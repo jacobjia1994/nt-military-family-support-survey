@@ -101,7 +101,7 @@
       "fields": [
         {
           "key": "region",
-          "label": "Where do you live now?",
+          "label": "Which area do you live in?",
           "type": "select",
           "options": [
             {
@@ -137,8 +137,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Choose an area. You can choose “Prefer not to answer”.",
-          "required": true
+          "hint": "Optional. This helps us plan where and how to offer support. Living outside the NT does not affect whether you can take part."
         },
         {
           "key": "time_nt",
@@ -250,7 +249,7 @@
           "hint": "Choose one answer, or leave this blank."
         }
       ],
-      "note": "Location is needed to continue; “Prefer not to answer” is available. Financial and care dependence appear only for adult children of a serving member."
+      "note": "Residence is optional, including for families outside the NT. It does not determine eligibility."
     },
     {
       "id": "strengths",
@@ -1566,7 +1565,7 @@
       "fields": [
         {
           "key": "region",
-          "label": "Where do you live now?",
+          "label": "Which area do you live in?",
           "type": "select",
           "options": [
             {
@@ -1602,8 +1601,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Choose an area. You can choose “Prefer not to answer”.",
-          "required": true
+          "hint": "Optional. This helps us plan where and how to offer support. Living outside the NT does not affect whether you can take part."
         },
         {
           "key": "time_nt",
@@ -1715,7 +1713,7 @@
           "hint": "Choose one answer, or leave this blank."
         }
       ],
-      "note": "Location is needed to continue; “Prefer not to answer” is available. Financial and care dependence appear only for adult children of a serving member."
+      "note": "Residence is optional, including for families outside the NT. It does not determine eligibility."
     },
     {
       "id": "strengths",
@@ -2931,36 +2929,32 @@
   ],
   "notice": [
     [
-      "Your choice",
-      "Taking part is voluntary. Most questions are optional, and you can stop before submitting. Some ask about wellbeing, disability or safety. Please answer about your own experience and leave out names, service numbers, units and other details that could identify anyone."
+      "Taking part",
+      "Taking part is your choice. Most questions are optional, and you can stop before submitting. Some ask about wellbeing, disability or safety. Please answer about your own experience and leave out names, service numbers, units and other identifying details."
     ],
     [
-      "How your answers will be used",
-      "Lutheran Care will use your responses to decide local priorities for its Defence family support program and plan activities and services."
+      "Why we are asking",
+      "Lutheran Care will use your answers to plan its Defence family support program in the Northern Territory. You can take part if you live outside the NT. We are interested in your experience while you or someone in your family is serving here."
     ],
     [
-      "Where they will be kept and who can see them",
-      "Lutheran Care will store your responses securely in its approved record-keeping systems. Authorised members of Lutheran Care’s project team will read your responses. Access is restricted to people who need the information for this work."
+      "Keeping your information",
+      "Lutheran Care will hold your answers in its approved record-keeping systems. Access is limited to authorised people who need the information for this work. Records are kept and securely disposed of under Lutheran Care’s records requirements."
     ],
     [
-      "What will be shared",
-      "Lutheran Care will share project information with the Department of Defence in a form that does not reasonably identify participants. Confidentiality has legal limits. Lutheran Care may need to share information where the law requires or permits it, including to report child harm or serious domestic violence."
+      "Sharing and confidentiality",
+      "Lutheran Care will share project information with the Department of Defence in a form that does not reasonably identify participants. We may need to disclose information when required by law or to protect someone from serious harm, including concerns about a child’s safety."
     ],
     [
-      "Retention and withdrawal",
-      "Lutheran Care will keep and dispose of responses under its approved records requirements. You can ask to withdraw your answers after submitting. If we cannot identify which answers are yours, we may be unable to remove them."
+      "Changing your mind",
+      "You can ask to withdraw your answers after submitting. If we cannot identify which answers are yours, we may be unable to remove them."
+    ],
+    [
+      "Privacy and questions",
+      "You can ask to access or correct your personal information, or raise a privacy concern, at <a href=\"mailto:feedback@lutherancare.org.au\">feedback@lutherancare.org.au</a>. Our <a href=\"https://www.lutherancare.org.au/privacy-policy/\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> explains how Lutheran Care handles personal information and complaints."
     ],
     [
       "Getting help",
-      "These questions help plan services. Your answers do not request a service, referral or follow-up interview. In Australia, call 000 in an emergency. For domestic, family or sexual violence support, call 1800RESPECT on 1800 737 732."
-    ],
-    [
-      "Questions, access or complaints",
-      "Contact <a href=\"mailto:feedback@lutherancare.org.au\">feedback@lutherancare.org.au</a> about privacy, access, correction or complaints. Our <a href=\"https://www.lutherancare.org.au/privacy-policy/\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> explains how Lutheran Care handles personal information."
-    ],
-    [
-      "Page hosting",
-      "This reading copy is hosted on GitHub Pages, which records visitor IP addresses for security. See the <a href=\"https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement\">GitHub Privacy Statement</a>. The collection platform and its data handling must be confirmed before this notice is used to collect responses."
+      "This questionnaire helps plan services. It does not arrange support, a referral or a follow-up interview. In Australia, call 000 in an emergency. For domestic, family or sexual violence support, contact <a href=\"https://www.1800respect.org.au/\" target=\"_blank\" rel=\"noopener\">1800RESPECT</a> on 1800 737 732."
     ]
   ],
   "domains": [
@@ -3045,7 +3039,7 @@
     "paragraphs": [
       "Lutheran Care would like your help to plan its Defence family support program in the Northern Territory.",
       "This questionnaire asks about your own experience: the support you have needed, what you have received and what would help now. We will use your answers to decide what the local program should focus on and how we offer it.",
-      "You are welcome to take part whether you need extra support or things are going well. Other adults in your family can answer separately.",
+      "You are welcome to take part whether you need extra support or things are going well. Family members living outside the NT are welcome too. Other adults in your family can answer separately.",
       "Thank you for your time."
     ],
     "funding": "The program is funded by the Australian Government Department of Defence through its Family Support Funding Program."
@@ -3162,7 +3156,7 @@
       "fields": [
         {
           "key": "region",
-          "label": "Where do you live now?",
+          "label": "Which area do you live in?",
           "type": "select",
           "options": [
             {
@@ -3198,8 +3192,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Choose an area. You can choose “Prefer not to answer”.",
-          "required": true
+          "hint": "Optional. This helps us plan where and how to offer support. Living outside the NT does not affect whether you can take part."
         },
         {
           "key": "time_nt",
@@ -3311,7 +3304,7 @@
           "hint": "Choose one answer, or leave this blank."
         }
       ],
-      "note": "Residence was not disclosed. The NT residence-duration question is not shown."
+      "note": "Residence is optional, including for families outside the NT. It does not determine eligibility."
     },
     {
       "id": "strengths",

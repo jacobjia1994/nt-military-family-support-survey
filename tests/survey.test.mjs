@@ -16,7 +16,9 @@ vm.runInContext(`${source.slice(0, bootstrap)}
   globalThis.survey = {
     DOMAINS, SPECIAL_NEEDS, NO_PRIORITY, toggleChoice, selectedNeeds,
     hasPriority, hasSoughtHelp, reconcileAnswers, buildSteps, cleanExport,
-    page, period, conditionalVisible, reviewHTML,
+    page, period, conditionalVisible, reviewHTML, locationFrame,
+    questionnaireVersion, needsGuardianPermission, guardianPermissionRecord,
+    participationRecord, hasValidParticipation, isOutsideSurveyScope,
     setContext(version, answers = {}) {
       state.version = version;
       state.age = version;
@@ -24,6 +26,12 @@ vm.runInContext(`${source.slice(0, bootstrap)}
       return domainList();
     },
     getContext: () => ({ version: state.version, answers: state.answers }),
+    setParticipationContext(age, participation = null, guardianPermission = null) {
+      state.age = age;
+      state.version = questionnaireVersion(age);
+      state.participation = participation;
+      state.guardianPermission = guardianPermission;
+    },
     librarySections: typeof questionLibrarySections === 'function'
       ? questionLibrarySections : null,
   };
@@ -377,5 +385,143 @@ test('declining service help is exclusive and clears appointment-time preference
     const a={delivery:[value],times:['weekend']};
     survey.reconcileAnswers(a,'delivery',domainsFor('adult'));
     assert.equal(hasOwn(a,'times'),false);
+  }
+});
+
+test('age choices select the intended language and permission routes', () => {
+  for (const [age, version, permissionRequired] of [
+    ['adult', 'adult', false],
+    ['youth_older', 'youth', false],
+    ['youth_younger', 'youth', true],
+    ['child', 'child', true],
+    ['young', 'child', true],
+  ]) {
+    assert.equal(survey.questionnaireVersion(age), version, age);
+    assert.equal(survey.needsGuardianPermission(age), permissionRequired, age);
+    const permission = survey.guardianPermissionRecord(age, true);
+    if (permissionRequired) {
+      assert.equal(permission.age_path, age);
+      assert.equal(permission.kind, 'parent_guardian_permission');
+      assert.equal(permission.agreed, true);
+    } else {
+      assert.equal(permission, null, 'Adult and older youth routes do not generate guardian permission');
+    }
+    assert.equal(survey.guardianPermissionRecord(age, false), null, 'Permission is never inferred');
+  }
+});
+
+test('under-15 participation needs both age-matched guardian permission and the child’s own agreement', () => {
+  for (const age of ['youth_younger', 'child']) {
+    const permission = survey.guardianPermissionRecord(age, true);
+    assert.equal(survey.participationRecord(age, true), null, age);
+    assert.equal(survey.participationRecord(age, true, { ...permission, agreed: false }), null, age);
+    assert.equal(survey.participationRecord(age, false, permission), null, 'Guardian permission cannot replace assent');
+    for (const otherAge of ['youth_younger', 'child', 'young'].filter(value => value !== age)) {
+      assert.equal(survey.participationRecord(age, true, survey.guardianPermissionRecord(otherAge, true)), null, `${otherAge} permission cannot authorise ${age}`);
+    }
+    const participation = survey.participationRecord(age, true, permission);
+    assert.equal(participation.age_path, age);
+    assert.equal(participation.kind, 'assent');
+    assert.equal(participation.agreed, true);
+    assert.deepEqual(plain(participation.guardian_permission), plain(permission));
+  }
+});
+
+test('adult and older youth consent is explicit, while under-7s do not create a questionnaire response', () => {
+  for (const age of ['adult', 'youth_older']) {
+    assert.equal(survey.participationRecord(age, false), null);
+    const participation = survey.participationRecord(age, true);
+    assert.equal(participation.kind, 'consent');
+    assert.equal(participation.age_path, age);
+    assert.equal(participation.guardian_permission, null);
+    survey.setParticipationContext(age, participation);
+    assert.equal(survey.hasValidParticipation(), true, age);
+  }
+  for (const age of [null, undefined, '', 'youth', 'unknown', 'young']) {
+    assert.equal(survey.participationRecord(age, true, survey.guardianPermissionRecord(age, true)), null, String(age));
+  }
+});
+
+test('the questionnaire gate rejects missing, withdrawn or stale-age participation', () => {
+  for (const age of ['adult', 'youth_older', 'youth_younger', 'child']) {
+    const permission = survey.guardianPermissionRecord(age, true);
+    const participation = survey.participationRecord(age, true, permission);
+    survey.setParticipationContext(age, participation, permission);
+    assert.equal(survey.hasValidParticipation(), true, age);
+    survey.setParticipationContext(age, null, permission);
+    assert.equal(survey.hasValidParticipation(), false, 'Permission alone cannot open the questionnaire');
+    survey.setParticipationContext(age, { ...participation, agreed: false }, permission);
+    assert.equal(survey.hasValidParticipation(), false, 'Withdrawing agreement closes the questionnaire');
+    for (const otherAge of ['adult', 'youth_older', 'youth_younger', 'child'].filter(value => value !== age)) {
+      survey.setParticipationContext(otherAge, participation, survey.guardianPermissionRecord(otherAge, true));
+      assert.equal(survey.hasValidParticipation(), false, `${age} agreement cannot be reused for ${otherAge}`);
+    }
+    if (survey.needsGuardianPermission(age)) {
+      survey.setParticipationContext(age, participation);
+      assert.equal(survey.hasValidParticipation(), false, 'Clearing permission invalidates existing assent');
+      survey.setParticipationContext(age, participation, { ...permission, agreed: false });
+      assert.equal(survey.hasValidParticipation(), false, 'Withdrawn permission invalidates existing assent');
+      survey.setParticipationContext(age, participation, survey.guardianPermissionRecord(age === 'child' ? 'youth_younger' : 'child', true));
+      assert.equal(survey.hasValidParticipation(), false, 'Permission must match the current age route');
+    }
+  }
+});
+
+test('survey eligibility depends on the military connection, never the respondent’s residence', () => {
+  for (const region of ['darwin', 'palmerston', 'katherine', 'alice', 'other_nt', 'outside_au', 'outside_overseas', 'prefer', '', undefined]) {
+    for (const roles of [['serving'], ['partner'], ['child'], ['parent'], ['other_family'], ['unsure']]) {
+      for (const serving_nt of ['yes', 'unsure']) {
+        assert.equal(survey.isOutsideSurveyScope({ region, roles, serving_nt }), false, `${region}: ${roles}: ${serving_nt}`);
+      }
+      assert.equal(survey.isOutsideSurveyScope({ region, roles, serving_nt: 'no' }), true);
+    }
+    assert.equal(survey.isOutsideSurveyScope({ region, roles: ['none'], serving_nt: 'yes' }), true);
+  }
+});
+
+test('residence is optional in each questionnaire and blank residence uses an unspecified frame', () => {
+  for (const version of ['adult', 'youth', 'child']) {
+    for (const region of [undefined, '', 'prefer']) {
+      const place = pageFor('place', version, { region });
+      const residence = place.fields.find(field => field.key === 'region');
+      assert.equal(Boolean(residence.required), false, `${version}: ${region}`);
+      assert.ok(residence.options.some(option => option.id === 'outside_au'));
+      assert.ok(residence.options.some(option => option.id === 'outside_overseas'));
+      assert.ok(residence.options.some(option => option.id === 'prefer'));
+      assert.equal(survey.locationFrame(region), 'unspecified');
+      assert.equal(survey.conditionalVisible(place.fields.find(field => field.key === 'time_nt')), false);
+      const needs = survey.page({ id: 'needs' });
+      assert.doesNotMatch(needs.intro, /time here|since you arrived|months in the NT/);
+      assert.match(needs.intro, version === 'child' ? /past three months/ : /past six months/);
+      assert.equal(hasOwn(survey.cleanExport({ region, time_nt: 'over3' }, version, domainsFor(version)).answers, 'time_nt'), false);
+    }
+  }
+});
+
+test('clearing or changing an optional residence removes answers tied to the previous frame', () => {
+  const domains = domainsFor('adult');
+  for (const [previous, region] of [
+    ['darwin', undefined], ['outside_au', ''], ['outside_overseas', 'prefer'],
+    [undefined, 'darwin'], ['', 'outside_au'], ['prefer', 'katherine'],
+  ]) {
+    const answers = {
+      region, roles: ['partner'], serving_nt: 'yes', force: 'adf', caring: ['under18'],
+      time_nt: 'over3', strengths: 'Earlier frame', needs: ['housing'], needs_other: 'Earlier topic',
+      adequacy: { housing: 'some' }, priority: 'housing', ...details(), anything: 'Earlier experience',
+    };
+    survey.reconcileAnswers(answers, 'region', domains, previous);
+    for (const key of ['strengths', 'needs', 'needs_other', 'adequacy', 'priority', ...Object.keys(details()), 'anything']) {
+      assert.equal(hasOwn(answers, key), false, `${previous} to ${region}: ${key}`);
+    }
+    for (const key of ['roles', 'serving_nt', 'force', 'caring']) assert.equal(hasOwn(answers, key), true, key);
+    if (survey.locationFrame(region) !== 'nt') assert.equal(hasOwn(answers, 'time_nt'), false);
+  }
+  for (const [previous, region] of [[undefined, 'prefer'], ['prefer', ''], ['', undefined]]) {
+    const answers = { region, time_nt: 'over3', strengths: 'Still relevant', needs: ['housing'], priority: 'housing', ...details() };
+    survey.reconcileAnswers(answers, 'region', domains, previous);
+    assert.equal(answers.strengths, 'Still relevant', 'Changing how residence is withheld does not change the question frame');
+    assert.equal(answers.priority, 'housing');
+    assert.equal(answers.impact, 'a_lot');
+    assert.equal(hasOwn(answers, 'time_nt'), false);
   }
 });

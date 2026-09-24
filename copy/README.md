@@ -16,3 +16,8 @@ The existing project’s receiving-system, records/withdrawal and child-particip
 
 
 24 September law/ethics review: added two exclusive service-preference choices (`not_wanted`, `unsure`); made the provider/purpose explicit; added a neutral undisclosed-residence reading path; corrected outside-NT serving-member wording; strengthened free-text and disclosure information. This intentionally supersedes the earlier claim of an unchanged option set. The collection notice is a labelled institutional proposal, not evidence that collection/storage/ethics arrangements have been approved. The main interactive page now states its actual browser-only answer handling and GitHub hosting metadata.
+
+
+## Current presentation, following Jacob's annotated corrections
+
+The participant-facing adult reading page now shows formal text without draft/proposal/technical-status banners. It is being shared internally for review; this staff file carries that context. Its notice is synchronised with the interactive form and adapts actual LC public forms/policy. Residence is optional and no longer a required continuation field. The interactive form implements the separate child/guardian steps described in `../consultation-procedure.md`. Earlier historical statements above about on-page backend notices and unchanged required flags are superseded.
