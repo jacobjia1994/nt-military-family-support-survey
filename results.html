@@ -5,25 +5,227 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <meta name="description" content="An illustrative, fictional results view for the NT Life & support survey.">
-  <title>Illustrative results · NT Life & support</title>
-  <style>:root{--paper:#f7f5ef;--ink:#193e38;--clay:#ba6844;--sage:#d9e2d8;--muted:#5b6a60;--line:#dde1d7;--white:#fffefb;--radius:17px;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper);font-synthesis:none}*{box-sizing:border-box}body{margin:0;line-height:1.55}button,select{font:inherit}a{color:inherit}button,a,select{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:focus-visible,a:focus-visible,select:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--clay);outline-offset:4px}button:disabled{opacity:.5;cursor:not-allowed}.skip-link{position:absolute;left:20px;top:-80px;background:var(--ink);color:#fff;padding:12px;z-index:20}.skip-link:focus{top:12px}.site-header{max-width:1280px;padding:27px 40px;margin:auto;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.wordmark{display:flex;align-items:center;gap:13px;font-weight:650;letter-spacing:-.3px;text-decoration:none}.brand-mark{background:var(--ink);color:var(--paper);width:42px;height:42px;display:grid;place-items:center;font-size:14px;border-radius:50%}.back-link{font-size:13px;text-decoration:none;display:flex;align-items:center;gap:9px}.back-link:hover{text-decoration:underline}main{max-width:1280px;margin:auto;padding:48px 40px 64px}.page-intro{display:flex;justify-content:space-between;gap:25px;align-items:flex-end;margin-bottom:29px}.eyebrow,.section-number{font-size:10px;font-weight:700;letter-spacing:1.65px;margin:0 0 12px;color:var(--muted)}h1{font:normal clamp(36px,4.1vw,54px)/1.08 Georgia,serif;letter-spacing:-1.6px;margin:0 0 19px}h2{font:normal 25px/1.18 Georgia,serif;letter-spacing:-.45px;margin:0}h3{font-size:14px;line-height:1.4;margin:0 0 10px}.intro-copy{font-size:14px;color:var(--muted);max-width:550px;margin:0}.intro-actions{display:flex;gap:9px;align-items:center;padding-bottom:2px;flex-shrink:0}.button{border:1px solid var(--ink);border-radius:50px;padding:11px 18px;font-size:12px;font-weight:600;white-space:nowrap;min-height:44px}.button.primary{background:var(--ink);color:var(--paper);display:flex;gap:19px;align-items:center}.button.primary:hover{background:#2d534b}.button.quiet{background:transparent;border-color:var(--line)}.button.quiet:hover{background:#edece5}.notice{padding:17px 20px;background:#edece1;border:1px solid #e0e0cf;border-radius:10px;display:flex;gap:13px;margin-bottom:25px;font-size:12px}.notice strong{font-weight:650}.notice p{margin:3px 0 0;color:var(--muted)}.notice-dot{width:9px;height:9px;margin-top:6px;background:var(--clay);border-radius:50%;flex-shrink:0}.filters{padding:24px 27px;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:19px}.filter-heading{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:17px}.filter-heading h2{font:600 14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:0}.text-button{background:none;border:none;text-decoration:underline;text-underline-offset:3px;font-size:12px;color:var(--muted);padding:6px 0;min-height:32px}.filter-fields{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:17px}label{font-size:11px;font-weight:600;color:var(--muted)}select{display:block;margin-top:7px;width:100%;border:1px solid #ccd4c9;border-radius:8px;padding:11px 34px 11px 11px;font-size:12px;background:var(--white);color:var(--ink);height:45px}.scope-note{margin:15px 0 0;font-size:11px;color:var(--muted)}.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px;margin:0 0 25px}.metric-card{padding:22px 25px;background:var(--sage);border:1px solid #ced8cb;border-radius:var(--radius)}.metric-card:nth-child(2){background:var(--ink);color:var(--paper);border-color:var(--ink)}.metric-card:nth-child(3){background:#ebe9df;border-color:#e1dfd3}.metric-label{margin:0;font-size:12px;font-weight:500}.metric-value{font:normal 46px/1.2 Georgia,serif;letter-spacing:-1.5px;margin:10px 0}.metric-value span{font:400 15px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:0;opacity:.75;margin-left:5px}.metric-description{font-size:11px;margin:0;color:var(--muted);max-width:285px}.metric-card:nth-child(2) .metric-description{color:#d4e0d7}.analysis-grid{display:grid;grid-template-columns:1.13fr 1fr;gap:23px;margin-bottom:23px}.panel{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:27px}.panel-heading{display:flex;gap:13px;justify-content:space-between;align-items:flex-start;margin-bottom:13px}.section-number{font-size:9px;letter-spacing:1.5px;margin-bottom:10px}.section-description{color:var(--muted);font-size:12px;line-height:1.7;margin:0 0 21px}.chip{font-size:10px;background:#edf1e9;border-radius:30px;padding:5px 10px;white-space:nowrap;margin-top:4px;color:#395546}.chip.terracotta{background:#f5e9e0;color:#975333}.chart-scale{display:flex;justify-content:space-between;font-size:9px;color:#717d74;padding-left:0;margin-bottom:13px}.bar-chart{display:flex;flex-direction:column;gap:16px}.bar-label{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:12px;margin-bottom:5px}.bar-number{font-size:11px;color:var(--muted);white-space:nowrap}.bar-track{height:7px;width:100%;border-radius:2px;background:#edf0e8;overflow:hidden}.bar-fill{height:100%;background:var(--ink);border-radius:2px;min-width:0;transition:width .2s ease}.footnote{font-size:10px;line-height:1.7;color:var(--muted);margin:21px 0 0}.priority-chart{display:flex;flex-direction:column;gap:15px}.priority-row{display:grid;grid-template-columns:25px 1fr;gap:12px;align-items:start}.rank{font:italic 20px/1.3 Georgia,serif;color:var(--clay);text-align:left}.priority-row .bar-label{font-size:12px}.priority-row .bar-fill{background:var(--clay)}.priority-row .bar-track{height:6px;background:#f2ebe4}.reading-note{padding:16px 18px;background:#f2f3ec;border-radius:10px;margin-top:22px;font-size:11px}.reading-note strong{font-weight:600}.reading-note p{color:var(--muted);margin:5px 0 0}.adequacy-panel{margin-bottom:23px}.table-scroll{overflow-x:auto;overscroll-behavior-x:contain}table{width:100%;border-collapse:collapse;font-size:11px;text-align:left;white-space:nowrap}th{font-size:10px;font-weight:600;color:var(--muted);border-bottom:1px solid #ccd5c8;padding:12px 13px}td{border-bottom:1px solid #ebeee6;padding:13px}th:first-child,td:first-child{padding-left:0;white-space:normal;min-width:170px}tbody tr:last-child td{border-bottom:none}th:not(:first-child),td:not(:first-child){text-align:right}td:first-child{font-weight:500}.rate{display:inline-block;min-width:100px;font-variant-numeric:tabular-nums}.rate strong{font-weight:600;color:#a35334}.rate span{font-size:10px;color:var(--muted)}.access-panel{margin-bottom:23px}.access-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:25px}.access-grid>div+div{border-left:1px solid var(--line);padding-left:33px}.small-heading{display:flex;gap:10px;align-items:center;margin-bottom:12px}.small-heading h3{margin:0}.small-marker{height:23px;width:23px;display:grid;place-items:center;background:var(--sage);border-radius:50%;font-size:10px;font-weight:700}.small-marker.clay{background:#efded3;color:#8e472b}.compact-chart{display:flex;flex-direction:column;gap:14px}.compact-chart .bar-label{font-size:11px}.compact-chart .bar-track{height:6px}.clay-chart .bar-fill{background:var(--clay)}.clay-chart .bar-track{background:#f2ebe4}.no-values{font-size:12px;color:var(--muted);padding:15px 0}.method-panel{border:1px solid var(--line);border-radius:12px;background:#f0f0e7;padding:0 24px}.method-panel summary{display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:20px 0;font-size:12px;font-weight:600;list-style:none}.method-panel summary::-webkit-details-marker{display:none}.plus{font-size:20px;font-weight:300;line-height:1}.method-panel[open] .plus{transform:rotate(45deg)}.method-content{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;border-top:1px solid var(--line);padding:22px 0}.method-content p,.method-content li{font-size:11px;color:var(--muted);line-height:1.8}.method-content ul{padding-left:15px;margin-top:0}.method-content li{margin-bottom:7px}.scan-detail{padding:18px 0 25px;border-top:1px solid var(--line)}.scan-detail h3{margin-bottom:8px}.empty-state{padding:55px 20px;text-align:center;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:30px}.empty-state p{font-size:14px;color:var(--muted)}.site-footer{max-width:1200px;margin:auto;padding:25px 0 30px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;font-size:10px;color:var(--muted)}.site-footer a{text-decoration:none}.site-footer a:hover{text-decoration:underline}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}[hidden]{display:none!important}@media(max-width:1000px){.page-intro{display:block}.intro-actions{margin-top:24px}.panel{padding:23px}.panel-heading{flex-wrap:wrap}.site-footer{margin:0 40px}.analysis-grid{gap:17px}.access-grid{gap:30px}.access-grid>div+div{padding-left:25px}.metric-card{padding:20px}.metric-value{font-size:41px}}@media(max-width:720px){.site-header{padding:20px 22px}.wordmark{font-size:14px;gap:9px}.brand-mark{height:36px;width:36px;font-size:12px}.back-link{font-size:11px;gap:5px}main{padding:32px 20px 40px}h1{font-size:40px;letter-spacing:-1.4px}.intro-copy{font-size:13px}.notice{padding:15px}.filters{padding:19px}.filter-fields{grid-template-columns:1fr;gap:13px}select{font-size:14px}.metric-grid{grid-template-columns:1fr;gap:11px}.metric-card{display:grid;grid-template-columns:1fr auto;column-gap:17px;padding:18px 21px}.metric-label{align-self:center}.metric-value{grid-column:2;grid-row:1/3;margin:0;font-size:38px;align-self:center;white-space:nowrap}.metric-value span{font-size:12px}.metric-description{grid-column:1;font-size:10px;margin-top:5px;max-width:250px}.analysis-grid{grid-template-columns:1fr;gap:19px;margin-bottom:19px}.panel{padding:22px 20px}.panel h2{font-size:24px}.access-grid{grid-template-columns:1fr;gap:26px}.access-grid>div+div{padding-left:0;border-left:0;padding-top:23px;border-top:1px solid var(--line)}.method-content{grid-template-columns:1fr;gap:12px}.method-panel{padding:0 19px}.site-footer{margin:0 20px;flex-wrap:wrap;gap:11px}.site-footer span:first-child{width:100%}.site-footer a{margin-left:auto}.intro-actions{gap:8px}.button{padding:11px 15px;font-size:11px}.priority-chart{gap:17px}.chart-scale{font-size:10px}.section-description{font-size:12px}.footnote{font-size:11px}.bar-label{font-size:12px}.bar-number{font-size:11px}th,td{padding:11px}.method-content p,.method-content li{font-size:12px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}@media print{body{background:#fff;color:#000}.site-header,main{max-width:none;padding:15px 0}.back-link,.intro-actions,.filters,.site-footer,.skip-link{display:none}.page-intro{display:block}h1{font-size:32px}.notice{background:#fff;border:1px solid #777}.metric-card,.metric-card:nth-child(2),.metric-card:nth-child(3){background:#fff;color:#000;border:1px solid #bbb}.metric-card:nth-child(2) .metric-description{color:#333}.metric-grid{grid-template-columns:repeat(3,1fr)}.metric-value{font-size:32px}.analysis-grid{display:block}.panel{break-inside:avoid;margin-bottom:18px;padding:18px}.bar-fill{print-color-adjust:exact;-webkit-print-color-adjust:exact}.method-panel{display:block;background:#fff}.method-panel:not([open]){display:none}.access-grid{gap:25px}.table-scroll{overflow:visible}th,td{font-size:9px;padding:8px}.metric-description,.section-description,.footnote{color:#333}.chip{border:1px solid #bbb;background:none}.page-intro br{display:none}}
-
-.impact-section{margin-top:28px;padding-top:23px;border-top:1px solid var(--line)}.scan-explanation{margin-top:22px}.adequacy-panel .table-scroll table{min-width:880px}
-</style>
+  <title>Example results · NT Life & support</title>
+  <style>
+    :root {
+      --paper: #fff;
+      --ink: #202523;
+      --primary: #185c52;
+      --primary-hover: #10483f;
+      --muted: #58645f;
+      --line: #dce3df;
+      --surface: #f5f7f6;
+      --selected: #eaf3ef;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      font-synthesis: none;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.6; }
+    button, select { font: inherit; }
+    a { color: var(--primary); text-underline-offset: 3px; }
+    button, a, select { -webkit-tap-highlight-color: transparent; }
+    button { cursor: pointer; }
+    button:focus-visible, a:focus-visible, select:focus-visible,
+    summary:focus-visible, [tabindex]:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 4px;
+    }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    ::selection { background: #d8ece4; color: var(--ink); }
+    .skip-link { position: absolute; left: 20px; top: -80px; background: var(--primary); color: #fff; padding: 12px 16px; z-index: 20; }
+    .skip-link:focus { top: 12px; }
+    .site-header {
+      max-width: 1248px; padding: 24px 32px; margin: auto;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; border-bottom: 1px solid var(--line);
+    }
+    .wordmark { display: inline-flex; align-items: center; gap: 12px; font-size: 16px; font-weight: 650; color: var(--ink); text-decoration: none; white-space: nowrap; }
+    .brand-mark { color: var(--primary); font-size: 14px; font-weight: 750; letter-spacing: .02em; padding-right: 12px; border-right: 1px solid var(--line); }
+    .site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 20px; }
+    .site-nav a { display: inline-flex; align-items: center; min-height: 44px; font-size: 13px; color: var(--muted); text-decoration: none; white-space: nowrap; }
+    .site-nav a:hover { color: var(--primary); text-decoration: underline; }
+    .site-nav a[aria-current="page"] { color: var(--primary); font-weight: 650; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 7px; }
+    main { max-width: 1248px; margin: auto; padding: 48px 32px 64px; }
+    .page-intro { display: flex; justify-content: space-between; gap: 32px; align-items: flex-end; margin-bottom: 28px; }
+    h1, h2, h3 { color: var(--ink); }
+    h1 { font-size: 36px; font-weight: 650; line-height: 1.2; letter-spacing: -.025em; margin: 0 0 16px; }
+    h2 { font-size: 23px; font-weight: 650; line-height: 1.3; letter-spacing: -.015em; margin: 0; }
+    h3 { font-size: 15px; font-weight: 650; line-height: 1.45; margin: 0 0 10px; }
+    .intro-copy { font-size: 16px; color: var(--muted); max-width: 58ch; margin: 0; }
+    .intro-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding-bottom: 2px; flex-shrink: 0; }
+    .button { border: 1px solid var(--line); border-radius: 6px; padding: 11px 16px; font-size: 13px; font-weight: 600; white-space: nowrap; min-height: 44px; }
+    .button.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .button.primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+    .button.quiet { background: #fff; color: var(--ink); }
+    .button.quiet:hover { background: var(--surface); border-color: #bdc9c2; }
+    .notice { padding: 18px 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; margin-bottom: 32px; font-size: 14px; }
+    .notice strong { font-weight: 650; }
+    .notice p { margin: 4px 0 0; color: var(--muted); max-width: 95ch; }
+    .filters { padding: 0 0 28px; border-bottom: 1px solid var(--line); margin-bottom: 28px; }
+    .filter-heading { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 16px; }
+    .filter-heading h2 { font-size: 17px; letter-spacing: 0; }
+    .text-button { background: none; border: none; text-decoration: underline; text-underline-offset: 3px; font-size: 13px; color: var(--primary); padding: 8px 0; min-height: 44px; }
+    .text-button:hover { color: var(--primary-hover); }
+    .filter-fields { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 20px; }
+    label { font-size: 13px; font-weight: 600; color: var(--ink); }
+    select { display: block; margin-top: 8px; width: 100%; border: 1px solid #aab9b1; border-radius: 5px; padding: 10px 30px 10px 12px; font-size: 14px; background: #fff; color: var(--ink); min-height: 46px; }
+    select:hover { border-color: var(--primary); }
+    .scope-note { margin: 16px 0 0; font-size: 13px; color: var(--muted); }
+    .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin: 0 0 36px; }
+    .metric-card { padding: 2px 0; }
+    .metric-card + .metric-card { padding-left: 32px; border-left: 1px solid var(--line); }
+    .metric-label { margin: 0; font-size: 14px; font-weight: 600; }
+    .metric-value { font-size: 36px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.2; letter-spacing: -.02em; margin: 12px 0 10px; color: var(--primary); }
+    .metric-value span { font-size: 15px; font-weight: 400; letter-spacing: 0; color: var(--muted); margin-left: 6px; }
+    .metric-description { font-size: 13px; margin: 0; color: var(--muted); max-width: 34ch; }
+    .analysis-grid { display: grid; grid-template-columns: 1.13fr 1fr; gap: 24px; margin-bottom: 24px; }
+    .panel { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 28px; }
+    .panel-heading { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+    .section-description { color: var(--muted); font-size: 14px; line-height: 1.65; margin: 0 0 24px; max-width: 85ch; }
+    .chip { font-size: 12px; background: var(--surface); border-radius: 4px; padding: 5px 9px; color: var(--muted); }
+    .chip.terracotta { background: var(--selected); color: var(--primary); }
+    .chart-scale { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+    .bar-chart { display: flex; flex-direction: column; gap: 18px; }
+    .bar-label { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; font-size: 14px; line-height: 1.45; margin-bottom: 7px; }
+    .bar-number { font-size: 13px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .bar-track { height: 7px; width: 100%; border-radius: 2px; background: #edf1ee; overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--primary); border-radius: 2px; min-width: 0; }
+    .footnote { font-size: 12px; line-height: 1.65; color: var(--muted); margin: 24px 0 0; max-width: 100ch; }
+    .priority-chart { display: flex; flex-direction: column; gap: 18px; }
+    .priority-row { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; }
+    .rank { font-size: 14px; font-weight: 650; line-height: 1.45; color: var(--muted); text-align: left; font-variant-numeric: tabular-nums; }
+    .reading-note { padding: 16px 18px; background: var(--surface); border-radius: 5px; margin-top: 24px; font-size: 13px; }
+    .reading-note strong { font-weight: 600; }
+    .reading-note p { color: var(--muted); margin: 5px 0 0; }
+    .adequacy-panel, .access-panel { margin-bottom: 24px; }
+    .table-scroll { overflow-x: auto; overscroll-behavior-x: contain; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    th { font-size: 12px; font-weight: 600; color: var(--muted); border-bottom: 1px solid #bdc9c2; padding: 12px; }
+    td { border-bottom: 1px solid var(--line); padding: 14px 12px; }
+    th:first-child, td:first-child { padding-left: 0; white-space: normal; min-width: 175px; }
+    tbody tr:last-child td { border-bottom: none; }
+    th:not(:first-child), td:not(:first-child) { text-align: right; }
+    td:first-child { font-weight: 500; }
+    .rate { display: inline-block; min-width: 100px; }
+    .rate strong { font-weight: 650; color: var(--primary); }
+    .rate span { font-size: 12px; color: var(--muted); }
+    .access-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 28px; }
+    .access-grid > div + div { border-left: 1px solid var(--line); padding-left: 32px; }
+    .small-heading { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; }
+    .small-heading h3 { margin: 0; }
+    .compact-chart { display: flex; flex-direction: column; gap: 18px; }
+    .compact-chart .bar-track { height: 6px; }
+    .no-values { font-size: 14px; color: var(--muted); padding: 16px 0; }
+    .method-panel { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding: 0 24px; }
+    .method-panel summary { display: flex; justify-content: space-between; gap: 16px; align-items: center; cursor: pointer; padding: 22px 0; font-size: 14px; font-weight: 600; list-style: none; }
+    .method-panel summary::-webkit-details-marker { display: none; }
+    .method-panel summary:hover { color: var(--primary); }
+    .plus { width: 16px; height: 16px; display: inline-block; position: relative; flex-shrink: 0; }
+    .plus::before, .plus::after { content: ""; position: absolute; top: 7px; left: 2px; width: 12px; height: 2px; background: currentColor; }
+    .plus::after { transform: rotate(90deg); }
+    .method-panel[open] .plus::after { display: none; }
+    .method-content { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; border-top: 1px solid var(--line); padding: 24px 0; }
+    .method-content p, .method-content li { font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .method-content ul { padding-left: 18px; margin-top: 0; }
+    .method-content li { margin-bottom: 10px; }
+    .scan-detail { padding: 24px 0 28px; border-top: 1px solid var(--line); }
+    .scan-detail h3 { margin-bottom: 10px; }
+    .empty-state { padding: 48px 24px; text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; margin-bottom: 32px; }
+    .empty-state p { font-size: 15px; color: var(--muted); }
+    .site-footer { max-width: 1184px; margin: auto; padding: 24px 0 32px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 12px; color: var(--muted); }
+    .site-footer a { color: var(--primary); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    [hidden] { display: none !important; }
+    .impact-section { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+    .scan-explanation { margin-top: 24px; }
+    .adequacy-panel .table-scroll table { min-width: 940px; }
+    @media (max-width: 1100px) {
+      .site-header { align-items: flex-start; flex-direction: column; gap: 12px; }
+      .page-intro { display: block; }
+      .intro-actions { margin-top: 24px; }
+      .panel { padding: 24px; }
+      .analysis-grid { gap: 20px; }
+      .site-footer { margin: 0 32px; }
+      .metric-grid { gap: 24px; }
+      .metric-card + .metric-card { padding-left: 24px; }
+    }
+    @media (max-width: 760px) {
+      .site-header { padding: 20px; gap: 8px; }
+      .site-nav { gap: 0 20px; }
+      .site-nav a { font-size: 12px; }
+      main { padding: 32px 20px 40px; }
+      h1 { font-size: 30px; }
+      h2 { font-size: 21px; }
+      .intro-copy { font-size: 15px; }
+      .notice { padding: 16px; font-size: 13px; margin-bottom: 28px; }
+      .filter-fields { grid-template-columns: 1fr; gap: 16px; }
+      select { font-size: 16px; }
+      .metric-grid { grid-template-columns: 1fr; gap: 20px; }
+      .metric-card { display: grid; grid-template-columns: 1fr auto; column-gap: 20px; }
+      .metric-card + .metric-card { padding: 20px 0 0; border-left: 0; border-top: 1px solid var(--line); }
+      .metric-label { align-self: center; }
+      .metric-value { grid-column: 2; grid-row: 1 / 3; margin: 0; font-size: 32px; align-self: center; white-space: nowrap; }
+      .metric-value span { font-size: 13px; }
+      .metric-description { grid-column: 1; font-size: 12px; margin-top: 5px; }
+      .analysis-grid { grid-template-columns: 1fr; gap: 20px; margin-bottom: 20px; }
+      .panel { padding: 22px 18px; }
+      .section-description { font-size: 13px; }
+      .access-grid { grid-template-columns: 1fr; gap: 28px; }
+      .access-grid > div + div { padding-left: 0; border-left: 0; padding-top: 24px; border-top: 1px solid var(--line); }
+      .method-content { grid-template-columns: 1fr; gap: 20px; }
+      .method-panel { padding: 0 18px; }
+      .site-footer { margin: 0 20px; gap: 10px 20px; }
+      .site-footer span:first-child { width: 100%; }
+      th, td { padding: 12px 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
+    @media print {
+      body { background: #fff; color: #000; }
+      .site-header, main { max-width: none; padding: 15px 0; }
+      .site-nav, .intro-actions, .filters, .site-footer, .skip-link { display: none; }
+      .page-intro { display: block; }
+      h1 { font-size: 28px; }
+      .notice { background: #fff; border-color: #777; }
+      .metric-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+      .metric-card { display: block; }
+      .metric-card + .metric-card { padding: 0 0 0 20px; border-top: 0; border-left: 1px solid #bbb; }
+      .metric-value { font-size: 28px; margin: 10px 0; }
+      .analysis-grid { display: block; }
+      .panel { break-inside: avoid; margin-bottom: 18px; padding: 18px; }
+      .bar-fill { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .method-panel { display: block; background: #fff; }
+      .method-panel:not([open]) { display: none; }
+      .access-grid { gap: 24px; }
+      .table-scroll { overflow: visible; }
+      .adequacy-panel .table-scroll table { min-width: 0; }
+      th, td { font-size: 9px; padding: 8px; }
+      .metric-description, .section-description, .footnote { color: #333; }
+      .chip { border: 1px solid #bbb; background: none; }
+    }
+  </style>
   
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to results</a>
   <header class="site-header">
     <a href="./index.html" class="wordmark" aria-label="NT Life and support survey"><span class="brand-mark" aria-hidden="true">NT</span><span>Life &amp; support</span></a>
-    <a class="back-link" href="./index.html"><span aria-hidden="true">←</span> Back to survey</a>
+    <nav class="site-nav" aria-label="Survey pages">
+      <a href="./index.html">Try the survey</a>
+      <a href="./questions.html">All questions</a>
+      <a href="./review.html">Review guide</a>
+      <a href="./results.html" aria-current="page">Example results</a>
+    </nav>
   </header>
   <main id="main">
     <div class="page-intro">
-      <div><p class="eyebrow">TEAM REVIEW · RESULTS EXAMPLE</p><h1>From lived experience<br>to better support.</h1><p class="intro-copy">Explore how individual answers could help a team understand support needs, gaps and priorities.</p></div>
-      <div class="intro-actions"><button id="export-button" class="button primary" type="button">Export filtered CSV <span aria-hidden="true">↗</span></button><button id="print-button" class="button quiet" type="button">Print this view</button></div>
+      <div><h1>Example results</h1><p class="intro-copy">Use the filters to explore support needs, gaps and priorities in a fictional dataset.</p></div>
+      <div class="intro-actions"><button id="export-button" class="button primary" type="button">Export filtered CSV</button><button id="print-button" class="button quiet" type="button">Print this view</button></div>
     </div>
-    <aside class="notice" aria-label="Fictional data notice"><span class="notice-dot" aria-hidden="true"></span><div><strong>Illustrative results. All records are fictional.</strong><p>This page demonstrates the analysis. It does not contain submitted survey answers or findings about military families. Do not infer NT-wide prevalence.</p></div></aside>
+    <aside class="notice" aria-label="Fictional data notice"><div><strong>Illustrative results. All records are fictional.</strong><p>This page demonstrates the analysis. It does not contain submitted survey answers or findings about military families. Do not infer NT-wide prevalence.</p></div></aside>
     <section class="filters" aria-labelledby="filter-heading">
       <div class="filter-heading"><h2 id="filter-heading">Explore the sample</h2><button id="reset-button" class="text-button" type="button">Reset filters</button></div>
       <div class="filter-fields">
@@ -41,17 +243,17 @@
         <article class="metric-card"><p class="metric-label">Adequacy response completion</p><p id="completeness-value" class="metric-value"></p><p id="completeness-description" class="metric-description"></p></article>
       </section>
       <section class="analysis-grid">
-        <article class="panel needs-panel"><div class="panel-heading"><div><p class="section-number">01 / SUPPORT NEEDS</p><h2>Where was help needed?</h2></div><span id="reference-period" class="chip">Past 6 months</span></div><p id="needs-description" class="section-description"></p><div class="chart-scale" aria-hidden="true"><span>0%</span><span>50%</span><span>100%</span></div><div id="needs-chart" class="bar-chart"></div><p class="footnote">Multiple areas can be selected, so percentages do not add to 100%. An area not selected does not establish that help was not needed. Whole-question response statuses are shown in the detail below.</p></article>
-        <article class="panel priority-panel"><div class="panel-heading"><div><p class="section-number">02 / CURRENT PRIORITY</p><h2>What matters most now?</h2></div></div><p id="priority-description" class="section-description"></p><div id="priority-chart" class="priority-chart"></div><div class="reading-note"><strong>One priority per person</strong><p>Past support needs and a current priority answer different questions. Everyone can choose a current priority, including people who selected no past need.</p></div><div class="impact-section"><h3>Impact on everyday life</h3><p id="impact-description" class="section-description"></p><div id="impact-chart" class="compact-chart clay-chart"></div></div></article>
+        <article class="panel needs-panel"><div class="panel-heading"><div><h2>Where was help needed?</h2></div><span id="reference-period" class="chip">Past 6 months</span></div><p id="needs-description" class="section-description"></p><div class="chart-scale" aria-hidden="true"><span>0%</span><span>50%</span><span>100%</span></div><div id="needs-chart" class="bar-chart"></div><p class="footnote">Multiple areas can be selected, so percentages do not add to 100%. An area not selected does not establish that help was not needed. Whole-question response statuses are shown in the detail below.</p></article>
+        <article class="panel priority-panel"><div class="panel-heading"><div><h2>What matters most now?</h2></div></div><p id="priority-description" class="section-description"></p><div id="priority-chart" class="priority-chart"></div><div class="reading-note"><strong>One priority per person</strong><p>Past support needs and a current priority answer different questions. Everyone can choose a current priority, including people who selected no past need.</p></div><div class="impact-section"><h3>Impact on everyday life</h3><p id="impact-description" class="section-description"></p><div id="impact-chart" class="compact-chart clay-chart"></div></div></article>
       </section>
-      <section class="panel adequacy-panel" aria-labelledby="adequacy-heading"><div class="panel-heading"><div><p class="section-number">03 / SUPPORT ADEQUACY</p><h2 id="adequacy-heading">Was the help enough?</h2></div><span class="chip terracotta">Some or no help = support gap</span></div><p class="section-description">Support gap rate = (some help, but not enough + no help) ÷ (enough + some + none). Only definite adequacy answers for a selected need enter this rate. Unsure, prefer not to answer and skipped answers remain visible and are excluded.</p><div class="table-scroll" tabindex="0" role="region" aria-label="Support adequacy detail table"><table><caption class="sr-only">Support needs and adequacy by area, with missing responses and gap denominators</caption><thead><tr><th scope="col">Support area</th><th scope="col">Needed help</th><th scope="col">Enough</th><th scope="col">Some, not enough</th><th scope="col">None</th><th scope="col">Unsure</th><th scope="col">Prefer not</th><th scope="col">Skipped</th><th scope="col">Gap rate</th></tr></thead><tbody id="adequacy-table"></tbody></table></div><p class="footnote">Each row covers people who selected that need. A person can appear in more than one row. A dash means there are no definite answers to calculate a rate.</p></section>
-      <section class="panel access-panel" aria-labelledby="access-heading"><div class="panel-heading"><div><p class="section-number">04 / ACCESS TO HELP</p><h2 id="access-heading">What got in the way?</h2></div></div><p class="section-description">These answers refer to the person’s chosen current priority. Experienced barriers among people who sought help and reasons for not seeking help use different questions and are analysed separately.</p><div class="access-grid"><div><div class="small-heading"><span class="small-marker" aria-hidden="true">A</span><h3>People who sought help</h3></div><p id="barriers-description" class="section-description"></p><div id="barriers-chart" class="compact-chart"></div></div><div><div class="small-heading"><span class="small-marker clay" aria-hidden="true">B</span><h3>People who did not seek help</h3></div><p id="reasons-description" class="section-description"></p><div id="reasons-chart" class="compact-chart clay-chart"></div></div></div><p id="access-note" class="footnote"></p></section>
-      <details class="method-panel"><summary><span>Data, definitions &amp; review notes</span><span class="plus" aria-hidden="true">+</span></summary><div class="method-content"><div><h3>What this dataset contains</h3><p id="dataset-description"></p><p>Records are generated deterministically from a fixed seed. They contain no real people, no identifiers from participants and no free-text testimonials. Filters intersect; downloads contain only the records currently in view.</p><p id="sample-composition"></p></div><div><h3>How to read these measures</h3><ul><li><strong>Support need:</strong> selected an area in one multi-select question; its percentage uses all respondents in the view, including whole-question nonresponses. Selection is not a prevalence estimate.</li><li><strong>Support gap:</strong> some help but not enough, or none. Enough help remains a reported need. The gap-rate denominator is shown for every row.</li><li><strong>Item completion:</strong> recorded adequacy responses, including “unsure” and “prefer not to answer”, divided by all selected needs. Completion does not mean the answer is analytically definite.</li><li><strong>Not selected:</strong> the area was not chosen. It does not imply no need. “None”, “unsure”, “prefer not to answer” and skipped describe the whole scan question.</li></ul></div><div><h3>Limits of the example</h3><p>Adult, young-person and child questionnaires have different wording and domains, and are shown separately. Respondents are individuals, not unique households. Counts across domains overlap.</p><p>The default view includes only respondents living in NT. Family members elsewhere in Australia or overseas, and undisclosed locations, are separate filter options; extending scope is a team decision. For adults outside NT, the settling question asks about adjusting to a family member serving in NT; extended-scope views use a combined label. Relationship categories overlap. Financial and care dependence are separate adult-child answers in the export. No weighting, population estimates or statistical comparisons are applied.</p><p>Before collecting real data, agree eligibility, safeguarding, consent, storage, small-group disclosure rules and an analysis plan with the project team.</p></div></div><div class="scan-detail"><h3>Needs scan response detail</h3><p class="section-description">This was one multi-select question, not a separate yes/no question for each area. Whole-question statuses sum to the number of people in view.</p><div class="table-scroll"><table><caption class="sr-only">Whole-question needs scan response statuses</caption><thead><tr><th scope="col">Needs scan response</th><th scope="col">People</th></tr></thead><tbody id="scan-status-table"></tbody></table></div><p class="section-description scan-explanation">For each area, “not selected” includes people who chose other areas and people whose whole-question answer was none, unsure, prefer not to answer or skipped. It must not be interpreted as no need.</p><div class="table-scroll"><table><caption class="sr-only">Selected and not-selected needs by domain</caption><thead><tr><th scope="col">Support area</th><th scope="col">Selected</th><th scope="col">Not selected</th></tr></thead><tbody id="scan-table"></tbody></table></div></div></details>
+      <section class="panel adequacy-panel" aria-labelledby="adequacy-heading"><div class="panel-heading"><div><h2 id="adequacy-heading">Was the help enough?</h2></div><span class="chip terracotta">Some or no help = support gap</span></div><p class="section-description">Support gap rate = (some help, but not enough + no help) ÷ (enough + some + none). Only definite adequacy answers for a selected need enter this rate. Unsure, prefer not to answer and skipped answers remain visible and are excluded.</p><div class="table-scroll" tabindex="0" role="region" aria-label="Support adequacy detail table"><table><caption class="sr-only">Support needs and adequacy by area, with missing responses and gap denominators</caption><thead><tr><th scope="col">Support area</th><th scope="col">Needed help</th><th scope="col">Enough</th><th scope="col">Some, not enough</th><th scope="col">None</th><th scope="col">Unsure</th><th scope="col">Prefer not</th><th scope="col">Skipped</th><th scope="col">Gap rate</th></tr></thead><tbody id="adequacy-table"></tbody></table></div><p class="footnote">Each row covers people who selected that need. A person can appear in more than one row. A dash means there are no definite answers to calculate a rate.</p></section>
+      <section class="panel access-panel" aria-labelledby="access-heading"><div class="panel-heading"><div><h2 id="access-heading">What got in the way?</h2></div></div><p class="section-description">These answers refer to the person’s chosen current priority. Experienced barriers among people who sought help and reasons for not seeking help use different questions and are analysed separately.</p><div class="access-grid"><div><div class="small-heading"><h3>People who sought help</h3></div><p id="barriers-description" class="section-description"></p><div id="barriers-chart" class="compact-chart"></div></div><div><div class="small-heading"><h3>People who did not seek help</h3></div><p id="reasons-description" class="section-description"></p><div id="reasons-chart" class="compact-chart clay-chart"></div></div></div><p id="access-note" class="footnote"></p></section>
+      <details class="method-panel"><summary><span>Data, definitions &amp; review notes</span><span class="plus" aria-hidden="true"></span></summary><div class="method-content"><div><h3>What this dataset contains</h3><p id="dataset-description"></p><p>Records are generated deterministically from a fixed seed. They contain no real people, no identifiers from participants and no free-text testimonials. Filters intersect; downloads contain only the records currently in view.</p><p id="sample-composition"></p></div><div><h3>How to read these measures</h3><ul><li><strong>Support need:</strong> selected an area in one multi-select question; its percentage uses all respondents in the view, including whole-question nonresponses. Selection is not a prevalence estimate.</li><li><strong>Support gap:</strong> some help but not enough, or none. Enough help remains a reported need. The gap-rate denominator is shown for every row.</li><li><strong>Item completion:</strong> recorded adequacy responses, including “unsure” and “prefer not to answer”, divided by all selected needs. Completion does not mean the answer is analytically definite.</li><li><strong>Not selected:</strong> the area was not chosen. It does not imply no need. “None”, “unsure”, “prefer not to answer” and skipped describe the whole scan question.</li></ul></div><div><h3>Limits of the example</h3><p>Adult, young-person and child questionnaires have different wording and domains, and are shown separately. Respondents are individuals, not unique households. Counts across domains overlap.</p><p>The default view includes only respondents living in NT. Family members elsewhere in Australia or overseas, and undisclosed locations, are separate filter options; extending scope is a team decision. For adults outside NT, the settling question asks about adjusting to a family member serving in NT; extended-scope views use a combined label. Relationship categories overlap. Financial and care dependence are separate adult-child answers in the export. No weighting, population estimates or statistical comparisons are applied.</p><p>Before collecting real data, agree eligibility, safeguarding, consent, storage, small-group disclosure rules and an analysis plan with the project team.</p></div></div><div class="scan-detail"><h3>Needs scan response detail</h3><p class="section-description">This was one multi-select question, not a separate yes/no question for each area. Whole-question statuses sum to the number of people in view.</p><div class="table-scroll"><table><caption class="sr-only">Whole-question needs scan response statuses</caption><thead><tr><th scope="col">Needs scan response</th><th scope="col">People</th></tr></thead><tbody id="scan-status-table"></tbody></table></div><p class="section-description scan-explanation">For each area, “not selected” includes people who chose other areas and people whose whole-question answer was none, unsure, prefer not to answer or skipped. It must not be interpreted as no need.</p><div class="table-scroll"><table><caption class="sr-only">Selected and not-selected needs by domain</caption><thead><tr><th scope="col">Support area</th><th scope="col">Selected</th><th scope="col">Not selected</th></tr></thead><tbody id="scan-table"></tbody></table></div></div></details>
     </div>
     <p id="export-status" class="sr-only" role="status"></p>
     <noscript><p class="notice">JavaScript is needed to calculate and filter the illustrative results.</p></noscript>
   </main>
-  <footer class="site-footer"><span>NT / Life &amp; support</span><span>Illustrative data · Internal team review</span><a href="./index.html">Return to survey <span aria-hidden="true">↗</span></a></footer>
+  <footer class="site-footer"><span>NT / Life &amp; support</span><span>Illustrative data · Internal team review</span><a href="./index.html">Try the survey</a></footer>
 <script>(function () {
   'use strict';
   const DOMAIN_SETS = {
