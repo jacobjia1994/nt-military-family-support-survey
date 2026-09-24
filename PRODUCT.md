@@ -41,3 +41,8 @@ Jacob requires participant information directly below the invitation, in smaller
 ## Evidence and decisions
 
 The baseline is repository commit ee2cc59. Existing questions are a draft, not an accepted or validated instrument. Jacob and the team retain final wording, participation scope, child participation arrangements, and real data collection decisions. Jacob explicitly requested Lutheran Care branding and formal institution-led wording. Funding is confirmed by the Department of Defence recipient list; describe funding, not an unverified partnership. Design implementation and reversible copy repairs are delegated by the current request.
+
+
+## Separate conversation request
+
+On 25 September Jacob requested the distinct follow-up contact form discussed in Thursday's ChatGPT task 讨论项目理解. It arranges a service-consultation conversation, with minimal identifiers and no link to anonymous survey answers. `contact.html` inherits the existing identity and operates independently. No email, address, date of birth, rank or service number is requested. A brief age-band choice routes under-15s to staff assistance before collecting contact details. The main form asks for a preferred name, phone, explicit safe first-contact method and consent; contact instructions and topic are optional. Voicemail permission is separate and defaults off. Details stay in page memory in this review build; no receiver or real submission is activated.

@@ -3,6 +3,8 @@
 A formal questionnaire for Lutheran Care’s internal team review. The project is service consultation. The participant interface uses the intended formal wording and LC branding; the current build holds answers in page memory and has no response receiver. Finishing does not transmit a response or claim that LC has received it.
 
 - [Questionnaire](https://jacobjia1994.github.io/nt-military-family-support-survey/)
+- [Separate conversation request](https://jacobjia1994.github.io/nt-military-family-support-survey/contact.html)
+- [Contact-form design and privacy basis](CONTACT_FORM.md)
 - [Adult reading copy](https://jacobjia1994.github.io/nt-military-family-support-survey/adult-wording.html)
 - [All ages and conditional questions](https://jacobjia1994.github.io/nt-military-family-support-survey/questions.html)
 - [Staff guide](https://jacobjia1994.github.io/nt-military-family-support-survey/review.html)
@@ -59,7 +61,7 @@ The implementation has no answer endpoint, application analytics, cookies or per
 
 ## Development and source material
 
-Run `node --test tests/survey.test.mjs`. `node scripts/export-copy.mjs` exports the current definitions for the adult reading copy. Local preview: `python3 -m http.server 8174 --bind 127.0.0.1`.
+Run `node --test tests/survey.test.mjs tests/contact.test.mjs`. `node scripts/export-copy.mjs` exports the current definitions for the adult reading copy. Local preview: `python3 -m http.server 8174 --bind 127.0.0.1`.
 
 LC logo and self-hosted Karla sources/licence are in `assets/`. GitHub Pages serves the repository root from main.
 
