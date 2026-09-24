@@ -1,26 +1,66 @@
 {
+  "invitation": {
+    "title": "Defence family support survey",
+    "greeting": "Hello,",
+    "paragraphs": [
+      "Lutheran Care would like your help to plan its Defence family support program in the Northern Territory.",
+      "Tell us about the support you have needed, what you received and what would help now.",
+      "Family members can take part wherever they live. Please answer about your own experience."
+    ],
+    "funding": "The program is funded by the Australian Government Department of Defence through its Family Support Funding Program."
+  },
+  "notice": [
+    [
+      "Your choice",
+      "Taking part is voluntary. Most questions are optional. Some ask about wellbeing, disability or safety."
+    ],
+    [
+      "Privacy",
+      "We do not ask for your name or contact details. Please leave out anything that could identify you or someone else, such as names, addresses or service numbers."
+    ],
+    [
+      "Use and storage",
+      "Lutheran Care will use your answers to plan its NT Defence family program. We will keep them in approved systems, limit access to authorised people working on the project, and retain and dispose of records under our records requirements."
+    ],
+    [
+      "Sharing",
+      "We will share project information with Defence after removing details that could reasonably identify anyone. We may need to disclose information to meet legal duties or protect someone from serious harm."
+    ],
+    [
+      "Withdrawal",
+      "You can stop before submitting. We do not keep a record linking answers to your name or contact details, so you cannot withdraw your response after submission."
+    ],
+    [
+      "Questions or complaints",
+      "Contact <a href=\"mailto:feedback@lutherancare.org.au\">feedback@lutherancare.org.au</a>. Our <a href=\"https://www.lutherancare.org.au/privacy-policy/\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> explains your rights, including access, correction and complaints."
+    ],
+    [
+      "If you need support",
+      "This survey does not arrange services or follow-up contact. In an emergency in Australia, call 000. For domestic, family or sexual violence support, contact <a href=\"https://www.1800respect.org.au/\" target=\"_blank\" rel=\"noopener\">1800RESPECT</a> on 1800 737 732."
+    ]
+  ],
   "nt": [
     {
       "id": "connection",
-      "title": "Your connection to military service",
+      "title": "Your connection to military life",
       "intro": "",
       "fields": [
         {
           "key": "roles",
-          "label": "Which statements apply to you?",
+          "label": "Which describes you?",
           "type": "multi",
           "options": [
             {
               "id": "serving",
-              "label": "I am a serving member"
+              "label": "I am a serving military member"
             },
             {
               "id": "partner",
-              "label": "I am the partner or spouse of a serving member"
+              "label": "I am a partner or spouse"
             },
             {
               "id": "child",
-              "label": "I am an adult child of a serving member"
+              "label": "I am a son, daughter or child of a serving member"
             },
             {
               "id": "parent",
@@ -44,7 +84,7 @@
         },
         {
           "key": "serving_nt",
-          "label": "Are you or someone in your family currently serving in the NT?",
+          "label": "Are you, or the military member in your family, currently serving in the NT?",
           "type": "single",
           "options": [
             {
@@ -60,12 +100,12 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Choose one answer.",
+          "hint": "Select one.",
           "required": true
         },
         {
           "key": "force",
-          "label": "Is your connection to the Australian Defence Force, another country’s military, or both?",
+          "label": "Which military are you or your family connected with?",
           "type": "single",
           "options": [
             {
@@ -89,14 +129,14 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Choose one answer, or leave this blank."
+          "hint": ""
         }
       ],
       "note": "Relationship and current service are needed to continue. “None of these” or “No” leads to an explanation of the survey scope. “Not sure” can continue."
     },
     {
       "id": "place",
-      "title": "About you",
+      "title": "Your life at the moment",
       "intro": "",
       "fields": [
         {
@@ -141,7 +181,7 @@
         },
         {
           "key": "time_nt",
-          "label": "How long have you been living in the NT?",
+          "label": "How long have you lived in the NT on this stay?",
           "type": "single",
           "options": [
             {
@@ -169,111 +209,35 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "If you have lived in the NT before, count only your current stay.",
+          "hint": "",
           "conditional": "nt"
-        },
-        {
-          "key": "caring",
-          "label": "Do you currently have any caring responsibilities?",
-          "type": "multi",
-          "options": [
-            {
-              "id": "under18",
-              "label": "Caring for children under 18"
-            },
-            {
-              "id": "adult_care",
-              "label": "Helping an adult with daily living or care"
-            },
-            {
-              "id": "none",
-              "label": "Neither"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Select all that apply.",
-          "exclusive": [
-            "none",
-            "prefer"
-          ]
-        },
-        {
-          "key": "financial_dependence",
-          "label": "Do you rely on your parents for essential living costs?",
-          "type": "single",
-          "options": [
-            {
-              "id": "yes",
-              "label": "Yes"
-            },
-            {
-              "id": "partly",
-              "label": "Partly"
-            },
-            {
-              "id": "no",
-              "label": "No"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Choose one answer, or leave this blank."
-        },
-        {
-          "key": "care_dependence",
-          "label": "Do you rely on your parents for help with daily living or care?",
-          "type": "single",
-          "options": [
-            {
-              "id": "yes",
-              "label": "Yes"
-            },
-            {
-              "id": "sometimes",
-              "label": "Sometimes"
-            },
-            {
-              "id": "no",
-              "label": "No"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Choose one answer, or leave this blank."
         }
       ],
-      "note": "Residence is optional, including for families outside the NT. It does not determine eligibility."
+      "note": "Residence is optional and never an eligibility test; skipping or declining uses neutral wording."
     },
     {
       "id": "strengths",
-      "title": "Support that already helps",
+      "title": "What already helps?",
       "intro": "",
       "fields": [
         {
           "key": "strengths",
-          "label": "What helps you manage everyday life in the NT?",
+          "label": "What already helps you manage everyday life in the NT?",
           "type": "text",
           "options": [],
-          "hint": "A few words are fine. Please leave out names or details that could identify anyone."
+          "hint": "Please leave out names or other details that could identify someone."
         }
       ],
       "note": ""
     },
     {
       "id": "needs",
-      "title": "Support you have needed",
-      "intro": "Think about the past six months in the NT. If you arrived more recently, think about your time here. Support includes help from family, friends, your community or a service.",
+      "title": "Where have you needed support?",
+      "intro": "Think about the past six months in the NT. If you arrived more recently, think about your time here. Support can include help from family, friends, your community or a service.",
       "fields": [
         {
           "key": "needs",
-          "label": "What have you needed help or support with?",
+          "label": "What did you need support with, whether or not you received it?",
           "type": "multi",
           "options": [
             {
@@ -288,18 +252,18 @@
             },
             {
               "id": "housing",
-              "label": "Housing",
-              "hint": "Finding a home, managing housing arrangements or dealing with housing problems."
+              "label": "Finding or managing housing",
+              "hint": "A suitable place to live, housing arrangements or housing problems."
             },
             {
               "id": "everyday_expenses",
-              "label": "Everyday living costs",
-              "hint": "Food, bills and other day-to-day expenses."
+              "label": "Managing everyday expenses",
+              "hint": "Food, bills and other day-to-day costs."
             },
             {
               "id": "transport",
-              "label": "Transport",
-              "hint": "Getting to work, services, activities or people you want to see."
+              "label": "Getting around",
+              "hint": "Transport to work, services, activities or people you want to see."
             },
             {
               "id": "childcare",
@@ -308,8 +272,8 @@
             },
             {
               "id": "schooling",
-              "label": "Children’s schooling or education",
-              "hint": "Starting or changing schools, learning or support at school."
+              "label": "Schooling or children's education",
+              "hint": "Starting or changing schools, learning or school support."
             },
             {
               "id": "parenting_caring",
@@ -329,7 +293,7 @@
             {
               "id": "disability_ongoing_needs",
               "label": "Disability or ongoing support needs",
-              "hint": "Accessing support, keeping care in place or getting help with ongoing needs."
+              "hint": "Access, additional needs, ongoing care or continuity of support."
             },
             {
               "id": "family_relationships",
@@ -339,17 +303,17 @@
             {
               "id": "people_to_turn_to",
               "label": "Friends, community or people to turn to",
-              "hint": "Feeling connected, belonging, or having someone to ask for help."
+              "hint": "Connection, belonging and having someone you can ask for help."
             },
             {
               "id": "military_separation",
               "label": "Time apart because of military service",
-              "hint": "Managing time away, reunions or uncertainty about time together."
+              "hint": "Managing absences, reunions or uncertainty about time together."
             },
             {
               "id": "safety_confidential_help",
               "label": "Feeling safe or getting confidential help",
-              "hint": "You do not need to describe what happened or name anyone."
+              "hint": "You do not need to describe personal events or identify anyone."
             },
             {
               "id": "other_need",
@@ -368,7 +332,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Select all that apply. Include areas where you got enough support.",
+          "hint": "Select all that apply.",
           "exclusive": [
             "none",
             "unsure",
@@ -377,10 +341,10 @@
         },
         {
           "key": "needs_other",
-          "label": "What else did you need support with?",
+          "label": "What else did you need help with?",
           "type": "short",
           "options": [],
-          "hint": "A few words are enough. Please leave out names.",
+          "hint": "Please leave out names or other details that could identify someone.",
           "conditional": "other_need"
         }
       ],
@@ -388,7 +352,7 @@
     },
     {
       "id": "adequacy",
-      "title": "Support you received",
+      "title": "Was the support enough?",
       "intro": "Think about the past six months in the NT. If you arrived more recently, think about your time here.",
       "fields": [
         {
@@ -398,15 +362,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -417,7 +381,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:work_study",
@@ -426,15 +390,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -445,24 +409,24 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:housing",
-          "label": "Housing",
+          "label": "Finding or managing housing",
           "type": "single",
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -473,24 +437,24 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:everyday_expenses",
-          "label": "Everyday living costs",
+          "label": "Managing everyday expenses",
           "type": "single",
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -501,24 +465,24 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:transport",
-          "label": "Transport",
+          "label": "Getting around",
           "type": "single",
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -529,7 +493,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:childcare",
@@ -538,15 +502,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -557,24 +521,24 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:schooling",
-          "label": "Children’s schooling or education",
+          "label": "Schooling or children's education",
           "type": "single",
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -585,7 +549,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:parenting_caring",
@@ -594,15 +558,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -613,7 +577,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:physical_health",
@@ -622,15 +586,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -641,7 +605,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:emotional_wellbeing",
@@ -650,15 +614,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -669,7 +633,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:disability_ongoing_needs",
@@ -678,15 +642,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -697,7 +661,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:family_relationships",
@@ -706,15 +670,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -725,7 +689,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:people_to_turn_to",
@@ -734,15 +698,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -753,7 +717,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:military_separation",
@@ -762,15 +726,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -781,7 +745,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:safety_confidential_help",
@@ -790,15 +754,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -809,7 +773,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:other_need",
@@ -818,15 +782,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -837,7 +801,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         }
       ],
       "note": "Only areas selected in the needs question are shown to a respondent, two per page. All possible areas are listed here for review."
@@ -849,87 +813,72 @@
       "fields": [
         {
           "key": "priority",
-          "label": "What would you most like support with now?",
-          "type": "single",
+          "label": "What would you like support with now?",
+          "type": "multi",
           "options": [
             {
               "id": "settling",
-              "label": "Settling into life in the NT",
-              "hint": "Finding your way around and adjusting to a new place."
+              "label": "Settling into life in the NT"
             },
             {
               "id": "work_study",
-              "label": "Work, study or training",
-              "hint": "Finding opportunities, continuing your career or using your skills."
+              "label": "Work, study or training"
             },
             {
               "id": "housing",
-              "label": "Housing",
-              "hint": "Finding a home, managing housing arrangements or dealing with housing problems."
+              "label": "Finding or managing housing"
             },
             {
               "id": "everyday_expenses",
-              "label": "Everyday living costs",
-              "hint": "Food, bills and other day-to-day expenses."
+              "label": "Managing everyday expenses"
             },
             {
               "id": "transport",
-              "label": "Transport",
-              "hint": "Getting to work, services, activities or people you want to see."
+              "label": "Getting around"
             },
             {
               "id": "childcare",
-              "label": "Childcare",
-              "hint": "Including care outside usual hours and when plans change."
+              "label": "Childcare"
             },
             {
               "id": "schooling",
-              "label": "Children’s schooling or education",
-              "hint": "Starting or changing schools, learning or support at school."
+              "label": "Schooling or children's education"
             },
             {
               "id": "parenting_caring",
-              "label": "Parenting or caring for someone",
-              "hint": "Day-to-day caring responsibilities and practical help."
+              "label": "Parenting or caring for someone"
             },
             {
               "id": "physical_health",
-              "label": "Physical health or healthcare",
-              "hint": "Accessing care and looking after your physical health."
+              "label": "Physical health or healthcare"
             },
             {
               "id": "emotional_wellbeing",
-              "label": "Emotional or mental wellbeing",
-              "hint": "Support with feelings, stress or emotional wellbeing."
+              "label": "Emotional or mental wellbeing"
             },
             {
               "id": "disability_ongoing_needs",
-              "label": "Disability or ongoing support needs",
-              "hint": "Accessing support, keeping care in place or getting help with ongoing needs."
+              "label": "Disability or ongoing support needs"
             },
             {
               "id": "family_relationships",
-              "label": "Family life or relationships",
-              "hint": "Keeping relationships working and managing changes together."
+              "label": "Family life or relationships"
             },
             {
               "id": "people_to_turn_to",
-              "label": "Friends, community or people to turn to",
-              "hint": "Feeling connected, belonging, or having someone to ask for help."
+              "label": "Friends, community or people to turn to"
             },
             {
               "id": "military_separation",
-              "label": "Time apart because of military service",
-              "hint": "Managing time away, reunions or uncertainty about time together."
+              "label": "Time apart because of military service"
             },
             {
               "id": "safety_confidential_help",
-              "label": "Feeling safe or getting confidential help",
-              "hint": "You do not need to describe what happened or name anyone."
+              "label": "Feeling safe or getting confidential help"
             },
             {
               "id": "another",
-              "label": "Another area"
+              "label": "Something else"
             },
             {
               "id": "none",
@@ -944,27 +893,32 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Choose one area. You can also say you do not need any more support now."
+          "hint": "Select all that apply.",
+          "exclusive": [
+            "none",
+            "unsure",
+            "prefer"
+          ]
         },
         {
           "key": "another_priority",
-          "label": "What would you like support with?",
+          "label": "What else would you like help with?",
           "type": "short",
           "options": [],
-          "hint": "A few words are enough. Please leave out names.",
+          "hint": "Please leave out names or other details that could identify someone.",
           "conditional": "another"
         }
       ],
-      "note": "The list uses the areas selected earlier, plus “Another area”. If none were selected, the full list is offered. Choosing no additional support, not sure, prefer not to answer, or skipping this page skips the detailed follow-up."
+      "note": "All current support areas are available, independently of past needs. Multiple selections lead to one set of collective follow-up questions. No current needs, unsure, declined or blank skips follow-up."
     },
     {
       "id": "impact",
-      "title": "How this affects you",
-      "intro": "These questions are about [the area you chose].",
+      "title": "Impact on everyday life",
+      "intro": "",
       "fields": [
         {
           "key": "impact",
-          "label": "Thinking about [the area you chose], how much has this affected your day-to-day life in the past four weeks?",
+          "label": "Overall, how much has this need affected your day-to-day life in the past four weeks?",
           "type": "single",
           "options": [
             {
@@ -996,19 +950,19 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "If this started more recently, think about the time since it started."
+          "hint": "If this started more recently, think about that time."
         }
       ],
-      "note": "Shown only when a current priority is selected."
+      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
     },
     {
       "id": "help",
-      "title": "Looking for help",
-      "intro": "These questions are about [the area you chose].",
+      "title": "Where have you looked for help?",
+      "intro": "",
       "fields": [
         {
           "key": "help",
-          "label": "Where have you looked for help with this?",
+          "label": "Where have you looked for help with this need?",
           "type": "multi",
           "options": [
             {
@@ -1060,32 +1014,32 @@
           ]
         }
       ],
-      "note": "Shown only when a current priority is selected."
+      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
     },
     {
       "id": "barriers",
-      "title": "Getting help",
+      "title": "Getting help: three question paths",
       "intro": "Only one of these versions appears, depending on the previous answer.",
       "fields": [],
       "variants": [
         {
           "id": "sought",
           "label": "If the person looked for help",
-          "title": "If you have looked for help",
-          "intro": "Think about [the area you chose].",
+          "title": "What has made it hard to get help?",
+          "intro": "",
           "fields": [
             {
               "key": "barriers",
-              "label": "What, if anything, made it harder to get the help you needed?",
+              "label": "What made it harder to get help with this need?",
               "type": "multi",
               "options": [
                 {
                   "id": "unaware",
-                  "label": "I did not know what support was available"
+                  "label": "I did not know what was available"
                 },
                 {
                   "id": "eligibility_unsure",
-                  "label": "I was not sure whether I was eligible"
+                  "label": "I was unsure whether I was eligible"
                 },
                 {
                   "id": "eligibility_refused",
@@ -1105,7 +1059,7 @@
                 },
                 {
                   "id": "hours_timing",
-                  "label": "The times support was available"
+                  "label": "Opening hours or timing"
                 },
                 {
                   "id": "childcare_caring",
@@ -1117,7 +1071,7 @@
                 },
                 {
                   "id": "accessibility",
-                  "label": "The support did not meet my access needs"
+                  "label": "Accessibility"
                 },
                 {
                   "id": "privacy_trust",
@@ -1125,11 +1079,11 @@
                 },
                 {
                   "id": "poor_fit",
-                  "label": "The support available did not suit my situation"
+                  "label": "Available support did not fit my situation"
                 },
                 {
                   "id": "explaining_repeatedly",
-                  "label": "Having to keep explaining my situation"
+                  "label": "Having to explain my situation repeatedly"
                 },
                 {
                   "id": "other",
@@ -1137,7 +1091,7 @@
                 },
                 {
                   "id": "none",
-                  "label": "Nothing made it harder to get help"
+                  "label": "Nothing made it harder"
                 },
                 {
                   "id": "unsure",
@@ -1160,12 +1114,12 @@
         {
           "id": "not-sought",
           "label": "If the person has not looked for help",
-          "title": "If you have not looked for help",
-          "intro": "Think about [the area you chose].",
+          "title": "What influenced your decision?",
+          "intro": "",
           "fields": [
             {
               "key": "barriers",
-              "label": "What are your reasons for not looking for help with this?",
+              "label": "Which reasons apply to you?",
               "type": "multi",
               "options": [
                 {
@@ -1178,11 +1132,11 @@
                 },
                 {
                   "id": "eligibility_concern",
-                  "label": "I am not sure whether I am eligible"
+                  "label": "I am unsure whether I am eligible"
                 },
                 {
                   "id": "cost_concern",
-                  "label": "I think it would cost too much"
+                  "label": "I expect it would cost too much"
                 },
                 {
                   "id": "time",
@@ -1237,21 +1191,21 @@
         {
           "id": "unknown",
           "label": "If help-seeking is skipped, uncertain or declined",
-          "title": "If the earlier question was unanswered, uncertain or declined",
-          "intro": "Think about [the area you chose].",
+          "title": "What has made it hard to get help?",
+          "intro": "",
           "fields": [
             {
               "key": "barriers",
-              "label": "If you have tried to get help with this, what, if anything, made it difficult?",
+              "label": "If you have tried to get help with this need, what made it difficult?",
               "type": "multi",
               "options": [
                 {
                   "id": "unaware",
-                  "label": "I did not know what support was available"
+                  "label": "I did not know what was available"
                 },
                 {
                   "id": "eligibility_unsure",
-                  "label": "I was not sure whether I was eligible"
+                  "label": "I was unsure whether I was eligible"
                 },
                 {
                   "id": "eligibility_refused",
@@ -1271,7 +1225,7 @@
                 },
                 {
                   "id": "hours_timing",
-                  "label": "The times support was available"
+                  "label": "Opening hours or timing"
                 },
                 {
                   "id": "childcare_caring",
@@ -1283,7 +1237,7 @@
                 },
                 {
                   "id": "accessibility",
-                  "label": "The support did not meet my access needs"
+                  "label": "Accessibility"
                 },
                 {
                   "id": "privacy_trust",
@@ -1291,11 +1245,11 @@
                 },
                 {
                   "id": "poor_fit",
-                  "label": "The support available did not suit my situation"
+                  "label": "Available support did not fit my situation"
                 },
                 {
                   "id": "explaining_repeatedly",
-                  "label": "Having to keep explaining my situation"
+                  "label": "Having to explain my situation repeatedly"
                 },
                 {
                   "id": "other",
@@ -1303,7 +1257,7 @@
                 },
                 {
                   "id": "none",
-                  "label": "Nothing made it harder to get help"
+                  "label": "Nothing made it harder"
                 },
                 {
                   "id": "unsure",
@@ -1314,7 +1268,7 @@
                   "label": "Prefer not to answer"
                 }
               ],
-              "hint": "Select all that apply. If you have not tried to get help, leave this question blank.",
+              "hint": "Select all that apply.",
               "exclusive": [
                 "none",
                 "unsure",
@@ -1327,27 +1281,27 @@
     },
     {
       "id": "change",
-      "title": "What would help",
-      "intro": "These questions are about [the area you chose].",
+      "title": "What would make the biggest difference?",
+      "intro": "",
       "fields": [
         {
           "key": "change",
-          "label": "What support or change would help you most with this?",
+          "label": "What would help you most with this need?",
           "type": "text",
           "options": [],
-          "hint": "A few words are enough. Please leave out names or details that could identify anyone."
+          "hint": "Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Shown only when a current priority is selected."
+      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
     },
     {
       "id": "delivery",
       "title": "Getting help from a service",
-      "intro": "Think about help with [the area you chose] from Lutheran Care or another service. This question helps us plan support. It does not arrange a service or give permission to contact you.",
+      "intro": "Think about help from Lutheran Care or another service.",
       "fields": [
         {
           "key": "delivery",
-          "label": "If you wanted help from a service, which of these would suit you?",
+          "label": "Which ways of getting help would suit you?",
           "type": "multi",
           "options": [
             {
@@ -1372,7 +1326,7 @@
             },
             {
               "id": "information",
-              "label": "Information I can read when it suits me"
+              "label": "Information I can read in my own time"
             },
             {
               "id": "referral",
@@ -1409,7 +1363,7 @@
         },
         {
           "key": "times",
-          "label": "If you used a service, when would calls, meetings or activities usually suit you?",
+          "label": "When would a call, meeting or activity suit you?",
           "type": "multi",
           "options": [
             {
@@ -1437,7 +1391,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Select all that apply. Use the time where you live.",
+          "hint": "Select all that apply. Use your local time.",
           "exclusive": [
             "no_preference",
             "prefer"
@@ -1445,19 +1399,19 @@
           "conditional": "live"
         }
       ],
-      "note": "Shown only when a current priority is selected. The timing question appears only for in-person, group, phone or video support."
+      "note": "Shown when one or more current needs are selected. The answer concerns those needs together. The timing question appears only for in-person, group, phone or video support."
     },
     {
       "id": "anything",
-      "title": "Anything else",
+      "title": "Is there anything we have missed?",
       "intro": "",
       "fields": [
         {
           "key": "anything",
-          "label": "Is there anything else you would like us to know?",
+          "label": "Is there anything important you would like to add?",
           "type": "text",
           "options": [],
-          "hint": "You can leave this blank. Please leave out names or details that could identify anyone."
+          "hint": "Please leave out names or other details that could identify someone."
         }
       ],
       "note": ""
@@ -1466,25 +1420,25 @@
   "outside": [
     {
       "id": "connection",
-      "title": "Your connection to military service",
+      "title": "Your connection to military life",
       "intro": "",
       "fields": [
         {
           "key": "roles",
-          "label": "Which statements apply to you?",
+          "label": "Which describes you?",
           "type": "multi",
           "options": [
             {
               "id": "serving",
-              "label": "I am a serving member"
+              "label": "I am a serving military member"
             },
             {
               "id": "partner",
-              "label": "I am the partner or spouse of a serving member"
+              "label": "I am a partner or spouse"
             },
             {
               "id": "child",
-              "label": "I am an adult child of a serving member"
+              "label": "I am a son, daughter or child of a serving member"
             },
             {
               "id": "parent",
@@ -1508,7 +1462,7 @@
         },
         {
           "key": "serving_nt",
-          "label": "Are you or someone in your family currently serving in the NT?",
+          "label": "Are you, or the military member in your family, currently serving in the NT?",
           "type": "single",
           "options": [
             {
@@ -1524,12 +1478,12 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Choose one answer.",
+          "hint": "Select one.",
           "required": true
         },
         {
           "key": "force",
-          "label": "Is your connection to the Australian Defence Force, another country’s military, or both?",
+          "label": "Which military are you or your family connected with?",
           "type": "single",
           "options": [
             {
@@ -1553,14 +1507,14 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Choose one answer, or leave this blank."
+          "hint": ""
         }
       ],
       "note": "Relationship and current service are needed to continue. “None of these” or “No” leads to an explanation of the survey scope. “Not sure” can continue."
     },
     {
       "id": "place",
-      "title": "About you",
+      "title": "Your life at the moment",
       "intro": "",
       "fields": [
         {
@@ -1605,7 +1559,7 @@
         },
         {
           "key": "time_nt",
-          "label": "How long have you been living in the NT?",
+          "label": "How long have you lived in the NT on this stay?",
           "type": "single",
           "options": [
             {
@@ -1633,111 +1587,35 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "If you have lived in the NT before, count only your current stay.",
+          "hint": "",
           "conditional": "nt"
-        },
-        {
-          "key": "caring",
-          "label": "Do you currently have any caring responsibilities?",
-          "type": "multi",
-          "options": [
-            {
-              "id": "under18",
-              "label": "Caring for children under 18"
-            },
-            {
-              "id": "adult_care",
-              "label": "Helping an adult with daily living or care"
-            },
-            {
-              "id": "none",
-              "label": "Neither"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Select all that apply.",
-          "exclusive": [
-            "none",
-            "prefer"
-          ]
-        },
-        {
-          "key": "financial_dependence",
-          "label": "Do you rely on your parents for essential living costs?",
-          "type": "single",
-          "options": [
-            {
-              "id": "yes",
-              "label": "Yes"
-            },
-            {
-              "id": "partly",
-              "label": "Partly"
-            },
-            {
-              "id": "no",
-              "label": "No"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Choose one answer, or leave this blank."
-        },
-        {
-          "key": "care_dependence",
-          "label": "Do you rely on your parents for help with daily living or care?",
-          "type": "single",
-          "options": [
-            {
-              "id": "yes",
-              "label": "Yes"
-            },
-            {
-              "id": "sometimes",
-              "label": "Sometimes"
-            },
-            {
-              "id": "no",
-              "label": "No"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Choose one answer, or leave this blank."
         }
       ],
-      "note": "Residence is optional, including for families outside the NT. It does not determine eligibility."
+      "note": "Residence is optional and never an eligibility test; skipping or declining uses neutral wording."
     },
     {
       "id": "strengths",
-      "title": "Support that already helps",
-      "intro": "",
+      "title": "What already helps?",
+      "intro": "Think about life while you or someone in your family is serving in the NT.",
       "fields": [
         {
           "key": "strengths",
-          "label": "What helps you manage everyday life while you or someone in your family is serving in the NT?",
+          "label": "What already helps you manage everyday life while you or someone in your family is serving in the NT?",
           "type": "text",
           "options": [],
-          "hint": "A few words are fine. Please leave out names or details that could identify anyone."
+          "hint": "Please leave out names or other details that could identify someone."
         }
       ],
       "note": ""
     },
     {
       "id": "needs",
-      "title": "Support you have needed",
-      "intro": "Think about the past six months while you or someone in your family has been serving in the NT, or that time if shorter. Support includes help from family, friends, your community or a service.",
+      "title": "Where have you needed support?",
+      "intro": "Think about the past six months while you or someone in your family has been serving in the NT, or that time if shorter. Support can include help from family, friends, your community or a service.",
       "fields": [
         {
           "key": "needs",
-          "label": "What have you needed help or support with?",
+          "label": "What did you need support with, whether or not you received it?",
           "type": "multi",
           "options": [
             {
@@ -1752,18 +1630,18 @@
             },
             {
               "id": "housing",
-              "label": "Housing",
-              "hint": "Finding a home, managing housing arrangements or dealing with housing problems."
+              "label": "Finding or managing housing",
+              "hint": "A suitable place to live, housing arrangements or housing problems."
             },
             {
               "id": "everyday_expenses",
-              "label": "Everyday living costs",
-              "hint": "Food, bills and other day-to-day expenses."
+              "label": "Managing everyday expenses",
+              "hint": "Food, bills and other day-to-day costs."
             },
             {
               "id": "transport",
-              "label": "Transport",
-              "hint": "Getting to work, services, activities or people you want to see."
+              "label": "Getting around",
+              "hint": "Transport to work, services, activities or people you want to see."
             },
             {
               "id": "childcare",
@@ -1772,8 +1650,8 @@
             },
             {
               "id": "schooling",
-              "label": "Children’s schooling or education",
-              "hint": "Starting or changing schools, learning or support at school."
+              "label": "Schooling or children's education",
+              "hint": "Starting or changing schools, learning or school support."
             },
             {
               "id": "parenting_caring",
@@ -1793,7 +1671,7 @@
             {
               "id": "disability_ongoing_needs",
               "label": "Disability or ongoing support needs",
-              "hint": "Accessing support, keeping care in place or getting help with ongoing needs."
+              "hint": "Access, additional needs, ongoing care or continuity of support."
             },
             {
               "id": "family_relationships",
@@ -1803,17 +1681,17 @@
             {
               "id": "people_to_turn_to",
               "label": "Friends, community or people to turn to",
-              "hint": "Feeling connected, belonging, or having someone to ask for help."
+              "hint": "Connection, belonging and having someone you can ask for help."
             },
             {
               "id": "military_separation",
               "label": "Time apart because of military service",
-              "hint": "Managing time away, reunions or uncertainty about time together."
+              "hint": "Managing absences, reunions or uncertainty about time together."
             },
             {
               "id": "safety_confidential_help",
               "label": "Feeling safe or getting confidential help",
-              "hint": "You do not need to describe what happened or name anyone."
+              "hint": "You do not need to describe personal events or identify anyone."
             },
             {
               "id": "other_need",
@@ -1832,7 +1710,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Select all that apply. Include areas where you got enough support.",
+          "hint": "Select all that apply.",
           "exclusive": [
             "none",
             "unsure",
@@ -1841,10 +1719,10 @@
         },
         {
           "key": "needs_other",
-          "label": "What else did you need support with?",
+          "label": "What else did you need help with?",
           "type": "short",
           "options": [],
-          "hint": "A few words are enough. Please leave out names.",
+          "hint": "Please leave out names or other details that could identify someone.",
           "conditional": "other_need"
         }
       ],
@@ -1852,25 +1730,25 @@
     },
     {
       "id": "adequacy",
-      "title": "Support you received",
+      "title": "Was the support enough?",
       "intro": "Think about the past six months while you or someone in your family has been serving in the NT, or that time if shorter.",
       "fields": [
         {
           "key": "adequacy:settling",
-          "label": "Adjusting to your family member serving in the NT",
+          "label": "Adjusting to changes linked to military service in the NT",
           "type": "single",
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -1881,7 +1759,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:work_study",
@@ -1890,15 +1768,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -1909,24 +1787,24 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:housing",
-          "label": "Housing",
+          "label": "Finding or managing housing",
           "type": "single",
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -1937,24 +1815,24 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:everyday_expenses",
-          "label": "Everyday living costs",
+          "label": "Managing everyday expenses",
           "type": "single",
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -1965,24 +1843,24 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:transport",
-          "label": "Transport",
+          "label": "Getting around",
           "type": "single",
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -1993,7 +1871,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:childcare",
@@ -2002,15 +1880,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -2021,24 +1899,24 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:schooling",
-          "label": "Children’s schooling or education",
+          "label": "Schooling or children's education",
           "type": "single",
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -2049,7 +1927,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:parenting_caring",
@@ -2058,15 +1936,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -2077,7 +1955,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:physical_health",
@@ -2086,15 +1964,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -2105,7 +1983,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:emotional_wellbeing",
@@ -2114,15 +1992,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -2133,7 +2011,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:disability_ongoing_needs",
@@ -2142,15 +2020,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -2161,7 +2039,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:family_relationships",
@@ -2170,15 +2048,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -2189,7 +2067,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:people_to_turn_to",
@@ -2198,15 +2076,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -2217,7 +2095,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:military_separation",
@@ -2226,15 +2104,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -2245,7 +2123,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:safety_confidential_help",
@@ -2254,15 +2132,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -2273,7 +2151,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:other_need",
@@ -2282,15 +2160,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -2301,7 +2179,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         }
       ],
       "note": "Only areas selected in the needs question are shown to a respondent, two per page. All possible areas are listed here for review."
@@ -2313,87 +2191,72 @@
       "fields": [
         {
           "key": "priority",
-          "label": "What would you most like support with now?",
-          "type": "single",
+          "label": "What would you like support with now?",
+          "type": "multi",
           "options": [
             {
               "id": "settling",
-              "label": "Adjusting to changes linked to military service in the NT",
-              "hint": "Changes to everyday life or family arrangements."
+              "label": "Adjusting to changes linked to military service in the NT"
             },
             {
               "id": "work_study",
-              "label": "Work, study or training",
-              "hint": "Finding opportunities, continuing your career or using your skills."
+              "label": "Work, study or training"
             },
             {
               "id": "housing",
-              "label": "Housing",
-              "hint": "Finding a home, managing housing arrangements or dealing with housing problems."
+              "label": "Finding or managing housing"
             },
             {
               "id": "everyday_expenses",
-              "label": "Everyday living costs",
-              "hint": "Food, bills and other day-to-day expenses."
+              "label": "Managing everyday expenses"
             },
             {
               "id": "transport",
-              "label": "Transport",
-              "hint": "Getting to work, services, activities or people you want to see."
+              "label": "Getting around"
             },
             {
               "id": "childcare",
-              "label": "Childcare",
-              "hint": "Including care outside usual hours and when plans change."
+              "label": "Childcare"
             },
             {
               "id": "schooling",
-              "label": "Children’s schooling or education",
-              "hint": "Starting or changing schools, learning or support at school."
+              "label": "Schooling or children's education"
             },
             {
               "id": "parenting_caring",
-              "label": "Parenting or caring for someone",
-              "hint": "Day-to-day caring responsibilities and practical help."
+              "label": "Parenting or caring for someone"
             },
             {
               "id": "physical_health",
-              "label": "Physical health or healthcare",
-              "hint": "Accessing care and looking after your physical health."
+              "label": "Physical health or healthcare"
             },
             {
               "id": "emotional_wellbeing",
-              "label": "Emotional or mental wellbeing",
-              "hint": "Support with feelings, stress or emotional wellbeing."
+              "label": "Emotional or mental wellbeing"
             },
             {
               "id": "disability_ongoing_needs",
-              "label": "Disability or ongoing support needs",
-              "hint": "Accessing support, keeping care in place or getting help with ongoing needs."
+              "label": "Disability or ongoing support needs"
             },
             {
               "id": "family_relationships",
-              "label": "Family life or relationships",
-              "hint": "Keeping relationships working and managing changes together."
+              "label": "Family life or relationships"
             },
             {
               "id": "people_to_turn_to",
-              "label": "Friends, community or people to turn to",
-              "hint": "Feeling connected, belonging, or having someone to ask for help."
+              "label": "Friends, community or people to turn to"
             },
             {
               "id": "military_separation",
-              "label": "Time apart because of military service",
-              "hint": "Managing time away, reunions or uncertainty about time together."
+              "label": "Time apart because of military service"
             },
             {
               "id": "safety_confidential_help",
-              "label": "Feeling safe or getting confidential help",
-              "hint": "You do not need to describe what happened or name anyone."
+              "label": "Feeling safe or getting confidential help"
             },
             {
               "id": "another",
-              "label": "Another area"
+              "label": "Something else"
             },
             {
               "id": "none",
@@ -2408,27 +2271,32 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Choose one area. You can also say you do not need any more support now."
+          "hint": "Select all that apply.",
+          "exclusive": [
+            "none",
+            "unsure",
+            "prefer"
+          ]
         },
         {
           "key": "another_priority",
-          "label": "What would you like support with?",
+          "label": "What else would you like help with?",
           "type": "short",
           "options": [],
-          "hint": "A few words are enough. Please leave out names.",
+          "hint": "Please leave out names or other details that could identify someone.",
           "conditional": "another"
         }
       ],
-      "note": "The list uses the areas selected earlier, plus “Another area”. If none were selected, the full list is offered. Choosing no additional support, not sure, prefer not to answer, or skipping this page skips the detailed follow-up."
+      "note": "All current support areas are available, independently of past needs. Multiple selections lead to one set of collective follow-up questions. No current needs, unsure, declined or blank skips follow-up."
     },
     {
       "id": "impact",
-      "title": "How this affects you",
-      "intro": "These questions are about [the area you chose].",
+      "title": "Impact on everyday life",
+      "intro": "",
       "fields": [
         {
           "key": "impact",
-          "label": "Thinking about [the area you chose], how much has this affected your day-to-day life in the past four weeks?",
+          "label": "Overall, how much has this need affected your day-to-day life in the past four weeks?",
           "type": "single",
           "options": [
             {
@@ -2460,19 +2328,19 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "If this started more recently, think about the time since it started."
+          "hint": "If this started more recently, think about that time."
         }
       ],
-      "note": "Shown only when a current priority is selected."
+      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
     },
     {
       "id": "help",
-      "title": "Looking for help",
-      "intro": "These questions are about [the area you chose].",
+      "title": "Where have you looked for help?",
+      "intro": "",
       "fields": [
         {
           "key": "help",
-          "label": "Where have you looked for help with this?",
+          "label": "Where have you looked for help with this need?",
           "type": "multi",
           "options": [
             {
@@ -2524,32 +2392,32 @@
           ]
         }
       ],
-      "note": "Shown only when a current priority is selected."
+      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
     },
     {
       "id": "barriers",
-      "title": "Getting help",
+      "title": "Getting help: three question paths",
       "intro": "Only one of these versions appears, depending on the previous answer.",
       "fields": [],
       "variants": [
         {
           "id": "sought",
           "label": "If the person looked for help",
-          "title": "If you have looked for help",
-          "intro": "Think about [the area you chose].",
+          "title": "What has made it hard to get help?",
+          "intro": "",
           "fields": [
             {
               "key": "barriers",
-              "label": "What, if anything, made it harder to get the help you needed?",
+              "label": "What made it harder to get help with this need?",
               "type": "multi",
               "options": [
                 {
                   "id": "unaware",
-                  "label": "I did not know what support was available"
+                  "label": "I did not know what was available"
                 },
                 {
                   "id": "eligibility_unsure",
-                  "label": "I was not sure whether I was eligible"
+                  "label": "I was unsure whether I was eligible"
                 },
                 {
                   "id": "eligibility_refused",
@@ -2569,7 +2437,7 @@
                 },
                 {
                   "id": "hours_timing",
-                  "label": "The times support was available"
+                  "label": "Opening hours or timing"
                 },
                 {
                   "id": "childcare_caring",
@@ -2581,7 +2449,7 @@
                 },
                 {
                   "id": "accessibility",
-                  "label": "The support did not meet my access needs"
+                  "label": "Accessibility"
                 },
                 {
                   "id": "privacy_trust",
@@ -2589,11 +2457,11 @@
                 },
                 {
                   "id": "poor_fit",
-                  "label": "The support available did not suit my situation"
+                  "label": "Available support did not fit my situation"
                 },
                 {
                   "id": "explaining_repeatedly",
-                  "label": "Having to keep explaining my situation"
+                  "label": "Having to explain my situation repeatedly"
                 },
                 {
                   "id": "other",
@@ -2601,7 +2469,7 @@
                 },
                 {
                   "id": "none",
-                  "label": "Nothing made it harder to get help"
+                  "label": "Nothing made it harder"
                 },
                 {
                   "id": "unsure",
@@ -2624,12 +2492,12 @@
         {
           "id": "not-sought",
           "label": "If the person has not looked for help",
-          "title": "If you have not looked for help",
-          "intro": "Think about [the area you chose].",
+          "title": "What influenced your decision?",
+          "intro": "",
           "fields": [
             {
               "key": "barriers",
-              "label": "What are your reasons for not looking for help with this?",
+              "label": "Which reasons apply to you?",
               "type": "multi",
               "options": [
                 {
@@ -2642,11 +2510,11 @@
                 },
                 {
                   "id": "eligibility_concern",
-                  "label": "I am not sure whether I am eligible"
+                  "label": "I am unsure whether I am eligible"
                 },
                 {
                   "id": "cost_concern",
-                  "label": "I think it would cost too much"
+                  "label": "I expect it would cost too much"
                 },
                 {
                   "id": "time",
@@ -2701,21 +2569,21 @@
         {
           "id": "unknown",
           "label": "If help-seeking is skipped, uncertain or declined",
-          "title": "If the earlier question was unanswered, uncertain or declined",
-          "intro": "Think about [the area you chose].",
+          "title": "What has made it hard to get help?",
+          "intro": "",
           "fields": [
             {
               "key": "barriers",
-              "label": "If you have tried to get help with this, what, if anything, made it difficult?",
+              "label": "If you have tried to get help with this need, what made it difficult?",
               "type": "multi",
               "options": [
                 {
                   "id": "unaware",
-                  "label": "I did not know what support was available"
+                  "label": "I did not know what was available"
                 },
                 {
                   "id": "eligibility_unsure",
-                  "label": "I was not sure whether I was eligible"
+                  "label": "I was unsure whether I was eligible"
                 },
                 {
                   "id": "eligibility_refused",
@@ -2735,7 +2603,7 @@
                 },
                 {
                   "id": "hours_timing",
-                  "label": "The times support was available"
+                  "label": "Opening hours or timing"
                 },
                 {
                   "id": "childcare_caring",
@@ -2747,7 +2615,7 @@
                 },
                 {
                   "id": "accessibility",
-                  "label": "The support did not meet my access needs"
+                  "label": "Accessibility"
                 },
                 {
                   "id": "privacy_trust",
@@ -2755,11 +2623,11 @@
                 },
                 {
                   "id": "poor_fit",
-                  "label": "The support available did not suit my situation"
+                  "label": "Available support did not fit my situation"
                 },
                 {
                   "id": "explaining_repeatedly",
-                  "label": "Having to keep explaining my situation"
+                  "label": "Having to explain my situation repeatedly"
                 },
                 {
                   "id": "other",
@@ -2767,7 +2635,7 @@
                 },
                 {
                   "id": "none",
-                  "label": "Nothing made it harder to get help"
+                  "label": "Nothing made it harder"
                 },
                 {
                   "id": "unsure",
@@ -2778,7 +2646,7 @@
                   "label": "Prefer not to answer"
                 }
               ],
-              "hint": "Select all that apply. If you have not tried to get help, leave this question blank.",
+              "hint": "Select all that apply.",
               "exclusive": [
                 "none",
                 "unsure",
@@ -2791,27 +2659,27 @@
     },
     {
       "id": "change",
-      "title": "What would help",
-      "intro": "These questions are about [the area you chose].",
+      "title": "What would make the biggest difference?",
+      "intro": "",
       "fields": [
         {
           "key": "change",
-          "label": "What support or change would help you most with this?",
+          "label": "What would help you most with this need?",
           "type": "text",
           "options": [],
-          "hint": "A few words are enough. Please leave out names or details that could identify anyone."
+          "hint": "Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Shown only when a current priority is selected."
+      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
     },
     {
       "id": "delivery",
       "title": "Getting help from a service",
-      "intro": "Think about help with [the area you chose] from Lutheran Care or another service. This question helps us plan support. It does not arrange a service or give permission to contact you.",
+      "intro": "Think about help from Lutheran Care or another service.",
       "fields": [
         {
           "key": "delivery",
-          "label": "If you wanted help from a service, which of these would suit you?",
+          "label": "Which ways of getting help would suit you?",
           "type": "multi",
           "options": [
             {
@@ -2836,7 +2704,7 @@
             },
             {
               "id": "information",
-              "label": "Information I can read when it suits me"
+              "label": "Information I can read in my own time"
             },
             {
               "id": "referral",
@@ -2873,7 +2741,7 @@
         },
         {
           "key": "times",
-          "label": "If you used a service, when would calls, meetings or activities usually suit you?",
+          "label": "When would a call, meeting or activity suit you?",
           "type": "multi",
           "options": [
             {
@@ -2901,7 +2769,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Select all that apply. Use the time where you live.",
+          "hint": "Select all that apply. Use your local time.",
           "exclusive": [
             "no_preference",
             "prefer"
@@ -2909,173 +2777,46 @@
           "conditional": "live"
         }
       ],
-      "note": "Shown only when a current priority is selected. The timing question appears only for in-person, group, phone or video support."
+      "note": "Shown when one or more current needs are selected. The answer concerns those needs together. The timing question appears only for in-person, group, phone or video support."
     },
     {
       "id": "anything",
-      "title": "Anything else",
+      "title": "Is there anything we have missed?",
       "intro": "",
       "fields": [
         {
           "key": "anything",
-          "label": "Is there anything else you would like us to know?",
+          "label": "Is there anything important you would like to add?",
           "type": "text",
           "options": [],
-          "hint": "You can leave this blank. Please leave out names or details that could identify anyone."
+          "hint": "Please leave out names or other details that could identify someone."
         }
       ],
       "note": ""
     }
   ],
-  "notice": [
-    [
-      "Taking part",
-      "Taking part is your choice. Most questions are optional, and you can stop before submitting. Some ask about wellbeing, disability or safety. Please answer about your own experience and leave out names, service numbers, units and other identifying details."
-    ],
-    [
-      "Why we are asking",
-      "Lutheran Care will use your answers to plan its Defence family support program in the Northern Territory. You can take part if you live outside the NT. We are interested in your experience while you or someone in your family is serving here."
-    ],
-    [
-      "Keeping your information",
-      "Lutheran Care will hold your answers in its approved record-keeping systems. Access is limited to authorised people who need the information for this work. Records are kept and securely disposed of under Lutheran Care’s records requirements."
-    ],
-    [
-      "Sharing and confidentiality",
-      "Lutheran Care will share project information with the Department of Defence in a form that does not reasonably identify participants. We may need to disclose information when required by law or to protect someone from serious harm, including concerns about a child’s safety."
-    ],
-    [
-      "Changing your mind",
-      "You can ask to withdraw your answers after submitting. If we cannot identify which answers are yours, we may be unable to remove them."
-    ],
-    [
-      "Privacy and questions",
-      "You can ask to access or correct your personal information, or raise a privacy concern, at <a href=\"mailto:feedback@lutherancare.org.au\">feedback@lutherancare.org.au</a>. Our <a href=\"https://www.lutherancare.org.au/privacy-policy/\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> explains how Lutheran Care handles personal information and complaints."
-    ],
-    [
-      "Getting help",
-      "This questionnaire helps plan services. It does not arrange support, a referral or a follow-up interview. In Australia, call 000 in an emergency. For domestic, family or sexual violence support, contact <a href=\"https://www.1800respect.org.au/\" target=\"_blank\" rel=\"noopener\">1800RESPECT</a> on 1800 737 732."
-    ]
-  ],
-  "domains": [
-    {
-      "id": "settling",
-      "label": "Settling into life in the NT",
-      "hint": "Finding your way around and adjusting to a new place."
-    },
-    {
-      "id": "work_study",
-      "label": "Work, study or training",
-      "hint": "Finding opportunities, continuing your career or using your skills."
-    },
-    {
-      "id": "housing",
-      "label": "Finding or managing housing",
-      "hint": "A suitable place to live, housing arrangements or housing problems."
-    },
-    {
-      "id": "everyday_expenses",
-      "label": "Managing everyday expenses",
-      "hint": "Food, bills and other day-to-day costs."
-    },
-    {
-      "id": "transport",
-      "label": "Getting around",
-      "hint": "Transport to work, services, activities or people you want to see."
-    },
-    {
-      "id": "childcare",
-      "label": "Childcare",
-      "hint": "Including care outside usual hours and when plans change."
-    },
-    {
-      "id": "schooling",
-      "label": "Schooling or children's education",
-      "hint": "Starting or changing schools, learning or school support."
-    },
-    {
-      "id": "parenting_caring",
-      "label": "Parenting or caring for someone",
-      "hint": "Day-to-day caring responsibilities and practical help."
-    },
-    {
-      "id": "physical_health",
-      "label": "Physical health or healthcare",
-      "hint": "Accessing care and looking after your physical health."
-    },
-    {
-      "id": "emotional_wellbeing",
-      "label": "Emotional or mental wellbeing",
-      "hint": "Support with feelings, stress or emotional wellbeing."
-    },
-    {
-      "id": "disability_ongoing_needs",
-      "label": "Disability or ongoing support needs",
-      "hint": "Access, additional needs, ongoing care or continuity of support."
-    },
-    {
-      "id": "family_relationships",
-      "label": "Family life or relationships",
-      "hint": "Keeping relationships working and managing changes together."
-    },
-    {
-      "id": "people_to_turn_to",
-      "label": "Friends, community or people to turn to",
-      "hint": "Connection, belonging and having someone you can ask for help."
-    },
-    {
-      "id": "military_separation",
-      "label": "Time apart because of military service",
-      "hint": "Managing absences, reunions or uncertainty about time together."
-    },
-    {
-      "id": "safety_confidential_help",
-      "label": "Feeling safe or getting confidential help",
-      "hint": "You do not need to describe personal events or identify anyone."
-    }
-  ],
-  "invitation": {
-    "title": "Defence family support survey",
-    "paragraphs": [
-      "Lutheran Care would like your help to plan its Defence family support program in the Northern Territory.",
-      "This questionnaire asks about your own experience: the support you have needed, what you have received and what would help now. We will use your answers to decide what the local program should focus on and how we offer it.",
-      "You are welcome to take part whether you need extra support or things are going well. Family members living outside the NT are welcome too. Other adults in your family can answer separately.",
-      "Thank you for your time."
-    ],
-    "funding": "The program is funded by the Australian Government Department of Defence through its Family Support Funding Program."
-  },
-  "completion": {
-    "review_title": "Check your answers",
-    "review_body": "Please check your answers. You can go back to change them.",
-    "closing": "Thank you for your time.",
-    "back": "Back",
-    "continue": "Continue",
-    "skip": "Skip this page",
-    "finish": "Finish",
-    "download": "Download my answers"
-  },
   "unspecified": [
     {
       "id": "connection",
-      "title": "Your connection to military service",
+      "title": "Your connection to military life",
       "intro": "",
       "fields": [
         {
           "key": "roles",
-          "label": "Which statements apply to you?",
+          "label": "Which describes you?",
           "type": "multi",
           "options": [
             {
               "id": "serving",
-              "label": "I am a serving member"
+              "label": "I am a serving military member"
             },
             {
               "id": "partner",
-              "label": "I am the partner or spouse of a serving member"
+              "label": "I am a partner or spouse"
             },
             {
               "id": "child",
-              "label": "I am an adult child of a serving member"
+              "label": "I am a son, daughter or child of a serving member"
             },
             {
               "id": "parent",
@@ -3099,7 +2840,7 @@
         },
         {
           "key": "serving_nt",
-          "label": "Are you or someone in your family currently serving in the NT?",
+          "label": "Are you, or the military member in your family, currently serving in the NT?",
           "type": "single",
           "options": [
             {
@@ -3115,12 +2856,12 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Choose one answer.",
+          "hint": "Select one.",
           "required": true
         },
         {
           "key": "force",
-          "label": "Is your connection to the Australian Defence Force, another country’s military, or both?",
+          "label": "Which military are you or your family connected with?",
           "type": "single",
           "options": [
             {
@@ -3144,14 +2885,14 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Choose one answer, or leave this blank."
+          "hint": ""
         }
       ],
       "note": "Relationship and current service are needed to continue. “None of these” or “No” leads to an explanation of the survey scope. “Not sure” can continue."
     },
     {
       "id": "place",
-      "title": "About you",
+      "title": "Your life at the moment",
       "intro": "",
       "fields": [
         {
@@ -3196,7 +2937,7 @@
         },
         {
           "key": "time_nt",
-          "label": "How long have you been living in the NT?",
+          "label": "How long have you lived in the NT on this stay?",
           "type": "single",
           "options": [
             {
@@ -3224,111 +2965,35 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "If you have lived in the NT before, count only your current stay.",
+          "hint": "",
           "conditional": "nt"
-        },
-        {
-          "key": "caring",
-          "label": "Do you currently have any caring responsibilities?",
-          "type": "multi",
-          "options": [
-            {
-              "id": "under18",
-              "label": "Caring for children under 18"
-            },
-            {
-              "id": "adult_care",
-              "label": "Helping an adult with daily living or care"
-            },
-            {
-              "id": "none",
-              "label": "Neither"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Select all that apply.",
-          "exclusive": [
-            "none",
-            "prefer"
-          ]
-        },
-        {
-          "key": "financial_dependence",
-          "label": "Do you rely on your parents for essential living costs?",
-          "type": "single",
-          "options": [
-            {
-              "id": "yes",
-              "label": "Yes"
-            },
-            {
-              "id": "partly",
-              "label": "Partly"
-            },
-            {
-              "id": "no",
-              "label": "No"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Choose one answer, or leave this blank."
-        },
-        {
-          "key": "care_dependence",
-          "label": "Do you rely on your parents for help with daily living or care?",
-          "type": "single",
-          "options": [
-            {
-              "id": "yes",
-              "label": "Yes"
-            },
-            {
-              "id": "sometimes",
-              "label": "Sometimes"
-            },
-            {
-              "id": "no",
-              "label": "No"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Choose one answer, or leave this blank."
         }
       ],
-      "note": "Residence is optional, including for families outside the NT. It does not determine eligibility."
+      "note": "Residence is optional and never an eligibility test; skipping or declining uses neutral wording."
     },
     {
       "id": "strengths",
-      "title": "Support that already helps",
-      "intro": "",
+      "title": "What already helps?",
+      "intro": "Think about life while you or someone in your family is serving in the NT.",
       "fields": [
         {
           "key": "strengths",
-          "label": "What helps you manage everyday life while you or someone in your family is serving in the NT?",
+          "label": "What already helps you manage everyday life while you or someone in your family is serving in the NT?",
           "type": "text",
           "options": [],
-          "hint": "A few words are fine. Please leave out names or details that could identify anyone."
+          "hint": "Please leave out names or other details that could identify someone."
         }
       ],
       "note": ""
     },
     {
       "id": "needs",
-      "title": "Support you have needed",
-      "intro": "Think about the past six months while you or someone in your family has been serving in the NT, or that time if shorter. Support includes help from family, friends, your community or a service.",
+      "title": "Where have you needed support?",
+      "intro": "Think about the past six months while you or someone in your family has been serving in the NT, or that time if shorter. Support can include help from family, friends, your community or a service.",
       "fields": [
         {
           "key": "needs",
-          "label": "What have you needed help or support with?",
+          "label": "What did you need support with, whether or not you received it?",
           "type": "multi",
           "options": [
             {
@@ -3343,18 +3008,18 @@
             },
             {
               "id": "housing",
-              "label": "Housing",
-              "hint": "Finding a home, managing housing arrangements or dealing with housing problems."
+              "label": "Finding or managing housing",
+              "hint": "A suitable place to live, housing arrangements or housing problems."
             },
             {
               "id": "everyday_expenses",
-              "label": "Everyday living costs",
-              "hint": "Food, bills and other day-to-day expenses."
+              "label": "Managing everyday expenses",
+              "hint": "Food, bills and other day-to-day costs."
             },
             {
               "id": "transport",
-              "label": "Transport",
-              "hint": "Getting to work, services, activities or people you want to see."
+              "label": "Getting around",
+              "hint": "Transport to work, services, activities or people you want to see."
             },
             {
               "id": "childcare",
@@ -3363,8 +3028,8 @@
             },
             {
               "id": "schooling",
-              "label": "Children’s schooling or education",
-              "hint": "Starting or changing schools, learning or support at school."
+              "label": "Schooling or children's education",
+              "hint": "Starting or changing schools, learning or school support."
             },
             {
               "id": "parenting_caring",
@@ -3384,7 +3049,7 @@
             {
               "id": "disability_ongoing_needs",
               "label": "Disability or ongoing support needs",
-              "hint": "Accessing support, keeping care in place or getting help with ongoing needs."
+              "hint": "Access, additional needs, ongoing care or continuity of support."
             },
             {
               "id": "family_relationships",
@@ -3394,17 +3059,17 @@
             {
               "id": "people_to_turn_to",
               "label": "Friends, community or people to turn to",
-              "hint": "Feeling connected, belonging, or having someone to ask for help."
+              "hint": "Connection, belonging and having someone you can ask for help."
             },
             {
               "id": "military_separation",
               "label": "Time apart because of military service",
-              "hint": "Managing time away, reunions or uncertainty about time together."
+              "hint": "Managing absences, reunions or uncertainty about time together."
             },
             {
               "id": "safety_confidential_help",
               "label": "Feeling safe or getting confidential help",
-              "hint": "You do not need to describe what happened or name anyone."
+              "hint": "You do not need to describe personal events or identify anyone."
             },
             {
               "id": "other_need",
@@ -3423,7 +3088,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Select all that apply. Include areas where you got enough support.",
+          "hint": "Select all that apply.",
           "exclusive": [
             "none",
             "unsure",
@@ -3432,10 +3097,10 @@
         },
         {
           "key": "needs_other",
-          "label": "What else did you need support with?",
+          "label": "What else did you need help with?",
           "type": "short",
           "options": [],
-          "hint": "A few words are enough. Please leave out names.",
+          "hint": "Please leave out names or other details that could identify someone.",
           "conditional": "other_need"
         }
       ],
@@ -3443,25 +3108,25 @@
     },
     {
       "id": "adequacy",
-      "title": "Support you received",
+      "title": "Was the support enough?",
       "intro": "Think about the past six months while you or someone in your family has been serving in the NT, or that time if shorter.",
       "fields": [
         {
           "key": "adequacy:settling",
-          "label": "Adjusting to your family member serving in the NT",
+          "label": "Adjusting to changes linked to military service in the NT",
           "type": "single",
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -3472,7 +3137,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:work_study",
@@ -3481,15 +3146,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -3500,24 +3165,24 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:housing",
-          "label": "Housing",
+          "label": "Finding or managing housing",
           "type": "single",
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -3528,24 +3193,24 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:everyday_expenses",
-          "label": "Everyday living costs",
+          "label": "Managing everyday expenses",
           "type": "single",
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -3556,24 +3221,24 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:transport",
-          "label": "Transport",
+          "label": "Getting around",
           "type": "single",
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -3584,7 +3249,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:childcare",
@@ -3593,15 +3258,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -3612,24 +3277,24 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:schooling",
-          "label": "Children’s schooling or education",
+          "label": "Schooling or children's education",
           "type": "single",
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -3640,7 +3305,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:parenting_caring",
@@ -3649,15 +3314,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -3668,7 +3333,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:physical_health",
@@ -3677,15 +3342,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -3696,7 +3361,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:emotional_wellbeing",
@@ -3705,15 +3370,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -3724,7 +3389,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:disability_ongoing_needs",
@@ -3733,15 +3398,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -3752,7 +3417,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:family_relationships",
@@ -3761,15 +3426,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -3780,7 +3445,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:people_to_turn_to",
@@ -3789,15 +3454,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -3808,7 +3473,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:military_separation",
@@ -3817,15 +3482,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -3836,7 +3501,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:safety_confidential_help",
@@ -3845,15 +3510,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -3864,7 +3529,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         },
         {
           "key": "adequacy:other_need",
@@ -3873,15 +3538,15 @@
           "options": [
             {
               "id": "enough",
-              "label": "Yes, I got enough support to meet my needs"
+              "label": "Enough to meet my needs"
             },
             {
               "id": "some",
-              "label": "I got some support, but needed more"
+              "label": "Some, but not enough"
             },
             {
               "id": "none",
-              "label": "I did not get any support"
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -3892,7 +3557,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Did you get the support you needed with this?"
+          "hint": "How much of the support you needed did you receive?"
         }
       ],
       "note": "Only areas selected in the needs question are shown to a respondent, two per page. All possible areas are listed here for review."
@@ -3904,87 +3569,72 @@
       "fields": [
         {
           "key": "priority",
-          "label": "What would you most like support with now?",
-          "type": "single",
+          "label": "What would you like support with now?",
+          "type": "multi",
           "options": [
             {
               "id": "settling",
-              "label": "Adjusting to changes linked to military service in the NT",
-              "hint": "Changes to everyday life or family arrangements."
+              "label": "Adjusting to changes linked to military service in the NT"
             },
             {
               "id": "work_study",
-              "label": "Work, study or training",
-              "hint": "Finding opportunities, continuing your career or using your skills."
+              "label": "Work, study or training"
             },
             {
               "id": "housing",
-              "label": "Housing",
-              "hint": "Finding a home, managing housing arrangements or dealing with housing problems."
+              "label": "Finding or managing housing"
             },
             {
               "id": "everyday_expenses",
-              "label": "Everyday living costs",
-              "hint": "Food, bills and other day-to-day expenses."
+              "label": "Managing everyday expenses"
             },
             {
               "id": "transport",
-              "label": "Transport",
-              "hint": "Getting to work, services, activities or people you want to see."
+              "label": "Getting around"
             },
             {
               "id": "childcare",
-              "label": "Childcare",
-              "hint": "Including care outside usual hours and when plans change."
+              "label": "Childcare"
             },
             {
               "id": "schooling",
-              "label": "Children’s schooling or education",
-              "hint": "Starting or changing schools, learning or support at school."
+              "label": "Schooling or children's education"
             },
             {
               "id": "parenting_caring",
-              "label": "Parenting or caring for someone",
-              "hint": "Day-to-day caring responsibilities and practical help."
+              "label": "Parenting or caring for someone"
             },
             {
               "id": "physical_health",
-              "label": "Physical health or healthcare",
-              "hint": "Accessing care and looking after your physical health."
+              "label": "Physical health or healthcare"
             },
             {
               "id": "emotional_wellbeing",
-              "label": "Emotional or mental wellbeing",
-              "hint": "Support with feelings, stress or emotional wellbeing."
+              "label": "Emotional or mental wellbeing"
             },
             {
               "id": "disability_ongoing_needs",
-              "label": "Disability or ongoing support needs",
-              "hint": "Accessing support, keeping care in place or getting help with ongoing needs."
+              "label": "Disability or ongoing support needs"
             },
             {
               "id": "family_relationships",
-              "label": "Family life or relationships",
-              "hint": "Keeping relationships working and managing changes together."
+              "label": "Family life or relationships"
             },
             {
               "id": "people_to_turn_to",
-              "label": "Friends, community or people to turn to",
-              "hint": "Feeling connected, belonging, or having someone to ask for help."
+              "label": "Friends, community or people to turn to"
             },
             {
               "id": "military_separation",
-              "label": "Time apart because of military service",
-              "hint": "Managing time away, reunions or uncertainty about time together."
+              "label": "Time apart because of military service"
             },
             {
               "id": "safety_confidential_help",
-              "label": "Feeling safe or getting confidential help",
-              "hint": "You do not need to describe what happened or name anyone."
+              "label": "Feeling safe or getting confidential help"
             },
             {
               "id": "another",
-              "label": "Another area"
+              "label": "Something else"
             },
             {
               "id": "none",
@@ -3999,27 +3649,32 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Choose one area. You can also say you do not need any more support now."
+          "hint": "Select all that apply.",
+          "exclusive": [
+            "none",
+            "unsure",
+            "prefer"
+          ]
         },
         {
           "key": "another_priority",
-          "label": "What would you like support with?",
+          "label": "What else would you like help with?",
           "type": "short",
           "options": [],
-          "hint": "A few words are enough. Please leave out names.",
+          "hint": "Please leave out names or other details that could identify someone.",
           "conditional": "another"
         }
       ],
-      "note": "The list uses the areas selected earlier, plus “Another area”. If none were selected, the full list is offered. Choosing no additional support, not sure, prefer not to answer, or skipping this page skips the detailed follow-up."
+      "note": "All current support areas are available, independently of past needs. Multiple selections lead to one set of collective follow-up questions. No current needs, unsure, declined or blank skips follow-up."
     },
     {
       "id": "impact",
-      "title": "How this affects you",
-      "intro": "These questions are about [the area you chose].",
+      "title": "Impact on everyday life",
+      "intro": "",
       "fields": [
         {
           "key": "impact",
-          "label": "Thinking about [the area you chose], how much has this affected your day-to-day life in the past four weeks?",
+          "label": "Overall, how much has this need affected your day-to-day life in the past four weeks?",
           "type": "single",
           "options": [
             {
@@ -4051,19 +3706,19 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "If this started more recently, think about the time since it started."
+          "hint": "If this started more recently, think about that time."
         }
       ],
-      "note": "Shown only when a current priority is selected."
+      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
     },
     {
       "id": "help",
-      "title": "Looking for help",
-      "intro": "These questions are about [the area you chose].",
+      "title": "Where have you looked for help?",
+      "intro": "",
       "fields": [
         {
           "key": "help",
-          "label": "Where have you looked for help with this?",
+          "label": "Where have you looked for help with this need?",
           "type": "multi",
           "options": [
             {
@@ -4115,32 +3770,32 @@
           ]
         }
       ],
-      "note": "Shown only when a current priority is selected."
+      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
     },
     {
       "id": "barriers",
-      "title": "Getting help",
+      "title": "Getting help: three question paths",
       "intro": "Only one of these versions appears, depending on the previous answer.",
       "fields": [],
       "variants": [
         {
           "id": "sought",
           "label": "If the person looked for help",
-          "title": "If you have looked for help",
-          "intro": "Think about [the area you chose].",
+          "title": "What has made it hard to get help?",
+          "intro": "",
           "fields": [
             {
               "key": "barriers",
-              "label": "What, if anything, made it harder to get the help you needed?",
+              "label": "What made it harder to get help with this need?",
               "type": "multi",
               "options": [
                 {
                   "id": "unaware",
-                  "label": "I did not know what support was available"
+                  "label": "I did not know what was available"
                 },
                 {
                   "id": "eligibility_unsure",
-                  "label": "I was not sure whether I was eligible"
+                  "label": "I was unsure whether I was eligible"
                 },
                 {
                   "id": "eligibility_refused",
@@ -4160,7 +3815,7 @@
                 },
                 {
                   "id": "hours_timing",
-                  "label": "The times support was available"
+                  "label": "Opening hours or timing"
                 },
                 {
                   "id": "childcare_caring",
@@ -4172,7 +3827,7 @@
                 },
                 {
                   "id": "accessibility",
-                  "label": "The support did not meet my access needs"
+                  "label": "Accessibility"
                 },
                 {
                   "id": "privacy_trust",
@@ -4180,11 +3835,11 @@
                 },
                 {
                   "id": "poor_fit",
-                  "label": "The support available did not suit my situation"
+                  "label": "Available support did not fit my situation"
                 },
                 {
                   "id": "explaining_repeatedly",
-                  "label": "Having to keep explaining my situation"
+                  "label": "Having to explain my situation repeatedly"
                 },
                 {
                   "id": "other",
@@ -4192,7 +3847,7 @@
                 },
                 {
                   "id": "none",
-                  "label": "Nothing made it harder to get help"
+                  "label": "Nothing made it harder"
                 },
                 {
                   "id": "unsure",
@@ -4215,12 +3870,12 @@
         {
           "id": "not-sought",
           "label": "If the person has not looked for help",
-          "title": "If you have not looked for help",
-          "intro": "Think about [the area you chose].",
+          "title": "What influenced your decision?",
+          "intro": "",
           "fields": [
             {
               "key": "barriers",
-              "label": "What are your reasons for not looking for help with this?",
+              "label": "Which reasons apply to you?",
               "type": "multi",
               "options": [
                 {
@@ -4233,11 +3888,11 @@
                 },
                 {
                   "id": "eligibility_concern",
-                  "label": "I am not sure whether I am eligible"
+                  "label": "I am unsure whether I am eligible"
                 },
                 {
                   "id": "cost_concern",
-                  "label": "I think it would cost too much"
+                  "label": "I expect it would cost too much"
                 },
                 {
                   "id": "time",
@@ -4292,21 +3947,21 @@
         {
           "id": "unknown",
           "label": "If help-seeking is skipped, uncertain or declined",
-          "title": "If the earlier question was unanswered, uncertain or declined",
-          "intro": "Think about [the area you chose].",
+          "title": "What has made it hard to get help?",
+          "intro": "",
           "fields": [
             {
               "key": "barriers",
-              "label": "If you have tried to get help with this, what, if anything, made it difficult?",
+              "label": "If you have tried to get help with this need, what made it difficult?",
               "type": "multi",
               "options": [
                 {
                   "id": "unaware",
-                  "label": "I did not know what support was available"
+                  "label": "I did not know what was available"
                 },
                 {
                   "id": "eligibility_unsure",
-                  "label": "I was not sure whether I was eligible"
+                  "label": "I was unsure whether I was eligible"
                 },
                 {
                   "id": "eligibility_refused",
@@ -4326,7 +3981,7 @@
                 },
                 {
                   "id": "hours_timing",
-                  "label": "The times support was available"
+                  "label": "Opening hours or timing"
                 },
                 {
                   "id": "childcare_caring",
@@ -4338,7 +3993,7 @@
                 },
                 {
                   "id": "accessibility",
-                  "label": "The support did not meet my access needs"
+                  "label": "Accessibility"
                 },
                 {
                   "id": "privacy_trust",
@@ -4346,11 +4001,11 @@
                 },
                 {
                   "id": "poor_fit",
-                  "label": "The support available did not suit my situation"
+                  "label": "Available support did not fit my situation"
                 },
                 {
                   "id": "explaining_repeatedly",
-                  "label": "Having to keep explaining my situation"
+                  "label": "Having to explain my situation repeatedly"
                 },
                 {
                   "id": "other",
@@ -4358,7 +4013,7 @@
                 },
                 {
                   "id": "none",
-                  "label": "Nothing made it harder to get help"
+                  "label": "Nothing made it harder"
                 },
                 {
                   "id": "unsure",
@@ -4369,7 +4024,7 @@
                   "label": "Prefer not to answer"
                 }
               ],
-              "hint": "Select all that apply. If you have not tried to get help, leave this question blank.",
+              "hint": "Select all that apply.",
               "exclusive": [
                 "none",
                 "unsure",
@@ -4382,27 +4037,27 @@
     },
     {
       "id": "change",
-      "title": "What would help",
-      "intro": "These questions are about [the area you chose].",
+      "title": "What would make the biggest difference?",
+      "intro": "",
       "fields": [
         {
           "key": "change",
-          "label": "What support or change would help you most with this?",
+          "label": "What would help you most with this need?",
           "type": "text",
           "options": [],
-          "hint": "A few words are enough. Please leave out names or details that could identify anyone."
+          "hint": "Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Shown only when a current priority is selected."
+      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
     },
     {
       "id": "delivery",
       "title": "Getting help from a service",
-      "intro": "Think about help with [the area you chose] from Lutheran Care or another service. This question helps us plan support. It does not arrange a service or give permission to contact you.",
+      "intro": "Think about help from Lutheran Care or another service.",
       "fields": [
         {
           "key": "delivery",
-          "label": "If you wanted help from a service, which of these would suit you?",
+          "label": "Which ways of getting help would suit you?",
           "type": "multi",
           "options": [
             {
@@ -4427,7 +4082,7 @@
             },
             {
               "id": "information",
-              "label": "Information I can read when it suits me"
+              "label": "Information I can read in my own time"
             },
             {
               "id": "referral",
@@ -4464,7 +4119,7 @@
         },
         {
           "key": "times",
-          "label": "If you used a service, when would calls, meetings or activities usually suit you?",
+          "label": "When would a call, meeting or activity suit you?",
           "type": "multi",
           "options": [
             {
@@ -4492,7 +4147,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Select all that apply. Use the time where you live.",
+          "hint": "Select all that apply. Use your local time.",
           "exclusive": [
             "no_preference",
             "prefer"
@@ -4500,19 +4155,19 @@
           "conditional": "live"
         }
       ],
-      "note": "Shown only when a current priority is selected. The timing question appears only for in-person, group, phone or video support."
+      "note": "Shown when one or more current needs are selected. The answer concerns those needs together. The timing question appears only for in-person, group, phone or video support."
     },
     {
       "id": "anything",
-      "title": "Anything else",
+      "title": "Is there anything we have missed?",
       "intro": "",
       "fields": [
         {
           "key": "anything",
-          "label": "Is there anything else you would like us to know?",
+          "label": "Is there anything important you would like to add?",
           "type": "text",
           "options": [],
-          "hint": "You can leave this blank. Please leave out names or details that could identify anyone."
+          "hint": "Please leave out names or other details that could identify someone."
         }
       ],
       "note": ""

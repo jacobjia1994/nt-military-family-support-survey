@@ -97,3 +97,16 @@ body.questionnaire{--ink:#30312f;--text:#41423f;--muted:#666963;--primary:#b9462
 @media(max-width:760px){.questionnaire .notice-grid{grid-template-columns:1fr;gap:17px}.questionnaire .participant-information{margin:27px 0;padding-top:22px}.questionnaire .notice-grid p{font-size:14px;line-height:1.65}.questionnaire .participant-information h2{font-size:18px}.questionnaire .participation-explanation p{font-size:16px}}
 @media(prefers-reduced-motion:reduce){.questionnaire .choice{transition:none}}
 @media print{body.questionnaire{background:#fff;padding:0}.questionnaire-shell{border:0;padding:0}.questionnaire .questionnaire-help{display:none}.lc-logo{width:150px}}
+
+/* Natural funding-text wrapping and concise form actions. */
+.questionnaire .welcome-intro .funding-note{max-width:none;white-space:normal;word-break:normal;overflow-wrap:normal;hyphens:none;text-wrap:wrap}
+.questionnaire .greeting{margin-bottom:8px}
+.required-label{display:inline-block;margin-left:10px;font-size:12px;font-weight:400;color:#777}
+.questionnaire .button:disabled{opacity:.45;cursor:not-allowed}
+.thank-you-resource{margin:30px 0;padding:26px 0;border-block:1px solid var(--line)}
+.thank-you-resource h2{font-size:23px;margin:0 0 20px}
+.thank-you-resource .small{margin:10px 0 0}
+
+.selected-needs{margin:0 0 22px;color:#6b6c65;font-size:14px}
+.selected-needs summary{cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.selected-needs p{font-size:14px;margin:10px 0}

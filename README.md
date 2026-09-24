@@ -9,7 +9,7 @@ A Lutheran Care Defence-family consultation questionnaire, with formal participa
 
 ## What is included
 
-Adult, youth (12–17), and child (7–11) pathways, plus a conversation guide for younger children. Relationship and financial/care dependence are separate. Conditional questions cover support needs, whether help was sufficient, one current priority, help-seeking and barriers.
+Adult, youth (12–17), and child (7–11) pathways, plus a conversation guide for younger children. Conditional questions cover past support needs and adequacy, multiple current needs, and one collective set of impact/help-seeking/barrier questions. Generic caring and adult-child dependency items have been removed; related support areas remain in the needs and barriers lists.
 
 The results page uses 136 fictional records. Age versions are shown separately, NT is the default geographical scope, and uncertain, declined and skipped answers remain distinct. The page supports filters and CSV export; it is not a set of findings about NT families.
 
@@ -50,3 +50,15 @@ The implemented participation model is: 18+ and 15–17 informed own consent; 7�
 Residence is optional and has no role in eligibility. Family members outside the NT are included. A broad area helps plan service locations and remote access; no address or postcode is asked. Skipping or declining residence uses neutral wording and hides NT residence-duration questions. Service preferences refer to receiving help from LC or another service and do not request a referral or authorise recontact.
 
 GitHub is the review-code host, not an answer store. There is no active receiver or monitoring service. LC can use its approved collection and staff arrangements for live consultation; this implementation does not silently activate one. Research/HREC approval is not a current project gate for the confirmed consultation scope; later research reuse would be a separate purpose.
+
+## Concise copy and multiple current needs
+
+The current instrument uses `schema_version: 2.0`. `answers.priority` is now an array, despite its historical key name. It records all selected current support needs, independently of past selections; it is not a rank or a single top priority. The impact, help, barriers, change and delivery answers concern the selected set collectively. Per-domain adequacy for past needs is unchanged. Never assign one collective impact/barrier value to each selected domain. The fictional results page remains an earlier single-priority illustration and is not a processor for version2 records.
+
+One Continue button advances optional blank questions and preserves entered answers. Required fields and participation choices must be answered first. Back still allows review and editing. `scripts/export-copy.mjs` exports the exact live definitions to `copy/adult-wording.json`; the adult reading copy now follows these rather than maintaining a separate rewrite.
+
+The withdrawal notice describes the intended no-linking design: no names/contact details, lookup codes or respondent/contact mapping. It does not promise that an unsolicited narrative can never identify anyone. The future receiver must not attach visit/IP metadata to the analysis dataset or pass response information to the resource link. Safeguarding records follow LC's restricted procedure.
+
+## Completion resource
+
+Edit `thank-you-resource.js` to set `title` and the public HTTPS `url` of the team's eventual file or folder. An empty URL shows an inactive resource button and **Available soon**, without an invented gift or fake link. A valid HTTPS URL activates **Get your free resource** after completion. The link opens separately with no referrer, response answers, email capture or appended participant ID. Optional questions may remain blank; answering sensitive fields is not a condition of seeing the resource. No actual resource file has been produced in this task.

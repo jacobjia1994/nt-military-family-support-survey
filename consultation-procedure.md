@@ -56,7 +56,7 @@ When a response does not identify a person, use the information actually availab
 
 Review narratives and combinations of age, broad locality, military connection and family relationship before release. Remove identifying details and aggregate or suppress small combinations where they could reasonably identify someone. Do not assume removing names is enough. No universal numerical suppression threshold is invented here. Identifiable safeguarding case information follows its lawful protection route, not the routine project-reporting route to the funder.
 
-Use the LC feedback/privacy contact for access, correction and complaints. If a response cannot be linked back to a person, explain why it cannot be retrieved or withdrawn. Never infer permission to contact someone, make a referral or interview them again from a service-format preference.
+Use the LC feedback/privacy contact for access, correction and complaints. For the consultation dataset, do not request names or contact details, issue lookup codes, keep a respondent/contact mapping or attempt to reconstruct identity for routine withdrawal requests. Explain that the participant can stop before submitting but cannot withdraw an individual unlinked response afterwards. This does not remove statutory duties concerning identifiable information volunteered unexpectedly; handle such information under LC’s privacy and safeguarding procedure. Never infer permission to contact someone, make a referral or interview them again from a service-format preference.
 
 ## Sources and support contacts
 
@@ -66,3 +66,7 @@ Use the LC feedback/privacy contact for access, correction and complaints. If a 
 - [NT child reporting guidance](https://nt.gov.au/law/crime/report-child-abuse), [current child protection Act](https://legislation.nt.gov.au/api/sitecore/Act/PDF?id=11659) and [current domestic violence Act](https://legislation.nt.gov.au/api/sitecore/Act/PDF?id=11768).
 - [LC general contact](https://www.lutherancare.org.au/contact-us/): (08) 8269 9333; ask for the NT Defence family program. This is not represented as a dedicated project number.
 - Australian support: [Kids Helpline](https://kidshelpline.com.au/) 1800 55 1800; [1800RESPECT](https://1800respect.org.au/) 1800 737 732. Emergency: 000 in Australia.
+
+## Digital resource at completion
+
+Use the same public file/folder link for all completers. Do not collect email addresses, require every optional answer, attach a response ID, append answers or use the resource to identify participants. Keep it a modest optional resource, separate from service eligibility and research/recontact consent. The team supplies the content and link in `thank-you-resource.js`; no file is currently claimed to be ready.

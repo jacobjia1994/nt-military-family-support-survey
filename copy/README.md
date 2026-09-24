@@ -1,23 +1,7 @@
-# Adult wording proposal
+# Adult questionnaire reading copy
 
-Read [the complete candidate](../adult-wording.html) as one questionnaire. This editorial proposal does not replace the live form.
+The reading view is generated from the actual definitions in `survey.js` via `node scripts/export-copy.mjs`. It includes NT, outside-NT and undisclosed-residence wording. Participant presentation remains formal for internal team review; backend/operating information belongs in the separate staff guide.
 
-`adult-wording.json` contains the complete proposed adult copy for NT residents and relatives living elsewhere, including the three help-seeking variants. It is based on the live questionnaire at commit `8e7559c`.
+Current revision: concise copy, optional generic caring/dependency items removed, multiple current needs with one collective follow-up set, one Continue action. `answers.priority` is an array under export schema2. Retrospective adequacy remains per domain. The resource module is configured in `thank-you-resource.js`.
 
-The editing brief is to speak as a Lutheran Care project worker to one adult, explain the actual local planning purpose, and ask clear questions without marketing hooks. Headings identify topics; questions and options carry the meaning. The respondent remains the unit of response.
-
-All 38 field/variant definitions in each location version preserve answer IDs and order, types, required/conditional flags and exclusive-answer logic. An independent semantic check preserved the six-month needs/adequacy window, current priority, four-week impact, informal as well as service support, and the distinction between experienced and anticipated barriers. It prompted three repairs: program location versus family residence, the outside-NT meaning of “here”, and “Skip this page” matching the existing interface.
-
-The HTML reading copy condenses the repeated adequacy items into one template and shows every conditional question. It has 21 numbered questions/templates; respondents do not see every item in the actual flow. Its route selector and optional notes are reviewer tools. It does not collect answers.
-
-The remaining language check is with real target readers: comprehension, willingness to continue, suitable answer choices and their own preferred words. No target-reader test or response-rate improvement is claimed. This is consistent with [ABS language guidance](https://www.abs.gov.au/statistics/standards/abs-forms-design-standards/2023/general-forms-design-principles-language) and [questionnaire-design guidance](https://analysisfunction.civilservice.gov.uk/policy-store/questionnaire-design-guidance/).
-
-The existing project’s receiving-system, records/withdrawal and child-participation decisions remain separate. This adult copy proposal does not approve live collection or rewrite the youth/child instruments.
-
-
-24 September law/ethics review: added two exclusive service-preference choices (`not_wanted`, `unsure`); made the provider/purpose explicit; added a neutral undisclosed-residence reading path; corrected outside-NT serving-member wording; strengthened free-text and disclosure information. This intentionally supersedes the earlier claim of an unchanged option set. The collection notice is a labelled institutional proposal, not evidence that collection/storage/ethics arrangements have been approved. The main interactive page now states its actual browser-only answer handling and GitHub hosting metadata.
-
-
-## Current presentation, following Jacob's annotated corrections
-
-The participant-facing adult reading page now shows formal text without draft/proposal/technical-status banners. It is being shared internally for review; this staff file carries that context. Its notice is synchronised with the interactive form and adapts actual LC public forms/policy. Residence is optional and no longer a required continuation field. The interactive form implements the separate child/guardian steps described in `../consultation-procedure.md`. Earlier historical statements above about on-page backend notices and unchanged required flags are superseded.
+Sources for Australian wording and selection instructions: [AIFS2022ADF Families Survey](https://aifs.gov.au/projects/defence-veteran-family-research/2022-adf-families-survey), [DFA actual priority-question example](https://dfa.org.au/adf-family-survey/), and [ABS Forms Design Standards](https://www.abs.gov.au/statistics/standards/abs-forms-design-standards/2023/general-forms-design-principles-question-structure). Formal privacy text adapts [LCpublicformsandpolicy](lc-public-practice.md) to this consultation’s intended no-linking data design.
