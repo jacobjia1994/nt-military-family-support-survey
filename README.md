@@ -38,3 +38,7 @@ Run `node --test tests/survey.test.mjs`. The current 15 tests exercise dependent
 Design targets are 8–10 minutes for adults, 5–7 for youth and 3–5 for children; these have not been validated by participant timing. The internal guide explains the decisions still needed before fieldwork, including consent and assent arrangements, data handling and scope.
 
 The original version reported 22 branching/answer-integrity regressions, calculation checks across 136 fictional records and 180 filter intersections. Its test sources were not included in this repository; the current regression suite above is reproducible here. This is not a validated psychometric instrument or a completed accessibility audit.
+
+## Participant information revision
+
+The opening and visible notice were revised against real Australian survey invitations, LC policy and OAIC guidance. Full participant information now appears before Start in readable smaller text. Adult consent and young-person assent are separate, unticked choices after age selection; the local answer export includes the notice version and participation record. This does not replace LC’s child-permission/capacity arrangements or configure a response receiver.

@@ -15,6 +15,7 @@ body.questionnaire{--ink:#30312f;--text:#41423f;--muted:#666963;--primary:#b9462
 .questionnaire h2{font-family:Karla,Arial,sans-serif;font-size:26px;font-weight:700;letter-spacing:-.02em}
 .questionnaire .welcome-intro{margin-bottom:32px}
 .questionnaire .welcome-intro p{margin-bottom:18px;max-width:65ch}
+.questionnaire .welcome-intro .funding-note{font-size:14px;line-height:1.6;color:#646660;margin-top:22px}
 .questionnaire .lead{font-size:19px;line-height:1.58;color:#4d504a;max-width:none}
 .questionnaire .small{font-size:15px;color:var(--muted)}
 .welcome-start{display:flex;align-items:center;gap:24px;padding-top:6px}
@@ -77,8 +78,22 @@ body.questionnaire{--ink:#30312f;--text:#41423f;--muted:#666963;--primary:#b9462
 .questionnaire .dialog-content h2{margin-bottom:20px}
 .questionnaire .dialog-content p{font-size:16px;line-height:1.6}
 .questionnaire .dialog-content a{overflow-wrap:anywhere}
+.questionnaire .participant-information{margin:30px 0 28px;padding-top:24px;border-top:1px solid var(--line);font-size:14px;line-height:1.6;color:#646660}
+.questionnaire .participant-information h2{font-size:18px;line-height:1.35;font-weight:650;letter-spacing:0;margin:0 0 18px;color:#41443e}
+.notice-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 26px}
+.questionnaire .notice-grid p{margin:0;font-size:14px;line-height:1.6;overflow-wrap:anywhere}
+.notice-grid strong{display:block;color:#484c44;font-weight:650;margin-bottom:3px}
+.participant-information a{overflow-wrap:anywhere;text-decoration-thickness:1px}
+.questionnaire .dialog-content .participant-information{border:0;padding:0;margin:0 0 24px}
+.questionnaire .dialog-content .notice-grid{grid-template-columns:1fr;gap:15px}
+.questionnaire .participation-explanation p{font-size:17px;line-height:1.6}
+.questionnaire .consent-choice{margin-top:20px;align-items:flex-start}
+.questionnaire .consent-choice .choice-label{font-size:16px;line-height:1.55}
+.questionnaire .consent-choice input{margin-top:4px}
+.questionnaire #participation-form .question-actions{margin-top:28px}
 .visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
 @media(max-width:760px){body.questionnaire{padding:0;background:#fff;font-size:17px}.questionnaire-shell{border:0;border-radius:0;padding:28px 24px 20px;max-width:580px}.lc-header{padding-bottom:24px;gap:14px}.lc-logo{width:151px}.lc-project{font-size:12px;max-width:130px}.lc-project span{font-size:11px}.questionnaire .welcome,.questionnaire .survey-layout,.questionnaire .finish{margin:32px 0 0}.questionnaire h1{font-size:35px;line-height:1.12;margin-bottom:24px;letter-spacing:-.032em}.questionnaire .lead{font-size:18px;line-height:1.55}.questionnaire .welcome-intro p{margin-bottom:17px}.welcome-start{display:block;padding-top:0}.welcome-start .button{width:100%;justify-content:space-between;padding-inline:22px}.welcome-start p{margin-top:16px;line-height:1.5}.welcome-start p br{display:none}.welcome-start p br:after{content:' '}.questionnaire .questionnaire-help{margin-top:24px;padding-top:16px}.questionnaire .question-card h1,.questionnaire .age-step h1{font-size:29px}.questionnaire .question-intro{font-size:16px;margin-bottom:26px}.questionnaire .question-group legend,.questionnaire .field-label{font-size:17px}.questionnaire .choice{padding:15px 16px;gap:12px}.questionnaire .choice-label{font-size:16px}.questionnaire .choice-hint{font-size:13px}.questionnaire .age-grid{grid-template-columns:1fr;gap:12px}.questionnaire .age-grid .choice{padding:18px;min-height:82px}.questionnaire .age-grid .choice-label{font-size:18px}.questionnaire .age-grid .choice-hint{font-size:13px}.questionnaire .question-actions{gap:18px;margin-top:28px}.questionnaire .action-right{gap:18px}.questionnaire .button{padding:13px 21px;font-size:16px}.questionnaire .skip-button{font-size:13px}.questionnaire .dialog-content{padding:27px 24px}.questionnaire .dialog-content h2{font-size:25px}.questionnaire .dialog-content p{font-size:15px}.questionnaire .finish-actions{gap:12px}}
 @media(max-width:360px){.questionnaire-shell{padding-inline:20px}.lc-logo{width:137px}.lc-project{font-size:11px;max-width:112px}.questionnaire h1{font-size:32px}}
+@media(max-width:760px){.questionnaire .notice-grid{grid-template-columns:1fr;gap:17px}.questionnaire .participant-information{margin:27px 0;padding-top:22px}.questionnaire .notice-grid p{font-size:14px;line-height:1.65}.questionnaire .participant-information h2{font-size:18px}.questionnaire .participation-explanation p{font-size:16px}}
 @media(prefers-reduced-motion:reduce){.questionnaire .choice{transition:none}}
 @media print{body.questionnaire{background:#fff;padding:0}.questionnaire-shell{border:0;padding:0}.questionnaire .questionnaire-help{display:none}.lc-logo{width:150px}}

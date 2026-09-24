@@ -34,6 +34,10 @@ Jacob clarified that concise wording must still give Defence members and familie
 
 On 24 September Jacob requested removal of draft/no-collection labels and the standalone audience boilerplate, formal About your answers text, and a more polished use of LC branding. This supersedes earlier respondent-facing demo labels. Keep the unresolved receiving platform in technical documentation rather than inventing submission or data-handling claims. Formal wording is sourced from the Defence funded-project list, LC’s current privacy policy and project reporting instructions. Most questions are optional; no blanket confidentiality or anonymity guarantee is made.
 
+## Visible participant information
+
+Jacob requires participant information directly below the invitation, in smaller readable type rather than only behind a dialog. State LC custody/approved storage, authorised project access, purpose, de-identified Defence reporting, voluntary participation, relevant sensitivity, retention/withdrawal limits and privacy/access/complaints contact. Use short labelled paragraphs, not a generic liability waiver. Adult express consent and young-person assent are recorded separately; assent does not establish parental permission or capacity assessment. Actual collection still depends on LC confirming its receiving system, records/withdrawal procedure and child participation arrangements.
+
 ## Evidence and decisions
 
 The baseline is repository commit ee2cc59. Existing questions are a draft, not an accepted or validated instrument. Jacob and the team retain final wording, participation scope, child participation arrangements, and real data collection decisions. Jacob explicitly requested Lutheran Care branding and formal institution-led wording. Funding is confirmed by the Department of Defence recipient list; describe funding, not an unverified partnership. Design implementation and reversible copy repairs are delegated by the current request.

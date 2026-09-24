@@ -65,3 +65,9 @@ Formal presentation does not establish response collection. The current frontend
 - [Formbricks](https://github.com/formbricks/formbricks): focused survey presentation and branded controls.
 
 SurveyJS, GOV.UK Frontend and Formbricks informed the design; their code and platforms are not dependencies. The questionnaire remains plain HTML, CSS and JavaScript with local brand and font assets.
+
+## Visible information and participation choice
+
+The invitation starts with an everyday question rather than institutional process. Funding remains explicit in a quieter line. A 14px, fully visible participant-information block follows the invitation and precedes Start; it uses labelled paragraphs in two columns on desktop and one column on mobile. It identifies purpose, Lutheran Care custody/approved systems, authorised project readership, de-identified Defence reporting, retention/withdrawal and contact/rights. The dialog remains only a secondary way to reread the same shared text later in the form.
+
+After age selection, adult consent and young-person assent use unticked explicit choices. Changing age clears the earlier choice. Assent is recorded as assent, with no implication of completed parental permission or capacity assessment. The actual intake platform, applicable retention/withdrawal procedure and child participation arrangements still require LC confirmation before live collection.
