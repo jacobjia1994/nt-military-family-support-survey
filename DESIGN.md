@@ -1,91 +1,67 @@
 ---
-name: NT Life and support
-description: A clear, restrained questionnaire for participant and team review.
+name: Lutheran Care Defence family questionnaire
+description: A welcoming, restrained questionnaire for Defence members and families in the Northern Territory.
 colors:
-  primary: "#185c52"
-  ink: "#202523"
-  text: "#28322e"
-  muted: "#5d6963"
-  paper: "#ffffff"
-  soft: "#f5f7f6"
-  line: "#dce3df"
-  selected: "#edf6f3"
-  error: "#a52b24"
+  primary: "#b94626"
+  ink: "#30312f"
+  text: "#41423f"
+  muted: "#666963"
+  page: "#faf9f6"
+  surface: "#ffffff"
+  soft: "#f6f4f0"
+  line: "#e1ded8"
+  selected: "#fff3ed"
+  error: "#a32424"
 typography:
-  body:
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'
-    fontSize: "16px"
-    lineHeight: 1.6
+  family: 'Karla, Arial, sans-serif'
+  body: "18px / 1.6"
+  mobileBody: "17px / 1.6"
 rounded:
-  button: "6px"
-  choice: "7px"
-  panel: "8px"
+  button: "7px"
+  choice: "8px"
+  desktopShell: "16px"
 ---
 
-# NT Life and support: implemented design
+# Lutheran Care questionnaire: implemented design
 
-## Overview
+Updated 24 September 2026. The respondent presentation is defined by `index.html`, `survey.js` and `lutheran-care.css`, which overrides the shared `survey.css` styles. Product and collection arrangements are recorded in `PRODUCT.md`.
 
-The interface should feel like a considered, ordinary survey: direct questions, familiar controls and enough space to read comfortably. Jacob requested a beautiful, simple experience without conspicuous AI writing or decorative interface conventions. The implementation uses a quiet page with one main task at a time; related questions can share a page.
+## Direction
 
-This record describes the code built on 24 September 2026. It is not human acceptance, a validated questionnaire or a complete accessibility audit. Jacob and the team still review wording, participation scope and the experience before real use. Product boundaries are in `PRODUCT.md`.
+This is a questionnaire with a clear institutional owner. The opening identifies Lutheran Care, explains the Defence-funded program and invites people to help shape useful local support. The respondent page has no website navigation, promotional panels, review links or draft/test badges. Its warmth comes from the wording, familiar branding and generous spacing.
 
-## Colors
+Use natural Australian English: Defence, family members, local connections and support. Explain the value of taking part without promises that every suggestion will be implemented. Keep necessary participation and privacy information short; “About your answers” remains available throughout. Each question should be easy to understand when read aloud.
 
-White is the main surface. Deep teal identifies actions, selected choices, links and progress. Dark ink carries headings; muted text is reserved for supporting information. Pale grey distinguishes the demo notice, help text and explanatory panels. Borders provide structure without competing with the questions. Errors use red text together with a written explanation.
+## Brand and typography
 
-The values above come from `survey.css`. The independently styled results page shares the main white, ink, teal, grey and border colors, with small differences in secondary text and selected tints. It does not introduce a separate visual identity.
+The official Lutheran Care logo is stored at `assets/lutheran-care-logo.png`. The current website uses warm orange, terracotta and pink colours, and Karla for body text; its child stylesheet uses Circe for headings. These are observed website choices, not a complete brand manual or a claim of formal brand approval.
 
-## Typography
+The questionnaire uses locally hosted Karla throughout, from `assets/Karla-Variable.ttf`, with its SIL Open Font License at `assets/Karla-OFL.txt`. This keeps the type consistent without an external font request. The deeper action colour `#b94626` is an adaptation of the website's `#d3502d`; it provides about 5.29:1 contrast with white button text. The logo is displayed unchanged.
 
-System sans-serif type is used throughout; there are no web-font downloads or display serifs. The base text is 16px with a 1.6 line height. Introductory copy is slightly larger. Questions and headings use weight 650, with supporting hints at 13–14px. Survey headings scale within a modest range; the results page uses fixed heading sizes at its breakpoints. Tables and results use tabular numerals.
+Desktop opening headings are 44px with a 1.12 line height; question headings are 32px. At the mobile breakpoint they become 35px and 29px. Body text is 18px on desktop and 17px on mobile, with smaller supporting text. Questions and options remain more prominent than hints and progress information.
 
-Copy names the task plainly. Buttons say “Continue”, “Back”, “Skip this page” or “Finish”. Necessary timeframes and branch instructions stay close to their questions. Generic page introductions and repeated skipping reminders are omitted. The opening is a warm invitation to contribute: it explains why personal experience is useful to other Defence members and families, including those arriving on posting. Australian spelling and ordinary community language take priority over institutional or marketing phrasing.
+## Layout and controls
 
-## Layout
+A warm off-white page holds a white questionnaire shell, up to 896px wide with 72px horizontal padding. The header contains a 180px logo and a small “Defence family support / Northern Territory” label, followed by a fine rule. There is no shadow, background image, illustration or decorative animation.
 
-The questionnaire is a single column, at most 680px wide, with no site header, branding bar, navigation or site footer. Its opening identifies it as a draft that does not collect responses. A single “About your answers” control makes participation and privacy information available throughout. The question library and guide use a 760px reading column; review navigation belongs only on those separate staff pages.
+Below 760px, the outer frame disappears into a white page; padding becomes 24px and the logo is 151px wide. The start button fills the reading width, and age choices stack vertically. At 360px and below, horizontal padding becomes 20px.
 
-The survey has five named sections. Progress reflects the section, not an invented completion percentage. The route grows with selected needs; two adequacy questions share a page. The wider results page pairs charts on desktop and stacks them on mobile. Detailed tables scroll horizontally when necessary.
+Radio and checkbox options use full clickable rows, a 56px minimum height, a fine border and modest rounding. Selected options gain a pale orange tint and a terracotta border as well as a checked control. Primary buttons are at least 52px high. Text fields use 17px type and text areas have a 156px minimum height. Keyboard focus has a visible orange outline; reduced-motion settings remove the short choice transitions.
 
-At 760px and below, navigation wraps, page margins reduce to roughly 20–22px and content becomes a single column. Most choices already occupy a full row; the age chooser remains two columns until 360px. Primary survey buttons have a 48px minimum height, choices at least 56px, and text inputs use 16px type. These are implemented accommodations, not evidence of testing with every device or assistive technology.
+The five-section progress indicator uses thin lines and a section label. Related questions can share a page. Back, Skip this page, Continue and Change remain plain, predictable actions. The final review lets people check answers before finishing.
 
-## Elevation & Depth
+## Preserved questionnaire behaviour
 
-The pages use flat surfaces, thin borders and spacing. There are no decorative shadows, gradients or background textures. A checked choice gains a light tint and inset border so its state is visible beyond the native control. Short hover transitions are functional; reduced-motion preferences disable them.
+Adult, youth and child wording, NT/outside-NT variants, and conditional follow-ups remain in the shared question definitions. Changing an earlier answer removes follow-ups that no longer apply. Under 7 opens a conversation guide. The separate question library and staff review pages remain outside the respondent flow.
 
-There is intentionally no photography, illustration or institutional logo. The questionnaire does not need an image to explain the task, and no endorsement is implied by borrowed branding.
+Formal presentation does not establish response collection. The current frontend has no receiver: answers remain in page memory, and the finish screen offers a local download or further changes without claiming successful submission. Selection and configuration of a private collection platform are pending. Do not add a submission-success message before a real receiving service confirms receipt.
 
-## Shapes
+## Reference sources
 
-Controls have gently rounded corners rather than pill shapes. Radio buttons, checkboxes, select menus and text areas retain familiar forms. Labels are clickable with their controls. Keyboard focus is visible; errors are written in text, and section changes place focus on the question heading.
+- [Official Lutheran Care logo](https://www.lutherancare.org.au/wp-content/uploads/2022/09/Lutheran-Care-Logo_H_HIRES-1024x404.png), [website child styles](https://www.lutherancare.org.au/wp-content/themes/enacare-child/style.css) and [base styles](https://www.lutherancare.org.au/wp-content/themes/enacare/assets/css/enacare-core.css): logo, observed colours and typography.
+- [Karla source](https://github.com/google/fonts/tree/main/ofl/karla) and [SIL OFL](https://raw.githubusercontent.com/google/fonts/main/ofl/karla/OFL.txt): the self-hosted variable font and its licence.
+- [SurveyJS Form Library](https://github.com/surveyjs/survey-library) and [theme documentation](https://surveyjs.io/documentation/themes-and-custom-styles): restrained layouts without individual question panels, consistent control states and theme variables.
+- [GOV.UK Frontend](https://github.com/alphagov/govuk-frontend) and [question-page guidance](https://design-system.service.gov.uk/patterns/question-pages/): clear labels, short hints and reversible navigation.
+- [Formbricks](https://github.com/formbricks/formbricks): focused survey presentation and branded controls.
 
-## Components
-
-- **Question flow:** answers stay available when using the in-page Back and Change controls. Changing needs, priority or help-seeking removes follow-ups that no longer apply. Most questions are optional; required connection and location questions explain what is needed to continue.
-- **Age paths:** adults 18+, young people 12–17 and children 7–11 receive different wording and support-area lists. Under 7 opens a conversation guide with no answer collection. Younger-person paths are available for staff walkthroughs; the age bands do not establish consent arrangements.
-- **Answer review:** the last section lists current answers and offers a Change action beside each question. Finishing the demo does not submit anything. A respondent can download their own answers as JSON or clear them and start again.
-- **Question library:** All questions is generated from the same definitions as the survey. Reviewers can switch age and NT/outside-NT location, read options and branching explanations, and print the wording. It includes all three help-seeking variants and the under-seven guide.
-- **Review notes:** section notes are associated with their age and location variant. They remain available while switching those filters in the open page, and can be downloaded as Markdown. They are held only in page memory, with no saved copy; download them before refreshing or leaving.
-- **Answer handling:** survey responses also live only in page memory. There is no response endpoint, analytics tracker or persistent browser storage. Downloads are explicit local actions. The notice and finish page make this limitation clear.
-- **Example results:** 136 deterministic fictional records remain separate from anything entered into the survey. Filters, chart counts, denominators, detailed tables, CSV export and print controls preserve the existing analysis. The fictional-data notice stays above the filters; methodological cautions remain available below and beside the results.
-
-## Do's and Don'ts
-
-- Keep the question, its options and the next action easy to locate.
-- Preserve plain wording, stable answer IDs and meaningful differences between answer paths.
-- Review content through the full question library as well as the interactive flow; read questions aloud before accepting them.
-- Keep decoration out of the respondent's way. Do not add dashboard furniture, stock portraits, ornamental section numbers or promotional headlines.
-- Do not describe entered answers as submitted, saved for later or included in the example results.
-- Do not present this implementation as consent approval, representative NT findings or a validated instrument.
-
-## References and dependencies
-
-The implementation borrows established patterns rather than another product's branding or source code:
-
-- [Tally customization](https://tally.so/help/customize-your-form): restrained document-style presentation and control over typography, widths and fields.
-- [Typeform question pages](https://help.typeform.com/hc/en-us/articles/38099463383188-How-to-add-multiple-questions-to-a-form-page): focused questions, with related questions grouped where useful.
-- [GOV.UK question pages](https://design-system.service.gov.uk/patterns/question-pages/) and [check answers](https://design-system.service.gov.uk/patterns/check-answers/): clear labels, short hints, reversible navigation and an answer-review step.
-- [Typeform accessibility checker](https://help.typeform.com/hc/en-us/articles/11826172113812-Check-if-your-form-is-accessible): practical attention to text, controls, contrast and alternative text. Referencing it does not certify this site.
-
-The site remains dependency-free HTML, CSS and JavaScript. [SurveyJS Form Library](https://github.com/surveyjs/survey-library), licensed under MIT, was considered as an optional engine for future complexity; it is not imported. [Formbricks](https://github.com/formbricks/formbricks) was reviewed as a mature survey platform, but its server stack and AGPL core are not dependencies of this demo.
+SurveyJS, GOV.UK Frontend and Formbricks informed the design; their code and platforms are not dependencies. The questionnaire remains plain HTML, CSS and JavaScript with local brand and font assets.

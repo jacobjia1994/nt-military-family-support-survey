@@ -1,6 +1,6 @@
 # NT Life & support
 
-A questionnaire and fictional results explorer for internal project-team review, focused on current military service in the Northern Territory and military families.
+A Lutheran Care Defence-family consultation questionnaire, with formal participant wording and official brand assets. Separate team-review and fictional-results resources are also included.
 
 - [Open the questionnaire](https://jacobjia1994.github.io/nt-military-family-support-survey/)
 - [Read every question and add review notes](https://jacobjia1994.github.io/nt-military-family-support-survey/questions.html)
@@ -19,17 +19,17 @@ There is no response collection backend, tracking or browser storage. Answers re
 
 ## Hosting and review
 
-The four HTML pages use dependency-free HTML, CSS and JavaScript and run on ordinary Intel or Apple Silicon Macs. `survey.js` supplies both the respondent flow and the full question list, so review wording stays in sync. `survey.css` supplies the questionnaire and guide styles; the results page retains its own presentation and calculations. GitHub Pages serves the root of the main branch. No build workflow, secret or external asset is needed.
+The four HTML pages use dependency-free HTML, CSS and JavaScript and run on ordinary Intel or Apple Silicon Macs. The participant form also loads `lutheran-care.css`, the unchanged official LC logo and a locally hosted Karla font; asset sources and its open-font licence are in `assets/`. `survey.js` supplies both the respondent flow and the full question list, so review wording stays in sync. `survey.css` supplies the questionnaire and guide styles; the results page retains its own presentation and calculations. GitHub Pages serves the root of the main branch. No build workflow, secret, third-party font request or tracking script is needed.
 
 For local development, run `python3 -m http.server 8174 --bind 127.0.0.1` from this directory, then open `http://127.0.0.1:8174/`. Work can continue on either Mac after pulling the latest GitHub commit.
 
 ## Review edition, 24 September 2026
 
-The respondent view is a single-column questionnaire with no site navigation, branding bar, results links or team-review links. Review resources remain available at their separate URLs. Explanatory copy is limited to useful instructions, voluntary participation and accurate answer handling. It keeps the existing question constructs, stable answer IDs and age/location branches. Copy changes remove promotional slogans, correct the child outside-NT wording and describe youth help-seeking concerns in the appropriate tense. Returning from the answer review to edit a section now returns directly to the updated overview.
+The respondent view is a single-column questionnaire with Lutheran Care’s logo and a quiet project header, with no site navigation, results links or team-review links. Review resources remain available at their separate URLs. The opening names Lutheran Care and verified Australian Government Department of Defence funding, explains the project and invites community input. Privacy information covers voluntary participation, purpose, de-identified sharing with Defence and LC’s public privacy policy/contact. It keeps the existing question constructs, stable answer IDs and age/location branches. Copy changes remove promotional slogans, correct the child outside-NT wording and describe youth help-seeking concerns in the appropriate tense. Returning from the answer review to edit a section now returns directly to the updated overview.
 
 The new full question list includes all three age versions, both location contexts, conditional fields, all three help-seeking variants and the under-seven conversation guide. It has printable wording and downloadable, private review notes. The separate review guide identifies decisions for the project team. The 136 fictional records and all results calculations are unchanged.
 
-Human review is still needed for tone, questionnaire length and final wording. This is a draft for discussion, not approval to begin fieldwork.
+Human review is still needed for tone, questionnaire length and final wording. The formal wording and branding do not themselves activate response collection. A receiving platform is still required before fieldwork; the application offers saving/reviewing answers and does not display a false submission confirmation.
 
 ## Validation
 

@@ -1,0 +1,84 @@
+@font-face{font-family:Karla;src:url('assets/Karla-Variable.ttf') format('truetype');font-style:normal;font-weight:200 800;font-display:swap}
+
+/* Lutheran Care identity, adapted for a focused questionnaire.
+   Official logo and website colours; Karla is locally hosted under SIL OFL.
+   The darker action colour preserves contrast on white. */
+body.questionnaire{--ink:#30312f;--text:#41423f;--muted:#666963;--primary:#b94626;--paper:#faf9f6;--soft:#f6f4f0;--line:#e1ded8;--selected:#fff3ed;--error:#a32424;font-family:Karla,Arial,sans-serif;background:var(--paper);color:var(--text);font-size:18px;line-height:1.6;padding:48px 28px 64px;min-height:100vh}
+.questionnaire-shell{max-width:896px;margin:0 auto;padding:42px 72px 24px;background:#fff;border:1px solid #e9e5df;border-radius:16px}
+.lc-header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-bottom:30px;border-bottom:1px solid var(--line)}
+.lc-logo{display:block;width:180px;height:auto;flex-shrink:0}
+.lc-project{margin:0;color:#555852;font-size:14px;font-weight:600;line-height:1.45;text-align:right}
+.lc-project span{display:block;font-size:13px;font-weight:400;color:#777972;margin-top:4px}
+.questionnaire .welcome,.questionnaire .survey-layout,.questionnaire .finish{max-width:none;margin:40px 0 0}
+.questionnaire h1{font-family:Karla,Arial,sans-serif;font-weight:700;font-size:44px;line-height:1.12;letter-spacing:-.032em;max-width:650px;margin:0 0 28px;text-wrap:balance}
+.questionnaire .welcome h1{max-width:620px}
+.questionnaire h2{font-family:Karla,Arial,sans-serif;font-size:26px;font-weight:700;letter-spacing:-.02em}
+.questionnaire .welcome-intro{margin-bottom:32px}
+.questionnaire .welcome-intro p{margin-bottom:18px;max-width:65ch}
+.questionnaire .lead{font-size:19px;line-height:1.58;color:#4d504a;max-width:none}
+.questionnaire .small{font-size:15px;color:var(--muted)}
+.welcome-start{display:flex;align-items:center;gap:24px;padding-top:6px}
+.welcome-start p{font-size:13px;line-height:1.55;color:var(--muted);margin:0}
+.questionnaire .button{font-size:16px;font-weight:650;border-radius:7px;min-height:52px;padding:13px 24px;gap:18px;line-height:1.25;white-space:nowrap}
+.questionnaire .button svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.questionnaire .primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+.questionnaire .primary:hover{background:#a63d21;border-color:#a63d21}
+.questionnaire .secondary{border-color:#cfc9c0;background:#fff;color:var(--ink)}
+.questionnaire .secondary:hover{background:#f8f6f2}
+.questionnaire :focus-visible{outline:2px solid #b94626;outline-offset:4px}
+.questionnaire h1:focus,.questionnaire main:focus{outline:none}
+.questionnaire ::selection{background:#f7dacb;color:#30312f}
+.questionnaire input,.questionnaire textarea{caret-color:var(--primary)}
+.questionnaire .questionnaire-help{max-width:none;margin:27px 0 0;padding-top:18px;border-top:1px solid var(--line)}
+.questionnaire .questionnaire-help .text-button{font-size:13px;padding:4px 0;color:#686a64;text-decoration-color:#bab9b3}
+.questionnaire .questionnaire-help .text-button:hover{color:var(--primary);text-decoration-color:var(--primary)}
+.questionnaire .step-topline{font-size:13px;line-height:1.4;margin-bottom:12px}
+.questionnaire .step-topline strong{color:#6a6b66;font-weight:600}
+.questionnaire .section-track{gap:8px;margin-bottom:32px}
+.questionnaire .section-track span{height:3px;background:#ebe7e1;border-radius:2px}
+.questionnaire .section-track span.visited{background:#c55737}
+.questionnaire .question-card h1,.questionnaire .age-step h1{font-size:32px;line-height:1.2;letter-spacing:-.025em;margin-bottom:25px;max-width:none}
+.questionnaire .question-card h1:has(+.question-intro),.questionnaire .age-step h1{margin-bottom:14px}
+.questionnaire .question-intro{font-size:17px;line-height:1.6;color:#6b6c65;margin-bottom:30px}
+.questionnaire .question-group{margin-bottom:34px}
+.questionnaire .question-group legend,.questionnaire .field-label{font-size:18px;font-weight:650;line-height:1.45;margin-bottom:14px;color:#333630}
+.questionnaire .field-hint{font-size:14px;line-height:1.5;color:#70726b;margin-top:7px}
+.questionnaire .choices{gap:10px}
+.questionnaire .choice{min-height:56px;padding:16px 19px;border:1px solid #d7d5ce;border-radius:8px;align-items:flex-start;gap:14px;background:#fff;transition:background-color .12s,border-color .12s}
+.questionnaire .choice:hover{background:#fcfaf7;border-color:#ad9f93}
+.questionnaire .choice:has(input:checked){background:#fff3ed;border-color:#b94626;box-shadow:inset 0 0 0 .5px #b94626}
+.questionnaire .choice:has(input:focus-visible){outline:2px solid #b94626;outline-offset:3px}
+.questionnaire .choice input{width:19px;height:19px;margin-top:3px;accent-color:var(--primary)}
+.questionnaire .choice-label{font-size:17px;line-height:1.4}
+.questionnaire .choice-hint{font-size:14px;line-height:1.45;color:#74746d}
+.questionnaire .choices.compact .choice{padding:14px 18px}
+.questionnaire .age-grid{gap:14px}
+.questionnaire .age-grid .choice{min-height:92px;padding:20px;align-items:center}
+.questionnaire .age-grid .choice input{margin-top:0}
+.questionnaire .age-grid .choice-label{font-size:18px;font-weight:650}
+.questionnaire .age-grid .choice-hint{font-size:13px;margin-top:3px}
+.questionnaire .textarea,.questionnaire .text-input,.questionnaire .select{border:1px solid #b4b5ac;border-radius:7px;padding:14px 16px;font-size:17px;color:#333630;background:#fff;min-height:52px}
+.questionnaire .textarea{min-height:156px}
+.questionnaire .char-count{font-size:12px;color:#74746d}
+.questionnaire .question-actions{border-top:1px solid var(--line);padding-top:25px;margin-top:34px;gap:24px}
+.questionnaire .back-button{color:#555852;font-size:15px;padding:12px 0}
+.questionnaire .skip-button{font-size:14px;color:#72746d}
+.questionnaire .action-right{gap:22px}
+.questionnaire .review-block{padding:24px 0}
+.questionnaire .review-header h3{font-size:16px;font-weight:650}
+.questionnaire .review-value{font-size:16px;color:#62665d}
+.questionnaire .review-header .text-button{font-size:14px;color:var(--primary)}
+.questionnaire .finish-actions{margin:28px 0 14px}
+.questionnaire .finish .card{background:#f9f7f3;padding:26px}
+.questionnaire .finish .card p:last-child{margin-bottom:0}
+.questionnaire dialog{font-family:Karla,Arial,sans-serif;border:1px solid #e4dfd8;border-radius:14px;max-width:640px;color:#41423f}
+.questionnaire dialog::backdrop{background:#2c29245e}
+.questionnaire .dialog-content{padding:34px 38px}
+.questionnaire .dialog-content h2{margin-bottom:20px}
+.questionnaire .dialog-content p{font-size:16px;line-height:1.6}
+.questionnaire .dialog-content a{overflow-wrap:anywhere}
+.visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+@media(max-width:760px){body.questionnaire{padding:0;background:#fff;font-size:17px}.questionnaire-shell{border:0;border-radius:0;padding:28px 24px 20px;max-width:580px}.lc-header{padding-bottom:24px;gap:14px}.lc-logo{width:151px}.lc-project{font-size:12px;max-width:130px}.lc-project span{font-size:11px}.questionnaire .welcome,.questionnaire .survey-layout,.questionnaire .finish{margin:32px 0 0}.questionnaire h1{font-size:35px;line-height:1.12;margin-bottom:24px;letter-spacing:-.032em}.questionnaire .lead{font-size:18px;line-height:1.55}.questionnaire .welcome-intro p{margin-bottom:17px}.welcome-start{display:block;padding-top:0}.welcome-start .button{width:100%;justify-content:space-between;padding-inline:22px}.welcome-start p{margin-top:16px;line-height:1.5}.welcome-start p br{display:none}.welcome-start p br:after{content:' '}.questionnaire .questionnaire-help{margin-top:24px;padding-top:16px}.questionnaire .question-card h1,.questionnaire .age-step h1{font-size:29px}.questionnaire .question-intro{font-size:16px;margin-bottom:26px}.questionnaire .question-group legend,.questionnaire .field-label{font-size:17px}.questionnaire .choice{padding:15px 16px;gap:12px}.questionnaire .choice-label{font-size:16px}.questionnaire .choice-hint{font-size:13px}.questionnaire .age-grid{grid-template-columns:1fr;gap:12px}.questionnaire .age-grid .choice{padding:18px;min-height:82px}.questionnaire .age-grid .choice-label{font-size:18px}.questionnaire .age-grid .choice-hint{font-size:13px}.questionnaire .question-actions{gap:18px;margin-top:28px}.questionnaire .action-right{gap:18px}.questionnaire .button{padding:13px 21px;font-size:16px}.questionnaire .skip-button{font-size:13px}.questionnaire .dialog-content{padding:27px 24px}.questionnaire .dialog-content h2{font-size:25px}.questionnaire .dialog-content p{font-size:15px}.questionnaire .finish-actions{gap:12px}}
+@media(max-width:360px){.questionnaire-shell{padding-inline:20px}.lc-logo{width:137px}.lc-project{font-size:11px;max-width:112px}.questionnaire h1{font-size:32px}}
+@media(prefers-reduced-motion:reduce){.questionnaire .choice{transition:none}}
+@media print{body.questionnaire{background:#fff;padding:0}.questionnaire-shell{border:0;padding:0}.questionnaire .questionnaire-help{display:none}.lc-logo{width:150px}}
