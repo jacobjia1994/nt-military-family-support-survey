@@ -1,18 +1,18 @@
 {
   "invitation": {
     "title": "Defence family support survey",
-    "greeting": "Hello,",
+    "greeting": "Hello,\nNT Defence Communities!",
     "paragraphs": [
-      "Lutheran Care would like your help to plan its Defence family support program in the Northern Territory.",
+      "Lutheran Care would like your help to plan its Defence Family Support Program in the Northern Territory.",
       "Tell us about the support you have needed, what you received and what would help now.",
-      "Family members can take part wherever they live. Please answer about your own experience."
+      "Please answer about your own experience."
     ],
     "funding": "The program is funded by the Australian Government Department of Defence through its Family Support Funding Program."
   },
   "notice": [
     [
       "Your choice",
-      "Taking part is voluntary. Most questions are optional. Some ask about wellbeing, disability or safety."
+      "Taking part is voluntary. Most questions are optional."
     ],
     [
       "Privacy",
@@ -20,7 +20,7 @@
     ],
     [
       "Use and storage",
-      "Lutheran Care will use your answers to plan its NT Defence family program. We will keep them in approved systems, limit access to authorised people working on the project, and retain and dispose of records under our records requirements."
+      "Lutheran Care will use your answers to plan its NT Defence Family Support Program. We will store them securely and limit access to authorised staff working on this project. Our Privacy Policy explains how we keep and manage records."
     ],
     [
       "Sharing",
@@ -28,7 +28,7 @@
     ],
     [
       "Withdrawal",
-      "You can stop before submitting. We do not keep a record linking answers to your name or contact details, so you cannot withdraw your response after submission."
+      "You can leave the survey before submitting. Once submitted, answers cannot be changed or withdrawn."
     ],
     [
       "Questions or complaints",
@@ -52,7 +52,7 @@
           "options": [
             {
               "id": "serving",
-              "label": "I am a serving military member"
+              "label": "I am a current or former serving member"
             },
             {
               "id": "partner",
@@ -60,11 +60,11 @@
             },
             {
               "id": "child",
-              "label": "I am a son, daughter or child of a serving member"
+              "label": "I am the child of a current or former serving member"
             },
             {
               "id": "parent",
-              "label": "I am a parent of a serving member"
+              "label": "I am the parent of a current or former serving member"
             },
             {
               "id": "other_family",
@@ -84,16 +84,24 @@
         },
         {
           "key": "serving_nt",
-          "label": "Are you, or the military member in your family, currently serving in the NT?",
+          "label": "When did you or your family member last serve in the NT?",
           "type": "single",
           "options": [
             {
               "id": "yes",
-              "label": "Yes"
+              "label": "Serving in the NT now"
+            },
+            {
+              "id": "recent",
+              "label": "Within the past 12 months, but not currently"
+            },
+            {
+              "id": "earlier",
+              "label": "More than 12 months ago"
             },
             {
               "id": "no",
-              "label": "No"
+              "label": "No military service in the NT"
             },
             {
               "id": "unsure",
@@ -132,7 +140,7 @@
           "hint": ""
         }
       ],
-      "note": "Relationship and current service are needed to continue. “None of these” or “No” leads to an explanation of the survey scope. “Not sure” can continue."
+      "note": "Current or recent NT service leads to the full questionnaire; earlier service leads to the short earlier-experience route. Location never determines eligibility."
     },
     {
       "id": "place",
@@ -181,24 +189,28 @@
         },
         {
           "key": "time_nt",
-          "label": "How long have you lived in the NT on this stay?",
+          "label": "How long have you lived in the NT?",
           "type": "single",
           "options": [
+            {
+              "id": "never",
+              "label": "I have not lived in the NT"
+            },
             {
               "id": "under3",
               "label": "Less than 3 months"
             },
             {
               "id": "3to12",
-              "label": "3–12 months"
+              "label": "3 months to less than 1 year"
             },
             {
               "id": "1to3",
-              "label": "More than 1 year, up to 3 years"
+              "label": "1 year to less than 3 years"
             },
             {
               "id": "over3",
-              "label": "More than 3 years"
+              "label": "3 years or more"
             },
             {
               "id": "unsure",
@@ -209,11 +221,10 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "",
-          "conditional": "nt"
+          "hint": "Count your current or most recent stay only."
         }
       ],
-      "note": "Residence is optional and never an eligibility test; skipping or declining uses neutral wording."
+      "note": ""
     },
     {
       "id": "strengths",
@@ -222,7 +233,7 @@
       "fields": [
         {
           "key": "strengths",
-          "label": "What already helps you manage everyday life in the NT?",
+          "label": "What has helped you manage day-to-day life?",
           "type": "text",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone."
@@ -233,7 +244,7 @@
     {
       "id": "needs",
       "title": "Where have you needed support?",
-      "intro": "Think about the past six months in the NT. If you arrived more recently, think about your time here. Support can include help from family, friends, your community or a service.",
+      "intro": "Think about the past 12 months, including any moves to or from the NT. Support can include help from family, friends, your community or a service.",
       "fields": [
         {
           "key": "needs",
@@ -242,78 +253,83 @@
           "options": [
             {
               "id": "settling",
-              "label": "Settling into life in the NT",
-              "hint": "Finding your way around and adjusting to a new place."
+              "label": "Postings and changes in service",
+              "hint": "Moving, settling in, preparing for a posting or leaving service."
             },
             {
               "id": "work_study",
               "label": "Work, study or training",
-              "hint": "Finding opportunities, continuing your career or using your skills."
+              "hint": "Finding work, keeping a career going or getting back into study."
             },
             {
               "id": "housing",
-              "label": "Finding or managing housing",
-              "hint": "A suitable place to live, housing arrangements or housing problems."
+              "label": "Housing",
+              "hint": "Finding a suitable home or dealing with housing problems."
             },
             {
               "id": "everyday_expenses",
-              "label": "Managing everyday expenses",
-              "hint": "Food, bills and other day-to-day costs."
+              "label": "Money and everyday expenses",
+              "hint": "Household bills, managing money or finding out about financial help."
             },
             {
               "id": "transport",
               "label": "Getting around",
-              "hint": "Transport to work, services, activities or people you want to see."
+              "hint": "Transport to work, appointments or activities."
             },
             {
               "id": "childcare",
               "label": "Childcare",
-              "hint": "Including care outside usual hours and when plans change."
+              "hint": "Finding care that is available when you need it."
             },
             {
               "id": "schooling",
-              "label": "Schooling or children's education",
-              "hint": "Starting or changing schools, learning or school support."
+              "label": "Children’s schooling",
+              "hint": "Enrolment, changing schools, learning or getting support at school."
             },
             {
               "id": "parenting_caring",
               "label": "Parenting or caring for someone",
-              "hint": "Day-to-day caring responsibilities and practical help."
+              "hint": "Raising children, sharing care or supporting someone who needs help."
             },
             {
               "id": "physical_health",
-              "label": "Physical health or healthcare",
-              "hint": "Accessing care and looking after your physical health."
+              "label": "Physical health and healthcare",
+              "hint": "Finding healthcare or getting the treatment you need."
             },
             {
               "id": "emotional_wellbeing",
-              "label": "Emotional or mental wellbeing",
-              "hint": "Support with feelings, stress or emotional wellbeing."
+              "label": "Mental health and wellbeing",
+              "hint": "Stress, grief or support with how you are feeling."
             },
             {
               "id": "disability_ongoing_needs",
-              "label": "Disability or ongoing support needs",
-              "hint": "Access, additional needs, ongoing care or continuity of support."
+              "label": "Disability support",
+              "hint": "Getting support that meets your needs."
             },
             {
               "id": "family_relationships",
-              "label": "Family life or relationships",
-              "hint": "Keeping relationships working and managing changes together."
+              "label": "Family relationships",
+              "hint": "Staying connected, relationship difficulties or changes in family life."
             },
             {
               "id": "people_to_turn_to",
-              "label": "Friends, community or people to turn to",
-              "hint": "Connection, belonging and having someone you can ask for help."
+              "label": "Friends and community",
+              "hint": "Meeting people, feeling connected or having someone to turn to."
             },
             {
               "id": "military_separation",
-              "label": "Time apart because of military service",
-              "hint": "Managing absences, reunions or uncertainty about time together."
+              "label": "Time apart because of service",
+              "hint": "Deployments, training or other time away from family."
             },
             {
               "id": "safety_confidential_help",
-              "label": "Feeling safe or getting confidential help",
-              "hint": "You do not need to describe personal events or identify anyone."
+              "label": "Feeling safe at home or in a relationship",
+              "hint": ""
+            },
+            {
+              "id": "finding_services",
+              "label": "Finding the right information or service",
+              "hint": "Knowing what is available, who can help or how to apply."
             },
             {
               "id": "other_need",
@@ -348,16 +364,16 @@
           "conditional": "other_need"
         }
       ],
-      "note": "“No support needed”, “Not sure” and “Prefer not to answer” cannot be combined with other selections."
+      "note": ""
     },
     {
       "id": "adequacy",
       "title": "Was the support enough?",
-      "intro": "Think about the past six months in the NT. If you arrived more recently, think about your time here.",
+      "intro": "Think about the past 12 months, including any moves to or from the NT.",
       "fields": [
         {
           "key": "adequacy:settling",
-          "label": "Settling into life in the NT",
+          "label": "Postings and changes in service",
           "type": "single",
           "options": [
             {
@@ -413,7 +429,7 @@
         },
         {
           "key": "adequacy:housing",
-          "label": "Finding or managing housing",
+          "label": "Housing",
           "type": "single",
           "options": [
             {
@@ -441,7 +457,7 @@
         },
         {
           "key": "adequacy:everyday_expenses",
-          "label": "Managing everyday expenses",
+          "label": "Money and everyday expenses",
           "type": "single",
           "options": [
             {
@@ -525,7 +541,7 @@
         },
         {
           "key": "adequacy:schooling",
-          "label": "Schooling or children's education",
+          "label": "Children’s schooling",
           "type": "single",
           "options": [
             {
@@ -581,7 +597,7 @@
         },
         {
           "key": "adequacy:physical_health",
-          "label": "Physical health or healthcare",
+          "label": "Physical health and healthcare",
           "type": "single",
           "options": [
             {
@@ -609,7 +625,7 @@
         },
         {
           "key": "adequacy:emotional_wellbeing",
-          "label": "Emotional or mental wellbeing",
+          "label": "Mental health and wellbeing",
           "type": "single",
           "options": [
             {
@@ -637,7 +653,7 @@
         },
         {
           "key": "adequacy:disability_ongoing_needs",
-          "label": "Disability or ongoing support needs",
+          "label": "Disability support",
           "type": "single",
           "options": [
             {
@@ -665,7 +681,7 @@
         },
         {
           "key": "adequacy:family_relationships",
-          "label": "Family life or relationships",
+          "label": "Family relationships",
           "type": "single",
           "options": [
             {
@@ -693,7 +709,7 @@
         },
         {
           "key": "adequacy:people_to_turn_to",
-          "label": "Friends, community or people to turn to",
+          "label": "Friends and community",
           "type": "single",
           "options": [
             {
@@ -721,7 +737,7 @@
         },
         {
           "key": "adequacy:military_separation",
-          "label": "Time apart because of military service",
+          "label": "Time apart because of service",
           "type": "single",
           "options": [
             {
@@ -749,7 +765,35 @@
         },
         {
           "key": "adequacy:safety_confidential_help",
-          "label": "Feeling safe or getting confidential help",
+          "label": "Feeling safe at home or in a relationship",
+          "type": "single",
+          "options": [
+            {
+              "id": "enough",
+              "label": "Enough to meet my needs"
+            },
+            {
+              "id": "some",
+              "label": "Some, but not enough"
+            },
+            {
+              "id": "none",
+              "label": "None"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "How much of the support you needed did you receive?"
+        },
+        {
+          "key": "adequacy:finding_services",
+          "label": "Finding the right information or service",
           "type": "single",
           "options": [
             {
@@ -804,7 +848,7 @@
           "hint": "How much of the support you needed did you receive?"
         }
       ],
-      "note": "Only areas selected in the needs question are shown to a respondent, two per page. All possible areas are listed here for review."
+      "note": "Only selected past needs are rated, two per page."
     },
     {
       "id": "priority",
@@ -818,7 +862,7 @@
           "options": [
             {
               "id": "settling",
-              "label": "Settling into life in the NT"
+              "label": "Postings and changes in service"
             },
             {
               "id": "work_study",
@@ -826,11 +870,11 @@
             },
             {
               "id": "housing",
-              "label": "Finding or managing housing"
+              "label": "Housing"
             },
             {
               "id": "everyday_expenses",
-              "label": "Managing everyday expenses"
+              "label": "Money and everyday expenses"
             },
             {
               "id": "transport",
@@ -842,7 +886,7 @@
             },
             {
               "id": "schooling",
-              "label": "Schooling or children's education"
+              "label": "Children’s schooling"
             },
             {
               "id": "parenting_caring",
@@ -850,31 +894,35 @@
             },
             {
               "id": "physical_health",
-              "label": "Physical health or healthcare"
+              "label": "Physical health and healthcare"
             },
             {
               "id": "emotional_wellbeing",
-              "label": "Emotional or mental wellbeing"
+              "label": "Mental health and wellbeing"
             },
             {
               "id": "disability_ongoing_needs",
-              "label": "Disability or ongoing support needs"
+              "label": "Disability support"
             },
             {
               "id": "family_relationships",
-              "label": "Family life or relationships"
+              "label": "Family relationships"
             },
             {
               "id": "people_to_turn_to",
-              "label": "Friends, community or people to turn to"
+              "label": "Friends and community"
             },
             {
               "id": "military_separation",
-              "label": "Time apart because of military service"
+              "label": "Time apart because of service"
             },
             {
               "id": "safety_confidential_help",
-              "label": "Feeling safe or getting confidential help"
+              "label": "Feeling safe at home or in a relationship"
+            },
+            {
+              "id": "finding_services",
+              "label": "Finding the right information or service"
             },
             {
               "id": "another",
@@ -909,16 +957,16 @@
           "conditional": "another"
         }
       ],
-      "note": "All current support areas are available, independently of past needs. Multiple selections lead to one set of collective follow-up questions. No current needs, unsure, declined or blank skips follow-up."
+      "note": "Each current need selected has its own follow-up page. None, unsure, declined or blank does not create a follow-up."
     },
     {
-      "id": "impact",
-      "title": "Impact on everyday life",
+      "id": "detail",
+      "title": "About each support need",
       "intro": "",
       "fields": [
         {
-          "key": "impact",
-          "label": "Overall, how much has this need affected your day-to-day life in the past four weeks?",
+          "key": "follow_up:settling:impact",
+          "label": "How much has this need affected your day-to-day life in the past four weeks?",
           "type": "single",
           "options": [
             {
@@ -950,18 +998,11 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "If this started more recently, think about that time."
-        }
-      ],
-      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
-    },
-    {
-      "id": "help",
-      "title": "Where have you looked for help?",
-      "intro": "",
-      "fields": [
+          "hint": "If this started more recently, think about that time.",
+          "need": "settling"
+        },
         {
-          "key": "help",
+          "key": "follow_up:settling:help",
           "label": "Where have you looked for help with this need?",
           "type": "multi",
           "options": [
@@ -1011,25 +1052,27 @@
             "not_sought",
             "unsure",
             "prefer"
-          ]
+          ],
+          "need": "settling"
+        },
+        {
+          "key": "follow_up:settling:change",
+          "label": "What would help you most with this need?",
+          "type": "text",
+          "options": [],
+          "hint": "Please leave out names or other details that could identify someone.",
+          "need": "settling"
         }
       ],
-      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
-    },
-    {
-      "id": "barriers",
-      "title": "Getting help: three question paths",
-      "intro": "Only one of these versions appears, depending on the previous answer.",
-      "fields": [],
       "variants": [
         {
           "id": "sought",
-          "label": "If the person looked for help",
-          "title": "What has made it hard to get help?",
+          "title": "After looking for help",
+          "label": "After looking for help",
           "intro": "",
           "fields": [
             {
-              "key": "barriers",
+              "key": "follow_up:settling:barriers",
               "label": "What made it harder to get help with this need?",
               "type": "multi",
               "options": [
@@ -1107,19 +1150,21 @@
                 "none",
                 "unsure",
                 "prefer"
-              ]
+              ],
+              "need": "settling",
+              "conditional": "need_barriers"
             }
           ]
         },
         {
           "id": "not-sought",
-          "label": "If the person has not looked for help",
-          "title": "What influenced your decision?",
+          "title": "When no help has been sought",
+          "label": "When no help has been sought",
           "intro": "",
           "fields": [
             {
-              "key": "barriers",
-              "label": "Which reasons apply to you?",
+              "key": "follow_up:settling:barriers",
+              "label": "What are your reasons for not looking for help with this need?",
               "type": "multi",
               "options": [
                 {
@@ -1184,124 +1229,23 @@
                 "none",
                 "unsure",
                 "prefer"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "unknown",
-          "label": "If help-seeking is skipped, uncertain or declined",
-          "title": "What has made it hard to get help?",
-          "intro": "",
-          "fields": [
-            {
-              "key": "barriers",
-              "label": "If you have tried to get help with this need, what made it difficult?",
-              "type": "multi",
-              "options": [
-                {
-                  "id": "unaware",
-                  "label": "I did not know what was available"
-                },
-                {
-                  "id": "eligibility_unsure",
-                  "label": "I was unsure whether I was eligible"
-                },
-                {
-                  "id": "eligibility_refused",
-                  "label": "I was told I was not eligible"
-                },
-                {
-                  "id": "cost",
-                  "label": "Cost"
-                },
-                {
-                  "id": "waiting",
-                  "label": "Waiting for support"
-                },
-                {
-                  "id": "location_transport",
-                  "label": "Location or transport"
-                },
-                {
-                  "id": "hours_timing",
-                  "label": "Opening hours or timing"
-                },
-                {
-                  "id": "childcare_caring",
-                  "label": "Childcare or caring responsibilities"
-                },
-                {
-                  "id": "language_culture",
-                  "label": "Language or cultural barriers"
-                },
-                {
-                  "id": "accessibility",
-                  "label": "Accessibility"
-                },
-                {
-                  "id": "privacy_trust",
-                  "label": "Concerns about privacy or trust"
-                },
-                {
-                  "id": "poor_fit",
-                  "label": "Available support did not fit my situation"
-                },
-                {
-                  "id": "explaining_repeatedly",
-                  "label": "Having to explain my situation repeatedly"
-                },
-                {
-                  "id": "other",
-                  "label": "Something else"
-                },
-                {
-                  "id": "none",
-                  "label": "Nothing made it harder"
-                },
-                {
-                  "id": "unsure",
-                  "label": "Not sure"
-                },
-                {
-                  "id": "prefer",
-                  "label": "Prefer not to answer"
-                }
               ],
-              "hint": "Select all that apply.",
-              "exclusive": [
-                "none",
-                "unsure",
-                "prefer"
-              ]
+              "need": "settling",
+              "conditional": "need_barriers"
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "change",
-      "title": "What would make the biggest difference?",
-      "intro": "",
-      "fields": [
-        {
-          "key": "change",
-          "label": "What would help you most with this need?",
-          "type": "text",
-          "options": [],
-          "hint": "Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
+      "note": "Repeat this page separately for each selected current need. The examples below name one need; actual answers are stored against that need only. Barriers appear after a substantive help-seeking answer; they remain absent if help-seeking is skipped, uncertain or declined."
     },
     {
       "id": "delivery",
       "title": "Getting help from a service",
-      "intro": "Think about help from Lutheran Care or another service.",
+      "intro": "These preferences are about support in general.",
       "fields": [
         {
           "key": "delivery",
-          "label": "Which ways of getting help would suit you?",
+          "label": "How would you prefer to receive support from Lutheran Care or another service?",
           "type": "multi",
           "options": [
             {
@@ -1399,7 +1343,7 @@
           "conditional": "live"
         }
       ],
-      "note": "Shown when one or more current needs are selected. The answer concerns those needs together. The timing question appears only for in-person, group, phone or video support."
+      "note": "One general preference page after all per-need pages."
     },
     {
       "id": "anything",
@@ -1415,6 +1359,21 @@
         }
       ],
       "note": ""
+    },
+    {
+      "id": "earlier",
+      "title": "Your experience in the NT",
+      "intro": "We’d like to hear what worked well and what could have been better.",
+      "fields": [
+        {
+          "key": "earlier_experience",
+          "label": "What should Lutheran Care know about supporting Defence families in the NT?",
+          "type": "text",
+          "options": [],
+          "hint": "Please leave out names or other details that could identify someone."
+        }
+      ],
+      "note": "Separate route for NT service ending more than 12 months ago; no recent-needs questions."
     }
   ],
   "outside": [
@@ -1430,7 +1389,7 @@
           "options": [
             {
               "id": "serving",
-              "label": "I am a serving military member"
+              "label": "I am a current or former serving member"
             },
             {
               "id": "partner",
@@ -1438,11 +1397,11 @@
             },
             {
               "id": "child",
-              "label": "I am a son, daughter or child of a serving member"
+              "label": "I am the child of a current or former serving member"
             },
             {
               "id": "parent",
-              "label": "I am a parent of a serving member"
+              "label": "I am the parent of a current or former serving member"
             },
             {
               "id": "other_family",
@@ -1462,16 +1421,24 @@
         },
         {
           "key": "serving_nt",
-          "label": "Are you, or the military member in your family, currently serving in the NT?",
+          "label": "When did you or your family member last serve in the NT?",
           "type": "single",
           "options": [
             {
               "id": "yes",
-              "label": "Yes"
+              "label": "Serving in the NT now"
+            },
+            {
+              "id": "recent",
+              "label": "Within the past 12 months, but not currently"
+            },
+            {
+              "id": "earlier",
+              "label": "More than 12 months ago"
             },
             {
               "id": "no",
-              "label": "No"
+              "label": "No military service in the NT"
             },
             {
               "id": "unsure",
@@ -1510,7 +1477,7 @@
           "hint": ""
         }
       ],
-      "note": "Relationship and current service are needed to continue. “None of these” or “No” leads to an explanation of the survey scope. “Not sure” can continue."
+      "note": "Current or recent NT service leads to the full questionnaire; earlier service leads to the short earlier-experience route. Location never determines eligibility."
     },
     {
       "id": "place",
@@ -1559,24 +1526,28 @@
         },
         {
           "key": "time_nt",
-          "label": "How long have you lived in the NT on this stay?",
+          "label": "How long have you lived in the NT?",
           "type": "single",
           "options": [
+            {
+              "id": "never",
+              "label": "I have not lived in the NT"
+            },
             {
               "id": "under3",
               "label": "Less than 3 months"
             },
             {
               "id": "3to12",
-              "label": "3–12 months"
+              "label": "3 months to less than 1 year"
             },
             {
               "id": "1to3",
-              "label": "More than 1 year, up to 3 years"
+              "label": "1 year to less than 3 years"
             },
             {
               "id": "over3",
-              "label": "More than 3 years"
+              "label": "3 years or more"
             },
             {
               "id": "unsure",
@@ -1587,20 +1558,19 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "",
-          "conditional": "nt"
+          "hint": "Count your current or most recent stay only."
         }
       ],
-      "note": "Residence is optional and never an eligibility test; skipping or declining uses neutral wording."
+      "note": ""
     },
     {
       "id": "strengths",
       "title": "What already helps?",
-      "intro": "Think about life while you or someone in your family is serving in the NT.",
+      "intro": "",
       "fields": [
         {
           "key": "strengths",
-          "label": "What already helps you manage everyday life while you or someone in your family is serving in the NT?",
+          "label": "What has helped you manage day-to-day life?",
           "type": "text",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone."
@@ -1611,7 +1581,7 @@
     {
       "id": "needs",
       "title": "Where have you needed support?",
-      "intro": "Think about the past six months while you or someone in your family has been serving in the NT, or that time if shorter. Support can include help from family, friends, your community or a service.",
+      "intro": "Think about the past 12 months, including any moves to or from the NT. Support can include help from family, friends, your community or a service.",
       "fields": [
         {
           "key": "needs",
@@ -1620,78 +1590,83 @@
           "options": [
             {
               "id": "settling",
-              "label": "Adjusting to changes linked to military service in the NT",
-              "hint": "Changes to everyday life or family arrangements."
+              "label": "Postings and changes in service",
+              "hint": "Moving, settling in, preparing for a posting or leaving service."
             },
             {
               "id": "work_study",
               "label": "Work, study or training",
-              "hint": "Finding opportunities, continuing your career or using your skills."
+              "hint": "Finding work, keeping a career going or getting back into study."
             },
             {
               "id": "housing",
-              "label": "Finding or managing housing",
-              "hint": "A suitable place to live, housing arrangements or housing problems."
+              "label": "Housing",
+              "hint": "Finding a suitable home or dealing with housing problems."
             },
             {
               "id": "everyday_expenses",
-              "label": "Managing everyday expenses",
-              "hint": "Food, bills and other day-to-day costs."
+              "label": "Money and everyday expenses",
+              "hint": "Household bills, managing money or finding out about financial help."
             },
             {
               "id": "transport",
               "label": "Getting around",
-              "hint": "Transport to work, services, activities or people you want to see."
+              "hint": "Transport to work, appointments or activities."
             },
             {
               "id": "childcare",
               "label": "Childcare",
-              "hint": "Including care outside usual hours and when plans change."
+              "hint": "Finding care that is available when you need it."
             },
             {
               "id": "schooling",
-              "label": "Schooling or children's education",
-              "hint": "Starting or changing schools, learning or school support."
+              "label": "Children’s schooling",
+              "hint": "Enrolment, changing schools, learning or getting support at school."
             },
             {
               "id": "parenting_caring",
               "label": "Parenting or caring for someone",
-              "hint": "Day-to-day caring responsibilities and practical help."
+              "hint": "Raising children, sharing care or supporting someone who needs help."
             },
             {
               "id": "physical_health",
-              "label": "Physical health or healthcare",
-              "hint": "Accessing care and looking after your physical health."
+              "label": "Physical health and healthcare",
+              "hint": "Finding healthcare or getting the treatment you need."
             },
             {
               "id": "emotional_wellbeing",
-              "label": "Emotional or mental wellbeing",
-              "hint": "Support with feelings, stress or emotional wellbeing."
+              "label": "Mental health and wellbeing",
+              "hint": "Stress, grief or support with how you are feeling."
             },
             {
               "id": "disability_ongoing_needs",
-              "label": "Disability or ongoing support needs",
-              "hint": "Access, additional needs, ongoing care or continuity of support."
+              "label": "Disability support",
+              "hint": "Getting support that meets your needs."
             },
             {
               "id": "family_relationships",
-              "label": "Family life or relationships",
-              "hint": "Keeping relationships working and managing changes together."
+              "label": "Family relationships",
+              "hint": "Staying connected, relationship difficulties or changes in family life."
             },
             {
               "id": "people_to_turn_to",
-              "label": "Friends, community or people to turn to",
-              "hint": "Connection, belonging and having someone you can ask for help."
+              "label": "Friends and community",
+              "hint": "Meeting people, feeling connected or having someone to turn to."
             },
             {
               "id": "military_separation",
-              "label": "Time apart because of military service",
-              "hint": "Managing absences, reunions or uncertainty about time together."
+              "label": "Time apart because of service",
+              "hint": "Deployments, training or other time away from family."
             },
             {
               "id": "safety_confidential_help",
-              "label": "Feeling safe or getting confidential help",
-              "hint": "You do not need to describe personal events or identify anyone."
+              "label": "Feeling safe at home or in a relationship",
+              "hint": ""
+            },
+            {
+              "id": "finding_services",
+              "label": "Finding the right information or service",
+              "hint": "Knowing what is available, who can help or how to apply."
             },
             {
               "id": "other_need",
@@ -1726,16 +1701,16 @@
           "conditional": "other_need"
         }
       ],
-      "note": "“No support needed”, “Not sure” and “Prefer not to answer” cannot be combined with other selections."
+      "note": ""
     },
     {
       "id": "adequacy",
       "title": "Was the support enough?",
-      "intro": "Think about the past six months while you or someone in your family has been serving in the NT, or that time if shorter.",
+      "intro": "Think about the past 12 months, including any moves to or from the NT.",
       "fields": [
         {
           "key": "adequacy:settling",
-          "label": "Adjusting to changes linked to military service in the NT",
+          "label": "Postings and changes in service",
           "type": "single",
           "options": [
             {
@@ -1791,7 +1766,7 @@
         },
         {
           "key": "adequacy:housing",
-          "label": "Finding or managing housing",
+          "label": "Housing",
           "type": "single",
           "options": [
             {
@@ -1819,7 +1794,7 @@
         },
         {
           "key": "adequacy:everyday_expenses",
-          "label": "Managing everyday expenses",
+          "label": "Money and everyday expenses",
           "type": "single",
           "options": [
             {
@@ -1903,7 +1878,7 @@
         },
         {
           "key": "adequacy:schooling",
-          "label": "Schooling or children's education",
+          "label": "Children’s schooling",
           "type": "single",
           "options": [
             {
@@ -1959,7 +1934,7 @@
         },
         {
           "key": "adequacy:physical_health",
-          "label": "Physical health or healthcare",
+          "label": "Physical health and healthcare",
           "type": "single",
           "options": [
             {
@@ -1987,7 +1962,7 @@
         },
         {
           "key": "adequacy:emotional_wellbeing",
-          "label": "Emotional or mental wellbeing",
+          "label": "Mental health and wellbeing",
           "type": "single",
           "options": [
             {
@@ -2015,7 +1990,7 @@
         },
         {
           "key": "adequacy:disability_ongoing_needs",
-          "label": "Disability or ongoing support needs",
+          "label": "Disability support",
           "type": "single",
           "options": [
             {
@@ -2043,7 +2018,7 @@
         },
         {
           "key": "adequacy:family_relationships",
-          "label": "Family life or relationships",
+          "label": "Family relationships",
           "type": "single",
           "options": [
             {
@@ -2071,7 +2046,7 @@
         },
         {
           "key": "adequacy:people_to_turn_to",
-          "label": "Friends, community or people to turn to",
+          "label": "Friends and community",
           "type": "single",
           "options": [
             {
@@ -2099,7 +2074,7 @@
         },
         {
           "key": "adequacy:military_separation",
-          "label": "Time apart because of military service",
+          "label": "Time apart because of service",
           "type": "single",
           "options": [
             {
@@ -2127,7 +2102,35 @@
         },
         {
           "key": "adequacy:safety_confidential_help",
-          "label": "Feeling safe or getting confidential help",
+          "label": "Feeling safe at home or in a relationship",
+          "type": "single",
+          "options": [
+            {
+              "id": "enough",
+              "label": "Enough to meet my needs"
+            },
+            {
+              "id": "some",
+              "label": "Some, but not enough"
+            },
+            {
+              "id": "none",
+              "label": "None"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "How much of the support you needed did you receive?"
+        },
+        {
+          "key": "adequacy:finding_services",
+          "label": "Finding the right information or service",
           "type": "single",
           "options": [
             {
@@ -2182,7 +2185,7 @@
           "hint": "How much of the support you needed did you receive?"
         }
       ],
-      "note": "Only areas selected in the needs question are shown to a respondent, two per page. All possible areas are listed here for review."
+      "note": "Only selected past needs are rated, two per page."
     },
     {
       "id": "priority",
@@ -2196,7 +2199,7 @@
           "options": [
             {
               "id": "settling",
-              "label": "Adjusting to changes linked to military service in the NT"
+              "label": "Postings and changes in service"
             },
             {
               "id": "work_study",
@@ -2204,11 +2207,11 @@
             },
             {
               "id": "housing",
-              "label": "Finding or managing housing"
+              "label": "Housing"
             },
             {
               "id": "everyday_expenses",
-              "label": "Managing everyday expenses"
+              "label": "Money and everyday expenses"
             },
             {
               "id": "transport",
@@ -2220,7 +2223,7 @@
             },
             {
               "id": "schooling",
-              "label": "Schooling or children's education"
+              "label": "Children’s schooling"
             },
             {
               "id": "parenting_caring",
@@ -2228,31 +2231,35 @@
             },
             {
               "id": "physical_health",
-              "label": "Physical health or healthcare"
+              "label": "Physical health and healthcare"
             },
             {
               "id": "emotional_wellbeing",
-              "label": "Emotional or mental wellbeing"
+              "label": "Mental health and wellbeing"
             },
             {
               "id": "disability_ongoing_needs",
-              "label": "Disability or ongoing support needs"
+              "label": "Disability support"
             },
             {
               "id": "family_relationships",
-              "label": "Family life or relationships"
+              "label": "Family relationships"
             },
             {
               "id": "people_to_turn_to",
-              "label": "Friends, community or people to turn to"
+              "label": "Friends and community"
             },
             {
               "id": "military_separation",
-              "label": "Time apart because of military service"
+              "label": "Time apart because of service"
             },
             {
               "id": "safety_confidential_help",
-              "label": "Feeling safe or getting confidential help"
+              "label": "Feeling safe at home or in a relationship"
+            },
+            {
+              "id": "finding_services",
+              "label": "Finding the right information or service"
             },
             {
               "id": "another",
@@ -2287,16 +2294,16 @@
           "conditional": "another"
         }
       ],
-      "note": "All current support areas are available, independently of past needs. Multiple selections lead to one set of collective follow-up questions. No current needs, unsure, declined or blank skips follow-up."
+      "note": "Each current need selected has its own follow-up page. None, unsure, declined or blank does not create a follow-up."
     },
     {
-      "id": "impact",
-      "title": "Impact on everyday life",
+      "id": "detail",
+      "title": "About each support need",
       "intro": "",
       "fields": [
         {
-          "key": "impact",
-          "label": "Overall, how much has this need affected your day-to-day life in the past four weeks?",
+          "key": "follow_up:settling:impact",
+          "label": "How much has this need affected your day-to-day life in the past four weeks?",
           "type": "single",
           "options": [
             {
@@ -2328,18 +2335,11 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "If this started more recently, think about that time."
-        }
-      ],
-      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
-    },
-    {
-      "id": "help",
-      "title": "Where have you looked for help?",
-      "intro": "",
-      "fields": [
+          "hint": "If this started more recently, think about that time.",
+          "need": "settling"
+        },
         {
-          "key": "help",
+          "key": "follow_up:settling:help",
           "label": "Where have you looked for help with this need?",
           "type": "multi",
           "options": [
@@ -2389,25 +2389,27 @@
             "not_sought",
             "unsure",
             "prefer"
-          ]
+          ],
+          "need": "settling"
+        },
+        {
+          "key": "follow_up:settling:change",
+          "label": "What would help you most with this need?",
+          "type": "text",
+          "options": [],
+          "hint": "Please leave out names or other details that could identify someone.",
+          "need": "settling"
         }
       ],
-      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
-    },
-    {
-      "id": "barriers",
-      "title": "Getting help: three question paths",
-      "intro": "Only one of these versions appears, depending on the previous answer.",
-      "fields": [],
       "variants": [
         {
           "id": "sought",
-          "label": "If the person looked for help",
-          "title": "What has made it hard to get help?",
+          "title": "After looking for help",
+          "label": "After looking for help",
           "intro": "",
           "fields": [
             {
-              "key": "barriers",
+              "key": "follow_up:settling:barriers",
               "label": "What made it harder to get help with this need?",
               "type": "multi",
               "options": [
@@ -2485,19 +2487,21 @@
                 "none",
                 "unsure",
                 "prefer"
-              ]
+              ],
+              "need": "settling",
+              "conditional": "need_barriers"
             }
           ]
         },
         {
           "id": "not-sought",
-          "label": "If the person has not looked for help",
-          "title": "What influenced your decision?",
+          "title": "When no help has been sought",
+          "label": "When no help has been sought",
           "intro": "",
           "fields": [
             {
-              "key": "barriers",
-              "label": "Which reasons apply to you?",
+              "key": "follow_up:settling:barriers",
+              "label": "What are your reasons for not looking for help with this need?",
               "type": "multi",
               "options": [
                 {
@@ -2562,124 +2566,23 @@
                 "none",
                 "unsure",
                 "prefer"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "unknown",
-          "label": "If help-seeking is skipped, uncertain or declined",
-          "title": "What has made it hard to get help?",
-          "intro": "",
-          "fields": [
-            {
-              "key": "barriers",
-              "label": "If you have tried to get help with this need, what made it difficult?",
-              "type": "multi",
-              "options": [
-                {
-                  "id": "unaware",
-                  "label": "I did not know what was available"
-                },
-                {
-                  "id": "eligibility_unsure",
-                  "label": "I was unsure whether I was eligible"
-                },
-                {
-                  "id": "eligibility_refused",
-                  "label": "I was told I was not eligible"
-                },
-                {
-                  "id": "cost",
-                  "label": "Cost"
-                },
-                {
-                  "id": "waiting",
-                  "label": "Waiting for support"
-                },
-                {
-                  "id": "location_transport",
-                  "label": "Location or transport"
-                },
-                {
-                  "id": "hours_timing",
-                  "label": "Opening hours or timing"
-                },
-                {
-                  "id": "childcare_caring",
-                  "label": "Childcare or caring responsibilities"
-                },
-                {
-                  "id": "language_culture",
-                  "label": "Language or cultural barriers"
-                },
-                {
-                  "id": "accessibility",
-                  "label": "Accessibility"
-                },
-                {
-                  "id": "privacy_trust",
-                  "label": "Concerns about privacy or trust"
-                },
-                {
-                  "id": "poor_fit",
-                  "label": "Available support did not fit my situation"
-                },
-                {
-                  "id": "explaining_repeatedly",
-                  "label": "Having to explain my situation repeatedly"
-                },
-                {
-                  "id": "other",
-                  "label": "Something else"
-                },
-                {
-                  "id": "none",
-                  "label": "Nothing made it harder"
-                },
-                {
-                  "id": "unsure",
-                  "label": "Not sure"
-                },
-                {
-                  "id": "prefer",
-                  "label": "Prefer not to answer"
-                }
               ],
-              "hint": "Select all that apply.",
-              "exclusive": [
-                "none",
-                "unsure",
-                "prefer"
-              ]
+              "need": "settling",
+              "conditional": "need_barriers"
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "change",
-      "title": "What would make the biggest difference?",
-      "intro": "",
-      "fields": [
-        {
-          "key": "change",
-          "label": "What would help you most with this need?",
-          "type": "text",
-          "options": [],
-          "hint": "Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
+      "note": "Repeat this page separately for each selected current need. The examples below name one need; actual answers are stored against that need only. Barriers appear after a substantive help-seeking answer; they remain absent if help-seeking is skipped, uncertain or declined."
     },
     {
       "id": "delivery",
       "title": "Getting help from a service",
-      "intro": "Think about help from Lutheran Care or another service.",
+      "intro": "These preferences are about support in general.",
       "fields": [
         {
           "key": "delivery",
-          "label": "Which ways of getting help would suit you?",
+          "label": "How would you prefer to receive support from Lutheran Care or another service?",
           "type": "multi",
           "options": [
             {
@@ -2777,7 +2680,7 @@
           "conditional": "live"
         }
       ],
-      "note": "Shown when one or more current needs are selected. The answer concerns those needs together. The timing question appears only for in-person, group, phone or video support."
+      "note": "One general preference page after all per-need pages."
     },
     {
       "id": "anything",
@@ -2793,6 +2696,21 @@
         }
       ],
       "note": ""
+    },
+    {
+      "id": "earlier",
+      "title": "Your experience in the NT",
+      "intro": "We’d like to hear what worked well and what could have been better.",
+      "fields": [
+        {
+          "key": "earlier_experience",
+          "label": "What should Lutheran Care know about supporting Defence families in the NT?",
+          "type": "text",
+          "options": [],
+          "hint": "Please leave out names or other details that could identify someone."
+        }
+      ],
+      "note": "Separate route for NT service ending more than 12 months ago; no recent-needs questions."
     }
   ],
   "unspecified": [
@@ -2808,7 +2726,7 @@
           "options": [
             {
               "id": "serving",
-              "label": "I am a serving military member"
+              "label": "I am a current or former serving member"
             },
             {
               "id": "partner",
@@ -2816,11 +2734,11 @@
             },
             {
               "id": "child",
-              "label": "I am a son, daughter or child of a serving member"
+              "label": "I am the child of a current or former serving member"
             },
             {
               "id": "parent",
-              "label": "I am a parent of a serving member"
+              "label": "I am the parent of a current or former serving member"
             },
             {
               "id": "other_family",
@@ -2840,16 +2758,24 @@
         },
         {
           "key": "serving_nt",
-          "label": "Are you, or the military member in your family, currently serving in the NT?",
+          "label": "When did you or your family member last serve in the NT?",
           "type": "single",
           "options": [
             {
               "id": "yes",
-              "label": "Yes"
+              "label": "Serving in the NT now"
+            },
+            {
+              "id": "recent",
+              "label": "Within the past 12 months, but not currently"
+            },
+            {
+              "id": "earlier",
+              "label": "More than 12 months ago"
             },
             {
               "id": "no",
-              "label": "No"
+              "label": "No military service in the NT"
             },
             {
               "id": "unsure",
@@ -2888,7 +2814,7 @@
           "hint": ""
         }
       ],
-      "note": "Relationship and current service are needed to continue. “None of these” or “No” leads to an explanation of the survey scope. “Not sure” can continue."
+      "note": "Current or recent NT service leads to the full questionnaire; earlier service leads to the short earlier-experience route. Location never determines eligibility."
     },
     {
       "id": "place",
@@ -2937,24 +2863,28 @@
         },
         {
           "key": "time_nt",
-          "label": "How long have you lived in the NT on this stay?",
+          "label": "How long have you lived in the NT?",
           "type": "single",
           "options": [
+            {
+              "id": "never",
+              "label": "I have not lived in the NT"
+            },
             {
               "id": "under3",
               "label": "Less than 3 months"
             },
             {
               "id": "3to12",
-              "label": "3–12 months"
+              "label": "3 months to less than 1 year"
             },
             {
               "id": "1to3",
-              "label": "More than 1 year, up to 3 years"
+              "label": "1 year to less than 3 years"
             },
             {
               "id": "over3",
-              "label": "More than 3 years"
+              "label": "3 years or more"
             },
             {
               "id": "unsure",
@@ -2965,20 +2895,19 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "",
-          "conditional": "nt"
+          "hint": "Count your current or most recent stay only."
         }
       ],
-      "note": "Residence is optional and never an eligibility test; skipping or declining uses neutral wording."
+      "note": ""
     },
     {
       "id": "strengths",
       "title": "What already helps?",
-      "intro": "Think about life while you or someone in your family is serving in the NT.",
+      "intro": "",
       "fields": [
         {
           "key": "strengths",
-          "label": "What already helps you manage everyday life while you or someone in your family is serving in the NT?",
+          "label": "What has helped you manage day-to-day life?",
           "type": "text",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone."
@@ -2989,7 +2918,7 @@
     {
       "id": "needs",
       "title": "Where have you needed support?",
-      "intro": "Think about the past six months while you or someone in your family has been serving in the NT, or that time if shorter. Support can include help from family, friends, your community or a service.",
+      "intro": "Think about the past 12 months, including any moves to or from the NT. Support can include help from family, friends, your community or a service.",
       "fields": [
         {
           "key": "needs",
@@ -2998,78 +2927,83 @@
           "options": [
             {
               "id": "settling",
-              "label": "Adjusting to changes linked to military service in the NT",
-              "hint": "Changes to everyday life or family arrangements."
+              "label": "Postings and changes in service",
+              "hint": "Moving, settling in, preparing for a posting or leaving service."
             },
             {
               "id": "work_study",
               "label": "Work, study or training",
-              "hint": "Finding opportunities, continuing your career or using your skills."
+              "hint": "Finding work, keeping a career going or getting back into study."
             },
             {
               "id": "housing",
-              "label": "Finding or managing housing",
-              "hint": "A suitable place to live, housing arrangements or housing problems."
+              "label": "Housing",
+              "hint": "Finding a suitable home or dealing with housing problems."
             },
             {
               "id": "everyday_expenses",
-              "label": "Managing everyday expenses",
-              "hint": "Food, bills and other day-to-day costs."
+              "label": "Money and everyday expenses",
+              "hint": "Household bills, managing money or finding out about financial help."
             },
             {
               "id": "transport",
               "label": "Getting around",
-              "hint": "Transport to work, services, activities or people you want to see."
+              "hint": "Transport to work, appointments or activities."
             },
             {
               "id": "childcare",
               "label": "Childcare",
-              "hint": "Including care outside usual hours and when plans change."
+              "hint": "Finding care that is available when you need it."
             },
             {
               "id": "schooling",
-              "label": "Schooling or children's education",
-              "hint": "Starting or changing schools, learning or school support."
+              "label": "Children’s schooling",
+              "hint": "Enrolment, changing schools, learning or getting support at school."
             },
             {
               "id": "parenting_caring",
               "label": "Parenting or caring for someone",
-              "hint": "Day-to-day caring responsibilities and practical help."
+              "hint": "Raising children, sharing care or supporting someone who needs help."
             },
             {
               "id": "physical_health",
-              "label": "Physical health or healthcare",
-              "hint": "Accessing care and looking after your physical health."
+              "label": "Physical health and healthcare",
+              "hint": "Finding healthcare or getting the treatment you need."
             },
             {
               "id": "emotional_wellbeing",
-              "label": "Emotional or mental wellbeing",
-              "hint": "Support with feelings, stress or emotional wellbeing."
+              "label": "Mental health and wellbeing",
+              "hint": "Stress, grief or support with how you are feeling."
             },
             {
               "id": "disability_ongoing_needs",
-              "label": "Disability or ongoing support needs",
-              "hint": "Access, additional needs, ongoing care or continuity of support."
+              "label": "Disability support",
+              "hint": "Getting support that meets your needs."
             },
             {
               "id": "family_relationships",
-              "label": "Family life or relationships",
-              "hint": "Keeping relationships working and managing changes together."
+              "label": "Family relationships",
+              "hint": "Staying connected, relationship difficulties or changes in family life."
             },
             {
               "id": "people_to_turn_to",
-              "label": "Friends, community or people to turn to",
-              "hint": "Connection, belonging and having someone you can ask for help."
+              "label": "Friends and community",
+              "hint": "Meeting people, feeling connected or having someone to turn to."
             },
             {
               "id": "military_separation",
-              "label": "Time apart because of military service",
-              "hint": "Managing absences, reunions or uncertainty about time together."
+              "label": "Time apart because of service",
+              "hint": "Deployments, training or other time away from family."
             },
             {
               "id": "safety_confidential_help",
-              "label": "Feeling safe or getting confidential help",
-              "hint": "You do not need to describe personal events or identify anyone."
+              "label": "Feeling safe at home or in a relationship",
+              "hint": ""
+            },
+            {
+              "id": "finding_services",
+              "label": "Finding the right information or service",
+              "hint": "Knowing what is available, who can help or how to apply."
             },
             {
               "id": "other_need",
@@ -3104,16 +3038,16 @@
           "conditional": "other_need"
         }
       ],
-      "note": "“No support needed”, “Not sure” and “Prefer not to answer” cannot be combined with other selections."
+      "note": ""
     },
     {
       "id": "adequacy",
       "title": "Was the support enough?",
-      "intro": "Think about the past six months while you or someone in your family has been serving in the NT, or that time if shorter.",
+      "intro": "Think about the past 12 months, including any moves to or from the NT.",
       "fields": [
         {
           "key": "adequacy:settling",
-          "label": "Adjusting to changes linked to military service in the NT",
+          "label": "Postings and changes in service",
           "type": "single",
           "options": [
             {
@@ -3169,7 +3103,7 @@
         },
         {
           "key": "adequacy:housing",
-          "label": "Finding or managing housing",
+          "label": "Housing",
           "type": "single",
           "options": [
             {
@@ -3197,7 +3131,7 @@
         },
         {
           "key": "adequacy:everyday_expenses",
-          "label": "Managing everyday expenses",
+          "label": "Money and everyday expenses",
           "type": "single",
           "options": [
             {
@@ -3281,7 +3215,7 @@
         },
         {
           "key": "adequacy:schooling",
-          "label": "Schooling or children's education",
+          "label": "Children’s schooling",
           "type": "single",
           "options": [
             {
@@ -3337,7 +3271,7 @@
         },
         {
           "key": "adequacy:physical_health",
-          "label": "Physical health or healthcare",
+          "label": "Physical health and healthcare",
           "type": "single",
           "options": [
             {
@@ -3365,7 +3299,7 @@
         },
         {
           "key": "adequacy:emotional_wellbeing",
-          "label": "Emotional or mental wellbeing",
+          "label": "Mental health and wellbeing",
           "type": "single",
           "options": [
             {
@@ -3393,7 +3327,7 @@
         },
         {
           "key": "adequacy:disability_ongoing_needs",
-          "label": "Disability or ongoing support needs",
+          "label": "Disability support",
           "type": "single",
           "options": [
             {
@@ -3421,7 +3355,7 @@
         },
         {
           "key": "adequacy:family_relationships",
-          "label": "Family life or relationships",
+          "label": "Family relationships",
           "type": "single",
           "options": [
             {
@@ -3449,7 +3383,7 @@
         },
         {
           "key": "adequacy:people_to_turn_to",
-          "label": "Friends, community or people to turn to",
+          "label": "Friends and community",
           "type": "single",
           "options": [
             {
@@ -3477,7 +3411,7 @@
         },
         {
           "key": "adequacy:military_separation",
-          "label": "Time apart because of military service",
+          "label": "Time apart because of service",
           "type": "single",
           "options": [
             {
@@ -3505,7 +3439,35 @@
         },
         {
           "key": "adequacy:safety_confidential_help",
-          "label": "Feeling safe or getting confidential help",
+          "label": "Feeling safe at home or in a relationship",
+          "type": "single",
+          "options": [
+            {
+              "id": "enough",
+              "label": "Enough to meet my needs"
+            },
+            {
+              "id": "some",
+              "label": "Some, but not enough"
+            },
+            {
+              "id": "none",
+              "label": "None"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "How much of the support you needed did you receive?"
+        },
+        {
+          "key": "adequacy:finding_services",
+          "label": "Finding the right information or service",
           "type": "single",
           "options": [
             {
@@ -3560,7 +3522,7 @@
           "hint": "How much of the support you needed did you receive?"
         }
       ],
-      "note": "Only areas selected in the needs question are shown to a respondent, two per page. All possible areas are listed here for review."
+      "note": "Only selected past needs are rated, two per page."
     },
     {
       "id": "priority",
@@ -3574,7 +3536,7 @@
           "options": [
             {
               "id": "settling",
-              "label": "Adjusting to changes linked to military service in the NT"
+              "label": "Postings and changes in service"
             },
             {
               "id": "work_study",
@@ -3582,11 +3544,11 @@
             },
             {
               "id": "housing",
-              "label": "Finding or managing housing"
+              "label": "Housing"
             },
             {
               "id": "everyday_expenses",
-              "label": "Managing everyday expenses"
+              "label": "Money and everyday expenses"
             },
             {
               "id": "transport",
@@ -3598,7 +3560,7 @@
             },
             {
               "id": "schooling",
-              "label": "Schooling or children's education"
+              "label": "Children’s schooling"
             },
             {
               "id": "parenting_caring",
@@ -3606,31 +3568,35 @@
             },
             {
               "id": "physical_health",
-              "label": "Physical health or healthcare"
+              "label": "Physical health and healthcare"
             },
             {
               "id": "emotional_wellbeing",
-              "label": "Emotional or mental wellbeing"
+              "label": "Mental health and wellbeing"
             },
             {
               "id": "disability_ongoing_needs",
-              "label": "Disability or ongoing support needs"
+              "label": "Disability support"
             },
             {
               "id": "family_relationships",
-              "label": "Family life or relationships"
+              "label": "Family relationships"
             },
             {
               "id": "people_to_turn_to",
-              "label": "Friends, community or people to turn to"
+              "label": "Friends and community"
             },
             {
               "id": "military_separation",
-              "label": "Time apart because of military service"
+              "label": "Time apart because of service"
             },
             {
               "id": "safety_confidential_help",
-              "label": "Feeling safe or getting confidential help"
+              "label": "Feeling safe at home or in a relationship"
+            },
+            {
+              "id": "finding_services",
+              "label": "Finding the right information or service"
             },
             {
               "id": "another",
@@ -3665,16 +3631,16 @@
           "conditional": "another"
         }
       ],
-      "note": "All current support areas are available, independently of past needs. Multiple selections lead to one set of collective follow-up questions. No current needs, unsure, declined or blank skips follow-up."
+      "note": "Each current need selected has its own follow-up page. None, unsure, declined or blank does not create a follow-up."
     },
     {
-      "id": "impact",
-      "title": "Impact on everyday life",
+      "id": "detail",
+      "title": "About each support need",
       "intro": "",
       "fields": [
         {
-          "key": "impact",
-          "label": "Overall, how much has this need affected your day-to-day life in the past four weeks?",
+          "key": "follow_up:settling:impact",
+          "label": "How much has this need affected your day-to-day life in the past four weeks?",
           "type": "single",
           "options": [
             {
@@ -3706,18 +3672,11 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "If this started more recently, think about that time."
-        }
-      ],
-      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
-    },
-    {
-      "id": "help",
-      "title": "Where have you looked for help?",
-      "intro": "",
-      "fields": [
+          "hint": "If this started more recently, think about that time.",
+          "need": "settling"
+        },
         {
-          "key": "help",
+          "key": "follow_up:settling:help",
           "label": "Where have you looked for help with this need?",
           "type": "multi",
           "options": [
@@ -3767,25 +3726,27 @@
             "not_sought",
             "unsure",
             "prefer"
-          ]
+          ],
+          "need": "settling"
+        },
+        {
+          "key": "follow_up:settling:change",
+          "label": "What would help you most with this need?",
+          "type": "text",
+          "options": [],
+          "hint": "Please leave out names or other details that could identify someone.",
+          "need": "settling"
         }
       ],
-      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
-    },
-    {
-      "id": "barriers",
-      "title": "Getting help: three question paths",
-      "intro": "Only one of these versions appears, depending on the previous answer.",
-      "fields": [],
       "variants": [
         {
           "id": "sought",
-          "label": "If the person looked for help",
-          "title": "What has made it hard to get help?",
+          "title": "After looking for help",
+          "label": "After looking for help",
           "intro": "",
           "fields": [
             {
-              "key": "barriers",
+              "key": "follow_up:settling:barriers",
               "label": "What made it harder to get help with this need?",
               "type": "multi",
               "options": [
@@ -3863,19 +3824,21 @@
                 "none",
                 "unsure",
                 "prefer"
-              ]
+              ],
+              "need": "settling",
+              "conditional": "need_barriers"
             }
           ]
         },
         {
           "id": "not-sought",
-          "label": "If the person has not looked for help",
-          "title": "What influenced your decision?",
+          "title": "When no help has been sought",
+          "label": "When no help has been sought",
           "intro": "",
           "fields": [
             {
-              "key": "barriers",
-              "label": "Which reasons apply to you?",
+              "key": "follow_up:settling:barriers",
+              "label": "What are your reasons for not looking for help with this need?",
               "type": "multi",
               "options": [
                 {
@@ -3940,124 +3903,23 @@
                 "none",
                 "unsure",
                 "prefer"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "unknown",
-          "label": "If help-seeking is skipped, uncertain or declined",
-          "title": "What has made it hard to get help?",
-          "intro": "",
-          "fields": [
-            {
-              "key": "barriers",
-              "label": "If you have tried to get help with this need, what made it difficult?",
-              "type": "multi",
-              "options": [
-                {
-                  "id": "unaware",
-                  "label": "I did not know what was available"
-                },
-                {
-                  "id": "eligibility_unsure",
-                  "label": "I was unsure whether I was eligible"
-                },
-                {
-                  "id": "eligibility_refused",
-                  "label": "I was told I was not eligible"
-                },
-                {
-                  "id": "cost",
-                  "label": "Cost"
-                },
-                {
-                  "id": "waiting",
-                  "label": "Waiting for support"
-                },
-                {
-                  "id": "location_transport",
-                  "label": "Location or transport"
-                },
-                {
-                  "id": "hours_timing",
-                  "label": "Opening hours or timing"
-                },
-                {
-                  "id": "childcare_caring",
-                  "label": "Childcare or caring responsibilities"
-                },
-                {
-                  "id": "language_culture",
-                  "label": "Language or cultural barriers"
-                },
-                {
-                  "id": "accessibility",
-                  "label": "Accessibility"
-                },
-                {
-                  "id": "privacy_trust",
-                  "label": "Concerns about privacy or trust"
-                },
-                {
-                  "id": "poor_fit",
-                  "label": "Available support did not fit my situation"
-                },
-                {
-                  "id": "explaining_repeatedly",
-                  "label": "Having to explain my situation repeatedly"
-                },
-                {
-                  "id": "other",
-                  "label": "Something else"
-                },
-                {
-                  "id": "none",
-                  "label": "Nothing made it harder"
-                },
-                {
-                  "id": "unsure",
-                  "label": "Not sure"
-                },
-                {
-                  "id": "prefer",
-                  "label": "Prefer not to answer"
-                }
               ],
-              "hint": "Select all that apply.",
-              "exclusive": [
-                "none",
-                "unsure",
-                "prefer"
-              ]
+              "need": "settling",
+              "conditional": "need_barriers"
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "change",
-      "title": "What would make the biggest difference?",
-      "intro": "",
-      "fields": [
-        {
-          "key": "change",
-          "label": "What would help you most with this need?",
-          "type": "text",
-          "options": [],
-          "hint": "Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Shown when one or more current needs are selected. The answer concerns those needs together."
+      "note": "Repeat this page separately for each selected current need. The examples below name one need; actual answers are stored against that need only. Barriers appear after a substantive help-seeking answer; they remain absent if help-seeking is skipped, uncertain or declined."
     },
     {
       "id": "delivery",
       "title": "Getting help from a service",
-      "intro": "Think about help from Lutheran Care or another service.",
+      "intro": "These preferences are about support in general.",
       "fields": [
         {
           "key": "delivery",
-          "label": "Which ways of getting help would suit you?",
+          "label": "How would you prefer to receive support from Lutheran Care or another service?",
           "type": "multi",
           "options": [
             {
@@ -4155,7 +4017,7 @@
           "conditional": "live"
         }
       ],
-      "note": "Shown when one or more current needs are selected. The answer concerns those needs together. The timing question appears only for in-person, group, phone or video support."
+      "note": "One general preference page after all per-need pages."
     },
     {
       "id": "anything",
@@ -4171,6 +4033,21 @@
         }
       ],
       "note": ""
+    },
+    {
+      "id": "earlier",
+      "title": "Your experience in the NT",
+      "intro": "We’d like to hear what worked well and what could have been better.",
+      "fields": [
+        {
+          "key": "earlier_experience",
+          "label": "What should Lutheran Care know about supporting Defence families in the NT?",
+          "type": "text",
+          "options": [],
+          "hint": "Please leave out names or other details that could identify someone."
+        }
+      ],
+      "note": "Separate route for NT service ending more than 12 months ago; no recent-needs questions."
     }
   ]
 }

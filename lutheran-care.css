@@ -110,3 +110,11 @@ body.questionnaire{--ink:#30312f;--text:#41423f;--muted:#666963;--primary:#b9462
 .selected-needs{margin:0 0 22px;color:#6b6c65;font-size:14px}
 .selected-needs summary{cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 .selected-needs p{font-size:14px;margin:10px 0}
+
+/* Intro paragraphs share one scale; the salutation uses the requested line break. */
+.questionnaire .welcome-intro p:not(.funding-note){font-size:18px;line-height:1.6;font-weight:400;color:#4d504a}
+.questionnaire .welcome-intro .greeting{white-space:pre-line}
+.need-progress{font-size:13px;color:#777;margin:-10px 0 22px}
+@media(max-width:760px){.questionnaire .welcome-intro p:not(.funding-note){font-size:17px;line-height:1.6}}
+
+.funding-program{white-space:nowrap}

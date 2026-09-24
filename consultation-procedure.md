@@ -2,7 +2,7 @@
 
 24 September 2026 · Staff operating procedure for team review
 
-This is a service consultation to plan Lutheran Care’s NT Defence family program. The participant interface shows the intended formal questionnaire. The current GitHub build is for internal review and has no response receiver; no worker is currently monitoring answers from it. This procedure sets out the operating arrangement for the team to use when collection is connected. It does not claim staff have already been appointed or completed an assessment.
+This is a service consultation to plan Lutheran Care’s NT Defence Family Support Program. The participant interface shows the intended formal questionnaire. The current GitHub build is for internal review and has no response receiver; no worker is currently monitoring answers from it. This procedure sets out the operating arrangement for the team to use when collection is connected. It does not claim staff have already been appointed or completed an assessment.
 
 ## Responsibility within the existing project team
 
@@ -14,7 +14,7 @@ Use LC’s approved record system and existing child-safety/incident processes. 
 
 Invite participation without pressure from staff, commanders, service providers or family members. Do not make participation a condition of support or send participation lists to a chain of command. This is a conduct rule for this consultation, not a quotation from an unrelated complaints form.
 
-Eligibility concerns the current NT service connection. Family members may live elsewhere in Australia or overseas. Residence is optional, asked only at a broad-area level for service planning, and must never exclude a respondent. “Not sure” about the service connection is retained as uncertain rather than automatically rejected.
+The full questionnaire concerns current NT service or service ending within the past 12 months. Earlier NT connections have a separate optional lessons/suggestions route; this consultation scope is not programme-benefit eligibility. Family members may live elsewhere in Australia or overseas. Residence is optional, asked only at a broad-area level for service planning, and must never exclude a respondent. “Not sure” about the service connection is retained as uncertain rather than automatically rejected.
 
 ## Participation routes implemented in the form
 
@@ -64,7 +64,7 @@ Use the LC feedback/privacy contact for access, correction and complaints. For t
 - [LC current counselling/referral forms](https://www.lutherancare.org.au/counselling/): practical precedent for guardian involvement; clinical intake fields and special counselling protections are not transferred to this consultation.
 - [OAIC consent and capacity, B.59–B.61](https://www.oaic.gov.au/privacy/australian-privacy-principles/australian-privacy-principles-guidelines/chapter-b-key-concepts).
 - [NT child reporting guidance](https://nt.gov.au/law/crime/report-child-abuse), [current child protection Act](https://legislation.nt.gov.au/api/sitecore/Act/PDF?id=11659) and [current domestic violence Act](https://legislation.nt.gov.au/api/sitecore/Act/PDF?id=11768).
-- [LC general contact](https://www.lutherancare.org.au/contact-us/): (08) 8269 9333; ask for the NT Defence family program. This is not represented as a dedicated project number.
+- [LC general contact](https://www.lutherancare.org.au/contact-us/): (08) 8269 9333; ask for the NT Defence Family Support Program. This is not represented as a dedicated project number.
 - Australian support: [Kids Helpline](https://kidshelpline.com.au/) 1800 55 1800; [1800RESPECT](https://1800respect.org.au/) 1800 737 732. Emergency: 000 in Australia.
 
 ## Digital resource at completion
