@@ -25,7 +25,7 @@ For local development, run `python3 -m http.server 8174 --bind 127.0.0.1` from t
 
 ## Review edition, 24 September 2026
 
-The redesign replaces the decorative split-screen landing page and sidebar with a quiet, single-column questionnaire. It keeps the existing question constructs, stable answer IDs and age/location branches. Copy changes remove promotional slogans, correct the child outside-NT wording and describe youth help-seeking concerns in the appropriate tense. Returning from the answer review to edit a section now returns directly to the updated overview.
+The respondent view is a single-column questionnaire with no site navigation, branding bar, results links or team-review links. Review resources remain available at their separate URLs. Explanatory copy is limited to useful instructions, voluntary participation and accurate answer handling. It keeps the existing question constructs, stable answer IDs and age/location branches. Copy changes remove promotional slogans, correct the child outside-NT wording and describe youth help-seeking concerns in the appropriate tense. Returning from the answer review to edit a section now returns directly to the updated overview.
 
 The new full question list includes all three age versions, both location contexts, conditional fields, all three help-seeking variants and the under-seven conversation guide. It has printable wording and downloadable, private review notes. The separate review guide identifies decisions for the project team. The 136 fictional records and all results calculations are unchanged.
 

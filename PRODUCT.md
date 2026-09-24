@@ -22,6 +22,10 @@ Jacob requested continued development on the Mac mini, a working GitHub link for
 - Use plain, natural English and familiar, restrained survey controls. Avoid decorative marketing language and generic AI interface conventions.
 - Mobile and keyboard use matter; back navigation must retain answers, and changed answers must clear irrelevant follow-ups.
 
+## Respondent experience
+
+Jacob clarified on 24 September 2026 that this must be a questionnaire, not a website. Omit site navigation, brand bars, results and review links from the respondent flow. Use separate URLs for team resources. Keep only necessary explanations, voluntary participation and accurate privacy information in natural English; no generic legal waivers or invented institutional commitments.
+
 ## Evidence and decisions
 
 The baseline is repository commit ee2cc59. Existing questions are a draft, not an accepted or validated instrument. Jacob and the team retain final wording, participation scope, child participation arrangements, and real data collection decisions. No institutional logo or endorsement is inferred. Design implementation and reversible copy repairs are delegated by the current request.

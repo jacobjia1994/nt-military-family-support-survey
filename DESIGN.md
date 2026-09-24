@@ -40,11 +40,11 @@ The values above come from `survey.css`. The independently styled results page s
 
 System sans-serif type is used throughout; there are no web-font downloads or display serifs. The base text is 16px with a 1.6 line height. Introductory copy is slightly larger. Questions and headings use weight 650, with supporting hints at 13–14px. Survey headings scale within a modest range; the results page uses fixed heading sizes at its breakpoints. Tables and results use tabular numerals.
 
-Copy names the task plainly. Buttons say “Continue”, “Back”, “Skip this page” or “Finish demo”. Introductory text explains who the questions concern and how answers are handled. Encouragement, slogans and repeated expressions of gratitude do not interrupt the flow.
+Copy names the task plainly. Buttons say “Continue”, “Back”, “Skip this page” or “Finish”. Necessary timeframes and branch instructions stay close to their questions. Generic page introductions and repeated skipping reminders are omitted.
 
 ## Layout
 
-The questionnaire is a single column, at most 680px wide. The question library and guide use a 760px reading column. The header offers four destinations: Try the survey, All questions, Review guide and Example results. A visible draft notice distinguishes the prototype from live collection.
+The questionnaire is a single column, at most 680px wide, with no site header, branding bar, navigation or site footer. Its opening identifies it as a draft that does not collect responses. A single “About your answers” control makes participation and privacy information available throughout. The question library and guide use a 760px reading column; review navigation belongs only on those separate staff pages.
 
 The survey has five named sections. Progress reflects the section, not an invented completion percentage. The route grows with selected needs; two adequacy questions share a page. The wider results page pairs charts on desktop and stacks them on mobile. Detailed tables scroll horizontally when necessary.
 

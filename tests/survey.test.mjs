@@ -293,7 +293,8 @@ test('each age and location path has unique option IDs and matching rendered rev
       const steps = survey.buildSteps(answers, domains, version);
       for (const step of steps) {
         const page = survey.page(step);
-        assert.ok(page.title && page.intro, `${version}: ${step.id}`);
+        assert.ok(page.title, `${version}: ${step.id}`);
+        assert.equal(typeof page.intro, 'string', 'Intro is optional; a clear question does not require extra prose');
         for (const field of page.fields) {
           assert.equal(new Set(field.options.map(option => option.id)).size, field.options.length, `${version}: ${field.key}`);
         }

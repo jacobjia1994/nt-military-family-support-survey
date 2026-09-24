@@ -10,19 +10,12 @@
   <link rel="stylesheet" href="survey.css">
   <script type="module" src="survey.js"></script>
 </head>
-<body>
-<!-- THESIS: A readable questionnaire, with a separate full-text review.
-OWN-WORLD: White paper, charcoal text, teal controls; familiar native inputs.
-STORY: Understand who this is for, choose an age path, answer and review.
-FIRST VIEWPORT: One 680px column; descriptive title, short introduction, age choices and a clear Continue button.
-FORM: Quiet document-style survey. Brief-pinned simplicity overrides ornamental challengers; seed 8f106fa4.
-FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance -->
+<body class="questionnaire">
+<!-- Respondent surface: questionnaire only. Review resources remain at separate URLs. -->
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header"><a class="wordmark" href="index.html" aria-label="Life and support in the NT home">NT <span>Life &amp; support</span></a><nav aria-label="Site"><a href="questions.html">All questions</a><a href="review.html">Review guide</a><a href="results.html">Example results</a></nav></header>
-  <div class="demo-notice"><strong>Team review draft</strong><span>This demo does not collect responses.</span></div>
   <main id="main" tabindex="-1"></main>
-  <footer class="site-footer"><span>Northern Territory · Military members &amp; families</span><button id="privacy-open" class="text-button">About your answers</button></footer>
-  <dialog id="privacy-dialog" aria-labelledby="privacy-title"><div class="dialog-content"><h2 id="privacy-title">About your answers</h2><p>Your answers stay in this page while it is open. They are not sent to a server or added to the results example.</p><p>Refreshing or closing the page clears your answers. At the end, you can choose to download a copy. Avoid including names, contact details, units, schools or other identifying details in written answers.</p><p>You can skip questions, go back to change answers, or stop at any time. This questionnaire is not monitored for requests for help.</p><button class="button primary" id="privacy-close">Close</button></div></dialog>
-  <noscript><p class="noscript">Please enable JavaScript to use this questionnaire. You can also read the <a href="review.html">question guide</a>.</p></noscript>
+  <div class="questionnaire-help"><button id="privacy-open" class="text-button">About your answers</button></div>
+  <dialog id="privacy-dialog" aria-labelledby="privacy-title"><div class="dialog-content"><h2 id="privacy-title">About your answers</h2><p>Taking part is voluntary. Most questions are optional, and you can stop at any time.</p><p>This preview does not submit your answers. They stay in this browser tab until you leave, refresh or close it. You can download a copy before you leave.</p><p>Please leave out names and other identifying details. This questionnaire is not monitored for requests for help.</p><button class="button primary" id="privacy-close">Close</button></div></dialog>
+  <noscript><p class="noscript">Please enable JavaScript to use this questionnaire.</p></noscript>
 </body>
 </html>
