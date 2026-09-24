@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="An illustrative, fictional results view for the NT Life & support survey.">
+  <title>Illustrative results · NT Life & support</title>
+  <style>:root{--paper:#f7f5ef;--ink:#193e38;--clay:#ba6844;--sage:#d9e2d8;--muted:#5b6a60;--line:#dde1d7;--white:#fffefb;--radius:17px;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper);font-synthesis:none}*{box-sizing:border-box}body{margin:0;line-height:1.55}button,select{font:inherit}a{color:inherit}button,a,select{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:focus-visible,a:focus-visible,select:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--clay);outline-offset:4px}button:disabled{opacity:.5;cursor:not-allowed}.skip-link{position:absolute;left:20px;top:-80px;background:var(--ink);color:#fff;padding:12px;z-index:20}.skip-link:focus{top:12px}.site-header{max-width:1280px;padding:27px 40px;margin:auto;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.wordmark{display:flex;align-items:center;gap:13px;font-weight:650;letter-spacing:-.3px;text-decoration:none}.brand-mark{background:var(--ink);color:var(--paper);width:42px;height:42px;display:grid;place-items:center;font-size:14px;border-radius:50%}.back-link{font-size:13px;text-decoration:none;display:flex;align-items:center;gap:9px}.back-link:hover{text-decoration:underline}main{max-width:1280px;margin:auto;padding:48px 40px 64px}.page-intro{display:flex;justify-content:space-between;gap:25px;align-items:flex-end;margin-bottom:29px}.eyebrow,.section-number{font-size:10px;font-weight:700;letter-spacing:1.65px;margin:0 0 12px;color:var(--muted)}h1{font:normal clamp(36px,4.1vw,54px)/1.08 Georgia,serif;letter-spacing:-1.6px;margin:0 0 19px}h2{font:normal 25px/1.18 Georgia,serif;letter-spacing:-.45px;margin:0}h3{font-size:14px;line-height:1.4;margin:0 0 10px}.intro-copy{font-size:14px;color:var(--muted);max-width:550px;margin:0}.intro-actions{display:flex;gap:9px;align-items:center;padding-bottom:2px;flex-shrink:0}.button{border:1px solid var(--ink);border-radius:50px;padding:11px 18px;font-size:12px;font-weight:600;white-space:nowrap;min-height:44px}.button.primary{background:var(--ink);color:var(--paper);display:flex;gap:19px;align-items:center}.button.primary:hover{background:#2d534b}.button.quiet{background:transparent;border-color:var(--line)}.button.quiet:hover{background:#edece5}.notice{padding:17px 20px;background:#edece1;border:1px solid #e0e0cf;border-radius:10px;display:flex;gap:13px;margin-bottom:25px;font-size:12px}.notice strong{font-weight:650}.notice p{margin:3px 0 0;color:var(--muted)}.notice-dot{width:9px;height:9px;margin-top:6px;background:var(--clay);border-radius:50%;flex-shrink:0}.filters{padding:24px 27px;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:19px}.filter-heading{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:17px}.filter-heading h2{font:600 14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:0}.text-button{background:none;border:none;text-decoration:underline;text-underline-offset:3px;font-size:12px;color:var(--muted);padding:6px 0;min-height:32px}.filter-fields{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:17px}label{font-size:11px;font-weight:600;color:var(--muted)}select{display:block;margin-top:7px;width:100%;border:1px solid #ccd4c9;border-radius:8px;padding:11px 34px 11px 11px;font-size:12px;background:var(--white);color:var(--ink);height:45px}.scope-note{margin:15px 0 0;font-size:11px;color:var(--muted)}.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px;margin:0 0 25px}.metric-card{padding:22px 25px;background:var(--sage);border:1px solid #ced8cb;border-radius:var(--radius)}.metric-card:nth-child(2){background:var(--ink);color:var(--paper);border-color:var(--ink)}.metric-card:nth-child(3){background:#ebe9df;border-color:#e1dfd3}.metric-label{margin:0;font-size:12px;font-weight:500}.metric-value{font:normal 46px/1.2 Georgia,serif;letter-spacing:-1.5px;margin:10px 0}.metric-value span{font:400 15px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:0;opacity:.75;margin-left:5px}.metric-description{font-size:11px;margin:0;color:var(--muted);max-width:285px}.metric-card:nth-child(2) .metric-description{color:#d4e0d7}.analysis-grid{display:grid;grid-template-columns:1.13fr 1fr;gap:23px;margin-bottom:23px}.panel{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:27px}.panel-heading{display:flex;gap:13px;justify-content:space-between;align-items:flex-start;margin-bottom:13px}.section-number{font-size:9px;letter-spacing:1.5px;margin-bottom:10px}.section-description{color:var(--muted);font-size:12px;line-height:1.7;margin:0 0 21px}.chip{font-size:10px;background:#edf1e9;border-radius:30px;padding:5px 10px;white-space:nowrap;margin-top:4px;color:#395546}.chip.terracotta{background:#f5e9e0;color:#975333}.chart-scale{display:flex;justify-content:space-between;font-size:9px;color:#717d74;padding-left:0;margin-bottom:13px}.bar-chart{display:flex;flex-direction:column;gap:16px}.bar-label{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:12px;margin-bottom:5px}.bar-number{font-size:11px;color:var(--muted);white-space:nowrap}.bar-track{height:7px;width:100%;border-radius:2px;background:#edf0e8;overflow:hidden}.bar-fill{height:100%;background:var(--ink);border-radius:2px;min-width:0;transition:width .2s ease}.footnote{font-size:10px;line-height:1.7;color:var(--muted);margin:21px 0 0}.priority-chart{display:flex;flex-direction:column;gap:15px}.priority-row{display:grid;grid-template-columns:25px 1fr;gap:12px;align-items:start}.rank{font:italic 20px/1.3 Georgia,serif;color:var(--clay);text-align:left}.priority-row .bar-label{font-size:12px}.priority-row .bar-fill{background:var(--clay)}.priority-row .bar-track{height:6px;background:#f2ebe4}.reading-note{padding:16px 18px;background:#f2f3ec;border-radius:10px;margin-top:22px;font-size:11px}.reading-note strong{font-weight:600}.reading-note p{color:var(--muted);margin:5px 0 0}.adequacy-panel{margin-bottom:23px}.table-scroll{overflow-x:auto;overscroll-behavior-x:contain}table{width:100%;border-collapse:collapse;font-size:11px;text-align:left;white-space:nowrap}th{font-size:10px;font-weight:600;color:var(--muted);border-bottom:1px solid #ccd5c8;padding:12px 13px}td{border-bottom:1px solid #ebeee6;padding:13px}th:first-child,td:first-child{padding-left:0;white-space:normal;min-width:170px}tbody tr:last-child td{border-bottom:none}th:not(:first-child),td:not(:first-child){text-align:right}td:first-child{font-weight:500}.rate{display:inline-block;min-width:100px;font-variant-numeric:tabular-nums}.rate strong{font-weight:600;color:#a35334}.rate span{font-size:10px;color:var(--muted)}.access-panel{margin-bottom:23px}.access-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:25px}.access-grid>div+div{border-left:1px solid var(--line);padding-left:33px}.small-heading{display:flex;gap:10px;align-items:center;margin-bottom:12px}.small-heading h3{margin:0}.small-marker{height:23px;width:23px;display:grid;place-items:center;background:var(--sage);border-radius:50%;font-size:10px;font-weight:700}.small-marker.clay{background:#efded3;color:#8e472b}.compact-chart{display:flex;flex-direction:column;gap:14px}.compact-chart .bar-label{font-size:11px}.compact-chart .bar-track{height:6px}.clay-chart .bar-fill{background:var(--clay)}.clay-chart .bar-track{background:#f2ebe4}.no-values{font-size:12px;color:var(--muted);padding:15px 0}.method-panel{border:1px solid var(--line);border-radius:12px;background:#f0f0e7;padding:0 24px}.method-panel summary{display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:20px 0;font-size:12px;font-weight:600;list-style:none}.method-panel summary::-webkit-details-marker{display:none}.plus{font-size:20px;font-weight:300;line-height:1}.method-panel[open] .plus{transform:rotate(45deg)}.method-content{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;border-top:1px solid var(--line);padding:22px 0}.method-content p,.method-content li{font-size:11px;color:var(--muted);line-height:1.8}.method-content ul{padding-left:15px;margin-top:0}.method-content li{margin-bottom:7px}.scan-detail{padding:18px 0 25px;border-top:1px solid var(--line)}.scan-detail h3{margin-bottom:8px}.empty-state{padding:55px 20px;text-align:center;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:30px}.empty-state p{font-size:14px;color:var(--muted)}.site-footer{max-width:1200px;margin:auto;padding:25px 0 30px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;font-size:10px;color:var(--muted)}.site-footer a{text-decoration:none}.site-footer a:hover{text-decoration:underline}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}[hidden]{display:none!important}@media(max-width:1000px){.page-intro{display:block}.intro-actions{margin-top:24px}.panel{padding:23px}.panel-heading{flex-wrap:wrap}.site-footer{margin:0 40px}.analysis-grid{gap:17px}.access-grid{gap:30px}.access-grid>div+div{padding-left:25px}.metric-card{padding:20px}.metric-value{font-size:41px}}@media(max-width:720px){.site-header{padding:20px 22px}.wordmark{font-size:14px;gap:9px}.brand-mark{height:36px;width:36px;font-size:12px}.back-link{font-size:11px;gap:5px}main{padding:32px 20px 40px}h1{font-size:40px;letter-spacing:-1.4px}.intro-copy{font-size:13px}.notice{padding:15px}.filters{padding:19px}.filter-fields{grid-template-columns:1fr;gap:13px}select{font-size:14px}.metric-grid{grid-template-columns:1fr;gap:11px}.metric-card{display:grid;grid-template-columns:1fr auto;column-gap:17px;padding:18px 21px}.metric-label{align-self:center}.metric-value{grid-column:2;grid-row:1/3;margin:0;font-size:38px;align-self:center;white-space:nowrap}.metric-value span{font-size:12px}.metric-description{grid-column:1;font-size:10px;margin-top:5px;max-width:250px}.analysis-grid{grid-template-columns:1fr;gap:19px;margin-bottom:19px}.panel{padding:22px 20px}.panel h2{font-size:24px}.access-grid{grid-template-columns:1fr;gap:26px}.access-grid>div+div{padding-left:0;border-left:0;padding-top:23px;border-top:1px solid var(--line)}.method-content{grid-template-columns:1fr;gap:12px}.method-panel{padding:0 19px}.site-footer{margin:0 20px;flex-wrap:wrap;gap:11px}.site-footer span:first-child{width:100%}.site-footer a{margin-left:auto}.intro-actions{gap:8px}.button{padding:11px 15px;font-size:11px}.priority-chart{gap:17px}.chart-scale{font-size:10px}.section-description{font-size:12px}.footnote{font-size:11px}.bar-label{font-size:12px}.bar-number{font-size:11px}th,td{padding:11px}.method-content p,.method-content li{font-size:12px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}@media print{body{background:#fff;color:#000}.site-header,main{max-width:none;padding:15px 0}.back-link,.intro-actions,.filters,.site-footer,.skip-link{display:none}.page-intro{display:block}h1{font-size:32px}.notice{background:#fff;border:1px solid #777}.metric-card,.metric-card:nth-child(2),.metric-card:nth-child(3){background:#fff;color:#000;border:1px solid #bbb}.metric-card:nth-child(2) .metric-description{color:#333}.metric-grid{grid-template-columns:repeat(3,1fr)}.metric-value{font-size:32px}.analysis-grid{display:block}.panel{break-inside:avoid;margin-bottom:18px;padding:18px}.bar-fill{print-color-adjust:exact;-webkit-print-color-adjust:exact}.method-panel{display:block;background:#fff}.method-panel:not([open]){display:none}.access-grid{gap:25px}.table-scroll{overflow:visible}th,td{font-size:9px;padding:8px}.metric-description,.section-description,.footnote{color:#333}.chip{border:1px solid #bbb;background:none}.page-intro br{display:none}}
+
+.impact-section{margin-top:28px;padding-top:23px;border-top:1px solid var(--line)}.scan-explanation{margin-top:22px}.adequacy-panel .table-scroll table{min-width:880px}
+</style>
+  
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to results</a>
+  <header class="site-header">
+    <a href="./index.html" class="wordmark" aria-label="NT Life and support survey"><span class="brand-mark" aria-hidden="true">NT</span><span>Life &amp; support</span></a>
+    <a class="back-link" href="./index.html"><span aria-hidden="true">←</span> Back to survey</a>
+  </header>
+  <main id="main">
+    <div class="page-intro">
+      <div><p class="eyebrow">TEAM REVIEW · RESULTS EXAMPLE</p><h1>From lived experience<br>to better support.</h1><p class="intro-copy">Explore how individual answers could help a team understand support needs, gaps and priorities.</p></div>
+      <div class="intro-actions"><button id="export-button" class="button primary" type="button">Export filtered CSV <span aria-hidden="true">↗</span></button><button id="print-button" class="button quiet" type="button">Print this view</button></div>
+    </div>
+    <aside class="notice" aria-label="Fictional data notice"><span class="notice-dot" aria-hidden="true"></span><div><strong>Illustrative results. All records are fictional.</strong><p>This page demonstrates the analysis. It does not contain submitted survey answers or findings about military families. Do not infer NT-wide prevalence.</p></div></aside>
+    <section class="filters" aria-labelledby="filter-heading">
+      <div class="filter-heading"><h2 id="filter-heading">Explore the sample</h2><button id="reset-button" class="text-button" type="button">Reset filters</button></div>
+      <div class="filter-fields">
+        <label for="version-filter">Questionnaire version<select id="version-filter"><option value="adult">Adults · 18 and over</option><option value="youth">Young people · 12–17</option><option value="child">Children · 7–11</option></select></label>
+        <label for="region-filter">Respondent location<select id="region-filter"><option value="nt" selected>All NT locations</option><option value="darwin">Darwin</option><option value="palmerston">Palmerston / Litchfield</option><option value="katherine">Katherine / Tindal</option><option value="alice">Alice Springs</option><option value="other_nt">Elsewhere in the NT</option><option value="outside_au">Elsewhere in Australia · family</option><option value="outside_overseas">Outside Australia · family</option><option value="prefer">Location undisclosed</option><option value="all">All locations · extended scope</option></select></label>
+        <label for="relationship-filter">Relationship<select id="relationship-filter"></select></label>
+      </div>
+      <p id="scope-note" class="scope-note" aria-live="polite" aria-atomic="true"></p>
+    </section>
+    <div id="empty-state" class="empty-state" hidden><h2>No records match these filters</h2><p>Choose a different location or relationship, or reset the filters.</p></div>
+    <div id="results-content">
+      <section class="metric-grid" aria-label="Sample summary">
+        <article class="metric-card"><p class="metric-label">Respondents in view</p><p id="sample-value" class="metric-value"></p><p id="sample-description" class="metric-description"></p></article>
+        <article class="metric-card"><p class="metric-label">At least one support gap</p><p id="gap-value" class="metric-value"></p><p id="gap-description" class="metric-description"></p></article>
+        <article class="metric-card"><p class="metric-label">Adequacy response completion</p><p id="completeness-value" class="metric-value"></p><p id="completeness-description" class="metric-description"></p></article>
+      </section>
+      <section class="analysis-grid">
+        <article class="panel needs-panel"><div class="panel-heading"><div><p class="section-number">01 / SUPPORT NEEDS</p><h2>Where was help needed?</h2></div><span id="reference-period" class="chip">Past 6 months</span></div><p id="needs-description" class="section-description"></p><div class="chart-scale" aria-hidden="true"><span>0%</span><span>50%</span><span>100%</span></div><div id="needs-chart" class="bar-chart"></div><p class="footnote">Multiple areas can be selected, so percentages do not add to 100%. An area not selected does not establish that help was not needed. Whole-question response statuses are shown in the detail below.</p></article>
+        <article class="panel priority-panel"><div class="panel-heading"><div><p class="section-number">02 / CURRENT PRIORITY</p><h2>What matters most now?</h2></div></div><p id="priority-description" class="section-description"></p><div id="priority-chart" class="priority-chart"></div><div class="reading-note"><strong>One priority per person</strong><p>Past support needs and a current priority answer different questions. Everyone can choose a current priority, including people who selected no past need.</p></div><div class="impact-section"><h3>Impact on everyday life</h3><p id="impact-description" class="section-description"></p><div id="impact-chart" class="compact-chart clay-chart"></div></div></article>
+      </section>
+      <section class="panel adequacy-panel" aria-labelledby="adequacy-heading"><div class="panel-heading"><div><p class="section-number">03 / SUPPORT ADEQUACY</p><h2 id="adequacy-heading">Was the help enough?</h2></div><span class="chip terracotta">Some or no help = support gap</span></div><p class="section-description">Support gap rate = (some help, but not enough + no help) ÷ (enough + some + none). Only definite adequacy answers for a selected need enter this rate. Unsure, prefer not to answer and skipped answers remain visible and are excluded.</p><div class="table-scroll" tabindex="0" role="region" aria-label="Support adequacy detail table"><table><caption class="sr-only">Support needs and adequacy by area, with missing responses and gap denominators</caption><thead><tr><th scope="col">Support area</th><th scope="col">Needed help</th><th scope="col">Enough</th><th scope="col">Some, not enough</th><th scope="col">None</th><th scope="col">Unsure</th><th scope="col">Prefer not</th><th scope="col">Skipped</th><th scope="col">Gap rate</th></tr></thead><tbody id="adequacy-table"></tbody></table></div><p class="footnote">Each row covers people who selected that need. A person can appear in more than one row. A dash means there are no definite answers to calculate a rate.</p></section>
+      <section class="panel access-panel" aria-labelledby="access-heading"><div class="panel-heading"><div><p class="section-number">04 / ACCESS TO HELP</p><h2 id="access-heading">What got in the way?</h2></div></div><p class="section-description">These answers refer to the person’s chosen current priority. Experienced barriers among people who sought help and reasons for not seeking help use different questions and are analysed separately.</p><div class="access-grid"><div><div class="small-heading"><span class="small-marker" aria-hidden="true">A</span><h3>People who sought help</h3></div><p id="barriers-description" class="section-description"></p><div id="barriers-chart" class="compact-chart"></div></div><div><div class="small-heading"><span class="small-marker clay" aria-hidden="true">B</span><h3>People who did not seek help</h3></div><p id="reasons-description" class="section-description"></p><div id="reasons-chart" class="compact-chart clay-chart"></div></div></div><p id="access-note" class="footnote"></p></section>
+      <details class="method-panel"><summary><span>Data, definitions &amp; review notes</span><span class="plus" aria-hidden="true">+</span></summary><div class="method-content"><div><h3>What this dataset contains</h3><p id="dataset-description"></p><p>Records are generated deterministically from a fixed seed. They contain no real people, no identifiers from participants and no free-text testimonials. Filters intersect; downloads contain only the records currently in view.</p><p id="sample-composition"></p></div><div><h3>How to read these measures</h3><ul><li><strong>Support need:</strong> selected an area in one multi-select question; its percentage uses all respondents in the view, including whole-question nonresponses. Selection is not a prevalence estimate.</li><li><strong>Support gap:</strong> some help but not enough, or none. Enough help remains a reported need. The gap-rate denominator is shown for every row.</li><li><strong>Item completion:</strong> recorded adequacy responses, including “unsure” and “prefer not to answer”, divided by all selected needs. Completion does not mean the answer is analytically definite.</li><li><strong>Not selected:</strong> the area was not chosen. It does not imply no need. “None”, “unsure”, “prefer not to answer” and skipped describe the whole scan question.</li></ul></div><div><h3>Limits of the example</h3><p>Adult, young-person and child questionnaires have different wording and domains, and are shown separately. Respondents are individuals, not unique households. Counts across domains overlap.</p><p>The default view includes only respondents living in NT. Family members elsewhere in Australia or overseas, and undisclosed locations, are separate filter options; extending scope is a team decision. For adults outside NT, the settling question asks about adjusting to a family member serving in NT; extended-scope views use a combined label. Relationship categories overlap. Financial and care dependence are separate adult-child answers in the export. No weighting, population estimates or statistical comparisons are applied.</p><p>Before collecting real data, agree eligibility, safeguarding, consent, storage, small-group disclosure rules and an analysis plan with the project team.</p></div></div><div class="scan-detail"><h3>Needs scan response detail</h3><p class="section-description">This was one multi-select question, not a separate yes/no question for each area. Whole-question statuses sum to the number of people in view.</p><div class="table-scroll"><table><caption class="sr-only">Whole-question needs scan response statuses</caption><thead><tr><th scope="col">Needs scan response</th><th scope="col">People</th></tr></thead><tbody id="scan-status-table"></tbody></table></div><p class="section-description scan-explanation">For each area, “not selected” includes people who chose other areas and people whose whole-question answer was none, unsure, prefer not to answer or skipped. It must not be interpreted as no need.</p><div class="table-scroll"><table><caption class="sr-only">Selected and not-selected needs by domain</caption><thead><tr><th scope="col">Support area</th><th scope="col">Selected</th><th scope="col">Not selected</th></tr></thead><tbody id="scan-table"></tbody></table></div></div></details>
+    </div>
+    <p id="export-status" class="sr-only" role="status"></p>
+    <noscript><p class="notice">JavaScript is needed to calculate and filter the illustrative results.</p></noscript>
+  </main>
+  <footer class="site-footer"><span>NT / Life &amp; support</span><span>Illustrative data · Internal team review</span><a href="./index.html">Return to survey <span aria-hidden="true">↗</span></a></footer>
+<script>(function () {
+  'use strict';
+  const DOMAIN_SETS = {
+  "adult": [
+    [
+      "settling",
+      "Settling into life in the NT"
+    ],
+    [
+      "work_study",
+      "Work, study or training"
+    ],
+    [
+      "housing",
+      "Finding or managing housing"
+    ],
+    [
+      "everyday_expenses",
+      "Managing everyday expenses"
+    ],
+    [
+      "transport",
+      "Getting around"
+    ],
+    [
+      "childcare",
+      "Childcare"
+    ],
+    [
+      "schooling",
+      "Schooling or children's education"
+    ],
+    [
+      "parenting_caring",
+      "Parenting or caring for someone"
+    ],
+    [
+      "physical_health",
+      "Physical health or healthcare"
+    ],
+    [
+      "emotional_wellbeing",
+      "Emotional or mental wellbeing"
+    ],
+    [
+      "disability_ongoing_needs",
+      "Disability or ongoing support needs"
+    ],
+    [
+      "family_relationships",
+      "Family life or relationships"
+    ],
+    [
+      "people_to_turn_to",
+      "Friends, community or people to turn to"
+    ],
+    [
+      "military_separation",
+      "Time apart because of military service"
+    ],
+    [
+      "safety_confidential_help",
+      "Feeling safe or getting confidential help"
+    ],
+    [
+      "other_need",
+      "Something else"
+    ]
+  ],
+  "youth": [
+    [
+      "friends_belonging",
+      "Friends or feeling that I belong"
+    ],
+    [
+      "school_learning",
+      "School, study or learning"
+    ],
+    [
+      "moving_change",
+      "Moving or getting used to changes"
+    ],
+    [
+      "family_time_apart",
+      "Family life or having someone away"
+    ],
+    [
+      "feelings_wellbeing",
+      "My feelings or wellbeing"
+    ],
+    [
+      "activities_transport",
+      "Things to do or getting around"
+    ],
+    [
+      "health_access",
+      "Health, disability or other support needs"
+    ],
+    [
+      "finding_help",
+      "Knowing where to get help or finding someone I trust"
+    ],
+    [
+      "other_need",
+      "Something else"
+    ]
+  ],
+  "child": [
+    [
+      "friends",
+      "Making or keeping friends"
+    ],
+    [
+      "school",
+      "School"
+    ],
+    [
+      "moving_change",
+      "Moving or changes"
+    ],
+    [
+      "family_away",
+      "When someone in my family is away"
+    ],
+    [
+      "feelings",
+      "Feelings or worries"
+    ],
+    [
+      "activities",
+      "Things to do"
+    ],
+    [
+      "other_need",
+      "Something else"
+    ]
+  ]
+};
+  const BARRIERS = {
+  "adult": {
+    "unaware": "I did not know what was available",
+    "eligibility_unsure": "I was unsure whether I was eligible",
+    "eligibility_refused": "I was told I was not eligible",
+    "cost": "Cost",
+    "waiting": "Waiting for support",
+    "location_transport": "Location or transport",
+    "hours_timing": "Opening hours or timing",
+    "childcare_caring": "Childcare or caring responsibilities",
+    "language_culture": "Language or cultural barriers",
+    "accessibility": "Accessibility",
+    "privacy_trust": "Concerns about privacy or trust",
+    "poor_fit": "Available support did not fit my situation",
+    "explaining_repeatedly": "Having to explain my situation repeatedly",
+    "other": "Something else"
+  },
+  "youth": {
+    "not_know_where": "Not knowing where to go",
+    "no_trusted_person": "Not having someone I trust to ask",
+    "privacy": "Worrying about who would be told",
+    "not_understood": "Feeling that people would not understand",
+    "timing": "Finding a suitable time",
+    "transport": "Getting there",
+    "cost": "Cost",
+    "not_ready": "Not feeling ready to ask",
+    "other": "Something else"
+  },
+  "child": {
+    "not_know_who": "I do not know who to ask",
+    "hard_to_explain": "It is hard to explain",
+    "worried_to_ask": "I feel worried about asking",
+    "other": "Something else"
+  }
+};
+  const VERSION_LABELS = {adult: 'Adults · 18+', youth: 'Young people · 12–17', child: 'Children · 7–11'};
+  const RELATIONSHIPS = {
+    adult: {serving: 'Serving member', partner: 'Partner or spouse', child: 'Adult child', parent: 'Parent of a serving member', other_family: 'Other family member'},
+    youth: {child: 'Child of a serving member', other_family: 'Other family member'},
+    child: {child: 'Child of a serving member', other_family: 'Other family member'}
+  };
+  const REGIONS = {darwin: 'Darwin', palmerston: 'Palmerston / Litchfield', katherine: 'Katherine / Tindal', alice: 'Alice Springs', other_nt: 'Elsewhere in the NT', outside_au: 'Elsewhere in Australia', outside_overseas: 'Outside Australia', prefer: 'Prefer not to answer'};
+  const NT_REGIONS = ['darwin', 'palmerston', 'katherine', 'alice', 'other_nt'];
+  const REASONS = {
+    adult: {not_needed_yet: 'Managing without outside help', dont_know: 'Do not know where to go', eligibility_concern: 'Unsure whether eligible', cost_concern: 'Expected cost', time: 'No time or opportunity', privacy: 'Concerned about privacy', trust: 'Unsure people would understand', self_reliance: 'Prefer to manage it myself', language: 'Language or communication', access: 'Travel or accessibility', other: 'Another reason'},
+    youth: {dont_know: 'Do not know who to ask', privacy: 'Worry others will find out', trust: 'Do not think people will understand', time: 'Have not had a chance', self_reliance: 'Want to try handling it myself', access: 'Hard to get there', other: 'Something else'},
+    child: {dont_know: 'Do not know who to ask', privacy: 'Worry others will find out', trust: 'Do not think people will understand', time: 'Have not had a chance', self_reliance: 'Want to try handling it myself', access: 'Hard to get there', other: 'Something else'}
+  };
+  const IMPACT = {not_at_all:'Not at all', a_little:'A little', moderately:'Moderately / somewhat', a_lot:'A lot', extremely:'Extremely / very much'};
+  const SPECIAL = ['none', 'unsure', 'prefer'];
+  const META = {
+    id: 'nt-life-support-fictional-v2', classification: 'fictional', seed: 24092026,
+    totalRecords: 136, counts: {adult: 96, youth: 24, child: 16},
+    referencePeriods: {adultNeeds: 'Past six months, or time in scope if shorter', youthNeeds: 'Past six months, or time in scope if shorter', childNeeds: 'Past three months, or time in scope if shorter', impact: 'Past four weeks, or since issue began if more recent', priority: 'Current'},
+    source: 'Deterministic synthetic records for internal review. No survey submissions or real collection dates.',
+    grain: 'One fictional respondent per record, not one household. Roles may overlap.',
+    scope: 'All records connect to a current member serving in NT; default analysis includes only respondents living in NT. Outside-NT family records are a separate optional scope example.',
+    scan: 'One multi-select answer. Selected domains do not imply no need for other domains. none, unsure, prefer and skipped are whole-question statuses.',
+    gapRate: '(some + none) / (enough + some + none) among respondents selecting a domain. unsure, prefer and skipped excluded.'
+  };
+  function createRandom(seed) {
+    let state = seed >>> 0;
+    return function () {state += 0x6D2B79F5; let t = state; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296;};
+  }
+  function responseStatus(values) {
+    if (!Array.isArray(values) || !values.length) return 'skipped';
+    return SPECIAL.includes(values[0]) ? values[0] : 'selected';
+  }
+  function priorityStatus(record) {
+    return !record.priority ? 'skipped' : SPECIAL.includes(record.priority) ? record.priority : 'selected';
+  }
+  function helpStatus(record) {
+    if (priorityStatus(record) !== 'selected') return 'not_asked';
+    if (!Array.isArray(record.help) || !record.help.length) return 'skipped';
+    if (record.help.includes('not_sought')) return 'not_sought';
+    if (record.help.includes('unsure')) return 'unsure';
+    if (record.help.includes('prefer')) return 'prefer';
+    return 'sought';
+  }
+  function createDataset() {
+    const random = createRandom(META.seed);
+    const pick = list => list[Math.floor(random() * list.length)];
+    const multi = labels => {
+      const n = random();
+      if (n < .08) return null;
+      if (n < .15) return ['prefer'];
+      if (n < .23) return ['unsure'];
+      if (n < .38) return ['none'];
+      const keys = Object.keys(labels), values = keys.filter((key, index) => random() < Math.max(.12, .40 - index * .018));
+      return values.length ? values : [pick(keys)];
+    };
+    const records = [];
+    for (const version of ['adult', 'youth', 'child']) {
+      const domains = DOMAIN_SETS[version].map(d => d[0]);
+      for (let i = 0; i < META.counts[version]; i++) {
+        const roles = version === 'adult' ? [pick(['serving','serving','partner','partner','child','parent','other_family'])] : [pick(['child','child','child','other_family'])];
+        if (version === 'adult' && roles[0] === 'serving' && random() < .25) roles.push('partner');
+        let region = pick(['darwin','darwin','darwin','palmerston','palmerston','katherine','katherine','alice','other_nt','outside_au','outside_overseas','prefer']);
+        if (roles.includes('serving') && ['outside_au','outside_overseas'].includes(region)) region = 'darwin';
+        const record = {id:'FICTIONAL-' + version.toUpperCase().slice(0,1) + '-' + String(i+1).padStart(3,'0'), fictional:true, version, roles, serving_nt:'yes', region,
+          force:pick(['adf','adf','adf','other','both','unsure','prefer']), needs:null, adequacy:{}, priority:null, impact:null, help:null, barriers:null};
+        if (version === 'adult' && roles.includes('child')) {
+          record.financial_dependence = pick(['yes','partly','no','prefer',null]);
+          record.care_dependence = pick(['yes','sometimes','no','prefer',null]);
+        }
+        const scan = random();
+        if (scan < .045) record.needs = null;
+        else if (scan < .09) record.needs = ['prefer'];
+        else if (scan < .15) record.needs = ['unsure'];
+        else if (scan < .27) record.needs = ['none'];
+        else {
+          record.needs = domains.filter((key,d) => random() < Math.max(.08,.52-d*.025));
+          if (!record.needs.length) record.needs = [pick(domains)];
+          for (const key of record.needs) {
+            const a = random();
+            record.adequacy[key] = a < .07 ? null : a < .14 ? 'prefer' : a < .22 ? 'unsure' : a < .47 ? 'enough' : a < .81 ? 'some' : 'none';
+          }
+        }
+        // The current-priority question is asked even when no past need was selected.
+        const priority = random();
+        if (priority < .05) record.priority = null;
+        else if (priority < .11) record.priority = 'prefer';
+        else if (priority < .19) record.priority = 'unsure';
+        else if (priority < .32) record.priority = 'none';
+        else if (priority < .38) record.priority = 'another';
+        else record.priority = pick(responseStatus(record.needs) === 'selected' ? record.needs : domains.filter(key => key !== 'other_need'));
+        if (priorityStatus(record) === 'selected') {
+          record.impact = pick(['not_at_all','a_little','moderately','a_lot','a_lot','extremely','unsure','prefer',null]);
+          const seeking = random();
+          if (seeking < .07) record.help = null;
+          else if (seeking < .13) record.help = ['prefer'];
+          else if (seeking < .22) record.help = ['unsure'];
+          else if (seeking < .46) record.help = ['not_sought'];
+          else {
+            const sources = version === 'adult' ? ['family','military','community','health','school','online','other'] : ['family','friends','school','community','health','online','other'];
+            record.help = sources.filter(() => random() < .27);
+            if (!record.help.length) record.help = [pick(sources)];
+          }
+          record.barriers = multi(helpStatus(record) === 'not_sought' ? REASONS[version] : BARRIERS[version]);
+        }
+        records.push(record);
+      }
+    }
+    return records;
+  }
+  const DATA = createDataset();
+  function filterRecords(records, filters) {
+    return records.filter(r => r.version === filters.version
+      && (filters.geography === 'all' || (filters.geography === 'nt' ? NT_REGIONS.includes(r.region) : r.region === filters.geography))
+      && (filters.relationship === 'all' || r.roles.includes(filters.relationship)));
+  }
+  function tallyStatuses(records, getStatus) {
+    return Object.fromEntries(['selected','none','unsure','prefer','skipped'].map(status => [status, records.filter(r => getStatus(r) === status).length]));
+  }
+  function aggregate(records, version) {
+    const isOutside = r => ['outside_au','outside_overseas'].includes(r.region);
+    const hasOutside = records.some(isOutside);
+    const hasLocalWording = records.some(r => !isOutside(r));
+    const domains = DOMAIN_SETS[version].map(([key,label]) => {
+      if (version === 'adult' && key === 'settling' && hasOutside) {
+        label = hasLocalWording ? 'Settling in / adjusting to a family member’s NT service' : 'Adjusting to your family member serving in the NT';
+      }
+      const needs = records.filter(r => r.needs?.includes(key));
+      const count = value => needs.filter(r => r.adequacy[key] === value).length;
+      const enough=count('enough'), some=count('some'), none=count('none'), unsure=count('unsure'), prefer=count('prefer');
+      return {key,label,needed:needs.length,notSelected:records.length-needs.length,enough,some,none,unsure,prefer,skipped:needs.filter(r => r.adequacy[key] == null).length,
+        gap:some+none, definite:enough+some+none, priority:records.filter(r => r.priority === key).length};
+    });
+    const scan = tallyStatuses(records, r => responseStatus(r.needs));
+    const priority = tallyStatuses(records, priorityStatus);
+    const priorities = [...domains.map(d => ({key:d.key,label:d.label,count:d.priority})),{key:'another',label:'Another area',count:records.filter(r => r.priority === 'another').length}];
+    const hasGap = r => Object.values(r.adequacy).some(v => ['some','none'].includes(v));
+    const unknownGap = r => ['unsure','prefer','skipped'].includes(responseStatus(r.needs)) || Object.values(r.adequacy).some(v => v == null || ['unsure','prefer'].includes(v));
+    const priorityRecords = records.filter(r => priorityStatus(r) === 'selected');
+    const help = Object.fromEntries(['sought','not_sought','unsure','prefer','skipped'].map(s => [s,priorityRecords.filter(r => helpStatus(r)===s).length]));
+    function access(status,labels) {
+      const group = priorityRecords.filter(r => helpStatus(r) === status);
+      const statuses = tallyStatuses(group,r => responseStatus(r.barriers));
+      const definite = group.filter(r => ['selected','none'].includes(responseStatus(r.barriers)));
+      return {total:group.length,statuses,denominator:definite.length,choices:Object.entries(labels).map(([key,label]) => ({key,label,count:definite.filter(r => r.barriers.includes(key)).length})).sort((a,b) => b.count-a.count)};
+    }
+    const impactDefinite = priorityRecords.filter(r => Object.hasOwn(IMPACT,r.impact));
+    return {total:records.length,domains,scan,priority,priorities,help,
+      gapPeople:records.filter(hasGap).length,gapUncertainPeople:records.filter(r => !hasGap(r) && unknownGap(r)).length,
+      asked:domains.reduce((s,d) => s+d.needed,0), answered:domains.reduce((s,d) => s+d.needed-d.skipped,0),
+      unsure:domains.reduce((s,d) => s+d.unsure,0),prefer:domains.reduce((s,d) => s+d.prefer,0),skipped:domains.reduce((s,d) => s+d.skipped,0),
+      barriers:access('sought',BARRIERS[version]),reasons:access('not_sought',REASONS[version]),
+      neutralBarrierAnswers:priorityRecords.filter(r => ['unsure','prefer','skipped'].includes(helpStatus(r)) && responseStatus(r.barriers)!=='skipped').length,
+      impact:{denominator:impactDefinite.length,choices:Object.entries(IMPACT).map(([key,label]) => ({key,label,count:impactDefinite.filter(r => r.impact===key).length})),unsure:priorityRecords.filter(r=>r.impact==='unsure').length,prefer:priorityRecords.filter(r=>r.impact==='prefer').length,skipped:priorityRecords.filter(r=>r.impact==null).length}};
+  }
+  function percent(n,d) {return d ? Math.round(n/d*100) : null;}
+  function escapeHTML(value) {return String(value).replace(/[&<>"']/g,ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
+  function csvCell(value) {
+    let s = value == null ? '' : String(value);
+    if (/^[\s]*[=+@-]/.test(s)) s = "'" + s;
+    return '"' + s.replace(/"/g,'""') + '"';
+  }
+  function createCSV(records,version) {
+    const domains = DOMAIN_SETS[version];
+    const columns = ['data_classification','fictional_record_id','questionnaire_version','needs_reference_months','impact_reference_weeks','respondent_location','roles','service_connection','financial_dependence','care_dependence','needs_scan_status','selected_needs',
+      ...domains.flatMap(([key]) => [key+'_selection',key+'_adequacy']),'current_priority','impact','help_status','help_sources','access_response_status','encountered_barriers','reasons_not_sought','barriers_unclassified_help_status'];
+    const rows = records.map(r => {
+      const hasPriority = priorityStatus(r)==='selected', help=helpStatus(r), access=responseStatus(r.barriers);
+      const accessValues = access==='selected' ? r.barriers.join(' | ') : access;
+      return ['fictional',r.id,r.version,version==='child'?3:6,4,r.region,r.roles.join(' | '),r.force,
+        r.roles.includes('child')&&version==='adult'?r.financial_dependence||'skipped':'not_asked',r.roles.includes('child')&&version==='adult'?r.care_dependence||'skipped':'not_asked',responseStatus(r.needs),responseStatus(r.needs)==='selected'?r.needs.join(' | '):'',
+        ...domains.flatMap(([key]) => [r.needs?.includes(key)?'selected':'not_selected',r.needs?.includes(key)?r.adequacy[key]||'skipped':'not_asked']),
+        r.priority||'skipped',hasPriority?r.impact||'skipped':'not_asked',help,help==='sought'?r.help.join(' | '):help,
+        hasPriority?access:'not_asked',help==='sought'?accessValues:'not_asked',help==='not_sought'?accessValues:'not_asked',hasPriority&&!['sought','not_sought'].includes(help)?accessValues:'not_asked'];
+    });
+    return [columns,...rows].map(row=>row.map(csvCell).join(',')).join('\r\n');
+  }
+  const api={META,DOMAIN_SETS,BARRIERS,REASONS,REGIONS,NT_REGIONS,DATA,createDataset,responseStatus,priorityStatus,helpStatus,filterRecords,aggregate,createCSV,csvCell};
+  if(typeof module!=='undefined'&&module.exports) module.exports=api;
+  if(typeof document==='undefined') return;
+  window.NTIllustrativeResults=api;
+  const $=id=>document.getElementById(id);
+  let currentRows=[];
+  const filters=()=>({version:$('version-filter').value,geography:$('region-filter').value,relationship:$('relationship-filter').value});
+  function bar(label,n,denominator,rank) {
+    const value=percent(n,denominator);
+    const inner='<div><div class="bar-label"><span>'+escapeHTML(label)+'</span><span class="bar-number">'+n+' / '+denominator+(value===null?'':' · '+value+'%')+'</span></div><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:'+(value||0)+'%"></div></div></div>';
+    return rank?'<div class="priority-row"><span class="rank" aria-hidden="true">'+String(rank).padStart(2,'0')+'</span>'+inner+'</div>':inner;
+  }
+  function relationships() {
+    const selected=$('relationship-filter').value, choices=RELATIONSHIPS[$('version-filter').value];
+    $('relationship-filter').innerHTML='<option value="all">All relationships</option>'+Object.entries(choices).map(([key,label])=>'<option value="'+key+'">'+escapeHTML(label)+'</option>').join('');
+    if(Object.hasOwn(choices,selected)) $('relationship-filter').value=selected;
+  }
+  const statusSummary=s=>s.none+' none · '+s.unsure+' unsure · '+s.prefer+' prefer not to answer · '+s.skipped+' skipped';
+  function renderAccess(id,result) {
+    $(id+'-description').textContent=result.total+' people in this group. Bars use '+result.denominator+' who selected a reason or explicitly selected none. '+statusSummary(result.statuses)+'.';
+    $(id+'-chart').innerHTML=result.denominator?result.choices.map(d=>bar(d.label,d.count,result.denominator)).join(''):'<p class="no-values">No definite answers in this selection.</p>';
+  }
+  function render() {
+    const f=filters(); currentRows=filterRecords(DATA,f);
+    const result=aggregate(currentRows,f.version),n=result.total;
+    const nt=currentRows.filter(r=>NT_REGIONS.includes(r.region)).length;
+    const outside=currentRows.filter(r=>['outside_au','outside_overseas'].includes(r.region)).length;
+    $('scope-note').textContent=VERSION_LABELS[f.version]+' only · '+n+' fictional respondents · '+nt+' in NT, '+outside+' outside NT, '+(n-nt-outside)+' location undisclosed. Versions are not pooled; roles may overlap.';
+    $('empty-state').hidden=n>0; $('results-content').hidden=n===0; $('export-button').disabled=n===0;
+    $('sample-value').innerHTML=n+'<span>people</span>';
+    $('sample-description').textContent='Individual respondents. This is not a household count.';
+    $('gap-value').innerHTML=result.gapPeople+'<span>/ '+n+' people</span>';
+    $('gap-description').textContent='At least one selected need received some or no help. '+result.gapUncertainPeople+' others have no recorded gap but incomplete, unsure or declined answers. No recorded gap does not establish no need.';
+    $('completeness-value').innerHTML=(percent(result.answered,result.asked)??'—')+(result.asked?'%':'');
+    $('completeness-description').textContent=result.answered+' / '+result.asked+' adequacy items have a response, including '+result.unsure+' unsure and '+result.prefer+' prefer not to answer; '+result.skipped+' skipped.';
+    $('reference-period').textContent=f.version==='child'?'Past 3 months':'Past 6 months';
+    $('needs-description').textContent='Number selecting each area, out of all '+n+' respondents in this view. '+result.scan.selected+' selected at least one area; '+statusSummary(result.scan)+'.';
+    const sorted=[...result.domains].sort((a,b)=>b.needed-a.needed);
+    $('needs-chart').innerHTML=sorted.map(d=>bar(d.label,d.needed,n)).join('');
+    $('priority-description').textContent=result.priority.selected+' people chose one area to improve now; '+result.priority.none+' need no additional support now, '+result.priority.unsure+' unsure, '+result.priority.prefer+' prefer not to answer, '+result.priority.skipped+' skipped. Bars use those '+result.priority.selected+' area choices.';
+    const priorities=result.priorities.filter(d=>d.count>0).sort((a,b)=>b.count-a.count);
+    $('priority-chart').innerHTML=priorities.length?priorities.map((d,i)=>bar(d.label,d.count,result.priority.selected,i+1)).join(''):'<p class="no-values">No current-priority area choices in this selection.</p>';
+    $('impact-description').textContent='Chosen issue, past four weeks (or since it began if more recent). '+result.impact.denominator+' definite answers; '+result.impact.unsure+' unsure, '+result.impact.prefer+' prefer not to answer, '+result.impact.skipped+' skipped.';
+    $('impact-chart').innerHTML=result.impact.denominator?result.impact.choices.map(d=>bar(d.label,d.count,result.impact.denominator)).join(''):'<p class="no-values">No definite impact answers in this selection.</p>';
+    $('adequacy-table').innerHTML=sorted.map(d=>'<tr><th scope="row">'+escapeHTML(d.label)+'</th><td>'+d.needed+'</td><td>'+d.enough+'</td><td>'+d.some+'</td><td>'+d.none+'</td><td>'+d.unsure+'</td><td>'+d.prefer+'</td><td>'+d.skipped+'</td><td><span class="rate">'+(d.definite?'<strong>'+percent(d.gap,d.definite)+'%</strong> <span>('+d.gap+'/'+d.definite+')</span>':'—')+'</span></td></tr>').join('');
+    renderAccess('barriers',result.barriers); renderAccess('reasons',result.reasons);
+    $('access-note').textContent='Multiple choices allowed within each group. For '+result.help.unsure+' people help-seeking was unsure, '+result.help.prefer+' declined and '+result.help.skipped+' skipped. Their '+result.neutralBarrierAnswers+' recorded barrier responses are retained in the export but excluded from these two groups. Unknown or declined barrier answers are excluded from bar denominators.';
+    $('dataset-description').textContent='Full fictional sample: 136 people — 96 adults (18+), 24 young people (12–17), 16 children (7–11). Need and adequacy windows: six months for adults/young people; three months for children, or time in scope if shorter. Priority is current. Impact is past four weeks, or since the issue began if more recent. No real collection dates.';
+    $('sample-composition').textContent='Service connection in this view — '+Object.entries({adf:'ADF',other:'Other countries’ military',both:'Both',unsure:'Unsure',prefer:'Prefer not to answer'}).map(([key,label])=>label+': '+currentRows.filter(r=>r.force===key).length).join(' · ')+'. Sample composition only.';
+    $('scan-status-table').innerHTML=Object.entries({selected:'Selected one or more areas',none:'Explicitly no need in listed areas',unsure:'Not sure',prefer:'Prefer not to answer',skipped:'Skipped'}).map(([key,label])=>'<tr><th scope="row">'+label+'</th><td>'+result.scan[key]+'</td></tr>').join('');
+    $('scan-table').innerHTML=sorted.map(d=>'<tr><th scope="row">'+escapeHTML(d.label)+'</th><td>'+d.needed+'</td><td>'+d.notSelected+'</td></tr>').join('');
+  }
+  $('version-filter').addEventListener('change',()=>{relationships();render();});
+  $('region-filter').addEventListener('change',render); $('relationship-filter').addEventListener('change',render);
+  $('reset-button').addEventListener('click',()=>{$('version-filter').value='adult';$('region-filter').value='nt';relationships();$('relationship-filter').value='all';render();});
+  $('print-button').addEventListener('click',()=>window.print());
+  $('export-button').addEventListener('click',()=>{
+    const url=URL.createObjectURL(new Blob(['\uFEFF'+createCSV(currentRows,filters().version)],{type:'text/csv;charset=utf-8'}));
+    const link=document.createElement('a'); link.href=url; link.download='nt-fictional-'+filters().version+'-filtered.csv';
+    document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    $('export-status').textContent='Exported '+currentRows.length+' fictional records matching the current filters.';
+  });
+  relationships();render();
+})();
+</script>
+</body>
+</html>
