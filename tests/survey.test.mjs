@@ -237,7 +237,7 @@ test('general delivery changes clear time preferences only when no live interact
 });
 
 test('all ages retain paired past-need ratings and get a separate follow-up page for each current need', () => {
-  for (const [version, rawDomainCount] of [['adult', 16], ['youth', 8], ['child', 8]]) {
+  for (const [version, rawDomainCount] of [['adult', 17], ['youth', 8], ['child', 8]]) {
     const domains = domainsFor(version);
     assert.equal(survey.DOMAINS[version].length, rawDomainCount);
     for (const priority of [undefined, [], ['none'], ['unsure'], ['prefer']]) {

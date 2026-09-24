@@ -2,22 +2,23 @@
 // Youth and child pathways are staff walkthroughs until participation procedures are agreed.
 const DOMAINS = {
   adult: [
-    { id: "settling", label: "Postings and changes in service", hint: "Moving, settling in, preparing for a posting or leaving service." },
+    { id: "settling", label: "Postings or leaving service", hint: "Preparing for a move, settling in, uncertainty about postings or adjusting after service." },
     { id: "work_study", label: "Work, study or training", hint: "Finding work, keeping a career going or getting back into study." },
-    { id: "housing", label: "Housing", hint: "Finding a suitable home or dealing with housing problems." },
+    { id: "housing", label: "Housing", hint: "Finding a secure home that suits your household, including accessibility needs or pets." },
     { id: "everyday_expenses", label: "Money and everyday expenses", hint: "Household bills, managing money or finding out about financial help." },
     { id: "transport", label: "Getting around", hint: "Transport to work, appointments or activities." },
-    { id: "childcare", label: "Childcare", hint: "Finding care that is available when you need it." },
+    { id: "childcare", label: "Childcare", hint: "Affordable care during work, shifts or unexpected absences." },
     { id: "schooling", label: "Children’s schooling", hint: "Enrolment, changing schools, learning or getting support at school." },
-    { id: "parenting_caring", label: "Parenting or caring for someone", hint: "Raising children, sharing care or supporting someone who needs help." },
+    { id: "parenting_caring", label: "Parenting or caring for someone", hint: "Parenting while someone is away, sharing care or supporting a relative who is unwell." },
     { id: "physical_health", label: "Physical health and healthcare", hint: "Finding healthcare or getting the treatment you need." },
-    { id: "emotional_wellbeing", label: "Mental health and wellbeing", hint: "Stress, grief or support with how you are feeling." },
+    { id: "emotional_wellbeing", label: "Mental health and wellbeing", hint: "Stress or support with how you are feeling." },
+    { id: "bereavement", label: "Grief or bereavement", hint: "Emotional or practical support after someone has died." },
     { id: "disability_ongoing_needs", label: "Disability support", hint: "Getting support that meets your needs." },
     { id: "family_relationships", label: "Family relationships", hint: "Staying connected, relationship difficulties or changes in family life." },
     { id: "people_to_turn_to", label: "Friends and community", hint: "Meeting people, feeling connected or having someone to turn to." },
-    { id: "military_separation", label: "Time apart because of service", hint: "Deployments, training or other time away from family." },
+    { id: "military_separation", label: "Time apart because of service", hint: "Time away for deployments or training, and settling back into family life afterwards." },
     { id: "safety_confidential_help", label: "Feeling safe at home or in a relationship", hint: "" }
-    ,{ id: "finding_services", label: "Finding the right information or service", hint: "Knowing what is available, who can help or how to apply." }
+    ,{ id: "finding_services", label: "Finding the right information or service", hint: "Knowing what is available to you, how to access it or who to speak to." }
   ],
   youth: [
     { id: "friends_belonging", label: "Friends or feeling that I belong" },
@@ -58,6 +59,7 @@ const BARRIERS = {
     { id: "language_culture", label: "Language or cultural barriers" },
     { id: "accessibility", label: "Accessibility" },
     { id: "privacy_trust", label: "Concerns about privacy or trust" },
+    { id: "military_understanding", label: "The service did not understand Defence family life" },
     { id: "poor_fit", label: "Available support did not fit my situation" },
     { id: "explaining_repeatedly", label: "Having to explain my situation repeatedly" },
     { id: "other", label: "Something else" },
@@ -161,13 +163,13 @@ function cleanExport(answers,version,domains) {
     }));
     if(!hasPriority(copy))for(const key of ['delivery','times','another_priority'])delete copy[key];
   }
-  return {schema_version:'3.0',questionnaire_revision:'2026-09-25-strategy-per-need',consultation_route:route,recall_months:route==='earlier_experience'?null:version==='child'?3:12,follow_up_scope:'one_block_per_selected_need',collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'downloaded_by_respondent; not submitted',answers:copy};
+  return {schema_version:'3.0',questionnaire_revision:'2026-09-25-difficulty-inventory',consultation_route:route,recall_months:route==='earlier_experience'?null:version==='child'?3:12,follow_up_scope:'one_block_per_selected_need',collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'downloaded_by_respondent; not submitted',answers:copy};
 }
 
 const main = document.querySelector('#main');
 const phases = ['About you','Everyday life','Your support','Support now','Finishing up'];
 const state = { version:'adult', age:null, answers:{}, step:'connection', screen:'welcome', returnToReview:false, participation:null, guardianPermission:null };
-const SURVEY_INVITATION = {"title": "Defence family support survey", "greeting": "Hello,\nNT Defence Communities!", "paragraphs": ["Lutheran Care would like your help to plan its Defence Family Support Program in the Northern Territory.", "Tell us about the support you have needed, what you received and what would help now.", "Please answer about your own experience."], "funding": "The program is funded by the Australian Government Department of Defence through its Family Support Funding Program."};
+const SURVEY_INVITATION = {"title": "Defence family support survey", "greeting": "Hello, NT Defence Communities!", "paragraphs": ["Lutheran Care would like your help to plan its Defence Family Support Program in the Northern Territory.", "Tell us about the support you have needed, what you received and what would help now.", "Please answer about your own experience."], "funding": "The program is funded by the Australian Government Department of Defence through its Family Support Funding Program."};
 const PARTICIPANT_NOTICE_VERSION = '2026-09-25-v9';
 // Formal participant wording for the internally reviewed consultation design.
 // The current build has no receiver; its technical status belongs in review.html.
@@ -230,7 +232,7 @@ const PREFER = {id:'prefer',label:'Prefer not to answer'};
 const UNSURE = {id:'unsure',label:'Not sure'};
 const regions = opts([['darwin','Darwin'],['palmerston','Palmerston / Litchfield'],['katherine','Katherine / Tindal'],['alice','Alice Springs'],['other_nt','Elsewhere in the NT'],['outside_au','Elsewhere in Australia'],['outside_overseas','Outside Australia'],['prefer','Prefer not to answer']]);
 const adequacy = () => opts([['enough',isChild()?'I got enough help':'Enough to meet my needs'],['some',isChild()?'I got some help, but needed more':'Some, but not enough'],['none',isChild()?'I did not get any help':'None'],['unsure','Not sure'],['prefer','Prefer not to answer']]);
-const roleOptions = () => isAdult() ? opts([['serving','I am a current or former serving member'],['partner','I am a partner or spouse'],['child','I am the child of a current or former serving member'],['parent','I am the parent of a current or former serving member'],['other_family','I am another family member'],['none','None of these']]) : opts([['child','My parent or carer serves or has served in the military'],['other_family','Someone else in my family serves or has served in the military'],['none','Neither of these'],['unsure','Not sure']]);
+const roleOptions = () => isAdult() ? opts([['serving','I am a current or former serving member'],['partner','I am a partner, spouse or former partner'],['child','I am the child of a current or former serving member'],['parent','I am the parent of a current or former serving member'],['other_family','I am another family member or carer'],['none','None of these']]) : opts([['child','My parent or carer serves or has served in the military'],['other_family','Someone else in my family serves or has served in the military'],['none','Neither of these'],['unsure','Not sure']]);
 const field = (key,label,type,options=[],hint=info,extra={}) => ({key,label,type,options,hint,...extra});
 function detailPage(need) {
   const answers=state.answers;
@@ -302,7 +304,7 @@ function fieldHTML(f) {
 function focusHeading(){main.querySelector('h1')?.focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'});}
 function renderWelcome(){
   state.screen='welcome';
-  main.innerHTML=`<div class="welcome"><section class="welcome-intro"><h1 tabindex="-1">${esc(SURVEY_INVITATION.title)}</h1><p class="greeting">${esc(SURVEY_INVITATION.greeting)}</p>${SURVEY_INVITATION.paragraphs.map((text,i)=>`<p class="${i===0?'lead':''}">${esc(text)}</p>`).join('')}<p class="funding-note">${esc(SURVEY_INVITATION.funding).replace('Family Support Funding Program','<span class="funding-program">Family Support Funding Program</span>')}</p></section>${participantInformationHTML()}<div class="welcome-start"><button class="button primary" id="start-questionnaire">Start questionnaire <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div></div>`;
+  main.innerHTML=`<div class="welcome"><section class="welcome-intro"><h1 tabindex="-1">${esc(SURVEY_INVITATION.title)}</h1><p class="greeting">${esc(SURVEY_INVITATION.greeting)}</p>${SURVEY_INVITATION.paragraphs.map((text,i)=>`<p class="${i===0?'lead':''}">${esc(text)}</p>`).join('')}<p class="funding-note">${esc(SURVEY_INVITATION.funding)}</p></section>${participantInformationHTML()}<div class="welcome-start"><button class="button primary" id="start-questionnaire">Start questionnaire <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div></div>`;
   main.querySelector('#start-questionnaire').onclick=()=>{renderAge();focusHeading();};
 }
 function renderAge(){

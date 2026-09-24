@@ -11,7 +11,7 @@ A formal questionnaire for Lutheran Care’s internal team review. This is servi
 
 ## Current structure, 25 September 2026
 
-The adult domains were checked against the supplied Australian Government *Defence and Veteran Family Wellbeing Strategy 2025–2030* and First Action Plan. The list has 16 domains plus Something else. Information/service navigation is added; postings/leaving service and grief are visible examples within broader domains. The source is national policy, not a validated scale or evidence of NT prevalence. Youth and child options remain shorter. Examples do not exhaust the possible experiences in an area.
+The adult domains were checked against the supplied Australian Government *Defence and Veteran Family Wellbeing Strategy 2025–2030* and First Action Plan. The list has 17 domains plus Something else. Grief/bereavement is separate because it includes practical as well as emotional support. Information/service navigation is added; postings/leaving service and grief are visible examples within broader domains. The source is national policy, not a validated scale or evidence of NT prevalence. Youth and child options remain shorter. Examples do not exhaust the possible experiences in an area.
 
 NT service timing controls the route, independently of the respondent's residence:
 
@@ -49,3 +49,11 @@ LC logo and self-hosted Karla sources/licence are in `assets/`. The Pages deploy
 ## Completion resource
 
 Set `title` and the public HTTPS `url` in `thank-you-resource.js` when the team has made the resource. Until then the inactive resource button says Available soon. The same link is used for all completers, including optional blanks and earlier-experience respondents. It appends no answers or participant ID, collects no email and opens without a referrer. No resource content has been invented.
+
+## Full difficulty inventory, 25 September
+
+The recovered 39 headings belong to the earlier *From Challenges to Solutions* synthesis, which combines the Strategy with the ADF Census and other research. They are not an official 39-item Strategy list. The current source inventory distinguishes explicitly stated difficulties/support needs from gaps inferred from policy actions. The full list is a team reference, not a new flat respondent checklist.
+
+Main-list additions remain selective: grief/bereavement is now a separate adult need; concise examples expose posting uncertainty, suitable/pet-friendly housing, atypical childcare hours and reunion. A specific Defence-family-understanding barrier is added for adults who sought help. Examples improve recognition but do not create separately coded counts of every detailed issue. Existing need-specific free text remains available.
+
+Family relationship labels include former partners and carers; this avoids excluding wider family voices from consultation and does not promise service eligibility.

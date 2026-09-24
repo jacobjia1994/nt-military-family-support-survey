@@ -1,7 +1,7 @@
 {
   "invitation": {
     "title": "Defence family support survey",
-    "greeting": "Hello,\nNT Defence Communities!",
+    "greeting": "Hello, NT Defence Communities!",
     "paragraphs": [
       "Lutheran Care would like your help to plan its Defence Family Support Program in the Northern Territory.",
       "Tell us about the support you have needed, what you received and what would help now.",
@@ -56,7 +56,7 @@
             },
             {
               "id": "partner",
-              "label": "I am a partner or spouse"
+              "label": "I am a partner, spouse or former partner"
             },
             {
               "id": "child",
@@ -68,7 +68,7 @@
             },
             {
               "id": "other_family",
-              "label": "I am another family member"
+              "label": "I am another family member or carer"
             },
             {
               "id": "none",
@@ -253,8 +253,8 @@
           "options": [
             {
               "id": "settling",
-              "label": "Postings and changes in service",
-              "hint": "Moving, settling in, preparing for a posting or leaving service."
+              "label": "Postings or leaving service",
+              "hint": "Preparing for a move, settling in, uncertainty about postings or adjusting after service."
             },
             {
               "id": "work_study",
@@ -264,7 +264,7 @@
             {
               "id": "housing",
               "label": "Housing",
-              "hint": "Finding a suitable home or dealing with housing problems."
+              "hint": "Finding a secure home that suits your household, including accessibility needs or pets."
             },
             {
               "id": "everyday_expenses",
@@ -279,7 +279,7 @@
             {
               "id": "childcare",
               "label": "Childcare",
-              "hint": "Finding care that is available when you need it."
+              "hint": "Affordable care during work, shifts or unexpected absences."
             },
             {
               "id": "schooling",
@@ -289,7 +289,7 @@
             {
               "id": "parenting_caring",
               "label": "Parenting or caring for someone",
-              "hint": "Raising children, sharing care or supporting someone who needs help."
+              "hint": "Parenting while someone is away, sharing care or supporting a relative who is unwell."
             },
             {
               "id": "physical_health",
@@ -299,7 +299,12 @@
             {
               "id": "emotional_wellbeing",
               "label": "Mental health and wellbeing",
-              "hint": "Stress, grief or support with how you are feeling."
+              "hint": "Stress or support with how you are feeling."
+            },
+            {
+              "id": "bereavement",
+              "label": "Grief or bereavement",
+              "hint": "Emotional or practical support after someone has died."
             },
             {
               "id": "disability_ongoing_needs",
@@ -319,7 +324,7 @@
             {
               "id": "military_separation",
               "label": "Time apart because of service",
-              "hint": "Deployments, training or other time away from family."
+              "hint": "Time away for deployments or training, and settling back into family life afterwards."
             },
             {
               "id": "safety_confidential_help",
@@ -329,7 +334,7 @@
             {
               "id": "finding_services",
               "label": "Finding the right information or service",
-              "hint": "Knowing what is available, who can help or how to apply."
+              "hint": "Knowing what is available to you, how to access it or who to speak to."
             },
             {
               "id": "other_need",
@@ -373,7 +378,7 @@
       "fields": [
         {
           "key": "adequacy:settling",
-          "label": "Postings and changes in service",
+          "label": "Postings or leaving service",
           "type": "single",
           "options": [
             {
@@ -652,6 +657,34 @@
           "hint": "How much of the support you needed did you receive?"
         },
         {
+          "key": "adequacy:bereavement",
+          "label": "Grief or bereavement",
+          "type": "single",
+          "options": [
+            {
+              "id": "enough",
+              "label": "Enough to meet my needs"
+            },
+            {
+              "id": "some",
+              "label": "Some, but not enough"
+            },
+            {
+              "id": "none",
+              "label": "None"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "How much of the support you needed did you receive?"
+        },
+        {
           "key": "adequacy:disability_ongoing_needs",
           "label": "Disability support",
           "type": "single",
@@ -862,7 +895,7 @@
           "options": [
             {
               "id": "settling",
-              "label": "Postings and changes in service"
+              "label": "Postings or leaving service"
             },
             {
               "id": "work_study",
@@ -899,6 +932,10 @@
             {
               "id": "emotional_wellbeing",
               "label": "Mental health and wellbeing"
+            },
+            {
+              "id": "bereavement",
+              "label": "Grief or bereavement"
             },
             {
               "id": "disability_ongoing_needs",
@@ -1119,6 +1156,10 @@
                 {
                   "id": "privacy_trust",
                   "label": "Concerns about privacy or trust"
+                },
+                {
+                  "id": "military_understanding",
+                  "label": "The service did not understand Defence family life"
                 },
                 {
                   "id": "poor_fit",
@@ -1393,7 +1434,7 @@
             },
             {
               "id": "partner",
-              "label": "I am a partner or spouse"
+              "label": "I am a partner, spouse or former partner"
             },
             {
               "id": "child",
@@ -1405,7 +1446,7 @@
             },
             {
               "id": "other_family",
-              "label": "I am another family member"
+              "label": "I am another family member or carer"
             },
             {
               "id": "none",
@@ -1590,8 +1631,8 @@
           "options": [
             {
               "id": "settling",
-              "label": "Postings and changes in service",
-              "hint": "Moving, settling in, preparing for a posting or leaving service."
+              "label": "Postings or leaving service",
+              "hint": "Preparing for a move, settling in, uncertainty about postings or adjusting after service."
             },
             {
               "id": "work_study",
@@ -1601,7 +1642,7 @@
             {
               "id": "housing",
               "label": "Housing",
-              "hint": "Finding a suitable home or dealing with housing problems."
+              "hint": "Finding a secure home that suits your household, including accessibility needs or pets."
             },
             {
               "id": "everyday_expenses",
@@ -1616,7 +1657,7 @@
             {
               "id": "childcare",
               "label": "Childcare",
-              "hint": "Finding care that is available when you need it."
+              "hint": "Affordable care during work, shifts or unexpected absences."
             },
             {
               "id": "schooling",
@@ -1626,7 +1667,7 @@
             {
               "id": "parenting_caring",
               "label": "Parenting or caring for someone",
-              "hint": "Raising children, sharing care or supporting someone who needs help."
+              "hint": "Parenting while someone is away, sharing care or supporting a relative who is unwell."
             },
             {
               "id": "physical_health",
@@ -1636,7 +1677,12 @@
             {
               "id": "emotional_wellbeing",
               "label": "Mental health and wellbeing",
-              "hint": "Stress, grief or support with how you are feeling."
+              "hint": "Stress or support with how you are feeling."
+            },
+            {
+              "id": "bereavement",
+              "label": "Grief or bereavement",
+              "hint": "Emotional or practical support after someone has died."
             },
             {
               "id": "disability_ongoing_needs",
@@ -1656,7 +1702,7 @@
             {
               "id": "military_separation",
               "label": "Time apart because of service",
-              "hint": "Deployments, training or other time away from family."
+              "hint": "Time away for deployments or training, and settling back into family life afterwards."
             },
             {
               "id": "safety_confidential_help",
@@ -1666,7 +1712,7 @@
             {
               "id": "finding_services",
               "label": "Finding the right information or service",
-              "hint": "Knowing what is available, who can help or how to apply."
+              "hint": "Knowing what is available to you, how to access it or who to speak to."
             },
             {
               "id": "other_need",
@@ -1710,7 +1756,7 @@
       "fields": [
         {
           "key": "adequacy:settling",
-          "label": "Postings and changes in service",
+          "label": "Postings or leaving service",
           "type": "single",
           "options": [
             {
@@ -1989,6 +2035,34 @@
           "hint": "How much of the support you needed did you receive?"
         },
         {
+          "key": "adequacy:bereavement",
+          "label": "Grief or bereavement",
+          "type": "single",
+          "options": [
+            {
+              "id": "enough",
+              "label": "Enough to meet my needs"
+            },
+            {
+              "id": "some",
+              "label": "Some, but not enough"
+            },
+            {
+              "id": "none",
+              "label": "None"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "How much of the support you needed did you receive?"
+        },
+        {
           "key": "adequacy:disability_ongoing_needs",
           "label": "Disability support",
           "type": "single",
@@ -2199,7 +2273,7 @@
           "options": [
             {
               "id": "settling",
-              "label": "Postings and changes in service"
+              "label": "Postings or leaving service"
             },
             {
               "id": "work_study",
@@ -2236,6 +2310,10 @@
             {
               "id": "emotional_wellbeing",
               "label": "Mental health and wellbeing"
+            },
+            {
+              "id": "bereavement",
+              "label": "Grief or bereavement"
             },
             {
               "id": "disability_ongoing_needs",
@@ -2456,6 +2534,10 @@
                 {
                   "id": "privacy_trust",
                   "label": "Concerns about privacy or trust"
+                },
+                {
+                  "id": "military_understanding",
+                  "label": "The service did not understand Defence family life"
                 },
                 {
                   "id": "poor_fit",
@@ -2730,7 +2812,7 @@
             },
             {
               "id": "partner",
-              "label": "I am a partner or spouse"
+              "label": "I am a partner, spouse or former partner"
             },
             {
               "id": "child",
@@ -2742,7 +2824,7 @@
             },
             {
               "id": "other_family",
-              "label": "I am another family member"
+              "label": "I am another family member or carer"
             },
             {
               "id": "none",
@@ -2927,8 +3009,8 @@
           "options": [
             {
               "id": "settling",
-              "label": "Postings and changes in service",
-              "hint": "Moving, settling in, preparing for a posting or leaving service."
+              "label": "Postings or leaving service",
+              "hint": "Preparing for a move, settling in, uncertainty about postings or adjusting after service."
             },
             {
               "id": "work_study",
@@ -2938,7 +3020,7 @@
             {
               "id": "housing",
               "label": "Housing",
-              "hint": "Finding a suitable home or dealing with housing problems."
+              "hint": "Finding a secure home that suits your household, including accessibility needs or pets."
             },
             {
               "id": "everyday_expenses",
@@ -2953,7 +3035,7 @@
             {
               "id": "childcare",
               "label": "Childcare",
-              "hint": "Finding care that is available when you need it."
+              "hint": "Affordable care during work, shifts or unexpected absences."
             },
             {
               "id": "schooling",
@@ -2963,7 +3045,7 @@
             {
               "id": "parenting_caring",
               "label": "Parenting or caring for someone",
-              "hint": "Raising children, sharing care or supporting someone who needs help."
+              "hint": "Parenting while someone is away, sharing care or supporting a relative who is unwell."
             },
             {
               "id": "physical_health",
@@ -2973,7 +3055,12 @@
             {
               "id": "emotional_wellbeing",
               "label": "Mental health and wellbeing",
-              "hint": "Stress, grief or support with how you are feeling."
+              "hint": "Stress or support with how you are feeling."
+            },
+            {
+              "id": "bereavement",
+              "label": "Grief or bereavement",
+              "hint": "Emotional or practical support after someone has died."
             },
             {
               "id": "disability_ongoing_needs",
@@ -2993,7 +3080,7 @@
             {
               "id": "military_separation",
               "label": "Time apart because of service",
-              "hint": "Deployments, training or other time away from family."
+              "hint": "Time away for deployments or training, and settling back into family life afterwards."
             },
             {
               "id": "safety_confidential_help",
@@ -3003,7 +3090,7 @@
             {
               "id": "finding_services",
               "label": "Finding the right information or service",
-              "hint": "Knowing what is available, who can help or how to apply."
+              "hint": "Knowing what is available to you, how to access it or who to speak to."
             },
             {
               "id": "other_need",
@@ -3047,7 +3134,7 @@
       "fields": [
         {
           "key": "adequacy:settling",
-          "label": "Postings and changes in service",
+          "label": "Postings or leaving service",
           "type": "single",
           "options": [
             {
@@ -3326,6 +3413,34 @@
           "hint": "How much of the support you needed did you receive?"
         },
         {
+          "key": "adequacy:bereavement",
+          "label": "Grief or bereavement",
+          "type": "single",
+          "options": [
+            {
+              "id": "enough",
+              "label": "Enough to meet my needs"
+            },
+            {
+              "id": "some",
+              "label": "Some, but not enough"
+            },
+            {
+              "id": "none",
+              "label": "None"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "How much of the support you needed did you receive?"
+        },
+        {
           "key": "adequacy:disability_ongoing_needs",
           "label": "Disability support",
           "type": "single",
@@ -3536,7 +3651,7 @@
           "options": [
             {
               "id": "settling",
-              "label": "Postings and changes in service"
+              "label": "Postings or leaving service"
             },
             {
               "id": "work_study",
@@ -3573,6 +3688,10 @@
             {
               "id": "emotional_wellbeing",
               "label": "Mental health and wellbeing"
+            },
+            {
+              "id": "bereavement",
+              "label": "Grief or bereavement"
             },
             {
               "id": "disability_ongoing_needs",
@@ -3793,6 +3912,10 @@
                 {
                   "id": "privacy_trust",
                   "label": "Concerns about privacy or trust"
+                },
+                {
+                  "id": "military_understanding",
+                  "label": "The service did not understand Defence family life"
                 },
                 {
                   "id": "poor_fit",
