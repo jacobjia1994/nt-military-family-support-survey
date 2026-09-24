@@ -3,22 +3,17 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import vm from 'node:vm';
 
-// Load the actual respondent definitions, without booting the browser UI.
-// No third-party DOM, network connection, or build step is needed.
+// Exercise the actual respondent definitions without a DOM, network or build step.
 const source = readFileSync(new URL('../survey.js', import.meta.url), 'utf8');
 const bootstrap = source.lastIndexOf("if (document.body.dataset.view === 'questions')");
 assert.ok(bootstrap > 0, 'The survey bootstrap must be identifiable');
-const context = vm.createContext({
-  structuredClone,
-  URL,
-  document: { querySelector: () => null },
-});
+const context = vm.createContext({ structuredClone, URL, document: { querySelector: () => null } });
 vm.runInContext(`${source.slice(0, bootstrap)}
   globalThis.survey = {
-    DOMAINS, SPECIAL_NEEDS, NO_PRIORITY, toggleChoice, selectedNeeds,
-    selectedPriorities, hasPriority, hasSoughtHelp, reconcileAnswers, buildSteps, cleanExport,
-    requiredAnswersComplete, thankYouResource, thankYouResourceHTML,
-    page, detailPage, period, conditionalVisible, reviewHTML, locationFrame,
+    DOMAINS, SPECIAL_NEEDS, toggleChoice, selectedNeeds, hasSoughtHelp,
+    reconcileAnswers, buildSteps, cleanExport, requiredAnswersComplete,
+    thankYouResource, thankYouResourceHTML, page, areaPage, areaBarrierField,
+    areaQuestionsHTML, period, conditionalVisible, reviewHTML, locationFrame,
     getValue, setValue, consultationRoute, maxTextLength, fieldHTML,
     questionnaireVersion, needsGuardianPermission, guardianPermissionRecord,
     participationRecord, hasValidParticipation, isOutsideSurveyScope,
@@ -26,50 +21,48 @@ vm.runInContext(`${source.slice(0, bootstrap)}
       state.version = version;
       state.age = version;
       state.answers = answers;
+      state.expandedAreas = {};
       return domainList();
     },
     getContext: () => ({ version: state.version, answers: state.answers }),
+    setExpanded(need, open) { state.expandedAreas[need] = open; },
     setParticipationContext(age, participation = null, guardianPermission = null) {
       state.age = age;
       state.version = questionnaireVersion(age);
       state.participation = participation;
       state.guardianPermission = guardianPermission;
     },
-    librarySections: typeof questionLibrarySections === 'function'
-      ? questionLibrarySections : null,
+    librarySections: questionLibrarySections,
   };
 `, context, { filename: 'survey.js' });
 const survey = context.survey;
-// Objects created inside a VM have different prototypes; compare JSON values.
+// Values created in a VM have different prototypes; compare serialisable values.
 const plain = value => JSON.parse(JSON.stringify(value));
 const hasOwn = (object, key) => Object.hasOwn(object, key);
-
 const domainsFor = version => survey.setContext(version);
 const pageFor = (id, version = 'adult', answers = {}) => {
   survey.setContext(version, answers);
   return plain(survey.page({ id }));
 };
-const needBlock = (label = 'Housing') => ({
-  impact: 'a_lot', help: ['family'], barriers: ['cost'], change: `${label} change`,
+const areaBlock = (label = 'Housing') => ({
+  received: 'some', additional_support_now: 'no', sources: ['family'],
+  barriers: ['cost'], comment: `${label} experience`,
 });
-const legacyCollective = () => ({
-  impact: 'a_lot', help: ['family'], barriers: ['cost'], change: 'Old combined answer',
-});
-const detailFor = (need, version, answers) => pageFor(`detail:${need}`, version, answers);
-const barrierField = detail => detail.fields.find(f => f.key.endsWith(':barriers'));
+const areaFor = (need, version, answers) => pageFor(`area:${need}`, version, answers);
+const barrierField = area => area.fields.find(f => f.key.endsWith(':barriers'));
 const fieldIds = field => field.options.map(option => option.id);
+const stepsFor = (answers, version = 'adult') => {
+  const domains = survey.setContext(version, answers);
+  return plain(survey.buildSteps(answers, domains, version));
+};
 
 
-test('exclusive answers replace ordinary choices, and ordinary choices replace exclusives', () => {
-  for (const exclusive of [
-    ['none', 'unsure', 'prefer'],
-    ['not_sought', 'unsure', 'prefer'],
-    ['no_preference', 'prefer'],
-  ]) {
+test('exclusive answers replace ordinary choices, without mutating previous values', () => {
+  for (const exclusive of [SPECIAL(), ['not_sought', 'unsure', 'prefer'], ['no_preference', 'prefer']]) {
     for (const value of exclusive) {
       const previous = ['family', 'community'];
       assert.deepEqual(plain(survey.toggleChoice(previous, value, exclusive)), [value]);
-      assert.deepEqual(previous, ['family', 'community'], 'Toggling must not mutate the old array');
+      assert.deepEqual(previous, ['family', 'community']);
       assert.deepEqual(plain(survey.toggleChoice([value], 'family', exclusive)), ['family']);
       assert.deepEqual(plain(survey.toggleChoice([value], value, exclusive)), []);
     }
@@ -77,122 +70,235 @@ test('exclusive answers replace ordinary choices, and ordinary choices replace e
   assert.deepEqual(plain(survey.toggleChoice(undefined, 'family')), ['family']);
   assert.deepEqual(plain(survey.toggleChoice(['family', 'community'], 'family')), ['community']);
 });
+function SPECIAL() { return ['none', 'unsure', 'prefer']; }
 
-test('needs and help classifiers distinguish substantive answers from explicit non-answers', () => {
+
+test('need and source classifiers preserve explicit non-answers rather than treating them as experience', () => {
   const domains = domainsFor('adult');
   assert.deepEqual(plain(survey.selectedNeeds({ needs: ['housing', 'none', 'unsure', 'prefer', 'unknown', 'other_need'] }, domains)), ['housing', 'other_need']);
-  for (const priority of [undefined, '', [], ['none'], ['unsure'], ['prefer']]) {
-    assert.equal(survey.hasPriority({ priority }), false);
+  for (const needs of [undefined, '', 'housing', [], ['none'], ['unsure'], ['prefer']]) {
+    assert.deepEqual(plain(survey.selectedNeeds({ needs }, domains)), []);
   }
-  for (const priority of [['housing'], ['another'], ['housing', 'transport']]) {
-    assert.equal(survey.hasPriority({ priority }), true);
+  for (const sources of [undefined, [], ['not_sought'], ['unsure'], ['prefer']]) {
+    assert.equal(survey.hasSoughtHelp({ sources }), false);
   }
-  for (const help of [undefined, [], ['not_sought'], ['unsure'], ['prefer']]) {
-    assert.equal(survey.hasSoughtHelp({ help }), false);
-  }
-  assert.equal(survey.hasSoughtHelp({ help: ['family'] }), true);
+  assert.equal(survey.hasSoughtHelp({ sources: ['family'] }), true);
 });
 
 
-test('editing past needs prunes only their adequacy ratings and preserves each current need', () => {
-  const domains = domainsFor('adult');
-  const follow_up = { housing: needBlock(), transport: needBlock('Transport') };
-  const answers = {
-    needs: ['housing'], needs_other: 'Old detail',
-    adequacy: { housing: 'enough', transport: 'some', other_need: 'none' },
-    priority: ['housing', 'transport'], follow_up,
-    delivery: ['phone'], times: ['weekend'], strengths: 'Friends', anything: 'Keep this',
-  };
-  survey.reconcileAnswers(answers, 'needs', domains);
-  assert.deepEqual(plain(answers.adequacy), { housing: 'enough' });
-  assert.equal(hasOwn(answers, 'needs_other'), false);
-  assert.deepEqual(answers.priority, ['housing', 'transport']);
-  assert.equal(answers.follow_up, follow_up);
-  assert.deepEqual(answers.delivery, ['phone']);
-  answers.needs = ['none'];
-  survey.reconcileAnswers(answers, 'needs', domains);
-  assert.deepEqual(plain(answers.adequacy), {});
-  assert.equal(answers.follow_up, follow_up, 'No past need does not erase a current need');
-  assert.equal(answers.anything, 'Keep this');
-});
-
-test('removing, reordering and re-adding current needs never shifts or resurrects another need’s answers', () => {
-  const domains = domainsFor('adult');
-  const answers = {
-    priority: ['transport', 'housing'],
-    follow_up: { housing: needBlock(), transport: needBlock('Transport'), another: needBlock('Other') },
-    another_priority: 'An earlier topic', adequacy: { housing: 'some' },
-    delivery: ['phone'], times: ['weekend'],
-  };
-  survey.reconcileAnswers(answers, 'priority', domains);
-  assert.deepEqual(plain(answers.follow_up), { housing: needBlock(), transport: needBlock('Transport') });
-  assert.equal(hasOwn(answers, 'another_priority'), false);
-  assert.deepEqual(answers.delivery, ['phone'], 'General delivery preferences survive a partial edit');
-  answers.priority = ['transport'];
-  survey.reconcileAnswers(answers, 'priority', domains);
-  assert.deepEqual(plain(answers.follow_up), { transport: needBlock('Transport') });
-  answers.priority = ['transport', 'housing'];
-  survey.reconcileAnswers(answers, 'priority', domains);
-  assert.equal(hasOwn(answers.follow_up, 'housing'), false);
-  const result = plain(survey.cleanExport(answers, 'adult', domains));
-  assert.deepEqual(result.answers.follow_up, { transport: needBlock('Transport'), housing: {} });
-  assert.deepEqual(result.answers.adequacy, {}, 'A stale rating is not exported when its past need is absent');
-  for (const priority of [[], ['none'], ['unsure'], ['prefer']]) {
-    const a = { ...answers, priority, follow_up: structuredClone(answers.follow_up) };
-    survey.reconcileAnswers(a, 'priority', domains);
-    assert.deepEqual(plain(a.follow_up), {});
-    for (const key of ['delivery', 'times', 'another_priority']) assert.equal(hasOwn(a, key), false, key);
+test('main routes select needs once, finish each selected area, and put background questions near the end', () => {
+  for (const [version, domainCount] of [['adult', 17], ['youth', 8], ['child', 8]]) {
+    assert.equal(survey.DOMAINS[version].length, domainCount, 'Accepted options remain available');
+    const ids = plain(survey.DOMAINS[version]).map(d => d.id);
+    for (const count of [0, 2, 5]) {
+      const needs = ids.slice(0, count);
+      const steps = stepsFor({ serving_nt: 'yes', needs }, version);
+      assert.deepEqual(steps.map(s => s.id), [
+        'connection', 'needs', ...needs.map(id => `area:${id}`),
+        ...(version === 'child' ? [] : ['delivery']), 'anything', 'place', 'review',
+      ]);
+      assert.equal(steps.length, (version === 'child' ? 5 : 6) + count);
+      assert.deepEqual(steps.filter(s => s.need).map(s => s.need), needs);
+      assert.equal(new Set(steps.map(s => s.id)).size, steps.length);
+      assert.equal(steps.filter(s => s.id === 'needs').length, 1);
+      assert.equal(steps.some(s => /priority|adequacy|impact|strengths|detail:/.test(s.id)), false);
+    }
   }
 });
 
-test('editing other-need descriptions clears only the answers that refer to the edited description', () => {
-  const domains = domainsFor('adult');
-  const answers = {
-    needs: ['other_need'], needs_other: 'An edited past need',
-    adequacy: { other_need: 'some', housing: 'enough' },
-    priority: ['housing', 'another'], another_priority: 'An edited current need',
-    follow_up: { housing: needBlock(), another: needBlock('Other') },
-    delivery: ['phone'], times: ['weekend'],
-  };
-  survey.reconcileAnswers(answers, 'another_priority', domains);
-  assert.deepEqual(plain(answers.follow_up), { housing: needBlock() });
-  assert.equal(answers.another_priority, 'An edited current need');
-  assert.equal(answers.adequacy.other_need, 'some');
-  survey.reconcileAnswers(answers, 'needs_other', domains);
-  assert.deepEqual(answers.adequacy, { housing: 'enough' });
-  assert.equal(answers.needs_other, 'An edited past need');
-  assert.deepEqual(plain(answers.follow_up), { housing: needBlock() });
-  assert.deepEqual(answers.times, ['weekend']);
+
+test('people reporting no needs can still give general preferences and suggestions', () => {
+  for (const version of ['adult', 'youth']) {
+    for (const needs of [undefined, [], ['none'], ['unsure'], ['prefer']]) {
+      const answers = { serving_nt: 'recent', needs, delivery: ['phone'], times: ['weekend'], anything: 'Keep the local group' };
+      assert.deepEqual(stepsFor(answers, version).map(s => s.id), ['connection', 'needs', 'delivery', 'anything', 'place', 'review']);
+      const result = plain(survey.cleanExport(answers, version, domainsFor(version)));
+      assert.deepEqual(result.answers.delivery, ['phone']);
+      assert.deepEqual(result.answers.times, ['weekend']);
+      assert.equal(result.answers.anything, 'Keep the local group');
+      assert.deepEqual(result.answers.areas, {});
+    }
+  }
 });
 
-test('scoped get/set and a help-source change affect only that need’s dependent barriers', () => {
-  const answers = { priority: ['housing', 'transport'], follow_up: { housing: needBlock(), transport: needBlock('Transport') } };
+
+test('past receipt and extra support now are independent, including resolved past gaps and new needs', () => {
+  const answers = { serving_nt: 'yes', needs: ['housing', 'childcare'], areas: {
+    housing: { received: 'some', additional_support_now: 'no', sources: ['community'], barriers: ['wait'], comment: 'Resolved now, but the waiting period was difficult.' },
+    childcare: { received: 'enough', additional_support_now: 'yes', sources: ['family'], comment: 'A new roster needs different care.' },
+  } };
   const domains = survey.setContext('adult', answers);
-  survey.setValue('follow_up:housing:help', ['not_sought']);
-  assert.deepEqual(plain(survey.getValue('follow_up:housing:help')), ['not_sought']);
-  assert.deepEqual(plain(survey.getValue('follow_up:transport:help')), ['family']);
-  survey.reconcileAnswers(answers, 'follow_up:housing:help', domains);
-  assert.equal(hasOwn(answers.follow_up.housing, 'barriers'), false);
-  assert.equal(answers.follow_up.housing.impact, 'a_lot');
-  assert.equal(answers.follow_up.housing.change, 'Housing change');
-  assert.deepEqual(answers.follow_up.transport, needBlock('Transport'));
-  survey.setValue('follow_up:transport:change', 'Different transport answer');
-  assert.equal(survey.getValue('follow_up:housing:change'), 'Housing change');
-  assert.equal(survey.getValue('follow_up:transport:change'), 'Different transport answer');
-  survey.setValue('adequacy:housing', 'some');
-  assert.equal(survey.getValue('adequacy:housing'), 'some');
-  assert.equal(hasOwn(answers, 'help'), false, 'Scoped writes must not create legacy collective answers');
+  for (const id of answers.needs) {
+    const area = survey.areaPage(id);
+    const core = area.fields.filter(f => !f.optional_detail);
+    assert.deepEqual(plain(core).map(f => f.key), [`areas:${id}:received`, `areas:${id}:additional_support_now`]);
+    assert.deepEqual(plain(fieldIds(core[0])), ['enough', 'some', 'none', 'unsure', 'prefer']);
+    assert.deepEqual(plain(fieldIds(core[1])), ['yes', 'no', 'unsure', 'prefer']);
+    assert.equal(area.fields.filter(f => f.optional_detail).length, 3);
+    assert.equal(survey.conditionalVisible(area.fields.find(f => f.key.endsWith(':barriers'))), true);
+  }
+  const result = plain(survey.cleanExport(answers, 'adult', domains));
+  assert.deepEqual(result.answers.areas, answers.areas);
+  survey.setValue('areas:housing:additional_support_now', 'yes');
+  survey.reconcileAnswers(answers, 'areas:housing:additional_support_now', domains, 'no');
+  assert.equal(answers.areas.housing.received, 'some');
+  assert.deepEqual(answers.areas.housing.barriers, ['wait']);
+  survey.setValue('areas:childcare:received', 'none');
+  survey.reconcileAnswers(answers, 'areas:childcare:received', domains, 'enough');
+  assert.equal(answers.areas.childcare.additional_support_now, 'yes');
+  assert.equal(answers.areas.childcare.comment, 'A new roster needs different care.');
 });
 
-test('changing service cohort clears experience answers while preserving basic connection and residence', () => {
+
+test('optional detail is available for every core answer, including resolved or fully supported needs', () => {
+  for (const received of [undefined, 'enough', 'some', 'none', 'unsure', 'prefer']) {
+    for (const additional_support_now of [undefined, 'yes', 'no', 'unsure', 'prefer']) {
+      const answers = { needs: ['housing'], areas: { housing: { received, additional_support_now } } };
+      survey.setContext('adult', answers);
+      const area = survey.areaPage('housing');
+      const html = survey.areaQuestionsHTML(area, 'housing');
+      assert.match(html, /<details class="area-details" data-area-details="housing"\s*>/);
+      assert.match(html, /More about this experience <span>\(optional\)<\/span>/);
+      assert.match(html, /name="areas:housing:sources"/);
+      assert.match(html, /name="areas:housing:comment"/);
+      const coreEnd = html.indexOf('<details');
+      assert.ok(html.indexOf('areas:housing:received') < coreEnd);
+      assert.ok(html.indexOf('areas:housing:additional_support_now') < coreEnd);
+      assert.ok(html.indexOf('areas:housing:sources') > coreEnd);
+    }
+  }
+});
+
+
+test('opening or collapsing optional detail does not delete answers or enter the export', () => {
+  const answers = { needs: ['housing'], areas: { housing: areaBlock() } };
+  const domains = survey.setContext('adult', answers);
+  const original = structuredClone(answers);
+  const exportBefore = plain(survey.cleanExport(answers, 'adult', domains));
+  for (const open of [true, false, true, false]) {
+    survey.setExpanded('housing', open);
+    const html = survey.areaQuestionsHTML(survey.areaPage('housing'), 'housing');
+    assert.equal(/data-area-details="housing" open>/.test(html), open);
+    assert.match(html, /Housing experience/);
+    assert.deepEqual(answers, original);
+    assert.deepEqual(plain(survey.cleanExport(answers, 'adult', domains)), exportBefore);
+  }
+  assert.doesNotMatch(JSON.stringify(exportBefore), /expandedAreas|expanded|disclosure/);
+});
+
+
+test('changing the current-support answer never changes the meaning of an already written comment', () => {
+  for (const version of ['adult', 'youth', 'child']) {
+    const id = survey.DOMAINS[version][0].id;
+    const answers = { needs: [id], areas: { [id]: { additional_support_now: 'yes', comment: 'An experience worth keeping' } } };
+    survey.setContext(version, answers);
+    const originalPrompt = survey.areaPage(id).fields.find(f => f.key.endsWith(':comment')).label;
+    for (const value of ['no', 'unsure', 'prefer', undefined]) {
+      survey.setValue(`areas:${id}:additional_support_now`, value);
+      survey.reconcileAnswers(answers, `areas:${id}:additional_support_now`, domainsFor(version));
+      survey.setContext(version, answers);
+      assert.equal(survey.areaPage(id).fields.find(f => f.key.endsWith(':comment')).label, originalPrompt);
+      assert.equal(answers.areas[id].comment, 'An experience worth keeping');
+    }
+  }
+});
+
+
+test('removing, reordering and re-adding needs preserves only the correct area answers and general preferences', () => {
   const domains = domainsFor('adult');
-  const experienceKeys = ['strengths', 'needs', 'needs_other', 'adequacy', 'priority', 'another_priority', 'follow_up', 'delivery', 'times', 'anything', 'earlier_experience'];
+  const answers = { needs: ['transport', 'housing'], needs_other: 'Stale topic', areas: {
+    housing: areaBlock(), transport: areaBlock('Transport'), other_need: areaBlock('Other'),
+  }, delivery: ['phone'], times: ['weekend'], anything: 'Keep this' };
+  survey.reconcileAnswers(answers, 'needs', domains);
+  assert.deepEqual(plain(answers.areas), { housing: areaBlock(), transport: areaBlock('Transport') });
+  assert.equal(hasOwn(answers, 'needs_other'), false);
+  answers.needs = ['housing', 'transport'];
+  survey.reconcileAnswers(answers, 'needs', domains);
+  assert.deepEqual(plain(answers.areas), { housing: areaBlock(), transport: areaBlock('Transport') });
+  answers.needs = ['transport'];
+  survey.reconcileAnswers(answers, 'needs', domains);
+  assert.deepEqual(plain(answers.areas), { transport: areaBlock('Transport') });
+  answers.needs = ['transport', 'housing'];
+  survey.reconcileAnswers(answers, 'needs', domains);
+  assert.equal(hasOwn(answers.areas, 'housing'), false, 'A re-added area needs fresh answers');
+  assert.deepEqual(plain(survey.cleanExport(answers, 'adult', domains)).answers.areas, { transport: areaBlock('Transport'), housing: {} });
+  for (const needs of [[], ['none'], ['unsure'], ['prefer']]) {
+    answers.needs = needs;
+    survey.reconcileAnswers(answers, 'needs', domains);
+    assert.deepEqual(plain(answers.areas), {});
+    assert.deepEqual(answers.delivery, ['phone']);
+    assert.deepEqual(answers.times, ['weekend']);
+    assert.equal(answers.anything, 'Keep this');
+  }
+});
+
+
+test('editing the Other description clears only that area, while keeping the new description and preferences', () => {
+  const domains = domainsFor('adult');
+  const answers = { needs: ['housing', 'other_need'], needs_other: 'Changed topic', areas: { housing: areaBlock(), other_need: areaBlock('Old topic') }, delivery: ['phone'], times: ['weekend'] };
+  survey.reconcileAnswers(answers, 'needs_other', domains);
+  assert.deepEqual(plain(answers.areas), { housing: areaBlock() });
+  assert.equal(answers.needs_other, 'Changed topic');
+  assert.deepEqual(answers.times, ['weekend']);
+  const other = areaFor('other_need', 'adult', answers);
+  assert.equal(other.title, 'Changed topic');
+  assert.deepEqual(plain(survey.cleanExport(answers, 'adult', domains)).answers.areas, { housing: areaBlock(), other_need: {} });
+});
+
+
+test('changing a source clears only its own area’s barriers and preserves both core answers and comments', () => {
+  const answers = { needs: ['housing', 'transport'], areas: { housing: areaBlock(), transport: areaBlock('Transport') } };
+  const domains = survey.setContext('adult', answers);
+  survey.setValue('areas:housing:sources', ['not_sought']);
+  survey.reconcileAnswers(answers, 'areas:housing:sources', domains);
+  assert.deepEqual(plain(survey.getValue('areas:housing:sources')), ['not_sought']);
+  assert.equal(hasOwn(answers.areas.housing, 'barriers'), false);
+  assert.equal(answers.areas.housing.received, 'some');
+  assert.equal(answers.areas.housing.additional_support_now, 'no');
+  assert.equal(answers.areas.housing.comment, 'Housing experience');
+  assert.deepEqual(answers.areas.transport, areaBlock('Transport'));
+  survey.setValue('areas:transport:comment', 'Transport only');
+  assert.equal(survey.getValue('areas:housing:comment'), 'Housing experience');
+  assert.equal(survey.getValue('areas:transport:comment'), 'Transport only');
+  assert.equal(hasOwn(answers, 'sources'), false);
+});
+
+
+test('actual barriers and reasons for not seeking help stay separate; blank or uncertain sources imply neither', () => {
+  const answers = { needs: ['housing', 'transport'], areas: {
+    housing: { received: 'enough', additional_support_now: 'no', sources: ['community'] },
+    transport: { sources: ['not_sought'] },
+  } };
+  const actual = barrierField(areaFor('housing', 'adult', answers));
+  assert.equal(survey.conditionalVisible(actual), true, 'Resolved needs can describe historical barriers');
+  assert.ok(fieldIds(actual).includes('eligibility_refused'));
+  assert.equal(fieldIds(actual).includes('eligibility_concern'), false);
+  const anticipated = barrierField(areaFor('transport', 'adult', answers));
+  assert.equal(survey.conditionalVisible(anticipated), true);
+  assert.ok(fieldIds(anticipated).includes('eligibility_concern'));
+  assert.equal(fieldIds(anticipated).includes('eligibility_refused'), false);
+  for (const sources of [undefined, [], ['unsure'], ['prefer']]) {
+    answers.areas.transport = { sources, barriers: ['OLD_BARRIER_SENTINEL'] };
+    const hidden = barrierField(areaFor('transport', 'adult', answers));
+    assert.equal(survey.conditionalVisible(hidden), false);
+    const result = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
+    assert.equal(hasOwn(result.answers.areas.transport, 'barriers'), false);
+    assert.deepEqual(result.answers.areas.housing.sources, ['community']);
+    survey.setContext('adult', answers);
+    assert.doesNotMatch(survey.reviewHTML(), /OLD_BARRIER_SENTINEL/);
+  }
+  const youth = barrierField(areaFor('school_learning', 'youth', { needs: ['school_learning'], areas: { school_learning: { sources: ['school'] } } }));
+  assert.ok(fieldIds(youth).includes('no_trusted_person'));
+  assert.equal(fieldIds(youth).includes('eligibility_refused'), false);
+});
+
+
+test('cohort changes clear experience answers but preserve connection and optional background', () => {
+  const domains = domainsFor('adult');
+  const experienceKeys = ['needs', 'needs_other', 'areas', 'delivery', 'times', 'anything', 'earlier_experience'];
   for (const previous of ['yes', 'recent', 'earlier', 'unsure']) {
     for (const serving_nt of ['yes', 'recent', 'earlier', 'unsure'].filter(v => v !== previous)) {
-      const answers = {
-        roles: ['partner'], force: 'adf', region: 'outside_au', time_nt: 'over3', serving_nt,
-        ...Object.fromEntries(experienceKeys.map(key => [key, 'PREVIOUS_COHORT_SENTINEL'])),
-      };
+      const answers = { roles: ['partner'], force: 'adf', region: 'outside_au', time_nt: 'over3', serving_nt, ...Object.fromEntries(experienceKeys.map(key => [key, 'PREVIOUS_COHORT_SENTINEL'])) };
       survey.reconcileAnswers(answers, 'serving_nt', domains, previous);
       for (const key of experienceKeys) assert.equal(hasOwn(answers, key), false, `${previous} to ${serving_nt}: ${key}`);
       assert.deepEqual(answers.roles, ['partner']);
@@ -200,304 +306,221 @@ test('changing service cohort clears experience answers while preserving basic c
       assert.equal(answers.time_nt, 'over3');
     }
   }
-  const unchanged = { serving_nt: 'recent', priority: ['housing'], follow_up: { housing: needBlock() } };
+  const unchanged = { serving_nt: 'recent', needs: ['housing'], areas: { housing: areaBlock() } };
   survey.reconcileAnswers(unchanged, 'serving_nt', domains, 'recent');
-  assert.deepEqual(unchanged.follow_up, { housing: needBlock() });
+  assert.deepEqual(unchanged.areas, { housing: areaBlock() });
 });
 
-test('residence edits no longer erase answers because the recall period is shared across locations', () => {
+
+test('residence edits do not erase experience answers or exclude relatives living outside the NT', () => {
   const domains = domainsFor('adult');
   for (const previous of ['darwin', 'outside_au', 'outside_overseas', 'prefer', '', undefined]) {
     for (const region of ['katherine', 'outside_au', 'prefer', '', undefined]) {
-      const answers = {
-        roles: ['partner'], serving_nt: 'recent', region, time_nt: 'over3',
-        strengths: 'Friends', needs: ['housing'], adequacy: { housing: 'some' },
-        priority: ['housing'], follow_up: { housing: needBlock() }, anything: 'A useful point',
-      };
+      const answers = { roles: ['partner'], serving_nt: 'recent', region, time_nt: 'over3', needs: ['housing'], areas: { housing: areaBlock() }, anything: 'A useful point' };
       const original = structuredClone(answers);
       survey.reconcileAnswers(answers, 'region', domains, previous);
-      assert.deepEqual(answers, original, `${previous} to ${region}`);
+      assert.deepEqual(answers, original);
+      assert.equal(survey.isOutsideSurveyScope(answers), false);
     }
   }
+  assert.equal(survey.isOutsideSurveyScope({ roles: ['none'], serving_nt: 'yes' }), true);
+  assert.equal(survey.isOutsideSurveyScope({ roles: ['partner'], serving_nt: 'no' }), true);
 });
 
-test('general delivery changes clear time preferences only when no live interaction is selected', () => {
+
+test('general delivery changes clear times only when no synchronous format remains', () => {
   const domains = domainsFor('adult');
   for (const delivery of [['text'], ['information'], ['referral'], ['not_wanted'], ['unsure'], ['no_preference'], ['prefer'], []]) {
-    const answers = { delivery, times: ['weekend'], follow_up: { housing: needBlock() } };
+    const answers = { delivery, times: ['weekend'], areas: { housing: areaBlock() } };
     survey.reconcileAnswers(answers, 'delivery', domains);
     assert.equal(hasOwn(answers, 'times'), false);
-    assert.deepEqual(answers.follow_up, { housing: needBlock() });
+    assert.deepEqual(answers.areas, { housing: areaBlock() });
   }
   for (const delivery of [['phone'], ['video'], ['group'], ['one_to_one'], ['information', 'phone']]) {
     const answers = { delivery, times: ['weekend'] };
     survey.reconcileAnswers(answers, 'delivery', domains);
     assert.deepEqual(answers.times, ['weekend']);
   }
-});
-
-test('all ages retain paired past-need ratings and get a separate follow-up page for each current need', () => {
-  for (const [version, rawDomainCount] of [['adult', 17], ['youth', 8], ['child', 8]]) {
-    const domains = domainsFor(version);
-    assert.equal(survey.DOMAINS[version].length, rawDomainCount);
-    for (const priority of [undefined, [], ['none'], ['unsure'], ['prefer']]) {
-      const steps = plain(survey.buildSteps({ serving_nt: 'recent', priority }, domains, version));
-      assert.deepEqual(steps.map(step => step.id), ['connection', 'place', 'strengths', 'needs', 'priority', 'anything', 'review']);
-    }
-    const needs = plain(domains).map(domain => domain.id);
-    const current = needs.slice(0, 3);
-    const answers = { serving_nt: 'yes', needs, priority: [...current, 'another'], another_priority: 'A distinct concern' };
-    survey.setContext(version, answers);
-    const steps = plain(survey.buildSteps(answers, domains, version));
-    const adequacySteps = steps.filter(step => step.id.startsWith('adequacy-'));
-    assert.equal(adequacySteps.length, Math.ceil(needs.length / 2));
-    assert.deepEqual(adequacySteps.flatMap(step => step.domains), needs);
-    assert.ok(adequacySteps.every(step => step.domains.length > 0 && step.domains.length <= 2));
-    assert.deepEqual(steps.filter(step => step.id.startsWith('detail:')).map(step => step.need), [...current, 'another']);
-    assert.equal(steps.filter(step => step.id === 'delivery').length, version === 'child' ? 0 : 1);
-    assert.equal(steps.some(step => ['impact', 'help', 'barriers', 'change'].includes(step.id)), false, 'No collective follow-up pages');
-    assert.equal(new Set(steps.map(step => step.id)).size, steps.length);
-    for (const step of steps.filter(step => step.need)) {
-      const detail = survey.page(step);
-      assert.deepEqual(plain(detail.fields).map(field => field.key), ['impact', 'help', 'barriers', 'change'].map(key => `follow_up:${step.need}:${key}`));
-    }
+  const p = pageFor('delivery');
+  assert.equal(p.title, 'Getting information and advice');
+  for (const value of ['not_wanted', 'unsure', 'no_preference', 'prefer']) {
+    assert.deepEqual(plain(survey.toggleChoice(['phone', 'referral'], value, p.fields[0].exclusive)), [value]);
   }
 });
 
-test('each need selects its own actual or anticipated barriers and unknown help hides barriers', () => {
-  const answers = {
-    priority: ['housing', 'transport'],
-    follow_up: { housing: { help: ['community'] }, transport: { help: ['not_sought'] } },
-  };
-  const actual = barrierField(detailFor('housing', 'adult', answers));
-  assert.equal(survey.conditionalVisible(actual), true);
-  assert.ok(fieldIds(actual).includes('eligibility_refused'));
-  assert.equal(fieldIds(actual).includes('eligibility_concern'), false);
-  const anticipated = barrierField(detailFor('transport', 'adult', answers));
-  assert.equal(survey.conditionalVisible(anticipated), true);
-  assert.ok(fieldIds(anticipated).includes('eligibility_concern'));
-  assert.equal(fieldIds(anticipated).includes('eligibility_refused'), false);
-  for (const help of [undefined, [], ['unsure'], ['prefer']]) {
-    answers.follow_up.transport = { help, barriers: ['OLD_BARRIER_SENTINEL'] };
-    const hidden = barrierField(detailFor('transport', 'adult', answers));
-    assert.equal(survey.conditionalVisible(hidden), false);
-    const result = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
-    assert.equal(hasOwn(result.answers.follow_up.transport, 'barriers'), false);
-    assert.deepEqual(result.answers.follow_up.housing.help, ['community']);
-    survey.setContext('adult', answers);
-    assert.doesNotMatch(survey.reviewHTML(), /OLD_BARRIER_SENTINEL/);
-  }
-  const youth = barrierField(detailFor('school_learning', 'youth', { priority: ['school_learning'], follow_up: { school_learning: { help: ['school'] } } }));
-  assert.ok(fieldIds(youth).includes('no_trusted_person'));
-  assert.equal(fieldIds(youth).includes('eligibility_refused'), false);
-});
 
-test('schema 3 exports independent per-need answers without mutating them or copying legacy combined answers', () => {
+test('schema 4 exports only selected-area measures and never migrates old current-only or combined responses', () => {
   const domains = domainsFor('adult');
-  const answers = {
-    serving_nt: 'recent', needs: ['housing'], adequacy: { housing: 'some' },
-    priority: ['housing', 'transport', 'another'], another_priority: 'A separate concern',
-    follow_up: { housing: needBlock(), transport: { help: ['not_sought'], barriers: ['privacy'], change: 'Transport only' }, schooling: needBlock('Stale') },
-    ...legacyCollective(), delivery: ['phone'], times: ['weekend'],
-  };
+  const legacy = { priority: ['transport'], adequacy: { housing: 'enough' }, follow_up: { housing: { impact: 'a_lot', help: ['family'], change: 'OLD_CURRENT_ONLY' } }, strengths: 'OLD_STRENGTH', impact: 'a_lot', help: ['family'], change: 'OLD_COMBINED', another_priority: 'OLD_OTHER', caring: ['under18'], financial_dependence: 'yes', care_dependence: 'yes', expandedAreas: { housing: true } };
+  const answers = { ...legacy, serving_nt: 'recent', needs: ['housing', 'childcare'], areas: { housing: { ...areaBlock(), impact: 'a_lot', help: ['military'], extra: 'DO_NOT_COPY' }, transport: areaBlock('STALE') }, delivery: ['phone'], times: ['weekend'] };
   const original = structuredClone(answers);
   const result = plain(survey.cleanExport(answers, 'adult', domains));
-  assert.equal(result.schema_version, '3.0');
-  assert.equal(result.follow_up_scope, 'one_block_per_selected_need');
+  assert.equal(result.schema_version, '4.0');
+  assert.equal(result.measurement_scope, 'past_support_and_current_requests_by_area');
+  assert.equal(result.details_optional, true);
   assert.equal(result.consultation_route, 'recent_nt');
   assert.equal(result.recall_months, 12);
   assert.equal(result.storage, 'downloaded_by_respondent; not submitted');
-  assert.deepEqual(result.answers.follow_up, { housing: needBlock(), transport: { help: ['not_sought'], barriers: ['privacy'], change: 'Transport only' }, another: {} });
-  for (const key of Object.keys(legacyCollective())) assert.equal(hasOwn(result.answers, key), false, key);
+  assert.deepEqual(result.answers.areas, { housing: areaBlock(), childcare: {} });
+  for (const key of Object.keys(legacy)) assert.equal(hasOwn(result.answers, key), false, key);
   assert.deepEqual(answers, original);
-
-  const collectiveOnly = plain(survey.cleanExport({ priority: ['housing', 'transport'], ...legacyCollective() }, 'adult', domains));
-  assert.deepEqual(collectiveOnly.answers.follow_up, { housing: {}, transport: {} }, 'Combined answers must not masquerade as two individual answers');
-  assert.doesNotMatch(JSON.stringify(collectiveOnly), /Old combined answer/);
-  const oldScalar = plain(survey.cleanExport({ priority: 'housing', ...legacyCollective() }, 'adult', domains));
-  assert.deepEqual(oldScalar.answers.follow_up, {}, 'Old single-priority answers are not silently migrated');
+  const oldOnly = plain(survey.cleanExport({ ...legacy, needs: ['housing'] }, 'adult', domains));
+  assert.deepEqual(oldOnly.answers.areas, { housing: {} });
+  assert.doesNotMatch(JSON.stringify(oldOnly), /OLD_|DO_NOT_COPY/);
 });
 
-test('exports distinguish no need, uncertainty, refusal, a cleared selection and an unanswered question', () => {
+
+test('exports preserve skipped, cleared, No, none, unsure and declined as distinct answers', () => {
   const domains = domainsFor('adult');
-  for (const value of ['none', 'unsure', 'prefer']) {
-    const answers = { needs: [value], priority: [value], adequacy: { housing: 'enough' }, follow_up: { housing: needBlock() }, delivery: ['phone'], times: ['weekend'] };
-    const result = plain(survey.cleanExport(answers, 'adult', domains));
-    assert.deepEqual(result.answers.needs, [value]);
-    assert.deepEqual(result.answers.priority, [value]);
-    assert.deepEqual(result.answers.adequacy, {});
-    assert.deepEqual(result.answers.follow_up, {});
-    for (const key of ['delivery', 'times']) assert.equal(hasOwn(result.answers, key), false);
+  for (const needs of [['none'], ['unsure'], ['prefer'], []]) {
+    const result = plain(survey.cleanExport({ needs, areas: { housing: areaBlock() }, delivery: ['phone'] }, 'adult', domains));
+    assert.deepEqual(result.answers.needs, needs);
+    assert.deepEqual(result.answers.areas, {});
+    assert.deepEqual(result.answers.delivery, ['phone']);
   }
-  const skipped = plain(survey.cleanExport({}, 'adult', domains));
-  assert.equal(hasOwn(skipped.answers, 'needs'), false);
-  assert.equal(hasOwn(skipped.answers, 'priority'), false);
-  const cleared = plain(survey.cleanExport({ needs: [], priority: [] }, 'adult', domains));
-  assert.deepEqual(cleared.answers.needs, []);
-  assert.deepEqual(cleared.answers.priority, []);
+  assert.equal(hasOwn(survey.cleanExport({}, 'adult', domains).answers, 'needs'), false);
+  const all = { needs: ['housing', 'transport', 'childcare', 'physical_health', 'emotional_wellbeing'], areas: {
+    housing: { received: 'none', additional_support_now: 'no' },
+    transport: { received: 'unsure', additional_support_now: 'unsure' },
+    childcare: { received: 'prefer', additional_support_now: 'prefer' },
+    emotional_wellbeing: { received: 'enough', sources: [], comment: '' },
+  } };
+  const areas = plain(survey.cleanExport(all, 'adult', domains)).answers.areas;
+  assert.deepEqual(areas, { ...all.areas, physical_health: {} });
+  assert.equal(hasOwn(areas.physical_health, 'additional_support_now'), false, 'Blank must never become No');
+  assert.equal(hasOwn(areas.physical_health, 'barriers'), false, 'Not opening detail must never become no barrier');
 });
 
-test('past support adequacy preserves distinct answers and uses null for a skipped active rating', () => {
-  const domains = domainsFor('adult');
-  const answers = {
-    needs: ['housing', 'transport', 'childcare', 'physical_health', 'emotional_wellbeing'],
-    adequacy: { housing: 'none', transport: 'unsure', childcare: 'prefer', emotional_wellbeing: 'enough', schooling: 'some' },
-    region: 'outside_au', time_nt: 'over3',
-  };
-  const result = plain(survey.cleanExport(answers, 'adult', domains));
-  assert.deepEqual(result.answers.adequacy, { housing: 'none', transport: 'unsure', childcare: 'prefer', physical_health: null, emotional_wellbeing: 'enough' });
-  assert.equal(result.answers.time_nt, 'over3', 'A former resident can describe their latest stay');
-});
 
-test('current, recent and uncertain NT connections use the full route regardless of residence', () => {
-  for (const region of ['darwin', 'palmerston', 'katherine', 'alice', 'other_nt', 'outside_au', 'outside_overseas', 'prefer', '', undefined]) {
-    for (const roles of [['serving'], ['partner'], ['child'], ['parent'], ['other_family'], ['unsure']]) {
-      for (const [serving_nt, route] of [['yes', 'current_nt'], ['recent', 'recent_nt'], ['unsure', 'uncertain_nt']]) {
-        const answers = { region, roles, serving_nt };
-        assert.equal(survey.isOutsideSurveyScope(answers), false);
-        assert.equal(survey.consultationRoute(answers), route);
-        assert.ok(survey.buildSteps(answers, domainsFor('adult'), 'adult').some(step => step.id === 'needs'));
-      }
-      assert.equal(survey.isOutsideSurveyScope({ region, roles, serving_nt: 'no' }), true);
-    }
-    assert.equal(survey.isOutsideSurveyScope({ region, roles: ['none'], serving_nt: 'yes' }), true);
-  }
-});
-
-test('earlier service has a short comments route and cannot export recent experience data', () => {
+test('exports exclude off-route background and old recent-needs data from the historical route', () => {
   for (const version of ['adult', 'youth', 'child']) {
-    const domains = domainsFor(version);
-    const answers = {
-      serving_nt: 'earlier', roles: ['partner'], force: 'adf', earlier_experience: 'An earlier NT experience',
-      region: 'darwin', time_nt: 'over3', assistance: 'reading', strengths: 'OLD_CORE', needs: ['housing'], adequacy: { housing: 'some' },
-      priority: ['housing'], follow_up: { housing: needBlock() }, delivery: ['phone'], times: ['weekend'], anything: 'OLD_CORE', ...legacyCollective(),
-    };
-    assert.equal(survey.isOutsideSurveyScope(answers), false);
-    assert.equal(survey.consultationRoute(answers), 'earlier_experience');
-    assert.deepEqual(plain(survey.buildSteps(answers, domains, version)).map(step => step.id), ['connection', 'earlier', 'review']);
-    const result = plain(survey.cleanExport(answers, version, domains));
+    const answers = { roles: ['partner'], serving_nt: 'earlier', earlier_experience: 'An older experience', needs: ['housing'], areas: { housing: areaBlock() }, delivery: ['phone'], times: ['weekend'], anything: 'Stale', region: 'darwin', force: 'adf', time_nt: 'over3' };
+    const original = structuredClone(answers);
+    assert.deepEqual(stepsFor(answers, version).map(s => s.id), ['connection', 'earlier', 'review']);
+    const result = plain(survey.cleanExport(answers, version, domainsFor(version)));
     assert.equal(result.consultation_route, 'earlier_experience');
     assert.equal(result.recall_months, null);
-    assert.deepEqual(result.answers, { serving_nt: 'earlier', roles: ['partner'], force: 'adf', earlier_experience: 'An earlier NT experience' });
-    survey.setContext(version, answers);
-    const review = survey.reviewHTML();
-    assert.match(review, /An earlier NT experience/);
-    assert.doesNotMatch(review, /OLD_CORE|Housing change|Old combined answer/);
-    const current = plain(survey.cleanExport({ ...answers, serving_nt: 'yes' }, version, domains));
-    assert.equal(hasOwn(current.answers, 'earlier_experience'), false, 'Earlier comments cannot join current cohort exports');
+    assert.deepEqual(result.answers, { roles: ['partner'], serving_nt: 'earlier', earlier_experience: 'An older experience' });
+    assert.deepEqual(answers, original);
   }
 });
 
-test('recall is 12 months for adults and youth, three for children, independent of location and moves', () => {
+
+test('the same recall period frames the checklist, support received and sources, across all locations', () => {
   for (const [version, months, pattern] of [['adult', 12, /past 12 months/], ['youth', 12, /past 12 months/], ['child', 3, /past three months/]]) {
+    const id = survey.DOMAINS[version][0].id;
     for (const serving_nt of ['yes', 'recent', 'unsure']) {
       for (const region of ['darwin', 'outside_au', 'outside_overseas', 'prefer', '', undefined]) {
-        const answers = { serving_nt, region };
-        const needs = pageFor('needs', version, answers);
-        assert.match(needs.intro, pattern);
-        assert.doesNotMatch(needs.intro, /six months|time here|since you arrived/);
+        const answers = { serving_nt, region, needs: [id] };
+        assert.match(pageFor('needs', version, answers).fields[0].label, pattern);
+        const area = areaFor(id, version, answers);
+        assert.match(area.fields[0].label, pattern);
+        assert.match(area.fields.find(f => f.key.endsWith(':sources')).label, pattern);
+        assert.equal(area.fields.some(f => /impact|four weeks/.test(f.key + f.label)), false);
         assert.equal(survey.cleanExport(answers, version, domainsFor(version)).recall_months, months);
       }
     }
   }
 });
 
-test('residence and latest-stay duration are optional and cover never-residents and former residents', () => {
+
+test('optional background is late, does not repeat connection and permits never-residents', () => {
   for (const version of ['adult', 'youth', 'child']) {
     const connection = pageFor('connection', version);
-    const service = connection.fields.find(f => f.key === 'serving_nt');
-    assert.deepEqual(fieldIds(service), ['yes', 'recent', 'earlier', 'no', 'unsure']);
-    assert.match(service.options.find(o => o.id === 'recent').label, /past 12 months/);
-    assert.match(service.options.find(o => o.id === 'earlier').label, /more than 12 months/i);
-    for (const region of ['darwin', 'outside_au', 'outside_overseas', 'prefer', undefined]) {
-      const place = pageFor('place', version, { region });
-      const residence = place.fields.find(f => f.key === 'region');
-      const duration = place.fields.find(f => f.key === 'time_nt');
-      assert.equal(Boolean(residence.required), false);
-      assert.equal(Boolean(duration.required), false);
-      assert.equal(survey.conditionalVisible(duration), true, 'Latest-stay duration does not assume current residence');
-      assert.ok(fieldIds(residence).includes('outside_overseas'));
-      assert.deepEqual(fieldIds(duration), ['never', 'under3', '3to12', '1to3', 'over3', 'unsure', 'prefer']);
-      assert.match(duration.hint, /current or most recent stay/);
-      const labels = Object.fromEntries(duration.options.map(o => [o.id, o.label]));
-      assert.match(labels.under3, /Less than 3 months/);
-      assert.match(labels['3to12'], /3 months to less than 1 year/);
-      assert.match(labels['1to3'], /1 year to less than 3 years/);
-      assert.match(labels.over3, /3 years or more/);
-      assert.match(labels.never, /not lived in the NT/);
-    }
+    assert.deepEqual(connection.fields.map(f => f.key), ['roles', 'serving_nt']);
+    assert.deepEqual(fieldIds(connection.fields[1]), ['yes', 'recent', 'earlier', 'no', 'unsure']);
+    const place = pageFor('place', version);
+    assert.deepEqual(place.fields.map(f => f.key), ['region', 'time_nt', 'force', ...(version === 'adult' ? [] : ['assistance'])]);
+    assert.ok(place.fields.every(f => !f.required));
+    const residence = place.fields.find(f => f.key === 'region');
+    assert.ok(fieldIds(residence).includes('outside_overseas'));
+    const duration = place.fields.find(f => f.key === 'time_nt');
+    assert.equal(survey.conditionalVisible(duration), true);
+    assert.deepEqual(fieldIds(duration), ['never', 'under3', '3to12', '1to3', 'over3', 'unsure', 'prefer']);
+    assert.match(duration.hint, /current or most recent stay/);
+    const labels = Object.fromEntries(duration.options.map(o => [o.id, o.label]));
+    assert.match(labels.under3, /Less than 3 months/);
+    assert.match(labels['3to12'], /3 months to less than 1 year/);
+    assert.match(labels['1to3'], /1 year to less than 3 years/);
+    assert.match(labels.over3, /3 years or more/);
+    assert.match(labels.never, /not lived in the NT/);
   }
 });
 
-test('every field and option ID is unique across each respondent’s live path', () => {
+
+test('every field and option ID remains unique even when every area is selected', () => {
   for (const version of ['adult', 'youth', 'child']) {
     const domains = domainsFor(version);
-    for (const region of ['darwin', 'outside_au', 'prefer']) {
-      const ids = plain(domains).map(d => d.id);
-      const answers = { serving_nt: 'recent', region, roles: ['child'], needs: ids, priority: [...ids.filter(id => id !== 'other_need'), 'another'] };
-      survey.setContext(version, answers);
-      const allFieldKeys = [];
-      for (const step of survey.buildSteps(answers, domains, version)) {
-        const p = survey.page(step);
-        assert.ok(p.title);
-        assert.equal(typeof p.intro, 'string');
-        for (const field of p.fields) {
-          allFieldKeys.push(field.key);
-          assert.equal(new Set(fieldIds(field)).size, field.options.length, `${version}: ${field.key}`);
-        }
+    const needs = plain(domains).map(d => d.id);
+    const answers = { serving_nt: 'recent', roles: ['child'], needs };
+    survey.setContext(version, answers);
+    const keys = [];
+    for (const step of survey.buildSteps(answers, domains, version)) {
+      const p = survey.page(step);
+      assert.ok(p.title);
+      assert.equal(typeof p.intro, 'string');
+      for (const field of p.fields) {
+        keys.push(field.key);
+        assert.equal(new Set(fieldIds(field)).size, field.options.length, `${version}: ${field.key}`);
       }
-      assert.equal(new Set(allFieldKeys).size, allFieldKeys.length, `${version}: ${region}`);
     }
+    assert.equal(new Set(keys).size, keys.length, version);
   }
 });
 
-test('review values remain attributable to the right need and editing returns to that need’s page', () => {
-  const answers = { serving_nt: 'yes', priority: ['housing', 'transport'], follow_up: {
-    housing: { impact: 'a_little', help: ['family'], change: 'HOUSING_ONLY_SENTINEL' },
-    transport: { impact: 'a_lot', help: ['not_sought'], change: 'TRANSPORT_ONLY_SENTINEL' },
+
+test('review groups each area separately and returns edits to its own core or optional detail', () => {
+  const answers = { serving_nt: 'yes', needs: ['housing', 'transport'], areas: {
+    housing: { received: 'some', additional_support_now: 'no', sources: ['family'], comment: 'HOUSING_ONLY_SENTINEL' },
+    transport: { received: 'enough', additional_support_now: 'yes', sources: ['not_sought'], comment: 'TRANSPORT_ONLY_SENTINEL' },
   } };
   survey.setContext('adult', answers);
-  const review = survey.reviewHTML();
-  const blocks = review.split('<div class="review-block">').slice(1);
-  const housing = blocks.find(block => block.includes('HOUSING_ONLY_SENTINEL'));
-  const transport = blocks.find(block => block.includes('TRANSPORT_ONLY_SENTINEL'));
+  const sections = survey.reviewHTML().split('<section class="review-section">').slice(1);
+  const housing = sections.find(section => section.includes('HOUSING_ONLY_SENTINEL'));
+  const transport = sections.find(section => section.includes('TRANSPORT_ONLY_SENTINEL'));
   assert.ok(housing);
   assert.ok(transport);
-  assert.match(housing, /Housing/);
-  assert.match(housing, /data-edit="detail:housing"/);
+  assert.match(housing, /<h2>Housing<\/h2>/);
+  assert.match(housing, /data-edit="area:housing" data-detail="false"/);
+  assert.match(housing, /data-edit="area:housing" data-detail="true"/);
   assert.doesNotMatch(housing, /TRANSPORT_ONLY_SENTINEL/);
-  assert.match(transport, /Getting around/);
-  assert.match(transport, /data-edit="detail:transport"/);
+  assert.match(transport, /<h2>Getting around<\/h2>/);
+  assert.match(transport, /data-edit="area:transport"/);
   assert.doesNotMatch(transport, /HOUSING_ONLY_SENTINEL/);
 });
 
-test('the library shares actual per-need fields, both barrier variants and all three residence settings', () => {
-  assert.equal(typeof survey.librarySections, 'function');
+
+test('review does not present unopened optional detail as no barrier or no support requested', () => {
+  survey.setContext('adult', { needs: ['housing'], areas: { housing: { received: 'enough' } } });
+  const review = survey.reviewHTML();
+  assert.match(review, /No additional details provided/);
+  assert.match(review, /Not answered/);
+  assert.doesNotMatch(review, /Nothing made it harder|data-edit="area:housing" data-detail="true"/);
+});
+
+
+test('the library shares the actual area fields, both barrier variants and the new sequence', () => {
   for (const version of ['adult', 'youth', 'child']) {
     const first = survey.DOMAINS[version][0].id;
     for (const location of ['nt', 'outside', 'unspecified']) {
       const sections = plain(survey.librarySections(version, location));
-      assert.equal(new Set(sections.map(section => section.id)).size, sections.length);
-      assert.equal(sections.some(section => section.id === 'delivery'), version !== 'child');
-      assert.ok(sections.some(section => section.id === 'earlier'));
-      assert.equal(sections.find(section => section.id === 'adequacy').fields.length, survey.DOMAINS[version].length + 1);
-      const detail = sections.find(section => section.id === 'detail');
-      assert.deepEqual(detail.fields.map(f => f.key), ['impact', 'help', 'change'].map(key => `follow_up:${first}:${key}`));
-      assert.deepEqual(detail.variants.map(v => v.id), ['sought', 'not-sought']);
-      assert.ok(detail.variants.every(v => v.fields[0].key === `follow_up:${first}:barriers`));
-      const answers = { serving_nt: 'yes', region: location === 'nt' ? 'darwin' : location === 'outside' ? 'outside_au' : 'prefer', priority: [first], follow_up: { [first]: { help: ['family'] } } };
-      const live = detailFor(first, version, answers);
-      assert.deepEqual(detail.fields, live.fields.filter(f => !f.key.endsWith(':barriers')));
-      assert.deepEqual(detail.variants[0].fields, [barrierField(live)]);
-      answers.follow_up[first].help = ['not_sought'];
-      assert.deepEqual(detail.variants[1].fields, [barrierField(detailFor(first, version, answers))]);
-      assert.match(sections.find(section => section.id === 'needs').intro, version === 'child' ? /three months/ : /12 months/);
+      assert.deepEqual(sections.map(s => s.id), ['connection', 'needs', 'area', ...(version === 'child' ? [] : ['delivery']), 'anything', 'place', 'earlier']);
+      const area = sections.find(s => s.id === 'area');
+      assert.deepEqual(area.fields.map(f => f.key), ['received', 'additional_support_now', 'sources', 'comment'].map(key => `areas:${first}:${key}`));
+      assert.deepEqual(area.variants.map(v => v.id), ['sought', 'not-sought']);
+      const answers = { serving_nt: 'yes', needs: [first], areas: { [first]: { sources: ['family'] } } };
+      const live = areaFor(first, version, answers);
+      assert.deepEqual(area.fields, live.fields.filter(f => !f.key.endsWith(':barriers')));
+      assert.deepEqual(area.variants[0].fields, [barrierField(live)]);
+      answers.areas[first].sources = ['not_sought'];
+      assert.deepEqual(area.variants[1].fields, [barrierField(areaFor(first, version, answers))]);
     }
   }
 });
 
-test('library rendering restores the original age and answer object without changing any values', () => {
-  const answers = { region: 'outside_overseas', serving_nt: 'recent', needs: ['feelings'], priority: ['feelings'], follow_up: { feelings: { help: ['family'], change: 'My own answer' } }, anything: 'My final comment' };
+
+test('library rendering restores the original respondent and preserves all answer values', () => {
+  const answers = { region: 'outside_overseas', serving_nt: 'recent', needs: ['feelings'], areas: { feelings: { received: 'some', sources: ['family'], comment: 'My own answer' } }, anything: 'My final comment' };
   survey.setContext('child', answers);
   const original = structuredClone(answers);
   const review = survey.reviewHTML();
@@ -512,7 +535,8 @@ test('library rendering restores the original age and answer object without chan
   }
 });
 
-test('required connection questions block blanks while every substantive question can be skipped', () => {
+
+test('connection blanks block Continue; every substantive and background question remains optional', () => {
   for (const version of ['adult', 'youth', 'child']) {
     const connection = pageFor('connection', version);
     for (const answers of [{}, { roles: [] }, { roles: ['child'] }, { serving_nt: 'recent' }]) {
@@ -521,42 +545,28 @@ test('required connection questions block blanks while every substantive questio
     for (const serving_nt of ['yes', 'recent', 'earlier', 'unsure']) {
       assert.equal(survey.requiredAnswersComplete(connection.fields, { roles: ['child'], serving_nt }), true);
     }
-    const first = survey.DOMAINS[version][0].id;
-    const domains = survey.setContext(version, { serving_nt: 'yes', needs: [first], priority: [first] });
-    for (const step of survey.buildSteps(survey.getContext().answers, domains, version).filter(step => step.id !== 'connection')) {
+    const id = survey.DOMAINS[version][0].id;
+    const answers = { serving_nt: 'yes', needs: [id] };
+    const domains = survey.setContext(version, answers);
+    for (const step of survey.buildSteps(answers, domains, version).filter(step => step.id !== 'connection')) {
       const p = survey.page(step);
       assert.equal(survey.requiredAnswersComplete(p.fields.filter(survey.conditionalVisible), {}), true, `${version}: ${step.id}`);
     }
-    const earlier = pageFor('earlier', version, { serving_nt: 'earlier' });
-    assert.equal(survey.requiredAnswersComplete(earlier.fields, {}), true);
+    assert.equal(survey.requiredAnswersComplete(pageFor('earlier', version).fields, {}), true);
   }
 });
 
-test('long-answer limits allow fuller responses while counters remain hidden until nearly full', () => {
+
+test('long-answer limits allow fuller responses without counters competing with empty fields', () => {
   for (const [version, max] of [['adult', 5000], ['youth', 5000], ['child', 1500]]) {
     survey.setContext(version, {});
     const f = survey.page({ id: 'anything' }).fields[0];
     assert.equal(survey.maxTextLength(version), max);
-    const empty = survey.fieldHTML(f);
-    assert.ok(empty.includes(`maxlength="${max}"`));
-    assert.match(empty, /data-counter="anything" hidden/);
+    assert.ok(survey.fieldHTML(f).includes(`maxlength="${max}"`));
+    assert.match(survey.fieldHTML(f), /data-counter="anything" hidden/);
     survey.setValue('anything', 'x'.repeat(Math.ceil(max * .8)));
-    const nearlyFull = survey.fieldHTML(f);
-    assert.doesNotMatch(nearlyFull, /data-counter="anything" hidden/);
-    assert.ok(nearlyFull.includes(`${max - Math.ceil(max * .8)} characters remaining`));
-  }
-});
-
-
-test('declining service help is exclusive and clears appointment-time preferences', () => {
-  const p=pageFor('delivery','adult',{region:'darwin',priority:['housing']});
-  const f=p.fields[0];
-  for(const value of ['not_wanted','unsure']) {
-    assert.ok(f.options.some(o=>o.id===value));
-    assert.deepEqual(plain(survey.toggleChoice(['phone','referral'],value,f.exclusive)),[value]);
-    const a={delivery:[value],times:['weekend']};
-    survey.reconcileAnswers(a,'delivery',domainsFor('adult'));
-    assert.equal(hasOwn(a,'times'),false);
+    assert.doesNotMatch(survey.fieldHTML(f), /data-counter="anything" hidden/);
+    assert.ok(survey.fieldHTML(f).includes(`${max - Math.ceil(max * .8)} characters remaining`));
   }
 });
 
@@ -635,59 +645,6 @@ test('the questionnaire gate rejects missing, withdrawn or stale-age participati
       assert.equal(survey.hasValidParticipation(), false, 'Withdrawn permission invalidates existing assent');
       survey.setParticipationContext(age, participation, survey.guardianPermissionRecord(age === 'child' ? 'youth_younger' : 'child', true));
       assert.equal(survey.hasValidParticipation(), false, 'Permission must match the current age route');
-    }
-  }
-});
-
-test('current support needs allow multiple selections from the full list regardless of past needs', () => {
-  for (const version of ['adult', 'youth', 'child']) {
-    const domainIds = plain(survey.DOMAINS[version]).map(domain => domain.id);
-    for (const needs of [undefined, [], ['none'], ['prefer'], [domainIds[0]]]) {
-      const current = pageFor('priority', version, { needs, region: 'darwin' });
-      const field = current.fields.find(field => field.key === 'priority');
-      assert.equal(field.type, 'multi');
-      assert.deepEqual(field.options.filter(option => domainIds.includes(option.id)).map(option => option.id), domainIds);
-      assert.ok(field.options.some(option => option.id === 'another'));
-      const selected = plain(survey.toggleChoice([domainIds[0]], domainIds[1], field.exclusive));
-      assert.deepEqual(selected, domainIds.slice(0, 2));
-      for (const exclusive of ['none', 'unsure', 'prefer']) {
-        assert.deepEqual(plain(survey.toggleChoice(selected, exclusive, field.exclusive)), [exclusive]);
-        assert.deepEqual(plain(survey.toggleChoice([exclusive], domainIds[1], field.exclusive)), [domainIds[1]]);
-      }
-    }
-  }
-});
-
-test('per-need adequacy stays bound to domain IDs when needs are reordered or a paired page changes', () => {
-  const domains = domainsFor('adult');
-  const answers = {
-    needs: ['housing', 'transport', 'childcare'],
-    adequacy: { housing: 'enough', transport: 'none', childcare: 'some' },
-    priority: ['housing', 'transport'],
-  };
-  answers.needs = ['childcare', 'housing'];
-  survey.reconcileAnswers(answers, 'needs', domains);
-  const pages = plain(survey.buildSteps(answers, domains, 'adult')).filter(step => step.id.startsWith('adequacy-'));
-  assert.deepEqual(pages.map(step => step.domains), [['childcare', 'housing']]);
-  assert.deepEqual(plain(survey.cleanExport(answers, 'adult', domains)).answers.adequacy, { childcare: 'some', housing: 'enough' });
-  answers.needs.push('transport');
-  survey.reconcileAnswers(answers, 'needs', domains);
-  assert.deepEqual(plain(survey.cleanExport(answers, 'adult', domains)).answers.adequacy, { childcare: 'some', housing: 'enough', transport: null }, 'Re-added needs require a fresh rating');
-});
-
-test('removed caring and dependence questions are absent and old answers cannot enter exports', () => {
-  const removed = ['caring', 'financial_dependence', 'care_dependence'];
-  for (const version of ['adult', 'youth', 'child']) {
-    for (const location of ['nt', 'outside', 'unspecified']) {
-      const sections = plain(survey.librarySections(version, location));
-      const fields = sections.flatMap(section => [...section.fields, ...(section.variants || []).flatMap(variant => variant.fields)]);
-      for (const key of removed) assert.equal(fields.some(field => field.key === key), false, `${version}/${location}: ${key}`);
-    }
-    const oldAnswers = { roles: ['child'], caring: ['under18'], financial_dependence: 'yes', care_dependence: 'sometimes', needs: ['none'], priority: ['none'] };
-    const result = plain(survey.cleanExport(oldAnswers, version, domainsFor(version)));
-    for (const key of removed) {
-      assert.equal(hasOwn(result.answers, key), false, key);
-      assert.equal(hasOwn(oldAnswers, key), true, 'Export must not mutate the original object');
     }
   }
 });

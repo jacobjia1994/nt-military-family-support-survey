@@ -120,3 +120,9 @@ body.questionnaire{--ink:#30312f;--text:#41423f;--muted:#666963;--primary:#b9462
 
 
 .questionnaire .welcome-intro .funding-note{font-size:13px;line-height:1.6;text-wrap:pretty;white-space:normal}
+
+.area-details{margin:12px 0 26px;border-top:1px solid var(--line);padding-top:20px}
+.area-details summary{cursor:pointer;color:var(--primary);font-size:16px;font-weight:600;line-height:1.5;padding:8px 0}
+.area-details summary span{font-weight:400;color:var(--muted);font-size:14px}
+.area-details-content{padding-top:28px}
+.area-details-content .question-group:last-child{margin-bottom:0}

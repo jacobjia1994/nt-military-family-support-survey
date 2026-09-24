@@ -110,145 +110,18 @@
           ],
           "hint": "Select one.",
           "required": true
-        },
-        {
-          "key": "force",
-          "label": "Which military are you or your family connected with?",
-          "type": "single",
-          "options": [
-            {
-              "id": "adf",
-              "label": "Australian Defence Force"
-            },
-            {
-              "id": "other",
-              "label": "Another country’s military"
-            },
-            {
-              "id": "both",
-              "label": "Both"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": ""
         }
       ],
-      "note": "Current or recent NT service leads to the full questionnaire; earlier service leads to the short earlier-experience route. Location never determines eligibility."
-    },
-    {
-      "id": "place",
-      "title": "Your life at the moment",
-      "intro": "",
-      "fields": [
-        {
-          "key": "region",
-          "label": "Which area do you live in?",
-          "type": "select",
-          "options": [
-            {
-              "id": "darwin",
-              "label": "Darwin"
-            },
-            {
-              "id": "palmerston",
-              "label": "Palmerston / Litchfield"
-            },
-            {
-              "id": "katherine",
-              "label": "Katherine / Tindal"
-            },
-            {
-              "id": "alice",
-              "label": "Alice Springs"
-            },
-            {
-              "id": "other_nt",
-              "label": "Elsewhere in the NT"
-            },
-            {
-              "id": "outside_au",
-              "label": "Elsewhere in Australia"
-            },
-            {
-              "id": "outside_overseas",
-              "label": "Outside Australia"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Optional. This helps us plan where and how to offer support. Living outside the NT does not affect whether you can take part."
-        },
-        {
-          "key": "time_nt",
-          "label": "How long have you lived in the NT?",
-          "type": "single",
-          "options": [
-            {
-              "id": "never",
-              "label": "I have not lived in the NT"
-            },
-            {
-              "id": "under3",
-              "label": "Less than 3 months"
-            },
-            {
-              "id": "3to12",
-              "label": "3 months to less than 1 year"
-            },
-            {
-              "id": "1to3",
-              "label": "1 year to less than 3 years"
-            },
-            {
-              "id": "over3",
-              "label": "3 years or more"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Count your current or most recent stay only."
-        }
-      ],
-      "note": ""
-    },
-    {
-      "id": "strengths",
-      "title": "What already helps?",
-      "intro": "",
-      "fields": [
-        {
-          "key": "strengths",
-          "label": "What has helped you manage day-to-day life?",
-          "type": "text",
-          "options": [],
-          "hint": "Please leave out names or other details that could identify someone."
-        }
-      ],
-      "note": ""
+      "note": "Only relationship and NT connection precede the substantive questions. Earlier connections retain a separate historical route."
     },
     {
       "id": "needs",
-      "title": "Where have you needed support?",
-      "intro": "Think about the past 12 months, including any moves to or from the NT. Support can include help from family, friends, your community or a service.",
+      "title": "Your support needs",
+      "intro": "Support can include help from family, friends, your community or a service.",
       "fields": [
         {
           "key": "needs",
-          "label": "What did you need support with, whether or not you received it?",
+          "label": "In the past 12 months, which areas have you needed support with?",
           "type": "multi",
           "options": [
             {
@@ -353,7 +226,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Select all that apply.",
+          "hint": "Select all that apply. Include needs that were met and support you still need now.",
           "exclusive": [
             "none",
             "unsure",
@@ -369,662 +242,29 @@
           "conditional": "other_need"
         }
       ],
-      "note": ""
+      "note": "Select areas once, including met needs and support still needed now. Blank, unsure and declined are distinct from no need."
     },
     {
-      "id": "adequacy",
-      "title": "Was the support enough?",
-      "intro": "Think about the past 12 months, including any moves to or from the NT.",
-      "fields": [
-        {
-          "key": "adequacy:settling",
-          "label": "Postings or leaving service",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:work_study",
-          "label": "Work, study or training",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:housing",
-          "label": "Housing",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:everyday_expenses",
-          "label": "Money and everyday expenses",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:transport",
-          "label": "Getting around",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:childcare",
-          "label": "Childcare",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:schooling",
-          "label": "Children’s schooling",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:parenting_caring",
-          "label": "Parenting or caring for someone",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:physical_health",
-          "label": "Physical health and healthcare",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:emotional_wellbeing",
-          "label": "Mental health and wellbeing",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:bereavement",
-          "label": "Grief or bereavement",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:disability_ongoing_needs",
-          "label": "Disability support",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:family_relationships",
-          "label": "Family relationships",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:people_to_turn_to",
-          "label": "Friends and community",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:military_separation",
-          "label": "Time apart because of service",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:safety_confidential_help",
-          "label": "Feeling safe at home or in a relationship",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:finding_services",
-          "label": "Finding the right information or service",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:other_need",
-          "label": "Something else",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        }
-      ],
-      "note": "Only selected past needs are rated, two per page."
-    },
-    {
-      "id": "priority",
-      "title": "Support you would like now",
+      "id": "area",
+      "title": "For each selected area",
       "intro": "",
       "fields": [
         {
-          "key": "priority",
-          "label": "What would you like support with now?",
-          "type": "multi",
-          "options": [
-            {
-              "id": "settling",
-              "label": "Postings or leaving service"
-            },
-            {
-              "id": "work_study",
-              "label": "Work, study or training"
-            },
-            {
-              "id": "housing",
-              "label": "Housing"
-            },
-            {
-              "id": "everyday_expenses",
-              "label": "Money and everyday expenses"
-            },
-            {
-              "id": "transport",
-              "label": "Getting around"
-            },
-            {
-              "id": "childcare",
-              "label": "Childcare"
-            },
-            {
-              "id": "schooling",
-              "label": "Children’s schooling"
-            },
-            {
-              "id": "parenting_caring",
-              "label": "Parenting or caring for someone"
-            },
-            {
-              "id": "physical_health",
-              "label": "Physical health and healthcare"
-            },
-            {
-              "id": "emotional_wellbeing",
-              "label": "Mental health and wellbeing"
-            },
-            {
-              "id": "bereavement",
-              "label": "Grief or bereavement"
-            },
-            {
-              "id": "disability_ongoing_needs",
-              "label": "Disability support"
-            },
-            {
-              "id": "family_relationships",
-              "label": "Family relationships"
-            },
-            {
-              "id": "people_to_turn_to",
-              "label": "Friends and community"
-            },
-            {
-              "id": "military_separation",
-              "label": "Time apart because of service"
-            },
-            {
-              "id": "safety_confidential_help",
-              "label": "Feeling safe at home or in a relationship"
-            },
-            {
-              "id": "finding_services",
-              "label": "Finding the right information or service"
-            },
-            {
-              "id": "another",
-              "label": "Something else"
-            },
-            {
-              "id": "none",
-              "label": "I do not need any more support now"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Select all that apply.",
-          "exclusive": [
-            "none",
-            "unsure",
-            "prefer"
-          ]
-        },
-        {
-          "key": "another_priority",
-          "label": "What else would you like help with?",
-          "type": "short",
-          "options": [],
-          "hint": "Please leave out names or other details that could identify someone.",
-          "conditional": "another"
-        }
-      ],
-      "note": "Each current need selected has its own follow-up page. None, unsure, declined or blank does not create a follow-up."
-    },
-    {
-      "id": "detail",
-      "title": "About each support need",
-      "intro": "",
-      "fields": [
-        {
-          "key": "follow_up:settling:impact",
-          "label": "How much has this need affected your day-to-day life in the past four weeks?",
+          "key": "areas:settling:received",
+          "label": "In the past 12 months, how much of the support you needed did you receive?",
           "type": "single",
           "options": [
             {
-              "id": "not_at_all",
-              "label": "Not at all"
+              "id": "enough",
+              "label": "Enough to meet my needs"
             },
             {
-              "id": "a_little",
-              "label": "A little"
+              "id": "some",
+              "label": "Some, but not enough"
             },
             {
-              "id": "moderately",
-              "label": "Moderately"
-            },
-            {
-              "id": "a_lot",
-              "label": "A lot"
-            },
-            {
-              "id": "extremely",
-              "label": "Extremely"
+              "id": "none",
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -1035,12 +275,35 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "If this started more recently, think about that time.",
-          "need": "settling"
+          "hint": ""
         },
         {
-          "key": "follow_up:settling:help",
-          "label": "Where have you looked for help with this need?",
+          "key": "areas:settling:additional_support_now",
+          "label": "Would you like any extra or different support with this now?",
+          "type": "single",
+          "options": [
+            {
+              "id": "yes",
+              "label": "Yes"
+            },
+            {
+              "id": "no",
+              "label": "No"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": ""
+        },
+        {
+          "key": "areas:settling:sources",
+          "label": "In the past 12 months, where have you looked for support with this?",
           "type": "multi",
           "options": [
             {
@@ -1090,27 +353,29 @@
             "unsure",
             "prefer"
           ],
-          "need": "settling"
+          "need": "settling",
+          "optional_detail": true
         },
         {
-          "key": "follow_up:settling:change",
-          "label": "What would help you most with this need?",
+          "key": "areas:settling:comment",
+          "label": "What would you like Lutheran Care to know about your experience with this?",
           "type": "text",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone.",
-          "need": "settling"
+          "need": "settling",
+          "optional_detail": true
         }
       ],
       "variants": [
         {
           "id": "sought",
-          "title": "After looking for help",
-          "label": "After looking for help",
+          "title": "Optional detail: after looking for support",
+          "label": "Optional detail: after looking for support",
           "intro": "",
           "fields": [
             {
-              "key": "follow_up:settling:barriers",
-              "label": "What made it harder to get help with this need?",
+              "key": "areas:settling:barriers",
+              "label": "What made it harder to get that support?",
               "type": "multi",
               "options": [
                 {
@@ -1193,19 +458,20 @@
                 "prefer"
               ],
               "need": "settling",
-              "conditional": "need_barriers"
+              "optional_detail": true,
+              "conditional": "area_barriers"
             }
           ]
         },
         {
           "id": "not-sought",
-          "title": "When no help has been sought",
-          "label": "When no help has been sought",
+          "title": "Optional detail: when support was not sought",
+          "label": "Optional detail: when support was not sought",
           "intro": "",
           "fields": [
             {
-              "key": "follow_up:settling:barriers",
-              "label": "What are your reasons for not looking for help with this need?",
+              "key": "areas:settling:barriers",
+              "label": "What were your reasons for not looking for support?",
               "type": "multi",
               "options": [
                 {
@@ -1272,21 +538,22 @@
                 "prefer"
               ],
               "need": "settling",
-              "conditional": "need_barriers"
+              "optional_detail": true,
+              "conditional": "area_barriers"
             }
           ]
         }
       ],
-      "note": "Repeat this page separately for each selected current need. The examples below name one need; actual answers are stored against that need only. Barriers appear after a substantive help-seeking answer; they remain absent if help-seeking is skipped, uncertain or declined."
+      "note": "Two independent core questions appear first. The remaining questions are in an optional details section, available whatever the core answers. Sources and barriers use the same recall period. Blank detail does not mean no barrier."
     },
     {
       "id": "delivery",
-      "title": "Getting help from a service",
-      "intro": "These preferences are about support in general.",
+      "title": "Getting information and advice",
+      "intro": "",
       "fields": [
         {
           "key": "delivery",
-          "label": "How would you prefer to receive support from Lutheran Care or another service?",
+          "label": "When you need information or advice, which ways would suit you?",
           "type": "multi",
           "options": [
             {
@@ -1384,22 +651,134 @@
           "conditional": "live"
         }
       ],
-      "note": "One general preference page after all per-need pages."
+      "note": "Everyone in the main adult/youth route can give general information/advice preferences, including those with no selected needs."
     },
     {
       "id": "anything",
-      "title": "Is there anything we have missed?",
+      "title": "Your ideas",
       "intro": "",
       "fields": [
         {
           "key": "anything",
-          "label": "Is there anything important you would like to add?",
+          "label": "Is there any support you would like us to keep, or anything else you would like to suggest?",
           "type": "text",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone."
         }
       ],
-      "note": ""
+      "note": "One optional invitation for positive experience and other suggestions."
+    },
+    {
+      "id": "place",
+      "title": "A little about you",
+      "intro": "",
+      "fields": [
+        {
+          "key": "region",
+          "label": "Which area do you live in?",
+          "type": "select",
+          "options": [
+            {
+              "id": "darwin",
+              "label": "Darwin"
+            },
+            {
+              "id": "palmerston",
+              "label": "Palmerston / Litchfield"
+            },
+            {
+              "id": "katherine",
+              "label": "Katherine / Tindal"
+            },
+            {
+              "id": "alice",
+              "label": "Alice Springs"
+            },
+            {
+              "id": "other_nt",
+              "label": "Elsewhere in the NT"
+            },
+            {
+              "id": "outside_au",
+              "label": "Elsewhere in Australia"
+            },
+            {
+              "id": "outside_overseas",
+              "label": "Outside Australia"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Optional. This helps us plan where and how to offer support. Living outside the NT does not affect whether you can take part."
+        },
+        {
+          "key": "time_nt",
+          "label": "How long have you lived in the NT?",
+          "type": "single",
+          "options": [
+            {
+              "id": "never",
+              "label": "I have not lived in the NT"
+            },
+            {
+              "id": "under3",
+              "label": "Less than 3 months"
+            },
+            {
+              "id": "3to12",
+              "label": "3 months to less than 1 year"
+            },
+            {
+              "id": "1to3",
+              "label": "1 year to less than 3 years"
+            },
+            {
+              "id": "over3",
+              "label": "3 years or more"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Count your current or most recent stay only."
+        },
+        {
+          "key": "force",
+          "label": "Which military are you or your family connected with?",
+          "type": "single",
+          "options": [
+            {
+              "id": "adf",
+              "label": "Australian Defence Force"
+            },
+            {
+              "id": "other",
+              "label": "Another country’s military"
+            },
+            {
+              "id": "both",
+              "label": "Both"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": ""
+        }
+      ],
+      "note": "Optional background is asked near the end, not repeated from the opening."
     },
     {
       "id": "earlier",
@@ -1414,7 +793,7 @@
           "hint": "Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Separate route for NT service ending more than 12 months ago; no recent-needs questions."
+      "note": "Separate historical route for NT service ending more than 12 months ago; not part of the recent-needs loop."
     }
   ],
   "outside": [
@@ -1488,145 +867,18 @@
           ],
           "hint": "Select one.",
           "required": true
-        },
-        {
-          "key": "force",
-          "label": "Which military are you or your family connected with?",
-          "type": "single",
-          "options": [
-            {
-              "id": "adf",
-              "label": "Australian Defence Force"
-            },
-            {
-              "id": "other",
-              "label": "Another country’s military"
-            },
-            {
-              "id": "both",
-              "label": "Both"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": ""
         }
       ],
-      "note": "Current or recent NT service leads to the full questionnaire; earlier service leads to the short earlier-experience route. Location never determines eligibility."
-    },
-    {
-      "id": "place",
-      "title": "Your life at the moment",
-      "intro": "",
-      "fields": [
-        {
-          "key": "region",
-          "label": "Which area do you live in?",
-          "type": "select",
-          "options": [
-            {
-              "id": "darwin",
-              "label": "Darwin"
-            },
-            {
-              "id": "palmerston",
-              "label": "Palmerston / Litchfield"
-            },
-            {
-              "id": "katherine",
-              "label": "Katherine / Tindal"
-            },
-            {
-              "id": "alice",
-              "label": "Alice Springs"
-            },
-            {
-              "id": "other_nt",
-              "label": "Elsewhere in the NT"
-            },
-            {
-              "id": "outside_au",
-              "label": "Elsewhere in Australia"
-            },
-            {
-              "id": "outside_overseas",
-              "label": "Outside Australia"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Optional. This helps us plan where and how to offer support. Living outside the NT does not affect whether you can take part."
-        },
-        {
-          "key": "time_nt",
-          "label": "How long have you lived in the NT?",
-          "type": "single",
-          "options": [
-            {
-              "id": "never",
-              "label": "I have not lived in the NT"
-            },
-            {
-              "id": "under3",
-              "label": "Less than 3 months"
-            },
-            {
-              "id": "3to12",
-              "label": "3 months to less than 1 year"
-            },
-            {
-              "id": "1to3",
-              "label": "1 year to less than 3 years"
-            },
-            {
-              "id": "over3",
-              "label": "3 years or more"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Count your current or most recent stay only."
-        }
-      ],
-      "note": ""
-    },
-    {
-      "id": "strengths",
-      "title": "What already helps?",
-      "intro": "",
-      "fields": [
-        {
-          "key": "strengths",
-          "label": "What has helped you manage day-to-day life?",
-          "type": "text",
-          "options": [],
-          "hint": "Please leave out names or other details that could identify someone."
-        }
-      ],
-      "note": ""
+      "note": "Only relationship and NT connection precede the substantive questions. Earlier connections retain a separate historical route."
     },
     {
       "id": "needs",
-      "title": "Where have you needed support?",
-      "intro": "Think about the past 12 months, including any moves to or from the NT. Support can include help from family, friends, your community or a service.",
+      "title": "Your support needs",
+      "intro": "Support can include help from family, friends, your community or a service.",
       "fields": [
         {
           "key": "needs",
-          "label": "What did you need support with, whether or not you received it?",
+          "label": "In the past 12 months, which areas have you needed support with?",
           "type": "multi",
           "options": [
             {
@@ -1731,7 +983,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Select all that apply.",
+          "hint": "Select all that apply. Include needs that were met and support you still need now.",
           "exclusive": [
             "none",
             "unsure",
@@ -1747,662 +999,29 @@
           "conditional": "other_need"
         }
       ],
-      "note": ""
+      "note": "Select areas once, including met needs and support still needed now. Blank, unsure and declined are distinct from no need."
     },
     {
-      "id": "adequacy",
-      "title": "Was the support enough?",
-      "intro": "Think about the past 12 months, including any moves to or from the NT.",
-      "fields": [
-        {
-          "key": "adequacy:settling",
-          "label": "Postings or leaving service",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:work_study",
-          "label": "Work, study or training",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:housing",
-          "label": "Housing",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:everyday_expenses",
-          "label": "Money and everyday expenses",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:transport",
-          "label": "Getting around",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:childcare",
-          "label": "Childcare",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:schooling",
-          "label": "Children’s schooling",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:parenting_caring",
-          "label": "Parenting or caring for someone",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:physical_health",
-          "label": "Physical health and healthcare",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:emotional_wellbeing",
-          "label": "Mental health and wellbeing",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:bereavement",
-          "label": "Grief or bereavement",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:disability_ongoing_needs",
-          "label": "Disability support",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:family_relationships",
-          "label": "Family relationships",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:people_to_turn_to",
-          "label": "Friends and community",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:military_separation",
-          "label": "Time apart because of service",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:safety_confidential_help",
-          "label": "Feeling safe at home or in a relationship",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:finding_services",
-          "label": "Finding the right information or service",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:other_need",
-          "label": "Something else",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        }
-      ],
-      "note": "Only selected past needs are rated, two per page."
-    },
-    {
-      "id": "priority",
-      "title": "Support you would like now",
+      "id": "area",
+      "title": "For each selected area",
       "intro": "",
       "fields": [
         {
-          "key": "priority",
-          "label": "What would you like support with now?",
-          "type": "multi",
-          "options": [
-            {
-              "id": "settling",
-              "label": "Postings or leaving service"
-            },
-            {
-              "id": "work_study",
-              "label": "Work, study or training"
-            },
-            {
-              "id": "housing",
-              "label": "Housing"
-            },
-            {
-              "id": "everyday_expenses",
-              "label": "Money and everyday expenses"
-            },
-            {
-              "id": "transport",
-              "label": "Getting around"
-            },
-            {
-              "id": "childcare",
-              "label": "Childcare"
-            },
-            {
-              "id": "schooling",
-              "label": "Children’s schooling"
-            },
-            {
-              "id": "parenting_caring",
-              "label": "Parenting or caring for someone"
-            },
-            {
-              "id": "physical_health",
-              "label": "Physical health and healthcare"
-            },
-            {
-              "id": "emotional_wellbeing",
-              "label": "Mental health and wellbeing"
-            },
-            {
-              "id": "bereavement",
-              "label": "Grief or bereavement"
-            },
-            {
-              "id": "disability_ongoing_needs",
-              "label": "Disability support"
-            },
-            {
-              "id": "family_relationships",
-              "label": "Family relationships"
-            },
-            {
-              "id": "people_to_turn_to",
-              "label": "Friends and community"
-            },
-            {
-              "id": "military_separation",
-              "label": "Time apart because of service"
-            },
-            {
-              "id": "safety_confidential_help",
-              "label": "Feeling safe at home or in a relationship"
-            },
-            {
-              "id": "finding_services",
-              "label": "Finding the right information or service"
-            },
-            {
-              "id": "another",
-              "label": "Something else"
-            },
-            {
-              "id": "none",
-              "label": "I do not need any more support now"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Select all that apply.",
-          "exclusive": [
-            "none",
-            "unsure",
-            "prefer"
-          ]
-        },
-        {
-          "key": "another_priority",
-          "label": "What else would you like help with?",
-          "type": "short",
-          "options": [],
-          "hint": "Please leave out names or other details that could identify someone.",
-          "conditional": "another"
-        }
-      ],
-      "note": "Each current need selected has its own follow-up page. None, unsure, declined or blank does not create a follow-up."
-    },
-    {
-      "id": "detail",
-      "title": "About each support need",
-      "intro": "",
-      "fields": [
-        {
-          "key": "follow_up:settling:impact",
-          "label": "How much has this need affected your day-to-day life in the past four weeks?",
+          "key": "areas:settling:received",
+          "label": "In the past 12 months, how much of the support you needed did you receive?",
           "type": "single",
           "options": [
             {
-              "id": "not_at_all",
-              "label": "Not at all"
+              "id": "enough",
+              "label": "Enough to meet my needs"
             },
             {
-              "id": "a_little",
-              "label": "A little"
+              "id": "some",
+              "label": "Some, but not enough"
             },
             {
-              "id": "moderately",
-              "label": "Moderately"
-            },
-            {
-              "id": "a_lot",
-              "label": "A lot"
-            },
-            {
-              "id": "extremely",
-              "label": "Extremely"
+              "id": "none",
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -2413,12 +1032,35 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "If this started more recently, think about that time.",
-          "need": "settling"
+          "hint": ""
         },
         {
-          "key": "follow_up:settling:help",
-          "label": "Where have you looked for help with this need?",
+          "key": "areas:settling:additional_support_now",
+          "label": "Would you like any extra or different support with this now?",
+          "type": "single",
+          "options": [
+            {
+              "id": "yes",
+              "label": "Yes"
+            },
+            {
+              "id": "no",
+              "label": "No"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": ""
+        },
+        {
+          "key": "areas:settling:sources",
+          "label": "In the past 12 months, where have you looked for support with this?",
           "type": "multi",
           "options": [
             {
@@ -2468,27 +1110,29 @@
             "unsure",
             "prefer"
           ],
-          "need": "settling"
+          "need": "settling",
+          "optional_detail": true
         },
         {
-          "key": "follow_up:settling:change",
-          "label": "What would help you most with this need?",
+          "key": "areas:settling:comment",
+          "label": "What would you like Lutheran Care to know about your experience with this?",
           "type": "text",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone.",
-          "need": "settling"
+          "need": "settling",
+          "optional_detail": true
         }
       ],
       "variants": [
         {
           "id": "sought",
-          "title": "After looking for help",
-          "label": "After looking for help",
+          "title": "Optional detail: after looking for support",
+          "label": "Optional detail: after looking for support",
           "intro": "",
           "fields": [
             {
-              "key": "follow_up:settling:barriers",
-              "label": "What made it harder to get help with this need?",
+              "key": "areas:settling:barriers",
+              "label": "What made it harder to get that support?",
               "type": "multi",
               "options": [
                 {
@@ -2571,19 +1215,20 @@
                 "prefer"
               ],
               "need": "settling",
-              "conditional": "need_barriers"
+              "optional_detail": true,
+              "conditional": "area_barriers"
             }
           ]
         },
         {
           "id": "not-sought",
-          "title": "When no help has been sought",
-          "label": "When no help has been sought",
+          "title": "Optional detail: when support was not sought",
+          "label": "Optional detail: when support was not sought",
           "intro": "",
           "fields": [
             {
-              "key": "follow_up:settling:barriers",
-              "label": "What are your reasons for not looking for help with this need?",
+              "key": "areas:settling:barriers",
+              "label": "What were your reasons for not looking for support?",
               "type": "multi",
               "options": [
                 {
@@ -2650,21 +1295,22 @@
                 "prefer"
               ],
               "need": "settling",
-              "conditional": "need_barriers"
+              "optional_detail": true,
+              "conditional": "area_barriers"
             }
           ]
         }
       ],
-      "note": "Repeat this page separately for each selected current need. The examples below name one need; actual answers are stored against that need only. Barriers appear after a substantive help-seeking answer; they remain absent if help-seeking is skipped, uncertain or declined."
+      "note": "Two independent core questions appear first. The remaining questions are in an optional details section, available whatever the core answers. Sources and barriers use the same recall period. Blank detail does not mean no barrier."
     },
     {
       "id": "delivery",
-      "title": "Getting help from a service",
-      "intro": "These preferences are about support in general.",
+      "title": "Getting information and advice",
+      "intro": "",
       "fields": [
         {
           "key": "delivery",
-          "label": "How would you prefer to receive support from Lutheran Care or another service?",
+          "label": "When you need information or advice, which ways would suit you?",
           "type": "multi",
           "options": [
             {
@@ -2762,22 +1408,134 @@
           "conditional": "live"
         }
       ],
-      "note": "One general preference page after all per-need pages."
+      "note": "Everyone in the main adult/youth route can give general information/advice preferences, including those with no selected needs."
     },
     {
       "id": "anything",
-      "title": "Is there anything we have missed?",
+      "title": "Your ideas",
       "intro": "",
       "fields": [
         {
           "key": "anything",
-          "label": "Is there anything important you would like to add?",
+          "label": "Is there any support you would like us to keep, or anything else you would like to suggest?",
           "type": "text",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone."
         }
       ],
-      "note": ""
+      "note": "One optional invitation for positive experience and other suggestions."
+    },
+    {
+      "id": "place",
+      "title": "A little about you",
+      "intro": "",
+      "fields": [
+        {
+          "key": "region",
+          "label": "Which area do you live in?",
+          "type": "select",
+          "options": [
+            {
+              "id": "darwin",
+              "label": "Darwin"
+            },
+            {
+              "id": "palmerston",
+              "label": "Palmerston / Litchfield"
+            },
+            {
+              "id": "katherine",
+              "label": "Katherine / Tindal"
+            },
+            {
+              "id": "alice",
+              "label": "Alice Springs"
+            },
+            {
+              "id": "other_nt",
+              "label": "Elsewhere in the NT"
+            },
+            {
+              "id": "outside_au",
+              "label": "Elsewhere in Australia"
+            },
+            {
+              "id": "outside_overseas",
+              "label": "Outside Australia"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Optional. This helps us plan where and how to offer support. Living outside the NT does not affect whether you can take part."
+        },
+        {
+          "key": "time_nt",
+          "label": "How long have you lived in the NT?",
+          "type": "single",
+          "options": [
+            {
+              "id": "never",
+              "label": "I have not lived in the NT"
+            },
+            {
+              "id": "under3",
+              "label": "Less than 3 months"
+            },
+            {
+              "id": "3to12",
+              "label": "3 months to less than 1 year"
+            },
+            {
+              "id": "1to3",
+              "label": "1 year to less than 3 years"
+            },
+            {
+              "id": "over3",
+              "label": "3 years or more"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Count your current or most recent stay only."
+        },
+        {
+          "key": "force",
+          "label": "Which military are you or your family connected with?",
+          "type": "single",
+          "options": [
+            {
+              "id": "adf",
+              "label": "Australian Defence Force"
+            },
+            {
+              "id": "other",
+              "label": "Another country’s military"
+            },
+            {
+              "id": "both",
+              "label": "Both"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": ""
+        }
+      ],
+      "note": "Optional background is asked near the end, not repeated from the opening."
     },
     {
       "id": "earlier",
@@ -2792,7 +1550,7 @@
           "hint": "Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Separate route for NT service ending more than 12 months ago; no recent-needs questions."
+      "note": "Separate historical route for NT service ending more than 12 months ago; not part of the recent-needs loop."
     }
   ],
   "unspecified": [
@@ -2866,145 +1624,18 @@
           ],
           "hint": "Select one.",
           "required": true
-        },
-        {
-          "key": "force",
-          "label": "Which military are you or your family connected with?",
-          "type": "single",
-          "options": [
-            {
-              "id": "adf",
-              "label": "Australian Defence Force"
-            },
-            {
-              "id": "other",
-              "label": "Another country’s military"
-            },
-            {
-              "id": "both",
-              "label": "Both"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": ""
         }
       ],
-      "note": "Current or recent NT service leads to the full questionnaire; earlier service leads to the short earlier-experience route. Location never determines eligibility."
-    },
-    {
-      "id": "place",
-      "title": "Your life at the moment",
-      "intro": "",
-      "fields": [
-        {
-          "key": "region",
-          "label": "Which area do you live in?",
-          "type": "select",
-          "options": [
-            {
-              "id": "darwin",
-              "label": "Darwin"
-            },
-            {
-              "id": "palmerston",
-              "label": "Palmerston / Litchfield"
-            },
-            {
-              "id": "katherine",
-              "label": "Katherine / Tindal"
-            },
-            {
-              "id": "alice",
-              "label": "Alice Springs"
-            },
-            {
-              "id": "other_nt",
-              "label": "Elsewhere in the NT"
-            },
-            {
-              "id": "outside_au",
-              "label": "Elsewhere in Australia"
-            },
-            {
-              "id": "outside_overseas",
-              "label": "Outside Australia"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Optional. This helps us plan where and how to offer support. Living outside the NT does not affect whether you can take part."
-        },
-        {
-          "key": "time_nt",
-          "label": "How long have you lived in the NT?",
-          "type": "single",
-          "options": [
-            {
-              "id": "never",
-              "label": "I have not lived in the NT"
-            },
-            {
-              "id": "under3",
-              "label": "Less than 3 months"
-            },
-            {
-              "id": "3to12",
-              "label": "3 months to less than 1 year"
-            },
-            {
-              "id": "1to3",
-              "label": "1 year to less than 3 years"
-            },
-            {
-              "id": "over3",
-              "label": "3 years or more"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Count your current or most recent stay only."
-        }
-      ],
-      "note": ""
-    },
-    {
-      "id": "strengths",
-      "title": "What already helps?",
-      "intro": "",
-      "fields": [
-        {
-          "key": "strengths",
-          "label": "What has helped you manage day-to-day life?",
-          "type": "text",
-          "options": [],
-          "hint": "Please leave out names or other details that could identify someone."
-        }
-      ],
-      "note": ""
+      "note": "Only relationship and NT connection precede the substantive questions. Earlier connections retain a separate historical route."
     },
     {
       "id": "needs",
-      "title": "Where have you needed support?",
-      "intro": "Think about the past 12 months, including any moves to or from the NT. Support can include help from family, friends, your community or a service.",
+      "title": "Your support needs",
+      "intro": "Support can include help from family, friends, your community or a service.",
       "fields": [
         {
           "key": "needs",
-          "label": "What did you need support with, whether or not you received it?",
+          "label": "In the past 12 months, which areas have you needed support with?",
           "type": "multi",
           "options": [
             {
@@ -3109,7 +1740,7 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Select all that apply.",
+          "hint": "Select all that apply. Include needs that were met and support you still need now.",
           "exclusive": [
             "none",
             "unsure",
@@ -3125,662 +1756,29 @@
           "conditional": "other_need"
         }
       ],
-      "note": ""
+      "note": "Select areas once, including met needs and support still needed now. Blank, unsure and declined are distinct from no need."
     },
     {
-      "id": "adequacy",
-      "title": "Was the support enough?",
-      "intro": "Think about the past 12 months, including any moves to or from the NT.",
-      "fields": [
-        {
-          "key": "adequacy:settling",
-          "label": "Postings or leaving service",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:work_study",
-          "label": "Work, study or training",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:housing",
-          "label": "Housing",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:everyday_expenses",
-          "label": "Money and everyday expenses",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:transport",
-          "label": "Getting around",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:childcare",
-          "label": "Childcare",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:schooling",
-          "label": "Children’s schooling",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:parenting_caring",
-          "label": "Parenting or caring for someone",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:physical_health",
-          "label": "Physical health and healthcare",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:emotional_wellbeing",
-          "label": "Mental health and wellbeing",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:bereavement",
-          "label": "Grief or bereavement",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:disability_ongoing_needs",
-          "label": "Disability support",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:family_relationships",
-          "label": "Family relationships",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:people_to_turn_to",
-          "label": "Friends and community",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:military_separation",
-          "label": "Time apart because of service",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:safety_confidential_help",
-          "label": "Feeling safe at home or in a relationship",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:finding_services",
-          "label": "Finding the right information or service",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        },
-        {
-          "key": "adequacy:other_need",
-          "label": "Something else",
-          "type": "single",
-          "options": [
-            {
-              "id": "enough",
-              "label": "Enough to meet my needs"
-            },
-            {
-              "id": "some",
-              "label": "Some, but not enough"
-            },
-            {
-              "id": "none",
-              "label": "None"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "How much of the support you needed did you receive?"
-        }
-      ],
-      "note": "Only selected past needs are rated, two per page."
-    },
-    {
-      "id": "priority",
-      "title": "Support you would like now",
+      "id": "area",
+      "title": "For each selected area",
       "intro": "",
       "fields": [
         {
-          "key": "priority",
-          "label": "What would you like support with now?",
-          "type": "multi",
-          "options": [
-            {
-              "id": "settling",
-              "label": "Postings or leaving service"
-            },
-            {
-              "id": "work_study",
-              "label": "Work, study or training"
-            },
-            {
-              "id": "housing",
-              "label": "Housing"
-            },
-            {
-              "id": "everyday_expenses",
-              "label": "Money and everyday expenses"
-            },
-            {
-              "id": "transport",
-              "label": "Getting around"
-            },
-            {
-              "id": "childcare",
-              "label": "Childcare"
-            },
-            {
-              "id": "schooling",
-              "label": "Children’s schooling"
-            },
-            {
-              "id": "parenting_caring",
-              "label": "Parenting or caring for someone"
-            },
-            {
-              "id": "physical_health",
-              "label": "Physical health and healthcare"
-            },
-            {
-              "id": "emotional_wellbeing",
-              "label": "Mental health and wellbeing"
-            },
-            {
-              "id": "bereavement",
-              "label": "Grief or bereavement"
-            },
-            {
-              "id": "disability_ongoing_needs",
-              "label": "Disability support"
-            },
-            {
-              "id": "family_relationships",
-              "label": "Family relationships"
-            },
-            {
-              "id": "people_to_turn_to",
-              "label": "Friends and community"
-            },
-            {
-              "id": "military_separation",
-              "label": "Time apart because of service"
-            },
-            {
-              "id": "safety_confidential_help",
-              "label": "Feeling safe at home or in a relationship"
-            },
-            {
-              "id": "finding_services",
-              "label": "Finding the right information or service"
-            },
-            {
-              "id": "another",
-              "label": "Something else"
-            },
-            {
-              "id": "none",
-              "label": "I do not need any more support now"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Select all that apply.",
-          "exclusive": [
-            "none",
-            "unsure",
-            "prefer"
-          ]
-        },
-        {
-          "key": "another_priority",
-          "label": "What else would you like help with?",
-          "type": "short",
-          "options": [],
-          "hint": "Please leave out names or other details that could identify someone.",
-          "conditional": "another"
-        }
-      ],
-      "note": "Each current need selected has its own follow-up page. None, unsure, declined or blank does not create a follow-up."
-    },
-    {
-      "id": "detail",
-      "title": "About each support need",
-      "intro": "",
-      "fields": [
-        {
-          "key": "follow_up:settling:impact",
-          "label": "How much has this need affected your day-to-day life in the past four weeks?",
+          "key": "areas:settling:received",
+          "label": "In the past 12 months, how much of the support you needed did you receive?",
           "type": "single",
           "options": [
             {
-              "id": "not_at_all",
-              "label": "Not at all"
+              "id": "enough",
+              "label": "Enough to meet my needs"
             },
             {
-              "id": "a_little",
-              "label": "A little"
+              "id": "some",
+              "label": "Some, but not enough"
             },
             {
-              "id": "moderately",
-              "label": "Moderately"
-            },
-            {
-              "id": "a_lot",
-              "label": "A lot"
-            },
-            {
-              "id": "extremely",
-              "label": "Extremely"
+              "id": "none",
+              "label": "None"
             },
             {
               "id": "unsure",
@@ -3791,12 +1789,35 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "If this started more recently, think about that time.",
-          "need": "settling"
+          "hint": ""
         },
         {
-          "key": "follow_up:settling:help",
-          "label": "Where have you looked for help with this need?",
+          "key": "areas:settling:additional_support_now",
+          "label": "Would you like any extra or different support with this now?",
+          "type": "single",
+          "options": [
+            {
+              "id": "yes",
+              "label": "Yes"
+            },
+            {
+              "id": "no",
+              "label": "No"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": ""
+        },
+        {
+          "key": "areas:settling:sources",
+          "label": "In the past 12 months, where have you looked for support with this?",
           "type": "multi",
           "options": [
             {
@@ -3846,27 +1867,29 @@
             "unsure",
             "prefer"
           ],
-          "need": "settling"
+          "need": "settling",
+          "optional_detail": true
         },
         {
-          "key": "follow_up:settling:change",
-          "label": "What would help you most with this need?",
+          "key": "areas:settling:comment",
+          "label": "What would you like Lutheran Care to know about your experience with this?",
           "type": "text",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone.",
-          "need": "settling"
+          "need": "settling",
+          "optional_detail": true
         }
       ],
       "variants": [
         {
           "id": "sought",
-          "title": "After looking for help",
-          "label": "After looking for help",
+          "title": "Optional detail: after looking for support",
+          "label": "Optional detail: after looking for support",
           "intro": "",
           "fields": [
             {
-              "key": "follow_up:settling:barriers",
-              "label": "What made it harder to get help with this need?",
+              "key": "areas:settling:barriers",
+              "label": "What made it harder to get that support?",
               "type": "multi",
               "options": [
                 {
@@ -3949,19 +1972,20 @@
                 "prefer"
               ],
               "need": "settling",
-              "conditional": "need_barriers"
+              "optional_detail": true,
+              "conditional": "area_barriers"
             }
           ]
         },
         {
           "id": "not-sought",
-          "title": "When no help has been sought",
-          "label": "When no help has been sought",
+          "title": "Optional detail: when support was not sought",
+          "label": "Optional detail: when support was not sought",
           "intro": "",
           "fields": [
             {
-              "key": "follow_up:settling:barriers",
-              "label": "What are your reasons for not looking for help with this need?",
+              "key": "areas:settling:barriers",
+              "label": "What were your reasons for not looking for support?",
               "type": "multi",
               "options": [
                 {
@@ -4028,21 +2052,22 @@
                 "prefer"
               ],
               "need": "settling",
-              "conditional": "need_barriers"
+              "optional_detail": true,
+              "conditional": "area_barriers"
             }
           ]
         }
       ],
-      "note": "Repeat this page separately for each selected current need. The examples below name one need; actual answers are stored against that need only. Barriers appear after a substantive help-seeking answer; they remain absent if help-seeking is skipped, uncertain or declined."
+      "note": "Two independent core questions appear first. The remaining questions are in an optional details section, available whatever the core answers. Sources and barriers use the same recall period. Blank detail does not mean no barrier."
     },
     {
       "id": "delivery",
-      "title": "Getting help from a service",
-      "intro": "These preferences are about support in general.",
+      "title": "Getting information and advice",
+      "intro": "",
       "fields": [
         {
           "key": "delivery",
-          "label": "How would you prefer to receive support from Lutheran Care or another service?",
+          "label": "When you need information or advice, which ways would suit you?",
           "type": "multi",
           "options": [
             {
@@ -4140,22 +2165,134 @@
           "conditional": "live"
         }
       ],
-      "note": "One general preference page after all per-need pages."
+      "note": "Everyone in the main adult/youth route can give general information/advice preferences, including those with no selected needs."
     },
     {
       "id": "anything",
-      "title": "Is there anything we have missed?",
+      "title": "Your ideas",
       "intro": "",
       "fields": [
         {
           "key": "anything",
-          "label": "Is there anything important you would like to add?",
+          "label": "Is there any support you would like us to keep, or anything else you would like to suggest?",
           "type": "text",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone."
         }
       ],
-      "note": ""
+      "note": "One optional invitation for positive experience and other suggestions."
+    },
+    {
+      "id": "place",
+      "title": "A little about you",
+      "intro": "",
+      "fields": [
+        {
+          "key": "region",
+          "label": "Which area do you live in?",
+          "type": "select",
+          "options": [
+            {
+              "id": "darwin",
+              "label": "Darwin"
+            },
+            {
+              "id": "palmerston",
+              "label": "Palmerston / Litchfield"
+            },
+            {
+              "id": "katherine",
+              "label": "Katherine / Tindal"
+            },
+            {
+              "id": "alice",
+              "label": "Alice Springs"
+            },
+            {
+              "id": "other_nt",
+              "label": "Elsewhere in the NT"
+            },
+            {
+              "id": "outside_au",
+              "label": "Elsewhere in Australia"
+            },
+            {
+              "id": "outside_overseas",
+              "label": "Outside Australia"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Optional. This helps us plan where and how to offer support. Living outside the NT does not affect whether you can take part."
+        },
+        {
+          "key": "time_nt",
+          "label": "How long have you lived in the NT?",
+          "type": "single",
+          "options": [
+            {
+              "id": "never",
+              "label": "I have not lived in the NT"
+            },
+            {
+              "id": "under3",
+              "label": "Less than 3 months"
+            },
+            {
+              "id": "3to12",
+              "label": "3 months to less than 1 year"
+            },
+            {
+              "id": "1to3",
+              "label": "1 year to less than 3 years"
+            },
+            {
+              "id": "over3",
+              "label": "3 years or more"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Count your current or most recent stay only."
+        },
+        {
+          "key": "force",
+          "label": "Which military are you or your family connected with?",
+          "type": "single",
+          "options": [
+            {
+              "id": "adf",
+              "label": "Australian Defence Force"
+            },
+            {
+              "id": "other",
+              "label": "Another country’s military"
+            },
+            {
+              "id": "both",
+              "label": "Both"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": ""
+        }
+      ],
+      "note": "Optional background is asked near the end, not repeated from the opening."
     },
     {
       "id": "earlier",
@@ -4170,7 +2307,7 @@
           "hint": "Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Separate route for NT service ending more than 12 months ago; no recent-needs questions."
+      "note": "Separate historical route for NT service ending more than 12 months ago; not part of the recent-needs loop."
     }
   ]
 }

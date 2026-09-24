@@ -1,60 +1,72 @@
 # NT Defence Family Support Program consultation
 
-A formal questionnaire for Lutheran Care’s internal team review. This is service consultation, not a human research project. The participant interface contains formal wording and LC branding; this staff file records the review context. The current build has no response receiver and does not claim that answers have been received.
+A formal questionnaire for Lutheran Care’s internal team review. The project is service consultation. The participant interface uses the intended formal wording and LC branding; the current build holds answers in page memory and has no response receiver. Finishing does not transmit a response or claim that LC has received it.
 
 - [Questionnaire](https://jacobjia1994.github.io/nt-military-family-support-survey/)
 - [Adult reading copy](https://jacobjia1994.github.io/nt-military-family-support-survey/adult-wording.html)
 - [All ages and conditional questions](https://jacobjia1994.github.io/nt-military-family-support-survey/questions.html)
 - [Staff guide](https://jacobjia1994.github.io/nt-military-family-support-survey/review.html)
-- [Proposed flow redesign](FLOW_REDESIGN.md)
+- [Approved flow and measurement contract](FLOW_REDESIGN.md)
 - [Participation and safeguarding procedure](consultation-procedure.md)
 - [Strategy-to-questionnaire evidence](copy/strategy-needs-map.md)
 
-## Current structure, 25 September 2026
+## Questionnaire flow
 
-The adult domains were checked against the supplied Australian Government *Defence and Veteran Family Wellbeing Strategy 2025–2030* and First Action Plan. The list has 17 domains plus Something else. Grief/bereavement is separate because it includes practical as well as emotional support. Information/service navigation is added; postings/leaving service and grief are visible examples within broader domains. The source is national policy, not a validated scale or evidence of NT prevalence. Youth and child options remain shorter. Examples do not exhaust the possible experiences in an area.
+1. Invitation, age-appropriate participation and the minimum NT connection check.
+2. Select support areas once.
+3. Complete one page for each selected area: support received in the recall period, then extra or different support wanted now. Optional experience stays on that page.
+4. General information/advice preferences for adults and young people, including those who selected no needs.
+5. One optional question about support worth keeping or other suggestions.
+6. Optional background: military affiliation, broad residence, current/most-recent NT stay and assistance with answering.
+7. Review, finish and the completion resource.
 
-NT service timing controls the route, independently of the respondent's residence:
+There is no second current-needs checklist, top-three ranking or four-week impact score. Past support received and extra support wanted now remain independent: a person can report an old gap that has since been resolved, or enough past support alongside a new request. “No” to extra help does not mean existing ongoing support is unnecessary.
 
-- Current service or service ending within 12months: full questionnaire.
-- Earlier NT service: one optional lessons/suggestions response, then review and finish. These records are separate from recent-needs counts.
-- Uncertain connection: full questions, marked uncertain in analysis.
-- No NT service/connection: scope explanation.
+The adult list retains 17 accepted domains plus “Something else”. Youth and child lists remain age-appropriate. Optional details are available for every selected area, including enough past support or no extra help wanted now. A respondent need not open those details to continue. The child version retains its age-appropriate journey without adult contact-format preferences.
 
-These are consultation-design boundaries for team review, not programme-benefit eligibility decisions. Current/former members and their family relationships can be selected; multiple roles remain possible. The strategy's inclusion of veterans does not itself establish the LC grant's service entitlements.
+## Scope and recall
 
-Past needs/adequacy refer to 12 months for adults/youth and 3 months for children. The current-or-most-recent NT residence question uses nonoverlapping bands and a never-lived-in-NT option. It does not ask people to add separate postings or measure lifetime service. Current need impact refers to 4 weeks. These windows are design choices, not legal requirements.
+NT service timing controls the route independently of residence:
 
-Each selected current need now has ONE page with its own impact, help sought, conditional barriers/reasons and desired change. Barriers appear only after a known help-seeking/not-seeking answer. Blank/uncertain/declined help does not imply an attempt. One general delivery/time preference page follows. No arbitrary cap is placed on current needs. Fieldwork length depends on selections; old unmeasured duration estimates have been removed.
+- Current service or service ending within the past 12 months: full questionnaire.
+- Earlier NT service: one optional lessons/suggestions page, then review and finish; analysed separately from recent support needs.
+- Uncertain connection: full questionnaire, retained as uncertain in analysis.
+- No NT service connection: scope explanation.
 
-## Answer model and integrity
+These routes define consultation participation, not programme-benefit eligibility. Family members can live outside the NT. Current/former members and wider family relationships can be selected, with multiple roles allowed.
 
-Schema 3 exports `follow_up[need_id]` blocks. No earlier collective answer is copied across needs. Removing a need removes only its block; editing one block's help source clears only its barriers. General service preferences remain explicitly general. Past adequacy remains keyed per domain. Earlier-experience exports contain no current-needs answers. The historical field `priority` is an array of current needs, not a ranking.
+The adult and youth recall period is 12 months; the child period is 3 months. Support received, sources and barriers use that same period. Extra or different support wanted refers to now. Optional NT residence duration concerns the current or most recent stay, with a never-lived-in-NT option; it does not add separate postings together. These periods are project design choices.
 
-Adult/youth comments allow 5000 characters; child comments 1500. Remaining-character feedback appears near the limit. Optional blank questions continue with one Continue button; the few required fields and consent choices must be completed first.
+Excluding invitation, age and participation, the adult main route has 6 pages with no areas, 8 with two, and 11 with five, including review. Optional details expand within each area's page. These are page counts, not measured completion times.
+
+## Answer model and interpretation
+
+Schema 4 uses one `answers.needs` selection and independent `answers.areas[domain_id]` records containing `received`, `additional_support_now`, `sources`, `barriers` and `comment`. There is no automatic migration of earlier collective or current-only follow-up answers into this model.
+
+Removing an area removes its answer block. Changing its source response clears only that area's dependent barriers. Explicit non-seeking uses reasons for not seeking; actual help-seeking uses experienced barriers. Blank, uncertain or declined source answers must not imply a failed attempt. Optional unanswered details remain missing, not “no barrier”. Use the number actually answering each field as its denominator.
+
+Records describe individuals, not unique households or NT population prevalence. Do not pool child/youth and adult measures, uncertain and confirmed connections, or earlier-experience and recent-needs routes without making those differences explicit. The earlier fictional results page is an illustration of an older instrument, not an analyser of schema 4 responses.
+
+Adult/youth comments allow 5000 characters; child comments allow 1500. The counter appears near the limit. Optional questions can be left blank with one Continue button; required connection/participation choices must be completed first.
 
 ## Participation and privacy
 
-Adults and 15–17-year-olds give informed own consent; 7–14-year-olds have guardian permission followed by their own assent. Under 7 uses a facilitated conversation guide. People needing capacity/authority/safe-guardian support can ask an LC worker; the public form never fabricates worker approval. The age split is an operational model, not a universal statutory consent age. See the staff procedure for actual responsibilities and reporting.
+Adults and 15–17-year-olds give their own informed agreement; ages 7–14 first have guardian permission, followed by their own assent. Under 7 uses a facilitated conversation guide. Anyone needing help with understanding, authority or safe guardian involvement can speak with an LC worker. The public form does not fabricate worker approval. The age split is an operational model, not a universal statutory consent age. Follow the staff procedure for individual assessment, assistance and safeguarding.
 
-No names, contacts or response-retrieval codes are requested. Ordinary answers are not linked to identity. Retaining answer records is different from retaining an identity mapping. The formal notice explains secure LC custody, authorised access, sharing, rights and withdrawal without naming an unselected platform or inventing a retention period. Unexpected identifying disclosures still fall under LC's privacy and safeguarding duties. A policy link and front-end checkbox do not activate an institution-managed receiver.
+No names, contact details or response-retrieval codes are requested. Ordinary answers are not linked to identity. Retaining answers is different from retaining an identity mapping. The formal notice describes intended LC custody, authorised access, sharing, rights and withdrawal without inventing a storage platform or retention period. Unexpected identifying disclosures still require appropriate privacy and safeguarding handling.
 
-The implementation holds answers in page memory, with optional local JSON download. It has no answer endpoint, application analytics, cookies or persistent answer store. GitHub Pages itself logs visitor IPs for security. Real responses must not be stored in this repository or personal development directories. Exported consent records carry `context: internal_review`; they are not evidence of real fieldwork approval.
+The implementation has no answer endpoint, application analytics, cookies or persistent answer store. Respondents can download a local JSON copy. GitHub Pages itself logs visitor IPs for security. Real responses do not belong in this repository or personal development directories. Exported consent records carry `context: internal_review`; they are not evidence of fieldwork approval. Before real collection, LC must put the receiver and the agreed handling arrangements into operation.
 
-## Development and verification
+## Development and source material
 
-Run `node --test tests/survey.test.mjs`. `node scripts/export-copy.mjs` exports the live definitions to the adult reading-copy data. Local preview: `python3 -m http.server 8174 --bind 127.0.0.1`.
+Run `node --test tests/survey.test.mjs`. `node scripts/export-copy.mjs` exports the current definitions for the adult reading copy. Local preview: `python3 -m http.server 8174 --bind 127.0.0.1`.
 
-LC logo and self-hosted Karla sources/licence are in `assets/`. The Pages deployment serves main at the repository root. The old fictional results illustrate an earlier instrument; they are not a processor for schema 3 responses or findings about families.
+LC logo and self-hosted Karla sources/licence are in `assets/`. GitHub Pages serves the repository root from main.
+
+The adult domains and examples were checked against the supplied *Defence and Veteran Family Wellbeing Strategy 2025–2030* and First Action Plan. The recovered 39 headings belong to the earlier *From Challenges to Solutions* synthesis of several sources, not an official 39-item Strategy list. The fuller source inventory distinguishes stated needs from gaps inferred from policy actions. It is a team reference, not a flat respondent checklist.
+
+Examples aid recognition but are not exhaustive and do not produce separate counts for every detail mentioned. The national Strategy is not a validated questionnaire or evidence of NT prevalence or LC programme entitlements. See the source mapping for page-level evidence.
 
 ## Completion resource
 
-Set `title` and the public HTTPS `url` in `thank-you-resource.js` when the team has made the resource. Until then the inactive resource button says Available soon. The same link is used for all completers, including optional blanks and earlier-experience respondents. It appends no answers or participant ID, collects no email and opens without a referrer. No resource content has been invented.
-
-## Full difficulty inventory, 25 September
-
-The recovered 39 headings belong to the earlier *From Challenges to Solutions* synthesis, which combines the Strategy with the ADF Census and other research. They are not an official 39-item Strategy list. The current source inventory distinguishes explicitly stated difficulties/support needs from gaps inferred from policy actions. The full list is a team reference, not a new flat respondent checklist.
-
-Main-list additions remain selective: grief/bereavement is now a separate adult need; concise examples expose posting uncertainty, suitable/pet-friendly housing, atypical childcare hours and reunion. A specific Defence-family-understanding barrier is added for adults who sought help. Examples improve recognition but do not create separately coded counts of every detailed issue. Existing need-specific free text remains available.
-
-Family relationship labels include former partners and carers; this avoids excluding wider family voices from consultation and does not promise service eligibility.
+Set `title` and the public HTTPS `url` in `thank-you-resource.js` when the team has made the resource. Until then the inactive button says Available soon. The same link is used for everyone completing the questionnaire, including optional blanks and earlier-experience respondents. It appends no answers or participant ID, collects no email and opens without a referrer. No resource content has been invented.
