@@ -6,6 +6,7 @@ A formal questionnaire for Lutheran Care’s internal team review. This is servi
 - [Adult reading copy](https://jacobjia1994.github.io/nt-military-family-support-survey/adult-wording.html)
 - [All ages and conditional questions](https://jacobjia1994.github.io/nt-military-family-support-survey/questions.html)
 - [Staff guide](https://jacobjia1994.github.io/nt-military-family-support-survey/review.html)
+- [Proposed flow redesign](FLOW_REDESIGN.md)
 - [Participation and safeguarding procedure](consultation-procedure.md)
 - [Strategy-to-questionnaire evidence](copy/strategy-needs-map.md)
 
