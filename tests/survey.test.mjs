@@ -272,7 +272,7 @@ test('barriers distinguish seeking help, not seeking help and an unanswered help
   assert.equal(hasOwn(options, 'prefer_not_to_say'), false);
 
   const notSought = pageFor('barriers', 'adult', { priority: 'housing', help: ['not_sought'] });
-  assert.match(notSought.title, /haven’t you looked/);
+  assert.equal(notSought.title, "What influenced your decision?");
   assert.match(notSought.intro, /influenced your decision/);
   assert.ok(notSought.fields[0].options.some(option => option.id === 'eligibility_concern'));
   assert.equal(notSought.fields[0].options.some(option => option.id === 'eligibility_refused'), false);
@@ -280,7 +280,7 @@ test('barriers distinguish seeking help, not seeking help and an unanswered help
   for (const help of [undefined, ['unsure'], ['prefer']]) {
     const neutral = pageFor('barriers', 'adult', { priority: 'housing', help });
     assert.match(neutral.intro, /skip this if it does not apply/);
-    assert.equal(neutral.fields[0].label, 'What, if anything, has made getting help difficult?');
+    assert.equal(neutral.fields[0].label, 'If you have tried to get help with this, what, if anything, made it difficult?');
   }
 });
 
@@ -325,7 +325,7 @@ test('the question library covers all six age/location combinations and all help
       assert.match(barriers.variants[2].intro, /skip this if it does not apply/);
       const needs = sections.find(section => section.id === 'needs');
       assert.match(needs.intro, version === 'child' ? /three months/ : /six months/);
-      if (location === 'outside') assert.match(needs.intro, /family member has been serving in the NT/);
+      if (location === 'outside') assert.match(needs.intro, version === 'adult' ? /you or someone in your family has been serving in the NT/ : /family member has been serving in the NT/);
     }
   }
 });
@@ -350,5 +350,32 @@ test('review library wording matches live questions and never alters respondent 
       assert.deepEqual(reference.fields, live.fields, `${version}: ${id}`);
     }
     survey.setContext('child', answers);
+  }
+});
+
+
+test('declining residence never assumes NT residence and clears earlier location-bound answers', () => {
+  for (const version of ['adult','youth','child']) {
+    const domains = survey.setContext(version, {region:'prefer'});
+    const place = survey.page({id:'place'});
+    assert.equal(survey.conditionalVisible(place.fields.find(f=>f.key==='time_nt')),false);
+    const needs = survey.page({id:'needs'});
+    assert.doesNotMatch(needs.intro,/time here|since you arrived|months in the NT/);
+    const response={region:'prefer',time_nt:'over3',needs:['housing'],priority:'housing',...details()};
+    survey.reconcileAnswers(response,'region',domains,'darwin');
+    for(const key of ['time_nt','needs','priority','delivery','times'])assert.equal(hasOwn(response,key),false,key);
+    assert.equal(hasOwn(survey.cleanExport({region:'prefer',time_nt:'over3'},version,domains).answers,'time_nt'),false);
+  }
+});
+
+test('declining service help is exclusive and clears appointment-time preferences', () => {
+  const p=pageFor('delivery','adult',{region:'darwin',priority:'housing'});
+  const f=p.fields[0];
+  for(const value of ['not_wanted','unsure']) {
+    assert.ok(f.options.some(o=>o.id===value));
+    assert.deepEqual(plain(survey.toggleChoice(['phone','referral'],value,f.exclusive)),[value]);
+    const a={delivery:[value],times:['weekend']};
+    survey.reconcileAnswers(a,'delivery',domainsFor('adult'));
+    assert.equal(hasOwn(a,'times'),false);
   }
 });

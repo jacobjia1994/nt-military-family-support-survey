@@ -15,7 +15,7 @@ The results page uses 136 fictional records. Age versions are shown separately, 
 
 ## Answer handling
 
-There is no response collection backend, tracking or browser storage. Answers remain in the page until it is left, refreshed or closed and can be downloaded by the respondent. No entered answer is sent to GitHub or added to the results page. Review notes are also held only in memory; they survive switching age/location views on the same page and can be downloaded as Markdown. Download notes before leaving the page. Do not use this version to collect real participant responses.
+There is no response collection backend, application analytics tracker or persistent answer storage. GitHub Pages records visitor IP addresses for security; see its hosting privacy notice. Answers remain in the page until it is left, refreshed or closed and can be downloaded by the respondent. No entered answer is sent to GitHub or added to the results page. Review notes are also held only in memory; they survive switching age/location views on the same page and can be downloaded as Markdown. Download notes before leaving the page. Do not use this version to collect real participant responses.
 
 ## Hosting and review
 
@@ -41,4 +41,10 @@ The original version reported 22 branching/answer-integrity regressions, calcula
 
 ## Participant information revision
 
-The opening and visible notice were revised against real Australian survey invitations, LC policy and OAIC guidance. Full participant information now appears before Start in readable smaller text. Adult consent and young-person assent are separate, unticked choices after age selection; the local answer export includes the notice version and participation record. This does not replace LC’s child-permission/capacity arrangements or configure a response receiver.
+The opening and visible notice were revised against real Australian survey invitations, LC policy and OAIC guidance. Full participant information now appears before Start in readable smaller text. The earlier edition proposed adult consent and young-person assent. The current browser-only page uses an unticked acknowledgement and records its notice version; formal collection consent remains in the clearly labelled adult proposal. This does not replace LC’s child-permission/capacity arrangements or configure a response receiver.
+
+## Law and ethics review, 24 September 2026
+
+Current answer handling is stated truthfully on the page. The local acknowledgement is not a record of consent to LC collection. The adult wording proposal describes an intended collection process, which is not active. The review found operational matters that LC must settle before recruitment or collection: approved receiver/access/hosting and retention; de-identification and disclosure procedures; safeguarding and child participation; and voluntary participation procedures for this service consultation. Jacob confirmed that this project is service consultation. Research/HREC approval is not a current prerequisite on that basis; later research reuse would be a separate purpose. The page is not a legal or institutional approval.
+
+Service preferences refer to getting help from Lutheran Care or another service, never permission for contact, referral or a research interview. No-service-wanted and unsure are explicit choices. Undisclosed residence uses a neutral service-linked frame and does not produce NT residence questions.
