@@ -1,6 +1,6 @@
-// Set title and a public HTTPS file/folder URL once the team has prepared the resource.
-// The link opens without sending questionnaire answers, IDs or contact details.
+// The service finder is a first-party page. Its relative path works here and if
+// these pages later move together to a different host. No answers or IDs enter it.
 window.SURVEY_THANK_YOU_RESOURCE = Object.freeze({
-  title: 'A free resource for Defence families',
-  url: ''
+  title: 'Find support in the NT',
+  url: 'support.html'
 });

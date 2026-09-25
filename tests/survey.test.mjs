@@ -790,8 +790,8 @@ test('contact links stay separate from answers and remain available in the foote
   const finish = survey.finishHTML();
   assert.match(finish, /Thank you for helping improve support in our NT communities/);
   assert.ok(finish.includes(anchor));
-  assert.ok(finish.includes('Get your free resource'));
-  assert.ok(finish.indexOf(anchor) < finish.indexOf('Get your free resource'), 'The interview option is available before leaving for the resource');
+  assert.ok(finish.includes('Find support services'));
+  assert.ok(finish.indexOf(anchor) < finish.indexOf('Find support services'), 'The interview option is available before leaving for the resource');
   assert.deepEqual(answers, original);
   const index = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const footer = index.match(/<div class="questionnaire-help">[\s\S]*?<\/div>/)?.[0];
@@ -803,7 +803,7 @@ test('contact links stay separate from answers and remain available in the foote
 });
 
 
-test('the free-resource link accepts HTTPS only, escapes its title and never includes survey answers', () => {
+test('the free-resource link accepts a safe URL, escapes its title and never includes survey answers', () => {
   const url = 'https://files.example.org/defence-families/guide.pdf?download=1';
   const config = { title: 'A guide <for families> & friends', url };
   survey.setContext('adult', { roles: ['partner'], change: 'PRIVATE_ANSWER_SENTINEL', priority: ['housing'], anything: 'PRIVATE_COMMENT_SENTINEL' });
@@ -815,6 +815,13 @@ test('the free-resource link accepts HTTPS only, escapes its title and never inc
   assert.match(html, /referrerpolicy="no-referrer"/);
   assert.doesNotMatch(html, /PRIVATE_ANSWER_SENTINEL|PRIVATE_COMMENT_SENTINEL/);
   assert.doesNotMatch(html, /[?&](answers|respondent|response|email|contact|token)=/);
+});
+
+test('the first-party support page opens without carrying answers or an origin-dependent URL', () => {
+  survey.setContext('adult', { anything: 'PRIVATE_ANSWER_SENTINEL' });
+  const html = survey.thankYouResourceHTML({ title: 'Find support in the NT', url: 'support.html' });
+  assert.match(html, /href="support\.html"/);
+  assert.doesNotMatch(html, /PRIVATE_ANSWER_SENTINEL|support\.html[?#]/);
 });
 
 test('an unconfigured or invalid free-resource URL never creates a fake or unsafe link', () => {
@@ -829,7 +836,7 @@ test('an unconfigured or invalid free-resource URL never creates a fake or unsaf
   const configContext = vm.createContext({ window: {} });
   vm.runInContext(readFileSync(new URL('../thank-you-resource.js', import.meta.url), 'utf8'), configContext);
   const configured = configContext.window.SURVEY_THANK_YOU_RESOURCE;
-  assert.equal(configured.url, '', 'The team has not supplied the resource URL yet');
+  assert.equal(configured.url, 'support.html', 'The first-party service finder is configured');
   assert.equal(Object.isFrozen(configured), true);
 });
 

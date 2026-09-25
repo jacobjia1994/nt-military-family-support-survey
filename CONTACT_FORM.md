@@ -42,7 +42,7 @@ The request is **not consent to an interview, recording, counselling or collecti
 
 ## Free resource
 
-The same free digital resource is offered beneath the contact form and review screen, and on the finish screen. It is available without providing contact details or agreeing to a conversation. `thank-you-resource.js` supplies the title and public URL for both forms. An empty or invalid URL displays an inactive button and **Available soon**. A configured link must use HTTPS without embedded credentials; it opens in a new tab with `noopener noreferrer` and `referrerpolicy="no-referrer"`. No answers, contact details or participant identifiers are added to the destination.
+The same free digital support finder is offered beneath the contact form and review screen, and on the finish screen. It is available without providing contact details or agreeing to a conversation. `thank-you-resource.js` now points to the exact first-party `support.html` page. The link also accepts a public HTTPS URL without embedded credentials for future resources; other relative URLs remain invalid. It opens in a new tab with `noopener noreferrer` and `referrerpolicy="no-referrer"`. No answers, contact details or participant identifiers are added to the destination.
 
 ## Information notice and sources
 

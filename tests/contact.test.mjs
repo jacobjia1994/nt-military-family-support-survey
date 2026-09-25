@@ -271,10 +271,11 @@ test('the review build prohibits transmission and does not connect to shared sur
 });
 
 
-test('the public resource uses the same safe HTTPS destination without any contact details', () => {
+test('the public resource uses a safe destination without any contact details', () => {
   for (const url of ['', 'http://example.org/file', 'javascript:alert(1)', 'data:text/plain,private', 'https://user:password@example.org/file']) {
     assert.equal(model.contactResource({ url }).url, '');
   }
+  assert.equal(model.contactResource({ url: 'support.html' }).url, 'support.html');
   const publicUrl = 'https://example.org/defence-resource.pdf';
   assert.equal(model.contactResource({ url: publicUrl }).url, publicUrl);
   const ui = createUI();
@@ -293,7 +294,7 @@ test('resource access is visible before contact entry and on finish, and empty c
   for (const render of [ui.api.renderForm, ui.api.renderFinish]) {
     render();
     assert.match(ui.main.innerHTML, /A free resource for Defence families/);
-    assert.match(ui.main.innerHTML, /disabled>Get your free resource/);
+    assert.match(ui.main.innerHTML, /disabled>Find support services/);
     assert.match(ui.main.innerHTML, /Available soon/);
   }
   assert.match(pageSource, /src="thank-you-resource.js/);

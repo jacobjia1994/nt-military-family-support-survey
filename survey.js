@@ -428,12 +428,13 @@ function requiredAnswersComplete(fields, answers) {
 }
 function thankYouResource(config={}) {
   let url='';
-  try {const u=new URL(String(config.url||''));if(u.protocol==='https:'&&!u.username&&!u.password)url=u.href;} catch {}
+  if (config.url === 'support.html') url = 'support.html';
+  else try {const u=new URL(String(config.url||''));if(u.protocol==='https:'&&!u.username&&!u.password)url=u.href;} catch {}
   return {title:String(config.title||'A free resource for Defence families'),url};
 }
 function thankYouResourceHTML(config=globalThis.SURVEY_THANK_YOU_RESOURCE||{}) {
   const resource=thankYouResource(config);
-  return `<section class="thank-you-resource" aria-labelledby="resource-title"><h2 id="resource-title">${esc(resource.title)}</h2>${resource.url?`<a class="button primary" href="${esc(resource.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Get your free resource</a>`:'<button class="button secondary" disabled>Get your free resource</button><p class="small">Available soon</p>'}</section>`;
+  return `<section class="thank-you-resource" aria-labelledby="resource-title"><h2 id="resource-title">${esc(resource.title)}</h2>${resource.url?`<a class="button primary" href="${esc(resource.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Find support services</a>`:'<button class="button secondary" disabled>Find support services</button><p class="small">Available soon</p>'}</section>`;
 }
 function renderSurvey(){
   if(!hasValidParticipation()){renderParticipation();return;}

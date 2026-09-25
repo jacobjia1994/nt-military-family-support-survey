@@ -53,6 +53,7 @@ export function escapeHTML(value){return String(value??'').replace(/[&<>"']/g,c=
 // The same public resource is available without providing contact details.
 export function contactResource(config={}){
   let url='';
-  try {const parsed=new URL(String(config.url||''));if(parsed.protocol==='https:'&&!parsed.username&&!parsed.password)url=parsed.href;} catch {}
+  if(config.url==='support.html')url='support.html';
+  else try {const parsed=new URL(String(config.url||''));if(parsed.protocol==='https:'&&!parsed.username&&!parsed.password)url=parsed.href;} catch {}
   return {title:String(config.title||'A free resource for Defence families'),url};
 }

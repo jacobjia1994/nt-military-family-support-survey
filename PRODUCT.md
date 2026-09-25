@@ -70,3 +70,8 @@ The final action in both forms and the younger-child review is labelled **Confir
 ## Age route and adult age bands
 
 On 25 September Jacob asked to separate age bands from questionnaire choice. The entrance now distinguishes an adult (18 or older) from someone under 18. All adults use the same questionnaire; their optional age-band question records 18–29, 30–39, 40–49 or 50 or older on the shared connection page, including the earlier-experience route. The requested decade boundaries are expressed without overlap. Under-18s then select the existing finer age path, preserving child/youth wording, guardian permission and assent arrangements. This decision concerns the questionnaire; the independent interview-request form retains its own contact and permission routes.
+
+
+## Free support finder
+
+On 25 September 2026 Jacob asked for the questionnaire’s free giveout to become a standalone web page that helps NT Defence personnel and families find services in a few clicks. `support.html` is the separate resource; it does not turn the respondent questionnaire into a website or require a survey/contact submission. The first screen has six plain-language need areas rather than 39 options. The 39 headings from the supplied reference remain searchable subtopics after that first choice. The page also has direct urgent-help and “not sure” routes. Service cards explain audience, location, offer and access limits, with direct provider links. No finder choice or survey/contact detail is sent to a provider by this site. The initial service records were verified against official provider pages on 25 September 2026 and are maintained in `support-data.mjs`. Availability and eligibility remain provider decisions.

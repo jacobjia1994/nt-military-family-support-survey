@@ -4,6 +4,7 @@ A formal questionnaire for Lutheran Care’s internal team review. The project i
 
 - [Questionnaire](https://jacobjia1994.github.io/nt-military-family-support-survey/)
 - [Separate interview request](https://jacobjia1994.github.io/nt-military-family-support-survey/contact.html)
+- [Defence family support finder](https://jacobjia1994.github.io/nt-military-family-support-survey/support.html)
 - [Contact-form design and privacy basis](CONTACT_FORM.md)
 - [Adult reading copy](https://jacobjia1994.github.io/nt-military-family-support-survey/adult-wording.html)
 - [All ages and conditional questions](https://jacobjia1994.github.io/nt-military-family-support-survey/questions.html)
@@ -78,4 +79,6 @@ Examples aid recognition but are not exhaustive and do not produce separate coun
 
 ## Free resource and interview link
 
-Set `title` and the public HTTPS `url` in `thank-you-resource.js` when the team has made the resource. Until then the inactive button says Available soon. The questionnaire completion screen and contact form use the same resource. Its link appends no answers or participant ID, collects no email and opens without a referrer. Resource access does not require requesting an interview. No resource content has been invented.
+`support.html` is the free, standalone support finder. It is linked from the questionnaire completion screen and the interview form, and can be opened directly without taking part in either. `thank-you-resource.js` uses the exact first-party `support.html` path; both links open without sending answers, contact details or participant IDs. External service links point to the providers’ official pages.
+
+The finder starts with **six everyday need areas**, not 39 questions. A visitor chooses an area and one of the 39 more specific situations to see contact options. Search, a “not sure” route and urgent-help contacts give alternate ways in. The 39 headings are adapted from the supplied *NT Defence Support - 39 challenges and relevant support* reference, not presented as an official Strategy checklist or an eligibility test. `support-data.mjs` records source PDF page numbers and current provider links. Service descriptions were checked against official provider pages on 25 September 2026; check time-sensitive details with the provider before referring someone. The site does not collect or store finder choices.

@@ -94,3 +94,8 @@ The under-7 form uses the same shell and form controls: one response box per chi
 
 
 The under-7 mode selector was removed after Jacob’s review. Four child-response fields appear directly above Your observations on one page, with no What would you like to share step. Existing guardian permission is retained; child willingness controls the child fields only, leaving the observations box usable independently.
+
+
+## Standalone support finder
+
+`support.html` extends the established Lutheran Care visual system without changing the questionnaire flow. The page uses the same logo, self-hosted Karla, warm paper/white surfaces, terracotta action colour and mobile shell. Its main task is navigation: a visible urgent-help strip, six two-column need rows on desktop (one column on mobile), then one concise list of situations and plain service entries. Search and “not sure” are alternate routes, not extra required questions. Each service entry foregrounds region, offer, audience and access caveat before official website and call actions. The first-party resource link accepts only the exact `support.html` relative path, allowing the forms and guide to move together to another host later.
