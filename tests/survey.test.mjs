@@ -9,12 +9,14 @@ const bootstrap = source.lastIndexOf("if (document.body.dataset.view === 'questi
 assert.ok(bootstrap > 0, 'The survey bootstrap must be identifiable');
 function nodeStub() {
   const children = new Map();
+  const lists = new Map();
   return { innerHTML: '', checked: false, disabled: false, focus() {},
     querySelector(selector) {
       if (!children.has(selector)) children.set(selector, nodeStub());
       return children.get(selector);
     },
-    querySelectorAll: () => [],
+    querySelectorAll(selector) { return lists.get(selector) || []; },
+    setList(selector, nodes) { lists.set(selector, nodes); },
     addEventListener(type, callback) { this[`on${type}`] = callback; },
   };
 }
@@ -24,12 +26,13 @@ vm.runInContext(`${source.slice(0, bootstrap)}
   globalThis.survey = {
     DOMAINS, SPECIAL_NEEDS, toggleChoice, selectedNeeds, hasNeedSelection, hasSoughtHelp,
     reconcileAnswers, buildSteps, cleanExport, requiredAnswersComplete,
+    selectedFocusNeed, detailedNeeds,
     thankYouResource, thankYouResourceHTML, contactLinkHTML, page, areaPage, areaBarrierField,
     areaQuestionsHTML, period, conditionalVisible, reviewHTML, locationFrame,
     getValue, setValue, consultationRoute, maxTextLength, fieldHTML,
     questionnaireVersion, needsGuardianPermission, guardianPermissionRecord, needsGuardianSupport,
     renderGuardianSupport, renderSurvey, renderYoung, resetYoung,
-    renderAge, renderMinorAge, resetAgePath,
+    renderWelcome, renderWelcomeConsent, setAgePath, resetAgePath,
     participationRecord, hasValidParticipation, isOutsideSurveyScope,
     setContext(version, answers = {}) {
       state.version = version;
@@ -38,7 +41,7 @@ vm.runInContext(`${source.slice(0, bootstrap)}
       return domainList();
     },
     getContext: () => ({ version: state.version, answers: state.answers }),
-    getUIState: () => ({ age: state.age, ageRoute: state.ageRoute, step: state.step, screen: state.screen, youngRecord: state.youngRecord, youngController: state.youngController }),
+    getUIState: () => ({ age: state.age, ageRoute: state.ageRoute, step: state.step, screen: state.screen, participation: state.participation, guardianPermission: state.guardianPermission, youngRecord: state.youngRecord, youngController: state.youngController }),
     setStep(step) { state.step = step; },
     finishHTML() { renderFinish(); return main.innerHTML; },
     setParticipationContext(age, participation = null, guardianPermission = null) {
@@ -70,6 +73,15 @@ const stepsFor = (answers, version = 'adult') => {
   const domains = survey.setContext(version, answers);
   return plain(survey.buildSteps(answers, domains, version));
 };
+function welcomeControls() {
+  const routes = Object.fromEntries(['young', 'youth', 'adult'].map(value => [value, Object.assign(nodeStub(), { value })]));
+  const youthAges = Object.fromEntries(['younger', 'older'].map(value => [value, Object.assign(nodeStub(), { value })]));
+  mainStub.setList('input[name="age_route"]', Object.values(routes));
+  const consent = mainStub.querySelector('#welcome-consent');
+  consent.setList('input[name="youth_age"]', Object.values(youthAges));
+  survey.renderWelcome();
+  return { routes, youthAges, consent, form: consent.querySelector('#welcome-consent-form') };
+}
 
 
 test('exclusive answers replace ordinary choices, without mutating previous values', () => {
@@ -101,22 +113,26 @@ test('need and source classifiers preserve explicit non-answers rather than trea
 });
 
 
-test('main routes put background first, select needs once and finish each area without a repeated ideas page', () => {
-  for (const [version, domainCount] of [['adult', 17], ['youth', 8], ['child', 8]]) {
+test('adult detail grows by area while the shared youth route has at most one focus page', () => {
+  for (const [version, domainCount] of [['adult', 17], ['youth', 8]]) {
     assert.equal(survey.DOMAINS[version].length, domainCount, 'Accepted options remain available');
     const ids = plain(survey.DOMAINS[version]).map(d => d.id);
     for (const count of [0, 2, 5]) {
       const needs = ids.slice(0, count);
       const steps = stepsFor({ serving_nt: 'yes', needs_status: 'yes', needs }, version);
       assert.deepEqual(steps.map(s => s.id), [
-        'connection', 'place', 'needs', ...needs.map(id => `area:${id}`),
-        ...(version === 'child' ? [] : ['delivery']), 'review',
+        'connection', ...(version === 'adult' ? ['place'] : []), 'needs',
+        ...(version === 'adult' ? needs.map(id => `area:${id}`) : []), 'delivery', 'review',
       ]);
-      assert.equal(steps.length, (version === 'child' ? 4 : 5) + count);
-      assert.deepEqual(steps.filter(s => s.need).map(s => s.need), needs);
+      assert.equal(steps.length, (version === 'adult' ? 5 + count : 4));
+      assert.deepEqual(steps.filter(s => s.need).map(s => s.need), version === 'adult' ? needs : []);
       assert.equal(new Set(steps.map(s => s.id)).size, steps.length);
       assert.equal(steps.filter(s => s.id === 'needs').length, 1);
       assert.equal(steps.some(s => /priority|adequacy|impact|strengths|detail:|anything/.test(s.id)), false);
+      if (version === 'youth' && count) {
+        const focused = stepsFor({ serving_nt: 'yes', needs_status: 'yes', needs, focus_need: needs.at(-1) }, version);
+        assert.deepEqual(focused.map(s => s.id), ['connection', 'needs', `area:${needs.at(-1)}`, 'delivery', 'review']);
+      }
     }
   }
 });
@@ -126,7 +142,7 @@ test('No, uncertainty, refusal and a skipped support filter all retain general p
   for (const version of ['adult', 'youth']) {
     for (const needs_status of [undefined, '', 'no', 'prefer', 'unsure', 'yes']) {
       const answers = { serving_nt: 'recent', needs_status, delivery: ['phone'], times: ['weekend'], anything: 'Keep the local group' };
-      assert.deepEqual(stepsFor(answers, version).map(s => s.id), ['connection', 'place', 'needs', 'delivery', 'review']);
+      assert.deepEqual(stepsFor(answers, version).map(s => s.id), ['connection', ...(version === 'adult' ? ['place'] : []), 'needs', 'delivery', 'review']);
       const result = plain(survey.cleanExport(answers, version, domainsFor(version)));
       assert.deepEqual(result.answers.delivery, ['phone']);
       assert.deepEqual(result.answers.times, ['weekend']);
@@ -207,7 +223,7 @@ test('rendering an area or moving to another area preserves written answers with
 test('a current request can be described only after Yes, and changing that answer clears only that request', () => {
   for (const version of ['adult', 'youth', 'child']) {
     const [first, second] = survey.DOMAINS[version].map(d => d.id);
-    const answers = { needs_status: 'yes', needs: [first, second], areas: {
+    const answers = { needs_status: 'yes', needs: [first, second], ...(version === 'youth' ? { focus_need: first } : {}), areas: {
       [first]: { ...areaBlock(), additional_support_now: 'yes', support_requested: 'FIRST_REQUEST' },
       [second]: { ...areaBlock('Second'), additional_support_now: 'yes', support_requested: 'SECOND_REQUEST' },
     } };
@@ -458,14 +474,14 @@ test('exports exclude off-route background and old recent-needs data from the hi
     const result = plain(survey.cleanExport(answers, version, domainsFor(version)));
     assert.equal(result.consultation_route, 'earlier_experience');
     assert.equal(result.recall_months, null);
-    assert.deepEqual(result.answers, { roles: ['partner'], serving_nt: 'earlier', earlier_experience: 'An older experience' });
+    assert.deepEqual(result.answers, { roles: ['partner'], serving_nt: 'earlier', earlier_experience: 'An older experience', ...(version === 'youth' ? { region: 'darwin' } : {}) });
     assert.deepEqual(answers, original);
   }
 });
 
 
 test('the same recall period frames the checklist, support received and sources, across all locations', () => {
-  for (const [version, months, pattern] of [['adult', 12, /past 12 months/], ['youth', 12, /past 12 months/], ['child', 3, /past three months/]]) {
+  for (const [version, months, pattern] of [['adult', 12, /past 12 months/], ['youth', 3, /past three months/], ['child', 3, /past three months/]]) {
     const id = survey.DOMAINS[version][0].id;
     for (const serving_nt of ['yes', 'recent', 'unsure']) {
       for (const region of ['darwin', 'outside_au', 'outside_overseas', 'prefer', '', undefined]) {
@@ -482,27 +498,21 @@ test('the same recall period frames the checklist, support received and sources,
 });
 
 
-test('optional background precedes needs, does not repeat connection and permits never-residents', () => {
-  for (const version of ['adult', 'youth', 'child']) {
-    const connection = pageFor('connection', version);
-    assert.deepEqual(connection.fields.map(f => f.key), ['roles', 'serving_nt', version === 'adult' ? 'age_group' : 'assistance']);
-    assert.deepEqual(fieldIds(connection.fields[1]), ['yes', 'recent', 'earlier', 'no', 'unsure']);
-    const place = pageFor('place', version);
-    assert.deepEqual(place.fields.map(f => f.key), ['region', 'time_nt', 'force']);
-    assert.ok(place.fields.every(f => !f.required));
-    const residence = place.fields.find(f => f.key === 'region');
-    assert.ok(fieldIds(residence).includes('outside_overseas'));
-    const duration = place.fields.find(f => f.key === 'time_nt');
-    assert.equal(survey.conditionalVisible(duration), true);
-    assert.deepEqual(fieldIds(duration), ['never', 'under3', '3to12', '1to3', 'over3', 'unsure', 'prefer']);
-    assert.match(duration.hint, /current or most recent stay/);
-    const labels = Object.fromEntries(duration.options.map(o => [o.id, o.label]));
-    assert.match(labels.under3, /Less than 3 months/);
-    assert.match(labels['3to12'], /3 months to less than 1 year/);
-    assert.match(labels['1to3'], /1 year to less than 3 years/);
-    assert.match(labels.over3, /3 years or more/);
-    assert.match(labels.never, /not lived in the NT/);
-  }
+test('adult background keeps its own page; youth region is optional on connection', () => {
+  const adult = pageFor('connection', 'adult');
+  assert.deepEqual(adult.fields.map(f => f.key), ['roles', 'serving_nt', 'age_group']);
+  const place = pageFor('place', 'adult');
+  assert.deepEqual(place.fields.map(f => f.key), ['region', 'time_nt', 'force']);
+  assert.ok(place.fields.every(f => !f.required));
+  const duration = place.fields.find(f => f.key === 'time_nt');
+  assert.deepEqual(fieldIds(duration), ['never', 'under3', '3to12', '1to3', 'over3', 'unsure', 'prefer']);
+  assert.match(duration.hint, /current or most recent stay/);
+  const youth = pageFor('connection', 'youth');
+  assert.deepEqual(youth.fields.map(f => f.key), ['roles', 'serving_nt', 'assistance', 'region']);
+  assert.equal(youth.fields.find(f => f.key === 'region').required, undefined);
+  assert.ok(fieldIds(youth.fields.find(f => f.key === 'region')).includes('outside_overseas'));
+  assert.deepEqual(fieldIds(youth.fields[1]), fieldIds(adult.fields[1]));
+  assert.equal(stepsFor({ serving_nt: 'yes' }, 'youth').some(step => step.id === 'place'), false);
 });
 
 test('adult age bands are optional, non-overlapping and available on both service-history routes', () => {
@@ -521,6 +531,42 @@ test('adult age bands are optional, non-overlapping and available on both servic
     assert.equal(hasOwn(survey.cleanExport(recent, 'youth', domainsFor('youth')).answers, 'age_group'), false);
   }
   assert.equal(hasOwn(survey.cleanExport({ serving_nt: 'yes', age_group: 'unknown' }, 'adult', domainsFor('adult')).answers, 'age_group'), false);
+});
+
+test('youth export keeps all checked needs but only an explicitly chosen focus has detail', () => {
+  const [first, second] = survey.DOMAINS.youth.map(domain => domain.id);
+  const answers = { roles: ['child'], serving_nt: 'yes', assistance: 'guardian', region: 'outside_au',
+    needs_status: 'yes', needs: [first, second], delivery: ['phone'],
+    time_nt: 'over3', force: 'adf', areas: { [first]: { comment: 'STALE_FIRST' }, [second]: { ...areaBlock('Focused'), comment: 'FOCUSED_SECOND' } } };
+  const domains = survey.setContext('youth', answers);
+  const withoutFocus = plain(survey.cleanExport(answers, 'youth', domains));
+  assert.equal(withoutFocus.schema_version, '6.1');
+  assert.equal(withoutFocus.recall_months, 3);
+  assert.deepEqual(withoutFocus.answers.needs, [first, second]);
+  assert.deepEqual(withoutFocus.answers.areas, {});
+  assert.equal(hasOwn(withoutFocus.answers, 'focus_need'), false);
+  assert.equal(withoutFocus.answers.region, 'outside_au');
+  assert.equal(hasOwn(withoutFocus.answers, 'time_nt'), false);
+  assert.equal(hasOwn(withoutFocus.answers, 'force'), false);
+  assert.deepEqual(stepsFor(answers, 'youth').map(step => step.id), ['connection', 'needs', 'delivery', 'review']);
+
+  answers.focus_need = second;
+  assert.deepEqual(stepsFor(answers, 'youth').map(step => step.id), ['connection', 'needs', `area:${second}`, 'delivery', 'review']);
+  const focused = plain(survey.cleanExport(answers, 'youth', domains));
+  assert.equal(focused.answers.focus_need, second);
+  assert.deepEqual(focused.answers.needs, [first, second]);
+  assert.deepEqual(Object.keys(focused.answers.areas), [second]);
+  assert.equal(focused.answers.areas[second].comment, 'FOCUSED_SECOND');
+  assert.doesNotMatch(JSON.stringify(focused), /STALE_FIRST/);
+
+  answers.needs = [first];
+  survey.setContext('youth', answers);
+  survey.reconcileAnswers(answers, 'needs', domains, [first, second]);
+  assert.equal(hasOwn(answers, 'focus_need'), false, 'Removing the focus need withdraws its detail');
+  assert.deepEqual(plain(answers.areas), {});
+  assert.deepEqual(plain(answers.needs), [first]);
+  assert.deepEqual(plain(answers.delivery), ['phone']);
+  assert.deepEqual(stepsFor(answers, 'youth').map(step => step.id), ['connection', 'needs', 'delivery', 'review'], 'One checked need does not force a detail page');
 });
 
 
@@ -581,7 +627,7 @@ test('the library shares the actual area fields, both barrier variants and the n
     const first = survey.DOMAINS[version][0].id;
     for (const location of ['nt', 'outside', 'unspecified']) {
       const sections = plain(survey.librarySections(version, location));
-      assert.deepEqual(sections.map(s => s.id), ['connection', 'place', 'needs', 'area', ...(version === 'child' ? [] : ['delivery']), 'earlier']);
+      assert.deepEqual(sections.map(s => s.id), ['connection', ...(version === 'youth' ? [] : ['place']), 'needs', 'area', ...(version === 'child' ? [] : ['delivery']), 'earlier']);
       const area = sections.find(s => s.id === 'area');
       assert.deepEqual(area.fields.map(f => f.key), ['received', 'additional_support_now', 'support_requested', 'sources', 'comment'].map(key => `areas:${first}:${key}`));
       assert.deepEqual(area.variants.map(v => v.id), ['sought', 'not-sought']);
@@ -635,7 +681,7 @@ test('connection blanks block Continue; every substantive and background questio
 
 
 test('long-answer limits allow fuller responses without counters competing with empty fields', () => {
-  for (const [version, max] of [['adult', 5000], ['youth', 5000], ['child', 1500]]) {
+  for (const [version, max] of [['adult', 5000], ['youth', 1500], ['child', 1500]]) {
     const need = survey.DOMAINS[version][0].id;
     survey.setContext(version, { needs_status: 'yes', needs: [need] });
     const f = survey.areaPage(need).fields.find(f => f.key.endsWith(':comment'));
@@ -670,32 +716,94 @@ test('age choices select the intended language and permission routes', () => {
   }
 });
 
-test('the age entrance asks only adult or under 18, then keeps the existing minor paths', () => {
+test('welcome expands age-matched information and 8–14 cannot start without guardian permission and own assent', () => {
   survey.resetAgePath();
-  survey.renderAge();
+  const { routes, youthAges, consent, form } = welcomeControls();
   assert.match(mainStub.innerHTML, /Whose experience is this about/);
-  assert.match(mainStub.innerHTML, /An adult \(18 or older\)/);
-  assert.match(mainStub.innerHTML, /A child or young person \(under 18\)/);
-  assert.doesNotMatch(mainStub.innerHTML, /30–39|15–17/);
-  mainStub.querySelector('input[name="age_route"]:checked').value = 'adult';
-  mainStub.querySelector('#welcome-form').onsubmit({ preventDefault() {} });
-  assert.equal(survey.getUIState().age, 'adult');
-  assert.equal(survey.getUIState().screen, 'participation');
+  for (const age of ['7 or younger', '8–17', '18 or older']) assert.match(mainStub.innerHTML, new RegExp(age));
+  assert.doesNotMatch(mainStub.innerHTML, /12–14|7–11/);
+  routes.youth.onchange();
+  assert.equal(survey.getUIState().screen, 'welcome');
+  assert.equal(survey.getUIState().ageRoute, 'youth');
+  assert.equal(survey.getUIState().age, null);
+  assert.match(consent.innerHTML, /No, 8–14/);
+  assert.match(consent.innerHTML, /Yes, 15–17/);
+  youthAges.younger.onchange();
+  assert.equal(survey.getUIState().age, 'youth_younger');
+  assert.equal(survey.getContext().version, 'youth');
+  assert.match(consent.innerHTML, /Taking part and your information/);
+  assert.match(consent.innerHTML, /name="guardian-permission"/);
+  assert.match(consent.innerHTML, /name="participation"/);
+  const guardian = form.querySelector('input[name="guardian-permission"]');
+  const assent = form.querySelector('input[name="participation"]');
+  const start = form.querySelector('[type="submit"]');
+  assert.equal(start.disabled, true);
+  assent.checked = true;
+  assent.onchange();
+  assert.equal(start.disabled, true, 'Young-person assent alone cannot open the questionnaire');
+  guardian.checked = true;
+  guardian.onchange();
+  assert.equal(survey.getUIState().participation.kind, 'assent');
+  assert.equal(start.disabled, false);
+  form.onsubmit({ preventDefault() {} });
+  assert.equal(survey.getUIState().screen, 'survey');
+  assert.equal(survey.getUIState().step, 'connection');
+  mainStub.querySelector('#back').onclick();
+  assert.equal(survey.getUIState().screen, 'welcome');
+  assert.match(mainStub.innerHTML, /value="youth" checked/);
+  survey.resetAgePath();
+});
 
-  survey.renderAge();
-  mainStub.querySelector('input[name="age_route"]:checked').value = 'minor';
-  mainStub.querySelector('#welcome-form').onsubmit({ preventDefault() {} });
-  assert.equal(survey.getUIState().age, null, 'Changing from adult to under 18 clears the earlier route');
-  assert.equal(survey.getUIState().screen, 'minor-age');
-  assert.match(mainStub.innerHTML, /15–17/);
-  assert.match(mainStub.innerHTML, /Under 7/);
-  survey.renderAge();
-  assert.match(mainStub.innerHTML, /value="minor" checked/, 'Back keeps the under-18 route selected');
-  survey.renderMinorAge();
-  mainStub.querySelector('input[name="age"]:checked').value = 'child';
-  mainStub.querySelector('#minor-age-form').onsubmit({ preventDefault() {} });
-  assert.equal(survey.getUIState().age, 'child');
-  assert.equal(survey.getUIState().screen, 'guardian-permission');
+test('switching youth consent band or top-level age clears stale answers and agreement', () => {
+  survey.resetAgePath();
+  const { routes, youthAges, consent } = welcomeControls();
+  routes.youth.onchange();
+  youthAges.younger.onchange();
+  const form = consent.querySelector('#welcome-consent-form');
+  const guardian = form.querySelector('input[name="guardian-permission"]');
+  const assent = form.querySelector('input[name="participation"]');
+  guardian.checked = true; guardian.onchange();
+  assent.checked = true; assent.onchange();
+  survey.setValue('roles', ['child']);
+  youthAges.older.onchange();
+  assert.equal(survey.getUIState().age, 'youth_older');
+  assert.deepEqual(plain(survey.getContext().answers), {});
+  assert.equal(survey.getUIState().guardianPermission, null);
+  assert.equal(survey.getUIState().participation, null);
+  assert.doesNotMatch(consent.innerHTML, /name="guardian-permission"/);
+  assert.match(consent.innerHTML, /name="participation"/);
+  routes.adult.onchange();
+  assert.equal(survey.getUIState().age, 'adult');
+  assert.equal(survey.getContext().version, 'adult');
+  assert.equal(survey.getUIState().ageRoute, 'adult');
+  routes.young.onchange();
+  assert.equal(survey.getUIState().age, 'young');
+  assert.match(consent.innerHTML, /name="guardian-permission"/);
+  assert.doesNotMatch(consent.innerHTML, /name="participation"/);
+  assert.match(consent.innerHTML, /Your child does not have to answer/);
+  survey.resetAgePath();
+});
+
+test('15–17 and adults give their own inline agreement without a guardian permission checkbox', () => {
+  for (const route of ['youth', 'adult']) {
+    survey.resetAgePath();
+    const { routes, youthAges, consent, form } = welcomeControls();
+    routes[route].onchange();
+    if (route === 'youth') youthAges.older.onchange();
+    assert.doesNotMatch(consent.innerHTML, /name="guardian-permission"/);
+    assert.match(consent.innerHTML, /name="participation"/);
+    const agreement = form.querySelector('input[name="participation"]');
+    const start = form.querySelector('[type="submit"]');
+    assert.equal(start.disabled, true);
+    agreement.checked = true;
+    agreement.onchange();
+    assert.equal(start.disabled, false);
+    assert.equal(survey.getUIState().participation.kind, 'consent');
+    assert.equal(survey.getUIState().participation.guardian_permission, null);
+    form.onsubmit({ preventDefault() {} });
+    assert.equal(survey.getUIState().screen, 'survey');
+    assert.equal(survey.getUIState().step, 'connection');
+  }
   survey.resetAgePath();
 });
 
@@ -764,10 +872,10 @@ test('per-area experience and requests have distinct direct prompts without aski
     const experience = fields.find(f => f.key.endsWith(':comment'));
     const request = fields.find(f => f.key.endsWith(':support_requested'));
     assert.doesNotMatch(experience.label, /Lutheran Care|us to know|need to know/i);
-    assert.equal(experience.label, version === 'child' ? 'What happened when you needed help with this?' : 'What happened when you needed support with this?');
-    assert.match(experience.hint, version === 'child' ? /what helped, or what could have helped/ : /what helped, or what would have made things easier/);
+    assert.equal(experience.label, version === 'child' ? 'What happened when you needed help with this?' : version === 'youth' ? 'What helped, or what could have been better?' : 'What happened when you needed support with this?');
+    assert.match(experience.hint, version === 'adult' ? /what helped, or what would have made things easier/ : /what happened, or leave this blank/);
     assert.doesNotMatch(experience.label, /when you (?:sought|received|got)/i, 'The experience question must not presume an attempt or successful receipt');
-    assert.match(request.label, /(?:support|help).*now\?/i);
+    assert.match(request.label, version === 'youth' ? /help would be useful\?/i : /(?:support|help).*now\?/i);
     assert.notEqual(experience.key, request.key);
   }
 });
@@ -861,18 +969,17 @@ test('Other explanation appears once directly after its choice, opens only when 
 });
 
 
-test('minors identify who is helping before personal questions; adults are not asked', () => {
+test('8–17-year-olds identify reading or writing help on connection; adults are not asked', () => {
   assert.equal(pageFor('connection', 'adult').fields.some(f => f.key === 'assistance'), false);
-  for (const version of ['youth', 'child']) {
-    const connection = pageFor('connection', version);
-    const assistance = connection.fields.find(f => f.key === 'assistance');
-    assert.equal(assistance.required, true);
-    assert.deepEqual(fieldIds(assistance), ['self', 'guardian', 'other']);
-    assert.equal(survey.requiredAnswersComplete(connection.fields, { roles: ['child'], serving_nt: 'yes' }), false);
-    for (const value of fieldIds(assistance)) {
-      assert.equal(survey.requiredAnswersComplete(connection.fields, { roles: ['child'], serving_nt: 'yes', assistance: value }), true);
-    }
-    assert.equal(pageFor('place', version).fields.some(f => f.key === 'assistance'), false);
+  const connection = pageFor('connection', 'youth');
+  const assistance = connection.fields.find(f => f.key === 'assistance');
+  assert.equal(assistance.required, true);
+  assert.deepEqual(plain(assistance.options).map(option => [option.id, option.label]), [
+    ['self', 'No, I am answering myself'], ['guardian', 'Yes, my parent or guardian'], ['other', 'Yes, someone else'],
+  ]);
+  assert.equal(survey.requiredAnswersComplete(connection.fields, { roles: ['child'], serving_nt: 'yes' }), false);
+  for (const value of fieldIds(assistance)) {
+    assert.equal(survey.requiredAnswersComplete(connection.fields, { roles: ['child'], serving_nt: 'yes', assistance: value }), true);
   }
 });
 
@@ -934,12 +1041,13 @@ test('exports never reinterpret old read/write helper answers as guardian presen
 });
 
 
-test('the younger-child interruption offers a private route and cannot advance without checking guardian presence', () => {
-  const answers = { roles: ['child'], serving_nt: 'yes', assistance: 'other', needs_status: 'yes', needs: ['feelings'] };
-  survey.setContext('child', answers);
-  const permission = survey.guardianPermissionRecord('child', true);
-  survey.setParticipationContext('child', survey.participationRecord('child', true, permission), permission);
-  survey.setStep('area:feelings');
+test('the 8–14 helper interruption offers a private route and cannot advance without guardian presence', () => {
+  const need = survey.DOMAINS.youth[0].id;
+  const answers = { roles: ['child'], serving_nt: 'yes', assistance: 'other', needs_status: 'yes', needs: [need], focus_need: need };
+  survey.setContext('youth', answers);
+  const permission = survey.guardianPermissionRecord('youth_younger', true);
+  survey.setParticipationContext('youth_younger', survey.participationRecord('youth_younger', true, permission), permission);
+  survey.setStep(`area:${need}`);
   survey.renderSurvey();
   assert.equal(survey.getUIState().screen, 'guardian-support');
   assert.match(mainStub.innerHTML, /Please ask your parent or guardian to join you/);
@@ -958,11 +1066,11 @@ test('the younger-child interruption offers a private route and cannot advance w
   form.onsubmit({ preventDefault() {} });
   assert.equal(answers.guardian_present, true);
   assert.equal(survey.getUIState().screen, 'survey');
-  assert.equal(survey.getUIState().step, 'place');
+  assert.equal(survey.getUIState().step, 'needs');
 });
 
 
-test('under-7 records use their own controller, survive review, and are cleared on restart', () => {
+test('ages 7 or younger use their own controller, survive review, and clear on restart', () => {
   let created = 0, shown = 0, reviewed = 0, reset = 0, options;
   context.window.SURVEY_YOUNG_CHILDREN = { create(config) {
     created += 1; options = config;
@@ -972,7 +1080,8 @@ test('under-7 records use their own controller, survive review, and are cleared 
   survey.setParticipationContext('young');
   survey.renderYoung();
   assert.equal(created, 0, 'The child module cannot start without age-matched guardian permission');
-  assert.equal(survey.getUIState().screen, 'guardian-permission');
+  assert.equal(survey.getUIState().screen, 'welcome');
+  assert.match(mainStub.innerHTML, /7 or younger/);
   const permission = survey.guardianPermissionRecord('young', true);
   survey.setParticipationContext('young', null, permission);
   survey.renderYoung();

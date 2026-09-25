@@ -1,10 +1,10 @@
 # Children's participation and help with answering
 
-Reviewed 25 September 2026. Scope: the existing Lutheran Care NT service-consultation questionnaire, its under-7 route, and who may help children answer. This is a bounded design review, not a claim of legal certification.
+Reviewed 25 September 2026; updated for Jacob’s approved 7-and-under / shared 8–17 design. Scope: the Lutheran Care NT service-consultation questionnaire, its supported younger-child route, and who may help children answer. This is a bounded design review, not a claim of legal certification.
 
 ## Decision
 
-Provide an actual under-7 form. For the ordinary under-15 online route, involve a parent or guardian before collecting substantive answers, and retain a private Lutheran Care help route where involving them would be unsafe or difficult. Keep the child's own answers distinct from an adult's observations.
+Provide an actual form for ages 7 or younger. For the ordinary 8–14 online route, involve a parent or guardian before collecting substantive answers, and retain a private Lutheran Care help route where involving them would be unsafe or difficult. Keep the child's own answers distinct from an adult's observations. Ages 8–17 share one shorter questionnaire; the split at 15 concerns participation permission, not different questions.
 
 Do not describe help from another person as unlawful, or a guardian's physical presence as universally required by Australian law. A reader, interpreter or scribe may assist without becoming the decision-maker. The parent's authority, the child's understanding and willingness, and who types the response are separate questions.
 
@@ -21,27 +21,29 @@ Do not describe help from another person as unlawful, or a guardian's physical p
 
 These are proportionate product arrangements for this form. They are not legislatively prescribed age bands.
 
-### Ages 7–14
+The invitation page shows **7 or younger**, **8–17** and **18 or older**. Choosing one immediately opens the relevant explanation and unticked participation choices on that same page. Ages 8–17 then select 8–14 or 15–17 to show the correct permission arrangement while continuing to the same questions. Changing either choice clears incompatible permission, assent and answers. Seven is a practical boundary for the supported-response form, not a legal age or a test of every child's reading ability.
+
+### Ages 8–14
 
 Ask **before the main questions**:
 
-**How are you answering these questions?**
+**Is anyone helping you read or write your answers?**
 
-- By myself
-- With my parent or guardian
-- With someone else
+- No, I am answering myself
+- Yes, my parent or guardian
+- Yes, someone else
 
-The ordinary self-service path requires the parent/guardian information and permission step, followed by the child's own choice to participate. The parent/guardian option means the guardian is involved; it does not require them to choose or dictate answers.
+The ordinary self-service path requires the parent/guardian information and permission choice on the invitation page, followed by the young person's own choice to participate there. The parent/guardian option means the guardian is involved; it does not require them to choose or dictate answers.
 
-For **By myself** or **With someone else**, route to:
+For **No, I am answering myself** or **Yes, someone else**, retain a guardian-presence check before substantive questions:
 
 > **Ask a parent or guardian to join you**
 >
-> Please ask your parent or guardian to join you. They can read the information and give permission before you start.
+> Please ask your parent or guardian to stay with you while you complete the questionnaire. They can help you read or write without choosing your answers.
 >
 > If this would be unsafe or difficult, you can speak with a Lutheran Care worker privately first.
 
-Actions: **My parent or guardian is here** / **Speak with Lutheran Care first** / **Back**. The first opens the actual guardian declaration; it must not silently mark permission as granted. The staff-help route explains how to contact LC and does not act as a self-certified worker override. A suitably authorised support worker or interpreter can still assist through an appropriate staff arrangement.
+Actions: **My parent or guardian is here** / **Speak with Lutheran Care first** / **Back**. Presence confirmation never creates or replaces the separate guardian permission and the young person's assent already given on the invitation page. The staff-help route explains how to contact LC and does not act as a self-certified worker override. A suitably authorised support worker or interpreter can still assist through an appropriate staff arrangement.
 
 Once permission is recorded, the child must still be free to decline, skip a question or stop. No automatic parent notification or new request for identifying information is needed. A helper reads or records the child's own answer without choosing it. For a genuine guardian-only account, use a separately labelled perspective instead of claiming it is the child's response.
 
@@ -49,9 +51,9 @@ Once permission is recorded, the child must still be free to decline, skip a que
 
 Use the same three assistance labels as descriptive information, with the person's own informed agreement. Another trusted helper does not automatically trigger a guardian stop. Offer **I would like someone to explain this** when understanding is uncertain. This preserves the OAIC capacity approach rather than treating every minor as incapable. A helper may support reading, communication or typing but must not supply the answers or give consent merely by being present.
 
-### Under 7
+### Ages 7 or younger
 
-Show an actual form for the parent/guardian after their information and authority declaration. Use a short introduction:
+Show an actual form for the parent/guardian after their information and authority declaration on the invitation page. Use a short introduction:
 
 > You can write down what your child says or shows you. Use their own words where you can, and keep your observations separate. Leave any question blank. Stop if your child does not want to continue.
 
@@ -76,13 +78,13 @@ Record expressed words, gestures or drawing descriptions faithfully. Do not turn
 
 ## Implemented sequence
 
-The current interface records the parent/guardian permission and then the child’s own agreement before the connection/helper questions. The later self/other-helper gateway confirms guardian presence; it does not silently create or replace permission. The unified under-7 form is implemented in `young-children.js`, with distinct child-expression and guardian-observation records. Unchecking willingness clears only the child responses; revoking guardian permission or stopping clears all text. Schema 1.1 derives its response basis from nonblank child responses, so an empty or guardian-only record makes no child-assent claim.
+The invitation page records age-specific participation choices before the main questions. Ages 8–14 have guardian permission and their own assent; the later self/other-helper gateway confirms guardian presence without creating permission. Both 8–14 and 15–17 answer the same shorter questionnaire, with a three-month recall, one broad checklist and detailed questions for at most one optional focus area. The form for ages 7 or younger is implemented in `young-children.js`, with distinct child-expression and guardian-observation records. Unchecking willingness clears only child responses; revoking guardian permission or stopping clears all text. Schema 1.1 derives its response basis from nonblank child responses, so an empty or guardian-only record makes no child-assent claim.
 
 ## Implementation checks that matter
 
-- Under-15 assistance routing happens before substantive questions; no completed child answers are reclassified later because of the helper selection.
+- Assistance routing for ages 8–14 happens before substantive questions; no completed young-person answers are reclassified later because of the helper selection.
 - Changing age, declining permission or stopping clears incompatible answers and participation records.
-- Under-7 child-view and guardian-observation responses have separate keys and review labels; exports cannot report a guardian-only form as child self-report or as personally assented by the child.
+- For ages 7 or younger, child expressions and guardian observations have separate keys and review labels; exports cannot report a guardian-only form as child self-report or as personally assented by the child.
 - Selecting another helper does not automatically constitute consent, invalidity, or a safeguarding allegation.
 - The guardian preference is a safe default for the unattended form; individual capacity and unusual care arrangements belong with LC staff. Do not invent a public checkbox that claims staff approval has been verified.
 - Keep existing concise safety disclosure and help access. A category selection by itself is not a statutory report, and a questionnaire cannot promise absolute confidentiality.

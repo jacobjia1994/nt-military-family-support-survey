@@ -8,7 +8,7 @@ web
 
 ## Purpose and users
 
-This questionnaire supports Lutheran Care’s Defence family support consultation in the Northern Territory. The participant wording and visual presentation are formal, with Lutheran Care named as the project lead. Jacob and the project team need to review its wording, scope and experience before inviting participants. Adult, youth (12–17), child (7–11) and under-seven supported-response paths already exist.
+This questionnaire supports Lutheran Care’s Defence family support consultation in the Northern Territory. The participant wording and visual presentation are formal, with Lutheran Care named as the project lead. Jacob and the project team need to review its wording, scope and experience before inviting participants. The survey has one adult questionnaire, one shorter shared questionnaire for ages 8–17, and a separate parent/guardian-supported response form for children aged 7 or younger.
 
 ## Operating context
 
@@ -36,7 +36,7 @@ On 24 September Jacob requested removal of draft/no-collection labels and the st
 
 ## Visible participant information
 
-Jacob requires participant information directly below the invitation, in smaller readable type rather than only behind a dialog. State LC custody/approved storage, authorised project access, purpose, de-identified Defence reporting, voluntary participation, relevant sensitivity, retention/withdrawal limits and privacy/access/complaints contact. Use short labelled paragraphs, not a generic liability waiver. Adult express consent and young-person assent are recorded separately; assent does not establish parental permission or capacity assessment. Actual collection still depends on LC confirming its receiving system, records/withdrawal procedure and child participation arrangements.
+Jacob requires participant information directly on the invitation page, in smaller readable type rather than only behind a dialog. Under the current inline design, it appears when an age route is chosen, beside that route’s participation choices. State LC custody/approved storage, authorised project access, purpose, de-identified Defence reporting, voluntary participation, relevant sensitivity, retention/withdrawal limits and privacy/access/complaints contact. Use short labelled paragraphs, not a generic liability waiver. Adult express consent and young-person assent are recorded separately; assent does not establish parental permission or capacity assessment. Actual collection still depends on LC confirming its receiving system, records/withdrawal procedure and child participation arrangements.
 
 ## Evidence and decisions
 
@@ -57,19 +57,23 @@ Jacob’s later 25 September revisions put optional background before needs, sho
 
 On 25 September Jacob confirmed that people with no support needs should still be able to give service-information preferences. The needs page therefore asks a separate yes/no/uncertain/declined question before displaying the area checklist; Something else only describes an unlisted need and reveals its input directly beneath that option. The experience question invites a concrete account, separately from support requested now. Interview links and the contact page explicitly invite an interview with LC staff about Defence-family difficulties and needs.
 
-Children aged 7–17 describe who is helping before substantive questions. For the unattended under-15 form, self/other-helper answers require a guardian-presence confirmation in addition to the existing guardian permission and child choice; a private LC help route remains. This is a form operating rule, not a claim that other helpers are unlawful. Under 7 has a real response form with distinct child-view and guardian-observation modes. Child views need the guardian’s attestation of willingness; guardian-only observations do not claim child assent. These records use a separate response type and are never treated as adult self-reports.
+Young people aged 8–17 describe who is helping before substantive questions. For the unattended 8–14 route, guardian permission and the young person’s own assent are both needed; a private LC help route remains where involving a guardian would be unsafe or difficult. This is a form operating rule, not a claim that other helpers are unlawful. Ages 15–17 use their own informed agreement. The form for ages 7 or younger keeps child expressions and guardian observations distinct. Child expressions need the guardian’s attestation of willingness; guardian-only observations do not claim child assent. These records use a separate response type and are never treated as older respondents’ self-reports.
 
 
-## Under-7 form simplification
+## Younger-child form simplification
 
-Jacob removed the explicit choice between child views and guardian observations. The under-7 form now displays all four child prompts and Your observations together. The existing willingness confirmation applies only to recording the child’s responses; observations can be provided without it. Response sources stay separate in review and export, inferred from actual answers rather than a selected mode.
+Jacob removed the explicit choice between child views and guardian observations. The form for children aged 7 or younger displays all four child prompts and Your observations together. The existing willingness confirmation applies only to recording the child’s responses; observations can be provided without it. Response sources stay separate in review and export, inferred from actual answers rather than a selected mode.
 
 
 The final action in both forms and the younger-child review is labelled **Confirm and submit**, as Jacob requested. This is the formal review interface; the label change does not activate a receiver or add a successful-receipt claim.
 
-## Age route and adult age bands
+## Inline age and participation route
 
-On 25 September Jacob asked to separate age bands from questionnaire choice. The entrance now distinguishes an adult (18 or older) from someone under 18. All adults use the same questionnaire; their optional age-band question records 18–29, 30–39, 40–49 or 50 or older on the shared connection page, including the earlier-experience route. The requested decade boundaries are expressed without overlap. Under-18s then select the existing finer age path, preserving child/youth wording, guardian permission and assent arrangements. This decision concerns the questionnaire; the independent interview-request form retains its own contact and permission routes.
+On 25 September Jacob approved replacing the separate age pages with a choice on the invitation page: **7 or younger**, **8–17**, or **18 or older**. The selected route expands its participation explanation and necessary choices on that same page. This is participation information and consent, not a generic legal waiver. The 8–17 choice uses a small 8–14/15–17 follow-up solely to show the appropriate permission and agreement steps, while both groups answer one shared questionnaire. Guardian permission plus the young person’s own assent applies to 8–14; 15–17-year-olds give their own informed agreement. A change of route clears incompatible answers and consent. Age seven is a practical supported-response boundary, not a legal or universal reading-capacity threshold.
+
+All adults continue through the same questionnaire. Their optional age-band question remains on the connection page and records 18–29, 30–39, 40–49 or 50 or older, including the earlier-experience route. Those bands do not change questions. The independent interview-request form retains its own contact and permission routes.
+
+The shared 8–17 questionnaire uses a **three-month** recall period and a shorter path: connection and optional broad region together, one support-needs checklist, then detailed questions for **one optional focus area** selected from the listed needs. Service-information preference remains available even when no need is selected. There is no separate youth place page and no repeated detail page for every selected area. Selected needs and the one focused account must remain analytically distinct; a blank focus is not “no need”. The adult questionnaire keeps its existing scope, question set and 12-month recall. This is a review draft: no receiver or live collection has been activated.
 
 
 ## Free support finder

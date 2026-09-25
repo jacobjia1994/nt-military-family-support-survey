@@ -44,7 +44,7 @@ Desktop opening headings are 44px with a 1.12 line height; question headings are
 
 A warm off-white page holds a white questionnaire shell, up to 896px wide with 72px horizontal padding. The header contains a 180px logo and a small “Defence family support / Northern Territory” label, followed by a fine rule. There is no shadow, background image, illustration or decorative animation.
 
-Below 760px, the outer frame disappears into a white page; padding becomes 24px and the logo is 151px wide. The start button fills the reading width, and the adult/under-18 route choices stack vertically. The under-18 age choices use two columns until the narrowest screens, when they also stack. At 360px and below, horizontal padding becomes 20px.
+Below 760px, the outer frame disappears into a white page; padding becomes 24px and the logo is 151px wide. The three age choices and the selected participation panel fit one reading column on mobile. The continuation button fills the reading width. At 360px and below, horizontal padding becomes 20px.
 
 Radio and checkbox options use full clickable rows, a 56px minimum height, a fine border and modest rounding. Selected options gain a pale orange tint and a terracotta border as well as a checked control. Primary buttons are at least 52px high. Text fields use 17px type and text areas have a 156px minimum height. Keyboard focus has a visible orange outline; reduced-motion settings remove the short choice transitions.
 
@@ -52,7 +52,7 @@ The four-section progress indicator uses thin lines and a section label. Related
 
 ## Preserved questionnaire behaviour
 
-Adult, youth and child wording, NT/outside-NT variants, and conditional follow-ups remain in the shared question definitions. Changing an earlier answer removes follow-ups that no longer apply. Under 7 opens a guardian-supported response form with separate child views and guardian observations. The separate question library and staff review pages remain outside the respondent flow.
+Adult and shared 8–17 wording, NT/outside-NT variants, and conditional follow-ups remain in the question definitions. Changing an earlier answer removes follow-ups that no longer apply. The 8–17 route combines region with connection and asks for detail about at most one optional focus area. Children aged 7 or younger use a guardian-supported form with separate child expressions and guardian observations. The separate question library and staff review pages remain outside the respondent flow.
 
 Formal presentation does not establish response collection. The current frontend has no receiver: answers remain in page memory, and the finish screen offers a local download or further changes without claiming successful submission. Selection and configuration of a private collection platform are pending. Do not add a submission-success message before a real receiving service confirms receipt.
 
@@ -68,9 +68,9 @@ SurveyJS, GOV.UK Frontend and Formbricks informed the design; their code and pla
 
 ## Visible information and participation choice
 
-The invitation starts with an everyday question rather than institutional process. Funding remains explicit in a quieter line. A 14px, fully visible participant-information block follows the invitation and precedes Start; it uses labelled paragraphs in two columns on desktop and one column on mobile. It identifies purpose, Lutheran Care custody/approved systems, authorised project readership, de-identified Defence reporting, retention/withdrawal and contact/rights. The dialog remains only a secondary way to reread the same shared text later in the form.
+The invitation starts with an everyday question rather than institutional process. Funding remains explicit in a quieter line. The age choice comes next; the selected route expands a fully visible participant-information block and its own agreement steps on the same page. The information uses 14px labelled paragraphs in two columns on desktop and one column on mobile. It identifies purpose, Lutheran Care custody/approved systems, authorised project readership, de-identified Defence reporting, retention/withdrawal and contact/rights. The dialog remains only a secondary way to reread the same shared text later in the form.
 
-After the adult/under-18 route choice, adult consent and young-person assent use unticked explicit choices. Under-18s choose a finer age path to retain existing questions and permission steps. Adults answer one questionnaire and can give a non-overlapping age band as an optional background answer. Changing age clears the earlier choice. Assent is recorded as assent, with no implication of completed parental permission or capacity assessment. The actual intake platform, applicable retention/withdrawal procedure and child participation arrangements still require LC confirmation before live collection.
+On the invitation page, one of three choices—7 or younger, 8–17, or 18 or older—opens the relevant explanation and unticked participation choices inline. Ages 8–17 make a small 8–14/15–17 selection for the consent arrangement, without changing the shared questions. Ages 8–14 need both guardian permission and their own assent; ages 15–17 and adults give their own informed agreement. The youngest route asks the guardian for permission before its supported-response form. Changing age clears incompatible participation and answers. Adults answer one questionnaire and can give a non-overlapping age band as an optional background answer. The actual intake platform, applicable retention/withdrawal procedure and child participation arrangements still require LC confirmation before live collection.
 
 ## Separate conversation request
 
@@ -90,10 +90,10 @@ The contact form now offers self and guardian routes, with adult, 15–17 and un
 
 Updated 25 September 2026. The support-needed choice sits above the conditional area checklist. The Other option and its conditional text field share a full-width grid item, keeping the field immediately below the checkbox. Existing label, hint, field and focus styling is retained. The interview action is consistently Request an interview.
 
-The under-7 form uses the same shell and form controls: one response box per child prompt plus a visibly separate guardian-observation area, or an observation-only mode. No new visual identity or nested decorative panels are introduced. The under-15 assistance interruption uses a plain heading, short explanation, explicit guardian-presence choice and a private LC help action.
+The form for ages 7 or younger uses the same shell and form controls: one response box per child prompt plus a visibly separate guardian-observation area. An adult can use only the observation box when the child cannot or does not want to express a view. No new visual identity or nested decorative panels are introduced. The 8–14 assistance route retains a short, clear guardian-presence explanation and a private LC help action.
 
 
-The under-7 mode selector was removed after Jacob’s review. Four child-response fields appear directly above Your observations on one page, with no What would you like to share step. Existing guardian permission is retained; child willingness controls the child fields only, leaving the observations box usable independently.
+The younger-child mode selector was removed after Jacob’s review. Four child-response fields appear directly above Your observations on one page, with no What would you like to share step. Guardian permission remains necessary; child willingness controls the child fields only, leaving the observations box usable independently.
 
 
 ## Standalone support finder

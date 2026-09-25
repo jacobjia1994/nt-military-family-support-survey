@@ -136,7 +136,7 @@
           "hint": "Optional. This helps us see whether support needs differ by age."
         }
       ],
-      "note": "Only relationship and NT connection precede the substantive questions. Earlier connections retain a separate historical route."
+      "note": "Relationship, NT connection and optional adult age band precede the substantive questions. Earlier connections retain a separate historical route."
     },
     {
       "id": "place",
@@ -919,7 +919,7 @@
           "hint": "Optional. This helps us see whether support needs differ by age."
         }
       ],
-      "note": "Only relationship and NT connection precede the substantive questions. Earlier connections retain a separate historical route."
+      "note": "Relationship, NT connection and optional adult age band precede the substantive questions. Earlier connections retain a separate historical route."
     },
     {
       "id": "place",
@@ -1702,7 +1702,7 @@
           "hint": "Optional. This helps us see whether support needs differ by age."
         }
       ],
-      "note": "Only relationship and NT connection precede the substantive questions. Earlier connections retain a separate historical route."
+      "note": "Relationship, NT connection and optional adult age band precede the substantive questions. Earlier connections retain a separate historical route."
     },
     {
       "id": "place",

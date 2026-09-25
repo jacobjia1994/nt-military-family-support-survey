@@ -22,17 +22,16 @@ The full questionnaire concerns current NT service or service ending within the 
 |---|---|
 | 18+ | Read the information and give informed own consent. |
 | 15–17 | Read the age-appropriate explanation and give informed own consent; ask for help where needed. |
-| 12–14 | Parent/guardian gives permission, then the young person independently agrees to take part. The required assistance question precedes substantive responses; self/other assistance requires confirmation that a parent or guardian is present. |
-| 7–11 | Parent/guardian gives permission, then the child gives their own assent. The same early assistance/presence route applies. |
-| Under 7 | A parent/guardian gives permission. One form shows four optional child-response boxes followed by Your observations. Confirming child willingness enables the child boxes; the observation field remains available without that confirmation. |
+| 8–14 | Parent/guardian gives permission, then the young person independently agrees to take part. The required assistance question precedes substantive responses; self/other assistance requires confirmation that a parent or guardian is present. |
+| 7 or younger | A parent/guardian gives permission. One form shows four optional child-response boxes followed by Your observations. Confirming child willingness enables the child boxes; the observation field remains available without that confirmation. |
 
 Eighteen is the NT age of majority. The questionnaire’s fifteen-year split is an operational capacity approach, informed by OAIC guidance, not a universal legal consent age or a legal exclusion of younger children. Do not presume capacity if there is reason to doubt understanding. Parent/guardian involvement follows existing LC practice, adapted to a short voluntary consultation rather than a counselling intake.
 
-Both permission and assent start unchecked. A child may refuse after the adult has agreed. Changing age clears earlier answers and participation records. Revoking guardian permission clears the child’s agreement and answers. The form does not ask for a parent’s name, phone, email, identity document or family-law orders.
+The invitation page shows 7 or younger, 8–17 and 18 or older; its selected route reveals the relevant explanation and participation choices on that same page. Ages 8–17 select 8–14 or 15–17 for permission only, then use one shorter questionnaire with a three-month recall. Both guardian permission and assent start unchecked. A child may refuse after the adult has agreed. Changing age clears incompatible answers and participation records. Revoking guardian permission clears the child’s agreement and answers. The form does not ask for a parent’s name, phone, email, identity document or family-law orders.
 
 ## Assistance and individual capacity
 
-Ages 7–17 answer the required **How are you answering these questions?** on the connection page: **By myself**, **My parent or guardian is helping me**, or **Someone else is helping me**. This also precedes historical-experience comments. For ages 7–14, self/other assistance opens a guardian-presence screen. Confirmation allows the child to retain their own answers with help if needed; it does not replace the earlier guardian-permission declaration or child assent. Changing the assistance choice clears that presence confirmation. For ages 15–17, another helper does not trigger a guardian block.
+Ages 8–17 answer the required **Is anyone helping you read or write your answers?** on the connection page: **No, I am answering myself**, **Yes, my parent or guardian**, or **Yes, someone else**. Optional broad region is asked on that page too; there is no separate youth place page. This also precedes historical-experience comments. For ages 8–14, self/other assistance opens a guardian-presence screen. Confirmation allows the young person to retain their own answers with help if needed; it does not replace the guardian-permission declaration or assent on the invitation page. Changing the assistance choice clears that presence confirmation. For ages 15–17, another helper does not trigger a guardian block.
 
 Requiring a parent or guardian alongside the ordinary under-15 online route is a design policy for this unattended form. Australian law does not declare all other helpers invalid or require physical guardian presence for every minor’s response. Permission, capacity, presence, help with reading/writing and supplying a proxy opinion are distinct. See [the focused child-participation review](CHILD_PARTICIPATION_REVIEW.md).
 
@@ -42,7 +41,7 @@ In the assisted route, the worker explains the purpose, voluntary choice, who ca
 
 A helper may read or record the child’s words but must not choose or rewrite answers. Read a scribed answer back for the child’s agreement. Where appropriate, provide a private chance to ask for help or say no. Giving guardian permission does not automatically entitle that adult to every answer.
 
-## Under-7 responses
+## Responses for ages 7 or younger
 
 The form shows four optional child-response boxes followed by **Your observations**, without asking the parent/guardian to select a response mode. Before recording a child’s expressions, the adult confirms that they have explained participation in an age-appropriate way and the child wants to join in. Record words or describe expressions without substituting adult answers. Read or explain the recorded meaning back where the child can check it. Do not press for a response.
 
@@ -85,7 +84,7 @@ Use the LC feedback/privacy contact for access, correction and complaints. For t
 ## Sources and support contacts
 
 - [LC current privacy policy](https://www.lutherancare.org.au/wp-content/uploads/2026/06/Confidentiality-and-Privacy-Policy-and-Procedure-2026_v12.pdf), June 2026 v12: capacity-sensitive consent, organisational systems, restricted access, records, lawful disclosure and complaints.
-- [Child participation and assistance review](CHILD_PARTICIPATION_REVIEW.md): capacity, guardian involvement, helpers and distinct under-7 perspectives.
+- [Child participation and assistance review](CHILD_PARTICIPATION_REVIEW.md): capacity, guardian involvement, helpers and distinct perspectives for children aged 7 or younger.
 - [Legal and privacy review](LEGAL_REVIEW.md): NT adulthood, child capacity, relevant reporting thresholds and facts still needed for real collection.
 - [LC current counselling/referral forms](https://www.lutherancare.org.au/counselling/): practical precedent for guardian involvement; clinical intake fields and special counselling protections are not transferred to this consultation.
 - [OAIC consent and capacity, B.59–B.61](https://www.oaic.gov.au/privacy/australian-privacy-principles/australian-privacy-principles-guidelines/chapter-b-key-concepts).

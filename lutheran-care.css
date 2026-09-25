@@ -130,3 +130,27 @@ body.questionnaire{--ink:#30312f;--text:#41423f;--muted:#666963;--primary:#b9462
 .questionnaire .other-need-followup{margin:14px 0 4px;padding:0 4px}
 .questionnaire .other-need-followup .text-input{width:100%}
 .questionnaire .other-need-followup .field-label{font-size:16px}
+
+/* Keep age choice and the relevant agreement together on the invitation page. */
+.questionnaire .welcome-age{border-top:1px solid var(--line);padding-top:28px;margin-top:34px}
+.questionnaire .welcome-age h2{font-size:22px;line-height:1.35;margin:0 0 8px}
+.questionnaire .welcome-age>p{font-size:15px;color:var(--muted);margin:0 0 20px}
+.questionnaire .welcome-age .question-group{margin-bottom:0}
+.questionnaire .welcome-age-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.questionnaire .welcome-age-grid .choice{min-height:76px;padding:16px}
+.questionnaire .welcome-age-grid .choice-label{font-size:16px}
+.questionnaire .welcome-consent{margin-top:24px}
+.questionnaire .consent-subage{border-top:1px solid var(--line);padding-top:24px;margin:0 0 26px}
+.questionnaire .consent-subage .age-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.questionnaire .consent-subage .choice{min-height:70px;padding:16px}
+.questionnaire .participation-inline{padding:0 0 12px}
+.questionnaire .participation-inline h2{font-size:22px;line-height:1.35;margin:0 0 12px}
+.questionnaire .participation-inline>p{color:var(--muted);font-size:15px;margin:0 0 20px}
+.questionnaire .participation-inline .welcome-start{margin-top:25px}
+.questionnaire .participation-inline #welcome-help{margin-top:16px}
+@media(max-width:760px){.questionnaire .welcome-age{margin-top:27px;padding-top:24px}.questionnaire .welcome-age-grid,.questionnaire .consent-subage .age-grid{grid-template-columns:1fr}.questionnaire .welcome-age-grid .choice{min-height:68px;padding:15px 16px}.questionnaire .welcome-age-grid .choice-label{font-size:16px}}
+.questionnaire .age-summary{margin:28px 0 0}
+.questionnaire .age-summary h2{font-size:22px;line-height:1.35;margin:0 0 12px}
+.questionnaire .age-summary p{color:var(--muted);font-size:15px;line-height:1.65;margin:0}
+
+.questionnaire .consent-role-label{font-size:15px;font-weight:700;margin:22px 0 8px}
