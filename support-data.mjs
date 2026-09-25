@@ -18,7 +18,7 @@ export const needs = [
   { id: 4, area: 'work', title: 'Reserve service, civilian work and income', pdfPage: 4, services: ['reserve-flexible-work','reserve-employer-support','employer-support-payment','catholiccare-financial'] },
   { id: 5, area: 'work', title: 'A partner’s work or career', pdfPage: 5, services: ['peap','soldieron-employment','darwin-vfwc'] },
   { id: 6, area: 'work', title: 'Debt, reduced income or urgent expenses', pdfPage: 6, services: ['catholiccare-financial','bravery-financial','dmfs-helpline'] },
-  { id: 7, area: 'moving', title: 'Finding or keeping housing', keywords: 'rent rental accommodation homelessness', pdfPage: 8, services: ['nt-central-intake','dmfs-helpline','legal-aid-nt'] },
+  { id: 7, area: 'moving', title: 'Finding or keeping housing', pdfPage: 8, services: ['nt-central-intake','dmfs-helpline','legal-aid-nt'] },
   { id: 8, area: 'moving', title: 'Pets during a move or a difficult time', pdfPage: 9, services: ['dmfs-helpline','dawn-house','dmfs-darwin'], note: 'Ask about pet care when discussing a move or a safety plan. Dawn House may be able to help women and children leaving violence arrange offsite pet care; a place is not guaranteed.' },
   { id: 9, area: 'work', title: 'Finding regular childcare', pdfPage: 10, services: ['defence-childcare','onetree-nt','dmfs-helpline'] },
   { id: 10, area: 'work', title: 'Childcare around shifts or an emergency', pdfPage: 12, services: ['defence-childcare','dmfs-helpline','onetree-nt'] },
@@ -41,7 +41,7 @@ export const needs = [
   { id: 27, area: 'health', title: 'Older relatives or a break from caring', pdfPage: 40, services: ['my-aged-care','carer-gateway'] },
   { id: 28, area: 'connection', title: 'Feeling isolated or new to the NT', pdfPage: 41, services: ['dmfs-darwin','dmfs-tindal','darwin-vfwc'] },
   { id: 29, area: 'connection', title: 'Activities, purpose or recognition', pdfPage: 43, services: ['darwin-vfwc','soldieron-employment','dmfs-darwin'] },
-  { id: 30, area: 'connection', title: 'Language access or culturally safe support', keywords: 'interpreter interpreting translation', pdfPage: 45, services: ['tis-national','mcnt','aboriginal-interpreter-nt','13yarn','dmfs-helpline'] },
+  { id: 30, area: 'connection', title: 'Language access or culturally safe support', pdfPage: 45, services: ['tis-national','mcnt','aboriginal-interpreter-nt','13yarn','dmfs-helpline'] },
   { id: 31, area: 'connection', title: 'LGBTQIA+ inclusive support', pdfPage: 47, services: ['qlife','open-arms','dmfs-helpline'] },
   { id: 32, area: 'connection', title: 'Family members are missing information', pdfPage: 48, services: ['dmfs-helpline','dmfs-darwin','dmfs-tindal'] },
   { id: 33, area: 'connection', title: 'Privacy concerns when asking for help', pdfPage: 49, services: ['open-arms','1800respect','kids-helpline'], note: 'Ask a provider what it records and who can see that information before sharing details.' },
@@ -103,15 +103,3 @@ export const services = [
   { id:'mcnt', name:'Multicultural Council of the NT', area:'Darwin · Top End', for:'Culturally and linguistically diverse people and communities', offers:'Local community connections and information about specific programs.', access:'Ask which program or support fits. Emergency relief is limited and assessed separately.', phone:'08 8945 9122', url:'https://www.mcnt.org.au/' },
   { id:'aboriginal-interpreter-nt', name:'NT Aboriginal Interpreter Service', area:'NT-wide · arranged interpreting', for:'Aboriginal-language speakers and organisations communicating with them', offers:'Onsite, phone or video interpreting so a service can communicate clearly.', access:'The organisation normally arranges the booking; fees may apply. Ask the service you are contacting to book an interpreter.', url:'https://service.nt.gov.au/services/concessions-community-care/book-an-aboriginal-interpreter' }
 ];
-
-
-// Match whole words or word beginnings. This avoids matching 'rent' inside
-// 'parenting', while allowing 'rental' and other topic-specific synonyms.
-export function searchNeeds(query) {
-  const words = String(query).toLocaleLowerCase('en-AU').match(/[a-z0-9]+/g) || [];
-  if (!words.length) return [];
-  return needs.filter(need => {
-    const tokens = `${need.title} ${need.keywords || ''}`.toLocaleLowerCase('en-AU').match(/[a-z0-9]+/g) || [];
-    return words.every(word => tokens.some(token => token.startsWith(word)));
-  });
-}

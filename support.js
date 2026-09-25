@@ -1,4 +1,4 @@
-import { areas, needs, services, searchNeeds } from './support-data.mjs?v=20260925-2';
+import { areas, needs, services } from './support-data.mjs?v=20260925-3';
 
 const finder = document.querySelector('#finder');
 const areaById = new Map(areas.map(area => [area.id, area]));
@@ -63,16 +63,8 @@ function serviceList(ids) {
 function homeHTML() {
   return `<section aria-labelledby="home-heading">
     <h1 id="home-heading" tabindex="-1">Find support in the NT</h1>
-    <p class="home-lead">Choose a topic to see where to start.</p>
     <ul class="area-list">${areas.map(area => `<li><a href="#area/${esc(area.id)}">${esc(area.title)}</a></li>`).join('')}</ul>
-    <div class="secondary-tools">
-      <a href="#not-sure">Not sure where to start?</a>
-      <details class="finder-search"><summary>Search all topics</summary>
-        <label for="topic-search">Search by situation</label>
-        <input class="text-input" id="topic-search" type="search" autocomplete="off" placeholder="For example, housing or school">
-        <div class="search-results" id="search-results" aria-live="polite"></div>
-      </details>
-    </div>
+    <p class="secondary-tools"><a href="#not-sure">Not sure where to start?</a></p>
   </section>`;
 }
 function areaHTML(area) {
@@ -102,23 +94,11 @@ function unsureHTML() {
     ${serviceList(['dmfs-helpline','dmfs-darwin','dmfs-tindal','darwin-vfwc'])}
   </section>`;
 }
-function showSearch(query) {
-  const target = finder.querySelector('#search-results');
-  if (!target) return;
-  const matches = searchNeeds(query);
-  if (!query.trim()) { target.innerHTML = ''; return; }
-  target.innerHTML = matches.length
-    ? `<p>${matches.length} ${matches.length === 1 ? 'topic' : 'topics'} found</p><ul class="search-list">${matches.map(need => `<li><a href="#need/${need.id}">${esc(need.title)}</a></li>`).join('')}</ul>`
-    : '<p>No matching topic. Try a broader word or choose a category above.</p>';
-}
 function render() {
   const [, kind, value] = location.hash.match(/^#(area|need)\/(.+)$/) || [];
   const area = kind === 'area' ? areaById.get(value) : null;
   const need = kind === 'need' ? needById.get(value) : null;
   finder.innerHTML = area ? areaHTML(area) : need ? needHTML(need) : location.hash === '#not-sure' ? unsureHTML() : homeHTML();
-  if (!area && !need && location.hash !== '#not-sure') {
-    finder.querySelector('#topic-search').addEventListener('input', event => showSearch(event.target.value));
-  }
   if (location.hash) {
     window.scrollTo({ top: 0, behavior: 'auto' });
     finder.querySelector('h1[tabindex="-1"]')?.focus({ preventScroll: true });
