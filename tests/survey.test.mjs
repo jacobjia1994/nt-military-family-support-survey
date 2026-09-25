@@ -768,8 +768,10 @@ test('welcome expands age-matched information and 8–14 cannot start without gu
   assert.equal(survey.getUIState().ageAudience, 'minor');
   assert.equal(survey.getUIState().ageRoute, 'youth');
   assert.equal(survey.getUIState().age, null);
-  assert.match(consent.innerHTML, /No, 8–14/);
-  assert.match(consent.innerHTML, /Yes, 15–17/);
+  assert.match(consent.innerHTML, /Young person’s age/);
+  assert.match(consent.innerHTML, /8–14/);
+  assert.match(consent.innerHTML, /15–17/);
+  assert.doesNotMatch(consent.innerHTML, /Everyone aged 8–17 sees the same questions/);
   youthAges.younger.onchange();
   assert.equal(survey.getUIState().age, 'youth_younger');
   assert.equal(survey.getContext().version, 'youth');

@@ -132,7 +132,7 @@ body.questionnaire{--ink:#30312f;--text:#41423f;--muted:#666963;--primary:#b9462
 .questionnaire .welcome-age .question-group{margin-bottom:0}
 .questionnaire .minor-age-options{margin-top:24px}
 .questionnaire .welcome-consent{margin-top:24px}
-.questionnaire .consent-subage{border-top:1px solid var(--line);padding-top:24px;margin:0 0 26px}
+.questionnaire .consent-subage{margin:22px 0 26px}
 .questionnaire .participation-inline{padding:0 0 12px}
 .questionnaire .participation-inline h2{font-size:22px;line-height:1.35;margin:0 0 12px}
 .questionnaire .participation-inline>p{color:var(--muted);font-size:15px;margin:0 0 20px}

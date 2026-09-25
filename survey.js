@@ -359,7 +359,7 @@ function renderWelcomeConsent(){
   const host=main.querySelector('#welcome-consent');
   if(!host)return;
   if(!state.ageRoute){host.innerHTML='';return;}
-  const youthAge=state.ageRoute==='youth'?`<fieldset class="question-group consent-subage"><legend>Is the young person 15 or older?</legend><p class="field-hint">Everyone aged 8–17 sees the same questions. This helps us show who needs to agree before they begin.</p><div class="choices">${opts([['younger','No, 8–14'],['older','Yes, 15–17']]).map(option=>optionHTML(option,{key:'youth_age',type:'single'},state.age==='youth_younger'?'younger':state.age==='youth_older'?'older':null)).join('')}</div></fieldset>`:'';
+  const youthAge=state.ageRoute==='youth'?`<fieldset class="question-group consent-subage"><legend>Young person’s age</legend><div class="choices">${opts([['younger','8–14'],['older','15–17']]).map(option=>optionHTML(option,{key:'youth_age',type:'single'},state.age==='youth_younger'?'younger':state.age==='youth_older'?'older':null)).join('')}</div></fieldset>`:'';
   if(!state.age){
     host.innerHTML=`<div class="welcome-consent">${youthAge}</div>`;
   }else{

@@ -75,6 +75,8 @@ On 25 September Jacob approved keeping age selection on the invitation page. The
 
 All adults continue through the same questionnaire. Their optional age-band question remains on the connection page and records 18–29, 30–39, 40–49 or 50 or older, including the earlier-experience route. Those bands do not change questions. The independent interview-request form retains its own contact and permission routes.
 
+Jacob later questioned the extra 15-year consent follow-up. Keep the necessary choice compact as **Young person’s age: 8–14 / 15–17**. It changes the permission arrangement, not the shared 8–17 question set; do not restore a Yes/No phrasing or a separate explanation sentence.
+
 The shared 8–17 questionnaire uses a **three-month** recall period and a shorter path: connection and optional broad region together, one support-needs checklist, then detailed questions for **one optional focus area** selected from the listed needs. Service-information preference remains available even when no need is selected. There is no separate youth place page and no repeated detail page for every selected area. Selected needs and the one focused account must remain analytically distinct; a blank focus is not “no need”. The adult questionnaire keeps its existing scope, question set and 12-month recall. This is a review draft: no receiver or live collection has been activated.
 
 
