@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { areas, needs, services } from '../support-data.mjs';
-import { journeys, secondaryNeedIds } from '../support-journeys.mjs';
+import { journeys, humanHelpServiceIds, secondaryNeedIds } from '../support-journeys.mjs';
 
 const page = readFileSync(new URL('../support.html', import.meta.url), 'utf8');
 const config = readFileSync(new URL('../thank-you-resource.js', import.meta.url), 'utf8');
@@ -32,7 +32,7 @@ test('public service links use official HTTPS pages and state who and how to acc
     assert.equal(url.password, '', service.id);
     for (const field of ['name','area','for','offers','access']) assert.ok(service[field], `${service.id} has ${field}`);
   }
-  assert.match(services.find(s => s.id === 'nt-central-intake').access, /phone lines are down/i);
+  assert.match(services.find(s => s.id === 'nt-central-intake').access, /phone lines.*down/i);
   assert.match(services.find(s => s.id === 'defence-childcare').access, /does not guarantee a place/i);
   assert.match(services.find(s => s.id === 'employer-support-payment').access, /not automatically to a family/i);
 });
@@ -42,6 +42,7 @@ test('finder keeps urgent contacts in the footer and does not send responses', (
   assert.match(page, /href="tel:000"/);
   assert.match(page, /href="tel:1800011046"/);
   assert.match(page, /href="tel:1800737732"/);
+  assert.match(page, /href="tel:131114"/);
   assert.ok(page.indexOf('<footer') < page.indexOf('href="tel:000"'));
   assert.doesNotMatch(page + scripts, /Choose a topic to see where to start|Search all topics/);
   assert.match(page, /connect-src 'none'/);
@@ -58,18 +59,17 @@ test('high-consequence situations lead to specific local or specialist routes', 
 });
 
 
-test('situation routes and secondary help make every need reachable without a 39-item menu', () => {
+test('four circumstance routes and secondary access links reach all 39 source needs', () => {
   const knownNeeds = new Set(needs.map(need => need.id));
   const knownServices = new Set(services.map(service => service.id));
-  const knownJourneys = new Set(journeys.map(journey => journey.id));
-  assert.equal(knownJourneys.size, journeys.length);
+  const knownRoutes = new Set(journeys.map(journey => journey.id));
+  assert.deepEqual(journeys.map(journey => journey.id), ['moving', 'apart', 'leaving', 'concern']);
+  assert.equal(knownRoutes.size, journeys.length);
   const reachable = new Set(secondaryNeedIds);
   for (const journey of journeys) {
     assert.ok(journey.title);
-    assert.ok(journey.startServices?.length || journey.choices.length, journey.id);
-    assert.ok(journey.choices.length <= 8, `${journey.id} has a scannable next step`);
-    for (const id of journey.startServices || []) assert.ok(knownServices.has(id), `${journey.id} start service ${id}`);
-    for (const id of journey.coveredNeedIds || []) reachable.add(id);
+    assert.ok(journey.choices.length >= 5, `${journey.id} has specific next choices`);
+    assert.ok(journey.choices.length <= (journey.id === 'concern' ? 13 : 7), `${journey.id} is scannable`);
     const choiceIds = new Set();
     for (const choice of journey.choices) {
       assert.ok(!choiceIds.has(choice.id), `${journey.id} has unique choice ${choice.id}`);
@@ -77,21 +77,39 @@ test('situation routes and secondary help make every need reachable without a 39
       assert.ok(choice.title);
       assert.ok(choice.needIds?.length, `${journey.id}/${choice.id} has an evidence anchor`);
       for (const id of choice.needIds) reachable.add(id);
-      for (const id of choice.serviceIds || []) assert.ok(knownServices.has(id), `${journey.id}/${choice.id} service ${id}`);
-      if (choice.journeyId) assert.ok(knownJourneys.has(choice.journeyId), `${journey.id}/${choice.id} cross-route`);
+      assert.ok(choice.primaryServiceIds?.length >= 2 && choice.primaryServiceIds.length <= 4, `${journey.id}/${choice.id} leads to a short answer`);
+      for (const id of [...choice.primaryServiceIds, ...(choice.moreServiceIds || [])]) assert.ok(knownServices.has(id), `${journey.id}/${choice.id} service ${id}`);
     }
   }
+  for (const id of humanHelpServiceIds) assert.ok(knownServices.has(id), `human help service ${id}`);
   assert.deepEqual([...reachable].sort((a, b) => a - b), [...knownNeeds].sort((a, b) => a - b));
-  assert.deepEqual(secondaryNeedIds, [36], 'Participation is secondary to finding help');
+  assert.deepEqual(secondaryNeedIds, [30, 31, 33, 36], 'Access modifiers and feedback stay outside the main taxonomy');
 });
 
-test('direct paths curate safe and relevant service starts', () => {
-  const byId = new Map(journeys.map(journey => [journey.id, journey]));
-  assert.ok(byId.get('leaving').startServices.includes('adf-transition'));
-  assert.ok(byId.get('mental').startServices.includes('nt-mental-health-line'));
-  assert.ok(!byId.get('mental').startServices.includes('darwin-mmhc'), 'Adult-only care is not offered to everyone');
-  assert.ok(byId.get('unsafe').startServices.includes('1800respect'));
-  assert.ok(byId.get('unsafe').startServices.includes('kwcc'), 'Katherine has a local route');
-  assert.ok(byId.get('finding-help').startServices.includes('dmfs-helpline'));
-  assert.ok(byId.get('bereavement').choices.some(choice => choice.needIds.includes(39)), 'Suicide bereavement remains distinct');
+test('representative NT scenarios have an immediate fitting contact after the second choice', () => {
+  const route = id => journeys.find(journey => journey.id === id);
+  const choice = (routeId, choiceId) => route(routeId).choices.find(item => item.id === choiceId);
+  assert.ok(choice('moving', 'school').primaryServiceIds.includes('school-change'));
+  assert.ok(choice('moving', 'housing').primaryServiceIds.includes('dha-housing'));
+  assert.ok(choice('apart', 'child').primaryServiceIds.includes('adf-equip'));
+  assert.ok(choice('leaving', 'transition').primaryServiceIds.includes('nt-transition-centre'));
+  assert.ok(choice('concern', 'childcare').primaryServiceIds.includes('kentish-fdc'));
+  assert.ok(choice('concern', 'mental').primaryServiceIds.includes('adf-allhours'));
+  assert.ok(!choice('concern', 'mental').primaryServiceIds.includes('darwin-mmhc'), 'Adult-only local care is not offered to everyone');
+  assert.ok(choice('concern', 'safety').primaryServiceIds.includes('1800respect'));
+  assert.ok(choice('concern', 'safety').primaryServiceIds.includes('wossca-alice'), 'Alice Springs has a local safety route');
+  assert.ok(choice('concern', 'grief').primaryServiceIds.includes('dva-death-support'));
+  assert.ok(humanHelpServiceIds.includes('veteran-wellbeing-agency'));
+});
+
+
+test('every provider record is reachable through a curated path or secondary access link', () => {
+  const used = new Set([...humanHelpServiceIds, 'lifeline', 'open-arms', '1800respect']);
+  for (const journey of journeys) for (const choice of journey.choices) {
+    for (const id of [...choice.primaryServiceIds, ...(choice.moreServiceIds || [])]) used.add(id);
+  }
+  for (const id of secondaryNeedIds) {
+    for (const serviceId of needs.find(need => need.id === id).services) used.add(serviceId);
+  }
+  assert.deepEqual(services.filter(service => !used.has(service.id)).map(service => service.id), []);
 });

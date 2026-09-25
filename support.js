@@ -1,5 +1,5 @@
-import { needs, services } from './support-data.mjs?v=20260925-4';
-import { journeys } from './support-journeys.mjs?v=20260925-1';
+import { needs, services } from './support-data.mjs?v=20260925-5';
+import { journeys, humanHelpServiceIds } from './support-journeys.mjs?v=20260925-2';
 
 const finder = document.querySelector('#finder');
 const journeyById = new Map(journeys.map(journey => [journey.id, journey]));
@@ -16,6 +16,25 @@ const telephone = phone => String(phone || '').replace(/\D/g, '');
 // The provider's full audience and access conditions remain in its disclosure.
 const decisiveLimit = {
   'dmfs-helpline': 'For ADF members and families.',
+  'dha-housing': 'Confirm rent allowance approval before signing a private lease.',
+  'toll-transitions': 'For approved Defence moves.',
+  'nt-transition-centre': 'Contact the NT team before visiting.',
+  'veteran-wellbeing-agency': 'Phone hours are weekdays 8:30 am–5 pm.',
+  'dva-acute-support': 'Assessed practical services, not a cash payment.',
+  'dva-claims': 'Claim eligibility is assessed.',
+  'lc-alice-financial': 'Gregory Terrace office closed; call for current access.',
+  'adf-allhours': '24/7 for ADF members and families.',
+  'imsick': 'For entitled ADF members, not civilian family members.',
+  'teamtalk': 'Not an emergency service.',
+  'eheadspace': 'Ages 12–25; not an emergency service.',
+  'sempro': 'Defence-related sexual misconduct; no formal report required.',
+  'defence-safe': 'Assessed accommodation allowance, not a guaranteed placement.',
+  'wossca-alice': 'For women and children in Central Australia; 24/7 crisis line.',
+  'territory-faces': 'For parents and carers; mandatory reporting applies.',
+  'headspace-alice': 'Ages 12–25; not an emergency service.',
+  'pats-nt': 'NT travel over 75 km; other coverage may exclude this scheme.',
+  'grief-australia': 'Ask about current counselling access; not an emergency line.',
+  griefline: 'Phone currently routes to SANE service enquiries, not immediate counselling.',
   'dmfs-tindal': 'Arrange base access before visiting.',
   'open-arms': 'For eligible Defence and veteran families.',
   'darwin-mmhc': 'For adults 18 and over.',
@@ -33,7 +52,6 @@ const decisiveLimit = {
   'headspace-katherine': 'Ages 12–25; not an emergency service.',
   'kids-helpline': 'For ages 5–25.',
   ndis: 'Eligibility is assessed; support is not guaranteed.',
-  'pats-nt': 'Check eligibility before arranging travel.',
   qlife: 'Not an emergency service.',
   'employer-support-payment': 'For employers or self-employed reservists, not a family payment.',
   '13yarn': 'For Aboriginal and Torres Strait Islander people.',
@@ -72,63 +90,67 @@ function homeHTML() {
   return `<section aria-labelledby="home-heading">
     <h1 id="home-heading" tabindex="-1">Find support in the NT</h1>
     <ul class="situation-list">${journeys.map(journey => `<li><a href="#situation/${esc(journey.id)}">${esc(journey.title)}</a></li>`).join('')}</ul>
+    <p class="human-help-link"><a href="#help">Not sure where to start? Talk to someone</a></p>
   </section>`;
 }
-function choiceLink(journey, choice) {
-  return choice.journeyId ? `#situation/${choice.journeyId}` : `#situation/${journey.id}/${choice.id}`;
-}
 function choiceList(journey) {
-  return `<ul class="choice-list">${journey.choices.map(choice => `<li><a href="${esc(choiceLink(journey, choice))}">${esc(choice.title)}</a></li>`).join('')}</ul>`;
+  return `<ul class="choice-list">${journey.choices.map(choice => `<li><a href="#situation/${esc(journey.id)}/${esc(choice.id)}">${esc(choice.title)}</a></li>`).join('')}</ul>`;
 }
 function accessHelpHTML(currentNeedIds = []) {
   const links = [
     !currentNeedIds.includes(30) && '<a href="#need/30">Language and interpreting help</a>',
+    !currentNeedIds.includes(31) && '<a href="#need/31">LGBTQIA+ inclusive support</a>',
     !currentNeedIds.includes(33) && '<a href="#need/33">Privacy when asking for help</a>'
   ].filter(Boolean);
-  return links.length ? `<details class="access-help"><summary>Need an interpreter or a private way to ask?</summary><p>${links.join(' · ')}</p></details>` : '';
+  return links.length ? `<details class="access-help"><summary>Need help accessing a service?</summary><p>${links.join(' · ')}</p></details>` : '';
 }
 function journeyHTML(journey) {
-  const direct = Boolean(journey.startServices?.length);
   return `<section aria-labelledby="journey-heading">
-    <nav class="finder-nav" aria-label="Support guide"><a href="#start">All situations</a></nav>
+    <nav class="finder-nav" aria-label="Support guide"><a href="#start">All support routes</a></nav>
     <h1 id="journey-heading" tabindex="-1">${esc(journey.title)}</h1>
-    ${journey.note ? `<p class="need-note${journey.id === 'unsafe' ? ' safety-note' : ''}">${esc(journey.note)}</p>` : ''}
-    ${direct ? `<h2 class="section-heading">Start here</h2>${serviceList(journey.startServices)}` : ''}
-    ${journey.choices.length ? `${direct ? '<h2 class="section-heading related-heading">More specific help</h2>' : ''}${choiceList(journey)}` : ''}
-    ${direct ? accessHelpHTML(journey.coveredNeedIds || []) : ''}
+    ${choiceList(journey)}
   </section>`;
 }
 function choiceHTML(journey, choice) {
   const selected = (choice.needIds || []).map(id => needById.get(String(id))).filter(Boolean);
-  const serviceIds = choice.serviceIds || selected.flatMap(need => need.services);
-  const notes = [choice.note, ...selected.map(need => need.note)].filter(Boolean);
+  const primary = choice.primaryServiceIds || choice.serviceIds || selected.flatMap(need => need.services);
+  const note = choice.note || (selected.length === 1 ? selected[0].note : '');
   return `<section aria-labelledby="choice-heading">
-    <nav class="finder-nav" aria-label="Support guide"><a href="#situation/${esc(journey.id)}">${esc(journey.title)}</a> <span aria-hidden="true">/</span> <a href="#start">All situations</a></nav>
+    <nav class="finder-nav" aria-label="Support guide"><a href="#situation/${esc(journey.id)}">${esc(journey.title)}</a> <span aria-hidden="true">/</span> <a href="#start">All routes</a></nav>
     <h1 id="choice-heading" tabindex="-1">${esc(choice.title)}</h1>
-    ${notes.map(note => `<p class="need-note${selected.some(need => need.id === 19) ? ' safety-note' : ''}">${esc(note)}</p>`).join('')}
-    ${serviceList(serviceIds)}
+    ${note ? `<p class="need-note${choice.safety ? ' safety-note' : ''}">${esc(note)}</p>` : ''}
+    ${serviceList(primary)}
+    ${choice.moreServiceIds?.length ? `<details class="more-services"><summary>${esc(choice.moreLabel || 'Other relevant services')}</summary>${serviceList(choice.moreServiceIds)}</details>` : ''}
     ${accessHelpHTML(choice.needIds || [])}
+  </section>`;
+}
+function humanHelpHTML() {
+  return `<section aria-labelledby="help-heading"><nav class="finder-nav" aria-label="Support guide"><a href="#start">All support routes</a></nav>
+    <h1 id="help-heading" tabindex="-1">Talk to someone who can help you find support</h1>
+    ${serviceList(humanHelpServiceIds)}
   </section>`;
 }
 function needHTML(need) {
   return `<section aria-labelledby="need-heading">
-    <nav class="finder-nav" aria-label="Support guide"><a href="#start">All situations</a></nav>
+    <nav class="finder-nav" aria-label="Support guide"><a href="#start">All support routes</a></nav>
     <h1 id="need-heading" tabindex="-1">${esc(need.title)}</h1>
     ${need.note ? `<p class="need-note${need.id === 19 ? ' safety-note' : ''}">${esc(need.note)}</p>` : ''}
     ${serviceList(need.services)}
     ${accessHelpHTML([need.id])}
   </section>`;
 }
-const legacyAreaJourney = { moving: 'posting', work: 'work-money', children: 'child-young', relationships: 'apart', health: 'health-care', connection: 'finding-help' };
+const oldAreaToRoute = { moving: 'moving', work: 'concern', children: 'concern', relationships: 'concern', health: 'concern', connection: 'concern' };
+const oldSituationToRoute = { posting: 'moving', leaving: 'leaving', 'work-money': 'concern', childcare: 'concern', 'child-young': 'concern', mental: 'concern', 'health-care': 'concern', apart: 'apart', unsafe: 'concern', bereavement: 'concern', 'finding-help': 'concern' };
 function render() {
   const hash = location.hash;
   const situation = hash.match(/^#situation\/([a-z0-9-]+)(?:\/([a-z0-9-]+))?$/);
   const oldArea = hash.match(/^#area\/([a-z0-9-]+)$/);
   const needMatch = hash.match(/^#need\/(\d+)$/);
-  const journey = situation ? journeyById.get(situation[1]) : oldArea ? journeyById.get(legacyAreaJourney[oldArea[1]]) : hash === '#not-sure' ? journeyById.get('finding-help') : null;
+  const id = situation?.[1] || (oldArea && oldAreaToRoute[oldArea[1]]);
+  const journey = journeyById.get(id) || journeyById.get(oldSituationToRoute[id]);
   const choice = situation?.[2] && journey ? journey.choices.find(item => item.id === situation[2]) : null;
   const need = needMatch ? needById.get(needMatch[1]) : null;
-  finder.innerHTML = choice ? choiceHTML(journey, choice) : journey ? journeyHTML(journey) : need ? needHTML(need) : homeHTML();
+  finder.innerHTML = choice ? choiceHTML(journey, choice) : journey ? journeyHTML(journey) : hash === '#help' || hash === '#not-sure' ? humanHelpHTML() : need ? needHTML(need) : homeHTML();
   if (hash) {
     window.scrollTo({ top: 0, behavior: 'auto' });
     finder.querySelector('h1[tabindex="-1"]')?.focus({ preventScroll: true });

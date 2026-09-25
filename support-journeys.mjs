@@ -1,125 +1,62 @@
-// Reader-facing routes. These are recognisable situations, not exclusive
-// categories: the same underlying need can appear in several journeys.
-// Need IDs refer to the 39-heading source inventory in support-data.mjs.
+// Four reader-facing routes. Each next choice opens contact-ready services.
+// needIds are provenance links to the earlier 39-heading source inventory;
+// they do not define the public navigation or limit its scope.
 export const journeys = [
   {
-    id: 'posting', title: 'We’re moving, settling in or need housing help',
+    id: 'moving', title: 'Moving or settling in',
     choices: [
-      { id: 'settling', title: 'We need to settle in after a posting', needIds: [1] },
-      { id: 'housing', title: 'We need to find or keep a home', needIds: [7] },
-      { id: 'pets', title: 'A pet is making the move harder', needIds: [8] },
-      { id: 'school', title: 'School changes, learning or friendships are hard', needIds: [13, 14], serviceIds: ['school-change', 'defence-education', 'school-mentor'] },
-      { id: 'local-connection', title: 'We feel new or isolated here', needIds: [28] },
-      { id: 'partner-work', title: 'My partner needs work after the move', needIds: [5] }
+      { id: 'arriving', title: 'Arriving after a posting', needIds: [1, 28, 32], primaryServiceIds: ['dmfs-darwin', 'dmfs-tindal', 'dmfs-helpline'], moreServiceIds: ['defence-community-groups'], moreLabel: 'Local family groups' },
+      { id: 'housing', title: 'Finding or keeping a home', needIds: [7], primaryServiceIds: ['dha-housing', 'dmfs-helpline', 'nt-central-intake'], moreServiceIds: ['toll-transitions', 'legal-aid-nt', 'salvos-alice-waterhole', 'salvos-katherine-doorways'], moreLabel: 'Removals, tenancy and local homelessness help' },
+      { id: 'pets', title: 'Moving with a pet', needIds: [8], primaryServiceIds: ['defence-pet-move', 'dha-housing', 'dmfs-helpline'], note: 'If a pet is making it hard to leave an unsafe home, use the Feeling unsafe path under specific concerns.' },
+      { id: 'school', title: 'A child is changing schools', needIds: [13, 14], primaryServiceIds: ['school-change', 'nt-school-enrolment', 'school-mentor'], moreServiceIds: ['defence-education'], moreLabel: 'Education assistance' },
+      { id: 'childcare', title: 'Finding childcare', needIds: [9, 10], primaryServiceIds: ['onetree-nt', 'kentish-fdc', 'defence-childcare'], moreServiceIds: ['nt-in-home-care', 'startingblocks'], moreLabel: 'Shift care and other places' },
+      { id: 'partner-work', title: 'Partner work after a move', needIds: [5], primaryServiceIds: ['soldieron-employment', 'peap', 'cowork-coplay'] },
+      { id: 'connections', title: 'Meeting people in a new place', needIds: [28, 29], primaryServiceIds: ['dmfs-darwin', 'dmfs-tindal', 'defence-community-groups'], moreServiceIds: ['darwin-vfwc', 'chaplaincy'], moreLabel: 'Other ways to connect' }
     ]
   },
   {
-    id: 'leaving', title: 'Someone in our family is leaving Defence',
-    startServices: ['adf-transition', 'soldieron-employment', 'darwin-vfwc'],
-    coveredNeedIds: [37],
+    id: 'apart', title: 'Apart because of service',
     choices: [
-      { id: 'housing', title: 'We may need housing help', needIds: [7] },
-      { id: 'work', title: 'Someone needs work or career support', needIds: [5] },
-      { id: 'local-connection', title: 'We need new connections and routines', needIds: [28, 29], serviceIds: ['darwin-vfwc', 'dmfs-darwin', 'soldieron-employment'] }
+      { id: 'away', title: 'Someone is away or coming home', needIds: [2], primaryServiceIds: ['dmfs-helpline', 'adf-equip', 'open-arms'] },
+      { id: 'parenting', title: 'Parenting or managing daily life alone', needIds: [2, 12], primaryServiceIds: ['dmfs-helpline', 'parentline', 'territory-faces'] },
+      { id: 'child', title: 'A child is finding time apart hard', needIds: [2, 12, 15], primaryServiceIds: ['adf-equip', 'parentline', 'kids-helpline'], moreServiceIds: ['eheadspace'], moreLabel: 'Young person online support' },
+      { id: 'care-hours', title: 'Care does not fit work or service hours', needIds: [3, 10], primaryServiceIds: ['kentish-fdc', 'nt-in-home-care', 'dmfs-helpline'] },
+      { id: 'relationship', title: 'Relationship strain or reunion', needIds: [17], primaryServiceIds: ['open-arms', 'relationship-counselling-nt', 'family-rel-advice'] },
+      { id: 'mental', title: 'Stress or mental health worries', needIds: [20, 21, 22], primaryServiceIds: ['adf-allhours', 'open-arms', 'teamtalk'], moreServiceIds: ['nt-mental-health-line', 'suicide-callback'], moreLabel: 'Urgent mental-health contacts', note: 'If someone is in immediate danger, call 000.' },
+      { id: 'unsafe', title: 'Feeling unsafe at home', needIds: [8, 19], primaryServiceIds: ['1800respect', 'dawn-house', 'kwcc', 'wossca-alice'], moreServiceIds: ['defence-safe', 'sempro'], moreLabel: 'Katherine, Alice Springs and Defence-specific help', note: 'If you are in immediate danger, call 000. If this device is not safe to use, use a safer phone or computer when you can.', safety: true }
     ]
   },
   {
-    id: 'work-money', title: 'Work or money is putting pressure on us',
+    id: 'leaving', title: 'Leaving Defence or already left',
     choices: [
-      { id: 'hours', title: 'Work hours clash with family care', needIds: [3] },
-      { id: 'reserve', title: 'Reserve service affects civilian work or income', needIds: [4] },
-      { id: 'partner-career', title: 'A partner needs work or career help', needIds: [5] },
-      { id: 'bills', title: 'Debt, bills or urgent expenses are a problem', needIds: [6] },
-      { id: 'housing', title: 'We may lose our home', needIds: [7] },
-      { id: 'childcare', title: 'Childcare does not fit our work hours', needIds: [10] }
+      { id: 'transition', title: 'Planning the transition', needIds: [37], primaryServiceIds: ['nt-transition-centre', 'adf-transition', 'veteran-wellbeing-agency'], moreServiceIds: ['dva-claims'], moreLabel: 'Claims and entitlements' },
+      { id: 'injury-care', title: 'Injury, health or a caring role', needIds: [23, 25, 26, 37], primaryServiceIds: ['dva-claims', 'darwin-vfwc', 'carer-gateway'], moreServiceIds: ['open-arms', 'dva-acute-support', 'general-health-nt'], moreLabel: 'Counselling and practical supports' },
+      { id: 'work', title: 'Work or study after service', needIds: [5, 37], primaryServiceIds: ['soldieron-employment', 'darwin-vfwc', 'veteran-wellbeing-agency'] },
+      { id: 'housing-money', title: 'Housing or money pressure', needIds: [6, 7, 37], primaryServiceIds: ['darwin-vfwc', 'lc-alice-financial', 'national-debt-helpline', 'nt-central-intake'], moreServiceIds: ['salvos-katherine-doorways', 'bravery-financial'], moreLabel: 'Regional and veteran-specific options' },
+      { id: 'connections', title: 'New routines and people to connect with', needIds: [28, 29, 37], primaryServiceIds: ['darwin-vfwc', 'soldieron-connect', 'veteran-wellbeing-agency'], moreServiceIds: ['defglis', 'chaplaincy'], moreLabel: 'Peer and spiritual support' },
+      { id: 'family', title: 'Family or relationship stress', needIds: [17, 20, 22, 37], primaryServiceIds: ['open-arms', 'relationship-counselling-nt', 'teamtalk'], moreServiceIds: ['family-rel-advice'], moreLabel: 'Separation and parenting advice' }
     ]
   },
   {
-    id: 'childcare', title: 'I need childcare',
+    id: 'concern', title: 'Find help for a specific concern',
     choices: [
-      { id: 'regular', title: 'I need a regular childcare place', needIds: [9] },
-      { id: 'shifts', title: 'Usual childcare does not fit shifts or an emergency', needIds: [10] }
-    ]
-  },
-  {
-    id: 'child-young', title: 'I’m expecting a baby or my child needs support',
-    choices: [
-      { id: 'baby', title: 'We are expecting or have a new baby', needIds: [11] },
-      { id: 'parenting', title: 'Parenting or behaviour feels difficult', needIds: [12] },
-      { id: 'school', title: 'School changes, learning or friendships are hard', needIds: [13, 14], serviceIds: ['school-change', 'defence-education', 'school-mentor'] },
-      { id: 'teen', title: 'A teenager or young adult needs support', needIds: [15] },
-      { id: 'young-carer', title: 'A young person helps care for someone', needIds: [16] },
-      { id: 'disability', title: 'My child needs disability or ongoing care support', needIds: [25] }
-    ]
-  },
-  {
-    id: 'mental', title: 'Someone in our family needs mental health support',
-    note: 'If someone is in immediate danger, call 000.',
-    startServices: ['nt-mental-health-line', 'open-arms', 'lifeline'],
-    coveredNeedIds: [20, 21, 22],
-    choices: [
-      { id: 'young', title: 'A young person needs someone to talk to', needIds: [15] },
-      { id: 'ongoing', title: 'We need ongoing mental health care', needIds: [20] },
-      { id: 'stress', title: 'Ongoing stress is affecting family life', needIds: [22] },
-      { id: 'private', title: 'I want to ask privately', needIds: [33] }
-    ]
-  },
-  {
-    id: 'health-care', title: 'Someone needs healthcare, disability or caring help',
-    choices: [
-      { id: 'treatment', title: 'We need healthcare or to keep treatment going', needIds: [23] },
-      { id: 'travel', title: 'We need to travel for specialist care', needIds: [24] },
-      { id: 'disability', title: 'We need disability or continuous care support', needIds: [25] },
-      { id: 'care-decisions', title: 'I need caring skills or a voice in care decisions', needIds: [26] },
-      { id: 'older-relative', title: 'An older relative or carer needs support', needIds: [27] },
-      { id: 'young-carer', title: 'A young person helps care for someone', needIds: [16] },
-      { id: 'young-health', title: 'A young person needs health support', needIds: [15] }
-    ]
-  },
-  {
-    id: 'apart', title: 'Time apart or a relationship change is affecting us',
-    choices: [
-      { id: 'away', title: 'Someone is away on service or returning', needIds: [2] },
-      { id: 'relationship', title: 'Our relationship or communication is strained', needIds: [17] },
-      { id: 'separation', title: 'We need practical help after separation', needIds: [18] },
-      { id: 'child', title: 'A child is finding time apart hard', needIds: [2, 12], serviceIds: ['adf-equip', 'parentline', 'dmfs-helpline'] },
-      { id: 'unsafe', title: 'I or someone in my family feels unsafe', journeyId: 'unsafe', needIds: [19] }
-    ]
-  },
-  {
-    id: 'unsafe', title: 'I or someone in my family feels unsafe',
-    note: 'If you are in immediate danger, call 000. If this device is not safe to use, use a safer phone or computer when you can.',
-    startServices: ['1800respect', 'dawn-house', 'kwcc'],
-    coveredNeedIds: [19],
-    choices: [
-      { id: 'pets', title: 'I am worried about leaving a pet behind', needIds: [8] },
-      { id: 'private', title: 'I want to ask for help privately', needIds: [33] },
-      { id: 'separation', title: 'I need practical help after separation', needIds: [18] }
-    ]
-  },
-  {
-    id: 'bereavement', title: 'Someone close to us has died',
-    choices: [
-      { id: 'general', title: 'We need grief or practical support', needIds: [38] },
-      { id: 'suicide', title: 'The death was by suicide', needIds: [39] },
-      { id: 'child-loss', title: 'A child has died', needIds: [38], serviceIds: ['amber-nt', 'open-arms'] },
-      { id: 'veteran-family', title: 'We are a bereaved veteran family', needIds: [38], serviceIds: ['legacy-nt', 'open-arms'] }
-    ]
-  },
-  {
-    id: 'finding-help', title: 'I feel alone or don’t know where to turn',
-    startServices: ['dmfs-helpline', 'darwin-vfwc'],
-    coveredNeedIds: [34, 35],
-    choices: [
-      { id: 'connections', title: 'I need local people, activities or purpose', needIds: [28, 29], serviceIds: ['dmfs-darwin', 'dmfs-tindal', 'darwin-vfwc'] },
-      { id: 'language', title: 'I need an interpreter or culturally safe support', needIds: [30] },
-      { id: 'lgbtq', title: 'I want LGBTQIA+ inclusive support', needIds: [31] },
-      { id: 'information', title: 'Information is missing or I keep being passed around', needIds: [32, 34, 35], serviceIds: ['dmfs-helpline', 'darwin-vfwc', 'dmfs-darwin', 'dmfs-tindal'] },
-      { id: 'private', title: 'I am concerned about privacy', needIds: [33] }
+      { id: 'housing', title: 'Housing', needIds: [7, 8], primaryServiceIds: ['dha-housing', 'nt-central-intake', 'legal-aid-nt'], moreServiceIds: ['defence-pet-move', 'salvos-alice-waterhole', 'salvos-katherine-doorways'], moreLabel: 'Pets and regional homelessness help' },
+      { id: 'work-money', title: 'Work or money', needIds: [3, 4, 5, 6], primaryServiceIds: ['soldieron-employment', 'catholiccare-financial', 'lc-alice-financial', 'national-debt-helpline'], moreServiceIds: ['adf-flexible-work', 'peap', 'reserve-flexible-work', 'reserve-protection', 'reserve-employer-support', 'employer-support-payment', 'bravery-financial'], moreLabel: 'Partner, Reserve and veteran-specific options' },
+      { id: 'childcare', title: 'Childcare', needIds: [9, 10], primaryServiceIds: ['kentish-fdc', 'onetree-nt', 'defence-childcare', 'nt-in-home-care'], moreServiceIds: ['startingblocks'], moreLabel: 'Local centres and other places' },
+      { id: 'parenting', title: 'Pregnancy or parenting', needIds: [11, 12], primaryServiceIds: ['parentline', 'postnatal-home', 'territory-faces'], moreServiceIds: ['breastfeeding-help'], moreLabel: 'Breastfeeding support' },
+      { id: 'school-youth', title: 'School or a young person', needIds: [13, 14, 15, 16], primaryServiceIds: ['school-change', 'nt-school-enrolment', 'kids-helpline'], moreServiceIds: ['headspace-darwin', 'headspace-palmerston', 'headspace-katherine', 'headspace-alice', 'eheadspace'], moreLabel: 'Young people: local and online support' },
+      { id: 'mental', title: 'Mental health', needIds: [20, 21, 22], primaryServiceIds: ['adf-allhours', 'open-arms', 'nt-mental-health-line'], moreServiceIds: ['teamtalk', 'darwin-mmhc', 'katherine-mmhc', 'eheadspace'], moreLabel: 'Ongoing, local and youth options', note: 'If someone is in immediate danger, call 000.' },
+      { id: 'health', title: 'Health or specialist travel', needIds: [23, 24], primaryServiceIds: ['general-health-nt', 'adf-family-health', 'pats-nt'], moreServiceIds: ['defence-remote-travel', 'imsick'], moreLabel: 'Remote-family travel and member-only triage' },
+      { id: 'caring', title: 'Disability or caring', needIds: [16, 25, 26, 27], primaryServiceIds: ['carer-gateway', 'defence-special-needs', 'ndis'], moreServiceIds: ['my-aged-care', 'nt-telehealth', 'carer-skills'], moreLabel: 'Older relatives and care decisions' },
+      { id: 'relationships', title: 'Relationships or separation', needIds: [17, 18], primaryServiceIds: ['family-rel-advice', 'relationship-counselling-nt', 'legal-aid-nt'], moreServiceIds: ['open-arms'], moreLabel: 'Defence-aware counselling' },
+      { id: 'safety', title: 'Feeling unsafe', needIds: [19], primaryServiceIds: ['1800respect', 'dawn-house', 'kwcc', 'wossca-alice'], moreServiceIds: ['defence-safe', 'sempro', 'sarc-darwin', 'sarc-alice', 'sarc-katherine'], moreLabel: 'Local and sexual-assault support', note: 'If you are in immediate danger, call 000. If this device is not safe to use, use a safer phone or computer when you can.', safety: true },
+      { id: 'grief', title: 'A death or grief', needIds: [38, 39], primaryServiceIds: ['grief-australia', 'open-arms', 'dva-death-support'], moreServiceIds: ['standby-nt', 'legacy-nt', 'amber-nt', 'thirrili', 'suicide-callback', 'griefline'], moreLabel: 'Family, child-loss and suicide-specific support' },
+      { id: 'connection', title: 'Community or finding help', needIds: [28, 29, 32, 34, 35], primaryServiceIds: ['dmfs-helpline', 'veteran-wellbeing-agency', 'defence-community-groups'], moreServiceIds: ['dmfs-darwin', 'dmfs-tindal', 'darwin-vfwc', 'soldieron-connect', 'teamtalk', 'chaplaincy'], moreLabel: 'Local and wellbeing contacts' },
+      { id: 'benefits', title: 'Defence information, benefits or claims', needIds: [32, 35, 37], primaryServiceIds: ['dmfs-helpline', 'dva-claims', 'veteran-wellbeing-agency'], moreServiceIds: ['darwin-vfwc', 'dva-acute-support', 'dfa'], moreLabel: 'Local advocacy and assessed crisis services' }
     ]
   }
 ];
 
-// Family influence on service design (#36) is participation, not a service need.
-// It remains available through a secondary footer link.
-export const secondaryNeedIds = [36];
+export const humanHelpServiceIds = ['dmfs-helpline', 'veteran-wellbeing-agency', 'territory-faces'];
+// Language, LGBTQIA+ inclusion and privacy are access needs; #36 is feedback.
+export const secondaryNeedIds = [30, 31, 33, 36];

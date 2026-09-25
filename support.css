@@ -10,11 +10,13 @@
 .support-page .situation-list,.support-page .choice-list,.support-page .service-list{list-style:none;padding:0;margin:0;border-top:1px solid var(--line)}
 .support-page .situation-list li,.support-page .choice-list li{border-bottom:1px solid var(--line)}
 .support-page .situation-list a,.support-page .choice-list a{display:block;padding:14px 4px;color:var(--ink);text-decoration:none;line-height:1.35}
-.support-page .situation-list a{font-size:18px;font-weight:650;min-height:55px}
+.support-page .situation-list a{font-size:20px;font-weight:650;min-height:68px;padding-block:20px}
 .support-page .choice-list a{font-size:17px;min-height:52px}
 .support-page .situation-list a:hover,.support-page .choice-list a:hover{color:var(--primary);background:var(--paper)}
+.support-page .human-help-link{margin:22px 0 0;font-size:15px}
+.support-page .human-help-link a{color:var(--primary);text-underline-offset:3px}
 .support-page .finder-nav{margin:0 0 22px;color:var(--muted);font-size:14px}
-.support-page .finder-nav a,.support-page .need-help a,.support-page .access-help a,.support-page .footer-links a{color:var(--primary);text-underline-offset:3px}
+.support-page .finder-nav a,.support-page .need-help a,.support-page .access-help a{color:var(--primary);text-underline-offset:3px}
 .support-page .finder-nav span{padding:0 8px;color:var(--muted)}
 .support-page .section-heading{font-size:19px;letter-spacing:0;margin:12px 0 14px}
 .support-page .related-heading{margin-top:30px}
@@ -32,11 +34,16 @@
 .support-page .service-details summary,.support-page .access-help summary{cursor:pointer;color:var(--muted);width:max-content;max-width:100%;text-decoration:underline;text-underline-offset:3px}
 .support-page .service-details p{font-size:14px;line-height:1.5;margin:9px 0 0;max-width:70ch}
 .support-page .service-details strong{color:var(--text)}
+.support-page .more-services{margin:22px 0 0}
+.support-page .more-services summary{cursor:pointer;color:var(--primary);font-size:15px;font-weight:650;text-decoration:underline;text-underline-offset:3px}
+.support-page .more-services .service-list{margin-top:12px}
 .support-page .access-help{font-size:14px;margin:25px 0 0}
 .support-page .access-help p{font-size:14px;margin:8px 0 0;color:var(--muted)}
 .support-page .need-help{font-size:14px;color:var(--muted);margin:20px 0 0}
 .support-page .support-footer{margin:46px 0 0;padding-top:22px;border-top:1px solid var(--line)}
 .support-page .footer-links{display:flex;flex-wrap:wrap;gap:8px 24px;margin:0 0 24px;font-size:14px}
+.support-page .footer-links a{color:var(--muted);text-underline-offset:3px}
+.support-page .footer-links a:hover{color:var(--primary)}
 .support-page .footer-urgent{padding-top:18px;border-top:1px solid var(--line)}
 .support-page .footer-urgent h2{font-size:19px;margin:0 0 11px;letter-spacing:0}
 .support-page .footer-urgent ul{list-style:none;padding:0;margin:0}
@@ -46,6 +53,6 @@
 .support-page .source-note{font-size:12px;color:var(--muted);line-height:1.5;margin:23px 0 0}
 .support-page :focus-visible{outline:2px solid var(--primary);outline-offset:3px}
 .support-page #finder h1:focus{outline:none}
-@media(max-width:760px){.support-page{padding:0;background:#fff}.support-page .questionnaire-shell{max-width:580px;padding:21px 24px 25px}.support-page .lc-header{padding-bottom:14px}.support-page .lc-logo{width:130px}.support-page .lc-project{font-size:11px}.support-page .lc-project span{font-size:10px}.support-page #finder{margin-top:25px}.support-page #finder h1{font-size:30px;margin-bottom:16px}.support-page .situation-list a{font-size:17px;min-height:53px;padding:13px 2px}.support-page .choice-list a{font-size:16px;min-height:50px;padding:13px 2px}.support-page .service-item h2{font-size:19px}.support-page .footer-urgent li{display:block}.support-page .footer-urgent li a{display:block;text-align:left;margin-top:2px}}
+@media(max-width:760px){.support-page{padding:0;background:#fff}.support-page .questionnaire-shell{max-width:580px;padding:21px 24px 25px}.support-page .lc-header{padding-bottom:14px}.support-page .lc-logo{width:130px}.support-page .lc-project{font-size:11px}.support-page .lc-project span{font-size:10px}.support-page #finder{margin-top:25px}.support-page #finder h1{font-size:30px;margin-bottom:16px}.support-page .situation-list a{font-size:18px;min-height:63px;padding:16px 2px}.support-page .choice-list a{font-size:16px;min-height:50px;padding:13px 2px}.support-page .service-item h2{font-size:19px}.support-page .footer-urgent li{display:block}.support-page .footer-urgent li a{display:block;text-align:left;margin-top:2px}}
 @media(max-width:360px){.support-page .questionnaire-shell{padding-inline:20px}}
 @media print{.support-page{padding:0}.support-page .questionnaire-shell{border:0;padding:0}.support-page .service-item{break-inside:avoid}}
