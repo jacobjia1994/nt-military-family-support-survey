@@ -5,7 +5,7 @@ import vm from 'node:vm';
 import * as model from '../contact-model.mjs';
 
 const valid = (overrides = {}) => ({
-  ...model.emptyRequest(), age_band: '15_plus', preferred_name: 'Alex',
+  ...model.emptyRequest(), requester: 'self', age_band: 'adult', preferred_name: 'Alex',
   phone: '+61 412 345 678', contact_method: 'sms', consent: true, ...overrides,
 });
 const uiSource = readFileSync(new URL('../contact.js', import.meta.url), 'utf8');
@@ -29,7 +29,7 @@ function createUI() {
   const forbidden = () => { throw new Error('Contact details must stay in memory'); };
   const main = element('#main');
   const context = vm.createContext({
-    ...model, esc: model.escapeHTML,
+    ...model, esc: model.escapeHTML, URL,
     document: { querySelector: element },
     window: { scrollTo() {}, addEventListener: (type, listener) => windowListeners.set(type, listener) },
     fetch: forbidden, XMLHttpRequest: forbidden, WebSocket: forbidden,
@@ -42,16 +42,16 @@ function createUI() {
     globalThis.contactTest = {
       setRequest(value) { request = value; },
       getRequest() { return request; },
-      renderForm, renderReview, renderFinish,
+      renderForm, renderReview, renderFinish, resourceHTML,
     };`, context, { filename: 'contact.js' });
   return { api: context.contactTest, main, element, windowListeners };
 }
 
-test('a request needs only an age band, name, phone, contact choice and explicit consent', () => {
+test('a self request needs only route, age band, name, phone, contact choice and explicit consent', () => {
   assert.deepEqual(model.requestErrors(valid()), {});
   assert.deepEqual(model.requestErrors(valid({ contact_notes: '', topic: '' })), {});
   for (const [key, value] of Object.entries({
-    age_band: '', preferred_name: '  ', phone: '', contact_method: '', consent: false,
+    requester: '', age_band: '', preferred_name: '  ', phone: '', contact_method: '', consent: false,
   })) {
     assert.ok(Object.hasOwn(model.requestErrors(valid({ [key]: value })), key), key);
     assert.throws(() => model.reviewRequest(valid({ [key]: value })));
@@ -90,7 +90,7 @@ test('review data is an explicit minimum-field whitelist, separate from survey a
     survey_answers: { housing: 'none' }, rank: 'Do not retain',
   }));
   assert.deepEqual(Object.keys(result).sort(), [
-    'age_band', 'preferred_name', 'phone', 'contact_method', 'voicemail',
+    'requester', 'age_band', 'preferred_name', 'phone', 'contact_method', 'voicemail',
     'contact_notes', 'topic', 'consent', 'notice_version',
   ].sort());
   assert.equal(result.preferred_name, 'Alex');
@@ -124,16 +124,68 @@ test('changing phone or contact method clears voicemail without erasing the rest
   assert.equal(model.changeRequest(previous, 'contact_notes', 'After 3 pm NT time').voicemail, true);
 });
 
-test('changing age erases personal details; under-15 requests cannot reach review', () => {
-  const previous = valid({ topic: 'Private topic', contact_notes: 'Private instructions', voicemail: true });
-  const under15 = model.changeRequest(previous, 'age_band', 'under_15');
-  assert.deepEqual(under15, { ...model.emptyRequest(), age_band: 'under_15' });
-  assert.deepEqual(model.changeRequest(under15, 'age_band', '15_plus'), { ...model.emptyRequest(), age_band: '15_plus' });
-  for (const age_band of ['under_15', '', 'adult', null]) {
-    assert.ok(model.requestErrors(valid({ age_band })).age_band);
-    assert.throws(() => model.reviewRequest(valid({ age_band })));
+test('all age groups have a valid self route, with guardian routes for both minor bands', () => {
+  for (const age_band of ['adult', 'youth', 'child']) {
+    const data = valid({ age_band });
+    assert.deepEqual(model.requestErrors(data), {});
+    assert.equal(model.contactRoute(data), `self_${age_band}`);
   }
+  for (const age_band of ['youth', 'child']) {
+    const data = valid({ requester: 'guardian', age_band, guardian_authority: true });
+    assert.deepEqual(model.requestErrors(data), {});
+    assert.equal(model.contactRoute(data), `guardian_${age_band}`);
+  }
+  for (const data of [valid({ requester: 'guardian', age_band: 'adult', guardian_authority: true }), valid({ requester: 'other' }), valid({ age_band: '15_plus' })]) {
+    assert.equal(model.contactRoute(data), '');
+    assert.throws(() => model.reviewRequest(data));
+  }
+});
+
+test('changing role or age clears personal details, consent and voicemail permission', () => {
+  const previous = valid({ topic: 'Private topic', contact_notes: 'Private instructions', voicemail: true });
+  const child = model.changeRequest(previous, 'age_band', 'child');
+  assert.deepEqual(child, { ...model.emptyRequest(), requester: 'self', age_band: 'child' });
+  const guardian = model.changeRequest(previous, 'requester', 'guardian');
+  assert.deepEqual(guardian, { ...model.emptyRequest(), requester: 'guardian' });
   assert.equal(previous.topic, 'Private topic');
+  assert.equal(model.changeRequest(previous, 'age_band', 'adult').topic, 'Private topic');
+});
+
+test('under-15 self requests collect contact instructions without a topic or sensitive-information agreement', () => {
+  const data = valid({ age_band: 'child', topic: 'Do not retain this sensitive topic', guardian_authority: true });
+  const details = model.reviewRequest(data);
+  assert.equal(Object.hasOwn(details, 'topic'), false);
+  assert.equal(Object.hasOwn(details, 'guardian_authority'), false);
+  assert.equal(model.needsTopic(data), false);
+  assert.equal(model.consentText(data), model.CONTACT_CHILD_CONSENT);
+  assert.doesNotMatch(model.consentText(data), /sensitive/i);
+  const ui = createUI();
+  ui.api.setRequest(data);
+  ui.api.renderForm();
+  assert.doesNotMatch(ui.main.innerHTML, /name="topic"/);
+  assert.match(ui.main.innerHTML, /discuss permission before arranging a conversation/);
+  assert.equal(ui.element('[type="submit"]').disabled, false);
+  ui.api.renderReview();
+  assert.doesNotMatch(ui.main.innerHTML, /Do not retain|What you would like to talk about/);
+});
+
+test('guardian requests need explicit authority and identify the adult contact without child identity fields', () => {
+  for (const guardian_authority of [false, 'true', 1, undefined]) {
+    assert.ok(model.requestErrors(valid({ requester: 'guardian', age_band: 'child', guardian_authority })).guardian_authority);
+  }
+  const data = valid({ requester: 'guardian', age_band: 'child', guardian_authority: true, child_name: 'Never retain', child_dob: '2018-01-01' });
+  const details = model.reviewRequest(data);
+  assert.equal(details.guardian_authority, true);
+  assert.equal(Object.hasOwn(details, 'child_name'), false);
+  assert.equal(Object.hasOwn(details, 'child_dob'), false);
+  const ui = createUI();
+  ui.api.setRequest(data);
+  ui.api.renderForm();
+  assert.match(ui.main.innerHTML, /Please give your own contact details/);
+  assert.match(ui.main.innerHTML, /name="guardian_authority"/);
+  assert.doesNotMatch(ui.main.innerHTML, /name="(?:child_name|child_dob)"/);
+  ui.api.renderReview();
+  assert.match(ui.main.innerHTML, /Parent or guardian’s phone number/);
 });
 
 test('overlong personal free text is rejected before review', () => {
@@ -216,4 +268,34 @@ test('the review build prohibits transmission and does not connect to shared sur
   assert.doesNotMatch(uiSource, /\b(?:fetch|XMLHttpRequest|WebSocket|sendBeacon|localStorage|sessionStorage|indexedDB)\s*(?:\(|\.|\[)/);
   assert.doesNotMatch(uiSource, /\b(?:URLSearchParams|location\.search|document\.cookie|survey_answers|response_id)\b/);
   assert.doesNotMatch(pageSource, /<script\b[^>]*src="https?:/);
+});
+
+
+test('the public resource uses the same safe HTTPS destination without any contact details', () => {
+  for (const url of ['', 'http://example.org/file', 'javascript:alert(1)', 'data:text/plain,private', 'https://user:password@example.org/file']) {
+    assert.equal(model.contactResource({ url }).url, '');
+  }
+  const publicUrl = 'https://example.org/defence-resource.pdf';
+  assert.equal(model.contactResource({ url: publicUrl }).url, publicUrl);
+  const ui = createUI();
+  ui.api.setRequest(valid({ preferred_name: 'NeverInLink', phone: '0412345678', topic: 'PrivateHousing' }));
+  const html = ui.api.resourceHTML({ title: '<resource>', url: publicUrl });
+  assert.match(html, /href="https:\/\/example.org\/defence-resource.pdf"/);
+  assert.match(html, /target="_blank"/);
+  assert.match(html, /rel="noopener noreferrer"/);
+  assert.match(html, /referrerpolicy="no-referrer"/);
+  assert.match(html, /&lt;resource&gt;/);
+  assert.doesNotMatch(html, /NeverInLink|0412345678|PrivateHousing/);
+});
+
+test('resource access is visible before contact entry and on finish, and empty config stays inactive', () => {
+  const ui = createUI();
+  for (const render of [ui.api.renderForm, ui.api.renderFinish]) {
+    render();
+    assert.match(ui.main.innerHTML, /A free resource for Defence families/);
+    assert.match(ui.main.innerHTML, /disabled>Get your free resource/);
+    assert.match(ui.main.innerHTML, /Available soon/);
+  }
+  assert.match(pageSource, /src="thank-you-resource.js/);
+  assert.doesNotMatch(ui.main.innerHTML, /request (?:has been |was )?(?:received|sent|submitted)/i);
 });

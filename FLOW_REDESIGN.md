@@ -1,112 +1,91 @@
 # Consultation flow and measurement contract
 
-Approved by Jacob on 25 September 2026 and implemented in the questionnaire.
+Implemented on 25 September 2026, including Jacob’s later revisions to show experience questions directly, move background questions forward and remove the repeated closing question.
 
-Select support areas once, complete each area, then ask about future arrangements. The accepted support-area options, branding, participation safeguards and independent answers for each area are retained.
+## Purpose and sequence
 
-## Purpose
-
-Give Lutheran Care a usable picture of support needs, support received, requests for extra or different help, and preferences that can inform the NT Defence Family Support Program.
-
-The previous journey made three passes over the same areas and offered detail only for current needs. The revised flow removes that repetition and also invites experience of difficulties that have been resolved.
-
-## Implemented sequence
+Give Lutheran Care a usable picture of support needed, support received, requests for extra or different help and preferences for finding services in the NT.
 
 1. Invitation, age-appropriate participation and the minimum NT connection check.
-2. One support-area checklist.
-3. Finish each selected area before moving to the next.
-4. General information/advice and programme-arrangement preferences.
-5. Useful experience or other suggestions.
-6. Short optional background questions.
-7. Review, finish and the existing completion resource.
+2. Optional **About you** questions.
+3. One support-area checklist.
+4. Finish each selected area before moving to the next.
+5. Information/advice preferences about services and support in the NT, for adults and young people.
+6. Review and finish, with the separate conversation request and free resource.
 
-Keep the older-NT-experience route separate from the recent-needs measures. Do not use this restructuring to silently change programme eligibility or recruitment scope.
+Earlier NT experience remains a separate connection → comments → review route. This routing defines consultation scope, not programme-benefit eligibility. Residence is optional and does not exclude family members living elsewhere.
 
-## Select the areas once
+## One selection, then one page per area
 
-**In the past 12 months, which areas have you needed support with?**
+The accepted support-area checklist includes needs that were met and support still needed now. Adults and young people use a 12-month recall period; children use 3 months. A new need now is within that window. There is no second full checklist, mandatory top-three ranking or four-week impact score.
 
-Include needs that were met and support you still need now.
+Each area asks, in this order:
 
-Use the accepted adult list and its exclusive none/uncertain/declined choices. The child version retains its shorter recall period and age-appropriate list. A need that has started now is included in the recall period. A future concern that has not yet become a need belongs in the final suggestion field.
+1. How much of the support needed in the recall period was received?
+2. Is extra or different support wanted now?
+3. If Yes: **What support would help you now?**
+4. Where did the person look for support in the same recall period?
+5. The relevant barriers or reasons for not seeking support, determined by the source response.
+6. **What worked well, or could have been better?**
 
-There is no second full checklist for current needs and no mandatory top-three ranking.
+These fields appear directly on the page. There is no **More about this experience** heading or collapsed panel. They remain optional. The child wording is simpler: **What help would you like now?** and **What helped, or could have made things easier?**
 
-## Complete one area at a time
-
-For Housing, display two short core questions together:
-
-**Over the past 12 months, how much of the support you needed with housing did you receive?**
-
-Enough to meet my needs / Some, but not enough / None / Not sure / Prefer not to answer.
-
-**Would you like any extra or different support with housing now?**
-
-Yes / No / Not sure / Prefer not to answer.
-
-The two questions measure different things. Do not combine them into a single status list. No extra support requested does not mean that existing ongoing support is unnecessary. Enough past support does not rule out a new request now. Preserve blank answers separately from No.
+## Keep past support and current requests independent
 
 | Past support | Extra/different support wanted now | Interpretation |
-|---|---|---|
-| Enough | No | Existing support may still be important; no additional request is recorded. |
+| --- | --- | --- |
+| Enough | No | Existing support may remain important; no additional request is recorded. |
 | Enough | Yes | A new, changed or previously uncovered request exists. |
-| Some/none | No | A past gap can be reported without being treated as current demand. |
+| Some/none | No | A past gap can be described without being counted as current demand. |
 | Some/none | Yes | A past gap and a current request are both recorded. |
 
-Do not label the second question a clinical assessment or an objective measure of unmet need.
+The second question is a current request, not a clinical assessment or objective measure of unmet need. Blank, uncertain and declined responses remain distinct from No. The Yes-only written response identifies what the person wants now; the final area comment covers experience and improvement without repeating a question about what LC needs to know.
 
-## Optional experience, kept with that area
+Sources and experience remain available even when earlier support was sufficient or no extra help is wanted. Actual help-seeking shows experienced barriers; explicit non-seeking shows reasons for not seeking. Blank, uncertain or declined source answers must not imply a failed attempt.
 
-A clearly optional **More about this experience** section is available on every selected area's page, including where no extra help is wanted now. Continue does not require the person to open it.
+Visible fields are still voluntary. Use the number actually answering each field as its denominator, and retain skipped answers as missing. Displaying every field does not turn incomplete responses into complete barrier measurements.
 
-When opened:
+## Background, preferences and completion
 
-- Ask where the person looked for support during the same recall period, using the existing sources list.
-- After actual help-seeking, ask the existing experienced-barrier question. After explicit non-seeking, use the separate reasons list. Unknown, declined or blank help-seeking must not imply a failed attempt.
-- Invite one written answer: **What would you like Lutheran Care to know about your experience with this?** The area title supplies the context. Keep this prompt stable when the core answers change, so previously entered text retains its meaning.
+Broad residence, current/most-recent NT stay, military affiliation and younger respondents’ assistance with answering come before the needs checklist. Age, relationship and service connection are not repeated. NT duration counts the current or most recent stay, not accumulated postings.
 
-The separate four-week impact score has been removed. Past support and current requests are sufficient for this flow; no third recall window is introduced.
+The preferences section is **Finding services and support in the NT**, asking **How would you prefer to get information or advice about services and support in the NT?** It describes information and navigation, not the substantive delivery of housing or childcare. Timing appears only after a synchronous format is selected. Preferences do not imply contact consent.
 
-Detailed responses will be volunteered context. They are not complete barrier measurements for every selected area. Use the number actually answering each field as its denominator. If complete barrier counts are essential, the team must accept a longer core questionnaire; layout changes cannot eliminate that workload.
+Adults and young people can answer preferences even with no selected needs. Children continue from their area pages to review. The separate **Your ideas** page is removed; experience and suggestions stay with the relevant area, and **Something else** remains available in the needs list.
 
-## General preferences and the ending
+The thank-you screen acknowledges helping improve support in NT communities. **Arrange a conversation** appears there and in the questionnaire footer, alongside the existing information access. It opens a separate tab without answers, response IDs or a person-level link. The contact form does not require questionnaire completion. The same free resource appears in both journeys without requiring consent to contact. Its URL remains unset until the team supplies the resource.
 
-Use **Getting information and advice** as the frame for phone, video, in-person, written-information and navigation preferences. These describe contact/advice, not the substantive delivery of housing or childcare. Keep timing conditional on a synchronous format. Do not infer consent to contact from any preference.
+Most questions remain optional, with one Continue button. Required participation and connection choices must be completed first. The formal participant interface does not claim receipt while collection is unconnected.
 
-Every adult or young person in the main cohort can contribute general preferences, including people with no current difficulties. Children retain the age-appropriate ending without adult contact-format preferences. One optional closing prompt can cover strengths and suggestions:
+## Page counts
 
-**Is there any support you would like us to keep, or anything else you would like to suggest?**
+Excluding invitation, age and participation, and including review:
 
-Optional military affiliation, broad residence, current/most-recent NT stay and assistance with answering come after the substantive questions. Do not ask age, relationship or connection again.
+| Route | Pages |
+| --- | --- |
+| Adult/youth main route | 5 + number of selected areas: 5 with none, 7 with two, 10 with five |
+| Child main route | 4 + number of selected areas |
+| Earlier NT experience | 3: connection, comments and review |
 
-Keep the existing single Continue convention, optional substantive questions, independent child choice, review, and resource entry. Do not invent a submission receipt while collection is unconnected.
+These are page counts, not measured completion times. All areas are completed once; optional fields can be left blank.
 
-## Concrete checks
+## Schema 5 answer contract
 
-A person selects Housing and Childcare. Housing support was insufficient last year, but no extra help is wanted now. Childcare support was sufficient before, but a new shift pattern means different help is wanted now. The two independent questions record both accurately, and either area can carry optional detail.
-
-A person selects no needs. They go directly to general preferences and suggestions, then optional background and review. They are not made to complete difficulty modules in order to contribute to programme design.
-
-A person selects five areas. They see ten brief core selections, with optional detail for any or all areas. The substantive questions remain optional. They do not repeat the full area checklist or undertake five compulsory long interviews.
-
-Excluding the existing welcome/age/consent steps, the adult main route has 6 pages with no selected areas, 8 with two, and 11 with five, including optional-background and review pages. These are page counts, not measured completion times. On the same basis, the earlier-experience route has three pages: connection, comments and review. Both routes then reach the completion screen.
-
-## Answer contract
-
-Schema 4 records the selected domains in `answers.needs` and the corresponding independent responses in `answers.areas[domain_id]`:
+`answers.needs` selects domains. Independent `answers.areas[domain_id]` blocks contain:
 
 - `received`: support received during the age-appropriate recall period;
 - `additional_support_now`: whether extra or different support is wanted now;
-- `sources`: optional help-seeking during that same past period;
-- `barriers`: optional experienced barriers or reasons for non-seeking, according to the source answer;
-- `comment`: one optional written response about this area.
+- `support_requested`: optional description shown and retained only after Yes;
+- `sources`: help-seeking during the same past period;
+- `barriers`: experienced barriers or reasons for non-seeking, according to the source answer;
+- `comment`: optional experience and suggested improvements for that area.
 
-Changing one area's source answer clears only that area's dependent barrier answer. Deselecting an area removes only its block. Earlier schema records must not be copied into these fields as though they answered the new questions. Missing optional answers remain missing; a closed detail section is not evidence that no barriers existed.
+Changing an area's sources clears only its dependent barriers. Changing Yes to another current-request answer clears its support-request text. Deselecting an area removes its block. Earlier collective/current-only records are not automatically migrated. The removed global `anything` answer is not exported. Unanswered fields remain missing.
 
-The public questionnaire remains the formal interface for internal review, with no connected receiver. Its completion resource and local answer download remain available. This restructuring does not activate collection or change the participation/safeguarding procedure.
+The main survey notice is `2026-09-25-v10`. It explains that names or contact details are not collected for retrieving individual responses afterwards and retains the general privacy-rights route. It does not announce an absolute loss of rights over unexpected identifiable content. See [LEGAL_REVIEW.md](LEGAL_REVIEW.md).
 
-## Basis and status
+The public questionnaire remains a formal interface for internal review, with no connected receiver. This flow change does not activate collection. Questionnaire child permission/assent remains in place; the separate contact form has its own minimal all-age routes described in [CONTACT_FORM.md](CONTACT_FORM.md).
 
-[ABS Forms Design Standards](https://www.abs.gov.au/book/export/31170/print) supports a logical conversational order and relevant filtering. [GOV.UK question pages](https://design-system.service.gov.uk/patterns/question-pages/) supports avoiding repeated entry and keeping each page's task focused. Neither source validates this particular instrument.
+## Design basis
 
-The governing decision is: select once, keep two independent core answers per area, make depth explicit and optional, then ask about service arrangements. Target-reader walkthroughs remain the practical test of comprehension and flow; implementation checks do not establish that participants will find every question clear.
+[ABS Forms Design Standards](https://www.abs.gov.au/book/export/31170/print) supports logical order and relevant filtering. [GOV.UK question pages](https://design-system.service.gov.uk/patterns/question-pages/) supports avoiding repeated entry and keeping each page's task focused. Neither source validates this instrument. Target-reader walkthroughs remain the practical test of comprehension and flow.

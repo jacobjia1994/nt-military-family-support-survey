@@ -1,6 +1,6 @@
 # Defence family service consultation: participation and safeguarding
 
-24 September 2026 · Staff operating procedure for team review
+25 September 2026 · Staff operating procedure for team review
 
 This is a service consultation to plan Lutheran Care’s NT Defence Family Support Program. The participant interface shows the intended formal questionnaire. The current GitHub build is for internal review and has no response receiver; no worker is currently monitoring answers from it. This procedure sets out the operating arrangement for the team to use when collection is connected. It does not claim staff have already been appointed or completed an assessment.
 
@@ -16,7 +16,7 @@ Invite participation without pressure from staff, commanders, service providers 
 
 The full questionnaire concerns current NT service or service ending within the past 12 months. Earlier NT connections have a separate optional lessons/suggestions route; this consultation scope is not programme-benefit eligibility. Family members may live elsewhere in Australia or overseas. Residence is optional, asked only at a broad-area level for service planning, and must never exclude a respondent. “Not sure” about the service connection is retained as uncertain rather than automatically rejected.
 
-## Participation routes implemented in the form
+## Participation routes implemented in the questionnaire
 
 | Age | Route |
 |---|---|
@@ -26,7 +26,7 @@ The full questionnaire concerns current NT service or service ending within the 
 | 7–11 | Parent/guardian gives permission, then the child gives their own assent. |
 | Under 7 | Permission precedes a facilitated conversation/drawing guide. The worker also establishes the child’s willingness and follows their lead. |
 
-The age split is this consultation’s proposed operational approach, informed by capacity guidance. It is not a universal legal consent age. Do not presume capacity if there is reason to doubt understanding. Parent/guardian involvement follows existing LC practice, adapted to a short voluntary consultation rather than a counselling intake.
+Eighteen is the NT age of majority. The questionnaire’s fifteen-year split is an operational capacity approach, informed by OAIC guidance, not a universal legal consent age or a legal exclusion of younger children. Do not presume capacity if there is reason to doubt understanding. Parent/guardian involvement follows existing LC practice, adapted to a short voluntary consultation rather than a counselling intake.
 
 Both permission and assent start unchecked. A child may refuse after the adult has agreed. Changing age clears earlier answers and participation records. Revoking guardian permission clears the child’s agreement and answers. The form does not ask for a parent’s name, phone, email, identity document or family-law orders.
 
@@ -37,6 +37,18 @@ If the young person needs explanation, the adult’s authority is uncertain, no 
 In the assisted route, the worker explains the purpose, voluntary choice, who can read information, confidentiality limits and stopping. Ask the young person to explain those points in their own words. Clarify where needed and record the worker’s judgement and basis in the restricted LC record. For a capable young person who can appropriately consent independently, arrange a facilitated consultation under LC’s procedure; lack of a parent beside the online form is not a final exclusion. If understanding is insufficient, seek valid permission or postpone.
 
 A helper may read or record the child’s words but must not choose or rewrite answers. Read a scribed answer back for the child’s agreement. Where appropriate, provide a private chance to ask for help or say no. Giving guardian permission does not automatically entitle that adult to every answer.
+
+## Separate requests for a conversation
+
+The contact form is independent of the questionnaire and does not receive its answers or response identifiers. It can be used without completing the questionnaire. Its footer and completion links open a separate tab so entering a request does not replace answers in progress. See [CONTACT_FORM.md](CONTACT_FORM.md) for fields and current routes.
+
+Adults can request contact for themselves. Young people aged 15–17 can use the self route where they understand the information; staff still confirm understanding and willingness at the start of the conversation. A parent or guardian can arrange contact for a child under 18, supplying the adult’s preferred name, number and contact instructions. Only a broad child age group is needed for arranging this first contact; do not request the child's legal name, date of birth, health history or identity documents at this stage.
+
+A person under 15 who is filling in the form themselves can ask a worker to explain taking part. This is a limited contact request, without a topic narrative, rather than advance consent to an interview or sensitive-data collection. Use the selected safe method to explain the consultation and establish capacity, suitable permission and the child's willingness before proceeding. Do not automatically contact a parent. Where parental involvement could increase risk, discuss a safe arrangement under LC's safeguarding process. A guardian declaration alone does not prove authority or override the child's choice.
+
+The first contact must follow the selected call/text preference and contact instructions. Text-first is not permission to call immediately. Do not leave a voicemail without the separate permission. Reconfirm a safe time and method if the circumstances are unclear; do not infer safety from the number’s format. Do not record the interview without separate appropriate agreement. Requesting contact does not guarantee a service, appointment or referral.
+
+Use the contact request's own privacy notice. The person can ask to change details or cancel contact. Cancellation stops the requested follow-up; it does not promise immediate destruction of records that must be retained. Keep contact records separate from questionnaire answers and routine de-identified reporting. Staff should not use the contact form to reconstruct an anonymous response.
 
 ## If someone becomes upset or discloses harm
 
@@ -56,17 +68,18 @@ When a response does not identify a person, use the information actually availab
 
 Review narratives and combinations of age, broad locality, military connection and family relationship before release. Remove identifying details and aggregate or suppress small combinations where they could reasonably identify someone. Do not assume removing names is enough. No universal numerical suppression threshold is invented here. Identifiable safeguarding case information follows its lawful protection route, not the routine project-reporting route to the funder.
 
-Use the LC feedback/privacy contact for access, correction and complaints. For the consultation dataset, do not request names or contact details, issue lookup codes, keep a respondent/contact mapping or attempt to reconstruct identity for routine withdrawal requests. Explain that the participant can stop before submitting but cannot withdraw an individual unlinked response afterwards. This does not remove statutory duties concerning identifiable information volunteered unexpectedly; handle such information under LC’s privacy and safeguarding procedure. Never infer permission to contact someone, make a referral or interview them again from a service-format preference.
+Use the LC feedback/privacy contact for access, correction and complaints. For the consultation dataset, do not request names or contact details, issue lookup codes, keep a respondent/contact mapping or attempt to reconstruct identity for routine withdrawal requests. The v10 notice says: “You can stop before submitting. We do not collect a name or contact details for retrieving individual responses afterwards.” This explains the intended design without an absolute denial of privacy rights. Where identifiable information is volunteered unexpectedly and can reasonably be located, consider applicable access and correction rights and handle it under LC’s privacy and safeguarding procedure. Never infer permission to contact someone, make a referral or interview them again from a service-format preference.
 
 ## Sources and support contacts
 
-- [LC current privacy policy](https://www.lutherancare.org.au/privacy-policy/), June 2026 v12: informed consent, approved systems, restricted access, records, legal disclosure and complaints.
+- [LC current privacy policy](https://www.lutherancare.org.au/wp-content/uploads/2026/06/Confidentiality-and-Privacy-Policy-and-Procedure-2026_v12.pdf), June 2026 v12: capacity-sensitive consent, organisational systems, restricted access, records, lawful disclosure and complaints.
+- [Legal and privacy review](LEGAL_REVIEW.md): NT adulthood, child capacity, relevant reporting thresholds and facts still needed for real collection.
 - [LC current counselling/referral forms](https://www.lutherancare.org.au/counselling/): practical precedent for guardian involvement; clinical intake fields and special counselling protections are not transferred to this consultation.
 - [OAIC consent and capacity, B.59–B.61](https://www.oaic.gov.au/privacy/australian-privacy-principles/australian-privacy-principles-guidelines/chapter-b-key-concepts).
 - [NT child reporting guidance](https://nt.gov.au/law/crime/report-child-abuse), [current child protection Act](https://legislation.nt.gov.au/api/sitecore/Act/PDF?id=11659) and [current domestic violence Act](https://legislation.nt.gov.au/api/sitecore/Act/PDF?id=11768).
 - [LC general contact](https://www.lutherancare.org.au/contact-us/): (08) 8269 9333; ask for the NT Defence Family Support Program. This is not represented as a dedicated project number.
 - Australian support: [Kids Helpline](https://kidshelpline.com.au/) 1800 55 1800; [1800RESPECT](https://1800respect.org.au/) 1800 737 732. Emergency: 000 in Australia.
 
-## Digital resource at completion
+## Digital resource
 
-Use the same public file/folder link for all completers. Do not collect email addresses, require every optional answer, attach a response ID, append answers or use the resource to identify participants. Keep it a modest optional resource, separate from service eligibility and research/recontact consent. The team supplies the content and link in `thank-you-resource.js`; no file is currently claimed to be ready.
+Use the same public file/folder link at questionnaire completion and on the contact form. Access does not require requesting a conversation or submitting contact details. Do not collect email addresses, require every optional answer, attach a response ID, append answers or use the resource to identify participants. Keep it a modest optional resource, separate from service eligibility and research/recontact consent. The team supplies the content and link in `thank-you-resource.js`; no file is currently claimed to be ready.

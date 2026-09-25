@@ -117,6 +117,7 @@ function reconcileAnswers(answers,changed,domains,previous) {
   if(changed.startsWith('areas:')) {
     const [,id,key]=changed.split(':');
     if(key==='sources'&&answers.areas?.[id])delete answers.areas[id].barriers;
+    if(key==='additional_support_now'&&answers.areas?.[id]?.additional_support_now!=='yes')delete answers.areas[id].support_requested;
   }
   if(changed==='serving_nt'&&previous!==answers.serving_nt) {
     for(const key of ['needs','needs_other','areas','delivery','times','anything','earlier_experience'])delete answers[key];
@@ -126,46 +127,47 @@ function reconcileAnswers(answers,changed,domains,previous) {
 }
 function buildSteps(answers,domains,version) {
   if(consultationRoute(answers)==='earlier_experience')return [{id:'connection',phase:0},{id:'earlier',phase:1},{id:'review',phase:2}];
-  const steps=[{id:'connection',phase:0},{id:'needs',phase:1}];
+  const steps=[{id:'connection',phase:0},{id:'place',phase:0},{id:'needs',phase:1}];
   for(const need of selectedNeeds(answers,domains))steps.push({id:'area:'+need,phase:1,need});
   if(version!=='child')steps.push({id:'delivery',phase:2});
-  steps.push({id:'anything',phase:2},{id:'place',phase:3},{id:'review',phase:4});
+  steps.push({id:'review',phase:3});
   return steps;
 }
 function hasAnswer(value) { return value!==undefined&&value!==null&&value!==''&&(!Array.isArray(value)||value.length>0); }
 function cleanExport(answers,version,domains) {
   const route=consultationRoute(answers),copy={};
-  const allowed=route==='earlier_experience'?['roles','serving_nt','earlier_experience']:['roles','serving_nt','needs','needs_other','delivery','times','anything','force','region','time_nt','assistance'];
+  const allowed=route==='earlier_experience'?['roles','serving_nt','earlier_experience']:['roles','serving_nt','needs','needs_other','delivery','times','force','region','time_nt','assistance'];
   for(const key of allowed)if(Object.hasOwn(answers,key))copy[key]=structuredClone(answers[key]);
   if(route!=='earlier_experience') {
     const ids=selectedNeeds(answers,domains);
     if(!ids.includes('other_need'))delete copy.needs_other;
     copy.areas=Object.fromEntries(ids.map(id=>{
       const input=answers.areas?.[id]||{},area={};
-      for(const key of ['received','additional_support_now','sources','barriers','comment'])if(Object.hasOwn(input,key))area[key]=structuredClone(input[key]);
+      for(const key of ['received','additional_support_now','support_requested','sources','barriers','comment'])if(Object.hasOwn(input,key))area[key]=structuredClone(input[key]);
       if(!hasSoughtHelp(area)&&!area.sources?.includes('not_sought'))delete area.barriers;
+      if(area.additional_support_now!=='yes')delete area.support_requested;
       return [id,area];
     }));
     if(!(copy.delivery||[]).some(v=>['one_to_one','group','phone','video'].includes(v)))delete copy.times;
   }
-  return {schema_version:'4.0',questionnaire_revision:'2026-09-25-single-pass',consultation_route:route,recall_months:route==='earlier_experience'?null:version==='child'?3:12,measurement_scope:'past_support_and_current_requests_by_area',details_optional:true,collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'downloaded_by_respondent; not submitted',answers:copy};
+  return {schema_version:'5.0',questionnaire_revision:'2026-09-25-open-experience',consultation_route:route,recall_months:route==='earlier_experience'?null:version==='child'?3:12,measurement_scope:'past_support_and_current_requests_by_area',details_optional:true,collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'downloaded_by_respondent; not submitted',answers:copy};
 }
 
 const main = document.querySelector('#main');
-const phases = ['Your connection','Your support','Your ideas','About you','Review'];
-const state = { version:'adult', age:null, answers:{}, step:'connection', screen:'welcome', returnToReview:false, participation:null, guardianPermission:null, expandedAreas:{} };
+const phases = ['About you','Your support','Finding support','Review'];
+const state = { version:'adult', age:null, answers:{}, step:'connection', screen:'welcome', returnToReview:false, participation:null, guardianPermission:null };
 const SURVEY_INVITATION = {"title": "Defence family support survey", "greeting": "Hello, NT Defence Communities!", "paragraphs": ["Lutheran Care would like your help to plan its Defence Family Support Program in the Northern Territory.", "Tell us about the support you have needed, what you received and what would help now.", "Please answer about your own experience."], "funding": "The program is funded by the Australian Government Department of Defence through its Family Support Funding Program."};
-const PARTICIPANT_NOTICE_VERSION = '2026-09-25-v9';
+const PARTICIPANT_NOTICE_VERSION = '2026-09-25-v10';
 // Formal participant wording for the internally reviewed consultation design.
 // The current build has no receiver; its technical status belongs in review.html.
 const PARTICIPANT_INFORMATION = [
   ['Your choice', 'Taking part is voluntary. Most questions are optional.'],
-  ['Privacy', 'We do not ask for your name or contact details. Please leave out anything that could identify you or someone else, such as names, addresses or service numbers.'],
+  ['Privacy', 'We do not ask for your name or contact details. Please leave out anything that could identify you or someone else, such as names, addresses or service numbers. The separate contact form does not receive your survey answers.'],
   ['Use and storage', 'Lutheran Care will use your answers to plan its NT Defence Family Support Program. We will store them securely and limit access to authorised staff working on this project. Our Privacy Policy explains how we keep and manage records.'],
   ['Sharing', 'We will share project information with Defence after removing details that could reasonably identify anyone. We may need to disclose information to meet legal duties or protect someone from serious harm.'],
-  ['Withdrawal', 'You can leave the survey before submitting. Once submitted, answers cannot be changed or withdrawn.'],
+  ['Before you submit', 'You can stop before submitting. We do not collect a name or contact details for retrieving individual responses afterwards.'],
   ['Questions or complaints', 'Contact <a href="mailto:feedback@lutherancare.org.au">feedback@lutherancare.org.au</a>. Our <a href="https://www.lutherancare.org.au/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a> explains your rights, including access, correction and complaints.'],
-  ['If you need support', 'This survey does not arrange services or follow-up contact. In an emergency in Australia, call 000. For domestic, family or sexual violence support, contact <a href="https://www.1800respect.org.au/" target="_blank" rel="noopener">1800RESPECT</a> on 1800 737 732.']
+  ['If you need support', 'This survey is not a request for services. In an emergency in Australia, call 000. For domestic, family or sexual violence support, contact <a href="https://www.1800respect.org.au/" target="_blank" rel="noopener">1800RESPECT</a> on 1800 737 732.']
 ];
 function participantInformationHTML(id='participant-information') {
   return `<section class="participant-information" id="${id}" aria-labelledby="${id}-title"><h2 id="${id}-title">Taking part and your information</h2><div class="notice-grid">${PARTICIPANT_INFORMATION.map(([label,body])=>`<p><strong>${label}</strong> ${body}</p>`).join('')}</div></section>`;
@@ -229,16 +231,17 @@ function areaPage(need) {
   return {title:domainLabel(need),intro:'',fields:[
     field(key('received'),isChild()?`In ${period()}, how much help did you get with this?`:`In ${period()}, how much of the support you needed did you receive?`,'single',adequacy()),
     field(key('additional_support_now'),isChild()?'Would you like more help with this now?':'Would you like any extra or different support with this now?','single',opts([['yes','Yes'],['no','No'],['unsure','Not sure'],['prefer','Prefer not to answer']])),
+    field(key('support_requested'),isChild()?'What help would you like now?':'What support would help you now?','text',[],privacyHint(),{need,conditional:'additional_support'}),
     field(key('sources'),isChild()?`In ${period()}, who have you asked for help with this?`:`In ${period()}, where have you looked for support with this?`,'multi',areaSources(),'Select all that apply.',{exclusive:['not_sought','unsure','prefer'],need,optional_detail:true}),
     areaBarrierField(need),
-    field(key('comment'),isChild()?'What would you like us to know about this?':'What would you like Lutheran Care to know about your experience with this?','text',[],privacyHint(),{need,optional_detail:true})
+    field(key('comment'),isChild()?'What helped, or could have made things easier?':'What worked well, or could have been better?','text',[],privacyHint(),{need,optional_detail:true})
   ]};
 }
 function page(step) {
   if(step.id.startsWith('area:'))return areaPage(step.need||step.id.slice(5));
   const child=isChild();
   switch(step.id) {
-    case 'earlier':return {title:'Your experience in the NT',intro:'We’d like to hear what worked well and what could have been better.',fields:[field('earlier_experience',child?'What would you like to tell us about your family’s time in the NT?':'What should Lutheran Care know about supporting Defence families in the NT?','text',[],privacyHint())]};
+    case 'earlier':return {title:'Your experience in the NT',intro:'We’d like to hear what worked well and what could have been better.',fields:[field('earlier_experience',child?'What would you like to tell us about your family’s time in the NT?':'What worked well during your family’s time in the NT, and what could have been better?','text',[],privacyHint())]};
     case 'connection':return {title:isAdult()?'Your connection to military life':'A little about your family',intro:'',fields:[
       field('roles',isAdult()?'Which describes you?':'Which describes your family?','multi',roleOptions(),'Select all that apply.',{required:true,exclusive:['none','unsure']}),
       field('serving_nt',isAdult()?'When did you or your family member last serve in the NT?':'When did your family member last serve in the NT?','single',opts([['yes','Serving in the NT now'],['recent','Within the past 12 months, but not currently'],['earlier','More than 12 months ago'],['no','No military service in the NT'],['unsure','Not sure']]),'Select one.',{required:true})
@@ -247,12 +250,11 @@ function page(step) {
       field('needs',child?`In ${period()}, what have you needed help with?`:`In ${period()}, which areas have you needed support with?`,'multi',[...domainList(),{id:'none',label:child?'I did not need help with these things':'I did not need support in these areas'},UNSURE,PREFER],child?'Select all that apply. Include help you got and help you still need.':'Select all that apply. Include needs that were met and support you still need now.',{exclusive:SPECIAL_NEEDS}),
       field('needs_other','What else did you need help with?','short',[],privacyHint(),{conditional:'other_need'})
     ]};
-    case 'delivery':return {title:'Getting information and advice',intro:'',fields:[
-      field('delivery','When you need information or advice, which ways would suit you?','multi',opts([['one_to_one','In person, one to one'],['group','In person, in a group'],['phone','By phone'],['video','By video call'],['text','By message or online chat'],['information','Information I can read in my own time'],['referral','Someone to help me find a suitable service'],['not_wanted','I would not want help from a service'],['unsure','Not sure'],['no_preference','No particular preference'],['other','Another way'],['prefer','Prefer not to answer']]),'Select all that apply.',{exclusive:['not_wanted','unsure','no_preference','prefer']}),
+    case 'delivery':return {title:'Finding services and support in the NT',intro:'',fields:[
+      field('delivery','How would you prefer to get information or advice about services and support in the NT?','multi',opts([['one_to_one','In person, one to one'],['group','In person, in a group'],['phone','By phone'],['video','By video call'],['text','By message or online chat'],['information','Information I can read in my own time'],['referral','Someone to help me find a suitable service'],['not_wanted','I would not want help from a service'],['unsure','Not sure'],['no_preference','No particular preference'],['other','Another way'],['prefer','Prefer not to answer']]),'Select all that apply.',{exclusive:['not_wanted','unsure','no_preference','prefer']}),
       field('times','When would a call, meeting or activity suit you?','multi',opts([['weekday_day','Weekday daytime'],['weekday_evening','Weekday evenings'],['weekend','Weekends'],['variable','It changes from week to week'],['no_preference','No particular preference'],['prefer','Prefer not to answer']]),'Select all that apply. Use your local time.',{exclusive:['no_preference','prefer'],conditional:'live'})
     ]};
-    case 'anything':return {title:'Your ideas',intro:'',fields:[field('anything',child?'Is there anything that helps you, or anything you would like to change?':'Is there any support you would like us to keep, or anything else you would like to suggest?','text',[],privacyHint())]};
-    case 'place':return {title:'A little about you',intro:'',fields:[
+    case 'place':return {title:'About you',intro:'',fields:[
       field('region','Which area do you live in?','select',regions,'Optional. This helps us plan where and how to offer support. Living outside the NT does not affect whether you can take part.'),
       field('time_nt','How long have you lived in the NT?','single',opts([['never','I have not lived in the NT'],['under3','Less than 3 months'],['3to12','3 months to less than 1 year'],['1to3','1 year to less than 3 years'],['over3','3 years or more'],['unsure','Not sure'],['prefer','Prefer not to answer']]),'Count your current or most recent stay only.'),
       field('force',isAdult()?'Which military are you or your family connected with?':'Which military is your family member part of?','single',opts([['adf','Australian Defence Force'],['other','Another country’s military'],['both','Both'],['unsure','Not sure'],['prefer','Prefer not to answer']])),
@@ -267,16 +269,13 @@ function optionHTML(o,f,value) {
   return `<label class="choice"><input type="${f.type==='multi'?'checkbox':'radio'}" name="${esc(f.key)}" value="${esc(o.id)}" ${checked?'checked':''}><span class="choice-body"><span class="choice-label">${esc(o.label)}</span>${o.hint?`<span class="choice-hint">${esc(o.hint)}</span>`:''}</span></label>`;
 }
 function conditionalVisible(f) {
+  if(f.conditional==='additional_support')return state.answers.areas?.[f.need]?.additional_support_now==='yes';
   if(f.conditional==='area_barriers'){const a=state.answers.areas?.[f.need]||{};return hasSoughtHelp(a)||Boolean(a.sources?.includes('not_sought'));}
   if(f.conditional==='other_need')return Boolean(state.answers.needs?.includes('other_need'));
   if(f.conditional==='live')return (state.answers.delivery||[]).some(v=>['one_to_one','group','phone','video'].includes(v));
   return true;
 }
-function areaQuestionsHTML(content,need) {
-  const core=content.fields.filter(f=>!f.optional_detail).map(fieldHTML).join('');
-  const extra=content.fields.filter(f=>f.optional_detail).map(fieldHTML).join('');
-  return `${core}<details class="area-details" data-area-details="${esc(need)}" ${state.expandedAreas[need]?'open':''}><summary>More about this experience <span>(optional)</span></summary><div class="area-details-content">${extra}</div></details>`;
-}
+function areaQuestionsHTML(content) { return content.fields.map(fieldHTML).join(''); }
 
 function fieldHTML(f) {
   const v=getValue(f.key),hint=f.hint?`<span class="field-hint" id="hint-${esc(f.key)}">${esc(f.hint)}</span>`:'';
@@ -301,7 +300,7 @@ function renderAge(){
   main.querySelector('#welcome-form [type="submit"]').disabled=!state.age;
   main.querySelector('#welcome-form').onchange=()=>{main.querySelector('#welcome-form [type="submit"]').disabled=!main.querySelector('input[name=age]:checked');};
   main.querySelector('#age-back').onclick=()=>{renderWelcome();focusHeading();};
-  main.querySelector('#welcome-form').addEventListener('submit',e=>{e.preventDefault();const age=main.querySelector('input[name="age"]:checked')?.value;if(!age){main.querySelector('#welcome-error').textContent='Choose an age group to continue.';main.querySelector('input[name=age]')?.focus();return;}if(age!==state.age){state.answers={};state.expandedAreas={};state.participation=null;state.guardianPermission=null;state.step='connection';state.returnToReview=false;}state.age=age;state.version=questionnaireVersion(age);if(needsGuardianPermission(age))renderGuardianPermission();else{renderParticipation();focusHeading();}});
+  main.querySelector('#welcome-form').addEventListener('submit',e=>{e.preventDefault();const age=main.querySelector('input[name="age"]:checked')?.value;if(!age){main.querySelector('#welcome-error').textContent='Choose an age group to continue.';main.querySelector('input[name=age]')?.focus();return;}if(age!==state.age){state.answers={};state.participation=null;state.guardianPermission=null;state.step='connection';state.returnToReview=false;}state.age=age;state.version=questionnaireVersion(age);if(needsGuardianPermission(age))renderGuardianPermission();else{renderParticipation();focusHeading();}});
 }
 function renderParticipationHelp(){
   state.participation=null;
@@ -312,7 +311,7 @@ function renderParticipationHelp(){
   focusHeading();
 }
 function renderParticipationDeclined(){
-  state.answers={};state.expandedAreas={};state.participation=null;state.guardianPermission=null;
+  state.answers={};state.participation=null;state.guardianPermission=null;
   state.screen='declined';
   main.innerHTML=`<section class="finish"><h1 tabindex="-1">You’ve left the survey</h1><button class="button secondary" id="declined-back">Return to the start</button></section>`;
   main.querySelector('#declined-back').onclick=()=>{state.age=null;renderWelcome();focusHeading();};
@@ -327,7 +326,7 @@ function renderGuardianPermission(){
   main.querySelector('#guardian-back').onclick=()=>{renderAge();focusHeading();};
   main.querySelector('#guardian-help').onclick=renderParticipationHelp;
   main.querySelector('#guardian-no').onclick=renderParticipationDeclined;
-  main.querySelector('[name="guardian-permission"]').onchange=e=>{state.guardianPermission=guardianPermissionRecord(state.age,e.target.checked);main.querySelector('#guardian-form [type="submit"]').disabled=!e.target.checked;state.participation=null;if(!e.target.checked){state.answers={};state.expandedAreas={};state.step='connection';}};
+  main.querySelector('[name="guardian-permission"]').onchange=e=>{state.guardianPermission=guardianPermissionRecord(state.age,e.target.checked);main.querySelector('#guardian-form [type="submit"]').disabled=!e.target.checked;state.participation=null;if(!e.target.checked){state.answers={};state.step='connection';}};
   main.querySelector('#guardian-form').onsubmit=e=>{e.preventDefault();state.guardianPermission=guardianPermissionRecord(state.age,main.querySelector('[name="guardian-permission"]').checked);if(!state.guardianPermission){main.querySelector('#guardian-error').textContent='Please give permission to continue, or choose another option below.';return;}if(young)renderYoung();else renderParticipation();focusHeading();};
   focusHeading();
 }
@@ -356,7 +355,7 @@ function renderParticipation(){
 
 const YOUNG_PROMPTS = ['What do you like about being here?', 'Is there anything that feels hard?', 'Who helps you when you need help?', 'What would make things a little easier?'];
 function renderYoung(){if(!state.guardianPermission?.agreed||state.guardianPermission.age_path!=='young'){renderGuardianPermission();return;}state.screen='young';main.innerHTML=`<section class="finish"><h1 tabindex="-1">Talking with younger children</h1><p class="lead">A Lutheran Care worker can help young children share their views through talking, drawing or pointing to pictures. Explain what will happen, ask whether they want to join in and follow their lead.</p><div class="card"><h2>Questions to try</h2>${YOUNG_PROMPTS.map(text=>`<p>${esc(text)}</p>`).join('')}<p class="small">Follow the child’s lead, accept “I don’t know”, and stop when they want to. Record their own words separately from an adult’s interpretation.</p></div><div class="finish-actions"><button class="button secondary" id="return-welcome">Back to age choices</button></div></section>`;main.querySelector('#return-welcome').onclick=()=>{renderAge();focusHeading();};focusHeading();}
-function renderScope(){state.screen='scope';main.innerHTML=`<section class="finish"><h1 tabindex="-1">Thank you for your interest</h1><p class="lead">This consultation focuses on experiences of military service in the Northern Territory.</p><div class="finish-actions"><button class="button primary" id="scope-back">Review my answer</button><button class="button secondary" id="scope-exit">Return to the start</button></div></section>`;main.querySelector('#scope-back').onclick=()=>{state.screen='survey';state.step='connection';renderSurvey();};main.querySelector('#scope-exit').onclick=()=>{state.answers={};state.expandedAreas={};renderWelcome();};focusHeading();}
+function renderScope(){state.screen='scope';main.innerHTML=`<section class="finish"><h1 tabindex="-1">Thank you for your interest</h1><p class="lead">This consultation focuses on experiences of military service in the Northern Territory.</p><div class="finish-actions"><button class="button primary" id="scope-back">Review my answer</button><button class="button secondary" id="scope-exit">Return to the start</button></div></section>`;main.querySelector('#scope-back').onclick=()=>{state.screen='survey';state.step='connection';renderSurvey();};main.querySelector('#scope-exit').onclick=()=>{state.answers={};renderWelcome();};focusHeading();}
 function activeSteps(){return buildSteps(state.answers,domainList(),state.version);}
 function reviewHTML(){return activeSteps().filter(s=>s.id!=='review').map(s=>{
   const p=page(s);
@@ -367,7 +366,7 @@ function reviewHTML(){return activeSteps().filter(s=>s.id!=='review').map(s=>{
     else text=(Array.isArray(v)?v:[v]).map(id=>f.options.find(o=>o.id===id)?.label||id).join('; ');
     return `<div class="review-block"><div class="review-header"><h3>${esc(f.label)}</h3><button class="text-button" type="button" data-edit="${esc(s.id)}" data-detail="${f.optional_detail?'true':'false'}" aria-label="Change: ${esc(s.need?p.title+': ':'')}${esc(f.label)}">Change</button></div><p class="review-value">${esc(text)}</p></div>`;
   }).join('');
-  const noDetail=s.need&&!p.fields.some(f=>f.optional_detail&&hasAnswer(getValue(f.key)))?'<p class="small">No additional details provided.</p>':'';
+  const noDetail='';
   return `<section class="review-section">${s.need?`<h2>${esc(p.title)}</h2>`:''}${rows}${noDetail}</section>`;
 }).join('');}
 
@@ -399,8 +398,6 @@ function renderSurvey(){
   main.innerHTML=`<div class="survey-layout"><section class="survey-main"><div class="step-topline"><strong>${esc(displayPhases[phaseIndex])}</strong><span>Section ${phaseIndex+1} of ${displayPhases.length}</span></div><div class="section-track" aria-hidden="true">${displayPhases.map((_,i)=>`<span class="${i<=phaseIndex?'visited':''}"></span>`).join('')}</div><form class="question-card" id="survey-form" novalidate><h1 tabindex="-1">${esc(p.title)}</h1>${p.intro?`<p class="question-intro">${esc(p.intro)}</p>`:''}${s.need?`<p class="need-progress">Area ${selectedNeeds(state.answers,domainList()).indexOf(s.need)+1} of ${selectedNeeds(state.answers,domainList()).length}</p>`:''}${review?reviewHTML():s.need?areaQuestionsHTML(p,s.need):p.fields.map(fieldHTML).join('')}<div class="error" id="form-error" role="alert"></div><div class="question-actions"><button class="back-button" type="button" id="back">Back</button><div class="action-right"><button class="button primary" type="submit">${review?'Finish':'Continue'}</button></div></div></form><button class="text-button" id="survey-help" type="button">Help or stop</button></section></div>`;
   main.querySelector('#survey-help').onclick=renderSurveyHelp;
   const form=main.querySelector('#survey-form');
-  const panel=form.querySelector('[data-area-details]');
-  if(panel)panel.addEventListener('toggle',()=>{if(state.screen==='survey'&&state.step===s.id)state.expandedAreas[s.need]=panel.open;});
   const refreshContinue=()=>{form.querySelector('[type="submit"]').disabled=!requiredAnswersComplete(p.fields.filter(conditionalVisible),state.answers);};
   refreshContinue();
   form.addEventListener('change',e=>{
@@ -413,8 +410,6 @@ function renderSurvey(){
       const wrap=form.querySelector(`[data-field="${barrier.key}"]`);
       if(wrap)wrap.outerHTML=fieldHTML(barrier);
     }
-    if(f.key==='serving_nt')state.expandedAreas={};
-    if(f.key==='needs')state.expandedAreas=Object.fromEntries(Object.entries(state.expandedAreas).filter(([id])=>selectedNeeds(state.answers,domainList()).includes(id)));
     for(const field of p.fields){
       const wrap=form.querySelector(`[data-field="${field.key}"]`);if(!wrap)continue;wrap.hidden=!conditionalVisible(field);
       const saved=getValue(field.key);
@@ -426,10 +421,11 @@ function renderSurvey(){
   form.addEventListener('submit',e=>{e.preventDefault();const missing=p.fields.filter(conditionalVisible).find(f=>f.required&&(!getValue(f.key)||Array.isArray(getValue(f.key))&&!getValue(f.key).length));if(missing){const err=form.querySelector('#form-error');err.textContent='Please answer: '+missing.label;form.querySelector(`[name="${missing.key}"]`)?.focus();return;}if(s.id==='connection'&&isOutsideSurveyScope(state.answers)){renderScope();return;}if(review){renderFinish();return;}if(state.returnToReview){state.returnToReview=false;state.step='review';renderSurvey();focusHeading();return;}goNext(s.id);});
   main.querySelector('#back').onclick=()=>{state.returnToReview=false;const current=activeSteps();const i=current.findIndex(x=>x.id===s.id);if(i<=0){renderParticipation();focusHeading();return;}state.step=current[i-1].id;renderSurvey();focusHeading();};
 
-  main.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>{state.returnToReview=true;state.step=b.dataset.edit;if(b.dataset.detail==='true'&&state.step.startsWith('area:'))state.expandedAreas[state.step.slice(5)]=true;renderSurvey();focusHeading();});
+  main.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>{state.returnToReview=true;state.step=b.dataset.edit;renderSurvey();focusHeading();});
 }
 function goNext(id){const steps=activeSteps(),index=steps.findIndex(s=>s.id===id);state.step=steps[index+1]?.id||'review';renderSurvey();focusHeading();}
-function renderFinish(){state.screen='finish';main.innerHTML=`<section class="finish"><h1 tabindex="-1">Thank you for your time</h1>${thankYouResourceHTML()}<div class="finish-actions"><button class="button secondary" id="download-answers">Save my answers</button><button class="button secondary" id="review-answers">Review my answers</button></div><button class="text-button" id="restart">Clear answers and start again</button></section>`;main.querySelector('#download-answers').onclick=()=>{const data=cleanExport(state.answers,state.version,domainList());data.participation=state.participation;const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='my-nt-support-answers.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};main.querySelector('#review-answers').onclick=()=>{state.step='review';renderSurvey();focusHeading();};main.querySelector('#restart').onclick=()=>{state.answers={};state.expandedAreas={};state.participation=null;state.guardianPermission=null;state.age=null;state.step='connection';renderWelcome();};focusHeading();}
+function contactLinkHTML(){return '<a class="button secondary" href="contact.html" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Arrange a conversation</a>';}
+function renderFinish(){state.screen='finish';main.innerHTML=`<section class="finish"><h1 tabindex="-1">Thank you for helping improve support in our NT communities.</h1><div class="finish-contact">${contactLinkHTML()}</div>${thankYouResourceHTML()}<div class="finish-actions"><button class="button secondary" id="download-answers">Save my answers</button><button class="button secondary" id="review-answers">Review my answers</button></div><button class="text-button" id="restart">Clear answers and start again</button></section>`;main.querySelector('#download-answers').onclick=()=>{const data=cleanExport(state.answers,state.version,domainList());data.participation=state.participation;const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='my-nt-support-answers.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};main.querySelector('#review-answers').onclick=()=>{state.step='review';renderSurvey();focusHeading();};main.querySelector('#restart').onclick=()=>{state.answers={};state.participation=null;state.guardianPermission=null;state.age=null;state.step='connection';renderWelcome();};focusHeading();}
 const reviewNotes = new Map();
 let libraryVersion = 'adult';
 let libraryLocation = 'nt';
@@ -438,29 +434,28 @@ let libraryLocation = 'nt';
 // No synthetic answers from this library enter the respondent flow or results.
 function questionLibrarySections(version,location) {
   const original={version:state.version,answers:state.answers};const first=DOMAINS[version][0].id;
-  state.version=version;state.answers={roles:['partner'],serving_nt:'yes',region:location==='nt'?'darwin':location==='outside'?'outside_au':'prefer',needs:[first],areas:{[first]:{received:'enough',additional_support_now:'no',sources:['family']}}};
+  state.version=version;state.answers={roles:['partner'],serving_nt:'yes',region:location==='nt'?'darwin':location==='outside'?'outside_au':'prefer',needs:[first],areas:{[first]:{received:'enough',additional_support_now:'yes',sources:['family']}}};
   try {
     const sections=[],add=(id,note='')=>sections.push({id,...page({id}),note});
     add('connection','Only relationship and NT connection precede the substantive questions. Earlier connections retain a separate historical route.');
+    add('place','Optional background precedes support needs. Residence does not control eligibility.');
     add('needs','Select areas once, including met needs and support still needed now. Blank, unsure and declined are distinct from no need.');
     const area=areaPage(first),variants=[];
-    for(const [id,title,sources] of [['sought','Optional detail: after looking for support',['family']],['not-sought','Optional detail: when support was not sought',['not_sought']]]) {
+    for(const [id,title,sources] of [['sought','After looking for support',['family']],['not-sought','When support was not sought',['not_sought']]]) {
       state.answers.areas[first].sources=sources;
       variants.push({id,title,label:title,intro:'',fields:[areaBarrierField(first)]});
     }
-    sections.push({id:'area',...area,title:'For each selected area',fields:area.fields.filter(f=>!f.key.endsWith(':barriers')),variants,note:'Two independent core questions appear first. The remaining questions are in an optional details section, available whatever the core answers. Sources and barriers use the same recall period. Blank detail does not mean no barrier.'});
+    sections.push({id:'area',...area,title:'For each selected area',fields:area.fields.filter(f=>!f.key.endsWith(':barriers')),variants,note:'Questions are displayed directly. Extra support requested appears only after Yes; past experience remains available to everyone selecting this area. Sources and barriers use the same recall period. Blank answers do not mean no barrier.'});
     if(version!=='child')add('delivery','Everyone in the main adult/youth route can give general information/advice preferences, including those with no selected needs.');
-    add('anything','One optional invitation for positive experience and other suggestions.');
-    add('place','Optional background is asked near the end, not repeated from the opening.');
     add('earlier','Separate historical route for NT service ending more than 12 months ago; not part of the recent-needs loop.');
     return sections;
   } finally {state.version=original.version;state.answers=original.answers;}
 }
 
 function libraryFieldHTML(f) {
-  const conditional = {nt:'Shown to people living in the NT.',other_need:'Shown after “Something else” is selected.',another:'Shown after “Something else” is selected.',live:'Shown after an in-person, group, phone or video option is selected.'}[f.conditional];
+  const conditional = {additional_support:'Shown after Yes to extra or different support now.',nt:'Shown to people living in the NT.',other_need:'Shown after “Something else” is selected.',another:'Shown after “Something else” is selected.',live:'Shown after an in-person, group, phone or video option is selected.'}[f.conditional];
   const type = {single:'Choose one',multi:'Select all that apply',select:'Choose one area',text:'Written answer',short:'Short written answer'}[f.type];
-  return `<div class="library-question"><p class="question-meta">${type} · ${f.required?'Needed to continue':f.optional_detail?'Optional details':'Optional'}</p><h3>${esc(f.label)}</h3>${f.hint?`<p class="field-hint">${esc(f.hint)}</p>`:''}${conditional?`<p class="branch-note">${conditional}</p>`:''}${f.options.length?`<ul class="option-list">${f.options.map(o=>`<li>${esc(o.label)}${o.hint?` <small>— ${esc(o.hint)}</small>`:''}</li>`).join('')}</ul>`:`<p class="small">${f.type==='short'?'Up to 160 characters.':`Up to ${maxTextLength(libraryVersion)} characters.`}</p>`}</div>`;
+  return `<div class="library-question"><p class="question-meta">${type} · ${f.required?'Needed to continue':'Optional'}</p><h3>${esc(f.label)}</h3>${f.hint?`<p class="field-hint">${esc(f.hint)}</p>`:''}${conditional?`<p class="branch-note">${conditional}</p>`:''}${f.options.length?`<ul class="option-list">${f.options.map(o=>`<li>${esc(o.label)}${o.hint?` <small>— ${esc(o.hint)}</small>`:''}</li>`).join('')}</ul>`:`<p class="small">${f.type==='short'?'Up to 160 characters.':`Up to ${maxTextLength(libraryVersion)} characters.`}</p>`}</div>`;
 }
 
 function downloadText(filename, text, type='text/plain;charset=utf-8') {
@@ -470,12 +465,9 @@ function downloadText(filename, text, type='text/plain;charset=utf-8') {
 }
 
 function librarySectionFieldsHTML(section) {
-  let detailsStarted=false;
   return section.fields.map(f=>{
-    const heading=f.optional_detail&&!detailsStarted?'<h3 class="branch-label">More about this experience (optional)</h3>':'';
-    if(f.optional_detail)detailsStarted=true;
     const variants=f.key.endsWith(':sources')?(section.variants||[]).map(v=>`<div><h3 class="branch-label">${esc(v.title)}</h3>${v.fields.map(libraryFieldHTML).join('')}</div>`).join(''):'';
-    return heading+libraryFieldHTML(f)+variants;
+    return libraryFieldHTML(f)+variants;
   }).join('');
 }
 

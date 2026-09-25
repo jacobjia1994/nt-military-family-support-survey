@@ -48,7 +48,7 @@ Below 760px, the outer frame disappears into a white page; padding becomes 24px 
 
 Radio and checkbox options use full clickable rows, a 56px minimum height, a fine border and modest rounding. Selected options gain a pale orange tint and a terracotta border as well as a checked control. Primary buttons are at least 52px high. Text fields use 17px type and text areas have a 156px minimum height. Keyboard focus has a visible orange outline; reduced-motion settings remove the short choice transitions.
 
-The five-section progress indicator uses thin lines and a section label. Related questions can share a page. Back, Skip this page, Continue and Change remain plain, predictable actions. The final review lets people check answers before finishing.
+The four-section progress indicator uses thin lines and a section label. Related questions can share a page. Back, Continue and Change remain plain, predictable actions. The final review lets people check answers before finishing.
 
 ## Preserved questionnaire behaviour
 
@@ -77,3 +77,10 @@ After age selection, adult consent and young-person assent use unticked explicit
 `contact.html` uses the same unchanged Lutheran Care logo, locally hosted Karla, terracotta action colour and flat white questionnaire shell. After a short age choice, people aged 15 or older see one page of contact fields; under-15s receive a staff-assisted contact route. Preferred name and phone sit side by side on desktop and stack below 760px. The heading is 38px on desktop and 32px on mobile; introductory text is 18px and 17px respectively.
 
 First-contact method is an explicit choice. Voicemail permission appears only for calls and starts unticked. Optional contact instructions and a brief topic follow the essential fields. The information notice remains fully visible in 14px text above the separate consent checkbox. Familiar controls lead to a details review with a Change action, then a neutral “Thank you for your time” finish. This independent form does not inherit or link survey answers. The current review build has no receiver, persistent storage or details download, and its finish does not claim receipt or a confirmed appointment.
+
+
+## Direct experience questions and inclusive contact routes
+
+Updated 25 September 2026. The questionnaire displays all applicable area questions without an accordion. Background precedes needs; the repeated closing ideas page is removed. Yes to extra support reveals a specific-support text box, with the same existing type and control treatment. A wrapping flex footer places About your answers at the left and Arrange a conversation at the right. The completion view puts the conversation link before the shared resource.
+
+The contact form now offers self and guardian routes, with adult, 15–17 and under-15 age groups where applicable. Guardian labels request the adult’s own details. Under-15 self-contact omits the topic narrative and explains the initial contact purpose. Its footer and finish show the same resource without requiring contact registration. Both new contact and resource links open separately and without a referrer; no form data enters their URL.

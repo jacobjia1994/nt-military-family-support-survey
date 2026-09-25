@@ -16,7 +16,7 @@
     ],
     [
       "Privacy",
-      "We do not ask for your name or contact details. Please leave out anything that could identify you or someone else, such as names, addresses or service numbers."
+      "We do not ask for your name or contact details. Please leave out anything that could identify you or someone else, such as names, addresses or service numbers. The separate contact form does not receive your survey answers."
     ],
     [
       "Use and storage",
@@ -27,8 +27,8 @@
       "We will share project information with Defence after removing details that could reasonably identify anyone. We may need to disclose information to meet legal duties or protect someone from serious harm."
     ],
     [
-      "Withdrawal",
-      "You can leave the survey before submitting. Once submitted, answers cannot be changed or withdrawn."
+      "Before you submit",
+      "You can stop before submitting. We do not collect a name or contact details for retrieving individual responses afterwards."
     ],
     [
       "Questions or complaints",
@@ -36,7 +36,7 @@
     ],
     [
       "If you need support",
-      "This survey does not arrange services or follow-up contact. In an emergency in Australia, call 000. For domestic, family or sexual violence support, contact <a href=\"https://www.1800respect.org.au/\" target=\"_blank\" rel=\"noopener\">1800RESPECT</a> on 1800 737 732."
+      "This survey is not a request for services. In an emergency in Australia, call 000. For domestic, family or sexual violence support, contact <a href=\"https://www.1800respect.org.au/\" target=\"_blank\" rel=\"noopener\">1800RESPECT</a> on 1800 737 732."
     ]
   ],
   "nt": [
@@ -113,6 +113,118 @@
         }
       ],
       "note": "Only relationship and NT connection precede the substantive questions. Earlier connections retain a separate historical route."
+    },
+    {
+      "id": "place",
+      "title": "About you",
+      "intro": "",
+      "fields": [
+        {
+          "key": "region",
+          "label": "Which area do you live in?",
+          "type": "select",
+          "options": [
+            {
+              "id": "darwin",
+              "label": "Darwin"
+            },
+            {
+              "id": "palmerston",
+              "label": "Palmerston / Litchfield"
+            },
+            {
+              "id": "katherine",
+              "label": "Katherine / Tindal"
+            },
+            {
+              "id": "alice",
+              "label": "Alice Springs"
+            },
+            {
+              "id": "other_nt",
+              "label": "Elsewhere in the NT"
+            },
+            {
+              "id": "outside_au",
+              "label": "Elsewhere in Australia"
+            },
+            {
+              "id": "outside_overseas",
+              "label": "Outside Australia"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Optional. This helps us plan where and how to offer support. Living outside the NT does not affect whether you can take part."
+        },
+        {
+          "key": "time_nt",
+          "label": "How long have you lived in the NT?",
+          "type": "single",
+          "options": [
+            {
+              "id": "never",
+              "label": "I have not lived in the NT"
+            },
+            {
+              "id": "under3",
+              "label": "Less than 3 months"
+            },
+            {
+              "id": "3to12",
+              "label": "3 months to less than 1 year"
+            },
+            {
+              "id": "1to3",
+              "label": "1 year to less than 3 years"
+            },
+            {
+              "id": "over3",
+              "label": "3 years or more"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Count your current or most recent stay only."
+        },
+        {
+          "key": "force",
+          "label": "Which military are you or your family connected with?",
+          "type": "single",
+          "options": [
+            {
+              "id": "adf",
+              "label": "Australian Defence Force"
+            },
+            {
+              "id": "other",
+              "label": "Another country’s military"
+            },
+            {
+              "id": "both",
+              "label": "Both"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": ""
+        }
+      ],
+      "note": "Optional background precedes support needs. Residence does not control eligibility."
     },
     {
       "id": "needs",
@@ -302,6 +414,15 @@
           "hint": ""
         },
         {
+          "key": "areas:settling:support_requested",
+          "label": "What support would help you now?",
+          "type": "text",
+          "options": [],
+          "hint": "Please leave out names or other details that could identify someone.",
+          "need": "settling",
+          "conditional": "additional_support"
+        },
+        {
           "key": "areas:settling:sources",
           "label": "In the past 12 months, where have you looked for support with this?",
           "type": "multi",
@@ -358,7 +479,7 @@
         },
         {
           "key": "areas:settling:comment",
-          "label": "What would you like Lutheran Care to know about your experience with this?",
+          "label": "What worked well, or could have been better?",
           "type": "text",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone.",
@@ -369,8 +490,8 @@
       "variants": [
         {
           "id": "sought",
-          "title": "Optional detail: after looking for support",
-          "label": "Optional detail: after looking for support",
+          "title": "After looking for support",
+          "label": "After looking for support",
           "intro": "",
           "fields": [
             {
@@ -465,8 +586,8 @@
         },
         {
           "id": "not-sought",
-          "title": "Optional detail: when support was not sought",
-          "label": "Optional detail: when support was not sought",
+          "title": "When support was not sought",
+          "label": "When support was not sought",
           "intro": "",
           "fields": [
             {
@@ -544,16 +665,16 @@
           ]
         }
       ],
-      "note": "Two independent core questions appear first. The remaining questions are in an optional details section, available whatever the core answers. Sources and barriers use the same recall period. Blank detail does not mean no barrier."
+      "note": "Questions are displayed directly. Extra support requested appears only after Yes; past experience remains available to everyone selecting this area. Sources and barriers use the same recall period. Blank answers do not mean no barrier."
     },
     {
       "id": "delivery",
-      "title": "Getting information and advice",
+      "title": "Finding services and support in the NT",
       "intro": "",
       "fields": [
         {
           "key": "delivery",
-          "label": "When you need information or advice, which ways would suit you?",
+          "label": "How would you prefer to get information or advice about services and support in the NT?",
           "type": "multi",
           "options": [
             {
@@ -654,140 +775,13 @@
       "note": "Everyone in the main adult/youth route can give general information/advice preferences, including those with no selected needs."
     },
     {
-      "id": "anything",
-      "title": "Your ideas",
-      "intro": "",
-      "fields": [
-        {
-          "key": "anything",
-          "label": "Is there any support you would like us to keep, or anything else you would like to suggest?",
-          "type": "text",
-          "options": [],
-          "hint": "Please leave out names or other details that could identify someone."
-        }
-      ],
-      "note": "One optional invitation for positive experience and other suggestions."
-    },
-    {
-      "id": "place",
-      "title": "A little about you",
-      "intro": "",
-      "fields": [
-        {
-          "key": "region",
-          "label": "Which area do you live in?",
-          "type": "select",
-          "options": [
-            {
-              "id": "darwin",
-              "label": "Darwin"
-            },
-            {
-              "id": "palmerston",
-              "label": "Palmerston / Litchfield"
-            },
-            {
-              "id": "katherine",
-              "label": "Katherine / Tindal"
-            },
-            {
-              "id": "alice",
-              "label": "Alice Springs"
-            },
-            {
-              "id": "other_nt",
-              "label": "Elsewhere in the NT"
-            },
-            {
-              "id": "outside_au",
-              "label": "Elsewhere in Australia"
-            },
-            {
-              "id": "outside_overseas",
-              "label": "Outside Australia"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Optional. This helps us plan where and how to offer support. Living outside the NT does not affect whether you can take part."
-        },
-        {
-          "key": "time_nt",
-          "label": "How long have you lived in the NT?",
-          "type": "single",
-          "options": [
-            {
-              "id": "never",
-              "label": "I have not lived in the NT"
-            },
-            {
-              "id": "under3",
-              "label": "Less than 3 months"
-            },
-            {
-              "id": "3to12",
-              "label": "3 months to less than 1 year"
-            },
-            {
-              "id": "1to3",
-              "label": "1 year to less than 3 years"
-            },
-            {
-              "id": "over3",
-              "label": "3 years or more"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Count your current or most recent stay only."
-        },
-        {
-          "key": "force",
-          "label": "Which military are you or your family connected with?",
-          "type": "single",
-          "options": [
-            {
-              "id": "adf",
-              "label": "Australian Defence Force"
-            },
-            {
-              "id": "other",
-              "label": "Another country’s military"
-            },
-            {
-              "id": "both",
-              "label": "Both"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": ""
-        }
-      ],
-      "note": "Optional background is asked near the end, not repeated from the opening."
-    },
-    {
       "id": "earlier",
       "title": "Your experience in the NT",
       "intro": "We’d like to hear what worked well and what could have been better.",
       "fields": [
         {
           "key": "earlier_experience",
-          "label": "What should Lutheran Care know about supporting Defence families in the NT?",
+          "label": "What worked well during your family’s time in the NT, and what could have been better?",
           "type": "text",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone."
@@ -872,6 +866,118 @@
       "note": "Only relationship and NT connection precede the substantive questions. Earlier connections retain a separate historical route."
     },
     {
+      "id": "place",
+      "title": "About you",
+      "intro": "",
+      "fields": [
+        {
+          "key": "region",
+          "label": "Which area do you live in?",
+          "type": "select",
+          "options": [
+            {
+              "id": "darwin",
+              "label": "Darwin"
+            },
+            {
+              "id": "palmerston",
+              "label": "Palmerston / Litchfield"
+            },
+            {
+              "id": "katherine",
+              "label": "Katherine / Tindal"
+            },
+            {
+              "id": "alice",
+              "label": "Alice Springs"
+            },
+            {
+              "id": "other_nt",
+              "label": "Elsewhere in the NT"
+            },
+            {
+              "id": "outside_au",
+              "label": "Elsewhere in Australia"
+            },
+            {
+              "id": "outside_overseas",
+              "label": "Outside Australia"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Optional. This helps us plan where and how to offer support. Living outside the NT does not affect whether you can take part."
+        },
+        {
+          "key": "time_nt",
+          "label": "How long have you lived in the NT?",
+          "type": "single",
+          "options": [
+            {
+              "id": "never",
+              "label": "I have not lived in the NT"
+            },
+            {
+              "id": "under3",
+              "label": "Less than 3 months"
+            },
+            {
+              "id": "3to12",
+              "label": "3 months to less than 1 year"
+            },
+            {
+              "id": "1to3",
+              "label": "1 year to less than 3 years"
+            },
+            {
+              "id": "over3",
+              "label": "3 years or more"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Count your current or most recent stay only."
+        },
+        {
+          "key": "force",
+          "label": "Which military are you or your family connected with?",
+          "type": "single",
+          "options": [
+            {
+              "id": "adf",
+              "label": "Australian Defence Force"
+            },
+            {
+              "id": "other",
+              "label": "Another country’s military"
+            },
+            {
+              "id": "both",
+              "label": "Both"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": ""
+        }
+      ],
+      "note": "Optional background precedes support needs. Residence does not control eligibility."
+    },
+    {
       "id": "needs",
       "title": "Your support needs",
       "intro": "Support can include help from family, friends, your community or a service.",
@@ -1059,6 +1165,15 @@
           "hint": ""
         },
         {
+          "key": "areas:settling:support_requested",
+          "label": "What support would help you now?",
+          "type": "text",
+          "options": [],
+          "hint": "Please leave out names or other details that could identify someone.",
+          "need": "settling",
+          "conditional": "additional_support"
+        },
+        {
           "key": "areas:settling:sources",
           "label": "In the past 12 months, where have you looked for support with this?",
           "type": "multi",
@@ -1115,7 +1230,7 @@
         },
         {
           "key": "areas:settling:comment",
-          "label": "What would you like Lutheran Care to know about your experience with this?",
+          "label": "What worked well, or could have been better?",
           "type": "text",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone.",
@@ -1126,8 +1241,8 @@
       "variants": [
         {
           "id": "sought",
-          "title": "Optional detail: after looking for support",
-          "label": "Optional detail: after looking for support",
+          "title": "After looking for support",
+          "label": "After looking for support",
           "intro": "",
           "fields": [
             {
@@ -1222,8 +1337,8 @@
         },
         {
           "id": "not-sought",
-          "title": "Optional detail: when support was not sought",
-          "label": "Optional detail: when support was not sought",
+          "title": "When support was not sought",
+          "label": "When support was not sought",
           "intro": "",
           "fields": [
             {
@@ -1301,16 +1416,16 @@
           ]
         }
       ],
-      "note": "Two independent core questions appear first. The remaining questions are in an optional details section, available whatever the core answers. Sources and barriers use the same recall period. Blank detail does not mean no barrier."
+      "note": "Questions are displayed directly. Extra support requested appears only after Yes; past experience remains available to everyone selecting this area. Sources and barriers use the same recall period. Blank answers do not mean no barrier."
     },
     {
       "id": "delivery",
-      "title": "Getting information and advice",
+      "title": "Finding services and support in the NT",
       "intro": "",
       "fields": [
         {
           "key": "delivery",
-          "label": "When you need information or advice, which ways would suit you?",
+          "label": "How would you prefer to get information or advice about services and support in the NT?",
           "type": "multi",
           "options": [
             {
@@ -1411,140 +1526,13 @@
       "note": "Everyone in the main adult/youth route can give general information/advice preferences, including those with no selected needs."
     },
     {
-      "id": "anything",
-      "title": "Your ideas",
-      "intro": "",
-      "fields": [
-        {
-          "key": "anything",
-          "label": "Is there any support you would like us to keep, or anything else you would like to suggest?",
-          "type": "text",
-          "options": [],
-          "hint": "Please leave out names or other details that could identify someone."
-        }
-      ],
-      "note": "One optional invitation for positive experience and other suggestions."
-    },
-    {
-      "id": "place",
-      "title": "A little about you",
-      "intro": "",
-      "fields": [
-        {
-          "key": "region",
-          "label": "Which area do you live in?",
-          "type": "select",
-          "options": [
-            {
-              "id": "darwin",
-              "label": "Darwin"
-            },
-            {
-              "id": "palmerston",
-              "label": "Palmerston / Litchfield"
-            },
-            {
-              "id": "katherine",
-              "label": "Katherine / Tindal"
-            },
-            {
-              "id": "alice",
-              "label": "Alice Springs"
-            },
-            {
-              "id": "other_nt",
-              "label": "Elsewhere in the NT"
-            },
-            {
-              "id": "outside_au",
-              "label": "Elsewhere in Australia"
-            },
-            {
-              "id": "outside_overseas",
-              "label": "Outside Australia"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Optional. This helps us plan where and how to offer support. Living outside the NT does not affect whether you can take part."
-        },
-        {
-          "key": "time_nt",
-          "label": "How long have you lived in the NT?",
-          "type": "single",
-          "options": [
-            {
-              "id": "never",
-              "label": "I have not lived in the NT"
-            },
-            {
-              "id": "under3",
-              "label": "Less than 3 months"
-            },
-            {
-              "id": "3to12",
-              "label": "3 months to less than 1 year"
-            },
-            {
-              "id": "1to3",
-              "label": "1 year to less than 3 years"
-            },
-            {
-              "id": "over3",
-              "label": "3 years or more"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Count your current or most recent stay only."
-        },
-        {
-          "key": "force",
-          "label": "Which military are you or your family connected with?",
-          "type": "single",
-          "options": [
-            {
-              "id": "adf",
-              "label": "Australian Defence Force"
-            },
-            {
-              "id": "other",
-              "label": "Another country’s military"
-            },
-            {
-              "id": "both",
-              "label": "Both"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": ""
-        }
-      ],
-      "note": "Optional background is asked near the end, not repeated from the opening."
-    },
-    {
       "id": "earlier",
       "title": "Your experience in the NT",
       "intro": "We’d like to hear what worked well and what could have been better.",
       "fields": [
         {
           "key": "earlier_experience",
-          "label": "What should Lutheran Care know about supporting Defence families in the NT?",
+          "label": "What worked well during your family’s time in the NT, and what could have been better?",
           "type": "text",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone."
@@ -1629,6 +1617,118 @@
       "note": "Only relationship and NT connection precede the substantive questions. Earlier connections retain a separate historical route."
     },
     {
+      "id": "place",
+      "title": "About you",
+      "intro": "",
+      "fields": [
+        {
+          "key": "region",
+          "label": "Which area do you live in?",
+          "type": "select",
+          "options": [
+            {
+              "id": "darwin",
+              "label": "Darwin"
+            },
+            {
+              "id": "palmerston",
+              "label": "Palmerston / Litchfield"
+            },
+            {
+              "id": "katherine",
+              "label": "Katherine / Tindal"
+            },
+            {
+              "id": "alice",
+              "label": "Alice Springs"
+            },
+            {
+              "id": "other_nt",
+              "label": "Elsewhere in the NT"
+            },
+            {
+              "id": "outside_au",
+              "label": "Elsewhere in Australia"
+            },
+            {
+              "id": "outside_overseas",
+              "label": "Outside Australia"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Optional. This helps us plan where and how to offer support. Living outside the NT does not affect whether you can take part."
+        },
+        {
+          "key": "time_nt",
+          "label": "How long have you lived in the NT?",
+          "type": "single",
+          "options": [
+            {
+              "id": "never",
+              "label": "I have not lived in the NT"
+            },
+            {
+              "id": "under3",
+              "label": "Less than 3 months"
+            },
+            {
+              "id": "3to12",
+              "label": "3 months to less than 1 year"
+            },
+            {
+              "id": "1to3",
+              "label": "1 year to less than 3 years"
+            },
+            {
+              "id": "over3",
+              "label": "3 years or more"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Count your current or most recent stay only."
+        },
+        {
+          "key": "force",
+          "label": "Which military are you or your family connected with?",
+          "type": "single",
+          "options": [
+            {
+              "id": "adf",
+              "label": "Australian Defence Force"
+            },
+            {
+              "id": "other",
+              "label": "Another country’s military"
+            },
+            {
+              "id": "both",
+              "label": "Both"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": ""
+        }
+      ],
+      "note": "Optional background precedes support needs. Residence does not control eligibility."
+    },
+    {
       "id": "needs",
       "title": "Your support needs",
       "intro": "Support can include help from family, friends, your community or a service.",
@@ -1816,6 +1916,15 @@
           "hint": ""
         },
         {
+          "key": "areas:settling:support_requested",
+          "label": "What support would help you now?",
+          "type": "text",
+          "options": [],
+          "hint": "Please leave out names or other details that could identify someone.",
+          "need": "settling",
+          "conditional": "additional_support"
+        },
+        {
           "key": "areas:settling:sources",
           "label": "In the past 12 months, where have you looked for support with this?",
           "type": "multi",
@@ -1872,7 +1981,7 @@
         },
         {
           "key": "areas:settling:comment",
-          "label": "What would you like Lutheran Care to know about your experience with this?",
+          "label": "What worked well, or could have been better?",
           "type": "text",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone.",
@@ -1883,8 +1992,8 @@
       "variants": [
         {
           "id": "sought",
-          "title": "Optional detail: after looking for support",
-          "label": "Optional detail: after looking for support",
+          "title": "After looking for support",
+          "label": "After looking for support",
           "intro": "",
           "fields": [
             {
@@ -1979,8 +2088,8 @@
         },
         {
           "id": "not-sought",
-          "title": "Optional detail: when support was not sought",
-          "label": "Optional detail: when support was not sought",
+          "title": "When support was not sought",
+          "label": "When support was not sought",
           "intro": "",
           "fields": [
             {
@@ -2058,16 +2167,16 @@
           ]
         }
       ],
-      "note": "Two independent core questions appear first. The remaining questions are in an optional details section, available whatever the core answers. Sources and barriers use the same recall period. Blank detail does not mean no barrier."
+      "note": "Questions are displayed directly. Extra support requested appears only after Yes; past experience remains available to everyone selecting this area. Sources and barriers use the same recall period. Blank answers do not mean no barrier."
     },
     {
       "id": "delivery",
-      "title": "Getting information and advice",
+      "title": "Finding services and support in the NT",
       "intro": "",
       "fields": [
         {
           "key": "delivery",
-          "label": "When you need information or advice, which ways would suit you?",
+          "label": "How would you prefer to get information or advice about services and support in the NT?",
           "type": "multi",
           "options": [
             {
@@ -2168,140 +2277,13 @@
       "note": "Everyone in the main adult/youth route can give general information/advice preferences, including those with no selected needs."
     },
     {
-      "id": "anything",
-      "title": "Your ideas",
-      "intro": "",
-      "fields": [
-        {
-          "key": "anything",
-          "label": "Is there any support you would like us to keep, or anything else you would like to suggest?",
-          "type": "text",
-          "options": [],
-          "hint": "Please leave out names or other details that could identify someone."
-        }
-      ],
-      "note": "One optional invitation for positive experience and other suggestions."
-    },
-    {
-      "id": "place",
-      "title": "A little about you",
-      "intro": "",
-      "fields": [
-        {
-          "key": "region",
-          "label": "Which area do you live in?",
-          "type": "select",
-          "options": [
-            {
-              "id": "darwin",
-              "label": "Darwin"
-            },
-            {
-              "id": "palmerston",
-              "label": "Palmerston / Litchfield"
-            },
-            {
-              "id": "katherine",
-              "label": "Katherine / Tindal"
-            },
-            {
-              "id": "alice",
-              "label": "Alice Springs"
-            },
-            {
-              "id": "other_nt",
-              "label": "Elsewhere in the NT"
-            },
-            {
-              "id": "outside_au",
-              "label": "Elsewhere in Australia"
-            },
-            {
-              "id": "outside_overseas",
-              "label": "Outside Australia"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Optional. This helps us plan where and how to offer support. Living outside the NT does not affect whether you can take part."
-        },
-        {
-          "key": "time_nt",
-          "label": "How long have you lived in the NT?",
-          "type": "single",
-          "options": [
-            {
-              "id": "never",
-              "label": "I have not lived in the NT"
-            },
-            {
-              "id": "under3",
-              "label": "Less than 3 months"
-            },
-            {
-              "id": "3to12",
-              "label": "3 months to less than 1 year"
-            },
-            {
-              "id": "1to3",
-              "label": "1 year to less than 3 years"
-            },
-            {
-              "id": "over3",
-              "label": "3 years or more"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Count your current or most recent stay only."
-        },
-        {
-          "key": "force",
-          "label": "Which military are you or your family connected with?",
-          "type": "single",
-          "options": [
-            {
-              "id": "adf",
-              "label": "Australian Defence Force"
-            },
-            {
-              "id": "other",
-              "label": "Another country’s military"
-            },
-            {
-              "id": "both",
-              "label": "Both"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": ""
-        }
-      ],
-      "note": "Optional background is asked near the end, not repeated from the opening."
-    },
-    {
       "id": "earlier",
       "title": "Your experience in the NT",
       "intro": "We’d like to hear what worked well and what could have been better.",
       "fields": [
         {
           "key": "earlier_experience",
-          "label": "What should Lutheran Care know about supporting Defence families in the NT?",
+          "label": "What worked well during your family’s time in the NT, and what could have been better?",
           "type": "text",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone."

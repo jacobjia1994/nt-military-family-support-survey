@@ -32,3 +32,9 @@
 .contact-page .contact-actions .button{margin-left:auto}
 @media(max-width:760px){.contact-page .contact-intro h1{font-size:32px}.contact-page .contact-intro p{font-size:17px}.contact-page .contact-pair{grid-template-columns:1fr;gap:0}.contact-page .contact-choices{grid-template-columns:1fr 1fr;gap:10px}.contact-page .contact-choices .choice{padding:14px 12px;gap:9px}.contact-page .contact-check{font-size:15px}.contact-page .contact-intro{margin-top:28px}.contact-page .contact-review dd{font-size:17px}}
 @media print{.contact-page .contact-actions,.contact-page .skip-link{display:none}.contact-page .questionnaire-shell{border:0;padding:0}.contact-page .question-group,.contact-page .contact-privacy{break-inside:avoid}}
+
+.contact-page .contact-resource{border-top:1px solid var(--line);padding-top:24px;margin-top:30px}
+.contact-page .contact-resource h2{font-size:21px;line-height:1.35;margin:0 0 16px}
+.contact-page .contact-resource .small{font-size:14px;margin:10px 0 0;color:var(--muted)}
+.contact-page .contact-route-note{font-size:16px;line-height:1.6;margin:0 0 26px;color:var(--muted)}
+.contact-page .contact-choices.route-choices{grid-template-columns:1fr}
