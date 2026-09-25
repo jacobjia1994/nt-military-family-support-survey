@@ -24,7 +24,7 @@ rounded:
 
 # Lutheran Care questionnaire: implemented design
 
-Updated 24 September 2026. The respondent presentation is defined by `index.html`, `survey.js` and `lutheran-care.css`, which overrides the shared `survey.css` styles. Product and collection arrangements are recorded in `PRODUCT.md`.
+Updated 25 September 2026. The respondent presentation is defined by `index.html`, `survey.js` and `lutheran-care.css`, which overrides the shared `survey.css` styles. Product and collection arrangements are recorded in `PRODUCT.md`.
 
 ## Direction
 
@@ -46,7 +46,7 @@ A warm off-white page holds a white questionnaire shell, up to 896px wide with 7
 
 Below 760px, the outer frame disappears into a white page; padding becomes 24px and the logo is 151px wide. The adult-first age choice, any expanded under-18 choices and the selected participation panel fit one reading column on mobile. The continuation button fills the reading width. At 360px and below, horizontal padding becomes 20px.
 
-Radio and checkbox options use full clickable rows, a 56px minimum height, a fine border and modest rounding. Selected options gain a pale orange tint and a terracotta border as well as a checked control. Primary buttons are at least 52px high. Text fields use 17px type and text areas have a 156px minimum height. Keyboard focus has a visible orange outline; reduced-motion settings remove the short choice transitions.
+Radio and checkbox options use full clickable rows, a 56px minimum height, a fine border and modest rounding. The adult, under-18 and revealed child-age choices use the same row height, typography, borders, spacing and checked/focus treatment as the questionnaire's other radio options. They stack in one column, with the child-age follow-up separated by its question label rather than an inset rail or oversized cards. Selected options gain a pale orange tint and a terracotta border as well as a checked control. Primary buttons are at least 52px high. Text fields use 17px type and text areas have a 156px minimum height. Keyboard focus has a visible orange outline; reduced-motion settings remove the short choice transitions.
 
 The four-section progress indicator uses thin lines and a section label. Related questions can share a page. Back, Continue and Change remain plain, predictable actions. The final review lets people check answers before finishing.
 
@@ -70,7 +70,7 @@ SurveyJS, GOV.UK Frontend and Formbricks informed the design; their code and pla
 
 The invitation starts with an everyday question rather than institutional process. Funding remains explicit in a quieter line. The age choice comes next; the selected route expands a fully visible participant-information block and its own agreement steps on the same page. The information uses 14px labelled paragraphs in two columns on desktop and one column on mobile. It identifies purpose, Lutheran Care custody/approved systems, authorised project readership, de-identified Defence reporting, retention/withdrawal and contact/rights. The dialog remains only a secondary way to reread the same shared text later in the form.
 
-The welcome heading stays **Defence family support survey** in sentence case. Neither age route is preselected. A prominent full-width **Adult (18 or older)** radio appears first; a quieter **Child or young person (under 18)** radio reveals **8–17** and **7 or younger** when selected. No separate age-selection hint repeats the labels. The chosen route opens its explanation and unticked participation choices inline. Ages 8–17 make a small 8–14/15–17 selection for the consent arrangement, without changing the shared questions. Ages 8–14 need both guardian permission and their own assent; ages 15–17 and adults give their own informed agreement. The youngest route asks the guardian for permission before its supported-response form. Changing age clears incompatible participation and answers. Adults answer one questionnaire and can give a non-overlapping age band as an optional background answer. The actual intake platform, applicable retention/withdrawal procedure and child participation arrangements still require LC confirmation before live collection.
+The welcome heading stays **Defence family support survey** in sentence case. Neither age route is preselected. **Adult (18 or older)** appears first and **Child or young person (under 18)** second, as matching standard radio rows. Selecting the latter reveals **8–17** and **7 or younger** in the same visual language. No separate age-selection hint repeats the labels. The chosen route opens its explanation and unticked participation choices inline. Ages 8–17 make an 8–14/15–17 follow-up choice for the consent arrangement, without changing the shared questions. Ages 8–14 need both guardian permission and their own assent; ages 15–17 and adults give their own informed agreement. The youngest route asks the guardian for permission before its supported-response form. Changing age clears incompatible participation and answers. Adults answer one questionnaire and can give a non-overlapping age band as an optional background answer. The actual intake platform, applicable retention/withdrawal procedure and child participation arrangements still require LC confirmation before live collection.
 
 ## Separate conversation request
 

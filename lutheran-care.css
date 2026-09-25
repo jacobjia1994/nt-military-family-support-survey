@@ -53,11 +53,6 @@ body.questionnaire{--ink:#30312f;--text:#41423f;--muted:#666963;--primary:#b9462
 .questionnaire .choice-label{font-size:17px;line-height:1.4}
 .questionnaire .choice-hint{font-size:14px;line-height:1.45;color:#74746d}
 .questionnaire .choices.compact .choice{padding:14px 18px}
-.questionnaire .age-grid{gap:14px}
-.questionnaire .age-grid .choice{min-height:92px;padding:20px;align-items:center}
-.questionnaire .age-grid .choice input{margin-top:0}
-.questionnaire .age-grid .choice-label{font-size:18px;font-weight:650}
-.questionnaire .age-grid .choice-hint{font-size:13px;margin-top:3px}
 .questionnaire .textarea,.questionnaire .text-input,.questionnaire .select{border:1px solid #b4b5ac;border-radius:7px;padding:14px 16px;font-size:17px;color:#333630;background:#fff;min-height:52px}
 .questionnaire .textarea{min-height:156px}
 .questionnaire .char-count{font-size:12px;color:#74746d}
@@ -92,7 +87,7 @@ body.questionnaire{--ink:#30312f;--text:#41423f;--muted:#666963;--primary:#b9462
 .questionnaire .consent-choice input{margin-top:4px}
 .questionnaire #participation-form .question-actions{margin-top:28px}
 .visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
-@media(max-width:760px){body.questionnaire{padding:0;background:#fff;font-size:17px}.questionnaire-shell{border:0;border-radius:0;padding:28px 24px 20px;max-width:580px}.lc-header{padding-bottom:24px;gap:14px}.lc-logo{width:151px}.lc-project{font-size:12px;max-width:130px}.lc-project span{font-size:11px}.questionnaire .welcome,.questionnaire .survey-layout,.questionnaire .finish{margin:32px 0 0}.questionnaire h1{font-size:35px;line-height:1.12;margin-bottom:24px;letter-spacing:-.032em}.questionnaire .lead{font-size:18px;line-height:1.55}.questionnaire .welcome-intro p{margin-bottom:17px}.welcome-start{display:block;padding-top:0}.welcome-start .button{width:100%;justify-content:space-between;padding-inline:22px}.welcome-start p{margin-top:16px;line-height:1.5}.welcome-start p br{display:none}.welcome-start p br:after{content:' '}.questionnaire .questionnaire-help{margin-top:24px;padding-top:16px}.questionnaire .question-card h1,.questionnaire .age-step h1{font-size:29px}.questionnaire .question-intro{font-size:16px;margin-bottom:26px}.questionnaire .question-group legend,.questionnaire .field-label{font-size:17px}.questionnaire .choice{padding:15px 16px;gap:12px}.questionnaire .choice-label{font-size:16px}.questionnaire .choice-hint{font-size:13px}.questionnaire .age-grid{grid-template-columns:1fr;gap:12px}.questionnaire .age-grid .choice{padding:18px;min-height:82px}.questionnaire .age-grid .choice-label{font-size:18px}.questionnaire .age-grid .choice-hint{font-size:13px}.questionnaire .question-actions{gap:18px;margin-top:28px}.questionnaire .action-right{gap:18px}.questionnaire .button{padding:13px 21px;font-size:16px}.questionnaire .skip-button{font-size:13px}.questionnaire .dialog-content{padding:27px 24px}.questionnaire .dialog-content h2{font-size:25px}.questionnaire .dialog-content p{font-size:15px}.questionnaire .finish-actions{gap:12px}}
+@media(max-width:760px){body.questionnaire{padding:0;background:#fff;font-size:17px}.questionnaire-shell{border:0;border-radius:0;padding:28px 24px 20px;max-width:580px}.lc-header{padding-bottom:24px;gap:14px}.lc-logo{width:151px}.lc-project{font-size:12px;max-width:130px}.lc-project span{font-size:11px}.questionnaire .welcome,.questionnaire .survey-layout,.questionnaire .finish{margin:32px 0 0}.questionnaire h1{font-size:35px;line-height:1.12;margin-bottom:24px;letter-spacing:-.032em}.questionnaire .lead{font-size:18px;line-height:1.55}.questionnaire .welcome-intro p{margin-bottom:17px}.welcome-start{display:block;padding-top:0}.welcome-start .button{width:100%;justify-content:space-between;padding-inline:22px}.welcome-start p{margin-top:16px;line-height:1.5}.welcome-start p br{display:none}.welcome-start p br:after{content:' '}.questionnaire .questionnaire-help{margin-top:24px;padding-top:16px}.questionnaire .question-card h1,.questionnaire .age-step h1{font-size:29px}.questionnaire .question-intro{font-size:16px;margin-bottom:26px}.questionnaire .question-group legend,.questionnaire .field-label{font-size:17px}.questionnaire .choice{padding:15px 16px;gap:12px}.questionnaire .choice-label{font-size:16px}.questionnaire .choice-hint{font-size:13px}.questionnaire .question-actions{gap:18px;margin-top:28px}.questionnaire .action-right{gap:18px}.questionnaire .button{padding:13px 21px;font-size:16px}.questionnaire .skip-button{font-size:13px}.questionnaire .dialog-content{padding:27px 24px}.questionnaire .dialog-content h2{font-size:25px}.questionnaire .dialog-content p{font-size:15px}.questionnaire .finish-actions{gap:12px}}
 @media(max-width:360px){.questionnaire-shell{padding-inline:20px}.lc-logo{width:137px}.lc-project{font-size:11px;max-width:112px}.questionnaire h1{font-size:32px}}
 @media(max-width:760px){.questionnaire .notice-grid{grid-template-columns:1fr;gap:17px}.questionnaire .participant-information{margin:27px 0;padding-top:22px}.questionnaire .notice-grid p{font-size:14px;line-height:1.65}.questionnaire .participant-information h2{font-size:18px}.questionnaire .participation-explanation p{font-size:16px}}
 @media(prefers-reduced-motion:reduce){.questionnaire .choice{transition:none}}
@@ -135,28 +130,15 @@ body.questionnaire{--ink:#30312f;--text:#41423f;--muted:#666963;--primary:#b9462
 .questionnaire .welcome-age{border-top:1px solid var(--line);padding-top:28px;margin-top:34px}
 .questionnaire .welcome-age h2{font-size:22px;line-height:1.35;margin:0 0 8px}
 .questionnaire .welcome-age .question-group{margin-bottom:0}
-.questionnaire .age-audience{display:grid;gap:8px}
-.questionnaire .adult-audience .choice{min-height:82px;padding:18px 21px;align-items:center;background:var(--paper);border-color:var(--line)}
-.questionnaire .adult-audience .choice-label{font-size:19px;font-weight:650}
-.questionnaire .minor-audience .choice{min-height:48px;padding:8px 0;align-items:center;border:0;background:transparent;box-shadow:none}
-.questionnaire .minor-audience .choice-label{font-size:15px;font-weight:600;color:var(--muted)}
-.questionnaire .minor-audience .choice:hover,.questionnaire .minor-audience .choice:has(input:checked){border:0;background:transparent;box-shadow:none}
-.questionnaire .minor-audience .choice:hover .choice-label,.questionnaire .minor-audience .choice:has(input:checked) .choice-label{color:var(--primary)}
-.questionnaire .minor-age-options{margin:10px 0 0 10px;padding:16px 0 0 22px;border-left:1px solid var(--line)}
-.questionnaire .minor-age-options .question-group legend{font-size:16px;margin-bottom:12px}
-.questionnaire .minor-age-options .age-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.questionnaire .minor-age-options .choice{min-height:67px;padding:14px 16px}
-.questionnaire .minor-age-options .choice-label{font-size:16px}
+.questionnaire .minor-age-options{margin-top:24px}
 .questionnaire .welcome-consent{margin-top:24px}
 .questionnaire .consent-subage{border-top:1px solid var(--line);padding-top:24px;margin:0 0 26px}
-.questionnaire .consent-subage .age-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-.questionnaire .consent-subage .choice{min-height:70px;padding:16px}
 .questionnaire .participation-inline{padding:0 0 12px}
 .questionnaire .participation-inline h2{font-size:22px;line-height:1.35;margin:0 0 12px}
 .questionnaire .participation-inline>p{color:var(--muted);font-size:15px;margin:0 0 20px}
 .questionnaire .participation-inline .welcome-start{margin-top:25px}
 .questionnaire .participation-inline #welcome-help{margin-top:16px}
-@media(max-width:760px){.questionnaire .welcome-age{margin-top:27px;padding-top:24px}.questionnaire .adult-audience .choice{min-height:72px;padding:16px}.questionnaire .adult-audience .choice-label{font-size:18px}.questionnaire .minor-age-options .age-grid,.questionnaire .consent-subage .age-grid{grid-template-columns:1fr}.questionnaire .minor-age-options .choice{min-height:60px}.questionnaire .minor-age-options .choice-label{font-size:16px}}
+@media(max-width:760px){.questionnaire .welcome-age{margin-top:27px;padding-top:24px}.questionnaire .minor-age-options{margin-top:20px}}
 .questionnaire .age-summary{margin:28px 0 0}
 .questionnaire .age-summary h2{font-size:22px;line-height:1.35;margin:0 0 12px}
 .questionnaire .age-summary p{color:var(--muted);font-size:15px;line-height:1.65;margin:0}
