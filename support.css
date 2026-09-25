@@ -1,58 +1,57 @@
-.support-page .questionnaire-shell{max-width:1040px;padding-bottom:36px}
-.support-page .support-intro{margin:42px 0 28px}
-.support-page .support-intro h1{margin-bottom:16px}
-.support-page .support-intro p{max-width:65ch;margin:0;color:var(--text)}
-.support-page .urgent-help{padding:22px 26px;margin:0 0 34px;background:var(--soft);border:1px solid var(--line);border-radius:8px}
-.support-page .urgent-help h2{font-size:20px;margin:0 0 13px}
-.support-page .urgent-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.support-page .urgent-links p{margin:0;font-size:15px;line-height:1.45}
-.support-page .urgent-links strong{display:block;color:var(--ink);font-size:14px}
-.support-page .urgent-links a{display:inline-block;font-weight:700;color:var(--primary);text-underline-offset:3px}
-.support-page .urgent-detail{font-size:13px;line-height:1.5;color:var(--muted);margin:13px 0 0}
-.support-page .urgent-detail a{color:var(--primary);text-underline-offset:3px}
-.support-page #finder h2{font-size:27px;margin:0 0 11px;letter-spacing:-.02em}
-.support-page #finder h3{font-size:19px;letter-spacing:0;margin:0 0 8px}
-.support-page .finder-lead{font-size:16px;color:var(--muted);margin:0 0 22px;max-width:68ch}
-.support-page .finder-nav{margin:0 0 22px}
-.support-page .finder-nav a{font-size:15px;color:var(--primary);text-underline-offset:3px}
+/* The service finder inherits Lutheran Care's questionnaire identity but gives
+   one task, choosing support, the visual focus. */
+.support-page{padding:32px 24px 48px}
+.support-page .questionnaire-shell{max-width:860px;padding:28px 48px 30px}
+.support-page .lc-header{padding-bottom:18px}
+.support-page .lc-logo{width:145px}
+.support-page .lc-project{font-size:13px}
+.support-page .lc-project span{font-size:12px}
+.support-page #finder{max-width:680px;margin:30px 0 0}
+.support-page #finder h1{font-size:38px;line-height:1.14;letter-spacing:-.025em;margin:0 0 12px;max-width:22ch}
+.support-page .home-lead{font-size:17px;color:var(--muted);margin:0 0 26px;line-height:1.5}
+.support-page .urgent-strip{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 18px;padding:13px 0;border-bottom:1px solid var(--line);font-size:13px;line-height:1.45}
+.support-page .urgent-strip strong{color:var(--ink);font-size:13px}
+.support-page .urgent-strip a{color:var(--primary);font-weight:650;text-decoration:none;text-underline-offset:3px}
+.support-page .urgent-strip a:hover{text-decoration:underline}
+.support-page .urgent-strip a span{font-weight:400;color:var(--muted)}
 .support-page .area-list,.support-page .topic-list,.support-page .search-list,.support-page .service-list{list-style:none;padding:0;margin:0}
-.support-page .area-list{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.support-page .area-list a,.support-page .topic-list a,.support-page .search-list a{display:block;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);text-decoration:none;min-height:64px;padding:17px 19px;transition:border-color .12s,background-color .12s}
-.support-page .area-list a:hover,.support-page .topic-list a:hover,.support-page .search-list a:hover{background:var(--paper);border-color:#b94626}
-.support-page .area-list strong,.support-page .topic-list strong,.support-page .search-list strong{display:block;font-size:17px;line-height:1.35}
-.support-page .area-list span,.support-page .search-list span{display:block;font-size:14px;color:var(--muted);line-height:1.45;margin-top:5px}
-.support-page .topic-list,.support-page .search-list{display:grid;gap:9px}
-.support-page .topic-list a{min-height:56px}
-.support-page .finder-search{margin:34px 0 0;padding:27px 0 0;border-top:1px solid var(--line)}
-.support-page .finder-search h2{font-size:22px!important}
-.support-page .finder-search label{display:block;font-size:16px;font-weight:650;margin-bottom:8px}
-.support-page .finder-search input{width:100%;max-width:600px}
-.support-page .search-results{margin-top:16px}
-.support-page .search-results p{font-size:15px;color:var(--muted)}
-.support-page .uncertain-route{margin:28px 0 0;padding-top:24px;border-top:1px solid var(--line)}
-.support-page .uncertain-route p{font-size:16px;margin:0 0 11px}
-.support-page .uncertain-route a{color:var(--primary);font-weight:650;text-underline-offset:3px}
-.support-page .need-context{font-size:15px;color:var(--muted);margin:0 0 24px}
-.support-page .service-list{display:grid;gap:0;border-top:1px solid var(--line)}
-.support-page .service-item{padding:23px 0;border-bottom:1px solid var(--line)}
-.support-page .service-item h3{font-size:21px!important;margin:0 0 7px!important}
-.support-page .service-item p{font-size:15px;line-height:1.55;margin:5px 0;color:var(--text)}
-.support-page .service-item .service-area{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:7px}
-.support-page .service-item .service-access{color:var(--muted)}
-.support-page .service-actions{display:flex;gap:10px 18px;align-items:center;flex-wrap:wrap;margin-top:15px}
-.support-page .service-actions .button{min-height:44px;padding:10px 17px;font-size:15px}
-.support-page .service-actions a:not(.button){font-size:15px;color:var(--primary);text-underline-offset:3px}
-.support-page .service-empty{font-size:15px;color:var(--muted)}
-.support-page .service-followup{margin:27px 0 0;padding:21px 24px;background:#f6f4f0;border-radius:8px}
-.support-page .service-followup h3{font-size:18px!important}
-.support-page .service-followup p{font-size:15px;margin:5px 0 0}
-.support-page .service-followup a{color:var(--primary);text-underline-offset:3px}
-.support-page .support-footer{margin:42px 0 0;padding-top:17px;border-top:1px solid var(--line)}
-.support-page .support-footer p{font-size:13px;line-height:1.55;color:var(--muted);margin:0}
-.support-page #finder a:focus-visible,.support-page .urgent-help a:focus-visible{outline:2px solid #b94626;outline-offset:4px}
-@media(max-width:760px){.support-page .support-intro{margin:32px 0 25px}.support-page .urgent-help{padding:19px;margin-bottom:29px}.support-page .urgent-links{grid-template-columns:1fr;gap:10px}.support-page .urgent-links p{display:flex;justify-content:space-between;gap:16px;align-items:baseline}.support-page .urgent-links strong{font-size:13px}.support-page .urgent-links a{text-align:right;font-size:14px}.support-page .area-list{grid-template-columns:1fr}.support-page #finder h2{font-size:24px}.support-page .service-item h3{font-size:19px!important}}
-@media(max-width:380px){.support-page .urgent-links p{display:block}.support-page .urgent-links a{text-align:left}.support-page .service-actions .button{width:100%;justify-content:center}}
-@media(prefers-reduced-motion:reduce){.support-page .area-list a,.support-page .topic-list a,.support-page .search-list a{transition:none}}
-@media print{.support-page .urgent-help{break-inside:avoid}.support-page .service-item{break-inside:avoid}}
-
-.support-page .finder-nav{scroll-margin-top:22px}
+.support-page .area-list,.support-page .topic-list{border-top:1px solid var(--line)}
+.support-page .area-list li,.support-page .topic-list li{border-bottom:1px solid var(--line)}
+.support-page .area-list a,.support-page .topic-list a,.support-page .search-list a{display:block;padding:16px 4px;color:var(--ink);text-decoration:none;line-height:1.35}
+.support-page .area-list a{font-size:19px;font-weight:650;min-height:60px}
+.support-page .topic-list a{font-size:17px;min-height:53px}
+.support-page .area-list a:hover,.support-page .topic-list a:hover,.support-page .search-list a:hover{color:var(--primary);background:var(--paper)}
+.support-page .secondary-tools{display:flex;align-items:baseline;flex-wrap:wrap;gap:16px 28px;margin:23px 0 0;font-size:15px}
+.support-page .secondary-tools a,.support-page .finder-search summary,.support-page .finder-nav a,.support-page .need-help a{color:var(--primary);text-underline-offset:3px}
+.support-page .finder-search summary{cursor:pointer;text-decoration:underline}
+.support-page .finder-search[open]{flex-basis:100%;padding:8px 0 0}
+.support-page .finder-search label{display:block;margin:16px 0 6px;font-size:15px;font-weight:650}
+.support-page .finder-search input{width:100%;max-width:540px}
+.support-page .search-results{margin-top:11px}
+.support-page .search-results p{font-size:14px;color:var(--muted);margin:0 0 6px}
+.support-page .search-list a{font-size:15px;border-bottom:1px solid var(--line);padding:10px 2px}
+.support-page .finder-nav{margin:0 0 22px;color:var(--muted);font-size:14px}
+.support-page .finder-nav span{padding:0 8px;color:var(--muted)}
+.support-page .need-note{max-width:62ch;margin:0 0 18px;color:var(--muted);font-size:15px;line-height:1.5}
+.support-page .safety-note{padding:12px 16px;background:var(--soft);color:var(--ink);border-radius:7px}
+.support-page .service-list{border-top:1px solid var(--line)}
+.support-page .service-item{padding:19px 0 20px;border-bottom:1px solid var(--line)}
+.support-page .service-area{font-size:13px;color:var(--muted);line-height:1.4;margin:0 0 5px}
+.support-page .service-item h2{font-size:21px;line-height:1.3;letter-spacing:-.015em;margin:0 0 6px}
+.support-page .service-offer{font-size:15px;line-height:1.5;color:var(--text);margin:0}
+.support-page .service-limit{font-size:14px;line-height:1.45;font-weight:650;color:var(--primary);margin:7px 0 0}
+.support-page .service-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px 20px;margin:14px 0 0}
+.support-page .service-actions .button{min-height:42px;padding:9px 15px;font-size:14px}
+.support-page .service-website{font-size:14px;color:var(--primary);text-underline-offset:3px}
+.support-page .service-details{margin:12px 0 0;font-size:14px;color:var(--muted)}
+.support-page .service-details summary{cursor:pointer;color:var(--muted);width:max-content;max-width:100%;text-decoration:underline;text-underline-offset:3px}
+.support-page .service-details p{font-size:14px;line-height:1.5;margin:9px 0 0;max-width:70ch}
+.support-page .service-details strong{color:var(--text)}
+.support-page .need-help{font-size:14px;color:var(--muted);margin:20px 0 0}
+.support-page .support-footer{margin:36px 0 0;padding-top:14px;border-top:1px solid var(--line)}
+.support-page .support-footer p{font-size:12px;color:var(--muted);line-height:1.5;margin:0}
+.support-page :focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.support-page #finder h1:focus{outline:none}
+@media(max-width:760px){.support-page{padding:0;background:#fff}.support-page .questionnaire-shell{max-width:580px;padding:21px 24px 25px}.support-page .lc-header{padding-bottom:14px}.support-page .lc-logo{width:130px}.support-page .lc-project{font-size:11px}.support-page .lc-project span{font-size:10px}.support-page #finder{margin-top:25px}.support-page #finder h1{font-size:31px;margin-bottom:10px}.support-page .home-lead{font-size:16px;margin-bottom:19px}.support-page .urgent-strip{gap:3px 12px;padding:10px 0;font-size:12px}.support-page .urgent-strip strong{font-size:12px}.support-page .urgent-strip a span{font-size:11px}.support-page .area-list a{font-size:18px;min-height:55px;padding:14px 2px}.support-page .topic-list a{font-size:16px;min-height:50px;padding:13px 2px}.support-page .service-item h2{font-size:19px}}
+@media(max-width:360px){.support-page .questionnaire-shell{padding-inline:20px}.support-page .urgent-strip{gap:3px 10px}}
+@media print{.support-page{padding:0}.support-page .questionnaire-shell{border:0;padding:0}.support-page .service-item{break-inside:avoid}}

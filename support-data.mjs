@@ -2,12 +2,12 @@
 // "NT Defence Support - 39 challenges and relevant support" reference (23 Sep 2026).
 // The headings are discovery topics, not questions or a test of eligibility.
 export const areas = [
-  { id: 'moving', title: 'Moving, housing and leaving Defence', description: 'A posting, a place to live, pets or transition to civilian life.' },
-  { id: 'work', title: 'Work, money and childcare', description: 'Work hours, partner careers, costs and care around a roster.' },
-  { id: 'children', title: 'Children, parenting and school', description: 'New babies, parenting, school changes and young people.' },
-  { id: 'relationships', title: 'Relationships, safety and loss', description: 'Time apart, separation, feeling unsafe or a death in the family.' },
-  { id: 'health', title: 'Health, disability and caring', description: 'Mental health, healthcare, disability and caring for someone.' },
-  { id: 'connection', title: 'Belonging and finding the right help', description: 'Local connections, inclusive support and knowing where to start.' }
+  { id: 'moving', title: 'Moving & housing', description: 'A posting, a place to live, pets or transition to civilian life.' },
+  { id: 'work', title: 'Work, money & childcare', description: 'Work hours, partner careers, costs and care around a roster.' },
+  { id: 'children', title: 'Children & school', description: 'New babies, parenting, school changes and young people.' },
+  { id: 'relationships', title: 'Relationships, safety & loss', description: 'Time apart, separation, feeling unsafe or a death in the family.' },
+  { id: 'health', title: 'Health, disability & care', description: 'Mental health, healthcare, disability and caring for someone.' },
+  { id: 'connection', title: 'Community & finding help', description: 'Local connections, inclusive support and knowing where to start.' }
 ];
 
 // pdfPage refers to the printed page number in the supplied 56-page PDF.
