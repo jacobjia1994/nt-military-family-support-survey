@@ -1,6 +1,7 @@
 // Public navigation, adapted from the 39 need headings in the supplied
 // "NT Defence Support - 39 challenges and relevant support" reference (23 Sep 2026).
 // The headings are discovery topics, not questions or a test of eligibility.
+// Legacy area tags remain for source grouping; public routes use support-journeys.mjs.
 export const areas = [
   { id: 'moving', title: 'Moving & housing', description: 'A posting, a place to live, pets or transition to civilian life.' },
   { id: 'work', title: 'Work, money & childcare', description: 'Work hours, partner careers, costs and care around a roster.' },

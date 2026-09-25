@@ -1,7 +1,8 @@
-import { areas, needs, services } from './support-data.mjs?v=20260925-4';
+import { needs, services } from './support-data.mjs?v=20260925-4';
+import { journeys } from './support-journeys.mjs?v=20260925-1';
 
 const finder = document.querySelector('#finder');
-const areaById = new Map(areas.map(area => [area.id, area]));
+const journeyById = new Map(journeys.map(journey => [journey.id, journey]));
 const needById = new Map(needs.map(need => [String(need.id), need]));
 const serviceById = new Map(services.map(service => [service.id, service]));
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[char]);
@@ -14,6 +15,7 @@ const telephone = phone => String(phone || '').replace(/\D/g, '');
 // Only limits that could change a visitor's next action belong in the closed row.
 // The provider's full audience and access conditions remain in its disclosure.
 const decisiveLimit = {
+  'dmfs-helpline': 'For ADF members and families.',
   'dmfs-tindal': 'Arrange base access before visiting.',
   'open-arms': 'For eligible Defence and veteran families.',
   'darwin-mmhc': 'For adults 18 and over.',
@@ -63,49 +65,71 @@ function serviceHTML(service) {
   </li>`;
 }
 function serviceList(ids) {
-  const found = ids.map(id => serviceById.get(id)).filter(Boolean);
+  const found = [...new Set(ids)].map(id => serviceById.get(id)).filter(Boolean);
   return found.length ? `<ul class="service-list">${found.map(serviceHTML).join('')}</ul>` : '<p>No service is listed for this topic yet.</p>';
 }
 function homeHTML() {
   return `<section aria-labelledby="home-heading">
     <h1 id="home-heading" tabindex="-1">Find support in the NT</h1>
-    <ul class="area-list">${areas.map(area => `<li><a href="#area/${esc(area.id)}">${esc(area.title)}</a></li>`).join('')}</ul>
-    <p class="secondary-tools"><a href="#not-sure">Not sure where to start?</a></p>
+    <ul class="situation-list">${journeys.map(journey => `<li><a href="#situation/${esc(journey.id)}">${esc(journey.title)}</a></li>`).join('')}</ul>
   </section>`;
 }
-function areaHTML(area) {
-  const topics = needs.filter(need => need.area === area.id);
-  return `<section aria-labelledby="area-heading">
-    <nav class="finder-nav" aria-label="Support guide"><a href="#start">All topics</a></nav>
-    <h1 id="area-heading" tabindex="-1">${esc(area.title)}</h1>
-    <ul class="topic-list">${topics.map(need => `<li><a href="#need/${need.id}">${esc(need.title)}</a></li>`).join('')}</ul>
+function choiceLink(journey, choice) {
+  return choice.journeyId ? `#situation/${choice.journeyId}` : `#situation/${journey.id}/${choice.id}`;
+}
+function choiceList(journey) {
+  return `<ul class="choice-list">${journey.choices.map(choice => `<li><a href="${esc(choiceLink(journey, choice))}">${esc(choice.title)}</a></li>`).join('')}</ul>`;
+}
+function accessHelpHTML(currentNeedIds = []) {
+  const links = [
+    !currentNeedIds.includes(30) && '<a href="#need/30">Language and interpreting help</a>',
+    !currentNeedIds.includes(33) && '<a href="#need/33">Privacy when asking for help</a>'
+  ].filter(Boolean);
+  return links.length ? `<details class="access-help"><summary>Need an interpreter or a private way to ask?</summary><p>${links.join(' · ')}</p></details>` : '';
+}
+function journeyHTML(journey) {
+  const direct = Boolean(journey.startServices?.length);
+  return `<section aria-labelledby="journey-heading">
+    <nav class="finder-nav" aria-label="Support guide"><a href="#start">All situations</a></nav>
+    <h1 id="journey-heading" tabindex="-1">${esc(journey.title)}</h1>
+    ${journey.note ? `<p class="need-note${journey.id === 'unsafe' ? ' safety-note' : ''}">${esc(journey.note)}</p>` : ''}
+    ${direct ? `<h2 class="section-heading">Start here</h2>${serviceList(journey.startServices)}` : ''}
+    ${journey.choices.length ? `${direct ? '<h2 class="section-heading related-heading">More specific help</h2>' : ''}${choiceList(journey)}` : ''}
+    ${direct ? accessHelpHTML(journey.coveredNeedIds || []) : ''}
+  </section>`;
+}
+function choiceHTML(journey, choice) {
+  const selected = (choice.needIds || []).map(id => needById.get(String(id))).filter(Boolean);
+  const serviceIds = choice.serviceIds || selected.flatMap(need => need.services);
+  const notes = [choice.note, ...selected.map(need => need.note)].filter(Boolean);
+  return `<section aria-labelledby="choice-heading">
+    <nav class="finder-nav" aria-label="Support guide"><a href="#situation/${esc(journey.id)}">${esc(journey.title)}</a> <span aria-hidden="true">/</span> <a href="#start">All situations</a></nav>
+    <h1 id="choice-heading" tabindex="-1">${esc(choice.title)}</h1>
+    ${notes.map(note => `<p class="need-note${selected.some(need => need.id === 19) ? ' safety-note' : ''}">${esc(note)}</p>`).join('')}
+    ${serviceList(serviceIds)}
+    ${accessHelpHTML(choice.needIds || [])}
   </section>`;
 }
 function needHTML(need) {
-  const area = areaById.get(need.area);
-  const safety = need.id === 19;
   return `<section aria-labelledby="need-heading">
-    <nav class="finder-nav" aria-label="Support guide"><a href="#area/${esc(area.id)}">${esc(area.title)}</a> <span aria-hidden="true">/</span> <a href="#start">All topics</a></nav>
+    <nav class="finder-nav" aria-label="Support guide"><a href="#start">All situations</a></nav>
     <h1 id="need-heading" tabindex="-1">${esc(need.title)}</h1>
-    ${need.note ? `<p class="need-note${safety ? ' safety-note' : ''}">${esc(need.note)}</p>` : ''}
+    ${need.note ? `<p class="need-note${need.id === 19 ? ' safety-note' : ''}">${esc(need.note)}</p>` : ''}
     ${serviceList(need.services)}
-    ${need.services.includes('dmfs-helpline') ? '' : '<p class="need-help">Not sure which service fits? <a href="tel:1800624608">Call the Defence Member and Family Helpline on 1800 624 608.</a></p>'}
+    ${accessHelpHTML([need.id])}
   </section>`;
 }
-function unsureHTML() {
-  return `<section aria-labelledby="unsure-heading">
-    <nav class="finder-nav" aria-label="Support guide"><a href="#start">All topics</a></nav>
-    <h1 id="unsure-heading" tabindex="-1">Not sure where to start?</h1>
-    <p class="home-lead">These teams can help you find a starting point.</p>
-    ${serviceList(['dmfs-helpline','dmfs-darwin','dmfs-tindal','darwin-vfwc'])}
-  </section>`;
-}
+const legacyAreaJourney = { moving: 'posting', work: 'work-money', children: 'child-young', relationships: 'apart', health: 'health-care', connection: 'finding-help' };
 function render() {
-  const [, kind, value] = location.hash.match(/^#(area|need)\/(.+)$/) || [];
-  const area = kind === 'area' ? areaById.get(value) : null;
-  const need = kind === 'need' ? needById.get(value) : null;
-  finder.innerHTML = area ? areaHTML(area) : need ? needHTML(need) : location.hash === '#not-sure' ? unsureHTML() : homeHTML();
-  if (location.hash) {
+  const hash = location.hash;
+  const situation = hash.match(/^#situation\/([a-z0-9-]+)(?:\/([a-z0-9-]+))?$/);
+  const oldArea = hash.match(/^#area\/([a-z0-9-]+)$/);
+  const needMatch = hash.match(/^#need\/(\d+)$/);
+  const journey = situation ? journeyById.get(situation[1]) : oldArea ? journeyById.get(legacyAreaJourney[oldArea[1]]) : hash === '#not-sure' ? journeyById.get('finding-help') : null;
+  const choice = situation?.[2] && journey ? journey.choices.find(item => item.id === situation[2]) : null;
+  const need = needMatch ? needById.get(needMatch[1]) : null;
+  finder.innerHTML = choice ? choiceHTML(journey, choice) : journey ? journeyHTML(journey) : need ? needHTML(need) : homeHTML();
+  if (hash) {
     window.scrollTo({ top: 0, behavior: 'auto' });
     finder.querySelector('h1[tabindex="-1"]')?.focus({ preventScroll: true });
   }
