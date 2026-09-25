@@ -29,6 +29,7 @@ vm.runInContext(`${source.slice(0, bootstrap)}
     getValue, setValue, consultationRoute, maxTextLength, fieldHTML,
     questionnaireVersion, needsGuardianPermission, guardianPermissionRecord, needsGuardianSupport,
     renderGuardianSupport, renderSurvey, renderYoung, resetYoung,
+    renderAge, renderMinorAge, resetAgePath,
     participationRecord, hasValidParticipation, isOutsideSurveyScope,
     setContext(version, answers = {}) {
       state.version = version;
@@ -37,7 +38,7 @@ vm.runInContext(`${source.slice(0, bootstrap)}
       return domainList();
     },
     getContext: () => ({ version: state.version, answers: state.answers }),
-    getUIState: () => ({ age: state.age, step: state.step, screen: state.screen, youngRecord: state.youngRecord, youngController: state.youngController }),
+    getUIState: () => ({ age: state.age, ageRoute: state.ageRoute, step: state.step, screen: state.screen, youngRecord: state.youngRecord, youngController: state.youngController }),
     setStep(step) { state.step = step; },
     finishHTML() { renderFinish(); return main.innerHTML; },
     setParticipationContext(age, participation = null, guardianPermission = null) {
@@ -484,7 +485,7 @@ test('the same recall period frames the checklist, support received and sources,
 test('optional background precedes needs, does not repeat connection and permits never-residents', () => {
   for (const version of ['adult', 'youth', 'child']) {
     const connection = pageFor('connection', version);
-    assert.deepEqual(connection.fields.map(f => f.key), ['roles', 'serving_nt', ...(version === 'adult' ? [] : ['assistance'])]);
+    assert.deepEqual(connection.fields.map(f => f.key), ['roles', 'serving_nt', version === 'adult' ? 'age_group' : 'assistance']);
     assert.deepEqual(fieldIds(connection.fields[1]), ['yes', 'recent', 'earlier', 'no', 'unsure']);
     const place = pageFor('place', version);
     assert.deepEqual(place.fields.map(f => f.key), ['region', 'time_nt', 'force']);
@@ -502,6 +503,24 @@ test('optional background precedes needs, does not repeat connection and permits
     assert.match(labels.over3, /3 years or more/);
     assert.match(labels.never, /not lived in the NT/);
   }
+});
+
+test('adult age bands are optional, non-overlapping and available on both service-history routes', () => {
+  const age = pageFor('connection', 'adult').fields.find(f => f.key === 'age_group');
+  assert.equal(age.required, undefined);
+  assert.deepEqual(plain(age.options).map(o => [o.id, o.label]), [
+    ['18_29', '18–29'], ['30_39', '30–39'], ['40_49', '40–49'], ['50_plus', '50 or older'],
+  ]);
+  for (const group of age.options.map(o => o.id)) {
+    const recent = { roles: ['partner'], serving_nt: 'yes', age_group: group };
+    const earlier = { ...recent, serving_nt: 'earlier', earlier_experience: 'Earlier support' };
+    assert.deepEqual(stepsFor(recent).map(s => s.id), ['connection', 'place', 'needs', 'delivery', 'review']);
+    assert.deepEqual(stepsFor(earlier).map(s => s.id), ['connection', 'earlier', 'review']);
+    assert.equal(survey.cleanExport(recent, 'adult', domainsFor('adult')).answers.age_group, group);
+    assert.equal(survey.cleanExport(earlier, 'adult', domainsFor('adult')).answers.age_group, group);
+    assert.equal(hasOwn(survey.cleanExport(recent, 'youth', domainsFor('youth')).answers, 'age_group'), false);
+  }
+  assert.equal(hasOwn(survey.cleanExport({ serving_nt: 'yes', age_group: 'unknown' }, 'adult', domainsFor('adult')).answers, 'age_group'), false);
 });
 
 
@@ -649,6 +668,35 @@ test('age choices select the intended language and permission routes', () => {
     }
     assert.equal(survey.guardianPermissionRecord(age, false), null, 'Permission is never inferred');
   }
+});
+
+test('the age entrance asks only adult or under 18, then keeps the existing minor paths', () => {
+  survey.resetAgePath();
+  survey.renderAge();
+  assert.match(mainStub.innerHTML, /Whose experience is this about/);
+  assert.match(mainStub.innerHTML, /An adult \(18 or older\)/);
+  assert.match(mainStub.innerHTML, /A child or young person \(under 18\)/);
+  assert.doesNotMatch(mainStub.innerHTML, /30–39|15–17/);
+  mainStub.querySelector('input[name="age_route"]:checked').value = 'adult';
+  mainStub.querySelector('#welcome-form').onsubmit({ preventDefault() {} });
+  assert.equal(survey.getUIState().age, 'adult');
+  assert.equal(survey.getUIState().screen, 'participation');
+
+  survey.renderAge();
+  mainStub.querySelector('input[name="age_route"]:checked').value = 'minor';
+  mainStub.querySelector('#welcome-form').onsubmit({ preventDefault() {} });
+  assert.equal(survey.getUIState().age, null, 'Changing from adult to under 18 clears the earlier route');
+  assert.equal(survey.getUIState().screen, 'minor-age');
+  assert.match(mainStub.innerHTML, /15–17/);
+  assert.match(mainStub.innerHTML, /Under 7/);
+  survey.renderAge();
+  assert.match(mainStub.innerHTML, /value="minor" checked/, 'Back keeps the under-18 route selected');
+  survey.renderMinorAge();
+  mainStub.querySelector('input[name="age"]:checked').value = 'child';
+  mainStub.querySelector('#minor-age-form').onsubmit({ preventDefault() {} });
+  assert.equal(survey.getUIState().age, 'child');
+  assert.equal(survey.getUIState().screen, 'guardian-permission');
+  survey.resetAgePath();
 });
 
 test('under-15 participation needs both age-matched guardian permission and the child’s own agreement', () => {

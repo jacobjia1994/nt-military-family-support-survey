@@ -44,7 +44,7 @@ Desktop opening headings are 44px with a 1.12 line height; question headings are
 
 A warm off-white page holds a white questionnaire shell, up to 896px wide with 72px horizontal padding. The header contains a 180px logo and a small “Defence family support / Northern Territory” label, followed by a fine rule. There is no shadow, background image, illustration or decorative animation.
 
-Below 760px, the outer frame disappears into a white page; padding becomes 24px and the logo is 151px wide. The start button fills the reading width, and age choices stack vertically. At 360px and below, horizontal padding becomes 20px.
+Below 760px, the outer frame disappears into a white page; padding becomes 24px and the logo is 151px wide. The start button fills the reading width, and the adult/under-18 route choices stack vertically. The under-18 age choices use two columns until the narrowest screens, when they also stack. At 360px and below, horizontal padding becomes 20px.
 
 Radio and checkbox options use full clickable rows, a 56px minimum height, a fine border and modest rounding. Selected options gain a pale orange tint and a terracotta border as well as a checked control. Primary buttons are at least 52px high. Text fields use 17px type and text areas have a 156px minimum height. Keyboard focus has a visible orange outline; reduced-motion settings remove the short choice transitions.
 
@@ -70,7 +70,7 @@ SurveyJS, GOV.UK Frontend and Formbricks informed the design; their code and pla
 
 The invitation starts with an everyday question rather than institutional process. Funding remains explicit in a quieter line. A 14px, fully visible participant-information block follows the invitation and precedes Start; it uses labelled paragraphs in two columns on desktop and one column on mobile. It identifies purpose, Lutheran Care custody/approved systems, authorised project readership, de-identified Defence reporting, retention/withdrawal and contact/rights. The dialog remains only a secondary way to reread the same shared text later in the form.
 
-After age selection, adult consent and young-person assent use unticked explicit choices. Changing age clears the earlier choice. Assent is recorded as assent, with no implication of completed parental permission or capacity assessment. The actual intake platform, applicable retention/withdrawal procedure and child participation arrangements still require LC confirmation before live collection.
+After the adult/under-18 route choice, adult consent and young-person assent use unticked explicit choices. Under-18s choose a finer age path to retain existing questions and permission steps. Adults answer one questionnaire and can give a non-overlapping age band as an optional background answer. Changing age clears the earlier choice. Assent is recorded as assent, with no implication of completed parental permission or capacity assessment. The actual intake platform, applicable retention/withdrawal procedure and child participation arrangements still require LC confirmation before live collection.
 
 ## Separate conversation request
 

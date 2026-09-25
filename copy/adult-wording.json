@@ -110,6 +110,30 @@
           ],
           "hint": "Select one.",
           "required": true
+        },
+        {
+          "key": "age_group",
+          "label": "Which age group are you in?",
+          "type": "single",
+          "options": [
+            {
+              "id": "18_29",
+              "label": "18–29"
+            },
+            {
+              "id": "30_39",
+              "label": "30–39"
+            },
+            {
+              "id": "40_49",
+              "label": "40–49"
+            },
+            {
+              "id": "50_plus",
+              "label": "50 or older"
+            }
+          ],
+          "hint": "Optional. This helps us see whether support needs differ by age."
         }
       ],
       "note": "Only relationship and NT connection precede the substantive questions. Earlier connections retain a separate historical route."
@@ -869,6 +893,30 @@
           ],
           "hint": "Select one.",
           "required": true
+        },
+        {
+          "key": "age_group",
+          "label": "Which age group are you in?",
+          "type": "single",
+          "options": [
+            {
+              "id": "18_29",
+              "label": "18–29"
+            },
+            {
+              "id": "30_39",
+              "label": "30–39"
+            },
+            {
+              "id": "40_49",
+              "label": "40–49"
+            },
+            {
+              "id": "50_plus",
+              "label": "50 or older"
+            }
+          ],
+          "hint": "Optional. This helps us see whether support needs differ by age."
         }
       ],
       "note": "Only relationship and NT connection precede the substantive questions. Earlier connections retain a separate historical route."
@@ -1628,6 +1676,30 @@
           ],
           "hint": "Select one.",
           "required": true
+        },
+        {
+          "key": "age_group",
+          "label": "Which age group are you in?",
+          "type": "single",
+          "options": [
+            {
+              "id": "18_29",
+              "label": "18–29"
+            },
+            {
+              "id": "30_39",
+              "label": "30–39"
+            },
+            {
+              "id": "40_49",
+              "label": "40–49"
+            },
+            {
+              "id": "50_plus",
+              "label": "50 or older"
+            }
+          ],
+          "hint": "Optional. This helps us see whether support needs differ by age."
         }
       ],
       "note": "Only relationship and NT connection precede the substantive questions. Earlier connections retain a separate historical route."

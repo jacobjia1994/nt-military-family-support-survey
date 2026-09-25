@@ -141,7 +141,9 @@ function hasAnswer(value) { return value!==undefined&&value!==null&&value!==''&&
 function cleanExport(answers,version,domains) {
   const route=consultationRoute(answers),copy={};
   const allowed=route==='earlier_experience'?['roles','serving_nt','assistance','guardian_present','earlier_experience']:['roles','serving_nt','needs_status','needs','needs_other','delivery','times','force','region','time_nt','assistance','guardian_present'];
+  if(version==='adult')allowed.push('age_group');
   for(const key of allowed)if(Object.hasOwn(answers,key))copy[key]=structuredClone(answers[key]);
+  if(Object.hasOwn(copy,'age_group')&&!ADULT_AGE_GROUPS.some(group=>group.id===copy.age_group))delete copy.age_group;
   if(!['self','guardian','other'].includes(copy.assistance)||version==='adult')delete copy.assistance;
   if(!['self','other'].includes(copy.assistance)||copy.guardian_present!==true)delete copy.guardian_present;
   if(route!=='earlier_experience') {
@@ -157,12 +159,12 @@ function cleanExport(answers,version,domains) {
     }));
     if(!(copy.delivery||[]).some(v=>['one_to_one','group','phone','video'].includes(v)))delete copy.times;
   }
-  return {schema_version:'6.0',questionnaire_revision:'2026-09-25-child-voice',consultation_route:route,recall_months:route==='earlier_experience'?null:version==='child'?3:12,measurement_scope:'past_support_and_current_requests_by_area',details_optional:true,collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'downloaded_by_respondent; not submitted',answers:copy};
+  return {schema_version:'6.0',questionnaire_revision:version==='adult'?'2026-09-25-adult-age-bands':'2026-09-25-child-voice',consultation_route:route,recall_months:route==='earlier_experience'?null:version==='child'?3:12,measurement_scope:'past_support_and_current_requests_by_area',details_optional:true,collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'downloaded_by_respondent; not submitted',answers:copy};
 }
 
 const main = document.querySelector('#main');
 const phases = ['About you','Your support','Finding support','Review'];
-const state = { version:'adult', age:null, answers:{}, step:'connection', screen:'welcome', returnToReview:false, participation:null, guardianPermission:null,youngController:null,youngRecord:null };
+const state = { version:'adult', age:null, ageRoute:null, answers:{}, step:'connection', screen:'welcome', returnToReview:false, participation:null, guardianPermission:null,youngController:null,youngRecord:null };
 const SURVEY_INVITATION = {"title": "Defence family support survey", "greeting": "Hello, NT Defence Communities!", "paragraphs": ["Lutheran Care would like your help to plan its Defence Family Support Program in the Northern Territory.", "Tell us about the support you have needed, what you received and what would help now.", "Please answer about your own experience."], "funding": "The program is funded by the Australian Government Department of Defence through its Family Support Funding Program."};
 const PARTICIPANT_NOTICE_VERSION = '2026-09-25-v11';
 // Formal participant wording for the internally reviewed consultation design.
@@ -201,6 +203,7 @@ function isOutsideSurveyScope(answers) {
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const opts = pairs => pairs.map(([id,label,hint]) => ({id,label,hint}));
+const ADULT_AGE_GROUPS = opts([['18_29','18–29'],['30_39','30–39'],['40_49','40–49'],['50_plus','50 or older']]);
 const domainList = () => [...DOMAINS[state.version],{id:'other_need',label:'Something else'}];
 const domainLabel = id => id==='other_need' ? (state.answers.needs_other || 'Something else') : domainList().find(d=>d.id===id)?.label || id;
 const isAdult = () => state.version==='adult';
@@ -252,7 +255,7 @@ function page(step) {
     case 'connection':return {title:isAdult()?'Your connection to military life':'A little about your family',intro:'',fields:[
       field('roles',isAdult()?'Which describes you?':'Which describes your family?','multi',roleOptions(),'Select all that apply.',{required:true,exclusive:['none','unsure']}),
       field('serving_nt',isAdult()?'When did you or your family member last serve in the NT?':'When did your family member last serve in the NT?','single',opts([['yes','Serving in the NT now'],['recent','Within the past 12 months, but not currently'],['earlier','More than 12 months ago'],['no','No military service in the NT'],['unsure','Not sure']]),'Select one.',{required:true}),
-      ...(!isAdult()?[field('assistance','How are you answering these questions?','single',opts([['self','By myself'],['guardian','My parent or guardian is helping me'],['other','Someone else is helping me']]),'These are your answers. A helper can read or write for you.',{required:true})]:[])
+      ...(isAdult()?[field('age_group','Which age group are you in?','single',ADULT_AGE_GROUPS,'Optional. This helps us see whether support needs differ by age.')]:[field('assistance','How are you answering these questions?','single',opts([['self','By myself'],['guardian','My parent or guardian is helping me'],['other','Someone else is helping me']]),'These are your answers. A helper can read or write for you.',{required:true})])
     ]};
     case 'needs':return {title:child?'Where have you needed help?':'Your support needs',intro:child?'Help can come from people you know or people whose job is to help.':'Support can include help from family, friends, your community or a service.',fields:[
       field('needs_status',child?`In ${period()}, have you needed any help?`:`In ${period()}, have you needed any support?`,'single',opts([['yes','Yes'],['no','No'],['unsure','Not sure'],['prefer','Prefer not to answer']])),
@@ -304,13 +307,31 @@ function renderWelcome(){
   main.innerHTML=`<div class="welcome"><section class="welcome-intro"><h1 tabindex="-1">${esc(SURVEY_INVITATION.title)}</h1><p class="greeting">${esc(SURVEY_INVITATION.greeting)}</p>${SURVEY_INVITATION.paragraphs.map((text,i)=>`<p class="${i===0?'lead':''}">${esc(text)}</p>`).join('')}<p class="funding-note">${esc(SURVEY_INVITATION.funding)}</p></section>${participantInformationHTML()}<div class="welcome-start"><button class="button primary" id="start-questionnaire">Start questionnaire <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div></div>`;
   main.querySelector('#start-questionnaire').onclick=()=>{renderAge();focusHeading();};
 }
+function resetAgePath(){
+  resetYoung();state.age=null;state.ageRoute=null;state.version='adult';state.answers={};state.participation=null;state.guardianPermission=null;state.step='connection';state.returnToReview=false;
+}
+function chooseAgePath(age){
+  if(age!==state.age)resetAgePath();
+  state.age=age;state.ageRoute=age==='adult'?'adult':'minor';state.version=questionnaireVersion(age);
+  if(needsGuardianPermission(age))renderGuardianPermission();else{renderParticipation();focusHeading();}
+}
 function renderAge(){
   state.screen='age';
-  main.innerHTML=`<div class="survey-layout"><section class="age-step"><h1 tabindex="-1">Which age group are you in?</h1><p class="question-intro">We’ll use this to show you the right questions.</p><form id="welcome-form"><fieldset class="question-group"><legend class="visually-hidden">Your age group</legend><div class="age-grid">${opts([['adult','18 or older',''],['youth_older','15–17',''],['youth_younger','12–14',''],['child','7–11',''],['young','Under 7','With a parent or guardian']]).map(o=>optionHTML(o,{key:'age',type:'single'},state.age)).join('')}</div></fieldset><div class="error" id="welcome-error" role="alert"></div><div class="question-actions"><button class="back-button" type="button" id="age-back">Back</button><button class="button primary" type="submit">Continue</button></div></form></section></div>`;
-  main.querySelector('#welcome-form [type="submit"]').disabled=!state.age;
-  main.querySelector('#welcome-form').onchange=()=>{main.querySelector('#welcome-form [type="submit"]').disabled=!main.querySelector('input[name=age]:checked');};
+  const selected=state.ageRoute||(state.age==='adult'?'adult':state.age?'minor':null);
+  main.innerHTML=`<div class="survey-layout"><section class="age-step"><h1 tabindex="-1">Whose experience is this about?</h1><p class="question-intro">Choose the age of the person whose experience these answers describe.</p><form id="welcome-form"><fieldset class="question-group"><legend class="visually-hidden">Adult or under 18</legend><div class="age-grid age-route-grid">${opts([['adult','An adult (18 or older)'],['minor','A child or young person (under 18)']]).map(o=>optionHTML(o,{key:'age_route',type:'single'},selected)).join('')}</div></fieldset><div class="error" id="welcome-error" role="alert"></div><div class="question-actions"><button class="back-button" type="button" id="age-back">Back</button><button class="button primary" type="submit">Continue</button></div></form></section></div>`;
+  main.querySelector('#welcome-form [type="submit"]').disabled=!selected;
+  main.querySelector('#welcome-form').onchange=()=>{main.querySelector('#welcome-form [type="submit"]').disabled=!main.querySelector('input[name=age_route]:checked');};
   main.querySelector('#age-back').onclick=()=>{renderWelcome();focusHeading();};
-  main.querySelector('#welcome-form').addEventListener('submit',e=>{e.preventDefault();const age=main.querySelector('input[name="age"]:checked')?.value;if(!age){main.querySelector('#welcome-error').textContent='Choose an age group to continue.';main.querySelector('input[name=age]')?.focus();return;}if(age!==state.age){resetYoung();state.answers={};state.participation=null;state.guardianPermission=null;state.step='connection';state.returnToReview=false;}state.age=age;state.version=questionnaireVersion(age);if(needsGuardianPermission(age))renderGuardianPermission();else{renderParticipation();focusHeading();}});
+  main.querySelector('#welcome-form').addEventListener('submit',e=>{e.preventDefault();const route=main.querySelector('input[name="age_route"]:checked')?.value;if(!route){main.querySelector('#welcome-error').textContent='Choose whose experience this is about.';main.querySelector('input[name=age_route]')?.focus();return;}if(route==='adult')chooseAgePath('adult');else{if(state.age==='adult')resetAgePath();state.ageRoute='minor';renderMinorAge();focusHeading();}});
+}
+function renderMinorAge(){
+  state.screen='minor-age';
+  const selected=state.age==='adult'?null:state.age;
+  main.innerHTML=`<div class="survey-layout"><section class="age-step"><h1 tabindex="-1">How old is the child or young person?</h1><p class="question-intro">This helps us show questions and participation steps suited to their age.</p><form id="minor-age-form"><fieldset class="question-group"><legend class="visually-hidden">Age of child or young person</legend><div class="age-grid">${opts([['youth_older','15–17'],['youth_younger','12–14'],['child','7–11'],['young','Under 7','With a parent or guardian']]).map(o=>optionHTML(o,{key:'age',type:'single'},selected)).join('')}</div></fieldset><div class="error" id="minor-age-error" role="alert"></div><div class="question-actions"><button class="back-button" type="button" id="minor-age-back">Back</button><button class="button primary" type="submit">Continue</button></div></form></section></div>`;
+  main.querySelector('#minor-age-form [type="submit"]').disabled=!selected;
+  main.querySelector('#minor-age-form').onchange=()=>{main.querySelector('#minor-age-form [type="submit"]').disabled=!main.querySelector('input[name=age]:checked');};
+  main.querySelector('#minor-age-back').onclick=()=>{renderAge();focusHeading();};
+  main.querySelector('#minor-age-form').addEventListener('submit',e=>{e.preventDefault();const age=main.querySelector('input[name="age"]:checked')?.value;if(!age){main.querySelector('#minor-age-error').textContent='Choose an age range to continue.';main.querySelector('input[name=age]')?.focus();return;}chooseAgePath(age);});
 }
 function renderParticipationHelp(){
   state.participation=null;
@@ -324,7 +345,7 @@ function renderParticipationDeclined(){
   resetYoung();state.answers={};state.participation=null;state.guardianPermission=null;
   state.screen='declined';
   main.innerHTML=`<section class="finish"><h1 tabindex="-1">You’ve left the survey</h1><button class="button secondary" id="declined-back">Return to the start</button></section>`;
-  main.querySelector('#declined-back').onclick=()=>{state.age=null;renderWelcome();focusHeading();};
+  main.querySelector('#declined-back').onclick=()=>{resetAgePath();renderWelcome();focusHeading();};
   focusHeading();
 }
 function renderGuardianPermission(){
@@ -333,7 +354,7 @@ function renderGuardianPermission(){
   main.innerHTML=`<section class="survey-layout"><h1 tabindex="-1">For a parent or guardian</h1><div class="participation-explanation"><p>Please read the participant information before giving permission. ${young?'You can record your child’s own words or share your observations as their parent or guardian. We keep these separate.':'These questions ask about your child’s own experience to help Lutheran Care plan support for Defence families.'}</p><p>Your child can leave questions blank, say no or stop. They do not need to describe upsetting events or identify anyone.</p><p>Lutheran Care may need to share information where the law requires it or to protect someone from serious harm. This can include concerns about a child’s safety.</p></div><button class="text-button" type="button" id="guardian-information">Read the participant information</button><form id="guardian-form"><label class="choice consent-choice"><input type="checkbox" name="guardian-permission" ${state.guardianPermission?.agreed?'checked':''}><span class="choice-label">I am this child’s parent or guardian and have authority to give permission for them to take part. I have read the participant information and agree to Lutheran Care collecting, using and sharing their answers as described, including any health or disability information ${young?'I choose to provide about my child':'they choose to share'}.</span></label><p class="small">${young?'Your child’s willingness to join in matters. Follow their lead and stop if they do not want to continue.':'Your child will make their own choice on the next screen. Please let them answer in their own words.'}</p><p class="error" id="guardian-error" role="alert"></p><div class="question-actions"><button class="back-button" id="guardian-back" type="button">Back</button><button class="button primary" type="submit">Continue</button></div></form><div class="finish-actions"><button class="text-button" id="guardian-help" type="button">Speak with Lutheran Care first</button><button class="text-button" id="guardian-no" type="button">I do not give permission</button></div></section>`;
   main.querySelector('#guardian-form [type="submit"]').disabled=!state.guardianPermission?.agreed;
   main.querySelector('#guardian-information').onclick=()=>document.querySelector('#privacy-dialog').showModal();
-  main.querySelector('#guardian-back').onclick=()=>{renderAge();focusHeading();};
+  main.querySelector('#guardian-back').onclick=()=>{renderMinorAge();focusHeading();};
   main.querySelector('#guardian-help').onclick=renderParticipationHelp;
   main.querySelector('#guardian-no').onclick=renderParticipationDeclined;
   main.querySelector('[name="guardian-permission"]').onchange=e=>{state.guardianPermission=guardianPermissionRecord(state.age,e.target.checked);main.querySelector('#guardian-form [type="submit"]').disabled=!e.target.checked;state.participation=null;if(!e.target.checked){resetYoung();state.answers={};state.step='connection';}};
@@ -356,7 +377,7 @@ function renderParticipation(){
   main.innerHTML=`<div class="survey-layout"><h1 tabindex="-1">${title}</h1><div class="participation-explanation">${explanation}</div><button class="text-button" type="button" id="read-information">Read the participant information</button><form id="participation-form"><label class="choice consent-choice"><input type="checkbox" name="participation" ${state.participation?.agreed?'checked':''}><span class="choice-label">${statement}</span></label><p class="error" id="participation-error" role="alert"></p><div class="question-actions"><button class="back-button" id="participation-back" type="button">Back</button><button class="button primary" type="submit">Continue</button></div></form><div class="finish-actions">${!adult?'<button class="text-button" id="participation-help" type="button">I would like someone to explain this</button>':''}<button class="text-button" id="participation-no" type="button">${child?'I do not want to do this':'I do not want to take part'}</button></div></div>`;
   main.querySelector('#participation-form [type="submit"]').disabled=!state.participation?.agreed;
   main.querySelector('#read-information').onclick=()=>document.querySelector('#privacy-dialog').showModal();
-  main.querySelector('#participation-back').onclick=()=>{if(needsGuardianPermission(state.age))renderGuardianPermission();else renderAge();focusHeading();};
+  main.querySelector('#participation-back').onclick=()=>{if(needsGuardianPermission(state.age))renderGuardianPermission();else if(state.age==='adult')renderAge();else renderMinorAge();focusHeading();};
   main.querySelector('#participation-help')?.addEventListener('click',renderParticipationHelp);
   main.querySelector('#participation-no').onclick=renderParticipationDeclined;
   main.querySelector('[name="participation"]').onchange=e=>{state.participation=participationRecord(state.age,e.target.checked,state.guardianPermission);main.querySelector('#participation-form [type="submit"]').disabled=!hasValidParticipation();};
@@ -451,7 +472,7 @@ function renderSurvey(){
 }
 function goNext(id){const steps=activeSteps(),index=steps.findIndex(s=>s.id===id);state.step=steps[index+1]?.id||'review';renderSurvey();focusHeading();}
 function contactLinkHTML(){return '<a class="button secondary" href="contact.html" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Request an interview</a>';}
-function renderFinish(){state.screen='finish';main.innerHTML=`<section class="finish"><h1 tabindex="-1">Thank you for helping improve support in our NT communities.</h1><div class="finish-contact">${contactLinkHTML()}</div>${thankYouResourceHTML()}<div class="finish-actions"><button class="button secondary" id="download-answers">Save my answers</button><button class="button secondary" id="review-answers">Review my answers</button></div><button class="text-button" id="restart">Clear answers and start again</button></section>`;main.querySelector('#download-answers').onclick=()=>{const data=state.age==='young'?state.youngController.exportAnswers():cleanExport(state.answers,state.version,domainList());if(state.age!=='young')data.participation=state.participation;const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='my-nt-support-answers.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};main.querySelector('#review-answers').onclick=()=>{if(state.age==='young'){state.screen='young';state.youngController.showReview();return;}state.step='review';renderSurvey();focusHeading();};main.querySelector('#restart').onclick=()=>{resetYoung();state.answers={};state.participation=null;state.guardianPermission=null;state.age=null;state.step='connection';renderWelcome();};focusHeading();}
+function renderFinish(){state.screen='finish';main.innerHTML=`<section class="finish"><h1 tabindex="-1">Thank you for helping improve support in our NT communities.</h1><div class="finish-contact">${contactLinkHTML()}</div>${thankYouResourceHTML()}<div class="finish-actions"><button class="button secondary" id="download-answers">Save my answers</button><button class="button secondary" id="review-answers">Review my answers</button></div><button class="text-button" id="restart">Clear answers and start again</button></section>`;main.querySelector('#download-answers').onclick=()=>{const data=state.age==='young'?state.youngController.exportAnswers():cleanExport(state.answers,state.version,domainList());if(state.age!=='young')data.participation=state.participation;const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='my-nt-support-answers.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};main.querySelector('#review-answers').onclick=()=>{if(state.age==='young'){state.screen='young';state.youngController.showReview();return;}state.step='review';renderSurvey();focusHeading();};main.querySelector('#restart').onclick=()=>{resetAgePath();renderWelcome();};focusHeading();}
 const reviewNotes = new Map();
 let libraryVersion = 'adult';
 let libraryLocation = 'nt';

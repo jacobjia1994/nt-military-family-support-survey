@@ -66,3 +66,7 @@ Jacob removed the explicit choice between child views and guardian observations.
 
 
 The final action in both forms and the younger-child review is labelled **Confirm and submit**, as Jacob requested. This is the formal review interface; the label change does not activate a receiver or add a successful-receipt claim.
+
+## Age route and adult age bands
+
+On 25 September Jacob asked to separate age bands from questionnaire choice. The entrance now distinguishes an adult (18 or older) from someone under 18. All adults use the same questionnaire; their optional age-band question records 18–29, 30–39, 40–49 or 50 or older on the shared connection page, including the earlier-experience route. The requested decade boundaries are expressed without overlap. Under-18s then select the existing finer age path, preserving child/youth wording, guardian permission and assent arrangements. This decision concerns the questionnaire; the independent interview-request form retains its own contact and permission routes.

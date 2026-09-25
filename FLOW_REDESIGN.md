@@ -6,7 +6,7 @@ Implemented on 25 September 2026, including the separate needs-status question, 
 
 Give Lutheran Care a usable picture of support needed, support received, requests for extra or different help and preferences for finding services in the NT.
 
-1. Invitation, age-appropriate participation and the minimum NT connection check. Required assistance for ages 7–17 is asked here, before main or earlier-experience questions.
+1. Invitation, adult/under-18 route choice, age-appropriate participation and the minimum NT connection check. Only under-18s choose a finer age path. Adults share one questionnaire and may give an age band on the connection page. Required assistance for ages 7–17 is asked here, before main or earlier-experience questions.
 2. Optional **About you** questions.
 3. Whether support was needed: Yes / No / Not sure / Prefer not to answer. Yes or Not sure reveals one support-area checklist.
 4. Finish each selected area before moving to the next.
@@ -47,7 +47,7 @@ Visible fields are still voluntary. Use the number actually answering each field
 
 ## Background, preferences and completion
 
-Broad residence, current/most-recent NT stay and military affiliation come before the needs question. The required assistance question for ages 7–17 sits earlier, with connection, so it also applies to the historical route. Age, relationship and service connection are not repeated. NT duration counts the current or most recent stay, not accumulated postings.
+Broad residence, current/most-recent NT stay and military affiliation come before the needs question. The optional adult age band sits with connection so that both recent and historical routes can record it. It does not change the adult question set. The required assistance question for ages 7–17 also sits with connection. Relationship and service connection are not repeated. NT duration counts the current or most recent stay, not accumulated postings.
 
 The preferences section is **Finding services and support in the NT**, asking **How would you prefer to get information or advice about services and support in the NT?** It describes information and navigation, not the substantive delivery of housing or childcare. Timing appears only after a synchronous format is selected. Preferences do not imply contact consent.
 
@@ -71,7 +71,7 @@ These counts exclude the conditional guardian-presence confirmation and the sepa
 
 ## Schema 6.0 answer contract
 
-`answers.needs_status` records whether support was needed. Yes and Not sure permit `answers.needs` domain selections; No, Prefer not to answer and blank do not. Changing to one of those states clears dependent selections, Other text and area blocks while retaining general preferences. Absence of a selection is not automatically no need. `answers.needs` selects domains. Independent `answers.areas[domain_id]` blocks contain:
+For adults, optional `answers.age_group` records one of `18_29`, `30_39`, `40_49` or `50_plus` on either consultation route; it is absent from child and youth exports. These non-overlapping bands are for analysis only, not questionnaire selection. `answers.needs_status` records whether support was needed. Yes and Not sure permit `answers.needs` domain selections; No, Prefer not to answer and blank do not. Changing to one of those states clears dependent selections, Other text and area blocks while retaining general preferences. Absence of a selection is not automatically no need. `answers.needs` selects domains. Independent `answers.areas[domain_id]` blocks contain:
 
 - `received`: support received during the age-appropriate recall period;
 - `additional_support_now`: whether extra or different support is wanted now;

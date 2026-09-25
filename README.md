@@ -16,7 +16,7 @@ A formal questionnaire for Lutheran Care’s internal team review. The project i
 
 ## Questionnaire flow
 
-1. Invitation, age-appropriate participation and the minimum NT connection check. Ages 7–17 also answer the required assistance question here, before either the main or earlier-experience route.
+1. Invitation, a simple adult/under-18 route choice, age-appropriate participation and the minimum NT connection check. Under-18s then choose 15–17, 12–14, 7–11 or under 7 for the existing child and youth paths. All adults use one questionnaire; its optional age question records 18–29, 30–39, 40–49 or 50 or older. Ages 7–17 also answer the required assistance question here, before either the main or earlier-experience route.
 2. Optional **About you** questions: broad residence, current/most-recent NT stay and military affiliation.
 3. First ask whether support was needed during the recall period. Yes or Not sure reveals one support-area checklist. No skips area questions but keeps adult/youth service-information preferences.
 4. Complete one page for each selected area: support received, extra or different support wanted now, what support would help if Yes, sources, relevant barriers or reasons, and an account of what happened when support was needed. Fields are visible directly; there is no expandable details panel.
@@ -44,7 +44,7 @@ Excluding invitation, age and participation, the adult/youth main route has **5 
 
 ## Answer model and interpretation
 
-Schema 6.0 stores the independent `answers.needs_status` answer (Yes, No, Not sure or Prefer not to answer), one `answers.needs` selection and independent `answers.areas[domain_id]` records containing `received`, `additional_support_now`, `support_requested`, `sources`, `barriers` and `comment`. `support_requested` appears and is retained only when `additional_support_now` is Yes. There is no automatic migration of older collective or current-only follow-up answers into this model.
+Schema 6.0 stores the optional adult `answers.age_group` on both recent and earlier-experience routes. The four adult values are `18_29`, `30_39`, `40_49` and `50_plus`; the value does not affect questionnaire routing. It also stores the independent `answers.needs_status` answer (Yes, No, Not sure or Prefer not to answer), one `answers.needs` selection and independent `answers.areas[domain_id]` records containing `received`, `additional_support_now`, `support_requested`, `sources`, `barriers` and `comment`. `support_requested` appears and is retained only when `additional_support_now` is Yes. There is no automatic migration of older collective or current-only follow-up answers into this model.
 
 Only Yes or Not sure permits area selection. Changing the needs-status response to No, Prefer not to answer or blank removes the dependent selections, other text and area blocks while preserving general preferences. Blank or declined need status is not evidence of no need. Removing an area removes its answer block. Changing its source response clears only that area's dependent barriers. Changing a Yes request to another response clears that area's dependent support-request text. Explicit non-seeking uses reasons for not seeking; actual help-seeking uses experienced barriers. Blank, uncertain or declined source answers must not imply a failed attempt. Optional unanswered fields remain missing, not “no barrier”. Use the number actually answering each field as its denominator.
 
