@@ -154,6 +154,7 @@ function cleanExport(answers,version,domains) {
   const route=consultationRoute(answers),copy={};
   const allowed=route==='earlier_experience'?['roles','serving_nt','assistance','guardian_present','earlier_experience']:['roles','serving_nt','needs_status','needs','needs_other','delivery','times','force','region','time_nt','assistance','guardian_present'];
   if(version==='adult')allowed.push('age_group');
+  if(['adult','youth'].includes(version))allowed.push('community_connection');
   if(version==='youth'&&route==='earlier_experience')allowed.push('region');
   if(version==='youth'&&route!=='earlier_experience')allowed.push('focus_need');
   for(const key of allowed)if(Object.hasOwn(answers,key))copy[key]=structuredClone(answers[key]);
@@ -177,13 +178,13 @@ function cleanExport(answers,version,domains) {
     }));
     if(!(copy.delivery||[]).some(v=>['one_to_one','group','phone','video'].includes(v)))delete copy.times;
   }
-  return {schema_version:version==='youth'?'6.1':'6.0',questionnaire_revision:version==='adult'?'2026-09-25-adult-age-bands':version==='youth'?'2026-09-25-youth-8-17':'2026-09-25-child-voice',consultation_route:route,recall_months:route==='earlier_experience'?null:version==='adult'?12:3,measurement_scope:version==='youth'?'selected_needs_and_one_focus_area':'past_support_and_current_requests_by_area',details_optional:true,collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'downloaded_by_respondent; not submitted',answers:copy};
+  return {schema_version:version==='youth'?'6.1':'6.0',questionnaire_revision:version==='adult'?'2026-09-25-adult-community-connection':version==='youth'?'2026-09-25-youth-community-connection':'2026-09-25-child-voice',consultation_route:route,recall_months:route==='earlier_experience'?null:version==='adult'?12:3,measurement_scope:version==='youth'?'selected_needs_and_one_focus_area':'past_support_and_current_requests_by_area',details_optional:true,collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'downloaded_by_respondent; not submitted',answers:copy};
 }
 
 const main = document.querySelector('#main');
 const phases = ['About you','Your support','Finding support','Review'];
 const state = { version:'adult', age:null, ageRoute:null, answers:{}, step:'connection', screen:'welcome', returnToReview:false, participation:null, guardianPermission:null,youngController:null,youngRecord:null };
-const SURVEY_INVITATION = {"title": "Defence family support survey", "greeting": "Hello, NT Defence Communities!", "paragraphs": ["Lutheran Care would like your help to plan its Defence Family Support Program in the Northern Territory.", "Tell us about the support you have needed, what you received and what would help now.", "Please answer about your own experience."], "funding": "The program is funded by the Australian Government Department of Defence through its Family Support Funding Program."};
+const SURVEY_INVITATION = {"title": "Defence family support survey", "greeting": "Hello, NT Defence Communities!", "paragraphs": ["Lutheran Care would like your help to plan its Defence Family Support Program in the Northern Territory.", "Tell us about the support you have needed, what you received and what would help now.", "Please answer about your own experience."], "funding": "Lutheran Care received funding from Defence Member and Family Support, a branch of the Commonwealth Department of Defence, to deliver this project."};
 const PARTICIPANT_NOTICE_VERSION = '2026-09-25-v11';
 // Formal participant wording for the internally reviewed consultation design.
 // The current build has no receiver; its technical status belongs in review.html.
@@ -274,7 +275,8 @@ function page(step) {
     case 'connection':return {title:isAdult()?'Your connection to military life':'A little about your family',intro:'',fields:[
       field('roles',isAdult()?'Which describes you?':'Which describes your family?','multi',roleOptions(),'Select all that apply.',{required:true,exclusive:['none','unsure']}),
       field('serving_nt',isAdult()?'When did you or your family member last serve in the NT?':'When did your family member last serve in the NT?','single',opts([['yes','Serving in the NT now'],['recent','Within the past 12 months, but not currently'],['earlier','More than 12 months ago'],['no','No military service in the NT'],['unsure','Not sure']]),'Select one.',{required:true}),
-      ...(isAdult()?[field('age_group','Which age group are you in?','single',ADULT_AGE_GROUPS,'Optional. This helps us see whether support needs differ by age.')]:[field('assistance','Is anyone helping you read or write your answers?','single',opts([['self','No, I am answering myself'],['guardian','Yes, my parent or guardian'],['other','Yes, someone else']]),'These are your answers. A helper can read or write for you, but should not choose your answers.',{required:true}),...(state.version==='youth'?[field('region','Which area do you live in now?','select',regions,'Optional. You can ask someone if you are not sure.')]:[])])
+      ...(isAdult()?[field('age_group','Which age group are you in?','single',ADULT_AGE_GROUPS,'Optional. This helps us see whether support needs differ by age.')]:[field('assistance','Is anyone helping you read or write your answers?','single',opts([['self','No, I am answering myself'],['guardian','Yes, my parent or guardian'],['other','Yes, someone else']]),'These are your answers. A helper can read or write for you, but should not choose your answers.',{required:true}),...(state.version==='youth'?[field('region','Which area do you live in now?','select',regions,'Optional. You can ask someone if you are not sure.')]:[])]),
+      ...(['adult','youth'].includes(state.version)?[field('community_connection',isAdult()?'What has helped you or your family feel connected in the NT?':'What has helped you feel welcome or included in the NT?','text',[],'Optional. A sentence or two is enough. '+privacyHint())]:[])
     ]};
     case 'needs':return {title:isAdult()?'Your support needs':'Where have you needed help?',intro:isAdult()?'Support can include help from family, friends, your community or a service.':'Help can come from family, friends, school, your community or a service.',fields:[
       field('needs_status',isAdult()?`In ${period()}, have you needed any support?`:`In ${period()}, have you needed help with anything?`,'single',opts([['yes','Yes'],['no','No'],['unsure','Not sure'],['prefer','Prefer not to answer']])),
@@ -526,7 +528,7 @@ function questionLibrarySections(version,location) {
   state.version=version;state.answers={roles:['partner'],serving_nt:'yes',needs_status:'yes',region:location==='nt'?'darwin':location==='outside'?'outside_au':'prefer',needs:[first],areas:{[first]:{received:'enough',additional_support_now:'yes',sources:['family']}}};
   try {
     const sections=[],add=(id,note='')=>sections.push({id,...page({id}),note});
-    add('connection',version==='youth'?'Relationship, NT connection, assistance and optional residence precede the shorter youth questions. Earlier connections retain a separate historical route.':'Relationship, NT connection and optional adult age band precede the substantive questions. Earlier connections retain a separate historical route.');
+    add('connection',version==='youth'?'Relationship, NT connection, assistance, optional residence and a positive community-connection prompt precede the shorter youth questions. Earlier connections retain a separate historical route.':'Relationship, NT connection, optional adult age band and a positive community-connection prompt precede the substantive questions. Earlier connections retain a separate historical route.');
     if(version!=='youth')add('place','Optional background precedes support needs. Residence does not control eligibility.');
     add('needs',version==='youth'?'Ask about help needed in the past three months, then record every selected area. The young person can optionally choose one area to describe further. No still leads to information preferences.':'Ask whether support was needed first. No skips the area questions but retains service-information preferences. Yes or Not sure opens the area list; Something else is only an unlisted need. Blank remains distinct from No.');
     const area=areaPage(first),variants=[];

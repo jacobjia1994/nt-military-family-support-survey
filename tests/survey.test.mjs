@@ -369,10 +369,11 @@ test('cohort changes clear experience answers but preserve connection and option
   const experienceKeys = ['needs_status', 'needs', 'needs_other', 'areas', 'delivery', 'times', 'anything', 'earlier_experience'];
   for (const previous of ['yes', 'recent', 'earlier', 'unsure']) {
     for (const serving_nt of ['yes', 'recent', 'earlier', 'unsure'].filter(v => v !== previous)) {
-      const answers = { roles: ['partner'], force: 'adf', region: 'outside_au', time_nt: 'over3', serving_nt, ...Object.fromEntries(experienceKeys.map(key => [key, 'PREVIOUS_COHORT_SENTINEL'])) };
+      const answers = { roles: ['partner'], community_connection: 'A local group helped us feel welcome.', force: 'adf', region: 'outside_au', time_nt: 'over3', serving_nt, ...Object.fromEntries(experienceKeys.map(key => [key, 'PREVIOUS_COHORT_SENTINEL'])) };
       survey.reconcileAnswers(answers, 'serving_nt', domains, previous);
       for (const key of experienceKeys) assert.equal(hasOwn(answers, key), false, `${previous} to ${serving_nt}: ${key}`);
       assert.deepEqual(answers.roles, ['partner']);
+      assert.equal(answers.community_connection, 'A local group helped us feel welcome.');
       assert.equal(answers.region, 'outside_au');
       assert.equal(answers.time_nt, 'over3');
     }
@@ -500,7 +501,7 @@ test('the same recall period frames the checklist, support received and sources,
 
 test('adult background keeps its own page; youth region is optional on connection', () => {
   const adult = pageFor('connection', 'adult');
-  assert.deepEqual(adult.fields.map(f => f.key), ['roles', 'serving_nt', 'age_group']);
+  assert.deepEqual(adult.fields.map(f => f.key), ['roles', 'serving_nt', 'age_group', 'community_connection']);
   const place = pageFor('place', 'adult');
   assert.deepEqual(place.fields.map(f => f.key), ['region', 'time_nt', 'force']);
   assert.ok(place.fields.every(f => !f.required));
@@ -508,11 +509,31 @@ test('adult background keeps its own page; youth region is optional on connectio
   assert.deepEqual(fieldIds(duration), ['never', 'under3', '3to12', '1to3', 'over3', 'unsure', 'prefer']);
   assert.match(duration.hint, /current or most recent stay/);
   const youth = pageFor('connection', 'youth');
-  assert.deepEqual(youth.fields.map(f => f.key), ['roles', 'serving_nt', 'assistance', 'region']);
+  assert.deepEqual(youth.fields.map(f => f.key), ['roles', 'serving_nt', 'assistance', 'region', 'community_connection']);
   assert.equal(youth.fields.find(f => f.key === 'region').required, undefined);
   assert.ok(fieldIds(youth.fields.find(f => f.key === 'region')).includes('outside_overseas'));
   assert.deepEqual(fieldIds(youth.fields[1]), fieldIds(adult.fields[1]));
   assert.equal(stepsFor({ serving_nt: 'yes' }, 'youth').some(step => step.id === 'place'), false);
+});
+
+test('the optional positive connection prompt survives no-needs and earlier-experience routes', () => {
+  for(const version of ['adult','youth']){
+    const field=pageFor('connection',version).fields.find(item=>item.key==='community_connection');
+    assert.equal(field.required,undefined);
+    assert.match(field.label,version==='adult'?/you or your family feel connected/:/feel welcome or included/);
+    const base={roles:['partner'],serving_nt:'yes',needs_status:'no',community_connection:'The local playgroup helped us meet people.'};
+    const noNeeds=plain(survey.cleanExport(base,version,domainsFor(version)));
+    assert.equal(noNeeds.answers.community_connection,base.community_connection);
+    assert.ok(stepsFor(base,version).some(step=>step.id==='delivery'));
+    const earlier={...base,serving_nt:'earlier',earlier_experience:'A previous NT posting'};
+    const historical=plain(survey.cleanExport(earlier,version,domainsFor(version)));
+    assert.equal(historical.answers.community_connection,base.community_connection);
+    assert.deepEqual(stepsFor(earlier,version).map(step=>step.id),['connection','earlier','review']);
+    survey.setContext(version,base);
+    assert.match(survey.reviewHTML(),/The local playgroup helped us meet people/);
+  }
+  const child=plain(survey.cleanExport({serving_nt:'yes',community_connection:'Stale adult answer'},'child',domainsFor('child')));
+  assert.equal(hasOwn(child.answers,'community_connection'),false);
 });
 
 test('adult age bands are optional, non-overlapping and available on both service-history routes', () => {

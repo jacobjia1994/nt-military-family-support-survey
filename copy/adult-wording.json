@@ -7,7 +7,7 @@
       "Tell us about the support you have needed, what you received and what would help now.",
       "Please answer about your own experience."
     ],
-    "funding": "The program is funded by the Australian Government Department of Defence through its Family Support Funding Program."
+    "funding": "Lutheran Care received funding from Defence Member and Family Support, a branch of the Commonwealth Department of Defence, to deliver this project."
   },
   "notice": [
     [
@@ -134,9 +134,16 @@
             }
           ],
           "hint": "Optional. This helps us see whether support needs differ by age."
+        },
+        {
+          "key": "community_connection",
+          "label": "What has helped you or your family feel connected in the NT?",
+          "type": "text",
+          "options": [],
+          "hint": "Optional. A sentence or two is enough. Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Relationship, NT connection and optional adult age band precede the substantive questions. Earlier connections retain a separate historical route."
+      "note": "Relationship, NT connection, optional adult age band and a positive community-connection prompt precede the substantive questions. Earlier connections retain a separate historical route."
     },
     {
       "id": "place",
@@ -917,9 +924,16 @@
             }
           ],
           "hint": "Optional. This helps us see whether support needs differ by age."
+        },
+        {
+          "key": "community_connection",
+          "label": "What has helped you or your family feel connected in the NT?",
+          "type": "text",
+          "options": [],
+          "hint": "Optional. A sentence or two is enough. Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Relationship, NT connection and optional adult age band precede the substantive questions. Earlier connections retain a separate historical route."
+      "note": "Relationship, NT connection, optional adult age band and a positive community-connection prompt precede the substantive questions. Earlier connections retain a separate historical route."
     },
     {
       "id": "place",
@@ -1700,9 +1714,16 @@
             }
           ],
           "hint": "Optional. This helps us see whether support needs differ by age."
+        },
+        {
+          "key": "community_connection",
+          "label": "What has helped you or your family feel connected in the NT?",
+          "type": "text",
+          "options": [],
+          "hint": "Optional. A sentence or two is enough. Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Relationship, NT connection and optional adult age band precede the substantive questions. Earlier connections retain a separate historical route."
+      "note": "Relationship, NT connection, optional adult age band and a positive community-connection prompt precede the substantive questions. Earlier connections retain a separate historical route."
     },
     {
       "id": "place",

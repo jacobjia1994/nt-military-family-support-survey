@@ -71,7 +71,7 @@ These counts exclude any conditional guardian-presence confirmation and the sepa
 
 ## Answer contract
 
-For adults, optional `answers.age_group` records one of `18_29`, `30_39`, `40_49` or `50_plus` on either consultation route; it is absent from youth exports. These non-overlapping bands are for analysis only, not questionnaire selection. The adult schema 6.0 record keeps its existing `answers.needs_status`, `answers.needs` and independent `answers.areas[domain_id]` blocks. Yes and Not sure permit needs selections; No, Prefer not to answer and blank do not. Changing to one of those states clears dependent selections, Other text and area blocks while retaining general preferences. Absence of a selection is not automatically no need. Adult area blocks contain:
+For adults, optional `answers.age_group` records one of `18_29`, `30_39`, `40_49` or `50_plus` on either consultation route; it is absent from youth exports. These non-overlapping bands are for analysis only, not questionnaire selection. Optional `answers.community_connection` records a positive NT connection experience for adults and young people aged 8–17 on either route, even when no support need is selected. The adult schema 6.0 record keeps its existing `answers.needs_status`, `answers.needs` and independent `answers.areas[domain_id]` blocks. Yes and Not sure permit needs selections; No, Prefer not to answer and blank do not. Changing to one of those states clears dependent selections, Other text and area blocks while retaining general preferences. Absence of a selection is not automatically no need. Adult area blocks contain:
 
 - `received`: support received during the age-appropriate recall period;
 - `additional_support_now`: whether extra or different support is wanted now;
