@@ -1,5 +1,5 @@
-import { needs, services } from './support-data.mjs?v=20260925-5';
-import { journeys, humanHelpServiceIds } from './support-journeys.mjs?v=20260925-2';
+import { needs, services } from './support-data.mjs?v=20260925-6';
+import { journeys, humanHelpServiceIds } from './support-journeys.mjs?v=20260925-3';
 
 const finder = document.querySelector('#finder');
 const journeyById = new Map(journeys.map(journey => [journey.id, journey]));
@@ -16,7 +16,7 @@ const telephone = phone => String(phone || '').replace(/\D/g, '');
 // The provider's full audience and access conditions remain in its disclosure.
 const decisiveLimit = {
   'dmfs-helpline': 'For ADF members and families.',
-  'dha-housing': 'Confirm rent allowance approval before signing a private lease.',
+  'dha-housing': 'For eligible ADF housing support, not homelessness help.',
   'toll-transitions': 'For approved Defence moves.',
   'nt-transition-centre': 'Contact the NT team before visiting.',
   'veteran-wellbeing-agency': 'Phone hours are weekdays 8:30 am–5 pm.',
@@ -39,7 +39,7 @@ const decisiveLimit = {
   'open-arms': 'For eligible Defence and veteran families.',
   'darwin-mmhc': 'For adults 18 and over.',
   'katherine-mmhc': 'For adults 18 and over; confirm its temporary address.',
-  'nt-central-intake': 'For homelessness risk, not general housing allocation. Phone unavailable; use the online form.',
+  'nt-central-intake': 'Phone unavailable; online replies aim to arrive within 48 business hours.',
   'bravery-financial': 'For veterans and eligible family members.',
   peap: 'Register before using a service; approval conditions apply.',
   'dawn-house': 'For women and children facing family violence.',
@@ -73,10 +73,10 @@ function serviceHTML(service) {
     <p class="service-offer">${esc(service.offers)}</p>
     ${limit ? `<p class="service-limit">${esc(limit)}</p>` : ''}
     <div class="service-actions">
-      ${service.phone ? `<a class="button primary" href="tel:${telephone(service.phone)}">Call ${esc(service.phone)}</a>` : `<a class="button primary" href="${esc(url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Open official website</a>`}
-      ${service.phone ? `<a class="service-website" href="${esc(url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Official website</a>` : ''}
+      ${service.phone ? `<a class="button primary" href="tel:${telephone(service.phone)}" aria-label="Call ${esc(service.name)} on ${esc(service.phone)}">Call ${esc(service.phone)}</a>` : `<a class="button primary" href="${esc(url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Open the official website for ${esc(service.name)}">Open official website</a>`}
+      ${service.phone ? `<a class="service-website" href="${esc(url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Official website for ${esc(service.name)}">Official website</a>` : ''}
     </div>
-    <details class="service-details"><summary>Who can use it and what to check</summary>
+    <details class="service-details"><summary aria-label="Who can use ${esc(service.name)} and what to check">Who can use it and what to check</summary>
       <p><strong>Who:</strong> ${esc(service.for)}</p>
       <p><strong>Access:</strong> ${esc(service.access)}</p>
     </details>
@@ -85,6 +85,22 @@ function serviceHTML(service) {
 function serviceList(ids) {
   const found = [...new Set(ids)].map(id => serviceById.get(id)).filter(Boolean);
   return found.length ? `<ul class="service-list">${found.map(serviceHTML).join('')}</ul>` : '<p>No service is listed for this topic yet.</p>';
+}
+function quickHelpHTML(quickHelp) {
+  if (!quickHelp) return '';
+  const contacts = quickHelp.contacts.map(contact => {
+    const service = serviceById.get(contact.id);
+    if (!service?.phone) return '';
+    return `<li><span>${esc(contact.label)}</span><a href="tel:${telephone(service.phone)}" aria-label="Call ${esc(service.name)} on ${esc(service.phone)}">${esc(service.phone)}</a></li>`;
+  }).filter(Boolean);
+  if (!contacts.length) return '';
+  const url = quickHelp.url && external(quickHelp.url);
+  return `<section class="quick-help" aria-label="${esc(quickHelp.title)}">
+    <h2>${esc(quickHelp.title)}</h2>
+    ${quickHelp.note ? `<p>${esc(quickHelp.note)}</p>` : ''}
+    <ul>${contacts.join('')}</ul>
+    ${url ? `<a class="quick-help-source" href="${esc(url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">${esc(quickHelp.urlLabel || 'Official information')}</a>` : ''}
+  </section>`;
 }
 function homeHTML() {
   return `<section aria-labelledby="home-heading">
@@ -115,11 +131,14 @@ function choiceHTML(journey, choice) {
   const selected = (choice.needIds || []).map(id => needById.get(String(id))).filter(Boolean);
   const primary = choice.primaryServiceIds || choice.serviceIds || selected.flatMap(need => need.services);
   const note = choice.note || (selected.length === 1 ? selected[0].note : '');
+  const split = choice.quickHelp ? Math.max(0, Math.min(primary.length, choice.quickHelp.afterPrimary || 0)) : primary.length;
   return `<section aria-labelledby="choice-heading">
     <nav class="finder-nav" aria-label="Support guide"><a href="#situation/${esc(journey.id)}">${esc(journey.title)}</a> <span aria-hidden="true">/</span> <a href="#start">All routes</a></nav>
     <h1 id="choice-heading" tabindex="-1">${esc(choice.title)}</h1>
     ${note ? `<p class="need-note${choice.safety ? ' safety-note' : ''}">${esc(note)}</p>` : ''}
-    ${serviceList(primary)}
+    ${split ? serviceList(primary.slice(0, split)) : ''}
+    ${quickHelpHTML(choice.quickHelp)}
+    ${split < primary.length ? serviceList(primary.slice(split)) : ''}
     ${choice.moreServiceIds?.length ? `<details class="more-services"><summary>${esc(choice.moreLabel || 'Other relevant services')}</summary>${serviceList(choice.moreServiceIds)}</details>` : ''}
     ${accessHelpHTML(choice.needIds || [])}
   </section>`;

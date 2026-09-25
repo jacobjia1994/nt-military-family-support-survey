@@ -79,6 +79,13 @@ test('four circumstance routes and secondary access links reach all 39 source ne
       for (const id of choice.needIds) reachable.add(id);
       assert.ok(choice.primaryServiceIds?.length >= 2 && choice.primaryServiceIds.length <= 4, `${journey.id}/${choice.id} leads to a short answer`);
       for (const id of [...choice.primaryServiceIds, ...(choice.moreServiceIds || [])]) assert.ok(knownServices.has(id), `${journey.id}/${choice.id} service ${id}`);
+      if (choice.quickHelp) {
+        assert.ok(choice.quickHelp.title && choice.quickHelp.contacts.length, `${journey.id}/${choice.id} has labelled quick contacts`);
+        for (const contact of choice.quickHelp.contacts) {
+          assert.ok(knownServices.has(contact.id), `${journey.id}/${choice.id} quick contact ${contact.id}`);
+          assert.ok(services.find(service => service.id === contact.id).phone, `${contact.id} has a callable number`);
+        }
+      }
     }
   }
   for (const id of humanHelpServiceIds) assert.ok(knownServices.has(id), `human help service ${id}`);
@@ -91,15 +98,55 @@ test('representative NT scenarios have an immediate fitting contact after the se
   const choice = (routeId, choiceId) => route(routeId).choices.find(item => item.id === choiceId);
   assert.ok(choice('moving', 'school').primaryServiceIds.includes('school-change'));
   assert.ok(choice('moving', 'housing').primaryServiceIds.includes('dha-housing'));
+  assert.ok(choice('moving', 'housing').quickHelp.contacts.some(contact => contact.id === 'salvos-topend-families'));
+  assert.ok(choice('concern', 'housing').quickHelp.contacts.some(contact => contact.id === 'salvos-alice-waterhole'));
+  assert.ok(choice('concern', 'housing').quickHelp.contacts.some(contact => contact.id === 'salvos-katherine-doorways'));
   assert.ok(choice('apart', 'child').primaryServiceIds.includes('adf-equip'));
   assert.ok(choice('leaving', 'transition').primaryServiceIds.includes('nt-transition-centre'));
+  assert.equal(choice('leaving', 'already-left').primaryServiceIds[0], 'veteran-wellbeing-agency');
+  assert.ok(!choice('leaving', 'already-left').primaryServiceIds.includes('nt-transition-centre'));
   assert.ok(choice('concern', 'childcare').primaryServiceIds.includes('kentish-fdc'));
   assert.ok(choice('concern', 'mental').primaryServiceIds.includes('adf-allhours'));
   assert.ok(!choice('concern', 'mental').primaryServiceIds.includes('darwin-mmhc'), 'Adult-only local care is not offered to everyone');
   assert.ok(choice('concern', 'safety').primaryServiceIds.includes('1800respect'));
+  for (const id of ['sarc-darwin', 'sarc-alice', 'sarc-katherine', 'sarc-tennant']) {
+    assert.ok(choice('concern', 'safety').quickHelp.contacts.some(contact => contact.id === id));
+  }
+  assert.ok(choice('concern', 'health').primaryServiceIds.includes('defence-remote-travel'));
   assert.ok(choice('concern', 'safety').primaryServiceIds.includes('wossca-alice'), 'Alice Springs has a local safety route');
   assert.ok(choice('concern', 'grief').primaryServiceIds.includes('dva-death-support'));
   assert.ok(humanHelpServiceIds.includes('veteran-wellbeing-agency'));
+});
+
+test('rendered safety and housing routes expose direct local calls without opening More', async () => {
+  const previous = { document: globalThis.document, window: globalThis.window, location: globalThis.location };
+  const finder = { innerHTML: '', querySelector: () => ({ focus() {} }) };
+  let onHashChange;
+  globalThis.document = { querySelector: () => finder };
+  globalThis.window = { addEventListener: (_event, callback) => { onHashChange = callback; }, scrollTo() {} };
+  globalThis.location = { hash: '#situation/concern/safety' };
+  try {
+    await import('../support.js?render-test');
+    const safety = finder.innerHTML;
+    assert.ok(safety.indexOf('1800RESPECT') < safety.indexOf('After sexual assault: NT referral centres'));
+    assert.ok(safety.indexOf('tel:0889226472') < safety.indexOf('more-services'));
+    assert.ok(safety.indexOf('tel:0889624361') < safety.indexOf('more-services'));
+    assert.match(safety, /aria-label="Official website for 1800RESPECT"/);
+    assert.match(safety, /aria-label="Who can use 1800RESPECT and what to check"/);
+
+    globalThis.location.hash = '#situation/concern/housing';
+    onHashChange();
+    const housing = finder.innerHTML;
+    assert.ok(housing.indexOf('Defence Housing Australia') < housing.indexOf('At risk of homelessness?'));
+    assert.ok(housing.indexOf('tel:0889275189') < housing.indexOf('more-services'));
+    assert.ok(housing.indexOf('tel:0889510200') < housing.indexOf('more-services'));
+    assert.ok(housing.indexOf('tel:0889712265') < housing.indexOf('more-services'));
+    assert.match(housing, /not homelessness help/);
+  } finally {
+    globalThis.document = previous.document;
+    globalThis.window = previous.window;
+    globalThis.location = previous.location;
+  }
 });
 
 
@@ -107,6 +154,7 @@ test('every provider record is reachable through a curated path or secondary acc
   const used = new Set([...humanHelpServiceIds, 'lifeline', 'open-arms', '1800respect']);
   for (const journey of journeys) for (const choice of journey.choices) {
     for (const id of [...choice.primaryServiceIds, ...(choice.moreServiceIds || [])]) used.add(id);
+    for (const contact of choice.quickHelp?.contacts || []) used.add(contact.id);
   }
   for (const id of secondaryNeedIds) {
     for (const serviceId of needs.find(need => need.id === id).services) used.add(serviceId);
