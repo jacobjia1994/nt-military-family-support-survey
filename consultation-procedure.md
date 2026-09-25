@@ -24,7 +24,7 @@ The full questionnaire concerns current NT service or service ending within the 
 | 15–17 | Read the age-appropriate explanation and give informed own consent; ask for help where needed. |
 | 12–14 | Parent/guardian gives permission, then the young person independently agrees to take part. The required assistance question precedes substantive responses; self/other assistance requires confirmation that a parent or guardian is present. |
 | 7–11 | Parent/guardian gives permission, then the child gives their own assent. The same early assistance/presence route applies. |
-| Under 7 | A parent/guardian gives permission and chooses an actual child-view form or guardian-observation form. The first requires willingness and provides four optional child-response boxes plus a separate optional observation box. The second has one observation field and does not claim child assent. |
+| Under 7 | A parent/guardian gives permission. One form shows four optional child-response boxes followed by Your observations. Confirming child willingness enables the child boxes; the observation field remains available without that confirmation. |
 
 Eighteen is the NT age of majority. The questionnaire’s fifteen-year split is an operational capacity approach, informed by OAIC guidance, not a universal legal consent age or a legal exclusion of younger children. Do not presume capacity if there is reason to doubt understanding. Parent/guardian involvement follows existing LC practice, adapted to a short voluntary consultation rather than a counselling intake.
 
@@ -44,11 +44,11 @@ A helper may read or record the child’s words but must not choose or rewrite a
 
 ## Under-7 responses
 
-The parent/guardian chooses **Record my child’s views** or **Share my observations as a parent or guardian**. In the first mode they confirm that the child understands in an age-appropriate way and wants to take part, then record words or describe expressions without substituting adult answers. Each prompt has an optional response box. Their own observations belong in the separate labelled field. Read or explain the recorded meaning back where the child can check it. Do not press for a response.
+The form shows four optional child-response boxes followed by **Your observations**, without asking the parent/guardian to select a response mode. Before recording a child’s expressions, the adult confirms that they have explained participation in an age-appropriate way and the child wants to join in. Record words or describe expressions without substituting adult answers. Read or explain the recorded meaning back where the child can check it. Do not press for a response.
 
-The observation-only mode accommodates babies and children unable to express their views without an invented child agreement. It records the adult’s perspective, not the child’s words. Refusal stops child elicitation. Unchecking willingness clears that mode’s responses; changing mode clears incompatible answers. Both modes offer review, correction, stopping and the shared completion screen.
+The separate observation field accommodates babies and children unable to express their views without an invented child agreement. It records the adult’s perspective, not the child’s words. Refusal stops child elicitation. Unchecking willingness clears only child responses and preserves guardian observations; revoking guardian permission or using Stop clears both. Review, correction and the shared completion screen remain available.
 
-Exports use `questionnaire_version: young_child_supported` with distinct response basis and participation metadata. Do not count guardian observations as child self-report, or pool these prompts with older children’s support-area responses. Do not add names, drawings, recordings or other uploads.
+Exports use schema 1.1 and `questionnaire_version: young_child_supported`. Nonblank child responses determine whether the export contains child-willingness metadata; an empty or observation-only record never claims child assent. Do not count guardian observations as child self-report, or pool these prompts with older children’s support-area responses. Do not add names, drawings, recordings or other uploads.
 
 ## Separate requests for an interview
 

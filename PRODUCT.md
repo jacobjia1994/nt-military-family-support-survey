@@ -58,3 +58,11 @@ Jacob’s later 25 September revisions put optional background before needs, sho
 On 25 September Jacob confirmed that people with no support needs should still be able to give service-information preferences. The needs page therefore asks a separate yes/no/uncertain/declined question before displaying the area checklist; Something else only describes an unlisted need and reveals its input directly beneath that option. The experience question invites a concrete account, separately from support requested now. Interview links and the contact page explicitly invite an interview with LC staff about Defence-family difficulties and needs.
 
 Children aged 7–17 describe who is helping before substantive questions. For the unattended under-15 form, self/other-helper answers require a guardian-presence confirmation in addition to the existing guardian permission and child choice; a private LC help route remains. This is a form operating rule, not a claim that other helpers are unlawful. Under 7 has a real response form with distinct child-view and guardian-observation modes. Child views need the guardian’s attestation of willingness; guardian-only observations do not claim child assent. These records use a separate response type and are never treated as adult self-reports.
+
+
+## Under-7 form simplification
+
+Jacob removed the explicit choice between child views and guardian observations. The under-7 form now displays all four child prompts and Your observations together. The existing willingness confirmation applies only to recording the child’s responses; observations can be provided without it. Response sources stay separate in review and export, inferred from actual answers rather than a selected mode.
+
+
+The final action in both forms and the younger-child review is labelled **Confirm and submit**, as Jacob requested. This is the formal review interface; the label change does not activate a receiver or add a successful-receipt claim.

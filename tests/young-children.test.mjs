@@ -9,29 +9,35 @@ vm.runInContext(source, context, { filename: 'young-children.js' });
 const { createSession, create, PROMPTS, MAX_LENGTH } = context.SURVEY_YOUNG_CHILDREN;
 const plain = value => JSON.parse(JSON.stringify(value));
 const permission = () => ({ agreed: true, age_path: 'young', kind: 'parent_guardian_permission', notice_version: 'test-v1', recorded_at: '2026-09-25T00:00:00.000Z' });
-const makeSession = extra => {
-  const session = createSession({ guardianPermission: permission(), now: () => '2026-09-25T00:01:00.000Z', ...extra });
-  session.selectMode('child_views');
-  return session;
-};
+const makeSession = extra => createSession({ guardianPermission: permission(), now: () => '2026-09-25T00:01:00.000Z', ...extra });
 
-test('under-seven answers need both a matching guardian permission and an explicit willingness attestation', () => {
+function assertNoChildClaim(output) {
+  assert.equal(output.response_mode, 'guardian_observations');
+  assert.equal(output.response_basis, 'parent_guardian_observations');
+  assert.equal(Object.hasOwn(output, 'child_responses'), false);
+  assert.equal(Object.hasOwn(output.participation, 'child_willingness_confirmed'), false);
+  assert.equal(Object.hasOwn(output.participation, 'recorded_at'), false);
+}
+
+test('guardian permission gates all answers; willingness additionally gates child expressions', () => {
   for (const guardianPermission of [null, {}, { agreed: false, age_path: 'young' }, { agreed: true, age_path: 'child' }]) {
     const session = makeSession({ guardianPermission });
+    assert.equal(session.canContinue(), false);
     assert.equal(session.confirmWillingness(true), false);
     assert.equal(session.answer('likes', 'Playing'), false);
+    assert.equal(session.answer('guardian_observations', 'Transport is difficult.'), false);
     assert.equal(session.exportAnswers(), null);
   }
   const session = makeSession();
-  assert.equal(session.canContinue(), false);
-  assert.equal(session.answer('likes', 'Playing'), false);
-  assert.equal(session.exportAnswers(), null);
-  assert.equal(session.confirmWillingness(true), true);
   assert.equal(session.canContinue(), true);
+  assert.equal(session.answer('likes', 'Playing'), false);
+  assert.equal(session.answer('guardian_observations', 'Transport is difficult.'), true);
+  assertNoChildClaim(session.exportAnswers());
+  assert.equal(session.confirmWillingness(true), true);
   assert.equal(session.answer('likes', 'Playing'), true);
 });
 
-test('the child expressions and guardian observations remain separate and do not include unrelated data', () => {
+test('child expressions and guardian observations remain separate without unrelated private data', () => {
   const session = makeSession({ guardianPermission: { ...permission(), name: 'Private name', phone: 'Private phone' } });
   session.confirmWillingness(true);
   session.answer('likes', 'The swings');
@@ -39,7 +45,9 @@ test('the child expressions and guardian observations remain separate and do not
   assert.equal(session.answer('phone', 'Private phone'), false);
   assert.equal(session.answer('__proto__', 'Bad key'), false);
   const output = plain(session.exportAnswers());
+  assert.equal(output.schema_version, '1.1');
   assert.equal(output.questionnaire_version, 'young_child_supported');
+  assert.equal(output.response_mode, 'child_views');
   assert.equal(output.response_basis, 'child_expressions_recorded_by_parent_guardian');
   assert.deepEqual(output.child_responses, { likes: 'The swings' });
   assert.equal(output.guardian_observations, 'Transport to activities is difficult.');
@@ -50,43 +58,53 @@ test('the child expressions and guardian observations remain separate and do not
   assert.equal(output.storage, 'downloaded_by_respondent; not submitted');
 });
 
-test('every response is optional; blank or whitespace-only answers are not treated as a negative experience', () => {
-  const session = makeSession();
-  session.confirmWillingness(true);
-  session.answer('hard', '   ');
-  session.answer('guardian_observations', '\n ');
-  const output = plain(session.exportAnswers());
-  assert.deepEqual(output.child_responses, {});
-  assert.equal(Object.hasOwn(output, 'guardian_observations'), false);
+test('blank child boxes do not create a child response or claim assent even if willingness was checked', () => {
+  for (const willing of [false, true]) {
+    const session = makeSession();
+    session.confirmWillingness(willing);
+    session.answer('hard', '   ');
+    session.answer('guardian_observations', '\n ');
+    const output = plain(session.exportAnswers());
+    assertNoChildClaim(output);
+    assert.equal(Object.hasOwn(output, 'guardian_observations'), false);
+  }
 });
 
-test('reversing willingness, refusing, or resetting clears all child and adult text', () => {
-  for (const clear of [session => session.confirmWillingness(false), session => session.confirmWillingness('unsure'), session => session.reset()]) {
+test('withdrawing willingness clears child text but preserves independent guardian observations', () => {
+  for (const value of [false, 'unsure']) {
     const session = makeSession();
     session.confirmWillingness(true);
     session.answer('hard', 'A worry');
     session.answer('guardian_observations', 'An observation');
-    clear(session);
-    assert.equal(session.exportAnswers(), null);
-    session.selectMode('child_views');
+    session.confirmWillingness(value);
+    assert.equal(session.canContinue(), true);
+    assert.deepEqual(plain(session.snapshot()).responses, {});
+    assert.equal(session.snapshot().willing, false);
+    assert.equal(session.exportAnswers().guardian_observations, 'An observation');
+    assertNoChildClaim(session.exportAnswers());
     session.confirmWillingness(true);
-    assert.deepEqual(plain(session.exportAnswers()).child_responses, {});
-    assert.equal(Object.hasOwn(session.exportAnswers(), 'guardian_observations'), false);
+    assert.deepEqual(plain(session.snapshot()).responses, {});
+    assert.equal(session.exportAnswers().guardian_observations, 'An observation');
+    assertNoChildClaim(session.exportAnswers());
   }
 });
 
-test('revoked permission is checked at finish and cannot be restored with stale answers', () => {
+test('reset and revoked permission discard both perspectives without restoring stale responses', () => {
   let currentPermission = permission();
   const session = makeSession({ guardianPermission: () => currentPermission });
   session.confirmWillingness(true);
   session.answer('likes', 'The park');
+  session.answer('guardian_observations', 'An observation');
   currentPermission = null;
   assert.equal(session.exportAnswers(), null);
   currentPermission = permission();
-  assert.equal(session.exportAnswers(), null);
-  session.selectMode('child_views');
+  assertNoChildClaim(session.exportAnswers());
+  assert.deepEqual(plain(session.snapshot()), { willing: false, responses: {}, guardian_observations: '' });
   session.confirmWillingness(true);
-  assert.deepEqual(plain(session.exportAnswers()).child_responses, {});
+  session.answer('likes', 'The pool');
+  session.answer('guardian_observations', 'A fresh observation');
+  session.reset();
+  assert.deepEqual(plain(session.snapshot()), { willing: false, responses: {}, guardian_observations: '' });
 });
 
 test('all four stable prompts and the separate observation use the same bounded text length', () => {
@@ -100,7 +118,7 @@ test('all four stable prompts and the separate observation use the same bounded 
   assert.equal(output.guardian_observations.length, MAX_LENGTH);
 });
 
-test('exports and snapshots cannot mutate the stored answers or permission', () => {
+test('exports and snapshots cannot mutate stored answers or permission', () => {
   const session = makeSession();
   session.confirmWillingness(true);
   session.answer('likes', 'The park');
@@ -121,99 +139,95 @@ function fakeMain() {
       focus() {}, addEventListener(type, listener) { this.listeners[type] = listener; },
       querySelector(selector) { return node(selector); },
       querySelectorAll(selector) {
-        if (selector === '[name="young_mode"]') return [node('child_mode'), node('observation_mode')];
-        if (selector === 'textarea') return [...PROMPTS.map(prompt => node(`field-${prompt.id}`)), node('field-guardian_observations')];
+        if (selector === 'textarea') return key === '#young-responses'
+          ? PROMPTS.map(prompt => node(`field-${prompt.id}`))
+          : [...PROMPTS.map(prompt => node(`field-${prompt.id}`)), node('field-guardian_observations')];
         return [];
       },
     });
     return nodes.get(key);
   };
-  node('child_mode').value = 'child_views';
-  node('observation_mode').value = 'guardian_observations';
   for (const id of [...PROMPTS.map(prompt => prompt.id), 'guardian_observations']) {
     Object.assign(node(`field-${id}`), { tagName: 'TEXTAREA', name: id });
   }
   return { main: { innerHTML: '', querySelector: node }, node };
 }
 
-test('the UI offers distinct modes, then renders four child boxes plus separate observations without assuming willingness', () => {
-  const { main, node } = fakeMain();
+function type(node, id, value) {
+  const field = node(`field-${id}`);
+  field.value = value;
+  node('#young-form').listeners.input({ target: field });
+}
+
+test('the unified UI shows four child boxes and observations immediately without a mode selector', () => {
+  const { main } = fakeMain();
   const controller = create({ main, guardianPermission: permission(), prompts: ['<img src=x onerror=bad()>'] });
   assert.equal(controller.show(), true);
-  assert.equal((main.innerHTML.match(/<textarea/g) || []).length, 0);
-  node('child_mode').listeners.change();
   assert.match(main.innerHTML, /&lt;img src=x onerror=bad\(\)&gt;/);
   assert.doesNotMatch(main.innerHTML, /<img src=x/);
   assert.equal((main.innerHTML.match(/<textarea/g) || []).length, 5);
   assert.match(main.innerHTML, /id="young-responses" disabled/);
+  assert.match(main.innerHTML, /Your observations/);
+  assert.doesNotMatch(main.innerHTML, /What would you like to share\?|Record my child’s views|Share my observations as a parent or guardian|young_mode|You can share your own observations if your child cannot express their views/);
   assert.doesNotMatch(main.innerHTML, /name="child_willing" checked/);
-  assert.equal(controller.exportAnswers(), null);
+  assertNoChildClaim(controller.exportAnswers());
 });
 
-test('guardian observation mode supports children unable to express views without asserting child assent', () => {
-  const session = makeSession();
-  assert.equal(session.selectMode('guardian_observations'), true);
-  assert.equal(session.canContinue(), true);
-  assert.equal(session.answer('likes', 'Invented child words'), false);
-  assert.equal(session.answer('guardian_observations', 'My baby needs a reliable childcare place.'), true);
-  const output = plain(session.exportAnswers());
-  assert.equal(output.response_mode, 'guardian_observations');
-  assert.equal(output.response_basis, 'parent_guardian_observations');
-  assert.equal(Object.hasOwn(output, 'child_responses'), false);
-  assert.equal(Object.hasOwn(output.participation, 'child_willingness_confirmed'), false);
-  assert.equal(Object.hasOwn(output.participation, 'recorded_at'), false);
-  assert.equal(output.participation.guardian_permission.agreed, true);
+test('guardian observations work without willingness and review does not invent a child section', () => {
+  const { main, node } = fakeMain();
+  const controller = create({ main, guardianPermission: permission() });
+  controller.show();
+  type(node, 'guardian_observations', 'My baby needs a reliable childcare place.');
+  node('#young-form').listeners.submit({ preventDefault() {} });
+  assert.match(main.innerHTML, /My baby needs a reliable childcare place/);
+  assert.match(main.innerHTML, /Your observations/);
+  assert.doesNotMatch(main.innerHTML, /Your child’s responses/);
+  assertNoChildClaim(controller.exportAnswers());
 });
 
-test('changing response mode clears incompatible text and does not carry willingness into a fresh child session', () => {
-  const session = makeSession();
-  session.confirmWillingness(true);
-  session.answer('likes', 'Friends');
-  session.answer('guardian_observations', 'Original observations');
-  session.selectMode('guardian_observations');
-  assert.equal(Object.hasOwn(session.exportAnswers(), 'guardian_observations'), false);
-  session.answer('guardian_observations', 'New observations');
-  session.selectMode('child_views');
-  assert.equal(session.exportAnswers(), null);
-  session.confirmWillingness(true);
-  assert.deepEqual(plain(session.exportAnswers()).child_responses, {});
-  assert.equal(Object.hasOwn(session.exportAnswers(), 'guardian_observations'), false);
+test('UI willingness reversal preserves the observation field while removing child responses', () => {
+  const { main, node } = fakeMain();
+  const controller = create({ main, guardianPermission: permission() });
+  controller.show();
+  node('#young-willing').checked = true;
+  node('#young-willing').listeners.change();
+  type(node, 'likes', 'The pool');
+  type(node, 'guardian_observations', 'Transport is difficult.');
+  node('#young-willing').checked = false;
+  node('#young-willing').listeners.change();
+  assert.equal(node('field-likes').value, '');
+  assert.equal(node('field-guardian_observations').value, 'Transport is difficult.');
+  assert.equal(controller.exportAnswers().guardian_observations, 'Transport is difficult.');
+  assertNoChildClaim(controller.exportAnswers());
 });
 
-test('observation UI provides one box; child refusal clears the record and calls stop without switching modes', () => {
+test('stopping clears child and guardian text and calls the parent stop handler', () => {
   const { main, node } = fakeMain();
   let stopped = 0;
   const controller = create({ main, guardianPermission: permission(), onStop: () => stopped++ });
   controller.show();
-  node('observation_mode').listeners.change();
-  assert.equal((main.innerHTML.match(/<textarea/g) || []).length, 1);
-  assert.doesNotMatch(main.innerHTML, /name="child_willing"/);
-  node('child_mode').listeners.change();
   node('#young-willing').checked = true;
   node('#young-willing').listeners.change();
-  const field = node('field-likes');
-  field.value = 'The pool';
-  node('#young-form').listeners.input({ target: field });
-  assert.equal(controller.exportAnswers().child_responses.likes, 'The pool');
+  type(node, 'likes', 'The pool');
+  type(node, 'guardian_observations', 'Transport is difficult.');
   node('#young-stop').onclick();
   assert.equal(stopped, 1);
-  assert.equal(controller.exportAnswers(), null);
+  assertNoChildClaim(controller.exportAnswers());
+  assert.equal(Object.hasOwn(controller.exportAnswers(), 'guardian_observations'), false);
 });
 
-test('review preserves child text on Back, escapes it, and passes the distinct record to the shared finish callback', () => {
+test('review preserves child text on Back, escapes it, and passes the distinct record to shared finish', () => {
   const { main, node } = fakeMain();
   let finished;
   const controller = create({ main, guardianPermission: permission(), onFinish: (payload, active) => { finished = { payload, active }; } });
   controller.show();
-  node('child_mode').listeners.change();
   node('#young-willing').checked = true;
   node('#young-willing').listeners.change();
-  const field = node('field-likes');
-  field.value = '<script>bad()</script>';
-  node('#young-form').listeners.input({ target: field });
+  type(node, 'likes', '<script>bad()</script>');
   node('#young-form').listeners.submit({ preventDefault() {} });
   assert.match(main.innerHTML, /&lt;script&gt;bad\(\)&lt;\/script&gt;/);
   assert.doesNotMatch(main.innerHTML, /<script>/);
+  assert.match(main.innerHTML, /Your child’s responses/);
   node('#young-edit').onclick();
   assert.match(main.innerHTML, /&lt;script&gt;bad\(\)&lt;\/script&gt;/);
   assert.match(main.innerHTML, /name="child_willing" checked/);

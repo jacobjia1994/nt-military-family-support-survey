@@ -91,3 +91,6 @@ The contact form now offers self and guardian routes, with adult, 15–17 and un
 Updated 25 September 2026. The support-needed choice sits above the conditional area checklist. The Other option and its conditional text field share a full-width grid item, keeping the field immediately below the checkbox. Existing label, hint, field and focus styling is retained. The interview action is consistently Request an interview.
 
 The under-7 form uses the same shell and form controls: one response box per child prompt plus a visibly separate guardian-observation area, or an observation-only mode. No new visual identity or nested decorative panels are introduced. The under-15 assistance interruption uses a plain heading, short explanation, explicit guardian-presence choice and a private LC help action.
+
+
+The under-7 mode selector was removed after Jacob’s review. Four child-response fields appear directly above Your observations on one page, with no What would you like to share step. Existing guardian permission is retained; child willingness controls the child fields only, leaving the observations box usable independently.

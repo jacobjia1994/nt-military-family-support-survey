@@ -55,10 +55,7 @@ Show an actual form for the parent/guardian after their information and authorit
 
 > You can write down what your child says or shows you. Use their own words where you can, and keep your observations separate. Leave any question blank. Stop if your child does not want to continue.
 
-Distinguish two response modes:
-
-- **My child wants to share their views.** Show one optional answer box for each short prompt.
-- **I am sharing my observations as their parent or guardian.** Show the guardian-observation field; do not represent this as the child's consent or voice.
+Use one form without a response-mode selector. Show all four child-response boxes, followed by **Your observations**. The child boxes remain disabled until the parent or guardian confirms the child wants to take part. The observation field stays available under the earlier guardian permission and does not require a claim of child willingness.
 
 A parent should not have to declare that a baby or child unable to express willingness has actively agreed. Equally, a child's refusal cannot be overridden by an adult ticking a consent box. If a child declines, stop eliciting child answers; a separate guardian account remains an adult perspective, not a substitute child response.
 
@@ -69,9 +66,9 @@ Suggested child prompts:
 3. **Who helps you when you need help?**
 4. **What would make things easier for you?**
 
-Use **Your child's answer** for each box. One optional field at the end can be:
+Keep the child-response prompts above a separate optional field at the end:
 
-**Your observations as their parent or guardian**
+**Your observations**
 
 > What support does your child need, or what would help your family?
 
@@ -79,7 +76,7 @@ Record expressed words, gestures or drawing descriptions faithfully. Do not turn
 
 ## Implemented sequence
 
-The current interface records the parent/guardian permission and then the child’s own agreement before the connection/helper questions. The later self/other-helper gateway confirms guardian presence; it does not silently create or replace permission. Under-7 response modes are implemented in `young-children.js`, with distinct child-expression and guardian-observation records.
+The current interface records the parent/guardian permission and then the child’s own agreement before the connection/helper questions. The later self/other-helper gateway confirms guardian presence; it does not silently create or replace permission. The unified under-7 form is implemented in `young-children.js`, with distinct child-expression and guardian-observation records. Unchecking willingness clears only the child responses; revoking guardian permission or stopping clears all text. Schema 1.1 derives its response basis from nonblank child responses, so an empty or guardian-only record makes no child-assent claim.
 
 ## Implementation checks that matter
 
