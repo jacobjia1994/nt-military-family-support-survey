@@ -1,4 +1,4 @@
-import { areas, needs, services } from './support-data.mjs?v=20260925-3';
+import { areas, needs, services } from './support-data.mjs?v=20260925-4';
 
 const finder = document.querySelector('#finder');
 const areaById = new Map(areas.map(area => [area.id, area]));
