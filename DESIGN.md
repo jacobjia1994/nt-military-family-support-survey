@@ -52,7 +52,7 @@ The four-section progress indicator uses thin lines and a section label. Related
 
 ## Preserved questionnaire behaviour
 
-Adult, youth and child wording, NT/outside-NT variants, and conditional follow-ups remain in the shared question definitions. Changing an earlier answer removes follow-ups that no longer apply. Under 7 opens a conversation guide. The separate question library and staff review pages remain outside the respondent flow.
+Adult, youth and child wording, NT/outside-NT variants, and conditional follow-ups remain in the shared question definitions. Changing an earlier answer removes follow-ups that no longer apply. Under 7 opens a guardian-supported response form with separate child views and guardian observations. The separate question library and staff review pages remain outside the respondent flow.
 
 Formal presentation does not establish response collection. The current frontend has no receiver: answers remain in page memory, and the finish screen offers a local download or further changes without claiming successful submission. Selection and configuration of a private collection platform are pending. Do not add a submission-success message before a real receiving service confirms receipt.
 
@@ -84,3 +84,10 @@ First-contact method is an explicit choice. Voicemail permission appears only fo
 Updated 25 September 2026. The questionnaire displays all applicable area questions without an accordion. Background precedes needs; the repeated closing ideas page is removed. Yes to extra support reveals a specific-support text box, with the same existing type and control treatment. A wrapping flex footer places About your answers at the left and Arrange a conversation at the right. The completion view puts the conversation link before the shared resource.
 
 The contact form now offers self and guardian routes, with adult, 15–17 and under-15 age groups where applicable. Guardian labels request the adult’s own details. Under-15 self-contact omits the topic narrative and explains the initial contact purpose. Its footer and finish show the same resource without requiring contact registration. Both new contact and resource links open separately and without a referrer; no form data enters their URL.
+
+
+## Inline Other and younger-child form
+
+Updated 25 September 2026. The support-needed choice sits above the conditional area checklist. The Other option and its conditional text field share a full-width grid item, keeping the field immediately below the checkbox. Existing label, hint, field and focus styling is retained. The interview action is consistently Request an interview.
+
+The under-7 form uses the same shell and form controls: one response box per child prompt plus a visibly separate guardian-observation area, or an observation-only mode. No new visual identity or nested decorative panels are introduced. The under-15 assistance interruption uses a plain heading, short explanation, explicit guardian-presence choice and a private LC help action.

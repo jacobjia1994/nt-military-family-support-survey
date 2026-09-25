@@ -232,8 +232,32 @@
       "intro": "Support can include help from family, friends, your community or a service.",
       "fields": [
         {
+          "key": "needs_status",
+          "label": "In the past 12 months, have you needed any support?",
+          "type": "single",
+          "options": [
+            {
+              "id": "yes",
+              "label": "Yes"
+            },
+            {
+              "id": "no",
+              "label": "No"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": ""
+        },
+        {
           "key": "needs",
-          "label": "In the past 12 months, which areas have you needed support with?",
+          "label": "What did you need support with?",
           "type": "multi",
           "options": [
             {
@@ -324,26 +348,10 @@
             {
               "id": "other_need",
               "label": "Something else"
-            },
-            {
-              "id": "none",
-              "label": "I did not need support in these areas"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
             }
           ],
           "hint": "Select all that apply. Include needs that were met and support you still need now.",
-          "exclusive": [
-            "none",
-            "unsure",
-            "prefer"
-          ]
+          "conditional": "needs_list"
         },
         {
           "key": "needs_other",
@@ -354,7 +362,7 @@
           "conditional": "other_need"
         }
       ],
-      "note": "Select areas once, including met needs and support still needed now. Blank, unsure and declined are distinct from no need."
+      "note": "Ask whether support was needed first. No skips the area questions but retains service-information preferences. Yes or Not sure opens the area list; Something else is only an unlisted need. Blank remains distinct from No."
     },
     {
       "id": "area",
@@ -479,10 +487,10 @@
         },
         {
           "key": "areas:settling:comment",
-          "label": "What worked well, or could have been better?",
+          "label": "What happened when you needed support with this?",
           "type": "text",
           "options": [],
-          "hint": "Please leave out names or other details that could identify someone.",
+          "hint": "You could describe what helped, or what would have made things easier. Please leave out names or other details that could identify someone.",
           "need": "settling",
           "optional_detail": true
         }
@@ -983,8 +991,32 @@
       "intro": "Support can include help from family, friends, your community or a service.",
       "fields": [
         {
+          "key": "needs_status",
+          "label": "In the past 12 months, have you needed any support?",
+          "type": "single",
+          "options": [
+            {
+              "id": "yes",
+              "label": "Yes"
+            },
+            {
+              "id": "no",
+              "label": "No"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": ""
+        },
+        {
           "key": "needs",
-          "label": "In the past 12 months, which areas have you needed support with?",
+          "label": "What did you need support with?",
           "type": "multi",
           "options": [
             {
@@ -1075,26 +1107,10 @@
             {
               "id": "other_need",
               "label": "Something else"
-            },
-            {
-              "id": "none",
-              "label": "I did not need support in these areas"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
             }
           ],
           "hint": "Select all that apply. Include needs that were met and support you still need now.",
-          "exclusive": [
-            "none",
-            "unsure",
-            "prefer"
-          ]
+          "conditional": "needs_list"
         },
         {
           "key": "needs_other",
@@ -1105,7 +1121,7 @@
           "conditional": "other_need"
         }
       ],
-      "note": "Select areas once, including met needs and support still needed now. Blank, unsure and declined are distinct from no need."
+      "note": "Ask whether support was needed first. No skips the area questions but retains service-information preferences. Yes or Not sure opens the area list; Something else is only an unlisted need. Blank remains distinct from No."
     },
     {
       "id": "area",
@@ -1230,10 +1246,10 @@
         },
         {
           "key": "areas:settling:comment",
-          "label": "What worked well, or could have been better?",
+          "label": "What happened when you needed support with this?",
           "type": "text",
           "options": [],
-          "hint": "Please leave out names or other details that could identify someone.",
+          "hint": "You could describe what helped, or what would have made things easier. Please leave out names or other details that could identify someone.",
           "need": "settling",
           "optional_detail": true
         }
@@ -1734,8 +1750,32 @@
       "intro": "Support can include help from family, friends, your community or a service.",
       "fields": [
         {
+          "key": "needs_status",
+          "label": "In the past 12 months, have you needed any support?",
+          "type": "single",
+          "options": [
+            {
+              "id": "yes",
+              "label": "Yes"
+            },
+            {
+              "id": "no",
+              "label": "No"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": ""
+        },
+        {
           "key": "needs",
-          "label": "In the past 12 months, which areas have you needed support with?",
+          "label": "What did you need support with?",
           "type": "multi",
           "options": [
             {
@@ -1826,26 +1866,10 @@
             {
               "id": "other_need",
               "label": "Something else"
-            },
-            {
-              "id": "none",
-              "label": "I did not need support in these areas"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
             }
           ],
           "hint": "Select all that apply. Include needs that were met and support you still need now.",
-          "exclusive": [
-            "none",
-            "unsure",
-            "prefer"
-          ]
+          "conditional": "needs_list"
         },
         {
           "key": "needs_other",
@@ -1856,7 +1880,7 @@
           "conditional": "other_need"
         }
       ],
-      "note": "Select areas once, including met needs and support still needed now. Blank, unsure and declined are distinct from no need."
+      "note": "Ask whether support was needed first. No skips the area questions but retains service-information preferences. Yes or Not sure opens the area list; Something else is only an unlisted need. Blank remains distinct from No."
     },
     {
       "id": "area",
@@ -1981,10 +2005,10 @@
         },
         {
           "key": "areas:settling:comment",
-          "label": "What worked well, or could have been better?",
+          "label": "What happened when you needed support with this?",
           "type": "text",
           "options": [],
-          "hint": "Please leave out names or other details that could identify someone.",
+          "hint": "You could describe what helped, or what would have made things easier. Please leave out names or other details that could identify someone.",
           "need": "settling",
           "optional_detail": true
         }

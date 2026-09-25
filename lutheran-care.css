@@ -125,3 +125,8 @@ body.questionnaire{--ink:#30312f;--text:#41423f;--muted:#666963;--primary:#b9462
 .questionnaire .questionnaire-help a{margin-left:auto;text-align:right}
 .finish-contact{margin:24px 0 28px}
 .questionnaire .finish h1{max-width:24ch}
+
+.other-need-option{grid-column:1/-1;min-width:0}
+.questionnaire .other-need-followup{margin:14px 0 4px;padding:0 4px}
+.questionnaire .other-need-followup .text-input{width:100%}
+.questionnaire .other-need-followup .field-label{font-size:16px}

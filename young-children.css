@@ -1,0 +1,6 @@
+/* Uses the questionnaire's shared type, spacing and inputs. */
+.young-responses{margin-top:32px}
+.young-responses:disabled{opacity:.55}
+.young-guardian-observations{border-top:1px solid var(--line);padding-top:24px;margin-top:32px}
+.questionnaire .young-guardian-observations h2{font-size:23px;margin:0 0 10px}
+.young-guardian-observations .question-group{margin-bottom:0}

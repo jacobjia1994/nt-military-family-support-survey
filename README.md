@@ -3,7 +3,7 @@
 A formal questionnaire for Lutheran Care’s internal team review. The project is service consultation. The participant interface uses the intended formal wording and LC branding; the current build holds entries in page memory and has no response receiver. Finishing does not transmit a response or claim that LC has received it.
 
 - [Questionnaire](https://jacobjia1994.github.io/nt-military-family-support-survey/)
-- [Separate conversation request](https://jacobjia1994.github.io/nt-military-family-support-survey/contact.html)
+- [Separate interview request](https://jacobjia1994.github.io/nt-military-family-support-survey/contact.html)
 - [Contact-form design and privacy basis](CONTACT_FORM.md)
 - [Adult reading copy](https://jacobjia1994.github.io/nt-military-family-support-survey/adult-wording.html)
 - [All ages and conditional questions](https://jacobjia1994.github.io/nt-military-family-support-survey/questions.html)
@@ -11,20 +11,21 @@ A formal questionnaire for Lutheran Care’s internal team review. The project i
 - [Flow and measurement contract](FLOW_REDESIGN.md)
 - [Participation and safeguarding procedure](consultation-procedure.md)
 - [Legal and privacy review](LEGAL_REVIEW.md)
+- [Child participation and assistance review](CHILD_PARTICIPATION_REVIEW.md)
 - [Strategy-to-questionnaire evidence](copy/strategy-needs-map.md)
 
 ## Questionnaire flow
 
-1. Invitation, age-appropriate participation and the minimum NT connection check.
-2. Optional **About you** questions: broad residence, current/most-recent NT stay, military affiliation and, for younger respondents, assistance with answering.
-3. Select support areas once.
-4. Complete one page for each selected area: support received, extra or different support wanted now, what support would help if Yes, sources, relevant barriers or reasons, and what worked or could improve. Fields are visible directly; there is no expandable details panel.
-5. Information/advice preferences about **services and support in the NT**, for adults and young people including those who selected no needs.
-6. Review, finish, the separate conversation request and the free resource.
+1. Invitation, age-appropriate participation and the minimum NT connection check. Ages 7–17 also answer the required assistance question here, before either the main or earlier-experience route.
+2. Optional **About you** questions: broad residence, current/most-recent NT stay and military affiliation.
+3. First ask whether support was needed during the recall period. Yes or Not sure reveals one support-area checklist. No skips area questions but keeps adult/youth service-information preferences.
+4. Complete one page for each selected area: support received, extra or different support wanted now, what support would help if Yes, sources, relevant barriers or reasons, and an account of what happened when support was needed. Fields are visible directly; there is no expandable details panel.
+5. Information/advice preferences about **services and support in the NT**, for adults and young people including those reporting no support needs.
+6. Review, finish, the separate interview request and the free resource.
 
 There is no second current-needs checklist, repeated closing “Your ideas” page, top-three ranking or four-week impact score. Past support received and extra support wanted now remain independent: a person can report an old gap that has since been resolved, or enough past support alongside a new request. “No” to extra help does not mean existing ongoing support is unnecessary.
 
-The adult list retains 17 accepted domains plus “Something else”. Youth and child lists remain age-appropriate. Sources and experience can be answered for every selected area, including sufficient past support or no extra help wanted now. Most questions remain optional even though they are visible. The child route excludes adult contact-format preferences.
+The adult list retains 17 accepted domains plus “Something else”. “I did not need support in these areas” is removed from the checklist: the preceding Yes/No/Not sure/Prefer not to answer question records that distinction. The “Something else” text box appears immediately below its checkbox only when selected. Youth and child lists remain age-appropriate. Sources and experience can be answered for every selected area, including sufficient past support or no extra help wanted now. Most questions remain optional even though they are visible. The child route excludes adult contact-format preferences.
 
 ## Scope and recall
 
@@ -39,25 +40,27 @@ These routes define consultation participation, not programme-benefit eligibilit
 
 The adult and youth recall period is 12 months; the child period is 3 months. Support received, sources and barriers use that same period. Extra or different support wanted refers to now. Optional NT residence duration concerns the current or most recent stay, with a never-lived-in-NT option; it does not add separate postings together. These periods are project design choices.
 
-Excluding invitation, age and participation, the adult/youth main route has **5 + n pages**, where n is the number of selected areas: 5 with none, 7 with two, and 10 with five, including review. The child route has **4 + n**. The earlier-experience route remains three pages: connection, comments and review. These are page counts, not measured completion times.
+Excluding invitation, age and participation, the adult/youth main route has **5 + n pages**, where n is the number of selected areas: 5 with none, 7 with two, and 10 with five, including review. The child route has **4 + n**. The earlier-experience route remains three pages: connection, comments and review. These counts exclude a conditional guardian-presence confirmation and the separate under-7 form; they are not measured completion times.
 
 ## Answer model and interpretation
 
-Schema 5 uses one `answers.needs` selection and independent `answers.areas[domain_id]` records containing `received`, `additional_support_now`, `support_requested`, `sources`, `barriers` and `comment`. `support_requested` appears and is retained only when `additional_support_now` is Yes. There is no automatic migration of older collective or current-only follow-up answers into this model.
+Schema 6.0 stores the independent `answers.needs_status` answer (Yes, No, Not sure or Prefer not to answer), one `answers.needs` selection and independent `answers.areas[domain_id]` records containing `received`, `additional_support_now`, `support_requested`, `sources`, `barriers` and `comment`. `support_requested` appears and is retained only when `additional_support_now` is Yes. There is no automatic migration of older collective or current-only follow-up answers into this model.
 
-Removing an area removes its answer block. Changing its source response clears only that area's dependent barriers. Changing a Yes request to another response clears that area's dependent support-request text. Explicit non-seeking uses reasons for not seeking; actual help-seeking uses experienced barriers. Blank, uncertain or declined source answers must not imply a failed attempt. Optional unanswered fields remain missing, not “no barrier”. Use the number actually answering each field as its denominator.
+Only Yes or Not sure permits area selection. Changing the needs-status response to No, Prefer not to answer or blank removes the dependent selections, other text and area blocks while preserving general preferences. Blank or declined need status is not evidence of no need. Removing an area removes its answer block. Changing its source response clears only that area's dependent barriers. Changing a Yes request to another response clears that area's dependent support-request text. Explicit non-seeking uses reasons for not seeking; actual help-seeking uses experienced barriers. Blank, uncertain or declined source answers must not imply a failed attempt. Optional unanswered fields remain missing, not “no barrier”. Use the number actually answering each field as its denominator.
 
-Records describe individuals, not unique households or NT population prevalence. Do not pool child/youth and adult measures, uncertain and confirmed connections, or earlier-experience and recent-needs routes without making those differences explicit. The fictional results page illustrates an older instrument; it does not analyse schema 5 responses.
+Records describe individuals, not unique households or NT population prevalence. Do not pool child/youth and adult measures, uncertain and confirmed connections, or earlier-experience and recent-needs routes without making those differences explicit. The fictional results page illustrates an older instrument; it does not analyse schema 6.0 responses.
 
 Adult/youth comments allow 5000 characters; child comments allow 1500. The counter appears near the limit. Optional questions can be left blank with one Continue button; required connection/participation choices must be completed first.
 
 ## Participation and privacy
 
-For the questionnaire, adults and 15–17-year-olds give their own informed agreement; ages 7–14 first have guardian permission, followed by their own assent. Under 7 uses a facilitated conversation guide. Anyone needing help with understanding, authority or safe guardian involvement can speak with an LC worker. The public form does not fabricate worker approval. Eighteen is adulthood; the use of fifteen is an operational capacity approach, not a universal statutory consent age. Follow the staff procedure for individual assessment, assistance and safeguarding.
+For the questionnaire, adults and 15–17-year-olds give their own informed agreement; ages 7–14 first have guardian permission, followed by their own assent. Ages 7–17 answer **How are you answering these questions?** with **By myself**, **My parent or guardian is helping me** or **Someone else is helping me**. For ages 7–14, self/other assistance leads to a guardian-presence confirmation before substantive questions. This is the open online form’s design policy, not a universal legal requirement or a statement that other helpers are unlawful. For ages 15–17, another helper does not cause a guardian block.
 
-The separate conversation form offers self and parent/guardian routes, including a limited explanation request for under-15s. A guardian supplies their own contact details. These arrangements do not replace the questionnaire's permission and assent process. See [CONTACT_FORM.md](CONTACT_FORM.md).
+Under 7 has a real parent/guardian form with two modes: four optional boxes recording the child’s own expressions, with a separate optional guardian-observation box; or one guardian-observation response. Child-view mode requires the adult to confirm the child wants to join in. Observation-only mode makes no claim of child assent. Its `young_child_supported` export keeps these perspectives separate from the adult and child questionnaire measures. Anyone needing help with understanding, authority or safe guardian involvement can speak with an LC worker. The public form does not fabricate worker approval. Eighteen is adulthood; the use of fifteen is an operational capacity approach, not a universal statutory consent age. Follow the staff procedure for individual assessment, assistance and safeguarding.
 
-No names, contact details or response-retrieval codes are requested in the questionnaire. Its v10 notice says people can stop before submitting and that names or contact details are not collected for retrieving individual responses afterwards. The general access, correction and complaint route remains available; unexpected identifiable content still requires appropriate handling.
+The separate interview-request form offers self and parent/guardian routes, including a limited explanation request for under-15s. A guardian supplies their own contact details. These arrangements do not replace the questionnaire's permission and assent process. See [CONTACT_FORM.md](CONTACT_FORM.md).
+
+No names, contact details or response-retrieval codes are requested in the questionnaire. Its v11 notice says people can stop before submitting and that names or contact details are not collected for retrieving individual responses afterwards. The general access, correction and complaint route remains available; unexpected identifiable content still requires appropriate handling.
 
 The questionnaire footer and thank-you screen link to the separate contact form in a new tab, without answers or participant identifiers. Contact details are not linked to questionnaire responses. Selecting a service-format preference is not permission for follow-up.
 
@@ -65,7 +68,7 @@ Neither form has a receiving endpoint, application analytics, cookies or persist
 
 ## Development and source material
 
-Run `node --test tests/survey.test.mjs tests/contact.test.mjs`. `node scripts/export-copy.mjs` exports the current definitions for the adult reading copy. Local preview: `python3 -m http.server 8174 --bind 127.0.0.1`.
+Run `node --test tests/*.test.mjs` to include the questionnaire, contact form and under-7 module. `node scripts/export-copy.mjs` exports the current definitions for the adult reading copy. Local preview: `python3 -m http.server 8174 --bind 127.0.0.1`.
 
 LC logo and self-hosted Karla sources/licence are in `assets/`. GitHub Pages serves the repository root from main.
 
@@ -73,6 +76,6 @@ The adult domains and examples were checked against the supplied *Defence and Ve
 
 Examples aid recognition but are not exhaustive and do not produce separate counts for every detail mentioned. The national Strategy is not a validated questionnaire or evidence of NT prevalence or LC programme entitlements. See the source mapping for page-level evidence.
 
-## Free resource and conversation link
+## Free resource and interview link
 
-Set `title` and the public HTTPS `url` in `thank-you-resource.js` when the team has made the resource. Until then the inactive button says Available soon. The questionnaire completion screen and contact form use the same resource. Its link appends no answers or participant ID, collects no email and opens without a referrer. Resource access does not require requesting a conversation. No resource content has been invented.
+Set `title` and the public HTTPS `url` in `thank-you-resource.js` when the team has made the resource. Until then the inactive button says Available soon. The questionnaire completion screen and contact form use the same resource. Its link appends no answers or participant ID, collects no email and opens without a referrer. Resource access does not require requesting an interview. No resource content has been invented.

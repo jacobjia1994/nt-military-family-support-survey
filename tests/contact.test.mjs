@@ -163,7 +163,7 @@ test('under-15 self requests collect contact instructions without a topic or sen
   ui.api.setRequest(data);
   ui.api.renderForm();
   assert.doesNotMatch(ui.main.innerHTML, /name="topic"/);
-  assert.match(ui.main.innerHTML, /discuss permission before arranging a conversation/);
+  assert.match(ui.main.innerHTML, /discuss permission before arranging an interview/);
   assert.equal(ui.element('[type="submit"]').disabled, false);
   ui.api.renderReview();
   assert.doesNotMatch(ui.main.innerHTML, /Do not retain|What you would like to talk about/);

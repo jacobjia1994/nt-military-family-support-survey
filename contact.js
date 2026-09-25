@@ -1,4 +1,4 @@
-import {CONTACT_NOTICE,CONTACT_METHODS,CONTACT_AGES,CONTACT_REQUESTERS,CONTACT_GUARDIAN_DECLARATION,CONTACT_LIMITS,emptyRequest,contactRoute,needsTopic,consentText,changeRequest,requestErrors,reviewRequest,contactResource,escapeHTML as esc} from './contact-model.mjs?v=20260925-2';
+import {CONTACT_NOTICE,CONTACT_METHODS,CONTACT_AGES,CONTACT_REQUESTERS,CONTACT_GUARDIAN_DECLARATION,CONTACT_LIMITS,emptyRequest,contactRoute,needsTopic,consentText,changeRequest,requestErrors,reviewRequest,contactResource,escapeHTML as esc} from './contact-model.mjs?v=20260925-3';
 
 // Internal review build: deliberately no receiver, persistence or answer download.
 // Do not add survey response IDs, query-string values or shared answer state.
@@ -15,14 +15,14 @@ function textField(key,label,{hint='',multiline=false}={}){const isRequired=['pr
 function choiceField(key,label,choices,{wide=false}={}){return `<fieldset class="question-group"><legend>${esc(label)} ${required}</legend><div class="contact-choices${wide?' route-choices':''}">${Object.entries(choices).map(([id,text])=>`<label class="choice"><input type="radio" name="${key}" value="${id}" ${request[key]===id?'checked':''}><span class="choice-label">${esc(text)}</span></label>`).join('')}</div></fieldset>`;}
 function routeNote(){
   if(request.requester==='guardian')return 'Please give your own contact details. A worker will discuss how your child can take part and what permission is needed.';
-  if(contactRoute(request)==='self_child')return 'A worker can contact you to explain how you can take part and discuss permission before arranging a conversation. Please give only your contact details here.';
-  if(contactRoute(request)==='self_youth')return 'A worker will explain the conversation and discuss any permission or support you need before you take part.';
+  if(contactRoute(request)==='self_child')return 'A worker can contact you to explain how you can take part and discuss permission before arranging an interview. Please give only your contact details here.';
+  if(contactRoute(request)==='self_youth')return 'A worker will explain the interview and discuss any permission or support you need before you take part.';
   return '';
 }
 function renderForm(){
   const route=contactRoute(request),guardian=request.requester==='guardian';
   const ages=guardian?{youth:CONTACT_AGES.youth,child:CONTACT_AGES.child}:CONTACT_AGES;
-  main.innerHTML=`<section class="contact-intro"><h1 tabindex="-1">Arrange a conversation</h1><p>Would you like to talk with Lutheran Care about your experience of Defence family life and what support would help? Leave a safe way to contact you.</p></section><form id="contact-form" class="contact-form" novalidate>
+  main.innerHTML=`<section class="contact-intro"><h1 tabindex="-1">Request an interview</h1><p>Share your experience with a Lutheran Care staff member to help us understand the difficulties and support needs of Defence families in the NT. Leave your details so we can arrange an interview.</p></section><form id="contact-form" class="contact-form" novalidate>
   ${choiceField('requester','Who is this request for?',CONTACT_REQUESTERS,{wide:true})}
   ${request.requester?choiceField('age_band',guardian?'Your child’s age group':'Your age group',ages):''}
   <div id="contact-fields" ${route?'':'hidden'}>

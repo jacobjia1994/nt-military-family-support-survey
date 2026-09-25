@@ -1,8 +1,8 @@
-# Conversation request form
+# Interview request form
 
-`contact.html` is the separate opt-in form for people who would like to speak with Lutheran Care about their experience of Defence family life and the support that would help. It follows the consultation concept recovered from Thursday's ChatGPT task **讨论项目理解** (`6ab46d41-1b10-83ec-aab1-b6eeca5f3201`).
+`contact.html` is the separate opt-in **Request an interview** form. Its introduction invites people to share their experience with a Lutheran Care staff member so LC can better understand the difficulties and support needs of Defence families in the NT, then leave details to arrange an interview. It follows the consultation concept recovered from Thursday's ChatGPT task **讨论项目理解** (`6ab46d41-1b10-83ec-aab1-b6eeca5f3201`).
 
-Its purpose is to arrange a consultation conversation. It is not a service intake assessment, a counselling referral or a confirmed appointment. Completing the main survey is not a condition of using this form. The form does not receive survey answers, response IDs or other identifiers linking a request to an anonymous response.
+Its purpose is to arrange a service-consultation interview. It is not a service intake assessment, a counselling referral or a confirmed appointment. Completing the main survey is not a condition of using this form. The form does not receive survey answers, response IDs or other identifiers linking a request to an anonymous response.
 
 ## Fields and interaction
 
@@ -38,7 +38,7 @@ The earlier under-15 stop screen was an implementation choice, not a legal ban. 
 
 `contactRoute()` recognises `self_adult`, `self_youth`, `self_child`, `guardian_youth` and `guardian_child`. An adult target is not valid on the child/guardian route. Changing the requester or age band clears personal fields, contact permissions, guardian declaration and consent, so adult or guardian details cannot silently become a child’s request. Guardian declarations are omitted from self-request review data. The under-15 self-route never serialises an old or injected topic value.
 
-The request is **not consent to an interview, recording, counselling or collection of further sensitive information**. When arranging a minor’s conversation, workers must establish understanding, appropriate permission and willingness before proceeding. A guardian checkbox records an assertion; workers verify authority if needed. Children can ask for help understanding the form. A self-request does not automatically notify a parent, especially where doing so could be unsafe. The programme needs a staff process for these decisions when collection is activated. See [the focused legal review](LEGAL_REVIEW.md).
+The request is **not consent to an interview, recording, counselling or collection of further sensitive information**. When arranging a minor’s conversation, workers must establish understanding, appropriate permission and willingness before proceeding. A guardian checkbox records an assertion; workers verify authority if needed. Children can ask for help understanding the form. A self-request does not automatically notify a parent, especially where doing so could be unsafe. The programme needs a staff process for these decisions when collection is activated. See [the focused legal review](LEGAL_REVIEW.md) and [the child-participation review](CHILD_PARTICIPATION_REVIEW.md). The latter also explains the separate main questionnaire’s assistance and under-7 routes; those changes do not turn a contact request into interview consent.
 
 ## Free resource
 

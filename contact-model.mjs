@@ -5,7 +5,7 @@ export const CONTACT_AGES = Object.freeze({adult:'18 or older',youth:'15–17',c
 export const CONTACT_REQUESTERS = Object.freeze({self:'For myself',guardian:'For my child or a child in my care'});
 export const CONTACT_NOTICE = [
   ['Purpose and choice', 'Lutheran Care will use these details to contact you about its NT Defence Family Support Program consultation. Taking part is voluntary. We need a name to use and a safe way to contact you. This request does not commit you or your child to an interview.'],
-  ['Storage and access', 'Lutheran Care will hold this request securely in its records, with access limited to staff who need it to arrange the conversation. Our Privacy Policy explains how we manage and retain personal information.'],
+  ['Storage and access', 'Lutheran Care will hold this request securely in its records, with access limited to staff who need it to arrange the interview. Our Privacy Policy explains how we manage and retain personal information.'],
   ['Keeping the forms separate', 'Your contact details will be kept separately from survey answers. Your name and phone number will not be included in consultation reports to Defence.'],
   ['Sharing and your rights', 'We may disclose information with your consent or where the law permits or requires it, including to protect someone from serious harm. You can ask to update your details, cancel contact, access your information or raise a privacy concern.']
 ];

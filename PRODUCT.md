@@ -8,7 +8,7 @@ web
 
 ## Purpose and users
 
-This questionnaire supports Lutheran Care’s Defence family support consultation in the Northern Territory. The participant wording and visual presentation are formal, with Lutheran Care named as the project lead. Jacob and the project team need to review its wording, scope and experience before inviting participants. Adult, youth (12–17), child (7–11) and under-seven conversation-guide paths already exist.
+This questionnaire supports Lutheran Care’s Defence family support consultation in the Northern Territory. The participant wording and visual presentation are formal, with Lutheran Care named as the project lead. Jacob and the project team need to review its wording, scope and experience before inviting participants. Adult, youth (12–17), child (7–11) and under-seven supported-response paths already exist.
 
 ## Operating context
 
@@ -51,3 +51,10 @@ On 25 September Jacob requested the distinct follow-up contact form discussed in
 ## Current question presentation and navigation
 
 Jacob’s later 25 September revisions put optional background before needs, show experience fields directly, and remove the separate repeated closing ideas page. A Yes to extra/different support now opens one optional specific-support text field; experience is asked directly as what worked well or could have been better. Information/advice preferences concern services and support in the NT. A bare independent contact-form link appears opposite About your answers on every survey page and on completion. Both forms use the same community-contribution thank-you and resource configuration. The resource is also available on the contact form without providing details. No link transfers a questionnaire answer or identity marker.
+
+
+## Need screening and supported child responses
+
+On 25 September Jacob confirmed that people with no support needs should still be able to give service-information preferences. The needs page therefore asks a separate yes/no/uncertain/declined question before displaying the area checklist; Something else only describes an unlisted need and reveals its input directly beneath that option. The experience question invites a concrete account, separately from support requested now. Interview links and the contact page explicitly invite an interview with LC staff about Defence-family difficulties and needs.
+
+Children aged 7–17 describe who is helping before substantive questions. For the unattended under-15 form, self/other-helper answers require a guardian-presence confirmation in addition to the existing guardian permission and child choice; a private LC help route remains. This is a form operating rule, not a claim that other helpers are unlawful. Under 7 has a real response form with distinct child-view and guardian-observation modes. Child views need the guardian’s attestation of willingness; guardian-only observations do not claim child assent. These records use a separate response type and are never treated as adult self-reports.
