@@ -47,3 +47,11 @@ test('finder keeps urgent contacts in the footer and does not send responses', (
   assert.doesNotMatch(page + scripts, /\b(?:fetch|XMLHttpRequest|WebSocket|sendBeacon|localStorage|sessionStorage|indexedDB|document\.cookie)\b/);
   assert.doesNotMatch(page, /<script\b[^>]*src="https?:/);
 });
+
+
+test('high-consequence situations lead to specific local or specialist routes', () => {
+  const byId = new Map(needs.map(need => [need.id, need]));
+  for (const [need, service] of [[2, 'adf-equip'], [5, 'cowork-coplay'], [10, 'kentish-fdc'], [10, 'nt-in-home-care'], [19, 'kwcc'], [26, 'nt-telehealth'], [33, 'safe-zone'], [38, 'legacy-nt'], [39, 'thirrili']]) {
+    assert.ok(byId.get(need).services.includes(service), `Need ${need} reaches ${service}`);
+  }
+});

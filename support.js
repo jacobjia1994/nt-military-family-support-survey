@@ -34,7 +34,13 @@ const decisiveLimit = {
   'pats-nt': 'Check eligibility before arranging travel.',
   qlife: 'Not an emergency service.',
   'employer-support-payment': 'For employers or self-employed reservists, not a family payment.',
-  '13yarn': 'For Aboriginal and Torres Strait Islander people.'
+  '13yarn': 'For Aboriginal and Torres Strait Islander people.',
+  'nt-in-home-care': 'Eligibility is assessed; care and places are not guaranteed.',
+  kwcc: 'For women and children in the Katherine region; call about availability.',
+  'safe-zone': 'Anonymous support; caller ID is visible unless hidden.',
+  'legacy-nt': 'For eligible bereaved veteran families.',
+  'amber-nt': 'For loss of a child through age 18.',
+  thirrili: 'For First Nations families after a traumatic death.'
 };
 
 function serviceHTML(service) {
