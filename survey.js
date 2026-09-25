@@ -183,7 +183,7 @@ function cleanExport(answers,version,domains) {
 
 const main = document.querySelector('#main');
 const phases = ['About you','Your support','Finding support','Review'];
-const state = { version:'adult', age:null, ageRoute:null, answers:{}, step:'connection', screen:'welcome', returnToReview:false, participation:null, guardianPermission:null,youngController:null,youngRecord:null };
+const state = { version:'adult', age:null, ageAudience:null, ageRoute:null, answers:{}, step:'connection', screen:'welcome', returnToReview:false, participation:null, guardianPermission:null,youngController:null,youngRecord:null };
 const SURVEY_INVITATION = {"title": "Defence family support survey", "greeting": "Hello, NT Defence Communities!", "paragraphs": ["Lutheran Care would like your help to plan its Defence Family Support Program in the Northern Territory.", "Tell us about the support you have needed, what you received and what would help now.", "Please answer about your own experience."], "funding": "Lutheran Care received funding from Defence Member and Family Support, a branch of the Commonwealth Department of Defence, to deliver this project."};
 const PARTICIPANT_NOTICE_VERSION = '2026-09-25-v11';
 // Formal participant wording for the internally reviewed consultation design.
@@ -326,21 +326,31 @@ function fieldHTML(f) {
 }
 function focusHeading(){main.querySelector('h1')?.focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'});}
 function resetAgePath(){
-  resetYoung();state.age=null;state.ageRoute=null;state.version='adult';state.answers={};state.participation=null;state.guardianPermission=null;state.step='connection';state.returnToReview=false;
+  resetYoung();state.age=null;state.ageAudience=null;state.ageRoute=null;state.version='adult';state.answers={};state.participation=null;state.guardianPermission=null;state.step='connection';state.returnToReview=false;
 }
 function setAgePath(age,route){
   if(age!==state.age)resetAgePath();
-  state.age=age;state.ageRoute=route;state.version=questionnaireVersion(age);
+  state.age=age;state.ageAudience=route==='adult'?'adult':'minor';state.ageRoute=route;state.version=questionnaireVersion(age);
 }
 function renderWelcome(){
   state.screen='welcome';
-  main.innerHTML=`<div class="welcome"><section class="welcome-intro"><h1 tabindex="-1">${esc(SURVEY_INVITATION.title)}</h1><p class="greeting">${esc(SURVEY_INVITATION.greeting)}</p>${SURVEY_INVITATION.paragraphs.map((value,i)=>`<p class="${i===0?'lead':''}">${esc(value)}</p>`).join('')}<p class="funding-note">${esc(SURVEY_INVITATION.funding)}</p></section><section class="welcome-age" aria-labelledby="welcome-age-title"><h2 id="welcome-age-title">Whose experience is this about?</h2><p>Choose an age range to see the right questions and information about taking part.</p><fieldset class="question-group"><legend class="visually-hidden">Age range</legend><div class="age-grid welcome-age-grid">${opts([['young','7 or younger'],['youth','8–17'],['adult','18 or older']]).map(option=>optionHTML(option,{key:'age_route',type:'single'},state.ageRoute)).join('')}</div></fieldset></section><div id="welcome-consent" aria-live="polite"></div></div>`;
-  main.querySelectorAll('input[name="age_route"]').forEach(input=>input.addEventListener('change',()=>{
-    if(input.value!==state.ageRoute){
-      if(input.value==='adult')setAgePath('adult','adult');
-      else if(input.value==='young')setAgePath('young','young');
-      else{resetAgePath();state.ageRoute='youth';state.version='youth';}
+  const audience=state.ageAudience||(state.ageRoute==='adult'?'adult':state.ageRoute?'minor':null);
+  main.innerHTML=`<div class="welcome"><section class="welcome-intro"><h1 tabindex="-1">${esc(SURVEY_INVITATION.title)}</h1><p class="greeting">${esc(SURVEY_INVITATION.greeting)}</p>${SURVEY_INVITATION.paragraphs.map((value,i)=>`<p class="${i===0?'lead':''}">${esc(value)}</p>`).join('')}<p class="funding-note">${esc(SURVEY_INVITATION.funding)}</p></section><section class="welcome-age" aria-labelledby="welcome-age-title"><h2 id="welcome-age-title">Whose experience is this about?</h2><fieldset class="question-group"><legend class="visually-hidden">Adult or under 18</legend><div class="age-audience"><div class="adult-audience">${optionHTML({id:'adult',label:'Adult (18 or older)'},{key:'age_audience',type:'single'},audience)}</div><div class="minor-audience">${optionHTML({id:'minor',label:'Child or young person (under 18)'},{key:'age_audience',type:'single'},audience)}</div></div></fieldset><div class="minor-age-options" id="minor-age-options" ${audience==='minor'?'':'hidden'}><fieldset class="question-group"><legend>How old is the child or young person?</legend><div class="age-grid age-route-grid">${opts([['youth','8–17'],['young','7 or younger']]).map(option=>optionHTML(option,{key:'age_route',type:'single'},state.ageRoute)).join('')}</div></fieldset></div></section><div id="welcome-consent" aria-live="polite"></div></div>`;
+  const minorOptions=main.querySelector('#minor-age-options');
+  main.querySelectorAll('input[name="age_audience"]').forEach(input=>input.addEventListener('change',()=>{
+    if(input.value==='adult'){
+      setAgePath('adult','adult');
+      minorOptions.hidden=true;
+      main.querySelectorAll('input[name="age_route"]').forEach(radio=>{radio.checked=false;});
+    }else{
+      if(state.ageAudience!=='minor'){resetAgePath();state.ageAudience='minor';}
+      minorOptions.hidden=false;
     }
+    renderWelcomeConsent();
+  }));
+  main.querySelectorAll('input[name="age_route"]').forEach(input=>input.addEventListener('change',()=>{
+    if(input.value==='young')setAgePath('young','young');
+    else if(state.ageRoute!=='youth'){resetAgePath();state.ageAudience='minor';state.ageRoute='youth';state.version='youth';}
     renderWelcomeConsent();
   }));
   renderWelcomeConsent();

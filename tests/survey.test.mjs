@@ -41,7 +41,7 @@ vm.runInContext(`${source.slice(0, bootstrap)}
       return domainList();
     },
     getContext: () => ({ version: state.version, answers: state.answers }),
-    getUIState: () => ({ age: state.age, ageRoute: state.ageRoute, step: state.step, screen: state.screen, participation: state.participation, guardianPermission: state.guardianPermission, youngRecord: state.youngRecord, youngController: state.youngController }),
+    getUIState: () => ({ age: state.age, ageAudience: state.ageAudience, ageRoute: state.ageRoute, step: state.step, screen: state.screen, participation: state.participation, guardianPermission: state.guardianPermission, youngRecord: state.youngRecord, youngController: state.youngController }),
     setStep(step) { state.step = step; },
     finishHTML() { renderFinish(); return main.innerHTML; },
     setParticipationContext(age, participation = null, guardianPermission = null) {
@@ -74,13 +74,18 @@ const stepsFor = (answers, version = 'adult') => {
   return plain(survey.buildSteps(answers, domains, version));
 };
 function welcomeControls() {
-  const routes = Object.fromEntries(['young', 'youth', 'adult'].map(value => [value, Object.assign(nodeStub(), { value })]));
+  const audiences = Object.fromEntries(['adult', 'minor'].map(value => [value, Object.assign(nodeStub(), { value })]));
+  const routes = Object.fromEntries(['young', 'youth'].map(value => [value, Object.assign(nodeStub(), { value })]));
   const youthAges = Object.fromEntries(['younger', 'older'].map(value => [value, Object.assign(nodeStub(), { value })]));
+  mainStub.setList('input[name="age_audience"]', Object.values(audiences));
   mainStub.setList('input[name="age_route"]', Object.values(routes));
   const consent = mainStub.querySelector('#welcome-consent');
   consent.setList('input[name="youth_age"]', Object.values(youthAges));
   survey.renderWelcome();
-  return { routes, youthAges, consent, form: consent.querySelector('#welcome-consent-form') };
+  const minorOptions = mainStub.querySelector('#minor-age-options');
+  // The stub does not parse innerHTML, so mirror the initially rendered hidden attribute.
+  minorOptions.hidden = /id="minor-age-options" hidden/.test(mainStub.innerHTML);
+  return { audiences, routes, youthAges, minorOptions, consent, form: consent.querySelector('#welcome-consent-form') };
 }
 
 
@@ -739,12 +744,28 @@ test('age choices select the intended language and permission routes', () => {
 
 test('welcome expands age-matched information and 8–14 cannot start without guardian permission and own assent', () => {
   survey.resetAgePath();
-  const { routes, youthAges, consent, form } = welcomeControls();
+  const { audiences, routes, youthAges, minorOptions, consent, form } = welcomeControls();
   assert.match(mainStub.innerHTML, /Whose experience is this about/);
-  for (const age of ['7 or younger', '8–17', '18 or older']) assert.match(mainStub.innerHTML, new RegExp(age));
+  assert.match(mainStub.innerHTML, /Adult \(18 or older\)/);
+  assert.match(mainStub.innerHTML, /Child or young person \(under 18\)/);
+  assert.ok(mainStub.innerHTML.indexOf('Adult (18 or older)') < mainStub.innerHTML.indexOf('Child or young person (under 18)'));
+  assert.doesNotMatch(mainStub.innerHTML, /Choose an age range to see the right questions/);
+  assert.doesNotMatch(mainStub.innerHTML, /value="(?:adult|minor)" checked/);
+  assert.equal(survey.getUIState().ageAudience, null, 'Adult route is not assumed');
+  assert.equal(survey.getUIState().ageRoute, null);
+  assert.equal(survey.getUIState().age, null);
+  assert.equal(minorOptions.hidden, true);
+  assert.equal(consent.innerHTML, '', 'No participation route is shown before a choice');
+  for (const age of ['7 or younger', '8–17']) assert.match(mainStub.innerHTML, new RegExp(age));
   assert.doesNotMatch(mainStub.innerHTML, /12–14|7–11/);
+  audiences.minor.onchange();
+  assert.equal(survey.getUIState().ageAudience, 'minor');
+  assert.equal(survey.getUIState().ageRoute, null);
+  assert.equal(minorOptions.hidden, false);
+  assert.equal(consent.innerHTML, '', 'A minor route still needs a precise age choice');
   routes.youth.onchange();
   assert.equal(survey.getUIState().screen, 'welcome');
+  assert.equal(survey.getUIState().ageAudience, 'minor');
   assert.equal(survey.getUIState().ageRoute, 'youth');
   assert.equal(survey.getUIState().age, null);
   assert.match(consent.innerHTML, /No, 8–14/);
@@ -771,13 +792,15 @@ test('welcome expands age-matched information and 8–14 cannot start without gu
   assert.equal(survey.getUIState().step, 'connection');
   mainStub.querySelector('#back').onclick();
   assert.equal(survey.getUIState().screen, 'welcome');
+  assert.match(mainStub.innerHTML, /value="minor" checked/);
   assert.match(mainStub.innerHTML, /value="youth" checked/);
   survey.resetAgePath();
 });
 
-test('switching youth consent band or top-level age clears stale answers and agreement', () => {
+test('switching youth consent band or adult/minor audience clears stale answers and agreement', () => {
   survey.resetAgePath();
-  const { routes, youthAges, consent } = welcomeControls();
+  const { audiences, routes, youthAges, minorOptions, consent } = welcomeControls();
+  audiences.minor.onchange();
   routes.youth.onchange();
   youthAges.younger.onchange();
   const form = consent.querySelector('#welcome-consent-form');
@@ -793,12 +816,28 @@ test('switching youth consent band or top-level age clears stale answers and agr
   assert.equal(survey.getUIState().participation, null);
   assert.doesNotMatch(consent.innerHTML, /name="guardian-permission"/);
   assert.match(consent.innerHTML, /name="participation"/);
-  routes.adult.onchange();
+  audiences.adult.onchange();
   assert.equal(survey.getUIState().age, 'adult');
   assert.equal(survey.getContext().version, 'adult');
+  assert.equal(survey.getUIState().ageAudience, 'adult');
   assert.equal(survey.getUIState().ageRoute, 'adult');
+  assert.equal(minorOptions.hidden, true);
+  assert.equal(routes.youth.checked, false);
+  assert.equal(routes.young.checked, false);
+  assert.deepEqual(plain(survey.getContext().answers), {});
+  assert.equal(survey.getUIState().participation, null);
+  assert.equal(survey.getUIState().guardianPermission, null);
+  assert.doesNotMatch(consent.innerHTML, /name="guardian-permission"/);
+  assert.match(consent.innerHTML, /name="participation"/);
+  audiences.minor.onchange();
+  assert.equal(survey.getUIState().ageAudience, 'minor');
+  assert.equal(survey.getUIState().ageRoute, null);
+  assert.equal(survey.getUIState().age, null);
+  assert.equal(minorOptions.hidden, false);
+  assert.equal(consent.innerHTML, '');
   routes.young.onchange();
   assert.equal(survey.getUIState().age, 'young');
+  assert.equal(survey.getUIState().ageAudience, 'minor');
   assert.match(consent.innerHTML, /name="guardian-permission"/);
   assert.doesNotMatch(consent.innerHTML, /name="participation"/);
   assert.match(consent.innerHTML, /Your child does not have to answer/);
@@ -808,8 +847,9 @@ test('switching youth consent band or top-level age clears stale answers and agr
 test('15–17 and adults give their own inline agreement without a guardian permission checkbox', () => {
   for (const route of ['youth', 'adult']) {
     survey.resetAgePath();
-    const { routes, youthAges, consent, form } = welcomeControls();
-    routes[route].onchange();
+    const { audiences, routes, youthAges, consent, form } = welcomeControls();
+    if (route === 'adult') audiences.adult.onchange();
+    else { audiences.minor.onchange(); routes.youth.onchange(); }
     if (route === 'youth') youthAges.older.onchange();
     assert.doesNotMatch(consent.innerHTML, /name="guardian-permission"/);
     assert.match(consent.innerHTML, /name="participation"/);
@@ -824,6 +864,14 @@ test('15–17 and adults give their own inline agreement without a guardian perm
     form.onsubmit({ preventDefault() {} });
     assert.equal(survey.getUIState().screen, 'survey');
     assert.equal(survey.getUIState().step, 'connection');
+    if (route === 'adult') {
+      mainStub.querySelector('#back').onclick();
+      assert.equal(survey.getUIState().screen, 'welcome');
+      assert.equal(survey.getUIState().ageAudience, 'adult');
+      assert.equal(survey.getUIState().ageRoute, 'adult');
+      assert.match(mainStub.innerHTML, /value="adult" checked/);
+      assert.match(mainStub.innerHTML, /id="minor-age-options" hidden/);
+    }
   }
   survey.resetAgePath();
 });
