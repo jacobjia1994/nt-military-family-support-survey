@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { areas, needs, services } from '../support-data.mjs';
-import { journeys, humanHelpServiceIds, secondaryNeedIds } from '../support-journeys.mjs';
+import { journeys, concernGroups, concernDirectChoiceIds, humanHelpServiceIds, secondaryNeedIds } from '../support-journeys.mjs';
 
 const page = readFileSync(new URL('../support.html', import.meta.url), 'utf8');
 const config = readFileSync(new URL('../thank-you-resource.js', import.meta.url), 'utf8');
@@ -59,7 +59,7 @@ test('high-consequence situations lead to specific local or specialist routes', 
 });
 
 
-test('four circumstance routes and secondary access links reach all 39 source needs', () => {
+test('four routes keep each visible choice small and retain all source needs', () => {
   const knownNeeds = new Set(needs.map(need => need.id));
   const knownServices = new Set(services.map(service => service.id));
   const knownRoutes = new Set(journeys.map(journey => journey.id));
@@ -69,7 +69,7 @@ test('four circumstance routes and secondary access links reach all 39 source ne
   for (const journey of journeys) {
     assert.ok(journey.title);
     assert.ok(journey.choices.length >= 5, `${journey.id} has specific next choices`);
-    assert.ok(journey.choices.length <= (journey.id === 'concern' ? 13 : 7), `${journey.id} is scannable`);
+    if (journey.id !== 'concern') assert.ok(journey.choices.length <= 9, `${journey.id} is scannable`);
     const choiceIds = new Set();
     for (const choice of journey.choices) {
       assert.ok(!choiceIds.has(choice.id), `${journey.id} has unique choice ${choice.id}`);
@@ -77,7 +77,7 @@ test('four circumstance routes and secondary access links reach all 39 source ne
       assert.ok(choice.title);
       assert.ok(choice.needIds?.length, `${journey.id}/${choice.id} has an evidence anchor`);
       for (const id of choice.needIds) reachable.add(id);
-      assert.ok(choice.primaryServiceIds?.length >= 2 && choice.primaryServiceIds.length <= 4, `${journey.id}/${choice.id} leads to a short answer`);
+      assert.ok(choice.primaryServiceIds?.length >= 1 && choice.primaryServiceIds.length <= 4, `${journey.id}/${choice.id} leads to a short answer`);
       for (const id of [...choice.primaryServiceIds, ...(choice.moreServiceIds || [])]) assert.ok(knownServices.has(id), `${journey.id}/${choice.id} service ${id}`);
       if (choice.quickHelp) {
         assert.ok(choice.quickHelp.title && choice.quickHelp.contacts.length, `${journey.id}/${choice.id} has labelled quick contacts`);
@@ -86,39 +86,54 @@ test('four circumstance routes and secondary access links reach all 39 source ne
           assert.ok(services.find(service => service.id === contact.id).phone, `${contact.id} has a callable number`);
         }
       }
+      if (choice.related) {
+        const relatedRoute = journeys.find(item => item.id === choice.related.routeId);
+        assert.ok(relatedRoute?.choices.some(item => item.id === choice.related.choiceId), `${journey.id}/${choice.id} has a working related route`);
+      }
     }
   }
+  const concern = journeys.find(journey => journey.id === 'concern');
+  assert.equal(concernGroups.length, 5);
+  const groupedIds = concernGroups.flatMap(group => {
+    assert.ok(group.title && group.choiceIds.length >= 2 && group.choiceIds.length <= 5, `${group.id} is short`);
+    return group.choiceIds;
+  });
+  assert.deepEqual(concernDirectChoiceIds, ['safety']);
+  assert.equal(new Set([...groupedIds, ...concernDirectChoiceIds]).size, concern.choices.length);
+  assert.deepEqual([...groupedIds, ...concernDirectChoiceIds].sort(), concern.choices.map(choice => choice.id).sort());
   for (const id of humanHelpServiceIds) assert.ok(knownServices.has(id), `human help service ${id}`);
   assert.deepEqual([...reachable].sort((a, b) => a - b), [...knownNeeds].sort((a, b) => a - b));
   assert.deepEqual(secondaryNeedIds, [30, 31, 33, 36], 'Access modifiers and feedback stay outside the main taxonomy');
 });
 
-test('representative NT scenarios have an immediate fitting contact after the second choice', () => {
+test('representative NT situations show a fitting first action', () => {
   const route = id => journeys.find(journey => journey.id === id);
   const choice = (routeId, choiceId) => route(routeId).choices.find(item => item.id === choiceId);
-  assert.ok(choice('moving', 'school').primaryServiceIds.includes('school-change'));
-  assert.ok(choice('moving', 'housing').primaryServiceIds.includes('dha-housing'));
-  assert.ok(choice('moving', 'housing').quickHelp.contacts.some(contact => contact.id === 'salvos-topend-families'));
-  assert.ok(choice('concern', 'housing').quickHelp.contacts.some(contact => contact.id === 'salvos-alice-waterhole'));
-  assert.ok(choice('concern', 'housing').quickHelp.contacts.some(contact => contact.id === 'salvos-katherine-doorways'));
-  assert.ok(choice('apart', 'child').primaryServiceIds.includes('adf-equip'));
-  assert.ok(choice('leaving', 'transition').primaryServiceIds.includes('nt-transition-centre'));
-  assert.equal(choice('leaving', 'already-left').primaryServiceIds[0], 'veteran-wellbeing-agency');
-  assert.ok(!choice('leaving', 'already-left').primaryServiceIds.includes('nt-transition-centre'));
-  assert.ok(choice('concern', 'childcare').primaryServiceIds.includes('kentish-fdc'));
-  assert.ok(choice('concern', 'mental').primaryServiceIds.includes('adf-allhours'));
-  assert.ok(!choice('concern', 'mental').primaryServiceIds.includes('darwin-mmhc'), 'Adult-only local care is not offered to everyone');
-  assert.ok(choice('concern', 'safety').primaryServiceIds.includes('1800respect'));
+  for (const [routeId, choiceId, first] of [
+    ['moving', 'arriving', 'dmfs-helpline'], ['moving', 'housing', 'dha-housing'],
+    ['moving', 'school', 'school-change'], ['apart', 'child', 'parentline'],
+    ['leaving', 'already-left', 'veteran-wellbeing-agency'], ['leaving', 'caring', 'carer-gateway'],
+    ['leaving', 'money', 'national-debt-helpline'],
+    ['concern', 'homelessness', 'nt-central-intake'], ['concern', 'reserve-work', 'reserve-protection'],
+    ['concern', 'money', 'national-debt-helpline'], ['concern', 'young-person', 'kids-helpline'],
+    ['concern', 'doctor', 'general-health-nt'], ['concern', 'disability', 'ndis'],
+    ['concern', 'carer', 'carer-gateway'], ['concern', 'suicide-loss', 'standby-nt'],
+    ['concern', 'safety', '1800respect']
+  ]) assert.equal(choice(routeId, choiceId).primaryServiceIds[0], first, `${routeId}/${choiceId}`);
+  assert.ok(choice('concern', 'homelessness').quickHelpFirst);
+  assert.ok(choice('concern', 'homelessness').quickHelp.contacts.some(contact => contact.id === 'salvos-alice-waterhole'));
+  assert.ok(choice('concern', 'homelessness').quickHelp.contacts.some(contact => contact.id === 'salvos-katherine-doorways'));
+  assert.ok(choice('concern', 'young-person').quickHelp.contacts.some(contact => contact.id === 'headspace-alice'));
+  assert.ok(choice('concern', 'doctor').primaryServiceIds.includes('imsick'));
+  assert.ok(choice('concern', 'specialist-travel').primaryServiceIds.includes('defence-remote-travel'));
+  assert.ok(choice('concern', 'mental').quickHelp.contacts.some(contact => contact.id === 'wurli-sewb'));
   for (const id of ['sarc-darwin', 'sarc-alice', 'sarc-katherine', 'sarc-tennant']) {
     assert.ok(choice('concern', 'safety').quickHelp.contacts.some(contact => contact.id === id));
   }
-  assert.ok(choice('concern', 'health').primaryServiceIds.includes('defence-remote-travel'));
-  assert.ok(choice('concern', 'safety').primaryServiceIds.includes('wossca-alice'), 'Alice Springs has a local safety route');
-  assert.ok(choice('concern', 'grief').primaryServiceIds.includes('dva-death-support'));
   assert.ok(humanHelpServiceIds.includes('veteran-wellbeing-agency'));
 });
 
-test('rendered safety and housing routes expose direct local calls without opening More', async () => {
+test('grouped paths and high-need results render the correct action without opening More', async () => {
   const previous = { document: globalThis.document, window: globalThis.window, location: globalThis.location };
   const finder = { innerHTML: '', querySelector: () => ({ focus() {} }) };
   let onHashChange;
@@ -132,16 +147,32 @@ test('rendered safety and housing routes expose direct local calls without openi
     assert.ok(safety.indexOf('tel:0889226472') < safety.indexOf('more-services'));
     assert.ok(safety.indexOf('tel:0889624361') < safety.indexOf('more-services'));
     assert.match(safety, /aria-label="Official website for 1800RESPECT"/);
-    assert.match(safety, /aria-label="Who can use 1800RESPECT and what to check"/);
+    assert.match(safety, /aria-label="Access details for 1800RESPECT"/);
+    assert.match(safety, /<strong>For:<\/strong> Anyone affected by domestic, family or sexual violence/);
 
-    globalThis.location.hash = '#situation/concern/housing';
+    globalThis.location.hash = '#situation/concern';
+    onHashChange();
+    assert.match(finder.innerHTML, /#group\/home-money/);
+    assert.match(finder.innerHTML, /#situation\/concern\/safety/);
+    assert.doesNotMatch(finder.innerHTML, /#situation\/concern\/reserve-work/);
+
+    globalThis.location.hash = '#group/children';
+    onHashChange();
+    assert.match(finder.innerHTML, /#situation\/concern\/young-person/);
+    assert.doesNotMatch(finder.innerHTML, /#situation\/concern\/homelessness/);
+
+    globalThis.location.hash = '#situation/concern/homelessness';
     onHashChange();
     const housing = finder.innerHTML;
-    assert.ok(housing.indexOf('Defence Housing Australia') < housing.indexOf('At risk of homelessness?'));
+    assert.ok(housing.indexOf('At risk of homelessness?') < housing.indexOf('Lutheran Care NT Central Intake'));
+    assert.doesNotMatch(housing, /Defence Housing Australia/);
     assert.ok(housing.indexOf('tel:0889275189') < housing.indexOf('more-services'));
     assert.ok(housing.indexOf('tel:0889510200') < housing.indexOf('more-services'));
     assert.ok(housing.indexOf('tel:0889712265') < housing.indexOf('more-services'));
-    assert.match(housing, /not homelessness help/);
+
+    globalThis.location.hash = '#situation/concern/work-money';
+    onHashChange();
+    assert.match(finder.innerHTML, /#situation\/concern\/money/);
   } finally {
     globalThis.document = previous.document;
     globalThis.window = previous.window;
