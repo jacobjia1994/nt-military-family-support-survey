@@ -1,5 +1,5 @@
-import {topics, questionsFor, getResults, legacyRoute} from './support-paths.mjs?v=20260926-3';
-import {services} from './support-catalog.mjs?v=20260926-3';
+import {topics, questionsFor, preferencesFor, getResults, legacyRoute} from './support-paths.mjs?v=20260926-4';
+import {services} from './support-catalog.mjs?v=20260926-4';
 
 const root = document.getElementById('finder');
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -11,6 +11,7 @@ let state = {topicId:null, answers:{}};
 let savedRegion = '';
 let currentQuestion = null;
 let started = false;
+const ntRegions = new Set(['darwin','palmerston','katherine','alice','tennant','gove','remote']);
 
 function focusHeading() {
   root.querySelector('h1')?.focus();
@@ -47,16 +48,31 @@ function showQuestion(topic, question, list) {
   const backHash = index > 0 ? questionHash(topic.id, list[index-1].id) : '#home';
   const related = question.id === 'need' && topic.links?.length ? `<nav class="related-needs" aria-label="Related help">${topic.links.map(item => link(item.href,item.label)).join('')}</nav>` : '';
   const selected = state.answers[question.id];
-  root.innerHTML = `<nav class="back-nav" aria-label="Support navigation"><a href="${backHash}">Back</a><a href="#home">All support topics</a></nav><p class="topic-label">${esc(topic.title)}</p>${question.id === 'need' || ['unsafe','refuge','assault','misconduct'].includes(state.answers.need) ? safetyNotice(topic) : ''}<form id="support-question" novalidate><fieldset class="choice-fieldset"${question.hint ? ' aria-describedby="question-hint"' : ''}><legend><h1 tabindex="-1">${esc(question.label)}</h1></legend>${question.hint ? `<p id="question-hint" class="question-hint">${esc(question.hint)}</p>` : ''}<p class="error" id="question-error" role="alert" hidden>Choose an option to continue.</p><div class="choice-list">${question.options.map((option, i) => `<label class="choice-row" for="answer-${i}"><input type="radio" id="answer-${i}" name="${esc(question.id)}" value="${esc(option.value)}" required${selected === option.value ? ' checked' : ''}${option.detail ? ` aria-describedby="answer-detail-${i}"` : ''}><span><strong>${esc(option.label)}</strong>${option.detail ? `<small id="answer-detail-${i}">${esc(option.detail)}</small>` : ''}</span></label>`).join('')}</div></fieldset>${related}<div class="form-actions"><button class="button" type="submit">Continue</button></div></form>`;
+  const safety = question.id !== 'need' && ['unsafe','refuge','assault','misconduct','child-violence'].includes(state.answers.need) ? safetyNotice(topic) : '';
+  root.innerHTML = `<nav class="back-nav" aria-label="Support navigation"><a href="${backHash}">Back</a><a href="#home">All support topics</a></nav><p class="topic-label">${esc(topic.title)}</p>${safety}<form id="support-question" novalidate><fieldset class="choice-fieldset"${question.hint ? ' aria-describedby="question-hint"' : ''}><legend><h1 tabindex="-1">${esc(question.label)}</h1></legend>${question.hint ? `<p id="question-hint" class="question-hint">${esc(question.hint)}</p>` : ''}<p class="error" id="question-error" role="alert" hidden>Choose an option to continue.</p><div class="choice-list">${question.options.map((option, i) => `<label class="choice-row" for="answer-${i}"><input type="radio" id="answer-${i}" name="${esc(question.id)}" value="${esc(option.value)}" required${selected === option.value ? ' checked' : ''}${option.detail ? ` aria-describedby="answer-detail-${i}"` : ''}><span><strong>${esc(option.label)}</strong>${option.detail ? `<small id="answer-detail-${i}">${esc(option.detail)}</small>` : ''}</span></label>`).join('')}</div></fieldset><div class="form-actions"><button class="button" type="submit">Continue</button></div></form>${related}`;
   document.title = `${question.label} — ${topic.title} | Lutheran Care`;
 }
 function actionBlock(service, primary) {
   const action = service.phone ? link(telephone(service.phone), `Call ${service.phone}`, primary ? 'button' : '') : link(service.url,service.action || 'Visit official website',primary ? 'button' : '');
   return `${action}${service.phone ? link(service.url,service.action || 'Official website',primary ? 'official' : '') : ''}`;
 }
-function serviceDetails(service, primary=false) {
-  if (primary) return `<div class="result-layout"><section class="result-main"><h1 tabindex="-1">${esc(service.name)}</h1><p class="area">${esc(service.area)}</p><p class="offer">${esc(service.offer)}</p><p class="fit"><strong>Who it helps:</strong> ${esc(service.audience)}</p><p class="cost"><strong>Cost:</strong> ${esc(service.cost)}</p>${service.access ? `<p class="access">${esc(service.access)}</p>` : ''}</section><aside class="contact-panel" aria-label="Contact ${esc(service.name)}">${actionBlock(service,true)}${service.hours ? `<p class="hours">${esc(service.hours)}</p>` : ''}${service.extraUrl ? link(service.extraUrl,service.extraLabel || 'More ways to contact','official') : ''}</aside></div>`;
-  return `<article class="alternative"><h3>${esc(service.name)}</h3><p class="area">${esc(service.area)}</p><p>${esc(service.offer)}</p><p><strong>Who it helps:</strong> ${esc(service.audience)}</p><p><strong>Cost:</strong> ${esc(service.cost)}</p>${service.access ? `<p>${esc(service.access)}</p>` : ''}${service.hours ? `<p class="quiet">${esc(service.hours)}</p>` : ''}<div class="alt-actions">${actionBlock(service,false)}</div>${service.extraUrl ? link(service.extraUrl,service.extraLabel || 'More ways to contact','official') : ''}</article>`;
+function serviceDetails(service, primary=false, beforeAction='') {
+  if (primary) return `<div class="result-layout"><section class="result-main"><h1 tabindex="-1">${esc(service.name)}</h1><p class="area">${esc(service.area)}</p><p class="offer">${esc(service.offer)}</p><p class="fit"><strong>Who it helps:</strong> ${esc(service.audience)}</p><p class="cost"><strong>Cost:</strong> ${esc(service.cost)}</p></section><aside class="contact-panel" aria-label="Contact ${esc(service.name)}">${beforeAction}${actionBlock(service,true)}${service.hours ? `<p class="hours">${esc(service.hours)}</p>` : ''}${service.extraUrl ? link(service.extraUrl,service.extraLabel || 'More ways to contact','official') : ''}</aside>${service.access ? `<p class="access">${esc(service.access)}</p>` : ''}</div>`;
+  return `<article class="alternative"><h3>${esc(service.name)}</h3><p class="area">${esc(service.area)}</p><p>${esc(service.offer)}</p><p><strong>Who it helps:</strong> ${esc(service.audience)}</p><p><strong>Cost:</strong> ${esc(service.cost)}</p><div class="alt-actions">${actionBlock(service,false)}</div>${service.hours ? `<p class="quiet">${esc(service.hours)}</p>` : ''}${service.extraUrl ? link(service.extraUrl,service.extraLabel || 'More ways to contact','official') : ''}${service.access ? `<p class="access">${esc(service.access)}</p>` : ''}</article>`;
+}
+function preferenceGroups(result) {
+  const coreIds = new Set([...(result.ids || []), ...(result.moreIds || [])]);
+  return (result.preferenceGroups || []).map(group => {
+    const ids = [...new Set(group.ids || [])].filter(id => services[id] && !coreIds.has(id));
+    if (!ids.length && !group.note) return '';
+    return `<section class="preference-group"><h2>${esc(group.title)}</h2>${group.note ? `<p class="preference-note">${esc(group.note)}</p>` : ''}${ids.map(id => serviceDetails(services[id])).join('')}${group.link ? `<p>${link(group.link.href,group.link.label)}</p>` : ''}</section>`;
+  }).join('');
+}
+function preferenceChoices(topic, result) {
+  const options = preferencesFor(topic.id,state.answers);
+  if (!options.length) return '';
+  const selected = Array.isArray(state.answers.preferences) ? state.answers.preferences : [];
+  return `<section class="support-preferences"><fieldset class="preference-fieldset" aria-describedby="preference-hint"><legend>Support preferences (optional)</legend><p class="question-hint" id="preference-hint">Choose any that matter to you. Extra contacts appear below.</p><div class="preference-list">${options.map((option,i) => `<label class="choice-row" for="preference-${i}"><input type="checkbox" id="preference-${i}" name="support-preference" value="${esc(option.value)}"${selected.includes(option.value) ? ' checked' : ''}${option.detail ? ` aria-describedby="preference-detail-${i}"` : ''}><span><strong>${esc(option.label)}</strong>${option.detail ? `<small id="preference-detail-${i}">${esc(option.detail)}</small>` : ''}</span></label>`).join('')}</div></fieldset><p id="preference-status" class="sr-only" role="status"></p><div id="preference-results">${preferenceGroups(result)}</div></section>`;
 }
 function showResults(topic) {
   currentQuestion = null;
@@ -69,9 +85,10 @@ function showResults(topic) {
     return;
   }
   const summary = list.filter(question=>['need','age','childAge','region'].includes(question.id)&&!(question.id==='age'&&state.answers.childAge)).map(question => question.options.find(option => option.value === state.answers[question.id])?.label).filter(Boolean).join(' · ');
-  const note = result.note ? `<p class="notice">${esc(result.note).replace(/1800 737 732/g,'<a href="tel:1800737732">1800 737 732</a>').replace(/call 000/g,'call <a href="tel:000">000</a>')}</p>` : '';
+  const note = result.note || result.preferenceLink ? `<p class="notice">${esc(result.note).replace(/1800 737 732/g,'<a href="tel:1800737732">1800 737 732</a>').replace(/call 000/g,'call <a href="tel:000">000</a>')}${result.preferenceLink ? ` ${link(result.preferenceLink.href,result.preferenceLink.label)}` : ''}</p>` : '';
+  const noteBefore = result.noteBefore || (topic.id === 'relationships' && ['unsafe','refuge','assault','misconduct','child-violence'].includes(state.answers.need));
   const lastQuestion = list.at(-1);
-  root.innerHTML = `<nav class="back-nav" aria-label="Support navigation"><a href="${lastQuestion ? questionHash(topic.id,lastQuestion.id) : '#'+topic.id}">Back to your choices</a><a href="#home">All support topics</a></nav><div class="context"><p>${esc(summary || topic.title)}</p><a href="#${topic.id}">Change</a></div>${topic.id === 'relationships' ? note : ''}${serviceDetails(services[ids[0]],true)}${topic.id !== 'relationships' ? note : ''}${result.say ? `<details class="say"><summary>What could I say when I contact them?</summary><p>“${esc(result.say)}”</p></details>` : ''}${ids.length > 1 ? `<section class="alternate-list" aria-label="Other suitable options"><h2>Other ways to get help</h2>${ids.slice(1).map(id => serviceDetails(services[id])).join('')}</section>` : ''}${more.length ? `<details class="more-services"><summary>More relevant services</summary><div>${more.map(id => serviceDetails(services[id])).join('')}</div></details>` : ''}<div class="result-bottom"><a href="#help">Need help finding another option?</a><button class="text-button" data-action="print">Print these contacts</button></div>`;
+  root.innerHTML = `<nav class="back-nav" aria-label="Support navigation"><a href="${lastQuestion ? questionHash(topic.id,lastQuestion.id) : '#'+topic.id}">Back to your choices</a><a href="#home">All support topics</a></nav><div class="context"><p>${esc(result.contextLabel || summary || topic.title)}</p><a href="#${topic.id}">Change</a></div>${serviceDetails(services[ids[0]],true,noteBefore ? note : '')}${!noteBefore ? note : ''}${result.say ? `<details class="say"><summary>What could I say when I contact them?</summary><p>“${esc(result.say)}”</p></details>` : ''}${preferenceChoices(topic,result)}${ids.length > 1 ? `<section class="alternate-list" aria-label="Other suitable options"><h2>Other ways to get help</h2>${ids.slice(1).map(id => serviceDetails(services[id])).join('')}</section>` : ''}${more.length ? `<details class="more-services"><summary>More relevant services</summary><div>${more.map(id => serviceDetails(services[id])).join('')}</div></details>` : ''}<div class="result-bottom"><a href="#help">Need help finding another option?</a><button class="text-button" data-action="print">Print these contacts</button></div>`;
   document.title = `${topic.title} — Support contacts | Lutheran Care`;
 }
 function render() {
@@ -92,6 +109,9 @@ function render() {
   } else {
     initialiseTopic(topic.id,seededNeed);
     let list = questions();
+    const regionQuestion = list.find(question => question.id === 'region');
+    if (regionQuestion?.options.some(option => option.value === 'nt') && ntRegions.has(state.answers.region)) state.answers.region = 'nt';
+    else if (state.answers.region === 'nt' && regionQuestion?.options.some(option => option.value === savedRegion)) state.answers.region = savedRegion;
     // A stale deep link must not manufacture an answer that is not offered.
     for (const question of list) {
       if (state.answers[question.id] && !hasAnswer(question)) delete state.answers[question.id];
@@ -113,6 +133,15 @@ function render() {
   started = true;
 }
 root.addEventListener('change', event => {
+  if (event.target.matches('input[name="support-preference"]')) {
+    state.answers.preferences = [...root.querySelectorAll('input[name="support-preference"]:checked')].map(input => input.value);
+    const result = getResults(state.topicId,state.answers);
+    // Keep the checkbox nodes in place: selecting a preference must not move focus or scroll.
+    document.getElementById('preference-results').innerHTML = preferenceGroups(result);
+    const count = document.getElementById('preference-results').querySelectorAll('.alternative').length;
+    document.getElementById('preference-status').textContent = count ? `${count} additional ${count === 1 ? 'contact' : 'contacts'} shown below. Your main contact stays the same.` : state.answers.preferences.length ? 'Preferences updated. Your main contact stays the same. Check any eligibility notes below.' : 'Your main contact stays the same. No additional contacts selected.';
+    return;
+  }
   if (!event.target.matches('input[type="radio"]')) return;
   document.getElementById('question-error')?.setAttribute('hidden','');
   // Native radio groups keep arrow-key navigation; selection never advances a page.
@@ -134,15 +163,15 @@ root.addEventListener('submit', event => {
     // Re-answering an early question cannot retain later eligibility for a different person.
     for (const key of Object.keys(state.answers)) {
       const keyPosition = previous.findIndex(question => question.id === key);
-      if (key !== 'region' && (keyPosition > position || keyPosition === -1)) delete state.answers[key];
+      if (key !== 'region' && key !== 'preferences' && (keyPosition > position || keyPosition === -1)) delete state.answers[key];
     }
   }
   state.answers[questionId] = selected.value;
-  if (questionId === 'region') savedRegion = selected.value;
+  if (questionId === 'region' && !(selected.value === 'nt' && ntRegions.has(savedRegion))) savedRegion = selected.value;
   let nextList = questions();
   const allowedKeys = new Set(nextList.map(question => question.id));
   for (const key of Object.keys(state.answers)) {
-    if (!allowedKeys.has(key) && key !== 'region') delete state.answers[key];
+    if (!allowedKeys.has(key) && key !== 'region' && key !== 'preferences') delete state.answers[key];
   }
   nextList = questions();
   const nextIndex = nextList.findIndex(question=>question.id===questionId)+1;
@@ -162,4 +191,13 @@ document.querySelector('.skip-link')?.addEventListener('click', event => {
   document.getElementById('main').scrollIntoView();
 });
 window.addEventListener('hashchange',render);
+let printOpened = [];
+window.addEventListener('beforeprint', () => {
+  printOpened = [...root.querySelectorAll('details.more-services:not([open])')];
+  for (const details of printOpened) details.open = true;
+});
+window.addEventListener('afterprint', () => {
+  for (const details of printOpened) details.open = false;
+  printOpened = [];
+});
 render();

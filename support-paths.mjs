@@ -13,7 +13,7 @@ export const topics = [
  {id:'connection',title:'Social groups & connection',hint:'Meeting people, settling in and family activities'}
 ];
 const needs = {
- mental:[['feelings','Stress, mood or mental health'],['grief','Grief after a death'],['practical-loss','Practical help after a death'],['suicide-loss','After a death by suicide'],['private','Anonymous support about Defence life'],['lgbtq','LGBTIQA+ peer support'],['men','Counselling for men (15 or older)'],['indigenous','Aboriginal or Torres Strait Islander support'],['addiction','Alcohol, drugs or gambling']],
+ mental:[['feelings','Stress, mood or mental health'],['grief','Grief after a death'],['practical-loss','Practical help after a death'],['suicide-loss','After a death by suicide'],['addiction','Alcohol, drugs or gambling']],
  relationships:[['counselling','Relationship counselling'],['separation','Separation or parenting arrangements'],['unsafe','Violence or feeling unsafe'],['refuge','A safe place to stay because of violence'],['assault','After sexual assault'],['misconduct','Defence-related sexual misconduct'],['child-violence','Support for a child affected by violence'],['legal','Legal advice']],
  parenting:[['parenting','Parenting or a child’s behaviour'],['childcare','Finding childcare'],['emergency-care','Urgent help caring for children'],['school','Starting or changing schools'],['learning','Learning or support at school'],['development','A child’s development or disability'],['education-costs','Help with education costs']],
  money:[['bills','Debt, bills or reduced income'],['essentials','Food or other essentials'],['housing','Finding or keeping housing'],['tonight','Nowhere to stay tonight'],['youth-housing','A young person aged 12–18 is leaving home or at risk'],['tenancy','A rent, bond or tenancy problem'],['defence-housing','Defence housing or a posting move'],['claims','DVA claims or benefits'],['family-crisis','Practical help during a family crisis']],
@@ -21,6 +21,7 @@ const needs = {
  care:[['health','Medical advice or finding care'],['baby','Pregnancy or a new baby'],['disability','Disability support or advocacy'],['carer','Support for an unpaid carer'],['older','Care as someone gets older'],['travel','Travel for medical treatment'],['costs','Help with family health costs']],
  connection:[['local','Local groups and activities'],['settle','Getting connected after a move'],['apart','Family support during time apart'],['migrant','Migrant or refugee settlement support']]
 };
+const auxiliaryNeeds={private:'Anonymous support about Defence life',lgbtq:'LGBTIQA+ peer support',men:'Counselling for men (15 or older)',indigenous:'Aboriginal or Torres Strait Islander support'};
 const ageQuestion=question('age','How old is the person needing support?',[
  ['26+','26 or older'],['18-25','18–25'],['under18','Under 18']
 ], 'Choose the age of the person who will receive the support.');
@@ -39,16 +40,16 @@ const roleQuestion=question('role','Who is the support for?',[
  ['member','The serving or former member'],['partner','Their partner'],['child','Their child'],['other','Another relative or carer'],['unsure','Not sure']
 ]);
 export function questionsFor(topic,a={}) {
- const qs=[];if(topic!=='help')qs.push(question('need','What would help?',needs[topic]||[]));
+ const qs=[];if(topic!=='help')qs.push(question('need','What would help?',topic==='mental'&&auxiliaryNeeds[a.need]?[...needs.mental,[a.need,auxiliaryNeeds[a.need]]]:needs[topic]||[]));
  const n=a.need;
  if(!n&&topic!=='help')return qs;
  if(topic==='mental'&&['feelings','grief'].includes(n)){
-  qs.push(ageQuestion);if(a.age==='under18')qs.push(childAgeQuestion);
+  qs.push(n==='grief'?question('age','How old is the person needing support?',[['adult','18 or older'],['under18','Under 18']]):ageQuestion);if(a.age==='under18')qs.push(childAgeQuestion);
   if(a.age && a.age!=='under18')qs.push(counsellingQuestion);
   qs.push(regionQuestion);
  } else if(topic==='mental'&&n==='indigenous') {
   qs.push(question('indigenousNeed','What kind of support?',[['distress','Someone to talk to now'],['local','Local social and emotional wellbeing support'],['loss','After a suicide or traumatic death']]));
-  if(a.indigenousNeed==='local')qs.push(regionQuestion);
+  if(a.indigenousNeed==='local'){qs.push(regionQuestion);if(a.region==='alice')qs.push(question('congressFit','Is the support for an Aboriginal person?',[['yes','Yes'],['other','No or not sure']], 'Congress provides free services for Aboriginal clients. Other referral options are available.'));}
  } else if(topic==='mental'&&n==='addiction') {
   qs.push(question('addiction','What is the concern?',[['substances','Alcohol or other drugs'],['gambling','Gambling']]));
  } else if(topic==='mental'&&n==='practical-loss') {
@@ -76,7 +77,7 @@ export function questionsFor(topic,a={}) {
   if(['bills','tonight','family-crisis','defence-housing'].includes(n))qs.push(connectionQuestion);
   if(n==='bills')qs.push(roleQuestion);
   if(n==='tonight'&&['serving','reserve'].includes(a.connection))qs.push(question('housingReason','Why is accommodation needed?',[['crisis','A domestic crisis means we cannot stay at home'],['other','Another reason or not sure']]));
-  if(n==='defence-housing')qs.push(question('housingTask','Which part of the move?',[
+  if(n==='defence-housing'&&['serving','reserve'].includes(a.connection))qs.push(question('housingTask','Which part of the move?',[
    ['home','Service housing or rent allowance'],['removal','An approved Defence removal'],['other','Other posting or housing questions']
   ]));
   if(n!=='family-crisis')qs.push(regionQuestion);
@@ -106,16 +107,53 @@ export function questionsFor(topic,a={}) {
   if(n==='costs'&&a.connection==='serving'&&['partner','child'].includes(a.role))qs.push(question('dependant','Are they a recognised Defence dependant?',[['yes','Yes'],['no','No or not sure']]));
  } else if(topic==='connection') {if(n!=='migrant')qs.push(connectionQuestion);if(['local','settle'].includes(n))qs.push(roleQuestion);qs.push(regionQuestion);}
  else if(topic==='help') {qs.push(connectionQuestion);}
- return qs;
+ const regionMode=regionModeFor(topic,a);
+ const filtered=qs.filter(q=>q.id!=='region'||regionMode!=='none').filter(q=>q.id!=='ntResidence'||!(topic==='care'&&n==='travel'&&a.connection==='serving'&&!['partner','child'].includes(a.role)));
+ return filtered.map(q=>q.id==='region'&&regionMode==='jurisdiction'?question('region','Is support needed in the Northern Territory?',[['nt','Northern Territory'],['outside','Outside the NT']]):q);
 }
+
+// Region is only requested when it changes a service or access requirement.
+export function regionModeFor(topic,a={}) {
+ const n=a.need, serving=['serving','reserve'].includes(a.connection);
+ if(topic==='mental') {
+  if(n==='grief'&&a.age&&a.age!=='under18')return 'none';
+  if(['feelings','grief'].includes(n)&&a.age==='under18'&&a.childAge==='5-11')return 'jurisdiction';
+  if(n==='practical-loss')return a.legacyFit==='eligible'?'jurisdiction':'none';
+  return ['feelings','grief'].includes(n)||(n==='indigenous'&&a.indigenousNeed==='local')?'full':'none';
+ }
+ if(topic==='relationships') {
+  if(['counselling','misconduct'].includes(n)||(n==='unsafe'&&a.violenceSupport==='any')||(n==='child-violence'&&a.childViolenceAge!=='0-12'))return 'none';
+  if(n==='separation'||(n==='legal'&&!(a.womenLegal==='yes'&&a.legalIssue==='family-civil')))return 'jurisdiction';
+  return 'full';
+ }
+ if(topic==='parenting') {
+  if(n==='education-costs'||(n==='childcare'&&a.careHours==='regular')||(n==='emergency-care'&&serving)||(n==='learning'&&(a.schoolType==='government'||serving)))return 'none';
+  return n==='development'?'full':'jurisdiction';
+ }
+ if(topic==='money')return ['bills','family-crisis','defence-housing'].includes(n)?'none':['tonight','tenancy'].includes(n)?'jurisdiction':'full';
+ if(topic==='work')return n==='transition'&&serving?'jurisdiction':'none';
+ if(topic==='care') {
+  if(n==='costs'||(n==='travel'&&a.connection==='serving'&&!['partner','child'].includes(a.role)))return 'none';
+  return ['disability','travel'].includes(n)||(n==='older'&&a.olderNeed==='alone')||(n==='baby'&&['nurse','young-parent','wurli'].includes(a.babyNeed))?'full':'none';
+ }
+ return topic==='connection'?'full':'none';
+}
+
+export function preferencesFor(topic,a={}) {
+ if(topic!=='mental'||!['feelings','grief','suicide-loss','addiction'].includes(a.need))return [];
+ const result=[{value:'anonymous',label:'Anonymous support'},{value:'lgbtq',label:'LGBTIQA+ peer support'},{value:'indigenous',label:'Aboriginal or Torres Strait Islander support'}];
+ if(['adult','18-25','26+'].includes(a.age))result.push({value:'men',label:'Counselling for men'});
+ return result;
+}
+
 const unique=ids=>[...new Set(ids.filter(Boolean))];
 export function getResults(topic,a={}) {
- const n=a.need,region=a.region||'remote',inNT=region!=='outside',age=a.age==='under18'?a.childAge:a.age;
+ const n=a.need,region=regionModeFor(topic,a)==='none'?'remote':(a.region||'remote'),inNT=region!=='outside',age=a.age==='under18'?a.childAge:a.age==='adult'?'26+':a.age;
  const serving=['serving','reserve'].includes(a.connection),fulltime=a.connection==='serving';
  const c={...a,region,age,connection:serving?'serving':a.connection};
  const localOffice=region==='katherine'?'dmfs-tindal':['darwin','palmerston','alice'].includes(region)?'dmfs-darwin':'dmfs-helpline';
  const primaryNav=serving?'dmfs-helpline':'wellbeing-agency';
- let ids=[],moreIds=[],note='',say='I would like help working out the next step.';
+ let ids=[],moreIds=[],note='',noteBefore=false,contextLabel='',preferenceLink=null,say='I would like help working out the next step.';
  function base(task,focus){const r=baseMatch({...c,task,focus});ids=r.ids;note=r.note;say=r.say;}
  if(topic==='mental'){
   if(['feelings','grief'].includes(n)){
@@ -131,7 +169,16 @@ export function getResults(topic,a={}) {
   else if(n==='private'){ids=['safe-zone'];say='I would like to talk about what is happening without giving my name.';}
   else if(n==='men'){ids=['mensline'];say='I would like to talk with a counsellor about emotional, family or relationship concerns.';}
   else if(n==='lgbtq'){ids=['qlife'];say='I would like to talk with an LGBTIQA+ peer supporter.';}
-  else if(n==='indigenous'){ids=a.indigenousNeed==='loss'?['thirrili','13yarn']:a.indigenousNeed==='local'&&region==='katherine'?['wurli-sewb','13yarn']:a.indigenousNeed==='local'&&['darwin','palmerston'].includes(region)?['danila-dilba','13yarn']:['13yarn'];say='I would like Aboriginal or Torres Strait Islander support for myself or my family.';}
+  else if(n==='indigenous'){
+   if(a.indigenousNeed==='loss')ids=['thirrili','13yarn'];
+   else if(a.indigenousNeed==='local'){
+    const local=region==='katherine'?'wurli-sewb':['darwin','palmerston'].includes(region)?'danila-dilba':region==='alice'&&a.congressFit==='yes'?'congress-sewb':null;
+    ids=local?[local,'13yarn']:['healthdirect','13yarn'];
+    contextLabel='Local Aboriginal or Torres Strait Islander wellbeing support · '+(regions.find(r=>r[0]===region)?.[1]||'your area');
+    if(!local){note='This guide has not verified a matching local service for these choices. Ask your usual health clinic or healthdirect about a local referral. 13YARN is a separate phone support option.';noteBefore=true;}
+   }else ids=['13yarn'];
+   say=a.indigenousNeed==='local'?'I am looking for ongoing local Aboriginal or Torres Strait Islander social and emotional wellbeing support. Can you help me access the right local team?':'I would like Aboriginal or Torres Strait Islander support for myself or my family.';
+  }
   else if(n==='addiction'){ids=[a.addiction==='gambling'?'gambling-help':'alcohol-drug-chat'];say='I would like support with my own or someone else’s alcohol, drug or gambling concerns.';}
  } else if(topic==='relationships'){
   if(n==='counselling'){base('talk','relationship');if(a.counselling==='reserve')ids=['reserve-counselling','family-advice'];}
@@ -193,9 +240,15 @@ export function getResults(topic,a={}) {
    ids=a.olderNeed==='alone'&&a.careFinderFit==='eligible'&&['darwin','palmerston','katherine','gove','alice'].includes(region)?['care-finder-nt','aged-care']:[{care:'aged-care',memory:'dementia-helpline',rights:'aged-advocacy'}[a.olderNeed]||'aged-care'];
    say='I would like help finding or arranging the right care for an older person.';
   } else if(n==='travel'){
-   ids=inNT?[['darwin','palmerston','katherine','alice','tennant','gove'].includes(region)?'pats-'+region:'pats-nt']:['healthdirect'];const familyTravel=fulltime&&['partner','child'].includes(a.role);
-   if(a.ntResidence==='no')ids=fulltime?[familyTravel?'defence-medical-travel':'defence-medical-enquiry']:['medicare-costs'];else if(fulltime){if(familyTravel)ids.push('defence-medical-travel');else ids=['defence-medical-enquiry'];}
-   say='I need to travel for specialist treatment. What assistance could apply before I book?';
+   const office={darwin:'patient-travel-darwin',palmerston:'patient-travel-darwin',katherine:'patient-travel-katherine',alice:'patient-travel-alice',tennant:'patient-travel-tennant',gove:'patient-travel-gove'}[region]||'patient-travel-offices';
+   const familyTravel=fulltime&&['partner','child'].includes(a.role);
+   if(fulltime&&!familyTravel)ids=['defence-medical-enquiry'];
+   else if(inNT&&a.ntResidence==='no'){
+    ids=familyTravel?['defence-medical-travel',office]:[office,primaryNav];
+    note='PATS usually requires six months of NT residence, so funding may not apply yet. Ask the Patient Travel Office about your referral and eligibility, and ask your treating team about travel planning or other support before booking.';noteBefore=true;
+   }else if(inNT){ids=[['darwin','palmerston','katherine','alice','tennant','gove'].includes(region)?'pats-'+region:'pats-nt'];if(familyTravel)ids.push('defence-medical-travel');}
+   else {ids=[primaryNav];note='Travel assistance depends on the state or territory. Ask your treating clinic or this navigation team to connect you with the relevant patient travel service.';}
+   say='I need to travel for specialist treatment. I would like help understanding the referral, eligibility and travel options before booking.';
   } else if(n==='costs'){
    ids=fulltime&&['partner','child'].includes(a.role)&&a.dependant==='yes'?['adf-family-health','medicare-costs']:a.role==='member'&&a.connection==='former'?['dva','medicare-costs']:['medicare-costs'];
    say='I would like to check what help is available with medical costs and what needs approval or registration.';
@@ -207,7 +260,18 @@ export function getResults(topic,a={}) {
   else {const groups=region==='katherine'?'defence-groups-tindal':['darwin','palmerston'].includes(region)?'defence-groups-darwin':localOffice;ids=serving?[groups,'soldieron-connect']:['soldieron-connect','wellbeing-agency'];if(['darwin','palmerston'].includes(region)){if(['member','partner','child'].includes(a.role)&&a.connection!=='unsure')ids=['mates4mates-darwin',...ids];ids.push('mcnt-connection');}say='I would like to find local activities or groups where I can meet people.';}
  } else if(topic==='help'){ids=[primaryNav];say='I am not sure where to start. Can you help me work out which support fits my situation?';}
  ids=unique(ids);moreIds=unique([...ids.slice(3),...moreIds]).filter(id=>!ids.slice(0,3).includes(id));
- return {ids:ids.slice(0,3),moreIds,note,say};
+ const selected=new Set(Array.isArray(a.preferences)?a.preferences:[]);
+ const valid=new Set(preferencesFor(topic,a).map(p=>p.value));
+ const preferenceGroups=[];
+ if(valid.has('anonymous')&&selected.has('anonymous'))preferenceGroups.push({title:'Anonymous support',ids:['safe-zone'],note:'An additional option for emotional support about Defence life.'});
+ if(valid.has('lgbtq')&&selected.has('lgbtq'))preferenceGroups.push({title:'LGBTIQA+ peer support',ids:['qlife'],note:'Peer support alongside the help for your original need.'});
+ if(valid.has('men')&&selected.has('men'))preferenceGroups.push({title:'Counselling for men',ids:['mensline']});
+ if(valid.has('indigenous')&&selected.has('indigenous')){
+  preferenceGroups.push({title:'Aboriginal or Torres Strait Islander support',ids:n==='suicide-loss'?['thirrili','13yarn']:['13yarn'],note:n==='suicide-loss'?'Culturally appropriate support after suicide.':'13YARN is phone crisis support; it does not replace ongoing local care.',link:{label:'Find local Aboriginal-led wellbeing support',href:'#mental/indigenous'}});
+
+ }
+
+ return {ids:ids.slice(0,3),moreIds,note,say,noteBefore,contextLabel,preferenceGroups,preferenceLink};
 }
 const oldNeeds={1:['connection','settle'],2:['connection','apart'],3:['parenting','emergency-care'],4:['work','reserve'],5:['work','partner'],6:['money','bills'],7:['money','housing'],8:['money','defence-housing'],9:['parenting','childcare'],10:['parenting','childcare'],11:['care','baby'],12:['parenting','parenting'],13:['parenting','school'],14:['parenting','learning'],15:['mental','feelings'],16:['care','carer'],17:['relationships','counselling'],18:['relationships','separation'],19:['relationships','unsafe'],20:['mental','feelings'],21:['mental','feelings'],22:['mental','feelings'],23:['care','health'],24:['care','travel'],25:['care','disability'],26:['care','carer'],27:['care','older'],28:['connection','local'],29:['connection','local'],30:['help'],31:['mental','lgbtq'],32:['help'],33:['mental','private'],34:['help'],35:['help'],36:['help'],37:['work','transition'],38:['mental','practical-loss'],39:['mental','suicide-loss']};
 export function legacyRoute(hash){

@@ -37,3 +37,9 @@
 - [DVA Acute Support Package](https://www.dva.gov.au/what-we-help-with/get-urgent-support/acute-support-package)的年龄规则因申请人与军人的关系而异。网页提供DVA家庭支持资格咨询，不用一个错误的统一年龄门槛排除家庭。
 
 准确的描述是：**经过官方来源核查、按实际需要和地区匹配的支持导航，包含NT本地及适合在NT使用的全国远程支持。** 不能表述为“一网打尽”或“所有资源永远准确”。
+
+## 复审后补正
+
+- Alice Springs 本地 Aboriginal 社会与情绪支持可联系 Congress；免费范围按其官方客户资格显示。其他地区未核实到本地匹配时，明确说明并提供转介方向，不把全国危机电话当成本地服务。
+- 不满六个月NT居住时间的医疗出行查询，转至相关 Patient Travel Office 讨论转介和资格，并说明资金并非已经获批。
+- 匿名、LGBTIQA+、文化适宜等支持偏好可与原求助需要同时保留。

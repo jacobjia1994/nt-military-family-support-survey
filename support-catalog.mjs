@@ -1,3 +1,4 @@
+import {reviewedReferrals} from './support-referrals.mjs?v=20260926-4';
 import {expandedServices} from './support-expanded.mjs?v=20260926-2';
 // Curated contact routes, independently checked against official provider sources.
 // A free first service does not imply that every onward service is free.
@@ -5,6 +6,7 @@ const checked = '2026-09-26';
 const service = data => ({ ...data, sources: data.sources || [data.url], checked });
 
 export const services = {
+  ...reviewedReferrals,
   'nt-inhome-care': service({
     name:'NT In Home Care Support Agency',audience:'Families whose childcare needs cannot be met by suitable available mainstream care',area:'NT-wide · phone and email',
     offer:'Ask about in-home care when shift hours, geographic isolation or complex needs prevent access to ordinary childcare.',cost:'Eligibility and subsidy enquiry. Childcare fees apply.',

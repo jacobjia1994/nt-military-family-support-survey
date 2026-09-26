@@ -107,3 +107,9 @@ One question is shown per view. Full-row native radios have a visible selected s
 Results retain one first contact and at most two immediate alternatives, with additional relevant offers disclosed separately. Audience, free scope, contact method and decisive access conditions are visible. The whole flow avoids storing personal details. Reloaded result links restart the necessary matching instead of showing a stale profile.
 
 Desktop, 390px mobile and 320px reflow are checked along with keyboard selection, validation, previous-answer editing and conditional resets. These are interface/scenario checks, not a claim of user testing. Survey and interview presentation remains unchanged.
+
+### Approved six-finding implementation
+
+The mental-need screen is reduced to five purpose choices; optional multi-select preferences live beside the results, preserving the original matching context. Geographic questions are pruned or use two visible NT/outside options when appropriate. Continue uses a sticky in-flow mobile action area with keyboard scroll clearance; related-help links appear after the action. Routine relationship screens omit crisis notices until an actual safety choice.
+
+Primary result access paragraphs follow the contact panel. In the verified 390×844 view the mental Continue button starts around y646 (formerly y1026), and the Open Arms call action around y592 (formerly y711). These measurements are representative evidence, not universal device guarantees. Print uses A4, visible URLs/mailto addresses, preserved check date, and automatically opened supplementary contacts; normal screen state is restored after printing.

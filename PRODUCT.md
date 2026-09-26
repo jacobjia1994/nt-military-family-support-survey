@@ -93,3 +93,11 @@ Each question shows its full set of native radio choices with a Continue button.
 `support-paths.mjs` defines the current questions and matching; `support-model.mjs` remains a tested base resolver for established offers. `support-catalog.mjs` and `support-expanded.mjs` contain source-bound contact records. Source coverage is assessed by actual need, relationship, place and delivery mode, not a provider count. `SUPPORT_COVERAGE.md` states coverage and limits. The old 39-topic inventory remains research history and is not the public menu.
 
 Urgent contacts stay in the footer, with context-specific safety contacts. Answers stay in page memory; no personal choices enter URLs or external service links. Browser history may retain visited task pages. A technical pass does not establish Jacob’s subjective acceptance or recruited-user validation.
+
+## Approved review fixes — 26 September 2026
+
+Jacob approved implementation of the six findings in the read-only review of release 12a6296. The seven homepage domains and native controls remain. Mental-health need selection now contains only five difficulties; anonymous, LGBTIQA+, cultural and men's support are optional, combinable preferences beside results and do not replace the original need. Legacy specialist links remain usable.
+
+Region is omitted when it cannot change a contact or access requirement, and becomes NT/outside-NT when that is the only relevant distinction. Adult grief uses a single adult band. A serving member's own medical-travel enquiry no longer asks NT residence. Alice Springs local Aboriginal wellbeing can lead to verified Congress services after the relevant audience check. Recent-arrival travel enquiries use Patient Travel Office guidance with the residency boundary stated, never a Medicare-claims substitute.
+
+Long mobile questions keep Continue within reach; related links follow it. Primary contact and hours precede longer access details. Routine relationship selection has no crisis panel; selected safety needs retain contextual help. Printing includes usable official URLs/emails and the check date. These scoped changes are implemented without modifying survey or interview files.

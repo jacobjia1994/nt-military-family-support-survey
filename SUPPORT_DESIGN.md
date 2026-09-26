@@ -1,3 +1,18 @@
+# Approved review improvements — implemented 26 September 2026
+
+The six findings in the review of release12a6296 are implemented. This is a scoped correction, preserving the homepage, brand, source record architecture and native controls.
+
+| Finding | Change | Evidence |
+| --- | --- | --- |
+| Local/medical-travel mismatches | Verified Congress local route with exact audience; Patient Travel enquiry for recent arrivals and explicit funding boundary; transparent local-referral fallback | Official URLs in support-referrals.mjs; matching regressions |
+| Irrelevant questions | Branch-specific geographic scope; no region for national-only routes; no residence question for member's own Defence travel | Question-list regression cases |
+| Mixed mental choices | Five difficulty choices plus optional combinable result preferences | Grief remains selected with Safe Zone and QLife shown together |
+| Late mobile actions | Sticky Continue with last-option clearance; primary contact before access details | 390px real browser measurements |
+| Routine crisis banner | Notice only after actual safety selection; footer remains | Main routine-relationships notice count zero |
+| Unusable printed web links | Visible URLs/emails, check date and supplementary services | One-page A4 ShelterMe/Central Intake PDF rendered and visually checked |
+
+The 17 focused regression tests plus existing suites pass (202 total). The tests establish the named functional/eligibility properties; they are not user-validation scores. No further resource expansion or new project shape was introduced.
+
 # NT support finder — revision after user feedback, 26 September 2026
 
 The prior release was technically functional but did not satisfy Jacob’s clarity or resource-coverage expectations. Seven consistent domains now replace mixed audience/action/life-event headings. Each question shows native radio rows; there are no dropdowns. Related first-click choices converge on shared routes rather than maintaining duplicate child/adult emotional-support logic.

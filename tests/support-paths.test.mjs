@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFileSync} from 'node:fs';
-import {topics,questionsFor,getResults,legacyRoute} from '../support-paths.mjs';
+import {topics,questionsFor,preferencesFor,getResults,legacyRoute} from '../support-paths.mjs';
 import {services} from '../support-catalog.mjs';
 const scenarios=[
  ['NT civilian family cannot find shift-hours care','parenting',{need:'childcare',connection:'former',careHours:'nonstandard',region:'alice'},'nt-inhome-care',[]],
@@ -66,8 +66,8 @@ test('age questions are relevant and under18 groups are conditional',()=>{
 });
 test('all valid visible paths have sourced contacts and every included offer is reachable',()=>{
  const reached=new Set();let leaves=0;
- function walk(t,a){const qs=questionsFor(t,a),q=qs.find(q=>!q.options.some(o=>o.value===a[q.id]));if(q){assert.ok(q.options.length&&q.label);for(const o of q.options)walk(t,{...a,[q.id]:o.value});return;}leaves++;const r=getResults(t,a);assert.ok(r.ids.length>0&&r.ids.length<=3,`${t}:${JSON.stringify(a)}`);for(const id of [...r.ids,...r.moreIds]){const s=services[id];assert.ok(s,id);assert.ok(s.name&&s.audience&&s.offer&&s.cost&&s.sources?.length,id);assert.equal(new URL(s.url).protocol,'https:');reached.add(id);}}
- for(const t of[...topics,{id:'help'}])walk(t.id,{});assert.ok(leaves>1000);assert.deepEqual(Object.keys(services).filter(id=>!reached.has(id)),[]);
+ function walk(t,a){const qs=questionsFor(t,a),q=qs.find(q=>!q.options.some(o=>o.value===a[q.id]));if(q){assert.ok(q.options.length&&q.label);for(const o of q.options)walk(t,{...a,[q.id]:o.value});return;}leaves++;const r=getResults(t,{...a,preferences:preferencesFor(t,a).map(p=>p.value)});assert.ok(r.ids.length>0&&r.ids.length<=3,`${t}:${JSON.stringify(a)}`);for(const id of [...r.ids,...r.moreIds,...(r.preferenceGroups||[]).flatMap(g=>g.ids)]){const s=services[id];assert.ok(s,id);assert.ok(s.name&&s.audience&&s.offer&&s.cost&&s.sources?.length,id);assert.equal(new URL(s.url).protocol,'https:');reached.add(id);}}
+ for(const t of[...topics,{id:'help'}])walk(t.id,{});for(const need of ['private','lgbtq','men','indigenous'])walk('mental',{need});assert.ok(leaves>500);assert.deepEqual(Object.keys(services).filter(id=>!reached.has(id)),[]);
 });
 test('public interface uses visible labelled radios, not dropdowns',()=>{
  const ui=readFileSync(new URL('../support.js',import.meta.url),'utf8');assert.doesNotMatch(ui,/<select|<option\b/);assert.match(ui,/<fieldset/);assert.match(ui,/<legend/);assert.match(ui,/type="radio"/);assert.match(ui,/type="submit"/);
