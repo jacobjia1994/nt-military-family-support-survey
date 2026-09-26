@@ -13,7 +13,7 @@
 | 情绪与心理支持 | Darwin、Katherine成人中心；Darwin、Palmerston、Katherine、Alice青少年中心；NT电话支持 | Open Arms、Reserve Assistance、Beyond Blue、Kids Helpline、eheadspace、Safe Zone |
 | 特定背景及成瘾支持 | Katherine Wurli；Greater Darwin Danila Dilba的已核实免费入口 | QLife、13YARN、Thirrili、MensLine、酒精药物在线咨询、赌博支持 |
 | 亲职、新生儿、儿童发育 | 六地儿童健康联系；四个区域儿童治疗入口；学校支持；Pandanus | Pregnancy Birth and Baby、PANDA、母乳喂养热线、Parentline、NDIS早期支持 |
-| 学校与托育 | 学校及教育联络支持；NT学校资源 | Defence学校及教育援助、Childcare Connect、紧急家庭照护、DVA子女教育援助 |
+| 学校与托育 | 学校及教育联络支持；NT学校资源 | Defence学校及教育援助、Childcare Connect、非标准工时或偏远地区的In Home Care资格咨询、紧急家庭照护、DVA子女教育援助 |
 | 关系、分居及人身安全 | 区域女性支持及庇护联系、性侵转介中心、妇女法律服务、Legal Aid、儿童暴力创伤支持 | 1800RESPECT、Family Relationship Advice Line、SeMPRO |
 | 金钱、必需品与住房 | Darwin、Palmerston、Katherine、Alice、Tennant的财务或生活必需品支持；租户服务；Central Intake；ReConnect | National Debt Helpline、Bravery Trust、DVA家庭支持资格咨询、Defence SAFE、DHA、Toll |
 | 就业、学习与退役 | NT Transition Centre；Darwin veteran hub | Soldier On、配偶就业援助PEAP、Reserve雇主支持、Defence退役服务、Veteran and Family Wellbeing Agency |

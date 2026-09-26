@@ -1,5 +1,5 @@
-import {topics, questionsFor, getResults, legacyRoute} from './support-paths.mjs?v=20260926-2';
-import {services} from './support-catalog.mjs?v=20260926-2';
+import {topics, questionsFor, getResults, legacyRoute} from './support-paths.mjs?v=20260926-3';
+import {services} from './support-catalog.mjs?v=20260926-3';
 
 const root = document.getElementById('finder');
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));

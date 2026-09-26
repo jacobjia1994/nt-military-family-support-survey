@@ -5,6 +5,15 @@ const checked = '2026-09-26';
 const service = data => ({ ...data, sources: data.sources || [data.url], checked });
 
 export const services = {
+  'nt-inhome-care': service({
+    name:'NT In Home Care Support Agency',audience:'Families whose childcare needs cannot be met by suitable available mainstream care',area:'NT-wide · phone and email',
+    offer:'Ask about in-home care when shift hours, geographic isolation or complex needs prevent access to ordinary childcare.',cost:'Eligibility and subsidy enquiry. Childcare fees apply.',
+    access:'Child Care Subsidy and In Home Care conditions apply. An assessment does not guarantee an educator or place.',phone:'1300 164 202',url:'https://inhomesupportagencywa.org.au/IHSWA/',extraUrl:'mailto:info@ihcsupportagencynt.org.au',extraLabel:'Email the NT support agency',sources:['https://www.education.gov.au/early-childhood/about/service-types/home-care/support-agencies','https://inhomesupportagencywa.org.au/IHSWA/']
+  }),
+  'inhome-care-agencies': service({
+    name:'In Home Care — find your support agency',audience:'Families needing care around nonstandard hours, isolation or complex needs',area:'Australia-wide · official contact list',
+    offer:'Find the agency that assesses In Home Care eligibility in your state or territory.',cost:'Free contact directory. Care fees and subsidy rules apply.',access:'Choose the agency for your location to discuss eligibility and suitable care.',url:'https://www.education.gov.au/early-childhood/about/service-types/home-care/support-agencies',action:'Find your support agency'
+  }),
   'open-arms-check': service({
     name:'Open Arms — check service or family eligibility',audience:'People unsure about Reserve service, a former-partner relationship or a bereaved-family pathway',area:'Australia-wide · phone',
     offer:'Ask the team to check the eligibility pathway for your circumstances.',cost:'Free eligibility advice. Counselling is available to eligible people.',access:'Other support shown on this page remains available while you check.',hours:'24 hours, every day',phone:'1800 011 046',url:'https://www.openarms.gov.au/who-we-help/eligibility',sources:['https://www.openarms.gov.au/who-we-help/eligibility','https://www.openarms.gov.au/sites/default/files/2025-11/Open%20Arms%20Eligibility%20Matrix%202025.pdf']

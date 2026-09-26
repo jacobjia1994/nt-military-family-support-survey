@@ -65,9 +65,10 @@ export function questionsFor(topic,a={}) {
   if(!['misconduct'].includes(n))qs.push(regionQuestion);
  } else if(topic==='parenting'){
   if(['school','childcare','emergency-care','education-costs','learning'].includes(n))qs.push(connectionQuestion);
+  if(n==='childcare')qs.push(question('careHours','What makes childcare difficult to find?',[['regular','Finding a regular place'],['nonstandard','Shift hours, isolation or complex needs']]));
   if(n==='learning')qs.push(question('schoolType','Which school setting?',[['government','NT government school'],['other','Another school or not sure']]));
   if(n==='development')qs.push(question('therapy','Which applies to the child?',[
-   ['eligible','Under 18, has Medicare and is not on NDIS'],['ndis','Already receives NDIS support'],['other','Another situation or not sure']
+   ['eligible','Birth–18, with Medicare and no NDIS support'],['ndis','Already receives NDIS support'],['other','Another situation or not sure']
   ],'NT children’s therapy has these entry requirements. Other support remains available.'));
   qs.push(regionQuestion);
   if(n==='development'&&a.therapy==='eligible'&&a.region==='remote')qs.push(question('remoteArea','Which NT region is the child in?',[['topend','Top End or East Arnhem'],['bigrivers','Katherine or Big Rivers'],['central','Central Australia or Barkly'],['unsure','Not sure']]));
@@ -143,7 +144,7 @@ export function getResults(topic,a={}) {
   else if(n==='misconduct'){ids=['sempro'];say='I would like to understand my support options after Defence-related sexual misconduct.';}
   else {base('safety',n);if(n==='unsafe'&&a.violenceSupport==='women'&&['darwin','palmerston'].includes(region))ids.push('dawn-counselling');if(n==='legal'&&a.womenLegal==='yes'&&a.legalIssue==='family-civil'&&inNT){const local={darwin:'tewls',palmerston:'tewls',katherine:'kwils',alice:'cawls',tennant:'cawls'}[region];if(local)ids=[local,'legal-aid'];}}
  } else if(topic==='parenting'){
-  if(['parenting','school','childcare'].includes(n))base('children',n);
+  if(['parenting','school','childcare'].includes(n)){base('children',n);if(n==='childcare'&&a.careHours==='nonstandard')ids=inNT?['nt-inhome-care',...(serving?['childcare-connect']:[])]:['inhome-care-agencies'];}
   else if(n==='emergency-care'){
    ids=serving?['defence-emergency-care']:['parentline','territory-faces'];
    if(!inNT&&!serving)ids=['family-advice'];

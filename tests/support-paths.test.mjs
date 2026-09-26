@@ -4,6 +4,8 @@ import {readFileSync} from 'node:fs';
 import {topics,questionsFor,getResults,legacyRoute} from '../support-paths.mjs';
 import {services} from '../support-catalog.mjs';
 const scenarios=[
+ ['NT civilian family cannot find shift-hours care','parenting',{need:'childcare',connection:'former',careHours:'nonstandard',region:'alice'},'nt-inhome-care',[]],
+ ['Outside NT shift-hours care uses relevant agency list','parenting',{need:'childcare',connection:'former',careHours:'nonstandard',region:'outside'},'inhome-care-agencies',['nt-inhome-care']],
  ['Member own medical travel is not family benefit','care',{need:'travel',connection:'serving',role:'member',region:'darwin',ntResidence:'no'},'defence-medical-enquiry',['defence-medical-travel']],
  ['General accommodation failure is not domestic crisis','money',{need:'tonight',connection:'serving',housingReason:'other',region:'darwin'},'dmfs-helpline',['defence-safe']],
  ['Remote Central child not sent to Top End','parenting',{need:'development',therapy:'eligible',region:'remote',remoteArea:'central'},'child-therapy-central',['child-therapy-remote']],
