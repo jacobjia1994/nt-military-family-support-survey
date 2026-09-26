@@ -1,9 +1,21 @@
+import {expandedServices} from './support-expanded.mjs?v=20260926-2';
 // Curated contact routes, independently checked against official provider sources.
 // A free first service does not imply that every onward service is free.
 const checked = '2026-09-26';
 const service = data => ({ ...data, sources: data.sources || [data.url], checked });
 
 export const services = {
+  'open-arms-check': service({
+    name:'Open Arms — check service or family eligibility',audience:'People unsure about Reserve service, a former-partner relationship or a bereaved-family pathway',area:'Australia-wide · phone',
+    offer:'Ask the team to check the eligibility pathway for your circumstances.',cost:'Free eligibility advice. Counselling is available to eligible people.',access:'Other support shown on this page remains available while you check.',hours:'24 hours, every day',phone:'1800 011 046',url:'https://www.openarms.gov.au/who-we-help/eligibility',sources:['https://www.openarms.gov.au/who-we-help/eligibility','https://www.openarms.gov.au/sites/default/files/2025-11/Open%20Arms%20Eligibility%20Matrix%202025.pdf']
+  }),
+  'defence-medical-enquiry': service({
+    name:'Defence medical-travel enquiries', audience:'Serving ADF members and families asking about medical-travel conditions', area:'Australia-wide · phone',
+    offer:'Ask which medical-travel rules apply to the patient, and how to arrange approval before booking.',cost:'Free information. Travel assistance depends on the applicable conditions.',
+    access:'Call 1800 DEFENCE about pay and conditions. A member’s own travel and travel for a resident family member use different rules.',phone:'1800 333 362',
+    url:'https://pay-conditions.defence.gov.au/pacman/chapter-5/part-3',sources:['https://pay-conditions.defence.gov.au/pacman/chapter-5/part-3','https://pay-conditions.defence.gov.au/form/contact-us']
+  }),
+  ...expandedServices,
   'legal-national': service({
     name: 'Find legal aid in your state or territory', audience: 'People looking for legal help in Australia', area: 'Australia-wide · official contact directory',
     offer: 'Find the appropriate legal aid service for your location and legal problem.', cost: 'Free directory. Advice and representation eligibility vary by service.',

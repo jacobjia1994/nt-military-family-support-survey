@@ -1,89 +1,165 @@
-import {tasks, regions, ages, connections, counsellingConnections, fieldsFor, matchSupport} from './support-model.mjs?v=20260926-1';
-import {services} from './support-catalog.mjs?v=20260926-1';
+import {topics, questionsFor, getResults, legacyRoute} from './support-paths.mjs?v=20260926-2';
+import {services} from './support-catalog.mjs?v=20260926-2';
+
 const root = document.getElementById('finder');
-let choices = {};
-let completed = false;
-let started = false;
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const arrow = '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>';
-const link = (url,label,cls='') => `<a class="${cls}" href="${esc(url)}" rel="noreferrer">${esc(label)}</a>`;
+const link = (url, label, className='') => `<a class="${className}" href="${esc(url)}" rel="noreferrer">${esc(label)}</a>`;
 const telephone = phone => `tel:${phone.replace(/\D/g,'')}`;
-const valueLabel = (options, value) => options.find(option=>option[0]===value)?.[1] || '';
-const taskById = id => tasks.find(task=>task.id===id) || (id==='help' ? {id:'help',title:'Not sure where to start',focuses:[]} : null);
-function selectField(name,label,options,selected,hint='') {
-  return `<div class="field"><label for="${name}">${esc(label)}</label><select name="${name}" id="${name}" required ${hint?`aria-describedby="${name}-hint"`:''}><option value="">Choose an option</option>${options.map(([value,text])=>`<option value="${value}" ${value===selected?'selected':''}>${esc(text)}</option>`).join('')}</select>${hint?`<small id="${name}-hint">${esc(hint)}</small>`:''}</div>`;
-}
+const topicById = id => topics.find(topic => topic.id === id) || (id === 'help' ? {id:'help', title:'Not sure where to start', hint:''} : null);
+let state = {topicId:null, answers:{}};
+let savedRegion = '';
+let currentQuestion = null;
+let started = false;
+
 function focusHeading() {
-  document.querySelector('main h1')?.focus();
-  window.scrollTo({top:0,behavior:'instant'});
+  root.querySelector('h1')?.focus();
+  window.scrollTo({top:0, behavior:'instant'});
+}
+function questionHash(topicId, questionId) { return `#${topicId}/q/${questionId}`; }
+function navigate(hash) {
+  if (location.hash === hash) render();
+  else location.hash = hash;
+}
+function questions() { return questionsFor(state.topicId, state.answers); }
+function hasAnswer(question) {
+  return question.options.some(option => option.value === state.answers[question.id]);
+}
+function initialiseTopic(topicId, need) {
+  if (state.topicId !== topicId) {
+    state = {topicId, answers:savedRegion ? {region:savedRegion} : {}};
+  }
+  if (need && state.answers.need !== need) {
+    state.answers = {...(savedRegion ? {region:savedRegion} : {}), need};
+  }
 }
 function showHome() {
-  root.innerHTML=`<h1 tabindex="-1">Find support in the NT</h1><p class="intro">Free help and advice for Defence members, veterans and families.</p><ul class="task-grid" aria-label="What would help today?">${tasks.map(t=>`<li><a class="task-link" href="#${t.id}"><span><strong>${esc(t.title)}</strong><small>${esc(t.hint)}</small></span>${arrow}</a></li>`).join('')}</ul><p class="human-link"><a href="#help">Not sure where to start? Talk it through</a></p>`;
+  currentQuestion = null;
+  root.innerHTML = `<h1 tabindex="-1">Find support in the NT</h1><p class="intro">Free advice and support for Defence members, veterans and families.</p><ul class="task-grid" aria-label="Choose the help you need">${topics.map(topic => `<li><a class="task-link" href="#${topic.id}"><span><strong>${esc(topic.title)}</strong><small>${esc(topic.hint)}</small></span>${arrow}</a></li>`).join('')}</ul><p class="human-link"><a href="#help">Not sure where to start?</a></p>`;
 }
-function showForm(task, preserveFocus=false) {
-  const activeName = preserveFocus ? document.activeElement?.name : '';
-  const f=fieldsFor(task.id,choices.focus,choices.age);
-  root.innerHTML=`<nav class="back-nav" aria-label="Support navigation"><a href="#home">Back to all needs</a></nav><h1 tabindex="-1">${esc(task.title)}</h1><p class="intro">${task.id==='help'?'Find someone who can help you work out the next step.':'For you or someone you are helping.'}</p>${task.id==='safety'?'<p class="notice">For violence or sexual assault, <a href="tel:1800737732">call 1800RESPECT on 1800 737 732</a> or <a href="https://www.1800respect.org.au/" rel="noreferrer">use online chat</a>, 24/7. In immediate danger, call <a href="tel:000">000</a>.</p>':''}<form id="match-form"><div class="form-grid">${task.focuses.length?selectField('focus','What would help most?',task.focuses,choices.focus):''}${selectField('region','Where is support needed?',regions,choices.region,'For a move, choose the destination if it is known.')}${f.age?selectField('age','Age of the person needing support',ages,choices.age,'Choose their age, even if you are contacting a service for them.'):''}${f.connection?selectField('connection','Which describes the person or family?',connections,choices.connection):''}${f.counselling?selectField('counselling','Their connection to Defence',counsellingConnections,choices.counselling,'Full-time service includes at least one day of continuous full-time service or training. If unsure, choose the last option.'):''}</div><div class="form-actions"><button class="button" type="submit">Find support</button></div><p class="quiet">No name, contact details or sign-up needed.</p></form>`;
-  if(activeName) document.getElementById(activeName)?.focus();
+function safetyNotice(topic) {
+  if (topic.id !== 'relationships') return '';
+  return '<p class="notice safety-note">For violence or sexual assault, <a href="tel:1800737732">1800RESPECT: 1800 737 732</a> or <a href="https://www.1800respect.org.au/" rel="noreferrer">online chat</a> is available 24/7. In immediate danger, call <a href="tel:000">000</a>.</p>';
 }
-function actionBlock(s,primary) {
-  const action=s.phone?link(telephone(s.phone),`Call ${s.phone}`,primary?'button':''):link(s.url,s.action||'Visit official website',primary?'button':'');
-  return `${action}${s.phone?link(s.url,s.action||'Official website',primary?'official':''):''}`;
+function showQuestion(topic, question, list) {
+  currentQuestion = question;
+  const index = list.findIndex(item => item.id === question.id);
+  const backHash = index > 0 ? questionHash(topic.id, list[index-1].id) : '#home';
+  const related = question.id === 'need' && topic.links?.length ? `<nav class="related-needs" aria-label="Related help">${topic.links.map(item => link(item.href,item.label)).join('')}</nav>` : '';
+  const selected = state.answers[question.id];
+  root.innerHTML = `<nav class="back-nav" aria-label="Support navigation"><a href="${backHash}">Back</a><a href="#home">All support topics</a></nav><p class="topic-label">${esc(topic.title)}</p>${question.id === 'need' || ['unsafe','refuge','assault','misconduct'].includes(state.answers.need) ? safetyNotice(topic) : ''}<form id="support-question" novalidate><fieldset class="choice-fieldset"${question.hint ? ' aria-describedby="question-hint"' : ''}><legend><h1 tabindex="-1">${esc(question.label)}</h1></legend>${question.hint ? `<p id="question-hint" class="question-hint">${esc(question.hint)}</p>` : ''}<p class="error" id="question-error" role="alert" hidden>Choose an option to continue.</p><div class="choice-list">${question.options.map((option, i) => `<label class="choice-row" for="answer-${i}"><input type="radio" id="answer-${i}" name="${esc(question.id)}" value="${esc(option.value)}" required${selected === option.value ? ' checked' : ''}${option.detail ? ` aria-describedby="answer-detail-${i}"` : ''}><span><strong>${esc(option.label)}</strong>${option.detail ? `<small id="answer-detail-${i}">${esc(option.detail)}</small>` : ''}</span></label>`).join('')}</div></fieldset>${related}<div class="form-actions"><button class="button" type="submit">Continue</button></div></form>`;
+  document.title = `${question.label} — ${topic.title} | Lutheran Care`;
 }
-function serviceDetails(s,primary=false) {
-  const h=primary?'h1':'h3';
-  if(primary) return `<div class="result-layout"><section class="result-main"><${h} tabindex="-1">${esc(s.name)}</${h}><p class="area">${esc(s.area)}</p><p class="offer">${esc(s.offer)}</p><p class="fit"><strong>Who it helps:</strong> ${esc(s.audience)}</p><p class="cost"><strong>Cost:</strong> ${esc(s.cost)}</p></section><aside class="contact-panel" aria-label="Contact ${esc(s.name)}">${actionBlock(s,true)}${s.hours?`<p class="hours">${esc(s.hours)}</p>`:''}${s.extraUrl?link(s.extraUrl,s.extraLabel||'More ways to contact','official'):''}</aside></div>${s.access?`<p class="access">${esc(s.access)}</p>`:''}`;
-  return `<article class="alternative"><div class="alt-heading"><h3>${esc(s.name)}</h3></div><p class="area">${esc(s.area)}</p><p>${esc(s.offer)}</p><p><strong>Who it helps:</strong> ${esc(s.audience)}</p><p><strong>Cost:</strong> ${esc(s.cost)}</p>${s.access?`<p>${esc(s.access)}</p>`:''}${s.hours?`<p class="quiet">${esc(s.hours)}</p>`:''}<div class="alt-actions">${actionBlock(s,false)}</div></article>`;
+function actionBlock(service, primary) {
+  const action = service.phone ? link(telephone(service.phone), `Call ${service.phone}`, primary ? 'button' : '') : link(service.url,service.action || 'Visit official website',primary ? 'button' : '');
+  return `${action}${service.phone ? link(service.url,service.action || 'Official website',primary ? 'official' : '') : ''}`;
 }
-function showResult(task) {
-  const result=matchSupport({...choices,task:task.id});
-  const found=result.ids.map(id=>services[id]).filter(Boolean);
-  if(!found.length){showForm(task);return;}
-  const summary=[task.title,valueLabel(regions,choices.region), fieldsFor(task.id,choices.focus,choices.age).age ? valueLabel(ages,choices.age):''].filter(Boolean).join(' · ');
-  const note=result.note?`<p class="notice">${esc(result.note).replace('1800 737 732','<a href="tel:1800737732">1800 737 732</a>').replace('call 000','call <a href="tel:000">000</a>')}</p>`:'';
-  root.innerHTML=`<nav class="back-nav" aria-label="Support navigation"><a href="#${task.id}">Back to your choices</a><a href="#home">All needs</a></nav><div class="context"><p>${esc(summary)}</p><button class="text-button" data-action="edit">Change</button></div>${task.id==='safety'?note:''}${serviceDetails(found[0],true)}${task.id!=='safety'?note:''}<details class="say"><summary>What could I say when I contact them?</summary><p>“${esc(result.say)}”</p></details>${found.length>1?`<section class="alternate-list" aria-label="Other suitable options"><h2>Other ways to get help</h2>${found.slice(1).map(s=>serviceDetails(s)).join('')}</section>`:''}${task.id==='talk' && choices.counselling==='other' && !['suicide-loss','bereavement-help'].includes(choices.focus)?'<p class="eligibility-note"><a href="https://www.openarms.gov.au/who-we-help/eligibility" rel="noreferrer">Check other Open Arms eligibility pathways</a>, or ask its team on <a href="tel:1800011046">1800 011 046</a>.</p>':''}<div class="result-bottom"><a href="#help">Need help finding another option?</a><button class="text-button" data-action="print">Print these contacts</button></div>`;
+function serviceDetails(service, primary=false) {
+  if (primary) return `<div class="result-layout"><section class="result-main"><h1 tabindex="-1">${esc(service.name)}</h1><p class="area">${esc(service.area)}</p><p class="offer">${esc(service.offer)}</p><p class="fit"><strong>Who it helps:</strong> ${esc(service.audience)}</p><p class="cost"><strong>Cost:</strong> ${esc(service.cost)}</p>${service.access ? `<p class="access">${esc(service.access)}</p>` : ''}</section><aside class="contact-panel" aria-label="Contact ${esc(service.name)}">${actionBlock(service,true)}${service.hours ? `<p class="hours">${esc(service.hours)}</p>` : ''}${service.extraUrl ? link(service.extraUrl,service.extraLabel || 'More ways to contact','official') : ''}</aside></div>`;
+  return `<article class="alternative"><h3>${esc(service.name)}</h3><p class="area">${esc(service.area)}</p><p>${esc(service.offer)}</p><p><strong>Who it helps:</strong> ${esc(service.audience)}</p><p><strong>Cost:</strong> ${esc(service.cost)}</p>${service.access ? `<p>${esc(service.access)}</p>` : ''}${service.hours ? `<p class="quiet">${esc(service.hours)}</p>` : ''}<div class="alt-actions">${actionBlock(service,false)}</div>${service.extraUrl ? link(service.extraUrl,service.extraLabel || 'More ways to contact','official') : ''}</article>`;
 }
-// Old public links open the nearest task, then ask for current context.
-const legacyNeeds={1:'moving',2:'moving',3:'children',4:'work',5:'work',6:'money',7:'money',8:'moving',9:'children',10:'children',11:'care',12:'children',13:'children',14:'children',15:'children',16:'care',17:'talk',18:'safety',19:'safety',20:'talk',21:'talk',22:'talk',23:'care',24:'care',25:'care',26:'care',27:'care',28:'connect',29:'connect',30:'help',31:'help',32:'help',33:'talk',34:'help',35:'help',36:'help',37:'work',38:'talk',39:'talk'};
+function showResults(topic) {
+  currentQuestion = null;
+  const result = getResults(topic.id,state.answers);
+  const ids = [...new Set(result.ids || [])].filter(id => services[id]).slice(0,3);
+  const more = [...new Set(result.moreIds || [])].filter(id => services[id] && !ids.includes(id));
+  const list = questions();
+  if (!ids.length) {
+    root.innerHTML = `<nav class="back-nav"><a href="#${topic.id}">Back to your choices</a><a href="#home">All support topics</a></nav><h1 tabindex="-1">Help finding a service</h1><p>There is no matched contact for these choices.</p><p><a href="#help">Find someone who can help you work out the next step</a>.</p>`;
+    return;
+  }
+  const summary = list.filter(question=>['need','age','childAge','region'].includes(question.id)&&!(question.id==='age'&&state.answers.childAge)).map(question => question.options.find(option => option.value === state.answers[question.id])?.label).filter(Boolean).join(' · ');
+  const note = result.note ? `<p class="notice">${esc(result.note).replace(/1800 737 732/g,'<a href="tel:1800737732">1800 737 732</a>').replace(/call 000/g,'call <a href="tel:000">000</a>')}</p>` : '';
+  const lastQuestion = list.at(-1);
+  root.innerHTML = `<nav class="back-nav" aria-label="Support navigation"><a href="${lastQuestion ? questionHash(topic.id,lastQuestion.id) : '#'+topic.id}">Back to your choices</a><a href="#home">All support topics</a></nav><div class="context"><p>${esc(summary || topic.title)}</p><a href="#${topic.id}">Change</a></div>${topic.id === 'relationships' ? note : ''}${serviceDetails(services[ids[0]],true)}${topic.id !== 'relationships' ? note : ''}${result.say ? `<details class="say"><summary>What could I say when I contact them?</summary><p>“${esc(result.say)}”</p></details>` : ''}${ids.length > 1 ? `<section class="alternate-list" aria-label="Other suitable options"><h2>Other ways to get help</h2>${ids.slice(1).map(id => serviceDetails(services[id])).join('')}</section>` : ''}${more.length ? `<details class="more-services"><summary>More relevant services</summary><div>${more.map(id => serviceDetails(services[id])).join('')}</div></details>` : ''}<div class="result-bottom"><a href="#help">Need help finding another option?</a><button class="text-button" data-action="print">Print these contacts</button></div>`;
+  document.title = `${topic.title} — Support contacts | Lutheran Care`;
+}
 function render() {
-  let route=location.hash.slice(1).split('/');
-  if(route[0]==='need') route=[legacyNeeds[route[1]]||'help'];
-  if(route[0]==='situation') route=[{moving:'moving',apart:'moving',leaving:'work',concern:'home'}[route[1]]||'home'];
-  const task=taskById(route[0]);
-  if(!task) showHome();
-  else {
-    if(choices.task!==task.id){choices={task:task.id,region:choices.region||'',connection:choices.connection||''};completed=false;}
-    if(route[1]==='results' && completed) showResult(task);else showForm(task);
+  const rawHash = location.hash.slice(1);
+  const segments = rawHash.split('/');
+  let topic = topicById(segments[0]);
+  let seededNeed;
+  if (!topic && rawHash && segments[0] !== 'home') {
+    const legacy = legacyRoute(rawHash);
+    if (legacy) { topic = topicById(legacy.topicId); seededNeed = legacy.need; }
+  } else if (topic && segments[1] && !['q','results'].includes(segments[1])) {
+    const legacy = legacyRoute(rawHash);
+    seededNeed = legacy?.need || segments[1];
   }
-  document.title=`${task?task.title:'Find support in the NT'} | Lutheran Care`;
-  if(started)focusHeading();
-  started=true;
+  if (!topic) {
+    showHome();
+    document.title = 'Find support in the NT | Lutheran Care';
+  } else {
+    initialiseTopic(topic.id,seededNeed);
+    let list = questions();
+    // A stale deep link must not manufacture an answer that is not offered.
+    for (const question of list) {
+      if (state.answers[question.id] && !hasAnswer(question)) delete state.answers[question.id];
+    }
+    list = questions();
+    const missing = list.findIndex(question => !hasAnswer(question));
+    const requested = segments[1] === 'q' ? list.findIndex(question => question.id === segments[2]) : -1;
+    if (segments[1] === 'results' && missing === -1) showResults(topic);
+    else if (!list.length) showResults(topic);
+    else {
+      let index = requested >= 0 ? requested : seededNeed || segments[1] === 'results' ? Math.max(0,missing) : 0;
+      if (missing >= 0 && index > missing) index = missing;
+      const question = list[index];
+      history.replaceState(null,'',questionHash(topic.id,question.id));
+      showQuestion(topic,question,list);
+    }
+  }
+  if (started) focusHeading();
+  started = true;
 }
-root.addEventListener('change',event=>{
-  if(!event.target.matches('select'))return;
-  const task=taskById(choices.task);
-  const data=Object.fromEntries(new FormData(document.getElementById('match-form')));
-  choices={...choices,...data};completed=false;
-  if(['focus','age'].includes(event.target.name)){
-    const f=fieldsFor(task.id,choices.focus,choices.age);
-    if(!f.age)delete choices.age;
-    if(!f.counselling)delete choices.counselling;
-    if(!f.connection)delete choices.connection;
-    showForm(task,true);
-  }
+root.addEventListener('change', event => {
+  if (!event.target.matches('input[type="radio"]')) return;
+  document.getElementById('question-error')?.setAttribute('hidden','');
+  // Native radio groups keep arrow-key navigation; selection never advances a page.
 });
-root.addEventListener('submit',event=>{
+root.addEventListener('submit', event => {
   event.preventDefault();
-  const form=event.target;if(!form.reportValidity())return;
-  choices={...choices,...Object.fromEntries(new FormData(form))};completed=true;
-  const resultHash=`#${choices.task}/results`;
-  if(location.hash===resultHash){showResult(taskById(choices.task));focusHeading();}else location.hash=resultHash;
+  if (event.target.id !== 'support-question' || !currentQuestion) return;
+  const selected = event.target.querySelector('input[type="radio"]:checked');
+  if (!selected) {
+    document.getElementById('question-error').hidden = false;
+    event.target.querySelector('input[type="radio"]')?.focus();
+    return;
+  }
+  const questionId = currentQuestion.id;
+  const previous = questions();
+  const position = previous.findIndex(question => question.id === questionId);
+  const changed = state.answers[questionId] !== selected.value;
+  if (changed) {
+    // Re-answering an early question cannot retain later eligibility for a different person.
+    for (const key of Object.keys(state.answers)) {
+      const keyPosition = previous.findIndex(question => question.id === key);
+      if (key !== 'region' && (keyPosition > position || keyPosition === -1)) delete state.answers[key];
+    }
+  }
+  state.answers[questionId] = selected.value;
+  if (questionId === 'region') savedRegion = selected.value;
+  let nextList = questions();
+  const allowedKeys = new Set(nextList.map(question => question.id));
+  for (const key of Object.keys(state.answers)) {
+    if (!allowedKeys.has(key) && key !== 'region') delete state.answers[key];
+  }
+  nextList = questions();
+  const nextIndex = nextList.findIndex(question=>question.id===questionId)+1;
+  const nextQuestion = nextList[nextIndex];
+  if (nextQuestion) navigate(questionHash(state.topicId,nextQuestion.id));
+  else navigate(`#${state.topicId}/results`);
 });
-root.addEventListener('click',event=>{
-  const action=event.target.closest('[data-action]')?.dataset.action;
-  if(action==='edit'){location.hash=choices.task;}
-  if(action==='print')window.print();
+root.addEventListener('click', event => {
+  if (event.target.closest('[data-action="print"]')) window.print();
+  const anchor = event.target.closest('a[href^="#"]');
+  // Re-opening the same topic/step still renders it; hashchange does not fire for equal hashes.
+  if (anchor && anchor.hash === location.hash) { event.preventDefault(); render(); }
 });
-document.querySelector('.skip-link').addEventListener('click',event=>{event.preventDefault();document.getElementById('main').focus();document.getElementById('main').scrollIntoView();});
+document.querySelector('.skip-link')?.addEventListener('click', event => {
+  event.preventDefault();
+  document.getElementById('main').focus();
+  document.getElementById('main').scrollIntoView();
+});
 window.addEventListener('hashchange',render);
 render();
