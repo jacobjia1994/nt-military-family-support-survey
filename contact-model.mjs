@@ -1,7 +1,7 @@
-export const CONTACT_NOTICE_VERSION = '2026-09-27-contact-v4';
-export const CONTACT_LIMITS = Object.freeze({ preferred_name:80, phone:30, email:254, contact_notes:200, topic:600 });
+export const CONTACT_NOTICE_VERSION = '2026-09-27-contact-v5';
+export const CONTACT_LIMITS = Object.freeze({ preferred_name:80, phone:30, email:254, contact_notes:300, topic:600, suggested_time:300 });
 export const CONTACT_METHODS = Object.freeze({call:'Call me',sms:'Text me',email:'Email me'});
-export const CONTACT_AGES = Object.freeze({adult:'18 or older',youth:'15–17',child:'Under 15'});
+export const CONTACT_AGES = Object.freeze({minor:'Under 18',adult:'18 or older'});
 export const CONTACT_REQUESTERS = Object.freeze({self:'Me',guardian:'My child (under 18)'});
 export const CONTACT_INTERVIEW_MODES = Object.freeze({phone:'Phone',video:'Video call',in_person:'In person',discuss:'No preference'});
 export const CONTACT_NOTICE = [
@@ -11,9 +11,9 @@ export const CONTACT_NOTICE = [
   ['Sharing and your rights', 'We may disclose information with your consent or where the law permits or requires it, including to protect someone from serious harm. You can ask to update your details, cancel contact, access your information or raise a privacy concern.']
 ];
 export const CONTACT_CONSENT = 'I agree to Lutheran Care contacting me as selected and using my details as described, including any sensitive information I choose to share.';
-export const CONTACT_CHILD_CONSENT = 'I would like Lutheran Care to contact me as selected above about this consultation. I understand how my contact details will be used.';
+export const CONTACT_MINOR_CONSENT = 'I would like Lutheran Care to contact me as selected. I understand how the details I provide will be used to arrange an interview. I can decide about taking part later.';
 export const CONTACT_GUARDIAN_DECLARATION = 'I have parental responsibility or legal authority to make this request for this child.';
-export function emptyRequest(){return {requester:'',age_band:'',preferred_name:'',phone:'',email:'',contact_method:'',voicemail:false,contact_notes:'',topic:'',interview_mode:'',guardian_authority:false,consent:false};}
+export function emptyRequest(){return {requester:'',age_band:'',preferred_name:'',phone:'',email:'',contact_method:'',voicemail:false,contact_notes:'',topic:'',suggested_time:'',interview_mode:'',guardian_authority:false,consent:false};}
 const isRecord = value => value!==null&&typeof value==='object'&&!Array.isArray(value);
 const record = value => isRecord(value)?value:{};
 const isChoice = (choices,value) => typeof value==='string'&&Object.hasOwn(choices,value);
@@ -22,12 +22,12 @@ const supplied = value => typeof value==='string'?Boolean(value.trim()):value!==
 export function contactRoute(value){
   const data=record(value);
   if(data.requester==='self'&&isChoice(CONTACT_AGES,data.age_band))return `self_${data.age_band}`;
-  if(data.requester==='guardian'&&['child','youth'].includes(data.age_band))return `guardian_${data.age_band}`;
+  if(data.requester==='guardian'&&data.age_band==='minor')return 'guardian_minor';
   return '';
 }
-export function needsTopic(data){return Boolean(contactRoute(data))&&contactRoute(data)!=='self_child';}
+export function needsTopic(data){return Boolean(contactRoute(data));}
 export function needsArrangements(data){return needsTopic(data);}
-export function consentText(data){return contactRoute(data)==='self_child'?CONTACT_CHILD_CONSENT:CONTACT_CONSENT;}
+export function consentText(data){return contactRoute(data)==='self_minor'?CONTACT_MINOR_CONSENT:CONTACT_CONSENT;}
 // Format checks cannot prove ownership or reachability. Confirm by a reply using
 // the selected safe contact method; do not substitute an unapproved phone call.
 export function phoneIsValid(value){
@@ -55,7 +55,7 @@ export function changeRequest(value,key,newValue){
   const current=record(value);
   if(!Object.hasOwn(emptyRequest(),key))return {...current};
   const fieldValue=['voicemail','guardian_authority','consent'].includes(key)?newValue===true:typeof newValue==='string'?newValue:'';
-  if(key==='requester'&&fieldValue!==current.requester)return {...emptyRequest(),requester:fieldValue};
+  if(key==='requester'&&fieldValue!==current.requester)return {...emptyRequest(),requester:fieldValue,age_band:fieldValue==='guardian'?'minor':''};
   if(key==='age_band'&&fieldValue!==current.age_band)return {...emptyRequest(),requester:current.requester,age_band:fieldValue};
   const next={...current,[key]:fieldValue};
   if(fieldValue!==current[key]){
@@ -66,7 +66,7 @@ export function changeRequest(value,key,newValue){
   return next;
 }
 function activeTextFields(data){
-  return ['preferred_name','phone','email','contact_notes',...(needsTopic(data)?['topic']:[])];
+  return ['preferred_name','phone','email','contact_notes',...(needsTopic(data)?['topic']:[]),...(needsArrangements(data)?['suggested_time']:[])];
 }
 export function requestErrors(value){
   const data=record(value),errors={},route=contactRoute(data);
@@ -90,7 +90,10 @@ export function reviewRequest(data){
   if(Object.keys(requestErrors(data)).length)throw new Error('Contact details are incomplete');
   const result={requester:data.requester,age_band:data.age_band,preferred_name:text(data.preferred_name),phone:text(data.phone),email:text(data.email),contact_method:data.contact_method,voicemail:data.contact_method==='call'&&data.voicemail===true,contact_notes:text(data.contact_notes),consent:true,notice_version:CONTACT_NOTICE_VERSION};
   if(needsTopic(data))result.topic=text(data.topic);
-  if(needsArrangements(data))result.interview_mode=text(data.interview_mode);
+  if(needsArrangements(data)){
+    result.interview_mode=text(data.interview_mode);
+    result.suggested_time=text(data.suggested_time);
+  }
   if(data.requester==='guardian')result.guardian_authority=true;
   return result;
 }

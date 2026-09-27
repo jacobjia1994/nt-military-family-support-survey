@@ -1,4 +1,4 @@
-import {CONTACT_NOTICE,CONTACT_METHODS,CONTACT_AGES,CONTACT_REQUESTERS,CONTACT_INTERVIEW_MODES,CONTACT_GUARDIAN_DECLARATION,CONTACT_LIMITS,emptyRequest,contactRoute,needsTopic,needsArrangements,emailIsValid,consentText,changeRequest,requestErrors,reviewRequest,contactResource,escapeHTML as esc} from './contact-model.mjs?v=20260927-interview-2';
+import {CONTACT_NOTICE,CONTACT_METHODS,CONTACT_AGES,CONTACT_REQUESTERS,CONTACT_INTERVIEW_MODES,CONTACT_GUARDIAN_DECLARATION,CONTACT_LIMITS,emptyRequest,contactRoute,needsTopic,needsArrangements,emailIsValid,consentText,changeRequest,requestErrors,reviewRequest,contactResource,escapeHTML as esc} from './contact-model.mjs?v=20260927-interview-3';
 
 // Review build: no receiver, persistence, exports or survey-response mapping.
 let request=emptyRequest();
@@ -23,28 +23,27 @@ function choiceField(key,label,choices,{wide=false,isOptional=false,hint=''}={})
 }
 function routeNote(){
   if(request.requester==='guardian')return 'This arranges an interview with your child. If you want to share your own experience as a parent or carer, choose Me. Please give your own contact details below.';
-  if(contactRoute(request)==='self_child')return 'A worker will explain how you can take part and discuss permission before arranging an interview. Please give only contact details here.';
-  if(contactRoute(request)==='self_youth')return 'A worker will discuss any permission or support you need before you take part.';
+  if(contactRoute(request)==='self_minor')return 'A team member will discuss any permission or support you need before the interview. Please save private details for the conversation.';
   return '';
 }
 function renderForm(){
-  const route=contactRoute(request),guardian=request.requester==='guardian',child=route==='self_child';
-  const ages=guardian?{youth:CONTACT_AGES.youth,child:CONTACT_AGES.child}:CONTACT_AGES;
+  const route=contactRoute(request),guardian=request.requester==='guardian';
   main.innerHTML=`${previewHTML()}<section class="contact-intro"><h1 tabindex="-1">Request an interview</h1><p>Share your experience of Defence life or supporting Defence families in Greater Darwin. We’d like to hear what works well and what could improve.</p></section>
   <form id="contact-form" class="contact-form" novalidate>
   ${choiceField('requester','Who would be interviewed?',CONTACT_REQUESTERS)}
-  ${request.requester?choiceField('age_band',guardian?'Your child’s age group':'Your age group',ages):''}
+  ${request.requester==='self'?choiceField('age_band','Your age group',CONTACT_AGES):''}
   <div id="contact-fields" ${route?'':'hidden'}>
   ${routeNote()?`<p class="contact-route-note">${esc(routeNote())}</p>`:''}
   ${textField('preferred_name',guardian?'Your name':'Name',{hint:'The name you would like us to use.'})}
   ${textField('phone',guardian?'Your mobile number':'Mobile number',{hint:'A mobile number we can reach you on. Include the country code for an overseas number.'})}
   ${textField('email','Email address')}
-  ${choiceField('contact_method','How should we arrange a time with you?',CONTACT_METHODS,{hint:'We’ll use your choice to agree a time.'})}
+  ${needsTopic(request)?textField('topic',guardian?'What would your child like to discuss?':'What would you like to discuss?',{hint:guardian?'A brief topic is enough. Leave out your child’s name and save private details for the interview.':'A brief topic is enough. Please save private details for the interview.',multiline:true}):''}
+  ${needsArrangements(request)?choiceField('interview_mode','How would you prefer to be interviewed?',CONTACT_INTERVIEW_MODES,{isOptional:true}):''}
+  ${needsArrangements(request)?textField('suggested_time','Suggested interview date and time',{hint:'Suggest one or more dates and times, or write “flexible”. Include your time zone if outside the NT.',multiline:true}):''}
+  ${choiceField('contact_method','How should we arrange a time with you?',CONTACT_METHODS,{hint:'We’ll use your choice to confirm a suitable time.'})}
   <p class="field-hint" id="email-contact-hint">To choose email, add your email address above.</p>
   <div id="voicemail-wrap" class="voicemail-choice" ${request.contact_method==='call'?'':'hidden'}><label class="contact-check"><input type="checkbox" name="voicemail" ${request.voicemail?'checked':''}><span>You may leave a voicemail saying Lutheran Care called.</span></label></div>
-  ${textField('contact_notes','Any contact instructions?',{hint:'For example, times to avoid. Leave this blank if there are none.'})}
-  ${needsArrangements(request)?choiceField('interview_mode','How would you prefer to be interviewed?',CONTACT_INTERVIEW_MODES,{isOptional:true}):''}
-  ${needsTopic(request)?textField('topic','Anything else we should know before the interview?',{hint:guardian?'For example, suitable times, a topic or an arrangement that would help. Leave out your child’s name and save private details for the conversation.':'For example, suitable times, a topic or an arrangement that would help. Save private details for the conversation.',multiline:true}):''}
+  ${textField('contact_notes','Any contact or access needs?',{hint:'For example, times not to contact you, an interpreter, accessibility needs or a support person. Leave blank if none.',multiline:true})}
   ${guardian?`<label class="contact-check"><input type="checkbox" name="guardian_authority" ${request.guardian_authority?'checked':''}><span>${esc(CONTACT_GUARDIAN_DECLARATION)} ${required}</span></label>`:''}
   ${consentHTML()}
   <div class="contact-actions"><button class="text-button" id="clear-details" type="button">Clear details</button><button class="button primary" type="submit" disabled>Review details</button></div></div></form>${footerHTML()}`;
@@ -72,9 +71,10 @@ function renderReview(){
   const rows=[['Person to be interviewed',CONTACT_REQUESTERS[details.requester]],[guardian?'Child’s age group':'Age group',CONTACT_AGES[details.age_band]],[guardian?'Parent or guardian’s name':'Name',details.preferred_name],[guardian?'Parent or guardian’s mobile number':'Mobile number',details.phone],['Arrange a time by',CONTACT_METHODS[details.contact_method]]];
   if(details.email)rows.push(['Email address',details.email]);
   if(details.contact_method==='call')rows.push(['Voicemail',details.voicemail?'May leave a voicemail saying Lutheran Care called':'Do not leave a voicemail']);
-  if(details.contact_notes)rows.push(['Contact instructions',details.contact_notes]);
+  if(details.contact_notes)rows.push(['Contact or access needs',details.contact_notes]);
   if(needsArrangements(details)&&details.interview_mode)rows.push(['Interview format',CONTACT_INTERVIEW_MODES[details.interview_mode]]);
-  if(needsTopic(details)&&details.topic)rows.push(['Notes for the interview',details.topic]);
+  if(needsTopic(details)&&details.topic)rows.push(['Discussion topic',details.topic]);
+  if(needsArrangements(details)&&details.suggested_time)rows.push(['Suggested interview date and time',details.suggested_time]);
   main.innerHTML=`${previewHTML()}<section class="contact-review"><h1 tabindex="-1">Check your details</h1><dl>${rows.map(([label,value])=>`<dt>${esc(label)}</dt><dd>${esc(value)}</dd>`).join('')}</dl><div class="contact-actions"><button class="back-button" id="edit-details" type="button">Change details</button><button class="button primary" id="finish-contact" type="button">Finish preview</button></div></section>${footerHTML()}`;
   main.querySelector('#edit-details').onclick=()=>{renderForm();focusStart();};main.querySelector('#finish-contact').onclick=renderFinish;focusStart();
 }

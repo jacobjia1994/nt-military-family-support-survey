@@ -103,7 +103,9 @@ The approved review corrections separate mental-health purpose from optional sup
 
 ## Interview request update — 27 September 2026
 
-The interview preview is one short form plus review. Mobile is required; email is optional. **Who would be interviewed?** distinguishes Me from My child, while professionals and parents speaking about their own experience both choose Me. Scheduling is a short exchange to agree a time via the chosen call/text/email channel, not an additional interview. Interview format remains optional. Contact instructions and one optional interview-notes box replace the separate background and arrangements questions. Existing young-person and guardian permissions remain; under-15 self requests collect contact details only.
+The interview preview is one form plus review. It asks explicitly and separately for **discussion topic**, **interview format** and **suggested interview date/time**, alongside the contact details needed to arrange it. A mobile is mandatory; email is optional. Only **Under 18 / 18 or older** are used. A guardian request already identifies the child as under 18 and does not repeat the age question. Professionals and adults discussing parenting experience choose Me.
+
+A brief, non-sensitive topic and scheduling preferences are available on every valid route. Under-18 contact requests still require LC to establish understanding, suitable permission and willingness before the interview; the form does not make that decision. One optional contact/access-needs field handles practical constraints. Suggested dates are not confirmed appointments, and arranging a time by the chosen channel is not an extra interview. The stable field-purpose contract is in PRODUCT.md and CONTACT_FORM.md.
 
 - [Interview team guide and message templates](INTERVIEW_TEAM_GUIDE.md)
 - [Institutional receiving and scheduling proposal](INTERVIEW_RECEIVING_PROPOSAL.md)

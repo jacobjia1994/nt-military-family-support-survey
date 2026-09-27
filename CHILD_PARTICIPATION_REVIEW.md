@@ -1,6 +1,6 @@
 # Children's participation and help with answering
 
-Reviewed 25 September 2026; updated for Jacob’s approved 7-and-under / shared 8–17 design. Scope: the Lutheran Care NT service-consultation questionnaire, its supported younger-child route, and who may help children answer. This is a bounded design review, not a claim of legal certification.
+Reviewed 25 September 2026; updated for Jacob’s approved 7-and-under / shared 8–17 design. Scope: the Lutheran Care NT service-consultation questionnaire, its supported younger-child route, and who may help children answer. The separate interview-request form follows [CONTACT_FORM.md](CONTACT_FORM.md): binary self-age choices, guardian-inferred under-18 status and optional brief topic/scheduling preferences, with LC establishing understanding and permission before interviewing. Its current design does not change the questionnaire routes discussed below. This is a bounded design review, not a claim of legal certification.
 
 ## Decision
 
