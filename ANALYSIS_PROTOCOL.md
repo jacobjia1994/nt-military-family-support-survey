@@ -19,7 +19,7 @@ Keep a frozen question and option dictionary for each deployed revision, plus th
 | Dataset/export identifier, export date, collection period and collection stage (test, pilot or live) | Keep demonstrations and tests out of real results. |
 | Questionnaire revision, schema/field-map revision and original form/question identifiers | A matching field label alone does not establish comparability. |
 | Age path/form, answer voice (participant or guardian observation), assistance where collected | Different questions and voices must remain distinguishable. |
-| Consultation route, residence status/locality and ADF relationship/status where collected | Separate current local, former local and outside-area perspectives; service location is not residence. |
+| Consultation route, selected residential area, optional suburb/locality, `location_precision` and ADF relationship/status where collected | Separate current local, former local and outside-area perspectives; service location is not residence. Keep broad-area-only records distinguishable from named suburb answers. |
 | Recall window and reference setting | Distinguish local past experience, current request and future interest. |
 | Question shown/eligible state, answer status and selected option identifiers | Preserve the difference between not asked and skipped. |
 | Recruitment channel when available, inclusions/exclusions and data-cleaning log | Describe the response cohort without pretending it is a population sample. |
@@ -27,6 +27,10 @@ Keep a frozen question and option dictionary for each deployed revision, plus th
 If Microsoft Forms does not export whether a question was displayed, derive this only where the frozen branching rules and preceding answers establish it. Otherwise record `unknown_display_status`; do not guess that a blank answer was a refusal or that an unshown option meant “no”. Store instrument revision and stage at dataset level even if the collection tool cannot add them to each record.
 
 Do not silently combine earlier and revised instruments. A comparison needs an explicit mapping of identical or meaningfully comparable questions, populations, options and time windows. Keep incompatible items separate. Current/former ADF status, residence route and recall period are separate dimensions, not interchangeable labels.
+
+## Geographic precision
+
+The first optional geography answer records the broad area; the second optionally identifies a suburb/locality within it. Preserve `residence_area`, optional `suburb` and `location_precision` (`area`, `suburb`, `other_locality` or `not_stated`). Other counts as `other_locality` only when the optional text is supplied; otherwise precision remains the selected area. Blank or declined area is `not_stated`; Outside Greater Darwin remains an area-level response with outside scope. Area-only answers contribute to the stated broad-area total but must never be spread among its suburbs or treated as a particular suburb. In particular, Palmerston is not Palmerston City, and Darwin is not Darwin City. A blank suburb does not erase a supplied area or make its local scope unknown. An unlisted locality supplied as Other text stays distinct from the canonical named catalogue until checked; preserve the original text. State the number of broad-area-only and unspecified locations beside suburb breakdowns.
 
 ## Denominators and unanswered questions
 

@@ -373,34 +373,34 @@ test('actual barriers and reasons for not seeking help stay separate; blank or u
 test('crossing local and historical residence routes clears experience answers but preserves connection', () => {
   const domains = domainsFor('adult');
   const experienceKeys = ['needs_status', 'needs', 'needs_other', 'areas', 'programmes', 'programme_priority', 'participation_formats', 'times', 'earlier_experience', 'time_nt', 'children_ages'];
-  for (const [previous, suburb] of [['wagaman', 'outside'], ['outside', 'wagaman'], ['other', 'outside']]) {
-    const answers = { roles: ['partner'], community_connection: 'A local group helped us feel welcome.', suburb, past_residence: 'yes', ...Object.fromEntries(experienceKeys.map(key => [key, 'PREVIOUS_COHORT_SENTINEL'])) };
-    survey.reconcileAnswers(answers, 'suburb', domains, previous);
-    for (const key of experienceKeys) assert.equal(hasOwn(answers, key), false, `${previous} to ${suburb}: ${key}`);
+  for (const [previous, residence_area] of [['darwin', 'outside'], ['outside', 'darwin'], ['greater_darwin_other', 'outside']]) {
+    const answers = { roles: ['partner'], community_connection: 'A local group helped us feel welcome.', residence_area, past_residence: 'yes', ...Object.fromEntries(experienceKeys.map(key => [key, 'PREVIOUS_COHORT_SENTINEL'])) };
+    survey.reconcileAnswers(answers, 'residence_area', domains, previous);
+    for (const key of experienceKeys) assert.equal(hasOwn(answers, key), false, `${previous} to ${residence_area}: ${key}`);
     assert.deepEqual(answers.roles, ['partner']);
     assert.equal(answers.community_connection, 'A local group helped us feel welcome.');
-    assert.equal(answers.suburb, suburb);
+    assert.equal(answers.residence_area, residence_area);
   }
-  const unchanged = { suburb: 'wagaman', needs_status: 'yes', needs: ['housing'], areas: { housing: areaBlock() } };
+  const unchanged = { residence_area: 'darwin', suburb: 'wagaman', needs_status: 'yes', needs: ['housing'], areas: { housing: areaBlock() } };
   survey.reconcileAnswers(unchanged, 'suburb', domains, 'casuarina');
   assert.deepEqual(unchanged.areas, { housing: areaBlock() });
 });
 
 
-test('locality edits within the local route preserve experiences and military posting never decides residence', () => {
+test('optional locality edits preserve experiences and military posting never decides residence', () => {
   const domains = domainsFor('adult');
   for (const previous of ['wagaman', 'casuarina', 'other', 'prefer', '', undefined]) {
     for (const suburb of ['stuart_park', 'other', 'prefer', '', undefined]) {
-      const answers = { roles: ['partner'], serving_nt: 'no', suburb, time_nt: 'over3', needs_status: 'yes', needs: ['housing'], areas: { housing: areaBlock() } };
+      const answers = { roles: ['partner'], serving_nt: 'no', residence_area: 'darwin', suburb, time_nt: 'over3', needs_status: 'yes', needs: ['housing'], areas: { housing: areaBlock() } };
       const original = structuredClone(answers);
       survey.reconcileAnswers(answers, 'suburb', domains, previous);
       assert.deepEqual(answers, original);
       assert.equal(survey.isOutsideSurveyScope(answers), false);
     }
   }
-  assert.equal(survey.isOutsideSurveyScope({ roles: ['none'], suburb: 'wagaman' }), true);
-  assert.equal(survey.isOutsideSurveyScope({ roles: ['partner'], serving_nt: 'no', suburb: 'wagaman' }), false);
-  assert.equal(survey.isOutsideSurveyScope({ roles: ['partner'], serving_nt: 'yes', suburb: 'outside', past_residence: 'no' }), true);
+  assert.equal(survey.isOutsideSurveyScope({ roles: ['none'], residence_area: 'darwin', suburb: 'wagaman' }), true);
+  assert.equal(survey.isOutsideSurveyScope({ roles: ['partner'], serving_nt: 'no', residence_area: 'darwin' }), false);
+  assert.equal(survey.isOutsideSurveyScope({ roles: ['partner'], serving_nt: 'yes', residence_area: 'outside', past_residence: 'no' }), true);
 });
 
 
@@ -426,13 +426,13 @@ test('participation format changes clear timing only when no synchronous format 
 });
 
 
-test('schema 7 exports selected-area measures and never migrates obsolete general or current-only responses', () => {
+test('schema 7.1 exports selected-area measures and never migrates obsolete general or current-only responses', () => {
   const domains = domainsFor('adult');
   const legacy = { anything: 'OLD_GENERAL_IDEAS', priority: ['transport'], adequacy: { housing: 'enough' }, follow_up: { housing: { impact: 'a_lot', help: ['family'], change: 'OLD_CURRENT_ONLY' } }, strengths: 'OLD_STRENGTH', impact: 'a_lot', help: ['family'], change: 'OLD_COMBINED', another_priority: 'OLD_OTHER', caring: ['under18'], financial_dependence: 'yes', care_dependence: 'yes', expandedAreas: { housing: true } };
   const answers = { ...legacy, serving_nt: 'recent', needs_status: 'yes', needs: ['housing', 'childcare'], areas: { housing: { ...areaBlock(), impact: 'a_lot', help: ['military'], extra: 'DO_NOT_COPY' }, transport: areaBlock('STALE') }, participation_formats: ['phone'], times: ['weekend'] };
   const original = structuredClone(answers);
   const result = plain(survey.cleanExport(answers, 'adult', domains));
-  assert.equal(result.schema_version, '7.0');
+  assert.equal(result.schema_version, '7.1');
   assert.equal(result.measurement_scope, 'local_support_experiences_and_programme_preferences');
   assert.equal(result.details_optional, true);
   assert.equal(result.consultation_route, 'residence_unspecified');
@@ -473,13 +473,13 @@ test('exports preserve skipped, cleared, No, unsure and declined support status 
 
 test('exports exclude off-route background and old recent-needs data from the historical route', () => {
   for (const version of ['adult', 'youth', 'child']) {
-    const answers = { roles: ['partner'], suburb: 'outside', past_residence: 'yes', earlier_experience: 'An older experience', needs_status: 'yes', needs: ['housing'], areas: { housing: areaBlock() }, participation_formats: ['phone'], times: ['weekend'], anything: 'Stale', region: 'darwin', force: 'adf', time_nt: 'over3' };
+    const answers = { roles: ['partner'], residence_area: 'outside', past_residence: 'yes', earlier_experience: 'An older experience', needs_status: 'yes', needs: ['housing'], areas: { housing: areaBlock() }, participation_formats: ['phone'], times: ['weekend'], anything: 'Stale', region: 'darwin', force: 'adf', time_nt: 'over3' };
     const original = structuredClone(answers);
     assert.deepEqual(stepsFor(answers, version).map(s => s.id), ['connection', 'earlier', 'review']);
     const result = plain(survey.cleanExport(answers, version, domainsFor(version)));
     assert.equal(result.consultation_route, 'earlier_experience');
     assert.equal(result.recall_months, null);
-    assert.deepEqual(result.answers, { roles: ['partner'], suburb: 'outside', past_residence: 'yes', earlier_experience: 'An older experience' });
+    assert.deepEqual(result.answers, { roles: ['partner'], residence_area: 'outside', region: 'outside_greater_darwin', past_residence: 'yes', earlier_experience: 'An older experience' });
     assert.deepEqual(answers, original);
   }
 });
@@ -505,31 +505,31 @@ test('the same recall period frames the checklist, support received and sources,
 
 test('residence precedes open reflection and youth locality remains optional on connection', () => {
   const adult = pageFor('connection', 'adult');
-  assert.deepEqual(adult.fields.map(f => f.key), ['roles', 'suburb', 'suburb_other', 'past_residence', 'age_group']);
+  assert.deepEqual(adult.fields.map(f => f.key), ['roles', 'residence_area', 'suburb', 'suburb_other', 'past_residence', 'age_group']);
   const place = pageFor('place', 'adult');
   assert.deepEqual(place.fields.map(f => f.key), ['time_nt', 'community_connection']);
   assert.ok(place.fields.every(f => !f.required));
   const duration = place.fields.find(f => f.key === 'time_nt');
   assert.deepEqual(fieldIds(duration), ['never', 'under3', '3to12', '1to3', 'over3', 'unsure', 'prefer']);
   assert.match(duration.hint, /current or most recent stay/);
-  const youth = pageFor('connection', 'youth');
-  assert.deepEqual(youth.fields.map(f => f.key), ['roles', 'suburb', 'suburb_other', 'past_residence', 'assistance', 'community_connection']);
+  const youth = pageFor('connection', 'youth', { residence_area: 'darwin' });
+  assert.deepEqual(youth.fields.map(f => f.key), ['roles', 'residence_area', 'suburb', 'suburb_other', 'past_residence', 'assistance', 'community_connection']);
   assert.equal(youth.fields.find(f => f.key === 'suburb').required, undefined);
   assert.ok(fieldIds(youth.fields.find(f => f.key === 'suburb')).includes('prefer'));
   assert.deepEqual(fieldIds(youth.fields[1]), fieldIds(adult.fields[1]));
-  assert.equal(stepsFor({ suburb: 'wagaman' }, 'youth').some(step => step.id === 'place'), false);
+  assert.equal(stepsFor({ residence_area: 'darwin', suburb: 'wagaman' }, 'youth').some(step => step.id === 'place'), false);
 });
 
 test('the optional connection-experience prompt survives no-needs and earlier-experience routes', () => {
   for(const version of ['adult','youth']){
     const field=pageFor(version==='adult'?'place':'connection',version).fields.find(item=>item.key==='community_connection');
     assert.equal(field.required,undefined);
-    assert.match(field.label,version==='adult'?/you or your family to feel connected/:/feel welcome or included/);
+    assert.equal(field.label, version === 'adult' ? 'What has made it easier or harder for you or your family to feel connected in Greater Darwin?' : 'What, if anything, has helped you feel welcome or included in Greater Darwin?');
     const base={roles:['partner'],serving_nt:'yes',needs_status:'no',community_connection:'The local playgroup helped us meet people.'};
     const noNeeds=plain(survey.cleanExport(base,version,domainsFor(version)));
     assert.equal(noNeeds.answers.community_connection,base.community_connection);
     assert.ok(stepsFor(base,version).some(step=>step.id==='delivery'));
-    const earlier={...base,suburb:'outside',past_residence:'yes',earlier_experience:'A previous local stay'};
+    const earlier={...base,residence_area:'outside',past_residence:'yes',earlier_experience:'A previous local stay'};
     const historical=plain(survey.cleanExport(earlier,version,domainsFor(version)));
     assert.equal(historical.answers.community_connection,base.community_connection);
     assert.deepEqual(stepsFor(earlier,version).map(step=>step.id),['connection','earlier','review']);
@@ -548,7 +548,7 @@ test('adult age bands are optional, non-overlapping and available on both servic
   ]);
   for (const group of age.options.map(o => o.id)) {
     const recent = { roles: ['partner'], serving_nt: 'yes', age_group: group };
-    const earlier = { ...recent, suburb: 'outside', past_residence: 'yes', earlier_experience: 'Earlier support' };
+    const earlier = { ...recent, residence_area: 'outside', past_residence: 'yes', earlier_experience: 'Earlier support' };
     assert.deepEqual(stepsFor(recent).map(s => s.id), ['connection', 'place', 'needs', 'programmes', 'delivery', 'review']);
     assert.deepEqual(stepsFor(earlier).map(s => s.id), ['connection', 'earlier', 'review']);
     assert.equal(survey.cleanExport(recent, 'adult', domainsFor('adult')).answers.age_group, group);
@@ -565,7 +565,7 @@ test('youth export keeps all checked needs but only an explicitly chosen focus h
     time_nt: 'over3', force: 'adf', areas: { [first]: { comment: 'STALE_FIRST' }, [second]: { ...areaBlock('Focused'), comment: 'FOCUSED_SECOND' } } };
   const domains = survey.setContext('youth', answers);
   const withoutFocus = plain(survey.cleanExport(answers, 'youth', domains));
-  assert.equal(withoutFocus.schema_version, '7.0');
+  assert.equal(withoutFocus.schema_version, '7.1');
   assert.equal(withoutFocus.recall_months, 3);
   assert.deepEqual(withoutFocus.answers.needs, [first, second]);
   assert.deepEqual(withoutFocus.answers.areas, {});
@@ -1233,70 +1233,165 @@ test('exports and routes reject hidden or legacy areas after No, refusal or a sk
   }
 });
 
-// The new locality answer must support regional planning without asking twice.
-test('Greater Darwin localities preserve aliases, regional aggregation and non-disclosure', () => {
-  for (const [typed, id, region] of [['Casuarina','casuarina','darwin'],['  wagaman  ','wagaman','darwin'],['Stuart Park','stuart_park','darwin'],['Howard Springs','howard_springs','litchfield'],['Rosebery','rosebery','palmerston'],['Robertson Barracks','holtze','litchfield']]) {
-    assert.equal(survey.suburbChoice(typed)?.id,id);
-    const result=plain(survey.cleanExport({serving_nt:'yes',suburb:id},'adult',domainsFor('adult')));
-    assert.equal(result.answers.suburb,id);assert.equal(result.answers.region,region);
-    assert.equal(result.geography_version,'2026-09-27');
+// The two-level picker keeps broad-area answers distinct from named suburbs.
+test('locality aliases and valid area-suburb pairs preserve regional aggregation', () => {
+  for (const [typed, id, residence_area] of [['Casuarina','casuarina','darwin'],['  wagaman  ','wagaman','darwin'],['Stuart Park','stuart_park','darwin'],['Howard Springs','howard_springs','litchfield'],['Rosebery','rosebery','palmerston'],['Robertson Barracks','holtze','litchfield'],['East Arm','east_arm','greater_darwin_other']]) {
+    assert.equal(survey.suburbChoice(typed)?.id, id);
+    for (const version of ['adult', 'youth']) {
+      const result = plain(survey.cleanExport({ residence_area, suburb: id }, version, domainsFor(version)));
+      assert.equal(result.answers.residence_area, residence_area);
+      assert.equal(result.answers.suburb, id);
+      assert.equal(result.answers.region, residence_area);
+      assert.equal(result.location_precision, 'suburb');
+      assert.equal(result.geography_version, '2026-09-27-two-level');
+    }
   }
-  for(const suburb of ['prefer','other','NOT_A_LOCALITY']){
-    const result=plain(survey.cleanExport({serving_nt:'yes',suburb,region:'darwin',suburb_other:'A locality name'},'adult',domainsFor('adult')));
-    assert.equal(hasOwn(result.answers,'region'),false);
-    assert.equal(hasOwn(result.answers,'suburb_other'),suburb==='other');
+  assert.equal(survey.suburbChoice('Katherine'), undefined);
+  assert.equal(survey.suburbChoice('Tindal'), undefined);
+});
+
+test('area-first fields show only matching optional suburbs and distinguish Palmerston area from Palmerston City', () => {
+  for (const version of ['adult', 'youth']) {
+    const broad = pageFor('connection', version).fields.find(field => field.key === 'residence_area');
+    assert.equal(broad.required, undefined);
+    assert.deepEqual(fieldIds(broad), ['darwin', 'palmerston', 'litchfield', 'greater_darwin_other', 'outside', 'prefer']);
+    assert.match(broad.options.find(option => option.id === 'palmerston').label, /Palmerston/);
+    for (const residence_area of ['darwin', 'palmerston', 'litchfield', 'greater_darwin_other']) {
+      const fields = pageFor('connection', version, { residence_area }).fields;
+      const suburb = fields.find(field => field.key === 'suburb');
+      const available = fieldIds(suburb);
+      assert.equal(suburb.type, 'select');
+      assert.equal(suburb.required, undefined);
+      assert.equal(survey.conditionalVisible(suburb), true);
+      assert.ok(available.includes('other') && available.includes('prefer'));
+      assert.equal(available.includes('outside'), false);
+      for (const locality of plain(survey.suburbs).filter(option => option.region)) {
+        assert.equal(available.includes(locality.id), locality.region === residence_area, `${residence_area}: ${locality.id}`);
+      }
+      const html = survey.fieldHTML(suburb);
+      assert.match(html, /<select/);
+      assert.doesNotMatch(html, /role="combobox"|suburb-search/);
+    }
+    for (const residence_area of [undefined, '', 'prefer', 'outside']) {
+      const fields = pageFor('connection', version, { residence_area, suburb: 'other', suburb_other: 'HIDDEN' }).fields;
+      assert.equal(survey.conditionalVisible(fields.find(field => field.key === 'suburb')), false);
+      assert.equal(survey.conditionalVisible(fields.find(field => field.key === 'suburb_other')), false);
+      assert.equal(survey.conditionalVisible(fields.find(field => field.key === 'past_residence')), residence_area === 'outside');
+    }
+    const areaOnly = plain(survey.cleanExport({ residence_area: 'palmerston' }, version, domainsFor(version)));
+    assert.equal(areaOnly.answers.region, 'palmerston');
+    assert.equal(areaOnly.location_precision, 'area');
+    assert.equal(hasOwn(areaOnly.answers, 'suburb'), false, 'Broad Palmerston must not silently become Palmerston City');
+    const city = plain(survey.cleanExport({ residence_area: 'palmerston', suburb: 'palmerston_city' }, version, domainsFor(version)));
+    assert.equal(city.answers.suburb, 'palmerston_city');
+    assert.equal(city.location_precision, 'suburb');
   }
-  assert.equal(survey.suburbChoice('Katherine'),undefined);
-  assert.equal(survey.suburbChoice('Tindal'),undefined);
-  const fields=pageFor('connection').fields;
-  assert.equal(fields.some(f=>f.key==='region'||f.key==='force'),false);
-  const field=fields.find(f=>f.key==='suburb');
-  assert.equal(field.type,'search-select');assert.equal(field.required,undefined);
-  assert.ok(field.options.some(o=>o.label==='Another locality in Greater Darwin'));
-  assert.ok(field.options.some(o=>o.label==='Prefer not to say'));
+});
+
+test('changing the selected area clears locality detail but preserves support answers on local routes', () => {
+  for (const [previous, residence_area] of [['darwin', 'palmerston'], ['palmerston', 'litchfield'], ['litchfield', 'greater_darwin_other'], ['darwin', 'prefer'], ['palmerston', '']]) {
+    const answers = { residence_area, suburb: 'other', suburb_other: 'OLD_LOCALITY', needs_status: 'yes', needs: ['housing'], areas: { housing: areaBlock() }, programmes: ['connection'], participation_formats: ['group'], times: ['weekend'] };
+    survey.reconcileAnswers(answers, 'residence_area', domainsFor('adult'), previous);
+    assert.equal(hasOwn(answers, 'suburb'), false);
+    assert.equal(hasOwn(answers, 'suburb_other'), false);
+    assert.equal(answers.residence_area, residence_area);
+    assert.deepEqual(answers.areas, { housing: areaBlock() });
+    assert.deepEqual(answers.needs, ['housing']);
+    assert.deepEqual(answers.programmes, ['connection']);
+    assert.deepEqual(answers.times, ['weekend']);
+  }
+  const unchanged = { residence_area: 'darwin', suburb: 'wagaman', needs_status: 'no' };
+  survey.reconcileAnswers(unchanged, 'residence_area', domainsFor('adult'), 'darwin');
+  assert.equal(unchanged.suburb, 'wagaman', 'A repeated unchanged value must not erase an existing answer');
+});
+
+test('exports retain area precision when locality is skipped, declined, unknown or inconsistent', () => {
+  for (const suburb of [undefined, '', 'prefer', 'NOT_A_LOCALITY', 'bakewell']) {
+    const answers = { residence_area: 'darwin', suburb, suburb_other: 'HIDDEN_DETAIL', region: 'palmerston' };
+    const original = structuredClone(answers);
+    const result = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
+    assert.equal(result.answers.region, 'darwin');
+    assert.equal(result.location_precision, 'area');
+    assert.equal(hasOwn(result.answers, 'suburb_other'), false);
+    if (suburb === 'NOT_A_LOCALITY' || suburb === 'bakewell') assert.equal(hasOwn(result.answers, 'suburb'), false);
+    assert.deepEqual(answers, original, 'Export must not mutate the respondent record');
+  }
+  for (const suburb_other of [undefined, '', '   ']) {
+    const result = plain(survey.cleanExport({ residence_area: 'litchfield', suburb: 'other', suburb_other }, 'adult', domainsFor('adult')));
+    assert.equal(result.answers.region, 'litchfield');
+    assert.equal(result.location_precision, 'area', 'Selecting Other without naming a locality supplies only area precision');
+  }
+  const namedOther = plain(survey.cleanExport({ residence_area: 'litchfield', suburb: 'other', suburb_other: 'A different rural locality' }, 'adult', domainsFor('adult')));
+  assert.equal(namedOther.answers.suburb_other, 'A different rural locality');
+  assert.equal(namedOther.answers.region, 'litchfield');
+  assert.equal(namedOther.location_precision, 'other_locality');
+});
+
+test('blank, declined and legacy-only areas never acquire a location from hidden or obsolete answers', () => {
+  for (const residence_area of [undefined, '', 'prefer', 'NOT_AN_AREA']) {
+    const answers = { residence_area, suburb: 'wagaman', suburb_other: 'HIDDEN_DETAIL', region: 'darwin', past_residence: 'yes' };
+    const result = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
+    assert.equal(result.location_precision, 'not_stated');
+    assert.equal(hasOwn(result.answers, 'residence_area'), residence_area === 'prefer');
+    if (residence_area === 'prefer') assert.equal(result.answers.residence_area, 'prefer');
+    assert.equal(result.residence_scope, 'not_disclosed_or_unspecified');
+    assert.equal(result.consultation_route, 'residence_unspecified');
+    for (const key of ['region', 'suburb', 'suburb_other', 'past_residence']) assert.equal(hasOwn(result.answers, key), false, key);
+  }
+  const outside = plain(survey.cleanExport({ residence_area: 'outside', suburb: 'wagaman', suburb_other: 'HIDDEN_DETAIL', past_residence: 'yes' }, 'adult', domainsFor('adult')));
+  assert.equal(outside.answers.residence_area, 'outside');
+  assert.equal(outside.answers.region, 'outside_greater_darwin');
+  assert.equal(outside.residence_scope, 'outside_greater_darwin');
+  assert.equal(outside.consultation_route, 'earlier_experience');
+  assert.equal(outside.location_precision, 'area');
+  for (const key of ['suburb', 'suburb_other']) assert.equal(hasOwn(outside.answers, key), false);
 });
 
 test('changing Other locality clears its hidden text without changing support needs', () => {
-  const answers={suburb:'casuarina',suburb_other:'OLD_LOCALITY',needs_status:'yes',needs:['housing'],areas:{housing:areaBlock()}};
-  survey.reconcileAnswers(answers,'suburb',domainsFor('adult'),'other');
-  assert.equal(hasOwn(answers,'suburb_other'),false);
-  assert.deepEqual(answers.needs,['housing']);assert.equal(answers.areas.housing.comment,'Housing experience');
-  for(const version of ['adult','youth']){
-    const result=plain(survey.cleanExport({serving_nt:'earlier',suburb:'howard_springs',earlier_experience:'Past local support'},version,domainsFor(version)));
-    assert.equal(result.answers.region,'litchfield');assert.equal(result.answers.suburb,'howard_springs');
+  const answers = { residence_area: 'darwin', suburb: 'casuarina', suburb_other: 'OLD_LOCALITY', needs_status: 'yes', needs: ['housing'], areas: { housing: areaBlock() } };
+  survey.reconcileAnswers(answers, 'suburb', domainsFor('adult'), 'other');
+  assert.equal(hasOwn(answers, 'suburb_other'), false);
+  assert.deepEqual(answers.needs, ['housing']);
+  assert.equal(answers.areas.housing.comment, 'Housing experience');
+  for (const version of ['adult', 'youth']) {
+    const result = plain(survey.cleanExport({ serving_nt: 'earlier', residence_area: 'litchfield', suburb: 'howard_springs', earlier_experience: 'Past local support' }, version, domainsFor(version)));
+    assert.equal(result.answers.region, 'litchfield');
+    assert.equal(result.answers.suburb, 'howard_springs');
   }
 });
 
 // Approved structure revision: preserve adult depth while making programme planning
 // independent of past unmet needs and of the serving member's posting location.
-test('residence drives current and historical routes, including local families whose member served elsewhere', () => {
+test('explicit residence areas drive routes even when the member served elsewhere or the optional suburb is absent', () => {
   for (const serving_nt of ['yes', 'recent', 'earlier', 'no', 'unsure', undefined]) {
-    for (const suburb of ['wagaman', 'casuarina', 'stuart_park', 'howard_springs', 'other']) {
-      const answers = { roles: ['partner'], serving_nt, suburb };
-      assert.equal(survey.consultationRoute(answers), 'current_local');
-      assert.equal(survey.residenceScope(answers), 'greater_darwin');
-      assert.equal(survey.isOutsideSurveyScope(answers), false);
-      assert.ok(stepsFor(answers).some(step => step.id === 'needs'));
-      assert.ok(stepsFor(answers).some(step => step.id === 'programmes'));
+    for (const residence_area of ['darwin', 'palmerston', 'litchfield', 'greater_darwin_other']) {
+      for (const suburb of [undefined, '', 'prefer', 'other']) {
+        const answers = { roles: ['partner'], serving_nt, residence_area, suburb };
+        assert.equal(survey.consultationRoute(answers), 'current_local');
+        assert.equal(survey.residenceScope(answers), 'greater_darwin');
+        assert.equal(survey.isOutsideSurveyScope(answers), false);
+        assert.ok(stepsFor(answers).some(step => step.id === 'needs'));
+        assert.ok(stepsFor(answers).some(step => step.id === 'programmes'));
+      }
     }
   }
-  for (const suburb of ['prefer', undefined, 'NOT_A_LOCALITY']) {
-    const answers = { roles: ['partner'], suburb };
+  for (const residence_area of ['prefer', undefined, '', 'NOT_AN_AREA']) {
+    const answers = { roles: ['partner'], residence_area, suburb: 'wagaman' };
     assert.equal(survey.consultationRoute(answers), 'residence_unspecified');
     assert.equal(survey.isOutsideSurveyScope(answers), false, 'Non-disclosure is not a declaration of ineligibility');
     assert.equal(survey.residenceScope(answers), 'not_disclosed_or_unspecified');
   }
-  const formerLocal = { roles: ['partner'], suburb: 'outside', past_residence: 'yes', serving_nt: 'yes' };
+  const formerLocal = { roles: ['partner'], residence_area: 'outside', past_residence: 'yes', serving_nt: 'yes' };
   assert.equal(survey.consultationRoute(formerLocal), 'earlier_experience');
   assert.deepEqual(stepsFor(formerLocal).map(step => step.id), ['connection', 'earlier', 'review']);
   assert.equal(survey.isOutsideSurveyScope({ ...formerLocal, past_residence: 'no' }), true);
-  assert.equal(survey.isOutsideSurveyScope({ roles: ['none'], suburb: 'wagaman' }), true);
+  assert.equal(survey.isOutsideSurveyScope({ roles: ['none'], residence_area: 'darwin' }), true);
 });
 
 test('adults can describe every selected need without a focus cap or required narrative', () => {
   const domains = domainsFor('adult');
   const needs = plain(domains).map(domain => domain.id);
-  const answers = { roles: ['partner'], suburb: 'wagaman', needs_status: 'yes', needs, areas: {} };
+  const answers = { roles: ['partner'], residence_area: 'darwin', suburb: 'wagaman', needs_status: 'yes', needs, areas: {} };
   for (const id of needs) answers.areas[id] = { received: 'some', additional_support_now: 'yes', support_requested: `Request for ${id}`, sources: ['community'], barriers: ['waiting'], comment: `Experience of ${id}` };
   survey.setContext('adult', answers);
   const areas = plain(survey.buildSteps(answers, domains, 'adult')).filter(step => step.need);
@@ -1313,7 +1408,7 @@ test('adults can describe every selected need without a focus cap or required na
 });
 
 test('No past need still permits future programmes, child stages and participation arrangements', () => {
-  const answers = { roles: ['partner'], suburb: 'wagaman', needs_status: 'no', programmes: ['playgroup', 'connection'], programme_priority: 'playgroup', children_ages: ['under5'], participation_formats: ['self_guided', 'group'], times: ['weekend'], participation_enablers: ['bring_children'], berrimah_access: 'with_help', berrimah_other: 'A bus connection would help.' };
+  const answers = { roles: ['partner'], residence_area: 'darwin', suburb: 'wagaman', needs_status: 'no', programmes: ['playgroup', 'connection'], programme_priority: 'playgroup', children_ages: ['under5'], participation_formats: ['self_guided', 'group'], times: ['weekend'], participation_enablers: ['bring_children'], berrimah_access: 'with_help', berrimah_other: 'A bus connection would help.' };
   const domains = survey.setContext('adult', answers);
   const ids = plain(survey.buildSteps(answers, domains, 'adult')).map(step => step.id);
   assert.ok(ids.includes('programmes') && ids.includes('delivery'));
@@ -1395,12 +1490,12 @@ test('adding or removing a sought source preserves barriers but changing the bra
   }
 });
 
-test('schema 7 exports locality and programme metadata without reinterpreting legacy delivery or service fields', () => {
-  const answers = { roles: ['partner'], suburb: 'howard_springs', serving_nt: 'no', force: 'adf', delivery: ['information'], region: 'outside_au', needs_status: 'no', programmes: ['connection'], participation_formats: ['group'], times: ['weekend'] };
+test('schema 7.1 exports locality and programme metadata without reinterpreting legacy delivery or service fields', () => {
+  const answers = { roles: ['partner'], residence_area: 'litchfield', suburb: 'howard_springs', serving_nt: 'no', force: 'adf', delivery: ['information'], region: 'outside_au', needs_status: 'no', programmes: ['connection'], participation_formats: ['group'], times: ['weekend'] };
   const domains = survey.setContext('adult', answers);
   const result = plain(survey.cleanExport(answers, 'adult', domains));
-  assert.equal(result.schema_version, '7.0');
-  assert.equal(result.questionnaire_revision, '2026-09-27-local-experience-and-programmes-r2');
+  assert.equal(result.schema_version, '7.1');
+  assert.equal(result.questionnaire_revision, '2026-09-27-two-level-geography');
   assert.equal(result.consultation_route, 'current_local');
   assert.equal(result.residence_scope, 'greater_darwin');
   assert.equal(result.recall_geography, 'time_living_in_greater_darwin');
@@ -1442,7 +1537,7 @@ test('service names are optional adult detail, preserved for organisations and r
 });
 
 test('review omits repeated optional blanks but keeps an edit entry for unanswered sections', () => {
-  survey.setContext('adult', { roles: ['partner'], suburb: 'wagaman', needs_status: 'yes', needs: ['housing'], areas: { housing: { received: 'some', comment: 'A useful comment' } } });
+  survey.setContext('adult', { roles: ['partner'], residence_area: 'darwin', suburb: 'wagaman', needs_status: 'yes', needs: ['housing'], areas: { housing: { received: 'some', comment: 'A useful comment' } } });
   const html = survey.reviewHTML();
   assert.doesNotMatch(html, /Not answered/);
   assert.match(html, /No optional answers added/);

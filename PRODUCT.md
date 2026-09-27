@@ -18,7 +18,7 @@ The dependency-free HTML/CSS/JavaScript implementation is available through the 
 
 LC may rebuild the main survey and independent interview request in its Microsoft Forms tenant, or host the current front end with an LC-approved receiver. This remains an open institutional choice. [COLLECTION_HANDOFF.md](COLLECTION_HANDOFF.md) gives the proposal, working-prototype checks and portable data contract. A platform decision must preserve meaningful questions, full optional adult detail, age/permission paths, stable IDs and safe-contact instructions. No receiver, account or storage system is activated by the current design changes.
 
-The release uses adult/youth schema `7.0`, revision `2026-09-27-local-experience-and-programmes-r2`, and younger-child schema `1.2`, revision `2026-09-27-background`. The IT delivery includes a question bank and source archive built from the recorded commit. The source archive is a portable front end, not an already configured collection system.
+The release uses adult/youth schema `7.1`, revision `2026-09-27-two-level-geography`, and younger-child schema `1.3`, revision `2026-09-27-two-level-geography`. The IT delivery includes a question bank and source archive built from the recorded commit. The source archive is a portable front end, not an already configured collection system.
 
 ## Respondent experience
 
@@ -40,11 +40,11 @@ The notice describes purpose, intended custody and authorised access, de-identif
 
 ## Scope and question order
 
-The consultation covers Darwin, Palmerston, Litchfield, East Arm and Robertson Barracks. A searchable alphabetical selector offers 100 named localities plus Another locality in Greater Darwin, Outside Greater Darwin and Prefer not to say. It derives a broader region from named localities; Other has optional text. There is no second location question.
+The consultation covers Darwin, Palmerston, Litchfield, East Arm and Robertson Barracks. Use two optional native dropdowns on the same background page: first Darwin, Palmerston, Litchfield / rural area, Another area in Greater Darwin, Outside Greater Darwin or Prefer not to say; then a suburb/locality only from the selected local area. Retain the 100-name catalogue, alphabetical child lists and an optional Other text field. A broad area is a complete valid answer when the suburb is left blank. Palmerston alone must not be recorded as Palmerston City. Changing the broad area clears its old suburb and Other text. Scope follows the broad area, not completion of the suburb question.
 
 Current/former ADF members and the existing partner, child, parent, wider-family/carer relationships remain invited. The military-force question stays removed and no overseas-service-transfer question is added. The previous local service-date gate is replaced by residence routing: local and undisclosed residence reach the main questionnaire; an outside respondent can offer earlier local experience; explicitly never living locally leads to the scope explanation. Uncertain or declined past residence may use the historical space without being labelled confirmed past residence. This concerns consultation, not service entitlement. A current local family is not excluded just because the member served elsewhere or left service more than a year ago.
 
-Simple background precedes open reflection. Adults give ADF relationship, optional locality and age band, then optional current/most-recent residence duration and positive connection experience. Youth give relationship, locality and assistance before their positive question; they have no separate residence-duration page. Adult age bands 18–29, 30–39, 40–49 and 50+ do not alter routing. Historical comments explicitly concern earlier Greater Darwin experience.
+Simple background precedes open reflection. Adults give ADF relationship, optional broad area and suburb, and age band, then optional current/most-recent residence duration and what made connection easier or harder. Youth give relationship, optional broad area and suburb, and assistance before their positive question; they have no separate residence-duration page. Adult age bands 18–29, 30–39, 40–49 and 50+ do not alter routing. Historical comments explicitly concern earlier Greater Darwin experience.
 
 Past needs concern only time living in Greater Darwin within the past 12 months for adults or three months for youth; recent arrivals consider time since arrival. The needs inventory retains its 17 adult domains plus Something else, pending the team's discussion. No/declined/blank past need status skips detail but still leads to future support and participation questions. Yes/Not sure opens the checklist. Met needs and successful support remain relevant.
 
@@ -62,7 +62,7 @@ See [FLOW_REDESIGN.md](FLOW_REDESIGN.md) for exact fields, branch rules and answ
 
 ## Younger-child form
 
-After guardian permission, a short background step records ADF family connection and optional child locality and 0–4/5–7 age band. An explicit No ADF connection gets a scope explanation; Yes or unsure continues. Preserve geography metadata and distinguish outside/undisclosed responses in analysis.
+After guardian permission, a short background step records ADF family connection and optional child broad area and suburb/locality, and 0–4/5–7 age band. An explicit No ADF connection gets a scope explanation; Yes or unsure continues. Preserve geography metadata and distinguish outside/undisclosed responses in analysis.
 
 The next page explains that “here” means living in Greater Darwin. Four child-expression boxes and Your observations are shown together without a response-mode selector. Child willingness enables child-expression fields; guardian observations remain available without claiming child assent. Unchecking willingness clears expressions only. The review/export infers expression versus observation basis from actual answers. No names or uploads are added, and these records are not pooled as equivalent adult/youth self-report.
 
@@ -76,7 +76,7 @@ Completion says **Thank you for helping strengthen the Defence community in Grea
 
 ## Interpretation and reporting
 
-[ANALYSIS_PROTOCOL.md](ANALYSIS_PROTOCOL.md) applies to every statistical result: report response records and participant perspectives, not unique households or population prevalence. Preserve recall windows, locality/residence routes, age paths and child/guardian voice. Show each finding's denominator and distinguish blank, declined, not asked and No. Selected needs remain recorded when their optional detail is blank. Locality counts inform planning among responses received, not neighbourhood prevalence rankings. Extracted charts/slides carry the reporting context with them.
+[ANALYSIS_PROTOCOL.md](ANALYSIS_PROTOCOL.md) applies to every statistical result: report response records and participant perspectives, not unique households or population prevalence. Preserve recall windows, locality/residence routes, age paths and child/guardian voice. Show each finding's denominator and distinguish blank, declined, not asked and No. Selected needs remain recorded when their optional detail is blank. Locality counts inform planning among responses received, not neighbourhood prevalence rankings. Preserve `location_precision`: broad-area-only responses contribute to that area but never to a specific suburb. Only a named suburb response identifies a named suburb. Extracted charts/slides carry the reporting context with them.
 
 Questionnaire meaning and IDs must survive migration. The old information/advice measure is not automatically comparable with new participation preferences. Tests and fictional results must never be merged into the live cohort. LC and the team retain genuine programme, collection and publication decisions; ordinary reversible implementation and documentation corrections are delegated.
 
@@ -103,4 +103,4 @@ Region is omitted when it cannot change a contact or access requirement, and bec
 Long mobile questions keep Continue within reach; related links follow it. Primary contact and hours precede longer access details. Routine relationship selection has no crisis panel; selected safety needs retain contextual help. Printing includes usable official URLs/emails and the check date. These scoped changes are implemented without modifying survey or interview files.
 
 
-The adult community-connection prompt now asks what has made connection easier or harder, giving positive and difficult experiences equal room in the same optional field. Its position and answer ID remain unchanged; questionnaire revision r2 records the wording change.
+The adult community-connection prompt now asks what has made connection easier or harder, giving positive and difficult experiences equal room in the same optional field. Its position and answer ID remain unchanged; the current revision retains this approved wording.

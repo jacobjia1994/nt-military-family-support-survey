@@ -1,14 +1,14 @@
 # Consultation flow and measurement contract
 
-Updated 27 September 2026. Adult/youth schema `7.0`, questionnaire revision `2026-09-27-local-experience-and-programmes-r2`. Younger-child schema `1.2`, revision `2026-09-27-background`. This remains a team-review interface without a response receiver. Collection platform and storage are for LC and its IT team to select; see [COLLECTION_HANDOFF.md](COLLECTION_HANDOFF.md).
+Updated 27 September 2026. Adult/youth schema `7.1`, questionnaire revision `2026-09-27-two-level-geography`. Younger-child schema `1.3`, revision `2026-09-27-two-level-geography`. This remains a team-review interface without a response receiver. Collection platform and storage are for LC and its IT team to select; see [COLLECTION_HANDOFF.md](COLLECTION_HANDOFF.md).
 
 ## Purpose and sequence
 
 The survey supports LC's decisions about useful support, experiences worth preserving, current requests and feasible participation in Greater Darwin, including Litchfield. Jacob clarified that optional detailed accounts are particularly important because staff can conduct only a limited number of interviews. Keep the opportunity to answer every selected adult domain; do not impose a one- or two-domain limit.
 
 1. On the invitation page, choose Adult (18 or older) or Child or young person (under 18). The latter reveals 8–17 and 7 or younger. Participation information and choices appear inline. Within 8–17, the 8–14/15–17 choice changes permission arrangements only.
-2. State the ADF relationship and optionally select current suburb/locality. Adults may optionally give their age band. Youth state who is helping them and may give a positive connection experience after these simpler questions.
-3. Adults on the main route see optional residence duration, then a positive connection question. There is no second locality question.
+2. State the ADF relationship and optionally select the current broad area, followed by an optional suburb/locality from that area. Adults may optionally give their age band. Youth state who is helping them and may give a positive connection experience after these simpler questions.
+3. Adults on the main route see optional residence duration, then a question about what made community connection easier or harder. Area and suburb are together on the preceding background page.
 4. Answer whether support was needed during time living in Greater Darwin within the relevant recall period. Yes or Not sure reveals the needs checklist.
 5. Adults may answer details for every selected area. Youth may select one optional focus from their checked needs; the other needs stay recorded without repeated detail pages.
 6. All adult/youth main-route respondents reach **What could help next?**, including people with No, declined or blank past need status. Programme interest and its optional priority concern future support, not a limit on past experiences.
@@ -21,13 +21,13 @@ The old current/recent Greater Darwin **service-date** screen is retired. Curren
 
 | Response | Route and interpretation |
 | --- | --- |
-| Named Greater Darwin locality, or Another locality in Greater Darwin | `current_local`: main questionnaire. |
-| Locality blank or Prefer not to say | `residence_unspecified`: main questionnaire; local residence must not be assumed in analysis. |
+| Darwin, Palmerston, Litchfield / rural area, or Another area in Greater Darwin, with or without a suburb | `current_local`: main questionnaire. |
+| Broad area blank or Prefer not to say | `residence_unspecified`: main questionnaire; local residence must not be assumed in analysis. |
 | Outside Greater Darwin, with past residence Yes | `earlier_experience`: connection → historical comments → review. |
 | Outside Greater Darwin, with past residence blank, unsure or declined | The historical comments route remains available; past local residence is not recorded as confirmed. |
 | Outside Greater Darwin and explicitly never lived there, or no invited ADF relationship | Scope explanation; no main needs interview. |
 
-The optional locality selector has 100 named localities, Another locality in Greater Darwin, Outside Greater Darwin and Prefer not to say. Named locality codes derive the broad region; Other reveals optional free text. These are consultation routes, not declarations of entitlement to programme services.
+The optional broad-area dropdown controls scope. For a local area, a second optional native dropdown offers only that area’s named suburbs/localities and Other suburb or locality. The existing catalogue contains 100 names in total. Other reveals optional free text. A blank suburb preserves the area and main route; no third level is needed. Palmerston alone is not Palmerston City. Changing area clears old suburb and Other text. These are consultation routes, not declarations of entitlement to programme services.
 
 Adults recall the past 12 months; youth recall three months. For recent arrivals, only the time since arriving in Greater Darwin is relevant. Earlier local experience has no current 12-/3-month needs denominator. Adult residence duration refers to the current or most recent stay, not accumulated postings.
 
@@ -82,19 +82,19 @@ The completion heading is **Thank you for helping strengthen the Defence communi
 
 ## Answer preservation and reporting
 
-Schema `7.0` stores the questionnaire revision, residence route/scope, local recall frame and respondent-perspective analysis unit. The area record retains `received`, `sources`, `barriers`, `comment`, `additional_support_now` and `support_requested`. Stable domain and choice IDs remain independent of presentation order.
+Schema `7.1` stores the questionnaire revision, residence route/scope, local recall frame and respondent-perspective analysis unit. The area record retains `received`, `sources`, `barriers`, `comment`, `additional_support_now` and `support_requested`. Stable domain and choice IDs remain independent of presentation order. Geography stores `residence_area` separately from optional `suburb`. Its `location_precision` is `area`, `suburb`, `other_locality` (Other with supplied text) or `not_stated`. Blank or declined area is not stated; Outside Greater Darwin has area precision and outside scope. Area-only records must not be distributed among suburbs.
 
-Changing past needs to No/declined/blank clears dependent domain answers while preserving future programmes and participation. Removing a selected domain removes only that domain's detail; removing a youth focus removes its focus detail. Adding another source within the same help-seeking branch preserves selected barriers. Switching between seeking, not seeking and an unspecified source branch clears now-inapplicable barriers. Turning a current request away from Yes clears its request text. Changing locality between historical and main routes clears incompatible route-dependent content. Changing participation formats removes only timing/Berrimah/Other fields that no longer apply.
+Changing past needs to No/declined/blank clears dependent domain answers while preserving future programmes and participation. Removing a selected domain removes only that domain's detail; removing a youth focus removes its focus detail. Adding another source within the same help-seeking branch preserves selected barriers. Switching between seeking, not seeking and an unspecified source branch clears now-inapplicable barriers. Turning a current request away from Yes clears its request text. Changing residential area between historical and main routes clears incompatible route-dependent content. Changing area also clears the previously selected suburb and its Other text, while leaving unrelated responses intact. Changing participation formats removes only timing/Berrimah/Other fields that no longer apply.
 
-Every report, chart, dashboard and numerical summary must follow [ANALYSIS_PROTOCOL.md](ANALYSIS_PROTOCOL.md): response records and participant perspectives, not unique families or population prevalence; explicit cohort, revision, recall frame and denominator; missing, declined, not asked and No kept distinct. A selected domain with no optional detail still counts as a selected domain. Historical, age-specific and guardian perspectives remain distinguishable. The fictional results page illustrates an older instrument and cannot analyse schema 7.0 responses.
+Every report, chart, dashboard and numerical summary must follow [ANALYSIS_PROTOCOL.md](ANALYSIS_PROTOCOL.md): response records and participant perspectives, not unique families or population prevalence; explicit cohort, revision, recall frame and denominator; missing, declined, not asked and No kept distinct. A selected domain with no optional detail still counts as a selected domain. Historical, age-specific and guardian perspectives remain distinguishable. The fictional results page illustrates an older instrument and cannot analyse schema 7.1 responses.
 
 ## Participation and younger children
 
 The main notice remains `2026-09-25-v11`; the revised flow does not activate collection or replace LC's participant procedures. Ages 8–14 require guardian permission and their own assent. The ordinary unattended route also checks guardian presence for self/other assistance. Ages 15–17 give their own informed agreement. A private LC-assisted route remains available; permission does not entitle a guardian to every answer. See [consultation-procedure.md](consultation-procedure.md).
 
-For ages 7 or younger, a brief first step records the ADF family connection, optional child locality and optional 0–4/5–7 age band. Yes or unsure ADF connection continues; No shows the scope explanation. The location is recorded without pretending an undisclosed or outside location is local. Child prompts then explicitly concern family life and living in Greater Darwin. Four optional expression boxes precede guardian observations. Willingness enables the expression boxes; observation-only records do not claim child assent. Unchecking willingness clears child expressions only.
+For ages 7 or younger, a brief first step records the ADF family connection, optional child broad area and then suburb/locality, and optional 0–4/5–7 age band. Yes or unsure ADF connection continues; No shows the scope explanation. The location is recorded without pretending an undisclosed or outside location is local. Child prompts then explicitly concern family life and living in Greater Darwin. Four optional expression boxes precede guardian observations. Willingness enables the expression boxes; observation-only records do not claim child assent. Unchecking willingness clears child expressions only.
 
-The younger-child export uses schema `1.2`, revision `2026-09-27-background`, geography metadata and distinct expression/observation fields. It is not equivalent to adult or youth need-domain self-report. The independent contact form retains its own all-age routes and safe-contact fields in [CONTACT_FORM.md](CONTACT_FORM.md).
+The younger-child export uses schema `1.3`, revision `2026-09-27-two-level-geography`, geography metadata and distinct expression/observation fields. It is not equivalent to adult or youth need-domain self-report. The independent contact form retains its own all-age routes and safe-contact fields in [CONTACT_FORM.md](CONTACT_FORM.md).
 
 ## Design basis
 

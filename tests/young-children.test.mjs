@@ -51,7 +51,8 @@ test('child expressions and guardian observations remain separate without unrela
   assert.equal(session.answer('phone', 'Private phone'), false);
   assert.equal(session.answer('__proto__', 'Bad key'), false);
   const output = plain(session.exportAnswers());
-  assert.equal(output.schema_version, '1.2');
+  assert.equal(output.schema_version, '1.3');
+  assert.equal(output.questionnaire_revision, '2026-09-27-two-level-geography');
   assert.equal(output.questionnaire_version, 'young_child_supported');
   assert.equal(output.response_mode, 'child_views');
   assert.equal(output.response_basis, 'child_expressions_recorded_by_parent_guardian');
@@ -169,10 +170,13 @@ function type(node, id, value) {
   node('#young-form').listeners.input({ target: field });
 }
 
-function completeBackground(node, { adf = 'yes', locality = '', stage = '', other = '' } = {}) {
+function completeBackground(node, { adf = 'yes', area = '', locality = '', stage = '', other = '' } = {}) {
   const form = node('#young-background-form');
   form.listeners.change({ target: { name: 'adf_connection', value: adf } });
+  node('#young-area').value = area;
+  form.listeners.change({ target: { name: 'residence_area', value: area } });
   node('#young-suburb').value = locality;
+  form.listeners.change({ target: { name: 'suburb', value: locality } });
   node('#young-stage').value = stage;
   node('#young-suburb-other').value = other;
   form.listeners.submit({ preventDefault() {} });
@@ -286,24 +290,30 @@ test('an explicit ADF connection is required before either perspective can be re
 test('canonical localities including Litchfield export their region and age without collecting a birth date', () => {
   const session = makeSession();
   assert.equal(context.SURVEY_GEOGRAPHY.localities.length, 100);
-  for (const suburb of ['wagaman', 'casuarina', 'stuart_park', 'humpty_doo', 'holtze']) assert.equal(session.setBackground('suburb', suburb), true);
+  for (const suburb of ['wagaman', 'casuarina', 'stuart_park', 'humpty_doo', 'holtze']) {
+    const locality = context.SURVEY_GEOGRAPHY.localities.find(option => option.id === suburb);
+    assert.equal(session.setBackground('residence_area', locality.region), true);
+    assert.equal(session.setBackground('suburb', suburb), true);
+  }
   assert.equal(session.setBackground('child_stage', '0_4'), true);
   assert.equal(session.setBackground('birth_date', '2022-01-01'), false);
   const output = plain(session.exportAnswers());
-  assert.deepEqual(output.background, { adf_connection: 'yes', suburb: 'holtze', child_stage: '0_4', region: 'litchfield', geography_scope: 'greater_darwin' });
-  assert.equal(output.geography_version, '2026-09-27');
+  assert.deepEqual(output.background, { adf_connection: 'yes', residence_area: 'litchfield', suburb: 'holtze', child_stage: '0_4', region: 'litchfield', geography_scope: 'greater_darwin', location_precision: 'suburb' });
+  assert.equal(output.geography_version, context.SURVEY_GEOGRAPHY.version);
   assert.equal(session.setBackground('suburb', 'unrecognised'), false);
   assert.equal(session.exportAnswers().background.suburb, 'holtze');
 });
 
 test('Other detail is cleared on locality changes and outside or undisclosed places never count as local', () => {
   const session = makeSession();
+  session.setBackground('residence_area', 'darwin');
   session.setBackground('suburb', 'other');
   session.setBackground('suburb_other', 'A locality');
   assert.equal(session.exportAnswers().background.suburb_other, 'A locality');
+  session.setBackground('residence_area', 'darwin');
   session.setBackground('suburb', 'other');
   assert.equal(session.exportAnswers().background.suburb_other, 'A locality');
-  session.setBackground('suburb', 'outside');
+  session.setBackground('residence_area', 'outside');
   session.answer('guardian_observations', 'Our family lives elsewhere.');
   let output = session.exportAnswers();
   assert.equal(output.background.geography_scope, 'outside_greater_darwin');
@@ -313,11 +323,12 @@ test('Other detail is cleared on locality changes and outside or undisclosed pla
   assertNoChildClaim(output);
   assert.equal(session.setBackground('suburb_other', 'Hidden stale value'), false);
   for (const choice of ['prefer', '']) {
-    session.setBackground('suburb', choice);
+    session.setBackground('residence_area', choice);
     output = session.exportAnswers();
     assert.equal(output.background.geography_scope, 'not_stated');
     assert.equal(output.background.region, null);
   }
+  session.setBackground('residence_area', 'darwin');
   session.setBackground('suburb', 'other');
   assert.equal(session.exportAnswers().background.suburb_other, undefined);
 });
@@ -338,32 +349,116 @@ test('background validation and scope screen keep users out until the required A
   assert.equal(controller.exportAnswers().background.adf_connection, 'unsure');
 });
 
-test('a typed alias resolves to the canonical locality while unmatched text requires a choice or omission', () => {
+test('dependent native selects show only the chosen area and retain locality aliases', () => {
   const { main, node } = fakeMain();
   const controller = create({ main, guardianPermission: permission() });
   controller.show();
-  completeBackground(node, { locality: 'Unlisted spelling' });
-  assert.match(node('#young-background-error').textContent, /choose a place from the list/);
-  assert.match(main.innerHTML, /About your child/);
-  completeBackground(node, { locality: 'Robertson Barracks', stage: '5_7' });
+  assert.match(main.innerHTML, /<select class="select" id="young-area" name="residence_area"/);
+  assert.match(main.innerHTML, /id="young-suburb-group" hidden/);
+  assert.doesNotMatch(main.innerHTML, /role="combobox"|locality-picker/);
+  completeBackground(node, { area: 'litchfield', locality: 'holtze', stage: '5_7' });
+  assert.match(node('#young-suburb').innerHTML, /Robertson Barracks/);
+  assert.doesNotMatch(node('#young-suburb').innerHTML, /value="wagaman"|value="bakewell"/);
   assert.equal(controller.exportAnswers().background.suburb, 'holtze');
   assert.equal(controller.exportAnswers().background.region, 'litchfield');
   assert.equal(controller.exportAnswers().background.child_stage, '5_7');
+});
+
+test('an area-only Palmerston answer has no implied suburb and has separate review labeling', () => {
+  const { main, node } = fakeMain();
+  const controller = create({ main, guardianPermission: permission() });
+  controller.show();
+  completeBackground(node, { area: 'palmerston' });
+  const background = plain(controller.exportAnswers().background);
+  assert.equal(background.residence_area, 'palmerston');
+  assert.equal(background.region, 'palmerston');
+  assert.equal(background.location_precision, 'area');
+  assert.equal(background.geography_scope, 'greater_darwin');
+  assert.equal(background.suburb, undefined);
+  controller.showReview();
+  assert.match(main.innerHTML, /Child’s area/);
+  assert.match(main.innerHTML, /Palmerston/);
+  assert.doesNotMatch(main.innerHTML, /Palmerston City|Child’s suburb or locality/);
+});
+
+test('area changes clear stale locality and free text but preserve child and guardian perspectives', () => {
+  const session = makeSession();
+  session.setBackground('residence_area', 'darwin');
+  session.setBackground('suburb', 'other');
+  session.setBackground('suburb_other', 'A local place');
+  session.confirmWillingness(true);
+  session.answer('likes', 'The pool');
+  session.answer('guardian_observations', 'A playgroup would help.');
+  session.setBackground('residence_area', 'palmerston');
+  let output = session.exportAnswers();
+  assert.equal(output.background.suburb, undefined);
+  assert.equal(output.background.suburb_other, undefined);
+  assert.equal(output.background.location_precision, 'area');
+  assert.equal(output.child_responses.likes, 'The pool');
+  assert.equal(output.guardian_observations, 'A playgroup would help.');
+  assert.equal(session.setBackground('suburb', 'wagaman'), false);
+  assert.equal(session.exportAnswers().background.suburb, undefined);
+  assert.equal(session.setBackground('suburb', 'bakewell'), true);
+  assert.equal(session.exportAnswers().background.location_precision, 'suburb');
+  session.setBackground('residence_area', 'prefer');
+  output = session.exportAnswers();
+  assert.equal(output.background.suburb, undefined);
+  assert.equal(output.background.region, null);
+  assert.equal(output.background.location_precision, 'not_stated');
+});
+
+test('Outside and Prefer not to say hide the suburb selector and cannot retain a named locality', () => {
+  const { main, node } = fakeMain();
+  const controller = create({ main, guardianPermission: permission() });
+  controller.show();
+  for (const area of ['outside', 'prefer', '']) {
+    completeBackground(node, { area });
+    assert.equal(node('#young-suburb-group').hidden, true);
+    const background = controller.exportAnswers().background;
+    assert.equal(background.suburb, undefined);
+    assert.equal(background.location_precision, area === 'outside' ? 'area' : 'not_stated');
+    assert.equal(background.geography_scope, area === 'outside' ? 'outside_greater_darwin' : 'not_stated');
+    controller.showBackground();
+  }
+});
+
+test('suburb disclosure is optional independently of the known area and Other detail is bounded', () => {
+  const session = makeSession();
+  assert.equal(session.setBackground('suburb', 'bakewell'), false);
+  assert.equal(session.setBackground('residence_area', 'palmerston'), true);
+  assert.equal(session.setBackground('suburb', 'prefer'), true);
+  assert.equal(session.exportAnswers().background.region, 'palmerston');
+  assert.equal(session.exportAnswers().background.location_precision, 'area');
+  session.setBackground('suburb', 'other');
+  assert.equal(session.exportAnswers().background.location_precision, 'area');
+  session.setBackground('suburb_other', 'x'.repeat(120));
+  assert.equal(session.exportAnswers().background.suburb_other.length, 100);
+  assert.equal(session.exportAnswers().background.location_precision, 'other_locality');
+  assert.equal(session.setBackground('residence_area', 'unrecognised'), false);
+  assert.equal(session.exportAnswers().background.residence_area, 'palmerston');
 });
 
 test('review includes guardian background and changes preserve existing perspectives until ADF scope is withdrawn', () => {
   const { main, node } = fakeMain();
   const controller = create({ main, guardianPermission: permission() });
   controller.show();
-  completeBackground(node, { locality: 'Wagaman', stage: '0_4' });
+  completeBackground(node, { area: 'darwin', locality: 'wagaman', stage: '0_4' });
   type(node, 'guardian_observations', 'Help to join a playgroup.');
+  node('#young-willing').checked = true;
+  node('#young-willing').listeners.change();
+  type(node, 'likes', 'My friends');
+  node('#young-back').onclick();
+  assert.match(main.innerHTML, /About your child/);
+  completeBackground(node, { area: 'darwin', locality: 'wagaman', stage: '0_4' });
+  assert.match(main.innerHTML, /My friends/);
   controller.showReview();
   assert.match(main.innerHTML, /Wagaman/);
   assert.match(main.innerHTML, /0–4 years/);
   assert.doesNotMatch(main.innerHTML, /Not answered/);
   node('#young-edit-background').onclick();
-  completeBackground(node, { locality: 'Outside Greater Darwin', stage: '0_4' });
+  completeBackground(node, { area: 'outside', stage: '0_4' });
   assert.equal(controller.exportAnswers().guardian_observations, 'Help to join a playgroup.');
+  assert.equal(controller.exportAnswers().child_responses.likes, 'My friends');
   controller.showReview();
   assert.match(main.innerHTML, /Outside Greater Darwin/);
   assert.doesNotMatch(main.innerHTML, /Wagaman/);

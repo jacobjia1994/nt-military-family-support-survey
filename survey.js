@@ -120,8 +120,8 @@ function detailedNeeds(answers,domains,version) {
 function hasFormalSource(area) { return (area.sources||[]).some(v=>['military','community','health','school','online','other'].includes(v)); }
 function hasSoughtHelp(area) { return (area.sources||[]).some(v=>!['not_sought','unsure','prefer'].includes(v)); }
 function residenceScope(answers) {
-  if(answers.suburb==='outside')return 'outside_greater_darwin';
-  if(answers.suburb==='other'||GEOGRAPHY?.localities.some(item=>item.id===answers.suburb))return 'greater_darwin';
+  if(answers.residence_area==='outside')return 'outside_greater_darwin';
+  if(LOCAL_AREAS.includes(answers.residence_area))return 'greater_darwin';
   return 'not_disclosed_or_unspecified';
 }
 function consultationRoute(answers) {
@@ -129,6 +129,7 @@ function consultationRoute(answers) {
   return residenceScope(answers)==='greater_darwin'?'current_local':'residence_unspecified';
 }
 function reconcileAnswers(answers,changed,domains,previous) {
+  if(changed==='residence_area'&&previous!==answers.residence_area){delete answers.suburb;delete answers.suburb_other;}
   if(changed==='suburb'&&answers.suburb!=='other')delete answers.suburb_other;
   if(changed==='needs_status'&&!hasNeedSelection(answers)){delete answers.needs;delete answers.needs_other;delete answers.focus_need;delete answers.areas;}
   if(changed==='needs') {
@@ -146,12 +147,12 @@ function reconcileAnswers(answers,changed,domains,previous) {
     if(key==='sources'&&answers.areas?.[id]&&!hasFormalSource(answers.areas[id]))delete answers.areas[id].service_names;
     if(key==='additional_support_now'&&answers.areas?.[id]?.additional_support_now!=='yes')delete answers.areas[id].support_requested;
   }
-  if(['suburb','past_residence'].includes(changed)) {
+  if(['residence_area','past_residence'].includes(changed)) {
     const before=consultationRoute({...answers,[changed]:previous}),after=consultationRoute(answers);
     if((before==='earlier_experience')!==(after==='earlier_experience')||(before==='outside_scope')!==(after==='outside_scope')){
       for(const key of ['needs_status','needs','needs_other','focus_need','areas','programme_other','programmes','programme_priority','participation_formats','participation_other','participation_enablers','enablers_other','berrimah_access','berrimah_other','times','earlier_experience','time_nt','children_ages'])delete answers[key];
     }
-    if(answers.suburb!=='outside')delete answers.past_residence;
+    if(answers.residence_area!=='outside')delete answers.past_residence;
   }
   if(changed==='programmes'){
     if(!(answers.programmes||[]).includes('other'))delete answers.programme_other;
@@ -179,7 +180,7 @@ function buildSteps(answers,domains,version) {
 function hasAnswer(value) { return value!==undefined&&value!==null&&value!==''&&(!Array.isArray(value)||value.length>0); }
 function cleanExport(answers,version,domains) {
   const route=consultationRoute(answers),copy={};
-  const allowed=['roles','suburb','suburb_other','past_residence','assistance','guardian_present','community_connection'];
+  const allowed=['roles','residence_area','suburb','suburb_other','past_residence','assistance','guardian_present','community_connection'];
   if(version==='adult')allowed.push('age_group');
   if(route==='earlier_experience')allowed.push('earlier_experience');
   else allowed.push('needs_status','needs','needs_other','time_nt','programmes','programme_other','programme_priority','children_ages','participation_formats','participation_other','participation_enablers','enablers_other','berrimah_access','berrimah_other','times');
@@ -187,11 +188,18 @@ function cleanExport(answers,version,domains) {
   for(const key of allowed)if(Object.hasOwn(answers,key))copy[key]=structuredClone(answers[key]);
   if(version==='youth'){delete copy.time_nt;delete copy.children_ages;if(!selectedNeeds(answers,domains).includes(copy.focus_need))delete copy.focus_need;}
   if(version==='child')delete copy.community_connection;
-  const locality=GEOGRAPHY?.localities.find(item=>item.id===copy.suburb);
-  if(locality)copy.region=locality.region;
-  if(copy.suburb&&!locality&&!['other','outside','prefer'].includes(copy.suburb))delete copy.suburb;
+  if(!AREAS.some(area=>area.id===copy.residence_area))delete copy.residence_area;
+  const locality=GEOGRAPHY?.localities.find(item=>item.id===copy.suburb&&item.region===copy.residence_area);
+  if(LOCAL_AREAS.includes(copy.residence_area)){
+    copy.region=copy.residence_area;
+    if(!locality&&!['other','prefer'].includes(copy.suburb))delete copy.suburb;
+  }else{
+    delete copy.suburb;delete copy.suburb_other;
+    if(copy.residence_area==='outside')copy.region='outside_greater_darwin';
+  }
   if(copy.suburb!=='other')delete copy.suburb_other;
-  if(copy.suburb!=='outside')delete copy.past_residence;
+  if(copy.residence_area!=='outside')delete copy.past_residence;
+  const locationPrecision=locality?'suburb':copy.suburb==='other'&&copy.suburb_other?.trim()?'other_locality':LOCAL_AREAS.includes(copy.residence_area)||copy.residence_area==='outside'?'area':'not_stated';
   if(Object.hasOwn(copy,'age_group')&&!ADULT_AGE_GROUPS.some(group=>group.id===copy.age_group))delete copy.age_group;
   if(!['self','guardian','other'].includes(copy.assistance)||version==='adult')delete copy.assistance;
   if(!['self','other'].includes(copy.assistance)||copy.guardian_present!==true)delete copy.guardian_present;
@@ -216,7 +224,7 @@ function cleanExport(answers,version,domains) {
     if(!(copy.participation_formats||[]).includes('other'))delete copy.participation_other;
     if(!(copy.participation_enablers||[]).includes('other'))delete copy.enablers_other;
   }
-  return {schema_version:'7.0',questionnaire_revision:'2026-09-27-local-experience-and-programmes-r2',geography_version:GEOGRAPHY?.version||null,consultation_route:route,residence_scope:residenceScope(copy),recall_months:route==='earlier_experience'?null:version==='adult'?12:3,recall_geography:'time_living_in_greater_darwin',analysis_unit:'respondent_perspective_not_household',measurement_scope:'local_support_experiences_and_programme_preferences',details_optional:true,collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'page_memory_only; not submitted',answers:copy};
+  return {schema_version:'7.1',questionnaire_revision:'2026-09-27-two-level-geography',location_precision:locationPrecision,geography_version:GEOGRAPHY?.version||null,consultation_route:route,residence_scope:residenceScope(copy),recall_months:route==='earlier_experience'?null:version==='adult'?12:3,recall_geography:'time_living_in_greater_darwin',analysis_unit:'respondent_perspective_not_household',measurement_scope:'local_support_experiences_and_programme_preferences',details_optional:true,collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'page_memory_only; not submitted',answers:copy};
 }
 
 const main = document.querySelector('#main');
@@ -281,13 +289,20 @@ const info = '';
 const PREFER = {id:'prefer',label:'Prefer not to answer'};
 const UNSURE = {id:'unsure',label:'Not sure'};
 const GEOGRAPHY = globalThis.SURVEY_GEOGRAPHY || globalThis.window?.SURVEY_GEOGRAPHY;
-const suburbs = [...(GEOGRAPHY?.localities || []),{id:'other',label:'Another locality in Greater Darwin'},{id:'outside',label:'Outside Greater Darwin'},{id:'prefer',label:'Prefer not to say'}];
+const AREAS = GEOGRAPHY?.areas || [];
+const LOCAL_AREAS = ['darwin','palmerston','litchfield','greater_darwin_other'];
+const suburbs = [...(GEOGRAPHY?.localities || []),{id:'other',label:'Another suburb or locality in this area'},{id:'prefer',label:'Prefer not to say'}];
 function suburbChoice(value) {
   const typed=String(value||'').trim().toLocaleLowerCase('en-AU');
   return suburbs.find(option=>[option.label,...(option.aliases||[])].some(label=>label.toLocaleLowerCase('en-AU')===typed));
 }
+function suburbsForArea(area) {
+  if(!LOCAL_AREAS.includes(area))return [];
+  return suburbs.filter(option=>option.region===area||['other','prefer'].includes(option.id));
+}
 function suburbFields() { return [
-  field('suburb','Which suburb or locality do you live in?','search-select',suburbs,'Optional. This helps us plan where and how to offer support.'),
+  field('residence_area','Which area do you live in?','select',AREAS,'Optional. This helps us plan where and how to offer support.'),
+  field('suburb','Which suburb or locality?','select',suburbsForArea(state.answers.residence_area),'Optional. You can leave this blank.',{conditional:'local_area',placeholder:'Not specified'}),
   field('suburb_other','Which other suburb or locality?','short',[],'',{conditional:'other_suburb'}),
   field('past_residence','Have you lived in Greater Darwin before?','single',opts([['yes','Yes'],['no','No'],['unsure','Not sure'],['prefer','Prefer not to say']]),'',{conditional:'outside_suburb'})
 ]; }
@@ -364,7 +379,8 @@ function optionHTML(o,f,value) {
   return `<label class="choice"><input type="${f.type==='multi'?'checkbox':'radio'}" name="${esc(f.key)}" value="${esc(o.id)}" ${checked?'checked':''}><span class="choice-body"><span class="choice-label">${esc(o.label)}</span>${o.hint?`<span class="choice-hint">${esc(o.hint)}</span>`:''}</span></label>`;
 }
 function conditionalVisible(f) {
-  if(f.conditional==='outside_suburb')return state.answers.suburb==='outside';
+  if(f.conditional==='local_area')return LOCAL_AREAS.includes(state.answers.residence_area);
+  if(f.conditional==='outside_suburb')return state.answers.residence_area==='outside';
   if(f.conditional==='programme_other')return (state.answers.programmes||[]).includes('other');
   if(f.conditional==='programme_priority')return PROGRAMMES.filter(o=>(state.answers.programmes||[]).includes(o.id)&&!['none','unsure','prefer'].includes(o.id)).length>1;
   if(f.conditional==='children_ages')return relevantChildStage(state.answers);
@@ -372,7 +388,7 @@ function conditionalVisible(f) {
   if(f.conditional==='enablers_other')return (state.answers.participation_enablers||[]).includes('other');
   if(f.conditional==='in_person')return inPersonParticipation(state.answers);
   if(f.conditional==='berrimah_other')return inPersonParticipation(state.answers)&&['with_help','difficult'].includes(state.answers.berrimah_access);
-  if(f.conditional==='other_suburb')return state.answers.suburb==='other';
+  if(f.conditional==='other_suburb')return LOCAL_AREAS.includes(state.answers.residence_area)&&state.answers.suburb==='other';
   if(f.conditional==='needs_list')return hasNeedSelection(state.answers);
   if(f.conditional==='focus_need')return state.version==='youth'&&selectedNeeds(state.answers,domainList()).length>0;
   if(f.conditional==='additional_support')return state.answers.areas?.[f.need]?.additional_support_now==='yes';
@@ -390,41 +406,10 @@ function fieldHTML(f) {
   const describedBy=f.hint?`aria-describedby="hint-${esc(f.key)}"`:'';
   if(['single','multi'].includes(f.type)) return `<fieldset class="question-group" data-field="${esc(f.key)}" ${hidden}><legend>${esc(f.label)}${f.required?'<span class="required-label">(required)</span>':''}${hint}</legend><div class="choices ${f.key==='needs'&&!isChild()?'columns':''} ${f.options.length>6?'compact':''}">${f.options.map(o=>f.key==='needs'&&o.id==='other_need'?`<div class="other-need-option">${optionHTML(o,f,v)}${fieldHTML(page({id:'needs'}).fields.find(item=>item.key==='needs_other'))}</div>`:optionHTML(o,f,v)).join('')}</div></fieldset>`;
   let input='';
-  if(f.type==='search-select') input=`<div class="locality-picker"><div class="locality-input-row"><input class="text-input suburb-search" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="${esc(f.key)}-options" id="${esc(f.key)}" name="${esc(f.key)}" maxlength="100" value="${esc(f.options.find(o=>o.id===v)?.label||'')}" placeholder="Type or choose a suburb or locality" autocomplete="off" ${describedBy}><button class="locality-toggle" type="button" aria-label="Show suburb or locality options" tabindex="-1"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button></div><ul class="locality-options" id="${esc(f.key)}-options" role="listbox" aria-label="Suburbs and localities" hidden></ul></div>`;
-  else if(f.type==='select') input=`<select class="select" id="${esc(f.key)}" name="${esc(f.key)}" ${describedBy}><option value="">Choose an option</option>${f.options.map(o=>`<option value="${esc(o.id)}" ${v===o.id?'selected':''}>${esc(o.label)}</option>`).join('')}</select>`;
+  if(f.type==='select') input=`<select class="select" id="${esc(f.key)}" name="${esc(f.key)}" ${describedBy}><option value="">${esc(f.placeholder||'Choose an option')}</option>${f.options.map(o=>`<option value="${esc(o.id)}" ${v===o.id?'selected':''}>${esc(o.label)}${o.aliases?.length?' ('+esc(o.aliases.join(' / '))+')':''}</option>`).join('')}</select>`;
   else if(f.type==='short') input=`<input class="text-input" id="${esc(f.key)}" name="${esc(f.key)}" maxlength="160" value="${esc(v||'')}" autocomplete="off" ${describedBy}>`;
   else input=`<textarea class="textarea" id="${esc(f.key)}" name="${esc(f.key)}" maxlength="${maxTextLength(state.version)}" ${describedBy}>${esc(v||'')}</textarea><div class="char-count" data-counter="${esc(f.key)}" ${(v||'').length<maxTextLength(state.version)*.8?'hidden':''}>${maxTextLength(state.version)-(v||'').length} characters remaining</div>`;
   return `<div class="question-group${f.key==='needs_other'?' other-need-followup':''}" data-field="${esc(f.key)}" ${hidden}><label class="field-label" for="${esc(f.key)}">${esc(f.label)}${f.required?'<span class="required-label">(required)</span>':''}${hint}</label>${input}</div>`;
-}
-function bindSuburbPicker(form) {
-  const input=form.querySelector('input.suburb-search');
-  if(!input?.closest)return;
-  const picker=input.closest('.locality-picker'),list=picker.querySelector('.locality-options'),toggle=picker.querySelector('.locality-toggle');
-  let matches=[],active=-1;
-  const close=()=>{list.hidden=true;input.setAttribute('aria-expanded','false');input.removeAttribute('aria-activedescendant');active=-1;};
-  const highlight=()=>{list.querySelectorAll('[role="option"]').forEach((option,index)=>{option.setAttribute('aria-selected',index===active?'true':'false');if(index===active){input.setAttribute('aria-activedescendant',option.id);option.scrollIntoView({block:'nearest'});}});};
-  const open=(all=false)=>{
-    const query=all?'':input.value.trim().toLocaleLowerCase('en-AU');
-    matches=suburbs.filter(option=>['other','outside','prefer'].includes(option.id)||[option.label,...(option.aliases||[])].some(label=>label.toLocaleLowerCase('en-AU').includes(query)));
-    active=-1;input.removeAttribute('aria-activedescendant');
-    list.innerHTML=matches.map((option,index)=>`<li role="presentation"><button type="button" role="option" aria-selected="false" tabindex="-1" id="suburb-option-${index}" data-suburb="${esc(option.id)}">${esc(option.label)}${option.aliases?.length?`<small>${esc(option.aliases.join(' / '))}</small>`:''}</button></li>`).join('');
-    list.hidden=false;input.setAttribute('aria-expanded','true');
-  };
-  const choose=option=>{input.value=option.label;input.dispatchEvent(new Event('input',{bubbles:true}));close();input.focus();};
-  input.addEventListener('focus',()=>open(Boolean(suburbChoice(input.value))));
-  input.addEventListener('input',()=>open());
-  input.addEventListener('keydown',event=>{
-    if(event.key==='ArrowDown'||event.key==='ArrowUp'){
-      event.preventDefault();if(list.hidden)open();
-      active=event.key==='ArrowDown'?Math.min(active+1,matches.length-1):active<0?matches.length-1:Math.max(active-1,0);highlight();
-    }else if(event.key==='Enter'&&!list.hidden){event.preventDefault();if(active>=0)choose(matches[active]);}
-    else if(event.key==='Escape'){event.preventDefault();close();}
-    else if(event.key==='Tab')close();
-  });
-  toggle.addEventListener('click',()=>{if(list.hidden){input.focus();open(true);}else close();});
-  list.addEventListener('pointerdown',event=>event.preventDefault());
-  list.addEventListener('click',event=>{const option=event.target.closest('[data-suburb]');if(option)choose(suburbs.find(item=>item.id===option.dataset.suburb));});
-  picker.addEventListener('focusout',event=>{if(!picker.contains(event.relatedTarget))close();});
 }
 function focusHeading(){main.querySelector('h1')?.focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'});}
 function resetAgePath(){
@@ -582,11 +567,11 @@ function renderSurvey(){
   const form=main.querySelector('#survey-form');
   const refreshContinue=()=>{form.querySelector('[type="submit"]').disabled=!requiredAnswersComplete(p.fields.filter(conditionalVisible),state.answers);};
   refreshContinue();
-  bindSuburbPicker(form);
   form.addEventListener('change',e=>{
-    const input=e.target;if(!input.name)return;const f=p.fields.find(f=>f.key===input.name);if(!f)return;if(f.type==='search-select'&&input.value.trim()&&!suburbChoice(input.value))return;
-    const old=getValue(f.key);let value=f.type==='search-select'?(suburbChoice(input.value)?.id||''):input.value;if(f.type==='multi')value=toggleChoice(old,input.value,f.exclusive||[]);
+    const input=e.target;if(!input.name)return;const f=p.fields.find(f=>f.key===input.name);if(!f)return;
+    const old=getValue(f.key);let value=input.value;if(f.type==='multi')value=toggleChoice(old,input.value,f.exclusive||[]);
     setValue(f.key,value);if(JSON.stringify(old)!==JSON.stringify(value))reconcileAnswers(state.answers,f.key,domainList(),old);
+    if(f.key==='residence_area'){p=page(s);const child=p.fields.find(item=>item.key==='suburb');const wrap=form.querySelector('[data-field="suburb"]');if(child&&wrap)wrap.outerHTML=fieldHTML(child);}
     if(s.id==='needs'&&['needs','needs_status'].includes(f.key)&&state.version==='youth'){
       p=page(s);
       const focus=p.fields.find(item=>item.key==='focus_need');
@@ -603,24 +588,13 @@ function renderSurvey(){
     for(const field of p.fields){
       const wrap=form.querySelector(`[data-field="${field.key}"]`);if(!wrap)continue;wrap.hidden=!conditionalVisible(field);
       const saved=getValue(field.key);
-      wrap.querySelectorAll('input,textarea,select').forEach(el=>{if(el.name!==field.key||field.type==='search-select')return;if(['checkbox','radio'].includes(el.type))el.checked=Array.isArray(saved)?saved.includes(el.value):saved===el.value;else el.value=saved??'';});
+      wrap.querySelectorAll('input,textarea,select').forEach(el=>{if(el.name!==field.key)return;if(['checkbox','radio'].includes(el.type))el.checked=Array.isArray(saved)?saved.includes(el.value):saved===el.value;else el.value=saved??'';});
     }
     refreshContinue();
   });
   form.addEventListener('input',e=>{
     const input=e.target;
     if(!input.matches('textarea,input[type="text"],input.text-input'))return;
-    const searchField=p.fields.find(f=>f.key===input.name&&f.type==='search-select');
-    if(searchField){
-      if(input.value.trim()&&!suburbChoice(input.value))return;
-      const old=getValue(input.name),value=suburbChoice(input.value)?.id||'';
-      setValue(input.name,value);reconcileAnswers(state.answers,input.name,domainList(),old);
-      form.querySelector('#form-error').textContent='';
-      const outside=form.querySelector('[data-field="past_residence"]');if(outside)outside.hidden=value!=='outside';
-      const other=form.querySelector('[data-field="suburb_other"]');
-      if(other){other.hidden=value!=='other';if(value!=='other'){const entry=other.querySelector('input');if(entry)entry.value='';}}
-      refreshContinue();return;
-    }
     const old=getValue(input.name);
     setValue(input.name,input.value);
     if(old!==input.value)reconcileAnswers(state.answers,input.name,domainList(),old);
@@ -634,7 +608,7 @@ function renderSurvey(){
     if(counter){counter.textContent=`${input.maxLength-input.value.length} characters remaining`;counter.hidden=input.value.length<input.maxLength*.8;}
     refreshContinue();
   });
-  form.addEventListener('submit',e=>{e.preventDefault();const suburbInput=form.querySelector('input.suburb-search');if(suburbInput?.value?.trim()&&!suburbChoice(suburbInput.value)){form.querySelector('#form-error').textContent='Choose a suburb or locality from the list, or select Another locality in Greater Darwin or Outside Greater Darwin.';suburbInput.focus();return;}const missing=p.fields.filter(conditionalVisible).find(f=>f.required&&(!getValue(f.key)||Array.isArray(getValue(f.key))&&!getValue(f.key).length));if(missing){const err=form.querySelector('#form-error');err.textContent='Please answer: '+missing.label;form.querySelector(`[name="${missing.key}"]`)?.focus();return;}if(s.id==='connection'&&isOutsideSurveyScope(state.answers)){renderScope();return;}if(s.id==='connection'&&needsGuardianSupport(state.age,state.answers)){renderGuardianSupport();return;}if(review){renderFinish();return;}if(state.returnToReview){state.returnToReview=false;state.step='review';renderSurvey();focusHeading();return;}goNext(s.id);});
+  form.addEventListener('submit',e=>{e.preventDefault();const missing=p.fields.filter(conditionalVisible).find(f=>f.required&&(!getValue(f.key)||Array.isArray(getValue(f.key))&&!getValue(f.key).length));if(missing){const err=form.querySelector('#form-error');err.textContent='Please answer: '+missing.label;form.querySelector(`[name="${missing.key}"]`)?.focus();return;}if(s.id==='connection'&&isOutsideSurveyScope(state.answers)){renderScope();return;}if(s.id==='connection'&&needsGuardianSupport(state.age,state.answers)){renderGuardianSupport();return;}if(review){renderFinish();return;}if(state.returnToReview){state.returnToReview=false;state.step='review';renderSurvey();focusHeading();return;}goNext(s.id);});
   main.querySelector('#back').onclick=()=>{state.returnToReview=false;const current=activeSteps();const i=current.findIndex(x=>x.id===s.id);if(i<=0){renderWelcome();focusHeading();return;}state.step=current[i-1].id;renderSurvey();focusHeading();};
 
   main.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>{state.returnToReview=true;state.step=b.dataset.edit;renderSurvey();focusHeading();});
@@ -650,11 +624,11 @@ let libraryLocation = 'nt';
 // No synthetic answers from this library enter the respondent flow or results.
 function questionLibrarySections(version,location) {
   const original={version:state.version,answers:state.answers};const first=DOMAINS[version][0].id;
-  state.version=version;state.answers={roles:['partner'],needs_status:'yes',suburb:location==='nt'?'casuarina':location==='outside'?'outside':'prefer',past_residence:location==='outside'?'yes':undefined,programmes:['parenting','playgroup','other'],participation_formats:['one_to_one','other'],participation_enablers:['other'],berrimah_access:'difficult',needs:[first],areas:{[first]:{received:'enough',additional_support_now:'yes',sources:['family']}}};
+  state.version=version;state.answers={roles:['partner'],needs_status:'yes',residence_area:location==='nt'?'darwin':location==='outside'?'outside':'prefer',suburb:location==='nt'?'casuarina':'',past_residence:location==='outside'?'yes':undefined,programmes:['parenting','playgroup','other'],participation_formats:['one_to_one','other'],participation_enablers:['other'],berrimah_access:'difficult',needs:[first],areas:{[first]:{received:'enough',additional_support_now:'yes',sources:['family']}}};
   try {
     const sections=[],add=(id,note='')=>sections.push({id,...page({id}),note});
     add('connection',version==='youth'?'ADF relationship and current residence, assistance, optional residence and a positive community-connection prompt precede the shorter youth questions. Earlier connections retain a separate historical route.':'ADF relationship and current residence, optional adult age band and a positive community-connection prompt precede the substantive questions. Earlier connections retain a separate historical route.');
-    if(version!=='youth')add('place','Optional background precedes support needs. Suburb/locality is optional; named locations aggregate to region without a second question.');
+    if(version!=='youth')add('place','Optional background precedes support needs. The broader area is chosen first; its suburb/locality is optional. Area-only answers retain their broader location without implying a suburb.');
     add('needs',version==='youth'?'Ask about help needed in the past three months, then record every selected area. The young person can optionally choose one area to describe further. No still leads to information preferences.':'Ask whether support was needed first. No skips the area questions but retains service-information preferences. Yes or Not sure opens the area list; Something else is only an unlisted need. Blank remains distinct from No.');
     const area=areaPage(first),variants=[];
     for(const [id,title,sources] of [['sought','After looking for support',['family']],['not-sought','When support was not sought',['not_sought']]]) {
@@ -664,13 +638,14 @@ function questionLibrarySections(version,location) {
     sections.push({id:'area',...area,title:version==='youth'?'For one optional focus area':'For each selected area',fields:area.fields.filter(f=>!f.key.endsWith(':barriers')),variants,note:version==='youth'?'Young people can select many needs, then choose at most one to describe further. All youth questions use the past three months when asking about earlier help; extra help wanted refers to now.':'Questions are displayed directly. Extra support requested appears only after Yes; past experience remains available to everyone selecting this area. Sources and barriers use the same recall period. Blank answers do not mean no barrier.'});
     if(version!=='child'){add('programmes','Everyone can discuss useful future support, including those with no past need.');add('delivery','Everyone in the main adult/youth route can describe participation preferences and conditions, independently of past needs.');}
     add('earlier','Separate historical route for people now outside Greater Darwin who have past local experience; not part of the recent-needs loop.');
+    for(const section of sections)for(const item of section.fields){if(item.key==='suburb'){item.options=suburbs;item.options_rule='Show only localities whose region matches residence_area, plus other/prefer. Blank retains area only.';}}
     return sections;
   } finally {state.version=original.version;state.answers=original.answers;}
 }
 
 function libraryFieldHTML(f) {
-  const conditional = {formal_sources:'Optional when a service or organisation source is selected.',outside_suburb:'Shown for Outside Greater Darwin.',programme_other:'Shown after Something else in future support.',programme_priority:'Optional when more than one support type is selected.',children_ages:'Shown for parenting, playgroup or child-related needs.',participation_other:'Shown after Another way.',enablers_other:'Shown after Something else in participation conditions.',in_person:'Shown for in-person participation.',berrimah_other:'Shown when attending Berrimah would be difficult or need adjustments.',other_suburb:'Shown when Other suburb or locality is selected.',needs_list:'Shown after Yes or Not sure to needing support.',focus_need:'Shown after selecting at least one support area.',additional_support:'Shown after Yes to extra or different support now.',nt:'Shown to people living in Greater Darwin.',other_need:'Shown after “Something else” is selected.',another:'Shown after “Something else” is selected.',live:'Shown after an in-person, group, phone or video option is selected.'}[f.conditional];
-  const type = {single:'Choose one',multi:'Select all that apply',select:'Choose one area','search-select':'Search or choose a suburb or locality',text:'Written answer',short:'Short written answer'}[f.type];
+  const conditional = {local_area:'Optional suburb list shown after a Greater Darwin area is chosen.',formal_sources:'Optional when a service or organisation source is selected.',outside_suburb:'Shown for Outside Greater Darwin.',programme_other:'Shown after Something else in future support.',programme_priority:'Optional when more than one support type is selected.',children_ages:'Shown for parenting, playgroup or child-related needs.',participation_other:'Shown after Another way.',enablers_other:'Shown after Something else in participation conditions.',in_person:'Shown for in-person participation.',berrimah_other:'Shown when attending Berrimah would be difficult or need adjustments.',other_suburb:'Shown when Another suburb or locality in this area is selected.',needs_list:'Shown after Yes or Not sure to needing support.',focus_need:'Shown after selecting at least one support area.',additional_support:'Shown after Yes to extra or different support now.',nt:'Shown to people living in Greater Darwin.',other_need:'Shown after “Something else” is selected.',another:'Shown after “Something else” is selected.',live:'Shown after an in-person, group, phone or video option is selected.'}[f.conditional];
+  const type = {single:'Choose one',multi:'Select all that apply',select:'Choose one area',text:'Written answer',short:'Short written answer'}[f.type];
   return `<div class="library-question"><p class="question-meta">${type} · ${f.required?'Needed to continue':'Optional'}</p><h3>${esc(f.label)}</h3>${f.hint?`<p class="field-hint">${esc(f.hint)}</p>`:''}${conditional?`<p class="branch-note">${conditional}</p>`:''}${f.options.length?`<ul class="option-list">${f.options.map(o=>`<li>${esc(o.label)}${o.hint?` <small>— ${esc(o.hint)}</small>`:''}</li>`).join('')}</ul>`:`<p class="small">${f.type==='short'?'Up to 160 characters.':`Up to ${maxTextLength(libraryVersion)} characters.`}</p>`}</div>`;
 }
 

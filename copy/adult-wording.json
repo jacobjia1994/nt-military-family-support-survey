@@ -83,9 +83,41 @@
           ]
         },
         {
+          "key": "residence_area",
+          "label": "Which area do you live in?",
+          "type": "select",
+          "options": [
+            {
+              "id": "darwin",
+              "label": "Darwin"
+            },
+            {
+              "id": "palmerston",
+              "label": "Palmerston"
+            },
+            {
+              "id": "litchfield",
+              "label": "Litchfield / rural area"
+            },
+            {
+              "id": "greater_darwin_other",
+              "label": "Other Greater Darwin area"
+            },
+            {
+              "id": "outside",
+              "label": "Outside Greater Darwin"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to say"
+            }
+          ],
+          "hint": "Optional. This helps us plan where and how to offer support."
+        },
+        {
           "key": "suburb",
-          "label": "Which suburb or locality do you live in?",
-          "type": "search-select",
+          "label": "Which suburb or locality?",
+          "type": "select",
           "options": [
             {
               "id": "acacia_hills",
@@ -602,18 +634,17 @@
             },
             {
               "id": "other",
-              "label": "Another locality in Greater Darwin"
-            },
-            {
-              "id": "outside",
-              "label": "Outside Greater Darwin"
+              "label": "Another suburb or locality in this area"
             },
             {
               "id": "prefer",
               "label": "Prefer not to say"
             }
           ],
-          "hint": "Optional. This helps us plan where and how to offer support."
+          "hint": "Optional. You can leave this blank.",
+          "conditional": "local_area",
+          "placeholder": "Not specified",
+          "options_rule": "Show only localities whose region matches residence_area, plus other/prefer. Blank retains area only."
         },
         {
           "key": "suburb_other",
@@ -724,7 +755,7 @@
           "hint": "Optional. Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Optional background precedes support needs. Suburb/locality is optional; named locations aggregate to region without a second question."
+      "note": "Optional background precedes support needs. The broader area is chosen first; its suburb/locality is optional. Area-only answers retain their broader location without implying a suburb."
     },
     {
       "id": "needs",
@@ -1589,9 +1620,41 @@
           ]
         },
         {
+          "key": "residence_area",
+          "label": "Which area do you live in?",
+          "type": "select",
+          "options": [
+            {
+              "id": "darwin",
+              "label": "Darwin"
+            },
+            {
+              "id": "palmerston",
+              "label": "Palmerston"
+            },
+            {
+              "id": "litchfield",
+              "label": "Litchfield / rural area"
+            },
+            {
+              "id": "greater_darwin_other",
+              "label": "Other Greater Darwin area"
+            },
+            {
+              "id": "outside",
+              "label": "Outside Greater Darwin"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to say"
+            }
+          ],
+          "hint": "Optional. This helps us plan where and how to offer support."
+        },
+        {
           "key": "suburb",
-          "label": "Which suburb or locality do you live in?",
-          "type": "search-select",
+          "label": "Which suburb or locality?",
+          "type": "select",
           "options": [
             {
               "id": "acacia_hills",
@@ -2108,18 +2171,17 @@
             },
             {
               "id": "other",
-              "label": "Another locality in Greater Darwin"
-            },
-            {
-              "id": "outside",
-              "label": "Outside Greater Darwin"
+              "label": "Another suburb or locality in this area"
             },
             {
               "id": "prefer",
               "label": "Prefer not to say"
             }
           ],
-          "hint": "Optional. This helps us plan where and how to offer support."
+          "hint": "Optional. You can leave this blank.",
+          "conditional": "local_area",
+          "placeholder": "Not specified",
+          "options_rule": "Show only localities whose region matches residence_area, plus other/prefer. Blank retains area only."
         },
         {
           "key": "suburb_other",
@@ -2230,7 +2292,7 @@
           "hint": "Optional. Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Optional background precedes support needs. Suburb/locality is optional; named locations aggregate to region without a second question."
+      "note": "Optional background precedes support needs. The broader area is chosen first; its suburb/locality is optional. Area-only answers retain their broader location without implying a suburb."
     },
     {
       "id": "needs",
@@ -3095,9 +3157,41 @@
           ]
         },
         {
+          "key": "residence_area",
+          "label": "Which area do you live in?",
+          "type": "select",
+          "options": [
+            {
+              "id": "darwin",
+              "label": "Darwin"
+            },
+            {
+              "id": "palmerston",
+              "label": "Palmerston"
+            },
+            {
+              "id": "litchfield",
+              "label": "Litchfield / rural area"
+            },
+            {
+              "id": "greater_darwin_other",
+              "label": "Other Greater Darwin area"
+            },
+            {
+              "id": "outside",
+              "label": "Outside Greater Darwin"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to say"
+            }
+          ],
+          "hint": "Optional. This helps us plan where and how to offer support."
+        },
+        {
           "key": "suburb",
-          "label": "Which suburb or locality do you live in?",
-          "type": "search-select",
+          "label": "Which suburb or locality?",
+          "type": "select",
           "options": [
             {
               "id": "acacia_hills",
@@ -3614,18 +3708,17 @@
             },
             {
               "id": "other",
-              "label": "Another locality in Greater Darwin"
-            },
-            {
-              "id": "outside",
-              "label": "Outside Greater Darwin"
+              "label": "Another suburb or locality in this area"
             },
             {
               "id": "prefer",
               "label": "Prefer not to say"
             }
           ],
-          "hint": "Optional. This helps us plan where and how to offer support."
+          "hint": "Optional. You can leave this blank.",
+          "conditional": "local_area",
+          "placeholder": "Not specified",
+          "options_rule": "Show only localities whose region matches residence_area, plus other/prefer. Blank retains area only."
         },
         {
           "key": "suburb_other",
@@ -3736,7 +3829,7 @@
           "hint": "Optional. Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Optional background precedes support needs. Suburb/locality is optional; named locations aggregate to region without a second question."
+      "note": "Optional background precedes support needs. The broader area is chosen first; its suburb/locality is optional. Area-only answers retain their broader location without implying a suburb."
     },
     {
       "id": "needs",

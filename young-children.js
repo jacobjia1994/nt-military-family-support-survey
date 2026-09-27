@@ -16,20 +16,20 @@
   const ADF_CONNECTIONS = Object.freeze([{ id: 'yes', label: 'Yes' }, { id: 'no', label: 'No' }, { id: 'unsure', label: 'Not sure' }]);
   const CHILD_STAGES = Object.freeze([{ id: '0_4', label: '0–4 years' }, { id: '5_7', label: '5–7 years' }, { id: 'prefer', label: 'Prefer not to say' }]);
   const geography = () => root.SURVEY_GEOGRAPHY;
-  const localities = () => [...(geography()?.localities || []),
-    { id: 'other', label: 'Other locality in Greater Darwin' },
-    { id: 'outside', label: 'Outside Greater Darwin' },
-    { id: 'prefer', label: 'Prefer not to say' }];
-  function localityChoice(value) {
-    const typed = String(value || '').trim().toLocaleLowerCase('en-AU');
-    return localities().find(option => [option.label, ...(option.aliases || [])].some(label => label.toLocaleLowerCase('en-AU') === typed));
-  }
-  function locationMetadata(suburb) {
-    const named = geography()?.localities.find(option => option.id === suburb);
-    if (named) return { region: named.region, geography_scope: 'greater_darwin' };
-    if (suburb === 'other') return { region: 'greater_darwin_other', geography_scope: 'greater_darwin' };
-    if (suburb === 'outside') return { region: 'outside_greater_darwin', geography_scope: 'outside_greater_darwin' };
-    return { region: null, geography_scope: 'not_stated' };
+  const areas = () => geography()?.areas || [];
+  const isLocalArea = area => ['darwin', 'palmerston', 'litchfield', 'greater_darwin_other'].includes(area);
+  const localities = area => isLocalArea(area) ? [
+    ...(geography()?.localities || []).filter(option => option.region === area),
+    { id: 'other', label: 'Another suburb or locality in this area' },
+    { id: 'prefer', label: 'Prefer not to say' },
+  ] : [];
+  function locationMetadata(background) {
+    const area = background.residence_area;
+    if (area === 'outside') return { region: 'outside_greater_darwin', geography_scope: 'outside_greater_darwin', location_precision: 'area' };
+    if (!isLocalArea(area)) return { region: null, geography_scope: 'not_stated', location_precision: 'not_stated' };
+    const named = geography()?.localities.find(option => option.id === background.suburb && option.region === area);
+    const precision = named ? 'suburb' : background.suburb === 'other' && background.suburb_other?.trim() ? 'other_locality' : 'area';
+    return { region: area, geography_scope: 'greater_darwin', location_precision: precision };
   }
 
   function createSession(options = {}) {
@@ -48,7 +48,10 @@
       if (key === 'adf_connection' && ADF_CONNECTIONS.some(option => option.id === value)) {
         background.adf_connection = value;
         if (value === 'no') clearExpressions();
-      } else if (key === 'suburb' && (value === '' || localities().some(option => option.id === value))) {
+      } else if (key === 'residence_area' && (value === '' || areas().some(option => option.id === value))) {
+        if (background.residence_area !== value) { delete background.suburb; delete background.suburb_other; }
+        if (value) background.residence_area = value; else delete background.residence_area;
+      } else if (key === 'suburb' && (value === '' || localities(background.residence_area).some(option => option.id === value))) {
         if (background.suburb !== value) delete background.suburb_other;
         if (value) background.suburb = value; else delete background.suburb;
       } else if (key === 'suburb_other' && background.suburb === 'other') background.suburb_other = textValue(value).slice(0, 100);
@@ -96,9 +99,9 @@
       }
       const hasChildResponses = Object.keys(childResponses).length > 0;
       return {
-        schema_version: '1.2', questionnaire_version: 'young_child_supported', questionnaire_revision: '2026-09-27-background', age_path: 'young',
+        schema_version: '1.3', questionnaire_version: 'young_child_supported', questionnaire_revision: '2026-09-27-two-level-geography', age_path: 'young',
         geography_version: geography()?.version || null,
-        background: { ...background, ...locationMetadata(background.suburb) },
+        background: { ...background, ...locationMetadata(background) },
         response_mode: hasChildResponses ? 'child_views' : 'guardian_observations',
         response_basis: hasChildResponses ? 'child_expressions_recorded_by_parent_guardian' : 'parent_guardian_observations',
         ...(hasChildResponses ? { child_responses: childResponses } : {}),
@@ -131,49 +134,16 @@
       return false;
     }
     function stop() { session.reset(); options.onStop?.(); }
-    function bindLocalityPicker(form) {
-      const input = form.querySelector('#young-suburb');
-      if (!input?.closest) return;
-      const picker = input.closest('.locality-picker');
-      const list = picker.querySelector('.locality-options');
-      const toggle = picker.querySelector('.locality-toggle');
-      let matches = [], active = -1;
-      const close = () => { list.hidden = true; input.setAttribute('aria-expanded', 'false'); input.removeAttribute('aria-activedescendant'); active = -1; };
-      const open = (all = false) => {
-        const query = all ? '' : input.value.trim().toLocaleLowerCase('en-AU');
-        matches = localities().filter(option => ['other', 'outside', 'prefer'].includes(option.id) || [option.label, ...(option.aliases || [])].some(label => label.toLocaleLowerCase('en-AU').includes(query)));
-        active = -1; input.removeAttribute('aria-activedescendant');
-        list.innerHTML = matches.map((option, index) => `<li role="presentation"><button type="button" role="option" aria-selected="false" tabindex="-1" id="young-locality-${index}" data-young-locality="${esc(option.id)}">${esc(option.label)}${option.aliases?.length ? `<small>${esc(option.aliases.join(' / '))}</small>` : ''}</button></li>`).join('');
-        list.hidden = false; input.setAttribute('aria-expanded', 'true');
-      };
-      const choose = option => {
-        if (!option) return;
-        input.value = option.label;
-        session.setBackground('suburb', option.id);
-        updateOtherLocality(form);
-        input.focus(); close();
-      };
-      input.addEventListener('focus', () => open(Boolean(localityChoice(input.value))));
-      input.addEventListener('input', () => {
-        session.setBackground('suburb', localityChoice(input.value)?.id || '');
-        updateOtherLocality(form); open();
-      });
-      input.addEventListener('keydown', event => {
-        if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-          event.preventDefault(); if (list.hidden) open();
-          active = event.key === 'ArrowDown' ? Math.min(active + 1, matches.length - 1) : active < 0 ? matches.length - 1 : Math.max(active - 1, 0);
-          list.querySelectorAll('[role="option"]').forEach((option, index) => {
-            option.setAttribute('aria-selected', index === active ? 'true' : 'false');
-            if (index === active) { input.setAttribute('aria-activedescendant', option.id); option.scrollIntoView({ block: 'nearest' }); }
-          });
-        } else if (event.key === 'Enter' && !list.hidden) { event.preventDefault(); if (active >= 0) choose(matches[active]); }
-        else if (event.key === 'Escape') { event.preventDefault(); close(); }
-        else if (event.key === 'Tab') close();
-      });
-      toggle.addEventListener('click', () => { if (list.hidden) { input.focus(); open(true); } else close(); });
-      list.addEventListener('pointerdown', event => event.preventDefault());
-      list.addEventListener('click', event => { const option = event.target.closest('[data-young-locality]'); if (option) choose(localities().find(item => item.id === option.dataset.youngLocality)); });
-      picker.addEventListener('focusout', event => { if (!picker.contains(event.relatedTarget)) close(); });
+    function localityOptions(background) {
+      return `<option value="">Select a suburb or locality (optional)</option>${localities(background.residence_area).map(option => `<option value="${esc(option.id)}" ${background.suburb === option.id ? 'selected' : ''}>${esc(option.label)}${option.aliases?.length ? ` (${esc(option.aliases.join(' / '))})` : ''}</option>`).join('')}`;
+    }
+    function updateLocation(form) {
+      const background = session.snapshot().background;
+      form.querySelector('#young-suburb-group').hidden = !isLocalArea(background.residence_area);
+      const select = form.querySelector('#young-suburb');
+      select.innerHTML = localityOptions(background);
+      select.value = background.suburb || '';
+      updateOtherLocality(form);
     }
     function updateOtherLocality(form) {
       const isOther = session.snapshot().background.suburb === 'other';
@@ -184,16 +154,17 @@
     function showBackground() {
       if (!requirePermission()) return false;
       const background = session.snapshot().background;
-      main.innerHTML = `<section class="survey-layout"><form class="question-card" id="young-background-form" novalidate><h1 tabindex="-1">About your child</h1><p class="question-intro">For a parent or guardian of a child aged 7 or younger.</p><fieldset class="question-group"><legend>Does your child have a parent, carer or other family member who serves or has served in the Australian Defence Force (ADF)?</legend><div class="choices">${ADF_CONNECTIONS.map(option => `<label class="choice"><input type="radio" name="adf_connection" value="${option.id}" required ${background.adf_connection === option.id ? 'checked' : ''}><span class="choice-label">${option.label}</span></label>`).join('')}</div></fieldset><div class="question-group"><label class="field-label" for="young-suburb">Which suburb or locality does your child live in?</label><p class="small" id="young-location-hint">Optional. Greater Darwin includes Darwin, Palmerston and Litchfield.</p><div class="locality-picker"><div class="locality-input-row"><input class="text-input" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="young-locality-options" aria-describedby="young-location-hint" id="young-suburb" name="suburb" maxlength="100" value="${esc(localities().find(option => option.id === background.suburb)?.label || '')}" placeholder="Type or choose a suburb or locality" autocomplete="off"><button class="locality-toggle" type="button" aria-label="Show suburb or locality options" tabindex="-1"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button></div><ul class="locality-options" id="young-locality-options" role="listbox" aria-label="Suburbs and localities" hidden></ul></div></div><div class="question-group" id="young-other-locality" ${background.suburb === 'other' ? '' : 'hidden'}><label class="field-label" for="young-suburb-other">Which other locality in Greater Darwin?</label><input class="text-input" id="young-suburb-other" name="suburb_other" maxlength="100" value="${esc(background.suburb_other || '')}"></div><div class="question-group"><label class="field-label" for="young-stage">How old is your child? <span class="small">Optional</span></label><select class="select" id="young-stage" name="child_stage"><option value="">Select an age group</option>${CHILD_STAGES.map(option => `<option value="${option.id}" ${background.child_stage === option.id ? 'selected' : ''}>${option.label}</option>`).join('')}</select></div><div class="error" id="young-background-error" role="alert"></div><div class="question-actions"><button class="back-button" type="button" id="young-background-back">Back</button><button class="button primary" type="submit">Continue</button></div></form><button class="text-button" type="button" id="young-stop">Stop and clear answers</button></section>`;
+      main.innerHTML = `<section class="survey-layout"><form class="question-card" id="young-background-form" novalidate><h1 tabindex="-1">About your child</h1><p class="question-intro">For a parent or guardian of a child aged 7 or younger.</p><fieldset class="question-group"><legend>Does your child have a parent, carer or other family member who serves or has served in the Australian Defence Force (ADF)?</legend><div class="choices">${ADF_CONNECTIONS.map(option => `<label class="choice"><input type="radio" name="adf_connection" value="${option.id}" required ${background.adf_connection === option.id ? 'checked' : ''}><span class="choice-label">${option.label}</span></label>`).join('')}</div></fieldset><div class="question-group"><label class="field-label" for="young-area">Which area does your child live in?</label><p class="small" id="young-location-hint">Optional. This helps us plan where and how to offer support.</p><select class="select" id="young-area" name="residence_area" aria-describedby="young-location-hint"><option value="">Select an area</option>${areas().map(option => `<option value="${esc(option.id)}" ${background.residence_area === option.id ? 'selected' : ''}>${esc(option.label)}</option>`).join('')}</select></div><div class="question-group" id="young-suburb-group" ${isLocalArea(background.residence_area) ? '' : 'hidden'}><label class="field-label" for="young-suburb">Which suburb or locality does your child live in? <span class="small">Optional</span></label><select class="select" id="young-suburb" name="suburb">${localityOptions(background)}</select></div><div class="question-group" id="young-other-locality" ${background.suburb === 'other' ? '' : 'hidden'}><label class="field-label" for="young-suburb-other">Which other suburb or locality? <span class="small">Optional</span></label><input class="text-input" id="young-suburb-other" name="suburb_other" maxlength="100" value="${esc(background.suburb_other || '')}"></div><div class="question-group"><label class="field-label" for="young-stage">How old is your child? <span class="small">Optional</span></label><select class="select" id="young-stage" name="child_stage"><option value="">Select an age group</option>${CHILD_STAGES.map(option => `<option value="${option.id}" ${background.child_stage === option.id ? 'selected' : ''}>${option.label}</option>`).join('')}</select></div><div class="error" id="young-background-error" role="alert"></div><div class="question-actions"><button class="back-button" type="button" id="young-background-back">Back</button><button class="button primary" type="submit">Continue</button></div></form><button class="text-button" type="button" id="young-stop">Stop and clear answers</button></section>`;
       const form = main.querySelector('#young-background-form');
       form.addEventListener('change', event => {
         const input = event.target;
-        if (input.name === 'adf_connection' || input.name === 'child_stage') session.setBackground(input.name, input.value);
+        if (['adf_connection', 'child_stage', 'residence_area', 'suburb'].includes(input.name)) session.setBackground(input.name, input.value);
+        if (input.name === 'residence_area') updateLocation(form);
+        if (input.name === 'suburb') updateOtherLocality(form);
       });
       form.addEventListener('input', event => {
         if (event.target.name === 'suburb_other') session.setBackground('suburb_other', event.target.value);
       });
-      bindLocalityPicker(form);
       form.addEventListener('submit', event => {
         event.preventDefault();
         if (!requirePermission()) return;
@@ -201,11 +172,11 @@
         const background = session.snapshot().background;
         if (!background.adf_connection) { error.textContent = 'Please choose Yes, No or Not sure for the ADF connection question.'; return; }
         if (background.adf_connection === 'no') return showOutsideScope();
+        const area = form.querySelector('#young-area');
+        if (!session.setBackground('residence_area', area.value)) { error.textContent = 'Please choose an area from the list, or leave it blank.'; area.focus(); return; }
         const locality = form.querySelector('#young-suburb');
-        const chosen = localityChoice(locality.value);
-        if (locality.value.trim() && !chosen) { error.textContent = 'Please choose a place from the list, choose Other locality in Greater Darwin or Outside Greater Darwin, or leave the location blank.'; locality.focus(); return; }
-        session.setBackground('suburb', chosen?.id || '');
-        if (chosen?.id === 'other') session.setBackground('suburb_other', form.querySelector('#young-suburb-other').value);
+        if (!session.setBackground('suburb', locality.value)) { error.textContent = 'Please choose a suburb or locality within the selected area, or leave it blank.'; locality.focus(); return; }
+        if (locality.value === 'other') session.setBackground('suburb_other', form.querySelector('#young-suburb-other').value);
         session.setBackground('child_stage', form.querySelector('#young-stage').value);
         show();
       });
@@ -264,8 +235,9 @@
       const rows = prompts.map(prompt => [prompt.label, values.responses[prompt.id]]).filter(([, value]) => value?.trim());
       const backgroundRows = [
         ['ADF family connection', ADF_CONNECTIONS.find(option => option.id === values.background.adf_connection)?.label],
-        ['Child’s suburb or locality', localities().find(option => option.id === values.background.suburb)?.label],
-        ['Other locality in Greater Darwin', values.background.suburb_other],
+        ['Child’s area', areas().find(option => option.id === values.background.residence_area)?.label],
+        ['Child’s suburb or locality', localities(values.background.residence_area).find(option => option.id === values.background.suburb)?.label],
+        ['Other suburb or locality', values.background.suburb_other],
         ['Child’s age group', CHILD_STAGES.find(option => option.id === values.background.child_stage)?.label],
       ].filter(([, value]) => value);
       const reviewRows = rows => rows.map(([label, value]) => `<section class="review-block"><div class="review-header"><h3>${esc(label)}</h3></div><p class="review-value">${esc(value)}</p></section>`).join('');
