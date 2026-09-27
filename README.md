@@ -1,4 +1,4 @@
-# NT Defence Family Support Program consultation
+# Greater Darwin Defence Family Support Survey
 
 A formal questionnaire for Lutheran Care’s internal team review. The project is service consultation. The participant interface uses the intended formal wording and LC branding; the current build holds entries in page memory and has no response receiver. Finishing does not transmit a response or claim that LC has received it.
 
@@ -18,10 +18,10 @@ A formal questionnaire for Lutheran Care’s internal team review. The project i
 ## Questionnaire flow
 
 1. On the invitation page, choose **Adult (18 or older)** or **Child or young person (under 18)**; the latter reveals **8–17** and **7 or younger**. No route is preselected. Participation information and the required choices appear there for the selected route. Ages 8–17 make an 8–14/15–17 follow-up choice for permission only; they answer the same shorter questionnaire. All adults use one questionnaire and can optionally record 18–29, 30–39, 40–49 or 50 or older later.
-2. Answer the minimum NT connection questions. Adults retain an optional **About you** page. Young people aged 8–17 give optional broad region on the connection page, with no separate place page.
+2. Answer the minimum ADF/Greater Darwin connection questions. Adults retain an optional **About you** page. Young people aged 8–17 give optional suburb or locality on the connection page, with no separate place page.
 3. Answer whether support was needed during the recall period. Yes or Not sure reveals one support-area checklist. No skips detail questions but keeps service-information preferences.
 4. Adults complete one detail page per selected area. Young people aged 8–17 can choose **one optional focus area** from the checked needs for detail; other checked needs remain recorded without repeated pages.
-5. Adults and young people may give information/advice preferences about **services and support in the NT**, including when they report no support needs.
+5. Adults and young people may give information/advice preferences about **services and support in Greater Darwin**, including when they report no support needs.
 6. Review, finish, the separate interview request and the free resource.
 
 There is no second current-needs checklist, repeated closing “Your ideas” page, top-three ranking or four-week impact score. Past support received and extra support wanted now remain independent: a person can report an old gap that has since been resolved, or enough past support alongside a new request. “No” to extra help does not mean existing ongoing support is unnecessary.
@@ -30,16 +30,20 @@ The adult list retains 17 accepted domains plus “Something else”. “I did n
 
 ## Scope and recall
 
-NT service timing controls the route independently of residence:
+Approved 27 September 2026: the consultation covers **Greater Darwin, including Litchfield**. `geography.js` contains 100 alphabetically ordered locality names plus **Other suburb or locality** and **Prefer not to say**. Search supports the recorded local aliases. The selected locality derives a broader analysis region without a second location question; Other offers an optional locality text field. The catalogue provenance is in `GEOGRAPHY_SOURCES.md`.
+
+The ADF relationship wording removes the former military-force question. No overseas-service transfer question is added. Needs domains and their content remain unchanged pending Monday’s discussion.
+
+ADF service timing in Greater Darwin controls the route independently of residence:
 
 - Current service or service ending within the past 12 months: full questionnaire.
-- Earlier NT service: one optional lessons/suggestions page, then review and finish; analysed separately from recent support needs.
+- Earlier Greater Darwin service: one optional lessons/suggestions page, then review and finish; analysed separately from recent support needs.
 - Uncertain connection: full questionnaire, retained as uncertain in analysis.
-- No NT service connection: scope explanation.
+- No Greater Darwin service connection: scope explanation.
 
-These routes define consultation participation, not programme-benefit eligibility. Family members can live outside the NT. Current/former members and wider family relationships can be selected, with multiple roles allowed.
+These routes define consultation participation, not programme-benefit eligibility. Residence does not independently control the service-connection route. Current/former members and wider family relationships can be selected, with multiple roles allowed.
 
-The adult recall period is 12 months; the shared 8–17 period is three months. Support received, sources and barriers use the relevant period where those details are asked. Extra or different support wanted refers to now. Optional adult NT residence duration concerns the current or most recent stay, with a never-lived-in-NT option; it does not add separate postings together. These periods are project design choices.
+The adult recall period is 12 months; the shared 8–17 period is three months. Support received, sources and barriers use the relevant period where those details are asked. Extra or different support wanted refers to now. Optional adult Greater Darwin residence duration concerns the current or most recent stay, with a never-lived-in-Greater-Darwin option; it does not add separate postings together. These periods are project design choices.
 
 Excluding the invitation-page choices and including review, the adult main route has **5 + n pages**, where n is the number of selected areas. The 8–17 route has four pages without a focus and five with one focus; adding checked needs does not add pages. The earlier-experience route remains three pages: connection, comments and review. These counts exclude a conditional guardian-presence confirmation and the separate form for ages 7 or younger; they are not measured completion times.
 
@@ -69,7 +73,7 @@ Neither form has a receiving endpoint, application analytics, cookies or persist
 
 ## Development and source material
 
-Run `node --test tests/*.test.mjs` to include the questionnaire, contact form and younger-child module. `node scripts/export-copy.mjs` exports the current definitions for the adult reading copy. Local preview: `python3 -m http.server 8174 --bind 127.0.0.1`.
+Run `node --test tests/*.test.mjs` to include the questionnaire, contact form and younger-child module. Run `node scripts/export-copy.mjs` followed by `node scripts/render-adult-copy.mjs` to regenerate the adult reading copy from the current definitions, including conditional variants and the complete locality list. The renderer preserves the established style and consent shell; locality options expand for printing. Local preview: `python3 -m http.server 8174 --bind 127.0.0.1`.
 
 LC logo and self-hosted Karla sources/licence are in `assets/`. GitHub Pages serves the repository root from main.
 
@@ -79,7 +83,9 @@ Examples aid recognition but are not exhaustive and do not produce separate coun
 
 ## Free resource and interview link
 
-`support.html` is the free, standalone support finder. It is linked from the questionnaire completion screen and the interview form, and can be opened directly without taking part in either. `thank-you-resource.js` uses the exact first-party `support.html` path; both links open without sending answers, contact details or participant IDs. External service links point to the providers’ official pages.
+The title is **Defence Family Support Survey**, the greeting is **Hello, Defence community!**, and the introduction names **Greater Darwin**. Answer-length hints and the duplicate earlier-experience introduction are removed. The finish says **Thank you for helping strengthen the Defence community in Greater Darwin.** Its equal-style actions are **Request an interview with Lutheran Care** and **Find support in a few clicks**, accompanied by the approved free thank-you guide description.
+
+`support.html` is the free, standalone NT-wide support finder. It is linked from the questionnaire completion screen and the interview form, and can be opened directly without taking part in either. `thank-you-resource.js` uses the exact first-party `support.html` path; both links open without sending answers, contact details or participant IDs. External service links point to the providers’ official pages.
 
 The current finder uses seven support domains and visible questionnaire-style radio choices. It asks one relevant question at a time, then shows a suitable first contact and short alternatives. There are no dropdowns or topic search. Child age bands are conditional rather than always displayed. Urgent help remains in the footer and context-specific safety routes.
 

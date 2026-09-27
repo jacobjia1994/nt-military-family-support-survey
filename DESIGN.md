@@ -1,6 +1,6 @@
 ---
 name: Lutheran Care Defence family questionnaire
-description: A welcoming, restrained questionnaire for Defence members and families in the Northern Territory.
+description: A welcoming, restrained questionnaire for Defence members and families in Greater Darwin.
 colors:
   primary: "#b94626"
   ink: "#30312f"
@@ -42,7 +42,7 @@ Desktop opening headings are 44px with a 1.12 line height; question headings are
 
 ## Layout and controls
 
-A warm off-white page holds a white questionnaire shell, up to 896px wide with 72px horizontal padding. The header contains a 180px logo and a small “Defence family support / Northern Territory” label, followed by a fine rule. There is no shadow, background image, illustration or decorative animation.
+A warm off-white page holds a white questionnaire shell, up to 896px wide with 72px horizontal padding. The header contains a 180px logo and a small “Defence Family Support Program / Greater Darwin” label, followed by a fine rule. There is no shadow, background image, illustration or decorative animation.
 
 Below 760px, the outer frame disappears into a white page; padding becomes 24px and the logo is 151px wide. The adult-first age choice, any expanded under-18 choices and the selected participation panel fit one reading column on mobile. The continuation button fills the reading width. At 360px and below, horizontal padding becomes 20px.
 
@@ -52,7 +52,7 @@ The four-section progress indicator uses thin lines and a section label. Related
 
 ## Preserved questionnaire behaviour
 
-Adult and shared 8–17 wording, NT/outside-NT variants, and conditional follow-ups remain in the question definitions. Changing an earlier answer removes follow-ups that no longer apply. The 8–17 route combines region with connection and asks for detail about at most one optional focus area. Children aged 7 or younger use a guardian-supported form with separate child expressions and guardian observations. The separate question library and staff review pages remain outside the respondent flow.
+Adult and shared 8–17 wording, Greater Darwin geographic variants, and conditional follow-ups remain in the question definitions. Changing an earlier answer removes follow-ups that no longer apply. The 8–17 route combines suburb/locality with connection and asks for detail about at most one optional focus area. Children aged 7 or younger use a guardian-supported form with separate child expressions and guardian observations. The separate question library and staff review pages remain outside the respondent flow.
 
 Formal presentation does not establish response collection. The current frontend has no receiver: answers remain in page memory, and the finish screen offers the separate interview request and support finder without claiming successful submission. Selection and configuration of a private collection platform are pending. Do not add a submission-success message before a real receiving service confirms receipt.
 
@@ -70,25 +70,25 @@ SurveyJS, GOV.UK Frontend and Formbricks informed the design; their code and pla
 
 The invitation starts with an everyday question rather than institutional process. Funding remains explicit in a quieter line. The age choice comes next; the selected route expands a fully visible participant-information block and its own agreement steps on the same page. The information uses 14px labelled paragraphs in two columns on desktop and one column on mobile. It identifies purpose, Lutheran Care custody/approved systems, authorised project readership, de-identified Defence reporting, retention/withdrawal and contact/rights. The dialog remains only a secondary way to reread the same shared text later in the form.
 
-The welcome heading stays **Defence family support survey** in sentence case. Neither age route is preselected. **Adult (18 or older)** appears first and **Child or young person (under 18)** second, as matching standard radio rows. Selecting the latter reveals **8–17** and **7 or younger** in the same visual language. No separate age-selection hint repeats the labels. The chosen route opens its explanation and unticked participation choices inline. Ages 8–17 make an 8–14/15–17 follow-up choice for the consent arrangement, without changing the shared questions. Ages 8–14 need both guardian permission and their own assent; ages 15–17 and adults give their own informed agreement. The youngest route asks the guardian for permission before its supported-response form. Changing age clears incompatible participation and answers. Adults answer one questionnaire and can give a non-overlapping age band as an optional background answer. The actual intake platform, applicable retention/withdrawal procedure and child participation arrangements still require LC confirmation before live collection.
+The welcome heading is **Defence Family Support Survey**, superseding the 25 September sentence-case version. Neither age route is preselected. **Adult (18 or older)** appears first and **Child or young person (under 18)** second, as matching standard radio rows. Selecting the latter reveals **8–17** and **7 or younger** in the same visual language. No separate age-selection hint repeats the labels. The chosen route opens its explanation and unticked participation choices inline. Ages 8–17 make an 8–14/15–17 follow-up choice for the consent arrangement, without changing the shared questions. Ages 8–14 need both guardian permission and their own assent; ages 15–17 and adults give their own informed agreement. The youngest route asks the guardian for permission before its supported-response form. Changing age clears incompatible participation and answers. Adults answer one questionnaire and can give a non-overlapping age band as an optional background answer. The actual intake platform, applicable retention/withdrawal procedure and child participation arrangements still require LC confirmation before live collection.
 
 ## Separate conversation request
 
 `contact.html` uses the same unchanged Lutheran Care logo, locally hosted Karla, terracotta action colour and flat white questionnaire shell. After a short age choice, people aged 15 or older see one page of contact fields; under-15s receive a staff-assisted contact route. Preferred name and phone sit side by side on desktop and stack below 760px. The heading is 38px on desktop and 32px on mobile; introductory text is 18px and 17px respectively.
 
-First-contact method is an explicit choice. Voicemail permission appears only for calls and starts unticked. Optional contact instructions and a brief topic follow the essential fields. The information notice remains fully visible in 14px text above the separate consent checkbox. Familiar controls lead to a details review with a Change action, then a neutral “Thank you for your time” finish. This independent form does not inherit or link survey answers. The current review build has no receiver, persistent storage or details download, and its finish does not claim receipt or a confirmed appointment.
+First-contact method is an explicit choice. Voicemail permission appears only for calls and starts unticked. Optional contact instructions and a brief topic follow the essential fields. The information notice remains fully visible in 14px text above the separate consent checkbox. Familiar controls lead to a details review with a Change action, then the approved community-contribution thank-you finish. This independent form does not inherit or link survey answers. The current review build has no receiver, persistent storage or details download, and its finish does not claim receipt or a confirmed appointment.
 
 
 ## Direct experience questions and inclusive contact routes
 
-Updated 25 September 2026. The questionnaire displays all applicable area questions without an accordion. Background precedes needs; the repeated closing ideas page is removed. Yes to extra support reveals a specific-support text box, with the same existing type and control treatment. A wrapping flex footer places About your answers at the left and Arrange a conversation at the right. The completion view puts the conversation link before the shared resource.
+Updated 25 September 2026. The questionnaire displays all applicable area questions without an accordion. Background precedes needs; the repeated closing ideas page is removed. Yes to extra support reveals a specific-support text box, with the same existing type and control treatment. A wrapping flex footer places About your answers at the left and Request an interview with Lutheran Care at the right. The completion view now places the interview and resource actions alongside each other (27 September revision).
 
 The contact form now offers self and guardian routes, with adult, 15–17 and under-15 age groups where applicable. Guardian labels request the adult’s own details. Under-15 self-contact omits the topic narrative and explains the initial contact purpose. Its footer and finish show the same resource without requiring contact registration. Both new contact and resource links open separately and without a referrer; no form data enters their URL.
 
 
 ## Inline Other and younger-child form
 
-Updated 25 September 2026. The support-needed choice sits above the conditional area checklist. The Other option and its conditional text field share a full-width grid item, keeping the field immediately below the checkbox. Existing label, hint, field and focus styling is retained. The interview action is consistently Request an interview.
+Updated 25 September 2026. The support-needed choice sits above the conditional area checklist. The Other option and its conditional text field share a full-width grid item, keeping the field immediately below the checkbox. Existing label, hint, field and focus styling is retained. The interview action is now consistently Request an interview with Lutheran Care (27 September revision).
 
 The form for ages 7 or younger uses the same shell and form controls: one response box per child prompt plus a visibly separate guardian-observation area. An adult can use only the observation box when the child cannot or does not want to express a view. No new visual identity or nested decorative panels are introduced. The 8–14 assistance route retains a short, clear guardian-presence explanation and a private LC help action.
 
@@ -116,4 +116,8 @@ Primary result access paragraphs follow the contact panel. In the verified 390×
 
 ## Survey copy and completion refinements
 
-Updated 27 September 2026. The greeting omits NT. Optional answer-length prompts and the repeated introduction before the earlier-experience question are removed; privacy instructions and the question itself remain. The completion screen no longer offers Save my answers or Review my answers. Its interview and support-finder links use the same secondary button style and equal-width desktop columns, stacking below 760px. The existing resource title appears directly below its button. The survey title, geographic scope, eligibility, region options, completion heading and action labels are unchanged pending the wording and scope discussion. These are local review changes and have not been published.
+Updated 27 September 2026 after Jacob approved the wording and scope. This supersedes the earlier same-day pending-scope note. The title is Defence Family Support Survey and greeting Hello, Defence community! The introduction and project header name Greater Darwin, including Litchfield in the consultation scope. Optional answer-length prompts and the repeated earlier-experience introduction are removed; necessary privacy instructions remain. The needs content stays unchanged pending Monday’s meeting. The former military-force field is removed without adding a transfer question.
+
+The searchable locality selector shows 100 alphabetically ordered names plus Other suburb or locality and Prefer not to say. It uses the existing field styling, supports keyboard operation and derives the broader analysis region without another question. Other reveals its optional text field.
+
+The completion heading is Thank you for helping strengthen the Defence community in Greater Darwin. Save my answers and Review my answers are removed. Request an interview with Lutheran Care and Find support in a few clicks use the same secondary button treatment and equal-width desktop columns, stacking below 760px. The approved thank-you sentence identifies the free support guide. The standalone navigator retains its NT-wide coverage.

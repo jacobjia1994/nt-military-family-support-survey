@@ -1,6 +1,6 @@
 # Interview request form
 
-`contact.html` is the separate opt-in **Request an interview** form. Its introduction invites people to share their experience with a Lutheran Care staff member so LC can better understand the difficulties and support needs of Defence families in the NT, then leave details to arrange an interview. It follows the consultation concept recovered from Thursday's ChatGPT task **讨论项目理解** (`6ab46d41-1b10-83ec-aab1-b6eeca5f3201`).
+`contact.html` is the separate opt-in **Request an interview with Lutheran Care** form. Its introduction invites people to share their experience with a Lutheran Care staff member so LC can better understand the difficulties and support needs of ADF members and families in Greater Darwin, then leave details to arrange an interview. It follows the consultation concept recovered from Thursday's ChatGPT task **讨论项目理解** (`6ab46d41-1b10-83ec-aab1-b6eeca5f3201`).
 
 Its purpose is to arrange a service-consultation interview. It is not a service intake assessment, a counselling referral or a confirmed appointment. Completing the main survey is not a condition of using this form. The form does not receive survey answers, response IDs or other identifiers linking a request to an anonymous response.
 
@@ -42,7 +42,7 @@ The request is **not consent to an interview, recording, counselling or collecti
 
 ## Free resource
 
-The same free digital support finder is offered beneath the contact form and review screen, and on the finish screen. It is available without providing contact details or agreeing to a conversation. `thank-you-resource.js` now points to the exact first-party `support.html` page. The link also accepts a public HTTPS URL without embedded credentials for future resources; other relative URLs remain invalid. It opens in a new tab with `noopener noreferrer` and `referrerpolicy="no-referrer"`. No answers, contact details or participant identifiers are added to the destination.
+The same free digital support finder is offered beneath the contact form and review screen, and on the finish screen. The button reads **Find support in a few clicks** and the description identifies the free guide for Defence members and families, without implying the visitor has already completed the survey. The navigator remains NT-wide while this consultation covers Greater Darwin, including Litchfield. It is available without providing contact details or agreeing to a conversation. `thank-you-resource.js` now points to the exact first-party `support.html` page. The link also accepts a public HTTPS URL without embedded credentials for future resources; other relative URLs remain invalid. It opens in a new tab with `noopener noreferrer` and `referrerpolicy="no-referrer"`. No answers, contact details or participant identifiers are added to the destination.
 
 ## Information notice and sources
 
@@ -61,6 +61,6 @@ Official sources checked on 25 September 2026:
 
 This is a formal-looking internal review build. `contact-model.mjs` owns the field limits, validation and notice; `contact.js` holds entered details only in page memory. There is no receiving endpoint, storage API, local/session storage, answer download or email submission. `contact.html` sets `connect-src 'none'` and `form-action 'none'`; external privacy links use a no-referrer policy. Leaving the page clears the in-memory request and rendered details, including when returning through the browser's back/forward cache.
 
-The flow ends with **Thank you for helping improve support in our NT communities.**, the shared resource and options to review or clear details. It does not claim receipt, an appointment or a promised callback. Use invented details for team walkthroughs. Public hosting can still receive ordinary page-request metadata; this implementation's claim is that entered form contents are not transmitted to a receiver.
+The flow ends with **Thank you for helping strengthen the Defence community in Greater Darwin.**, the shared resource and options to review or clear details. It does not claim receipt, an appointment or a promised callback. Use invented details for team walkthroughs. Public hosting can still receive ordinary page-request metadata; this implementation's claim is that entered form contents are not transmitted to a receiver.
 
 Before replacing this review flow with real collection, the implementation and notice need to describe the actual Lutheran Care receiving record, authorised access, provider and any overseas processing, and applicable retention arrangements. Those facts cannot be inferred from the organisation-wide policy or supplied by a generic disclaimer. The receiving process must also preserve contact permissions, the separation from anonymous survey responses and staff decisions about minors’ capacity, permission and willingness. This is the remaining operational work for activation, not a claim that the prototype already collects information or guarantees legal compliance.

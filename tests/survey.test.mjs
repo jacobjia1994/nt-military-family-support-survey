@@ -22,13 +22,14 @@ function nodeStub() {
 }
 const mainStub = nodeStub();
 const context = vm.createContext({ structuredClone, URL, document: { querySelector: () => mainStub }, window: { scrollTo() {} } });
+vm.runInContext(readFileSync(new URL('../geography.js', import.meta.url), 'utf8'), context);
 vm.runInContext(`${source.slice(0, bootstrap)}
   globalThis.survey = {
     DOMAINS, SPECIAL_NEEDS, toggleChoice, selectedNeeds, hasNeedSelection, hasSoughtHelp,
     reconcileAnswers, buildSteps, cleanExport, requiredAnswersComplete,
     selectedFocusNeed, detailedNeeds,
     thankYouResource, thankYouResourceHTML, contactLinkHTML, page, areaPage, areaBarrierField,
-    areaQuestionsHTML, period, conditionalVisible, reviewHTML, locationFrame,
+    areaQuestionsHTML, period, conditionalVisible, reviewHTML, locationFrame, suburbChoice, suburbs,
     getValue, setValue, consultationRoute, maxTextLength, fieldHTML,
     questionnaireVersion, needsGuardianPermission, guardianPermissionRecord, needsGuardianSupport,
     renderGuardianSupport, renderSurvey, renderYoung, resetYoung,
@@ -419,8 +420,8 @@ test('general delivery changes clear times only when no synchronous format remai
     assert.deepEqual(answers.times, ['weekend']);
   }
   const p = pageFor('delivery');
-  assert.match(p.title, /services and support in the NT/);
-  assert.match(p.fields[0].label, /information or advice about services and support in the NT/);
+  assert.match(p.title, /services and support in Greater Darwin/);
+  assert.match(p.fields[0].label, /information or advice about services and support in Greater Darwin/);
   for (const value of ['not_wanted', 'unsure', 'no_preference', 'prefer']) {
     assert.deepEqual(plain(survey.toggleChoice(['phone', 'referral'], value, p.fields[0].exclusive)), [value]);
   }
@@ -433,12 +434,12 @@ test('schema 6 exports selected-area measures and never migrates obsolete genera
   const answers = { ...legacy, serving_nt: 'recent', needs_status: 'yes', needs: ['housing', 'childcare'], areas: { housing: { ...areaBlock(), impact: 'a_lot', help: ['military'], extra: 'DO_NOT_COPY' }, transport: areaBlock('STALE') }, delivery: ['phone'], times: ['weekend'] };
   const original = structuredClone(answers);
   const result = plain(survey.cleanExport(answers, 'adult', domains));
-  assert.equal(result.schema_version, '6.0');
+  assert.equal(result.schema_version, '6.2');
   assert.equal(result.measurement_scope, 'past_support_and_current_requests_by_area');
   assert.equal(result.details_optional, true);
   assert.equal(result.consultation_route, 'recent_nt');
   assert.equal(result.recall_months, 12);
-  assert.equal(result.storage, 'downloaded_by_respondent; not submitted');
+  assert.equal(result.storage, 'page_memory_only; not submitted');
   assert.deepEqual(result.answers.areas, { housing: areaBlock(), childcare: {} });
   for (const key of Object.keys(legacy)) assert.equal(hasOwn(result.answers, key), false, key);
   assert.deepEqual(answers, original);
@@ -508,15 +509,15 @@ test('adult background keeps its own page; youth region is optional on connectio
   const adult = pageFor('connection', 'adult');
   assert.deepEqual(adult.fields.map(f => f.key), ['roles', 'serving_nt', 'age_group', 'community_connection']);
   const place = pageFor('place', 'adult');
-  assert.deepEqual(place.fields.map(f => f.key), ['region', 'time_nt', 'force']);
+  assert.deepEqual(place.fields.map(f => f.key), ['suburb', 'suburb_other', 'time_nt']);
   assert.ok(place.fields.every(f => !f.required));
   const duration = place.fields.find(f => f.key === 'time_nt');
   assert.deepEqual(fieldIds(duration), ['never', 'under3', '3to12', '1to3', 'over3', 'unsure', 'prefer']);
   assert.match(duration.hint, /current or most recent stay/);
   const youth = pageFor('connection', 'youth');
-  assert.deepEqual(youth.fields.map(f => f.key), ['roles', 'serving_nt', 'assistance', 'region', 'community_connection']);
-  assert.equal(youth.fields.find(f => f.key === 'region').required, undefined);
-  assert.ok(fieldIds(youth.fields.find(f => f.key === 'region')).includes('outside_overseas'));
+  assert.deepEqual(youth.fields.map(f => f.key), ['roles', 'serving_nt', 'assistance', 'suburb', 'suburb_other', 'community_connection']);
+  assert.equal(youth.fields.find(f => f.key === 'suburb').required, undefined);
+  assert.ok(fieldIds(youth.fields.find(f => f.key === 'suburb')).includes('prefer'));
   assert.deepEqual(fieldIds(youth.fields[1]), fieldIds(adult.fields[1]));
   assert.equal(stepsFor({ serving_nt: 'yes' }, 'youth').some(step => step.id === 'place'), false);
 });
@@ -566,7 +567,7 @@ test('youth export keeps all checked needs but only an explicitly chosen focus h
     time_nt: 'over3', force: 'adf', areas: { [first]: { comment: 'STALE_FIRST' }, [second]: { ...areaBlock('Focused'), comment: 'FOCUSED_SECOND' } } };
   const domains = survey.setContext('youth', answers);
   const withoutFocus = plain(survey.cleanExport(answers, 'youth', domains));
-  assert.equal(withoutFocus.schema_version, '6.1');
+  assert.equal(withoutFocus.schema_version, '6.2');
   assert.equal(withoutFocus.recall_months, 3);
   assert.deepEqual(withoutFocus.answers.needs, [first, second]);
   assert.deepEqual(withoutFocus.answers.areas, {});
@@ -967,10 +968,10 @@ test('contact links stay separate from answers and remain available in the foote
     assert.doesNotMatch(html, /PRIVATE_EXPERIENCE_SENTINEL|contact\.html[?#]/);
   }
   const finish = survey.finishHTML();
-  assert.match(finish, /Thank you for helping improve support in our NT communities/);
+  assert.match(finish, /Thank you for helping strengthen the Defence community in Greater Darwin/);
   assert.ok(finish.includes(anchor));
-  assert.ok(finish.includes('Find support services'));
-  assert.ok(finish.indexOf(anchor) < finish.indexOf('Find support services'), 'The interview option is available before leaving for the resource');
+  assert.ok(finish.includes('Find support in a few clicks'));
+  assert.ok(finish.indexOf(anchor) < finish.indexOf('Find support in a few clicks'), 'The interview option is available before leaving for the resource');
   assert.deepEqual(answers, original);
   const index = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const footer = index.match(/<div class="questionnaire-help">[\s\S]*?<\/div>/)?.[0];
@@ -1232,5 +1233,39 @@ test('exports and routes reject hidden or legacy areas after No, refusal or a sk
     assert.doesNotMatch(JSON.stringify(result), /HIDDEN_TOPIC|HIDDEN_COMMENT/);
     assert.equal(stepsFor(answers).some(s => s.id.startsWith('area:')), false);
     assert.deepEqual(answers, original, 'Export must not mutate the live response');
+  }
+});
+
+// The new locality answer must support regional planning without asking twice.
+test('Greater Darwin localities preserve aliases, regional aggregation and non-disclosure', () => {
+  for (const [typed, id, region] of [['Casuarina','casuarina','darwin'],['  wagaman  ','wagaman','darwin'],['Stuart Park','stuart_park','darwin'],['Howard Springs','howard_springs','litchfield'],['Rosebery','rosebery','palmerston'],['Robertson Barracks','holtze','litchfield']]) {
+    assert.equal(survey.suburbChoice(typed)?.id,id);
+    const result=plain(survey.cleanExport({serving_nt:'yes',suburb:id},'adult',domainsFor('adult')));
+    assert.equal(result.answers.suburb,id);assert.equal(result.answers.region,region);
+    assert.equal(result.geography_version,'2026-09-27');
+  }
+  for(const suburb of ['prefer','other','NOT_A_LOCALITY']){
+    const result=plain(survey.cleanExport({serving_nt:'yes',suburb,region:'darwin',suburb_other:'A locality name'},'adult',domainsFor('adult')));
+    assert.equal(hasOwn(result.answers,'region'),false);
+    assert.equal(hasOwn(result.answers,'suburb_other'),suburb==='other');
+  }
+  assert.equal(survey.suburbChoice('Katherine'),undefined);
+  assert.equal(survey.suburbChoice('Tindal'),undefined);
+  const fields=pageFor('place').fields;
+  assert.equal(fields.some(f=>f.key==='region'||f.key==='force'),false);
+  const field=fields.find(f=>f.key==='suburb');
+  assert.equal(field.type,'search-select');assert.equal(field.required,undefined);
+  assert.ok(field.options.some(o=>o.label==='Other suburb or locality'));
+  assert.ok(field.options.some(o=>o.label==='Prefer not to say'));
+});
+
+test('changing Other locality clears its hidden text without changing support needs', () => {
+  const answers={suburb:'casuarina',suburb_other:'OLD_LOCALITY',needs_status:'yes',needs:['housing'],areas:{housing:areaBlock()}};
+  survey.reconcileAnswers(answers,'suburb',domainsFor('adult'),'other');
+  assert.equal(hasOwn(answers,'suburb_other'),false);
+  assert.deepEqual(answers.needs,['housing']);assert.equal(answers.areas.housing.comment,'Housing experience');
+  for(const version of ['adult','youth']){
+    const result=plain(survey.cleanExport({serving_nt:'earlier',suburb:'howard_springs',earlier_experience:'Past local support'},version,domainsFor(version)));
+    assert.equal(result.answers.region,'litchfield');assert.equal(result.answers.suburb,'howard_springs');
   }
 });

@@ -91,7 +91,7 @@ const BARRIERS = {
   ]
 };
 
-const NT_REGIONS = ['darwin','palmerston','katherine','alice','other_nt'];
+const NT_REGIONS = ['darwin','palmerston','litchfield','greater_darwin_other','katherine','alice','other_nt'];
 const locationFrame = region => NT_REGIONS.includes(region) ? 'nt' : ['outside_au','outside_overseas'].includes(region) ? 'outside' : 'unspecified';
 const SPECIAL_NEEDS = [];
 const hasNeedSelection = answers => ['yes','unsure'].includes(answers.needs_status);
@@ -119,6 +119,7 @@ function consultationRoute(answers) {
   return answers.serving_nt==='earlier'?'earlier_experience':answers.serving_nt==='recent'?'recent_nt':answers.serving_nt==='yes'?'current_nt':'uncertain_nt';
 }
 function reconcileAnswers(answers,changed,domains,previous) {
+  if(changed==='suburb'&&answers.suburb!=='other')delete answers.suburb_other;
   if(changed==='needs_status'&&!hasNeedSelection(answers)){delete answers.needs;delete answers.needs_other;delete answers.focus_need;delete answers.areas;}
   if(changed==='needs') {
     const ids=selectedNeeds(answers,domains);
@@ -154,6 +155,7 @@ function cleanExport(answers,version,domains) {
   const route=consultationRoute(answers),copy={};
   const allowed=route==='earlier_experience'?['roles','serving_nt','assistance','guardian_present','earlier_experience']:['roles','serving_nt','needs_status','needs','needs_other','delivery','times','force','region','time_nt','assistance','guardian_present'];
   if(version==='adult')allowed.push('age_group');
+  if(['adult','youth'].includes(version))allowed.push('suburb','suburb_other');
   if(['adult','youth'].includes(version))allowed.push('community_connection');
   if(version==='youth'&&route==='earlier_experience')allowed.push('region');
   if(version==='youth'&&route!=='earlier_experience')allowed.push('focus_need');
@@ -162,6 +164,13 @@ function cleanExport(answers,version,domains) {
     delete copy.time_nt;delete copy.force;
     if(!selectedNeeds(answers,domains).includes(copy.focus_need))delete copy.focus_need;
   }
+  delete copy.force;
+  if(copy.suburb){
+    const locality=GEOGRAPHY?.localities.find(item=>item.id===copy.suburb);
+    if(locality)copy.region=locality.region;
+    else {delete copy.region;if(!['other','prefer'].includes(copy.suburb))delete copy.suburb;}
+  }
+  if(copy.suburb!=='other')delete copy.suburb_other;
   if(Object.hasOwn(copy,'age_group')&&!ADULT_AGE_GROUPS.some(group=>group.id===copy.age_group))delete copy.age_group;
   if(!['self','guardian','other'].includes(copy.assistance)||version==='adult')delete copy.assistance;
   if(!['self','other'].includes(copy.assistance)||copy.guardian_present!==true)delete copy.guardian_present;
@@ -178,13 +187,13 @@ function cleanExport(answers,version,domains) {
     }));
     if(!(copy.delivery||[]).some(v=>['one_to_one','group','phone','video'].includes(v)))delete copy.times;
   }
-  return {schema_version:version==='youth'?'6.1':'6.0',questionnaire_revision:version==='adult'?'2026-09-25-adult-community-connection':version==='youth'?'2026-09-25-youth-community-connection':'2026-09-25-child-voice',consultation_route:route,recall_months:route==='earlier_experience'?null:version==='adult'?12:3,measurement_scope:version==='youth'?'selected_needs_and_one_focus_area':'past_support_and_current_requests_by_area',details_optional:true,collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'downloaded_by_respondent; not submitted',answers:copy};
+  return {schema_version:'6.2',questionnaire_revision:'2026-09-27-greater-darwin',geography_version:GEOGRAPHY?.version||null,consultation_route:route,recall_months:route==='earlier_experience'?null:version==='adult'?12:3,measurement_scope:version==='youth'?'selected_needs_and_one_focus_area':'past_support_and_current_requests_by_area',details_optional:true,collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'page_memory_only; not submitted',answers:copy};
 }
 
 const main = document.querySelector('#main');
 const phases = ['About you','Your support','Finding support','Review'];
 const state = { version:'adult', age:null, ageAudience:null, ageRoute:null, answers:{}, step:'connection', screen:'welcome', returnToReview:false, participation:null, guardianPermission:null,youngController:null,youngRecord:null };
-const SURVEY_INVITATION = {"title": "Defence family support survey", "greeting": "Hello, Defence Communities!", "paragraphs": ["Lutheran Care would like your help to plan its Defence Family Support Program in the Northern Territory.", "Tell us about the support you have needed, what you received and what would help now.", "Please answer about your own experience."], "funding": "Lutheran Care received funding from Defence Member and Family Support, a branch of the Commonwealth Department of Defence, to deliver this project."};
+const SURVEY_INVITATION = {"title": "Defence Family Support Survey", "greeting": "Hello, Defence community!", "paragraphs": ["Lutheran Care would like your help to plan its Defence Family Support Program in Greater Darwin.", "Tell us about the support you have needed, what you received and what would help now.", "Please answer about your own experience."], "funding": "Lutheran Care received funding from Defence Member and Family Support, a branch of the Commonwealth Department of Defence, to deliver this project."};
 const PARTICIPANT_NOTICE_VERSION = '2026-09-25-v11';
 // Formal participant wording for the internally reviewed consultation design.
 // The current build has no receiver; its technical status belongs in review.html.
@@ -242,9 +251,18 @@ const maxTextLength = version => version==='adult'?5000:1500;
 const info = '';
 const PREFER = {id:'prefer',label:'Prefer not to answer'};
 const UNSURE = {id:'unsure',label:'Not sure'};
-const regions = opts([['darwin','Darwin'],['palmerston','Palmerston / Litchfield'],['katherine','Katherine / Tindal'],['alice','Alice Springs'],['other_nt','Elsewhere in the NT'],['outside_au','Elsewhere in Australia'],['outside_overseas','Outside Australia'],['prefer','Prefer not to answer']]);
+const GEOGRAPHY = globalThis.SURVEY_GEOGRAPHY || globalThis.window?.SURVEY_GEOGRAPHY;
+const suburbs = [...(GEOGRAPHY?.localities || []),{id:'other',label:'Other suburb or locality'},{id:'prefer',label:'Prefer not to say'}];
+function suburbChoice(value) {
+  const typed=String(value||'').trim().toLocaleLowerCase('en-AU');
+  return suburbs.find(option=>[option.label,...(option.aliases||[])].some(label=>label.toLocaleLowerCase('en-AU')===typed));
+}
+function suburbFields() { return [
+  field('suburb','Which suburb or locality do you live in?','search-select',suburbs,'Optional. This helps us plan where and how to offer support.'),
+  field('suburb_other','Which other suburb or locality?','short',[],'',{conditional:'other_suburb'})
+]; }
 const adequacy = () => opts([['enough',isAdult()?'Enough to meet my needs':'I got enough help'],['some',isAdult()?'Some, but not enough':'I got some help, but needed more'],['none',isAdult()?'None':'I did not get any help'],['unsure','Not sure'],['prefer','Prefer not to answer']]);
-const roleOptions = () => isAdult() ? opts([['serving','I am a current or former serving member'],['partner','I am a partner, spouse or former partner'],['child','I am the child of a current or former serving member'],['parent','I am the parent of a current or former serving member'],['other_family','I am another family member or carer'],['none','None of these']]) : opts([['child','My parent or carer serves or has served in the military'],['other_family','Someone else in my family serves or has served in the military'],['none','Neither of these'],['unsure','Not sure']]);
+const roleOptions = () => isAdult() ? opts([['serving','I am a current or former Australian Defence Force (ADF) member'],['partner','I am a partner, spouse or former partner of an ADF member'],['child','I am the child of a current or former ADF member'],['parent','I am the parent of a current or former ADF member'],['other_family','I am another family member or carer of a current or former ADF member'],['none','None of these']]) : opts([['child','My parent or carer serves or has served in the Australian Defence Force (ADF)'],['other_family','Someone else in my family serves or has served in the ADF'],['none','Neither of these'],['unsure','Not sure']]);
 const field = (key,label,type,options=[],hint=info,extra={}) => ({key,label,type,options,hint,...extra});
 function areaSources() { return isAdult()?opts([['family','Family or friends'],['military','Military support services'],['community','A community group or service'],['health','A health professional or service'],['school','A school, college or university'],['online','Online information or support'],['other','Somewhere else'],['not_sought','I have not looked for help'],['unsure','Not sure'],['prefer','Prefer not to answer']]):opts([['family','A parent, carer or someone in my family'],['friends','A friend'],['school','Someone at school'],['community','A youth worker or community group'],['health','A doctor, counsellor or other health worker'],['online','An online or phone support service'],['other','Someone else'],['not_sought','I have not asked anyone'],['unsure','Not sure'],['prefer','Prefer not to answer']]); }
 function areaBarrierField(need) {
@@ -271,12 +289,12 @@ function page(step) {
   if(step.id.startsWith('area:'))return areaPage(step.need||step.id.slice(5));
   const child=isChild();
   switch(step.id) {
-    case 'earlier':return {title:'Your experience in the NT',intro:'',fields:[field('earlier_experience',isAdult()?'What worked well during your family’s time in the NT, and what could have been better?':'What would you like to tell us about your family’s time in the NT?','text',[],privacyHint())]};
-    case 'connection':return {title:isAdult()?'Your connection to military life':'A little about your family',intro:'',fields:[
+    case 'earlier':return {title:'Your experience in Greater Darwin',intro:'',fields:[...(isAdult()?suburbFields():[]),field('earlier_experience',isAdult()?'What worked well during your family’s time in Greater Darwin, and what could have been better?':'What would you like to tell us about your family’s time in Greater Darwin?','text',[],privacyHint())]};
+    case 'connection':return {title:isAdult()?'Your connection to ADF life':'A little about your family',intro:'',fields:[
       field('roles',isAdult()?'Which describes you?':'Which describes your family?','multi',roleOptions(),'Select all that apply.',{required:true,exclusive:['none','unsure']}),
-      field('serving_nt',isAdult()?'When did you or your family member last serve in the NT?':'When did your family member last serve in the NT?','single',opts([['yes','Serving in the NT now'],['recent','Within the past 12 months, but not currently'],['earlier','More than 12 months ago'],['no','No military service in the NT'],['unsure','Not sure']]),'Select one.',{required:true}),
-      ...(isAdult()?[field('age_group','Which age group are you in?','single',ADULT_AGE_GROUPS,'Optional. This helps us see whether support needs differ by age.')]:[field('assistance','Is anyone helping you read or write your answers?','single',opts([['self','No, I am answering myself'],['guardian','Yes, my parent or guardian'],['other','Yes, someone else']]),'These are your answers. A helper can read or write for you, but should not choose your answers.',{required:true}),...(state.version==='youth'?[field('region','Which area do you live in now?','select',regions,'Optional. You can ask someone if you are not sure.')]:[])]),
-      ...(['adult','youth'].includes(state.version)?[field('community_connection',isAdult()?'What has helped you or your family feel connected in the NT?':'What has helped you feel welcome or included in the NT?','text',[],'Optional. '+privacyHint())]:[])
+      field('serving_nt',isAdult()?'When did you or your family member last serve in Greater Darwin?':'When did your family member last serve in Greater Darwin?','single',opts([['yes','Serving in Greater Darwin now'],['recent','Within the past 12 months, but not currently'],['earlier','More than 12 months ago'],['no','No military service in Greater Darwin'],['unsure','Not sure']]),'Select one.',{required:true}),
+      ...(isAdult()?[field('age_group','Which age group are you in?','single',ADULT_AGE_GROUPS,'Optional. This helps us see whether support needs differ by age.')]:[field('assistance','Is anyone helping you read or write your answers?','single',opts([['self','No, I am answering myself'],['guardian','Yes, my parent or guardian'],['other','Yes, someone else']]),'These are your answers. A helper can read or write for you, but should not choose your answers.',{required:true}),...(state.version==='youth'?suburbFields():[])]),
+      ...(['adult','youth'].includes(state.version)?[field('community_connection',isAdult()?'What has helped you or your family feel connected in Greater Darwin?':'What has helped you feel welcome or included in Greater Darwin?','text',[],'Optional. '+privacyHint())]:[])
     ]};
     case 'needs':return {title:isAdult()?'Your support needs':'Where have you needed help?',intro:isAdult()?'Support can include help from family, friends, your community or a service.':'Help can come from family, friends, school, your community or a service.',fields:[
       field('needs_status',isAdult()?`In ${period()}, have you needed any support?`:`In ${period()}, have you needed help with anything?`,'single',opts([['yes','Yes'],['no','No'],['unsure','Not sure'],['prefer','Prefer not to answer']])),
@@ -284,14 +302,13 @@ function page(step) {
       field('needs_other',isAdult()?'What else did you need help with?':'What else?','short',[],privacyHint(),{conditional:'other_need'}),
       ...(state.version==='youth'?[field('focus_need','Would you like to tell us more about one of these?','single',selectedNeeds(state.answers,domainList()).map(id=>({id,label:domainLabel(id)})),'Optional. Choose one area, or continue without choosing.',{conditional:'focus_need'})]:[])
     ]};
-    case 'delivery':return {title:'Finding services and support in the NT',intro:'',fields:[
-      field('delivery',isAdult()?'How would you prefer to get information or advice about services and support in the NT?':'How would you like to find out about help in the NT?','multi',opts([['one_to_one','In person, one to one'],['group','In person, in a group'],['phone','By phone'],['video','By video call'],['text','By message or online chat'],['information','Information I can read in my own time'],['referral','Someone to help me find a suitable service'],['not_wanted','I would not want help from a service'],['unsure','Not sure'],['no_preference','No particular preference'],['other','Another way'],['prefer','Prefer not to answer']]),'Select all that apply.',{exclusive:['not_wanted','unsure','no_preference','prefer']}),
+    case 'delivery':return {title:'Finding services and support in Greater Darwin',intro:'',fields:[
+      field('delivery',isAdult()?'How would you prefer to get information or advice about services and support in Greater Darwin?':'How would you like to find out about help in Greater Darwin?','multi',opts([['one_to_one','In person, one to one'],['group','In person, in a group'],['phone','By phone'],['video','By video call'],['text','By message or online chat'],['information','Information I can read in my own time'],['referral','Someone to help me find a suitable service'],['not_wanted','I would not want help from a service'],['unsure','Not sure'],['no_preference','No particular preference'],['other','Another way'],['prefer','Prefer not to answer']]),'Select all that apply.',{exclusive:['not_wanted','unsure','no_preference','prefer']}),
       field('times','When would a call, meeting or activity suit you?','multi',opts([['weekday_day','Weekday daytime'],['weekday_evening','Weekday evenings'],['weekend','Weekends'],['variable','It changes from week to week'],['no_preference','No particular preference'],['prefer','Prefer not to answer']]),'Select all that apply. Use your local time.',{exclusive:['no_preference','prefer'],conditional:'live'})
     ]};
     case 'place':return {title:'About you',intro:'',fields:[
-      field('region','Which area do you live in?','select',regions,'Optional. This helps us plan where and how to offer support. Living outside the NT does not affect whether you can take part.'),
-      field('time_nt','How long have you lived in the NT?','single',opts([['never','I have not lived in the NT'],['under3','Less than 3 months'],['3to12','3 months to less than 1 year'],['1to3','1 year to less than 3 years'],['over3','3 years or more'],['unsure','Not sure'],['prefer','Prefer not to answer']]),'Count your current or most recent stay only.'),
-      field('force',isAdult()?'Which military are you or your family connected with?':'Which military is your family member part of?','single',opts([['adf','Australian Defence Force'],['other','Another country’s military'],['both','Both'],['unsure','Not sure'],['prefer','Prefer not to answer']])),
+      ...suburbFields(),
+      field('time_nt','How long have you lived in Greater Darwin?','single',opts([['never','I have not lived in Greater Darwin'],['under3','Less than 3 months'],['3to12','3 months to less than 1 year'],['1to3','1 year to less than 3 years'],['over3','3 years or more'],['unsure','Not sure'],['prefer','Prefer not to answer']]),'Count your current or most recent stay only.'),
 
     ]};
     default:return {title:'Check your answers',intro:'',fields:[]};
@@ -303,6 +320,7 @@ function optionHTML(o,f,value) {
   return `<label class="choice"><input type="${f.type==='multi'?'checkbox':'radio'}" name="${esc(f.key)}" value="${esc(o.id)}" ${checked?'checked':''}><span class="choice-body"><span class="choice-label">${esc(o.label)}</span>${o.hint?`<span class="choice-hint">${esc(o.hint)}</span>`:''}</span></label>`;
 }
 function conditionalVisible(f) {
+  if(f.conditional==='other_suburb')return state.answers.suburb==='other';
   if(f.conditional==='needs_list')return hasNeedSelection(state.answers);
   if(f.conditional==='focus_need')return state.version==='youth'&&selectedNeeds(state.answers,domainList()).length>0;
   if(f.conditional==='additional_support')return state.answers.areas?.[f.need]?.additional_support_now==='yes';
@@ -319,10 +337,41 @@ function fieldHTML(f) {
   const describedBy=f.hint?`aria-describedby="hint-${esc(f.key)}"`:'';
   if(['single','multi'].includes(f.type)) return `<fieldset class="question-group" data-field="${esc(f.key)}" ${hidden}><legend>${esc(f.label)}${f.required?'<span class="required-label">(required)</span>':''}${hint}</legend><div class="choices ${f.key==='needs'&&!isChild()?'columns':''} ${f.options.length>6?'compact':''}">${f.options.map(o=>f.key==='needs'&&o.id==='other_need'?`<div class="other-need-option">${optionHTML(o,f,v)}${fieldHTML(page({id:'needs'}).fields.find(item=>item.key==='needs_other'))}</div>`:optionHTML(o,f,v)).join('')}</div></fieldset>`;
   let input='';
-  if(f.type==='select') input=`<select class="select" id="${esc(f.key)}" name="${esc(f.key)}" ${describedBy}><option value="">Choose an option</option>${f.options.map(o=>`<option value="${esc(o.id)}" ${v===o.id?'selected':''}>${esc(o.label)}</option>`).join('')}</select>`;
+  if(f.type==='search-select') input=`<div class="locality-picker"><div class="locality-input-row"><input class="text-input suburb-search" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="${esc(f.key)}-options" id="${esc(f.key)}" name="${esc(f.key)}" maxlength="100" value="${esc(f.options.find(o=>o.id===v)?.label||'')}" placeholder="Type or choose a suburb or locality" autocomplete="off" ${describedBy}><button class="locality-toggle" type="button" aria-label="Show suburb or locality options" tabindex="-1"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button></div><ul class="locality-options" id="${esc(f.key)}-options" role="listbox" aria-label="Suburbs and localities" hidden></ul></div>`;
+  else if(f.type==='select') input=`<select class="select" id="${esc(f.key)}" name="${esc(f.key)}" ${describedBy}><option value="">Choose an option</option>${f.options.map(o=>`<option value="${esc(o.id)}" ${v===o.id?'selected':''}>${esc(o.label)}</option>`).join('')}</select>`;
   else if(f.type==='short') input=`<input class="text-input" id="${esc(f.key)}" name="${esc(f.key)}" maxlength="160" value="${esc(v||'')}" autocomplete="off" ${describedBy}>`;
   else input=`<textarea class="textarea" id="${esc(f.key)}" name="${esc(f.key)}" maxlength="${maxTextLength(state.version)}" ${describedBy}>${esc(v||'')}</textarea><div class="char-count" data-counter="${esc(f.key)}" ${(v||'').length<maxTextLength(state.version)*.8?'hidden':''}>${maxTextLength(state.version)-(v||'').length} characters remaining</div>`;
   return `<div class="question-group${f.key==='needs_other'?' other-need-followup':''}" data-field="${esc(f.key)}" ${hidden}><label class="field-label" for="${esc(f.key)}">${esc(f.label)}${f.required?'<span class="required-label">(required)</span>':''}${hint}</label>${input}</div>`;
+}
+function bindSuburbPicker(form) {
+  const input=form.querySelector('input.suburb-search');
+  if(!input?.closest)return;
+  const picker=input.closest('.locality-picker'),list=picker.querySelector('.locality-options'),toggle=picker.querySelector('.locality-toggle');
+  let matches=[],active=-1;
+  const close=()=>{list.hidden=true;input.setAttribute('aria-expanded','false');input.removeAttribute('aria-activedescendant');active=-1;};
+  const highlight=()=>{list.querySelectorAll('[role="option"]').forEach((option,index)=>{option.setAttribute('aria-selected',index===active?'true':'false');if(index===active){input.setAttribute('aria-activedescendant',option.id);option.scrollIntoView({block:'nearest'});}});};
+  const open=(all=false)=>{
+    const query=all?'':input.value.trim().toLocaleLowerCase('en-AU');
+    matches=suburbs.filter(option=>['other','prefer'].includes(option.id)||[option.label,...(option.aliases||[])].some(label=>label.toLocaleLowerCase('en-AU').includes(query)));
+    active=-1;input.removeAttribute('aria-activedescendant');
+    list.innerHTML=matches.map((option,index)=>`<li role="presentation"><button type="button" role="option" aria-selected="false" tabindex="-1" id="suburb-option-${index}" data-suburb="${esc(option.id)}">${esc(option.label)}${option.aliases?.length?`<small>${esc(option.aliases.join(' / '))}</small>`:''}</button></li>`).join('');
+    list.hidden=false;input.setAttribute('aria-expanded','true');
+  };
+  const choose=option=>{input.value=option.label;input.dispatchEvent(new Event('input',{bubbles:true}));close();input.focus();};
+  input.addEventListener('focus',()=>open(Boolean(suburbChoice(input.value))));
+  input.addEventListener('input',()=>open());
+  input.addEventListener('keydown',event=>{
+    if(event.key==='ArrowDown'||event.key==='ArrowUp'){
+      event.preventDefault();if(list.hidden)open();
+      active=event.key==='ArrowDown'?Math.min(active+1,matches.length-1):active<0?matches.length-1:Math.max(active-1,0);highlight();
+    }else if(event.key==='Enter'&&!list.hidden){event.preventDefault();if(active>=0)choose(matches[active]);}
+    else if(event.key==='Escape'){event.preventDefault();close();}
+    else if(event.key==='Tab')close();
+  });
+  toggle.addEventListener('click',()=>{if(list.hidden){input.focus();open(true);}else close();});
+  list.addEventListener('pointerdown',event=>event.preventDefault());
+  list.addEventListener('click',event=>{const option=event.target.closest('[data-suburb]');if(option)choose(suburbs.find(item=>item.id===option.dataset.suburb));});
+  picker.addEventListener('focusout',event=>{if(!picker.contains(event.relatedTarget))close();});
 }
 function focusHeading(){main.querySelector('h1')?.focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'});}
 function resetAgePath(){
@@ -364,7 +413,7 @@ function renderWelcomeConsent(){
     host.innerHTML=`<div class="welcome-consent">${youthAge}</div>`;
   }else{
     const adult=state.age==='adult',young=state.age==='young',guardian=needsGuardianPermission(state.age);
-    const ageIntro=adult?'Please read the information below before deciding whether to take part.':young?'For a parent or guardian: you can record what your child says or shows and add your own observations separately. Your child does not have to answer.':'For a young person: Lutheran Care wants to learn what helps Defence families in the NT. The team will read your answers and share a summary with Defence without names or details that could show who you are. You can skip questions or stop. Please leave out names and school names. If we think someone is being hurt or is in serious danger, we may need to tell someone who can help. Someone can help you read or write, but should not choose your answers.';
+    const ageIntro=adult?'Please read the information below before deciding whether to take part.':young?'For a parent or guardian: you can record what your child says or shows and add your own observations separately. Your child does not have to answer.':'For a young person: Lutheran Care wants to learn what helps Defence families in Greater Darwin. The team will read your answers and share a summary with Defence without names or details that could show who you are. You can skip questions or stop. Please leave out names and school names. If we think someone is being hurt or is in serious danger, we may need to tell someone who can help. Someone can help you read or write, but should not choose your answers.';
     const guardianLabel=young?'I am this child’s parent or guardian and have authority to give permission. I have read the information and agree to Lutheran Care using and sharing their responses or my observations as described, including health or disability information I choose to provide.':'I am this young person’s parent or guardian and have authority to give permission. I have read the information and agree to Lutheran Care using and sharing their answers as described, including health or disability information they choose to provide.';
     const participantLabel=adult?'I have read the participant information and agree to take part. I consent to Lutheran Care collecting, using and sharing my answers as described, including any health or disability information I choose to share.':guardian?'I understand what these questions are for, and I want to take part. These will be my answers, even if someone helps me read or write.':'I have read the information, understand how my answers will be used, and agree to take part, including sharing health or disability information I choose to give.';
     host.innerHTML=`<div class="welcome-consent">${youthAge}<section class="age-summary" aria-labelledby="age-summary-title"><h2 id="age-summary-title">Before you begin</h2><p>${ageIntro}</p></section>${participantInformationHTML('welcome-participant-information')}<section class="participation-inline" aria-labelledby="participation-inline-title"><h2 id="participation-inline-title">Your agreement</h2><form id="welcome-consent-form">${guardian?`<h3 class="consent-role-label">For a parent or guardian</h3><label class="choice consent-choice"><input type="checkbox" name="guardian-permission" ${state.guardianPermission?.agreed?'checked':''}><span class="choice-label">${guardianLabel}</span></label>`:''}${young?'':`${guardian?'<h3 class="consent-role-label">For the young person</h3>':''}<label class="choice consent-choice"><input type="checkbox" name="participation" ${state.participation?.agreed?'checked':''}><span class="choice-label">${participantLabel}</span></label>`}<p class="error" id="welcome-consent-error" role="alert"></p><div class="welcome-start"><button class="button primary" type="submit" disabled>Start questions <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div></form>${!adult?'<button class="text-button" type="button" id="welcome-help">I would like someone to explain this</button>':''}</section></div>`;
@@ -432,7 +481,7 @@ function renderGuardianSupport(){
   main.querySelector('#support-back').onclick=()=>{state.step='connection';renderSurvey();focusHeading();};main.querySelector('#support-help').onclick=renderParticipationHelp;focusHeading();
 }
 
-function renderScope(){state.screen='scope';main.innerHTML=`<section class="finish"><h1 tabindex="-1">Thank you for your interest</h1><p class="lead">This consultation focuses on experiences of military service in the Northern Territory.</p><div class="finish-actions"><button class="button primary" id="scope-back">Review my answer</button><button class="button secondary" id="scope-exit">Return to the start</button></div></section>`;main.querySelector('#scope-back').onclick=()=>{state.screen='survey';state.step='connection';renderSurvey();};main.querySelector('#scope-exit').onclick=()=>{state.answers={};renderWelcome();};focusHeading();}
+function renderScope(){state.screen='scope';main.innerHTML=`<section class="finish"><h1 tabindex="-1">Thank you for your interest</h1><p class="lead">This consultation is for Australian Defence Force members and their families living in Greater Darwin, including Darwin, Palmerston and Litchfield.</p><div class="finish-actions"><button class="button primary" id="scope-back">Review my answer</button><button class="button secondary" id="scope-exit">Return to the start</button></div></section>`;main.querySelector('#scope-back').onclick=()=>{state.screen='survey';state.step='connection';renderSurvey();};main.querySelector('#scope-exit').onclick=()=>{state.answers={};renderWelcome();};focusHeading();}
 function activeSteps(){return buildSteps(state.answers,domainList(),state.version);}
 function reviewHTML(){return activeSteps().filter(s=>s.id!=='review').map(s=>{
   const p=page(s);
@@ -466,7 +515,7 @@ function thankYouResource(config={}) {
 }
 function thankYouResourceHTML(config=globalThis.SURVEY_THANK_YOU_RESOURCE||{}) {
   const resource=thankYouResource(config);
-  return `<section class="thank-you-resource" aria-labelledby="resource-title">${resource.url?`<a class="button secondary" href="${esc(resource.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Find support services</a>`:'<button class="button secondary" disabled>Find support services</button><p class="small">Available soon</p>'}<p class="small" id="resource-title">${esc(resource.title)}</p></section>`;
+  return `<section class="thank-you-resource" aria-labelledby="resource-title">${resource.url?`<a class="button secondary" href="${esc(resource.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Find support in a few clicks</a>`:'<button class="button secondary" disabled>Find support in a few clicks</button><p class="small">Available soon</p>'}<p class="visually-hidden" id="resource-title">${esc(resource.title)}</p></section>`;
 }
 function renderSurvey(){
   if(!hasValidParticipation()){renderWelcome();return;}
@@ -480,9 +529,10 @@ function renderSurvey(){
   const form=main.querySelector('#survey-form');
   const refreshContinue=()=>{form.querySelector('[type="submit"]').disabled=!requiredAnswersComplete(p.fields.filter(conditionalVisible),state.answers);};
   refreshContinue();
+  bindSuburbPicker(form);
   form.addEventListener('change',e=>{
     const input=e.target;if(!input.name)return;const f=p.fields.find(f=>f.key===input.name);if(!f)return;
-    const old=getValue(f.key);let value=input.value;if(f.type==='multi')value=toggleChoice(old,input.value,f.exclusive||[]);
+    const old=getValue(f.key);let value=f.type==='search-select'?(suburbChoice(input.value)?.id||''):input.value;if(f.type==='multi')value=toggleChoice(old,input.value,f.exclusive||[]);
     setValue(f.key,value);if(JSON.stringify(old)!==JSON.stringify(value))reconcileAnswers(state.answers,f.key,domainList(),old);
     if(s.id==='needs'&&['needs','needs_status'].includes(f.key)&&state.version==='youth'){
       p=page(s);
@@ -499,13 +549,22 @@ function renderSurvey(){
     for(const field of p.fields){
       const wrap=form.querySelector(`[data-field="${field.key}"]`);if(!wrap)continue;wrap.hidden=!conditionalVisible(field);
       const saved=getValue(field.key);
-      wrap.querySelectorAll('input,textarea,select').forEach(el=>{if(el.name!==field.key)return;if(['checkbox','radio'].includes(el.type))el.checked=Array.isArray(saved)?saved.includes(el.value):saved===el.value;else el.value=saved??'';});
+      wrap.querySelectorAll('input,textarea,select').forEach(el=>{if(el.name!==field.key||field.type==='search-select')return;if(['checkbox','radio'].includes(el.type))el.checked=Array.isArray(saved)?saved.includes(el.value):saved===el.value;else el.value=saved??'';});
     }
     refreshContinue();
   });
   form.addEventListener('input',e=>{
     const input=e.target;
     if(!input.matches('textarea,input[type="text"],input.text-input'))return;
+    const searchField=p.fields.find(f=>f.key===input.name&&f.type==='search-select');
+    if(searchField){
+      const old=getValue(input.name),value=suburbChoice(input.value)?.id||'';
+      setValue(input.name,value);reconcileAnswers(state.answers,input.name,domainList(),old);
+      form.querySelector('#form-error').textContent='';
+      const other=form.querySelector('[data-field="suburb_other"]');
+      if(other){other.hidden=value!=='other';if(value!=='other'){const entry=other.querySelector('input');if(entry)entry.value='';}}
+      refreshContinue();return;
+    }
     const old=getValue(input.name);
     setValue(input.name,input.value);
     if(old!==input.value)reconcileAnswers(state.answers,input.name,domainList(),old);
@@ -519,14 +578,14 @@ function renderSurvey(){
     if(counter){counter.textContent=`${input.maxLength-input.value.length} characters remaining`;counter.hidden=input.value.length<input.maxLength*.8;}
     refreshContinue();
   });
-  form.addEventListener('submit',e=>{e.preventDefault();const missing=p.fields.filter(conditionalVisible).find(f=>f.required&&(!getValue(f.key)||Array.isArray(getValue(f.key))&&!getValue(f.key).length));if(missing){const err=form.querySelector('#form-error');err.textContent='Please answer: '+missing.label;form.querySelector(`[name="${missing.key}"]`)?.focus();return;}if(s.id==='connection'&&isOutsideSurveyScope(state.answers)){renderScope();return;}if(s.id==='connection'&&needsGuardianSupport(state.age,state.answers)){renderGuardianSupport();return;}if(review){renderFinish();return;}if(state.returnToReview){state.returnToReview=false;state.step='review';renderSurvey();focusHeading();return;}goNext(s.id);});
+  form.addEventListener('submit',e=>{e.preventDefault();const suburbInput=form.querySelector('input.suburb-search');if(suburbInput?.value?.trim()&&!suburbChoice(suburbInput.value)){form.querySelector('#form-error').textContent='Choose a suburb or locality from the list, or select Other suburb or locality.';suburbInput.focus();return;}const missing=p.fields.filter(conditionalVisible).find(f=>f.required&&(!getValue(f.key)||Array.isArray(getValue(f.key))&&!getValue(f.key).length));if(missing){const err=form.querySelector('#form-error');err.textContent='Please answer: '+missing.label;form.querySelector(`[name="${missing.key}"]`)?.focus();return;}if(s.id==='connection'&&isOutsideSurveyScope(state.answers)){renderScope();return;}if(s.id==='connection'&&needsGuardianSupport(state.age,state.answers)){renderGuardianSupport();return;}if(review){renderFinish();return;}if(state.returnToReview){state.returnToReview=false;state.step='review';renderSurvey();focusHeading();return;}goNext(s.id);});
   main.querySelector('#back').onclick=()=>{state.returnToReview=false;const current=activeSteps();const i=current.findIndex(x=>x.id===s.id);if(i<=0){renderWelcome();focusHeading();return;}state.step=current[i-1].id;renderSurvey();focusHeading();};
 
   main.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>{state.returnToReview=true;state.step=b.dataset.edit;renderSurvey();focusHeading();});
 }
 function goNext(id){const steps=activeSteps(),index=steps.findIndex(s=>s.id===id);state.step=steps[index+1]?.id||'review';renderSurvey();focusHeading();}
-function contactLinkHTML(){return '<a class="button secondary" href="contact.html" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Request an interview</a>';}
-function renderFinish(){state.screen='finish';main.innerHTML=`<section class="finish"><h1 tabindex="-1">Thank you for helping improve support in our NT communities.</h1><div class="finish-next-steps"><div class="finish-contact">${contactLinkHTML()}</div>${thankYouResourceHTML()}</div><button class="text-button" id="restart">Clear answers and start again</button></section>`;main.querySelector('#restart').onclick=()=>{resetAgePath();renderWelcome();};focusHeading();}
+function contactLinkHTML(){return '<a class="button secondary" href="contact.html" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Request an interview with Lutheran Care</a>';}
+function renderFinish(){state.screen='finish';main.innerHTML=`<section class="finish"><h1 tabindex="-1">Thank you for helping strengthen the Defence community in Greater Darwin.</h1><p class="lead">As a thank-you for sharing your views, explore our free guide to support services for Defence members and families.</p><div class="finish-next-steps"><div class="finish-contact">${contactLinkHTML()}</div>${thankYouResourceHTML()}</div><button class="text-button" id="restart">Clear answers and start again</button></section>`;main.querySelector('#restart').onclick=()=>{resetAgePath();renderWelcome();};focusHeading();}
 const reviewNotes = new Map();
 let libraryVersion = 'adult';
 let libraryLocation = 'nt';
@@ -535,11 +594,11 @@ let libraryLocation = 'nt';
 // No synthetic answers from this library enter the respondent flow or results.
 function questionLibrarySections(version,location) {
   const original={version:state.version,answers:state.answers};const first=DOMAINS[version][0].id;
-  state.version=version;state.answers={roles:['partner'],serving_nt:'yes',needs_status:'yes',region:location==='nt'?'darwin':location==='outside'?'outside_au':'prefer',needs:[first],areas:{[first]:{received:'enough',additional_support_now:'yes',sources:['family']}}};
+  state.version=version;state.answers={roles:['partner'],serving_nt:'yes',needs_status:'yes',suburb:location==='nt'?'casuarina':location==='outside'?'other':'prefer',needs:[first],areas:{[first]:{received:'enough',additional_support_now:'yes',sources:['family']}}};
   try {
     const sections=[],add=(id,note='')=>sections.push({id,...page({id}),note});
-    add('connection',version==='youth'?'Relationship, NT connection, assistance, optional residence and a positive community-connection prompt precede the shorter youth questions. Earlier connections retain a separate historical route.':'Relationship, NT connection, optional adult age band and a positive community-connection prompt precede the substantive questions. Earlier connections retain a separate historical route.');
-    if(version!=='youth')add('place','Optional background precedes support needs. Residence does not control eligibility.');
+    add('connection',version==='youth'?'Relationship, Greater Darwin connection, assistance, optional residence and a positive community-connection prompt precede the shorter youth questions. Earlier connections retain a separate historical route.':'Relationship, Greater Darwin connection, optional adult age band and a positive community-connection prompt precede the substantive questions. Earlier connections retain a separate historical route.');
+    if(version!=='youth')add('place','Optional background precedes support needs. Suburb/locality is optional; named locations aggregate to region without a second question.');
     add('needs',version==='youth'?'Ask about help needed in the past three months, then record every selected area. The young person can optionally choose one area to describe further. No still leads to information preferences.':'Ask whether support was needed first. No skips the area questions but retains service-information preferences. Yes or Not sure opens the area list; Something else is only an unlisted need. Blank remains distinct from No.');
     const area=areaPage(first),variants=[];
     for(const [id,title,sources] of [['sought','After looking for support',['family']],['not-sought','When support was not sought',['not_sought']]]) {
@@ -548,14 +607,14 @@ function questionLibrarySections(version,location) {
     }
     sections.push({id:'area',...area,title:version==='youth'?'For one optional focus area':'For each selected area',fields:area.fields.filter(f=>!f.key.endsWith(':barriers')),variants,note:version==='youth'?'Young people can select many needs, then choose at most one to describe further. All youth questions use the past three months when asking about earlier help; extra help wanted refers to now.':'Questions are displayed directly. Extra support requested appears only after Yes; past experience remains available to everyone selecting this area. Sources and barriers use the same recall period. Blank answers do not mean no barrier.'});
     if(version!=='child')add('delivery','Everyone in the main adult/youth route can give general information/advice preferences, including those with no selected needs.');
-    add('earlier','Separate historical route for NT service ending more than 12 months ago; not part of the recent-needs loop.');
+    add('earlier','Separate historical route for Greater Darwin service ending more than 12 months ago; not part of the recent-needs loop.');
     return sections;
   } finally {state.version=original.version;state.answers=original.answers;}
 }
 
 function libraryFieldHTML(f) {
-  const conditional = {needs_list:'Shown after Yes or Not sure to needing support.',focus_need:'Shown after selecting at least one support area.',additional_support:'Shown after Yes to extra or different support now.',nt:'Shown to people living in the NT.',other_need:'Shown after “Something else” is selected.',another:'Shown after “Something else” is selected.',live:'Shown after an in-person, group, phone or video option is selected.'}[f.conditional];
-  const type = {single:'Choose one',multi:'Select all that apply',select:'Choose one area',text:'Written answer',short:'Short written answer'}[f.type];
+  const conditional = {other_suburb:'Shown when Other suburb or locality is selected.',needs_list:'Shown after Yes or Not sure to needing support.',focus_need:'Shown after selecting at least one support area.',additional_support:'Shown after Yes to extra or different support now.',nt:'Shown to people living in Greater Darwin.',other_need:'Shown after “Something else” is selected.',another:'Shown after “Something else” is selected.',live:'Shown after an in-person, group, phone or video option is selected.'}[f.conditional];
+  const type = {single:'Choose one',multi:'Select all that apply',select:'Choose one area','search-select':'Search or choose a suburb or locality',text:'Written answer',short:'Short written answer'}[f.type];
   return `<div class="library-question"><p class="question-meta">${type} · ${f.required?'Needed to continue':'Optional'}</p><h3>${esc(f.label)}</h3>${f.hint?`<p class="field-hint">${esc(f.hint)}</p>`:''}${conditional?`<p class="branch-note">${conditional}</p>`:''}${f.options.length?`<ul class="option-list">${f.options.map(o=>`<li>${esc(o.label)}${o.hint?` <small>— ${esc(o.hint)}</small>`:''}</li>`).join('')}</ul>`:`<p class="small">${f.type==='short'?'Up to 160 characters.':`Up to ${maxTextLength(libraryVersion)} characters.`}</p>`}</div>`;
 }
 
@@ -575,12 +634,12 @@ function librarySectionFieldsHTML(section) {
 function renderQuestionLibrary() {
   const sections=questionLibrarySections(libraryVersion,libraryLocation);
   const versionLabel={adult:'Adults · 18 or older',youth:'Young people · 8–17'}[libraryVersion];
-  main.innerHTML=`<h1>All questions</h1><p class="lead">Read the wording, options and different paths in one place.</p><p class="small">This list uses the same questions as the survey. Follow-up examples name the first support area; a respondent sees their own choice. Notes are for your own review: they are not sent anywhere. Download them before closing or refreshing this page.</p><div class="library-tools"><label>Age version<select class="select" id="review-version"><option value="adult" ${libraryVersion==='adult'?'selected':''}>Adults · 18 or older</option><option value="youth" ${libraryVersion==='youth'?'selected':''}>Young people · 8–17</option></select></label><label>Location<select class="select" id="review-location"><option value="nt" ${libraryLocation==='nt'?'selected':''}>Living in the NT</option><option value="outside" ${libraryLocation==='outside'?'selected':''}>Living outside the NT</option><option value="unspecified" ${libraryLocation==='unspecified'?'selected':''}>Residence not disclosed</option></select></label><button class="button secondary" id="print-questions">Print questions</button></div><p class="small" id="version-description">${versionLabel} · ${libraryLocation==='nt'?'Living in the NT':libraryLocation==='outside'?'Living outside the NT':'Residence not disclosed'} · 25 September 2026</p><div class="notes-actions"><button class="button secondary" id="download-notes">Download review notes</button><span class="notes-status" aria-live="polite">${reviewNotes.size?`Notes in ${reviewNotes.size} section${reviewNotes.size===1?'':'s'}`:'No notes yet'}</span></div><nav class="library-index" aria-label="Question sections">${sections.map(s=>`<a href="#${s.id}">${esc(s.id==='adequacy'?'Support received':s.id==='barriers'?'Getting help':s.title)}</a>`).join('')}</nav>${sections.map(s=>{const key=`${libraryVersion}/${libraryLocation}/${s.id}`;return `<section class="library-section" id="${s.id}"><h2>${esc(s.title)}</h2><p class="small">${esc(s.intro)}</p>${s.note?`<p class="branch-note">${esc(s.note)}</p>`:''}${librarySectionFieldsHTML(s)}<label class="notes-label" for="note-${s.id}">Your review notes: ${esc(s.title)}</label><textarea class="textarea review-note" id="note-${s.id}" data-note="${key}" maxlength="4000" placeholder="Suggested wording, a missing option, or a question for the team">${esc(reviewNotes.get(key)||'')}</textarea></section>`;}).join('')}<section class="library-section" id="under-seven"><h2>Children aged 7 or younger</h2><p>A parent or guardian sees one response box per child prompt, followed by Your observations. Confirm willingness before recording the child’s own views; leave those questions blank when the child cannot or does not want to answer. The observations field remains available and records the adult’s perspective separately.</p><ol>${YOUNG_PROMPTS.map(text=>`<li>${esc(text)}</li>`).join('')}</ol><p>Each prompt has an optional written-response box. A separate optional box records parent/guardian observations. A parent or guardian can leave the child questions blank and enter only their observations, without a claim of child assent.</p><p>The 8–17 route shares one question set; an age follow-up changes only the participation steps. See the <a href="review.html#children">participation guide</a>.</p></section><div class="notes-actions"><button class="button primary" id="download-notes-bottom">Download review notes</button><a class="button secondary" href="index.html">Try the survey</a></div>`;
+  main.innerHTML=`<h1>All questions</h1><p class="lead">Read the wording, options and different paths in one place.</p><p class="small">This list uses the same questions as the survey. Follow-up examples name the first support area; a respondent sees their own choice. Notes are for your own review: they are not sent anywhere. Download them before closing or refreshing this page.</p><div class="library-tools"><label>Age version<select class="select" id="review-version"><option value="adult" ${libraryVersion==='adult'?'selected':''}>Adults · 18 or older</option><option value="youth" ${libraryVersion==='youth'?'selected':''}>Young people · 8–17</option></select></label><label>Location<select class="select" id="review-location"><option value="nt" ${libraryLocation==='nt'?'selected':''}>Living in Greater Darwin</option><option value="outside" ${libraryLocation==='outside'?'selected':''}>Other locality</option><option value="unspecified" ${libraryLocation==='unspecified'?'selected':''}>Residence not disclosed</option></select></label><button class="button secondary" id="print-questions">Print questions</button></div><p class="small" id="version-description">${versionLabel} · ${libraryLocation==='nt'?'Living in Greater Darwin':libraryLocation==='outside'?'Other locality':'Residence not disclosed'} · 27 September 2026</p><div class="notes-actions"><button class="button secondary" id="download-notes">Download review notes</button><span class="notes-status" aria-live="polite">${reviewNotes.size?`Notes in ${reviewNotes.size} section${reviewNotes.size===1?'':'s'}`:'No notes yet'}</span></div><nav class="library-index" aria-label="Question sections">${sections.map(s=>`<a href="#${s.id}">${esc(s.id==='adequacy'?'Support received':s.id==='barriers'?'Getting help':s.title)}</a>`).join('')}</nav>${sections.map(s=>{const key=`${libraryVersion}/${libraryLocation}/${s.id}`;return `<section class="library-section" id="${s.id}"><h2>${esc(s.title)}</h2><p class="small">${esc(s.intro)}</p>${s.note?`<p class="branch-note">${esc(s.note)}</p>`:''}${librarySectionFieldsHTML(s)}<label class="notes-label" for="note-${s.id}">Your review notes: ${esc(s.title)}</label><textarea class="textarea review-note" id="note-${s.id}" data-note="${key}" maxlength="4000" placeholder="Suggested wording, a missing option, or a question for the team">${esc(reviewNotes.get(key)||'')}</textarea></section>`;}).join('')}<section class="library-section" id="under-seven"><h2>Children aged 7 or younger</h2><p>A parent or guardian sees one response box per child prompt, followed by Your observations. Confirm willingness before recording the child’s own views; leave those questions blank when the child cannot or does not want to answer. The observations field remains available and records the adult’s perspective separately.</p><ol>${YOUNG_PROMPTS.map(text=>`<li>${esc(text)}</li>`).join('')}</ol><p>Each prompt has an optional written-response box. A separate optional box records parent/guardian observations. A parent or guardian can leave the child questions blank and enter only their observations, without a claim of child assent.</p><p>The 8–17 route shares one question set; an age follow-up changes only the participation steps. See the <a href="review.html#children">participation guide</a>.</p></section><div class="notes-actions"><button class="button primary" id="download-notes-bottom">Download review notes</button><a class="button secondary" href="index.html">Try the survey</a></div>`;
   main.querySelector('#review-version').onchange=e=>{libraryVersion=e.target.value;renderQuestionLibrary();};
   main.querySelector('#review-location').onchange=e=>{libraryLocation=e.target.value;renderQuestionLibrary();};
   main.querySelector('#print-questions').onclick=()=>window.print();
   main.querySelectorAll('[data-note]').forEach(input=>input.addEventListener('input',()=>{if(input.value.trim())reviewNotes.set(input.dataset.note,input.value);else reviewNotes.delete(input.dataset.note);main.querySelector('.notes-status').textContent=reviewNotes.size?`Notes in ${reviewNotes.size} section${reviewNotes.size===1?'':'s'}`:'No notes yet';}));
-  const download=()=>{const entries=[...reviewNotes].map(([key,value])=>`## ${key}\n\n${value}`).join('\n\n');downloadText('nt-survey-review-notes.md',`# NT questionnaire review notes\n\nQuestionnaire: 25 September 2026\nSaved: ${new Date().toISOString()}\n\n${entries||'No notes entered.'}\n`);};
+  const download=()=>{const entries=[...reviewNotes].map(([key,value])=>`## ${key}\n\n${value}`).join('\n\n');downloadText('nt-survey-review-notes.md',`# NT questionnaire review notes\n\nQuestionnaire: 27 September 2026\nSaved: ${new Date().toISOString()}\n\n${entries||'No notes entered.'}\n`);};
   main.querySelector('#download-notes').onclick=download;main.querySelector('#download-notes-bottom').onclick=download;
 }
 

@@ -294,7 +294,7 @@ test('resource access is visible before contact entry and on finish, and empty c
   for (const render of [ui.api.renderForm, ui.api.renderFinish]) {
     render();
     assert.match(ui.main.innerHTML, /A free resource for Defence families/);
-    assert.match(ui.main.innerHTML, /disabled>Find support services/);
+    assert.match(ui.main.innerHTML, /disabled>Find support in a few clicks/);
     assert.match(ui.main.innerHTML, /Available soon/);
   }
   assert.match(pageSource, /src="thank-you-resource.js/);
