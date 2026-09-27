@@ -52,9 +52,12 @@
 
 @media(max-width:360px){.contact-page .contact-intro h1{font-size:28px}}
 
-/* Capacity acknowledgement sits immediately before the form action. */
-.contact-page .contact-capacity{margin:28px 0 0;padding:20px;background:var(--soft);border:1px solid #b9b1a5;border-radius:8px}
-.contact-page .contact-capacity h2{font-size:19px;line-height:1.35;margin:0 0 12px;color:var(--ink)}
-.contact-page .contact-capacity p{font-size:16px;line-height:1.6;margin:0 0 12px;color:var(--text)}
-.contact-page .contact-capacity .contact-check{padding:4px 0;font-weight:600}
-@media(max-width:760px){.contact-page .contact-capacity{padding:18px}.contact-page .contact-capacity p{font-size:15px}}
+/* Both acknowledgements use one aligned visual treatment. */
+.contact-page .contact-consent-panel{margin:28px 0 0;padding:20px;background:var(--soft);border:1px solid #b9b1a5;border-radius:8px}
+.contact-page .contact-consent-panel h2{font-size:19px;line-height:1.35;margin:0 0 12px;color:var(--ink)}
+.contact-page .contact-consent-panel p{font-size:16px;line-height:1.6;margin:0 0 12px;color:var(--text)}
+.contact-page .contact-consent-panel .contact-check{padding:4px 0;font-weight:600}
+.contact-page .contact-consent-panel .contact-privacy{margin:0 0 16px;padding:0;border:0}
+.contact-page .contact-consent-panel .notice-grid p{margin:0}
+.contact-page .contact-consent-panel .contact-privacy>p{margin:16px 0 0}
+@media(max-width:760px){.contact-page .contact-consent-panel{padding:18px}.contact-page .contact-consent-panel p{font-size:15px}}
