@@ -1,11 +1,15 @@
-import {reviewedReferrals} from './support-referrals.mjs?v=20260926-4';
-import {expandedServices} from './support-expanded.mjs?v=20260926-2';
+import {reviewedReferrals} from './support-referrals.mjs?v=20260927-1';
+import {expandedServices} from './support-expanded.mjs?v=20260927-1';
+import {nationalReviewedServices} from './support-national-reviewed.mjs?v=20260927-1';
+import {ntReviewedServices} from './support-nt-reviewed.mjs?v=20260927-1';
 // Curated contact routes, independently checked against official provider sources.
 // A free first service does not imply that every onward service is free.
 const checked = '2026-09-26';
-const service = data => ({ ...data, sources: data.sources || [data.url], checked });
+const service = data => ({ ...data, sources: data.sources || [data.url], checked: data.checked || checked });
 
 export const services = {
+  ...nationalReviewedServices,
+  ...ntReviewedServices,
   ...reviewedReferrals,
   'nt-inhome-care': service({
     name:'NT In Home Care Support Agency',audience:'Families whose childcare needs cannot be met by suitable available mainstream care',area:'NT-wide · phone and email',
@@ -17,8 +21,9 @@ export const services = {
     offer:'Find the agency that assesses In Home Care eligibility in your state or territory.',cost:'Free contact directory. Care fees and subsidy rules apply.',access:'Choose the agency for your location to discuss eligibility and suitable care.',url:'https://www.education.gov.au/early-childhood/about/service-types/home-care/support-agencies',action:'Find your support agency'
   }),
   'open-arms-check': service({
+    checked: '2026-09-27',
     name:'Open Arms — check service or family eligibility',audience:'People unsure about Reserve service, a former-partner relationship or a bereaved-family pathway',area:'Australia-wide · phone',
-    offer:'Ask the team to check the eligibility pathway for your circumstances.',cost:'Free eligibility advice. Counselling is available to eligible people.',access:'Other support shown on this page remains available while you check.',hours:'24 hours, every day',phone:'1800 011 046',url:'https://www.openarms.gov.au/who-we-help/eligibility',sources:['https://www.openarms.gov.au/who-we-help/eligibility','https://www.openarms.gov.au/sites/default/files/2025-11/Open%20Arms%20Eligibility%20Matrix%202025.pdf']
+    offer:'Ask the team to check the eligibility pathway for your circumstances.',cost:'Free eligibility advice. Counselling is available to eligible people.',access:'Former partners may qualify within five years of separation or while co-parenting a child under 18 of an eligible member. Other Reserve and bereaved-family rules also apply. Ask the team to check your circumstances.',hours:'24 hours, every day',phone:'1800 011 046',url:'https://www.openarms.gov.au/who-we-help/eligibility',sources:['https://www.openarms.gov.au/who-we-help/eligibility','https://www.openarms.gov.au/sites/default/files/2025-11/Open%20Arms%20Eligibility%20Matrix%202025.pdf']
   }),
   'defence-medical-enquiry': service({
     name:'Defence medical-travel enquiries', audience:'Serving ADF members and families asking about medical-travel conditions', area:'Australia-wide · phone',
@@ -165,14 +170,15 @@ export const services = {
     sources: ['https://headspace.org.au/online-and-phone-support/connect-with-us/', 'https://headspace.org.au/emergency-assistance/', 'https://headspace.org.au/online-and-phone-support/connect-with-us/faqs/']
   }),
   'kids-helpline': service({
+    checked: '2026-09-27',
     name: 'Kids Helpline', audience: 'Children and young people aged 5–25', area: 'Australia-wide · phone or webchat',
     offer: 'A counsellor can listen to worries about home, friends, school or how you are feeling.',
     cost: 'Free, including calls from mobiles.',
     access: 'This is the young person’s counselling service. A parent/carer can help them make contact.',
     hours: '24 hours, every day', phone: '1800 55 1800',
     url: 'https://www.kidshelpline.com.au/get-help',
-    extraUrl: 'https://www.kidshelpline.com.au/get-help', extraLabel: 'Use webchat',
-    sources: ['https://www.kidshelpline.com.au/about/about-khl', 'https://www.kidshelpline.com.au/get-help']
+    extraUrl: 'https://www.kidshelpline.com.au/get-help/webchat-counselling/', extraLabel: 'Use webchat',
+    sources: ['https://www.kidshelpline.com.au/about/about-khl', 'https://www.kidshelpline.com.au/get-help', 'https://www.kidshelpline.com.au/get-help/webchat-counselling/']
   }),
   'parentline': service({
     name: 'Parentline', audience: 'Parents and carers in the NT or Queensland', area: 'NT / Queensland · phone or chat',
@@ -250,14 +256,15 @@ export const services = {
     extraUrl: 'https://soldieron.org.au/supporting-you/registration-form/', extraLabel: 'Register or request social-work support'
   }),
   'transition': service({
-    name: 'NT Defence Transition Centre', audience: 'Serving members and reservists preparing to leave or change service category', area: 'NT · phone and arranged appointments',
+    checked: '2026-09-27',
+    name: 'NT Defence Transition Centre', audience: 'Members and reservists preparing to leave or change service category, and people within 24 months after separation', area: 'NT · phone and arranged appointments',
     offer: 'Plan work, health and family life with a transition coach. Family/support people can join sessions.',
     cost: 'Free transition support; individual programme eligibility applies.',
     access: 'Call before visiting Robertson Barracks. Support can continue for up to 24 months after transition.',
     hours: 'Contact for appointment times', phone: '08 7971 6840',
     url: 'https://www.defence.gov.au/adf-members-families/military-life-cycle/transition/transition-centre-contacts',
     extraUrl: 'mailto:transition.nt@defence.gov.au', extraLabel: 'Email the NT transition team',
-    sources: ['https://www.defence.gov.au/adf-members-families/military-life-cycle/transition/transition-centre-contacts', 'https://www.defence.gov.au/adf-members-families/transition/coaching-and-support/transition-from-reserves', 'https://www.defence.gov.au/news-events/news/2024-05-29/transitioning-has-never-been-easier']
+    sources: ['https://www.defence.gov.au/adf-members-families/military-life-cycle/transition/transition-centre-contacts', 'https://www.defence.gov.au/adf-members-families/transition/coaching-and-support/transition-from-reserves', 'https://www.defence.gov.au/adf-members-families/military-life-cycle/transition/transition-support-members']
   }),
   'dva': service({
     name: 'Department of Veterans’ Affairs', audience: 'Serving/ex-serving members and families asking about DVA support', area: 'Australia-wide · phone and online',
@@ -268,13 +275,14 @@ export const services = {
     url: 'https://www.dva.gov.au/about-us/contact-us'
   }),
   'transition-national': service({
-    name: 'Defence Transition Centres', audience: 'Serving members and reservists preparing to leave or change service category', area: 'Australia-wide · contact your nearest centre',
+    checked: '2026-09-27',
+    name: 'Defence Transition Centres', audience: 'Members and reservists preparing to leave or change service category, and people within 24 months after separation', area: 'Australia-wide · contact your nearest centre',
     offer: 'Arrange transition coaching to plan work, health and family life. Family/support people can join sessions.',
     cost: 'Free transition support; individual programme eligibility applies.',
     access: 'Choose your nearest centre from the official contact list. Support can continue for up to 24 months after transition.',
     hours: 'Contact the centre for appointment times',
     url: 'https://www.defence.gov.au/adf-members-families/military-life-cycle/transition/transition-centre-contacts', action: 'Find your transition team',
-    sources: ['https://www.defence.gov.au/adf-members-families/military-life-cycle/transition/transition-centre-contacts', 'https://www.defence.gov.au/adf-members-families/transition/coaching-and-support/transition-from-reserves', 'https://www.defence.gov.au/news-events/news/2024-05-29/transitioning-has-never-been-easier']
+    sources: ['https://www.defence.gov.au/adf-members-families/military-life-cycle/transition/transition-centre-contacts', 'https://www.defence.gov.au/adf-members-families/transition/coaching-and-support/transition-from-reserves', 'https://www.defence.gov.au/adf-members-families/military-life-cycle/transition/transition-support-members']
   }),
   'wellbeing-agency': service({
     name: 'Veteran and Family Wellbeing Agency', audience: 'Veterans and family members, including people who are not DVA clients', area: 'Australia-wide · phone or callback',

@@ -1,3 +1,21 @@
+# Independent audit implementation — 27 September 2026
+
+The approved independent review is implemented without changing the seven homepage domains or the survey/interview pages. The current support asset revision is `20260927-1`.
+
+- Chat links are direct actions beside contact details, and available chat alternatives appear near the main contact. QLife and Kids Helpline link to their verified chat pages.
+- Human navigation preserves the original need, location and suggested opening sentence. Its result has no self-loop; returning restores the original answers. State remains in memory only.
+- Children answer age once. The result summary supports editing a single answer, retains independent answers, and asks for newly relevant eligibility information.
+- Relationship counselling exposes Open Arms eligibility checks for former partners and other uncertain relationships. Recent leavers retain transition support; current-serving family crises can see the assessed Acute Support Package.
+- New explicit needs distinguish ongoing mental-health treatment, reduced income, and help with daily tasks at home. They make clinical treatment, payments and a younger veteran’s own home-care needs findable without mislabelling them as general counselling, debt or aged care.
+- Twenty-two national/programme/regional records were added in `support-national-reviewed.mjs` and `support-nt-reviewed.mjs`, with provider sources and date. The records distinguish eligibility enquiries, assessed funding, co-payments and unknown accommodation charges.
+- Local child/family mental-health programmes, youth housing outreach, independent school advocacy and East Arnhem contacts are matched only to their verified ages and geography.
+
+Validation: 225 tests pass, including the new scenario and renderer checks. Full visible-route enumeration reaches all 159 active records across 1,872 terminal answer combinations. This establishes catalogue reachability, not universal public-service completeness. Browser verification at 390px, 320px and desktop covered single-step child age, conditional adult eligibility after editing, simultaneous preferences/focus, direct QLife chat, contextual food-support handoff/back navigation, and funded treatment with NT referral. No horizontal overflow was observed in those states. No real service enquiry was sent and no recruited-user usability study is claimed.
+
+The bounded independent integration review identified and resolved three additional exclusions: younger veterans asking for help at home for themselves; partners who may qualify for DVA income support; and former Reserve-only members who may qualify for DVA mental-health treatment. Transitional audience wording now includes recent leavers. No further open-ended provider search is required for this approved repair set.
+
+## Earlier revisions
+
 # Approved review improvements — implemented 26 September 2026
 
 The six findings in the review of release12a6296 are implemented. This is a scoped correction, preserving the homepage, brand, source record architecture and native controls.

@@ -14,7 +14,7 @@ test('nationwide support does not require a location that cannot affect the answ
   const cases = [
     ['mental', { need: 'grief', age: 'adult', counselling: 'other' }],
     ['relationships', { need: 'counselling', counselling: 'partner' }],
-    ['money', { need: 'bills', connection: 'former', role: 'partner' }],
+    ['money', { need: 'income', connection: 'former', role: 'partner' }],
     ['parenting', { need: 'childcare', connection: 'former', careHours: 'regular' }],
     ['work', { need: 'transition', connection: 'former' }]
   ];
@@ -66,7 +66,7 @@ test('location remains available when it selects a different local clinic', () =
 test('the mental-health first question contains needs, with identity and anonymity chosen separately', () => {
   const need = questionsFor('mental').find(q => q.id === 'need');
   assert.deepEqual(new Set(need.options.map(o => o.value)), new Set([
-    'feelings', 'grief', 'practical-loss', 'suicide-loss', 'addiction'
+    'feelings', 'treatment', 'grief', 'practical-loss', 'suicide-loss', 'addiction'
   ]));
   const preferences = preferencesFor('mental', { need: 'grief', age: 'adult' });
   for (const value of ['anonymous', 'lgbtq', 'indigenous', 'men']) {

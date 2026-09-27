@@ -59,8 +59,8 @@ const scenarios=[
  ['Migrant settlement Darwin','connection',{need:'migrant',region:'darwin'},'ramss',[]]
 ];
 for(const[name,t,a,first,excluded]of scenarios)test(name,()=>{const r=getResults(t,a);assert.equal(r.ids[0],first);for(const id of excluded)assert.ok(![...r.ids,...r.moreIds].includes(id),id);});
-test('age questions are relevant and under18 groups are conditional',()=>{
- let qs=questionsFor('mental',{need:'feelings'});assert.equal(qs.find(q=>q.id==='age').options.length,3);assert.ok(!qs.some(q=>q.id==='childAge'));
+test('new age choices are visible on one page and legacy under18 state remains readable',()=>{
+ let qs=questionsFor('mental',{need:'feelings'});assert.deepEqual(qs.find(q=>q.id==='age').options.map(o=>o.value),['0-4','5-11','12-17','18-25','26+']);assert.ok(!qs.some(q=>q.id==='childAge'));
  qs=questionsFor('mental',{need:'feelings',age:'under18'});assert.equal(qs.find(q=>q.id==='childAge').options.length,3);assert.ok(!qs.some(q=>q.id==='counselling'));
  for(const [t,need]of[['money','essentials'],['work','job'],['parenting','parenting'],['care','carer']])assert.ok(!questionsFor(t,{need}).some(q=>['age','childAge'].includes(q.id)));
 });

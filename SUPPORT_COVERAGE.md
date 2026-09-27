@@ -1,10 +1,28 @@
 # NT Defence 家庭支持：资源覆盖核查
 
-核查日期：2026年9月26日
+核查日期：2026年9月26–27日
 
 **上一版没有完整覆盖相关支持。** 它核实了已选联系信息，却把一些不同用途的服务压缩成泛用热线。儿童发育评估、地方家庭暴力支持、专项家庭照护、配偶职业援助、医疗费用与出行等因此缺少直接入口。
 
 本次按“实际求助任务 × 服务资格 × NT地区 × 本地或远程渠道”检查覆盖，并补回能改变首个行动的服务。所有纳入记录保留服务机构或政府官方来源及核查日期。核查没有电话联系机构、预约或确认实时床位。
+
+## 9 月 27 日独立审查后的补充
+
+本轮已补齐独立审查确认的功能缺口，并修复“目录已有但用户路径看不到”的情况。新增 22 条项目或地区联系记录；这些不是 22 个不同机构，也不作为覆盖完整的证明。
+
+| 功能 | 新增或修正的实际入口 |
+|---|---|
+| ADF 临床服务 | 常规 on-base healthcare、IMSICK、All-hours Support Line；家属不被当作享有成员医疗资格 |
+| 持续心理治疗 | DVA Non-Liability Health Care、Connect to Wellbeing NT；保留符合特殊条件的 Reserve 资格查询 |
+| 交通与居家帮助 | DVA travel、Booked Car with Driver、Veterans’ Home Care、Household Services/Attendant Care；本人和代为求助者均可查找 |
+| 收入减少 | Services Australia Payment Finder、Bravery 实际费用援助、DVA 收入支持；成员和可能符合条件的伴侣都可询问 |
+| NT 儿童及青年 | Darwin/Malak、Jabiru、Wadeye FMHSS；Tennant YES；Katherine/Tennant 10–25 岁 Assertive Outreach |
+| 学生权益 | Darwin/Palmerston NT 政府学校家庭可找 54 reasons 独立倡导 |
+| East Arnhem | Money Support Hub、Miyalk 安全住宿联系；不承诺免费床位或实时空位 |
+| 育儿 | CatholicCare Children and Parenting 项目的地方活动和实用支持查询 |
+| 已有资格遗漏 | 前伴侣 Open Arms 核查、退役 24 个月内 transition、部分现役家庭 ASP |
+
+全部 159 条现有记录可从有效页面选择到达；1,872 个终点枚举和场景回归同时验证了已知年龄、身份及地区边界。免费咨询、评估后的资助和收费服务仍明确区分。官方来源保存在每条服务记录中。仍不声称穷尽所有机构、项目或实时名额。
 
 ## 目前覆盖到什么
 
