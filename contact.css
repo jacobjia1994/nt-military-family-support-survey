@@ -1,5 +1,5 @@
 .contact-page .contact-intro{margin:36px 0 30px}
-.contact-page .contact-intro h1{font-size:38px;line-height:1.18;margin-bottom:20px}
+.contact-page .contact-intro h1{font-size:38px;line-height:1.18;margin-bottom:20px;max-width:none;text-wrap:pretty}
 .contact-page .contact-intro p{margin:0;max-width:65ch;font-size:18px;line-height:1.6}
 .contact-page .contact-form{margin:0}
 .contact-page .contact-pair{display:grid;grid-template-columns:1fr 1fr;gap:26px}
@@ -40,8 +40,6 @@
 .contact-page .contact-choices.route-choices{grid-template-columns:1fr}
 
 .contact-page .contact-preview{font-size:14px;line-height:1.5;color:var(--muted);margin:24px 0 0;padding-bottom:16px;border-bottom:1px solid var(--line)}
-.contact-page .conversation-summary{padding-left:22px;margin:22px 0 0;font-size:16px;line-height:1.55;color:var(--muted);max-width:65ch}
-.contact-page .conversation-summary li{padding-left:4px;margin-bottom:12px}
 .contact-page .choice:has(input:disabled){background:var(--soft);color:var(--muted);cursor:default}
 .contact-page .question-group>.field-hint{margin:-4px 0 12px}
 .contact-page .contact-check+.field-hint{margin:10px 0 0;font-size:14px}
@@ -50,4 +48,6 @@
 .contact-page #request-agreement{scroll-margin-top:24px}
 .contact-page .contact-review>p{font-size:16px;color:var(--muted)}
 .contact-page .contact-actions .back-button{max-width:100%;white-space:normal;text-align:left}
-@media(max-width:760px){.contact-page .conversation-summary{font-size:15px}.contact-page .contact-actions .button{white-space:normal;min-width:150px}.contact-page .contact-review .contact-actions .button{width:100%;margin-top:8px}.contact-page .contact-review .contact-actions .back-button{padding-block:8px}.contact-page .contact-preview{font-size:13px}.contact-page .finish-actions{flex-wrap:wrap}}
+@media(max-width:760px){.contact-page .contact-actions .button{white-space:normal;min-width:150px}.contact-page .contact-review .contact-actions .button{width:100%;margin-top:8px}.contact-page .contact-review .contact-actions .back-button{padding-block:8px}.contact-page .contact-preview{font-size:13px}.contact-page .finish-actions{flex-wrap:wrap}}
+
+@media(max-width:360px){.contact-page .contact-intro h1{font-size:28px}}

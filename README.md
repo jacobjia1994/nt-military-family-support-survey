@@ -103,9 +103,9 @@ The approved review corrections separate mental-health purpose from optional sup
 
 ## Interview request update — 27 September 2026
 
-The interview preview now requires a contactable mobile number and offers optional email. Choosing email-first contact requires an email; providing a mobile never overrides that choice. Adult, young-person, guardian and professional routes remain distinct. Optional preferences help the team arrange private interviews, while the first-contact method controls how they may initially approach the person. All fields stay in page memory; the preview explicitly sends nothing and books no appointment.
+The interview preview is one short form plus review. Mobile is required; email is optional. **Who would be interviewed?** distinguishes Me from My child, while professionals and parents speaking about their own experience both choose Me. Scheduling is a short exchange to agree a time via the chosen call/text/email channel, not an additional interview. Interview format remains optional. Contact instructions and one optional interview-notes box replace the separate background and arrangements questions. Existing young-person and guardian permissions remain; under-15 self requests collect contact details only.
 
 - [Interview team guide and message templates](INTERVIEW_TEAM_GUIDE.md)
 - [Institutional receiving and scheduling proposal](INTERVIEW_RECEIVING_PROPOSAL.md)
 
-LC has not chosen a receiver. The proposed first release uses LC’s own approved form service, with restricted ownership, a separate small scheduling log and a named coordinator/backup. The GitHub page is currently a review surface, not a collecting service.
+LC has not chosen a receiver. The suggested first release uses LC’s own approved form service, restricted ownership, a separate small scheduling log and a coordinator/backup. The GitHub page explicitly sends nothing and books no appointment.

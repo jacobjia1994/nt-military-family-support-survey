@@ -42,7 +42,7 @@ function createUI() {
     globalThis.contactTest = {
       setRequest(value) { request = value; },
       getRequest() { return request; },
-      renderForm, renderPreferences, renderReview, renderFinish, resourceHTML,
+      renderForm, renderReview, renderFinish, resourceHTML,
     };`, context, { filename: 'contact.js' });
   return { api: context.contactTest, main, element, windowListeners };
 }
@@ -108,7 +108,7 @@ test('review data is an explicit minimum-field whitelist, separate from survey a
   }));
   assert.deepEqual(Object.keys(result).sort(), [
     'requester', 'age_band', 'preferred_name', 'phone', 'email', 'contact_method', 'voicemail',
-    'contact_notes', 'topic', 'interview_mode', 'availability', 'participation_notes', 'connection', 'consent', 'notice_version',
+    'contact_notes', 'topic', 'interview_mode', 'consent', 'notice_version',
   ].sort());
   assert.equal(result.preferred_name, 'Alex');
   assert.equal(result.phone, '+61 412 345 678');
@@ -179,38 +179,33 @@ test('all age groups have a valid self route, with guardian routes for both mino
 });
 
 test('changing role or age clears personal details, consent and voicemail permission', () => {
-  const previous = valid({ topic: 'Private topic', contact_notes: 'Private instructions', voicemail: true, email:'alex@example.org', interview_mode:'phone', availability:'Tuesday', participation_notes:'A quiet room', connection:'family', organisation_role:'Private workplace' });
+  const previous = valid({ topic: 'Private topic', contact_notes: 'Private instructions', voicemail: true, email:'alex@example.org', interview_mode:'phone' });
   const child = model.changeRequest(previous, 'age_band', 'child');
   assert.deepEqual(child, { ...model.emptyRequest(), requester: 'self', age_band: 'child' });
   const guardian = model.changeRequest(previous, 'requester', 'guardian');
   assert.deepEqual(guardian, { ...model.emptyRequest(), requester: 'guardian' });
   assert.equal(previous.topic, 'Private topic');
   assert.equal(model.changeRequest(previous, 'age_band', 'adult').topic, 'Private topic');
-  const professional=model.changeRequest(previous,'requester','professional');
-  assert.deepEqual(professional,{...model.emptyRequest(),requester:'professional'});
 });
 
-test('professional requests skip age and guardian information and retain only the relevant optional fields', () => {
-  const data=valid({ requester:'professional', age_band:'', organisation_role:'  Family liaison, Example Service  ', interview_mode:'video', availability:'Tuesday mornings', participation_notes:'Written questions in advance', connection:'family', guardian_authority:true });
-  assert.equal(model.contactRoute(data),'professional');
+test('only self and guardian routes remain, and superseded classification fields cannot be retained', () => {
+  assert.deepEqual(Object.keys(model.CONTACT_REQUESTERS),['self','guardian']);
+  assert.equal(model.contactRoute(valid({requester:'professional'})),'');
+  assert.ok(model.requestErrors(valid({requester:'professional'})).requester);
+  assert.throws(()=>model.reviewRequest(valid({requester:'professional'})));
+  const data=valid({organisation_role:'Private employer',availability:'Tuesday mornings',participation_notes:'Private arrangement',connection:'family'});
   assert.deepEqual(model.requestErrors(data),{});
-  assert.equal(model.needsArrangements(data),true);
   const details=model.reviewRequest(data);
-  assert.equal(details.organisation_role,'Family liaison, Example Service');
-  for(const key of ['age_band','guardian_authority','connection'])assert.equal(Object.hasOwn(details,key),false,key);
-  assert.equal(details.interview_mode,'video');
-  assert.equal(details.availability,'Tuesday mornings');
-  assert.equal(details.participation_notes,'Written questions in advance');
-  assert.deepEqual(model.requestErrors({...data,age_band:{unexpected:'value'},connection:{unexpected:'value'}}),{});
-  assert.ok(model.requestErrors({...data,phone:''}).phone);
-  assert.equal(Object.hasOwn(model.reviewRequest(valid({organisation_role:'Do not retain'})),'organisation_role'),false);
+  for(const key of ['organisation_role','availability','participation_notes','connection']){
+    assert.equal(Object.hasOwn(details,key),false,key);
+    assert.equal(Object.hasOwn(model.emptyRequest(),key),false,key);
+    assert.equal(Object.hasOwn(model.changeRequest(valid(),key,'Do not retain'),key),false,key);
+  }
 });
 
 test('conversation preferences are optional and allow only the supported choices', () => {
   for(const interview_mode of ['',...Object.keys(model.CONTACT_INTERVIEW_MODES)])assert.deepEqual(model.requestErrors(valid({interview_mode})),{});
-  for(const connection of ['',...Object.keys(model.CONTACT_CONNECTIONS)])assert.deepEqual(model.requestErrors(valid({connection})),{});
   for(const interview_mode of ['group','toString',true,{}])assert.ok(model.requestErrors(valid({interview_mode})).interview_mode);
-  for(const connection of ['commander','__proto__',true,{}])assert.ok(model.requestErrors(valid({connection})).connection);
   assert.equal(model.needsArrangements({}),false);
   assert.equal(model.needsArrangements(valid({age_band:'child'})),false);
 });
@@ -221,7 +216,7 @@ test('unexpected input types cannot bypass required fields or crash validation',
     assert.equal(model.contactRoute(data),'');
     assert.throws(()=>model.reviewRequest(data),/incomplete/);
   }
-  for(const key of ['preferred_name','phone','email','contact_notes','topic','availability','participation_notes']){
+  for(const key of ['preferred_name','phone','email','contact_notes','topic']){
     assert.ok(model.requestErrors(valid({[key]:{toString:()=> '0412345678'}}))[key],key);
   }
   assert.equal(model.changeRequest(valid(),'consent','true').consent,false);
@@ -261,7 +256,7 @@ test('guardian requests need explicit authority and identify the adult contact w
   const ui = createUI();
   ui.api.setRequest(data);
   ui.api.renderForm();
-  assert.match(ui.main.innerHTML, /Give your own contact details/);
+  assert.match(ui.main.innerHTML, /give your own contact details/i);
   assert.match(ui.main.innerHTML, /name="guardian_authority"/);
   assert.doesNotMatch(ui.main.innerHTML, /name="(?:child_name|child_dob)"/);
   ui.api.renderReview();
@@ -269,20 +264,19 @@ test('guardian requests need explicit authority and identify the adult contact w
 });
 
 test('overlong personal free text is rejected before review', () => {
-  for (const key of ['preferred_name', 'contact_notes', 'topic','availability','participation_notes','organisation_role']) {
+  for (const key of ['preferred_name', 'contact_notes', 'topic']) {
     const maximum = model.CONTACT_LIMITS[key];
-    const overrides=key==='organisation_role'?{requester:'professional'}:{};
-    assert.equal(model.requestErrors(valid({ ...overrides,[key]: 'a'.repeat(maximum) }))[key], undefined);
-    assert.ok(model.requestErrors(valid({ ...overrides,[key]: 'a'.repeat(maximum + 1) }))[key]);
-    assert.throws(() => model.reviewRequest(valid({ ...overrides,[key]: 'a'.repeat(maximum + 1) })));
+    assert.equal(model.requestErrors(valid({ [key]: 'a'.repeat(maximum) }))[key], undefined);
+    assert.ok(model.requestErrors(valid({ [key]: 'a'.repeat(maximum + 1) }))[key]);
+    assert.throws(() => model.reviewRequest(valid({ [key]: 'a'.repeat(maximum + 1) })));
   }
 });
 
-test('participant-entered values are escaped in contact, preferences and review renderers', () => {
+test('participant-entered values are escaped in the form and review renderers', () => {
   const ui = createUI();
   const malicious = '<img src=x onerror="alert(1)"> & \'quoted\'';
-  ui.api.setRequest(valid({ preferred_name: malicious, topic: malicious, contact_notes: malicious, availability:malicious, participation_notes:malicious }));
-  for (const render of [ui.api.renderForm, ui.api.renderPreferences, ui.api.renderReview]) {
+  ui.api.setRequest(valid({ preferred_name: malicious, topic: malicious, contact_notes: malicious }));
+  for (const render of [ui.api.renderForm, ui.api.renderReview]) {
     render();
     assert.ok(ui.main.innerHTML.includes(model.escapeHTML(malicious)));
     assert.equal(ui.main.innerHTML.includes(malicious), false);
@@ -296,12 +290,11 @@ test('blank optional fields remain valid and do not imply invented discussion to
   ui.api.renderReview();
   assert.equal(ui.api.getRequest().topic, '');
   assert.equal(ui.api.getRequest().contact_notes, '');
-  assert.match(ui.main.innerHTML,/<dt>What you would like to talk about<\/dt><dd>Not provided<\/dd>/);
-  assert.match(ui.main.innerHTML,/<dt>Interview preference<\/dt><dd>Discuss when arranging<\/dd>/);
-  assert.match(ui.main.innerHTML,/<dt>Email address<\/dt><dd>Not provided<\/dd>/);
+  assert.doesNotMatch(ui.main.innerHTML,/<dt>(?:Notes for the interview|Interview format|Contact instructions|Email address)<\/dt>/);
+  assert.doesNotMatch(ui.main.innerHTML,/Not provided|Discuss when arranging/);
 });
 
-test('the contact step clears voicemail on method changes and the next step requires fresh consent', () => {
+test('the form clears voicemail on method changes and requires fresh consent before review', () => {
   const ui = createUI();
   assert.equal(ui.element('[type="submit"]').disabled, true);
   ui.api.setRequest(valid({ contact_method: 'call', voicemail: true }));
@@ -313,20 +306,23 @@ test('the contact step clears voicemail on method changes and the next step requ
   assert.equal(ui.element('[name="voicemail"]').checked, false);
   assert.equal(ui.api.getRequest().voicemail, false);
   assert.equal(ui.api.getRequest().consent, false);
-  form.listeners.get('submit')({preventDefault(){}});
-  assert.match(ui.main.innerHTML,/Planning your conversation/);
+  assert.equal(ui.element('[name="consent"]').checked,false);
   assert.equal(ui.element('[type="submit"]').disabled, true);
-  ui.element('#preferences-form').listeners.get('change')({ target: { name:'consent', type:'checkbox', checked:true } });
+  form.listeners.get('submit')({preventDefault(){}});
+  assert.match(ui.main.innerHTML,/id="contact-form"/);
+  form.listeners.get('change')({ target: { name:'consent', type:'checkbox', checked:true } });
   assert.equal(ui.element('[type="submit"]').disabled,false);
+  form.listeners.get('submit')({preventDefault(){}});
+  assert.match(ui.main.innerHTML,/Check your details/);
 });
 
 test('email stays optional while mobile stays required, even when the contact choice is email',()=>{
   const ui=createUI();
-  ui.api.setRequest(valid({consent:false}));
+  ui.api.setRequest(valid());
   ui.api.renderForm();
   assert.match(ui.main.innerHTML,/<input[^>]*name="phone"[^>]* required>/);
   assert.doesNotMatch(ui.main.innerHTML,/<input[^>]*name="email"[^>]* required>/);
-  assert.equal(ui.element('[type="submit"]').disabled,false,'Optional email and later consent do not block Continue');
+  assert.equal(ui.element('[type="submit"]').disabled,false,'An optional empty email does not block review');
   assert.equal(ui.element('[name="contact_method"][value="email"]').disabled,true);
   const form=ui.element('#contact-form');
   form.listeners.get('input')({target:{name:'email',type:'email',value:'alex@example.org'}});
@@ -336,6 +332,7 @@ test('email stays optional while mobile stays required, even when the contact ch
   form.listeners.get('input')({target:{name:'phone',type:'tel',value:''}});
   assert.equal(ui.element('[type="submit"]').disabled,true);
   form.listeners.get('input')({target:{name:'phone',type:'tel',value:'0412345678'}});
+  form.listeners.get('change')({target:{name:'consent',type:'checkbox',checked:true}});
   assert.equal(ui.element('[type="submit"]').disabled,false);
   form.listeners.get('input')({target:{name:'email',type:'email',value:''}});
   assert.equal(ui.api.getRequest().contact_method,'');
@@ -343,36 +340,49 @@ test('email stays optional while mobile stays required, even when the contact ch
   assert.equal(ui.element('[type="submit"]').disabled,true,'No automatic fallback to phone contact');
 });
 
-test('professional route omits age and family connection and includes the optional organisation field',()=>{
+test('all self participants use one route without professional or family classification questions',()=>{
   const ui=createUI();
-  ui.api.setRequest(valid({requester:'professional',age_band:'',organisation_role:'Example Service'}));
+  ui.api.setRequest(valid());
   ui.api.renderForm();
-  assert.doesNotMatch(ui.main.innerHTML,/name="(?:age_band|guardian_authority)"/);
-  assert.match(ui.main.innerHTML,/identifiable client or patient details/);
+  assert.match(ui.main.innerHTML,/name="requester" value="self"/);
+  assert.match(ui.main.innerHTML,/name="requester" value="guardian"/);
+  assert.doesNotMatch(ui.main.innerHTML,/name="requester" value="professional"/);
+  assert.doesNotMatch(ui.main.innerHTML,/name="(?:connection|organisation_role|availability|participation_notes|guardian_authority)"/);
   assert.equal(ui.element('[type="submit"]').disabled,false);
   ui.element('#contact-form').listeners.get('submit')({preventDefault(){}});
-  assert.match(ui.main.innerHTML,/name="organisation_role"/);
-  assert.doesNotMatch(ui.main.innerHTML,/name="connection"/);
-  ui.element('#preferences-form').listeners.get('submit')({preventDefault(){}});
-  assert.match(ui.main.innerHTML,/Example Service/);
-  assert.doesNotMatch(ui.main.innerHTML,/<dt>(?:Age group|Child’s age group|ADF connection)<\/dt>/);
+  assert.match(ui.main.innerHTML,/Check your details/);
+  assert.doesNotMatch(ui.main.innerHTML,/<dt>(?:Organisation or role|ADF connection)<\/dt>/);
 });
 
-test('conversation preferences can remain blank, and moving back retains details but contact changes revoke consent',()=>{
+test('one form uses distinct scheduling and interview questions without the previous introductory checklist',()=>{
+  const ui=createUI();
+  ui.api.setRequest(valid());
+  ui.api.renderForm();
+  assert.match(ui.main.innerHTML,/<h1[^>]*>Request an interview<\/h1>/);
+  assert.match(ui.main.innerHTML,/How should we arrange a time with you\?/);
+  assert.match(ui.main.innerHTML,/How would you prefer to be interviewed\?/);
+  assert.match(ui.main.innerHTML,/No preference/);
+  assert.doesNotMatch(ui.main.innerHTML,/first.contact|Planning your conversation|conversation-summary|completed the survey/i);
+  const intro=ui.main.innerHTML.match(/<section class="contact-intro">([\s\S]*?)<\/section>/)?.[1];
+  assert.ok(intro);
+  assert.doesNotMatch(intro,/<(?:ul|li)\b/);
+});
+
+test('editing from review retains interview preferences and notes but contact changes revoke consent',()=>{
   const ui=createUI();
   ui.api.setRequest(valid({consent:false}));
   ui.api.renderForm();
-  ui.element('#contact-form').listeners.get('submit')({preventDefault(){}});
-  assert.match(ui.main.innerHTML,/These preferences are optional/);
   assert.equal(ui.element('[type="submit"]').disabled,true);
-  const preferences=ui.element('#preferences-form');
-  preferences.listeners.get('change')({target:{name:'interview_mode',type:'radio',value:'phone'}});
-  preferences.listeners.get('input')({target:{name:'availability',type:'text',value:'School hours'}});
-  preferences.listeners.get('change')({target:{name:'consent',type:'checkbox',checked:true}});
+  const form=ui.element('#contact-form');
+  form.listeners.get('change')({target:{name:'interview_mode',type:'radio',value:'phone'}});
+  form.listeners.get('input')({target:{name:'topic',type:'textarea',value:'School hours, please'}});
+  form.listeners.get('change')({target:{name:'consent',type:'checkbox',checked:true}});
   assert.equal(ui.element('[type="submit"]').disabled,false);
-  ui.element('#back-contact').onclick();
+  form.listeners.get('submit')({preventDefault(){}});
+  assert.match(ui.main.innerHTML,/Check your details/);
+  ui.element('#edit-details').onclick();
   assert.equal(ui.api.getRequest().interview_mode,'phone');
-  assert.equal(ui.api.getRequest().availability,'School hours');
+  assert.equal(ui.api.getRequest().topic,'School hours, please');
   assert.equal(ui.api.getRequest().preferred_name,'Alex');
   const contact=ui.element('#contact-form');
   contact.listeners.get('input')({target:{name:'phone',type:'tel',value:'0400111222'}});
@@ -380,9 +390,9 @@ test('conversation preferences can remain blank, and moving back retains details
   contact.listeners.get('submit')({preventDefault(){}});
   assert.equal(ui.element('[name="consent"]').checked,false);
   assert.equal(ui.element('[type="submit"]').disabled,true);
-  assert.equal(ui.api.getRequest().availability,'School hours');
-  ui.element('#preferences-form').listeners.get('change')({target:{name:'consent',type:'checkbox',checked:true}});
-  ui.element('#preferences-form').listeners.get('submit')({preventDefault(){}});
+  assert.equal(ui.api.getRequest().topic,'School hours, please');
+  contact.listeners.get('change')({target:{name:'consent',type:'checkbox',checked:true}});
+  contact.listeners.get('submit')({preventDefault(){}});
   assert.match(ui.main.innerHTML,/0400111222/);
   assert.match(ui.main.innerHTML,/School hours/);
 });
@@ -409,7 +419,6 @@ test('review and finish make no network or storage calls; clear removes the in-m
   let prevented = false;
   ui.element('#contact-form').listeners.get('submit')({ preventDefault() { prevented = true; } });
   assert.equal(prevented, true, 'Native form submission must be prevented');
-  ui.element('#preferences-form').listeners.get('submit')({preventDefault(){}});
   ui.element('#finish-contact').onclick();
   ui.element('#review-details').onclick();
   ui.api.renderFinish();
