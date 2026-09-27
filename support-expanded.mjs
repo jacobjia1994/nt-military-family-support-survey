@@ -667,17 +667,17 @@ export const expandedServices = {
   },
   "dva-acute-support": {
     "name": "DVA — family support and eligibility",
-    "audience": "Veterans and families, including former partners and bereaved relatives",
+    "audience": "Eligible current or former members and families, including some former partners and bereaved relatives",
     "area": "Australia-wide · phone or online",
     "offer": "Ask DVA which family supports fit your situation, including whether an Acute Support Package could help.",
     "cost": "Free information and eligibility guidance. Funded support is assessed.",
-    "access": "Age rules differ for members, relatives, former partners and bereaved families. DVA can connect you with other support if the package does not apply.",
+    "access": "Age, compensation or payment, and family-crisis conditions apply. Rules differ for members, relatives, former partners and bereaved families. Ask DVA to assess your situation, including if the member still serves.",
     "url": "https://www.dva.gov.au/what-we-help-with/get-urgent-support/acute-support-package",
     "sources": [
       "https://www.dva.gov.au/what-we-help-with/get-urgent-support/acute-support-package",
       "https://www.dva.gov.au/about-us/contact-us"
     ],
-    "checked": "2026-09-26",
+    "checked": "2026-09-27",
     "phone": "1800 838 372"
   },
   "dva-education": {
@@ -730,12 +730,14 @@ export const expandedServices = {
     "cost": "Free, anonymous peer support.",
     "access": "Call or use webchat. This is peer support and referral, not an emergency response.",
     "url": "https://www.qlife.org.au/faq",
+    "chatUrl": "https://www.qlife.org.au/resources/chat",
+    "chatLabel": "Use QLife webchat",
     "sources": [
       "https://www.qlife.org.au/faq",
       "https://www.qlife.org.au/resources/chat",
       "https://www.qlife.org.au/"
     ],
-    "checked": "2026-09-26",
+    "checked": "2026-09-27",
     "phone": "1800 184 527",
     "hours": "Daily 3pm–9pm, your local time; final calls by 8:40pm"
   },

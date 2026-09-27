@@ -18,6 +18,26 @@
 .preference-group h2{font-size:21px;margin:0 0 10px}
 .preference-note{font-size:16px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.button-secondary{background:var(--white);color:var(--accent)}
+.button-secondary:hover{background:var(--selected);color:var(--accent)}
+.context{flex-wrap:wrap}
+.context>p{flex:1 1 250px}
+.answer-editor{flex:0 0 auto;margin-left:auto}
+.answer-editor>summary{padding:8px 0;color:var(--accent);cursor:pointer;min-height:40px}
+.answer-editor[open]{flex-basis:100%;order:2;margin-left:0}
+.answer-editor ul{list-style:none;padding:0;margin:5px 0 0}
+.answer-editor li{display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding:10px 0}
+.answer-editor li>span{min-width:0}
+.answer-editor li strong,.answer-editor li span span{display:block}
+.answer-editor li strong{font-weight:600;color:var(--text)}
+.answer-editor li a{display:flex;align-items:center;min-height:44px;flex-shrink:0}
+.handoff-context{font-size:16px;margin-bottom:24px}
+.chat-options{border-top:1px solid var(--line);margin-top:16px;padding-top:16px}
+.chat-options ul{list-style:none;padding:0;margin:0}
+.chat-options li{margin-bottom:8px}
+.chat-options li a{display:flex;align-items:center;min-height:44px;font-size:16px;font-weight:600}
+.chat-options small{display:block;font-size:13px;line-height:1.4;color:var(--text)}
+.contact-panel .chat-help{font-size:13px;margin:10px 0 0;color:var(--text)}
 @media(max-width:700px){
   /* The action keeps its place in the form, so the last option and footer can scroll clear. */
   #support-question{padding-bottom:1px}
@@ -32,7 +52,7 @@
   .page-shell{max-width:none;padding:0}
   .site-header{padding-bottom:15px}
   main{padding-top:20px;min-height:0}
-  .back-nav,.context a,.result-bottom,.skip-link,.say,.choice-list,.form-actions,.related-needs,.preference-fieldset,.access-help,.urgent{display:none}
+  .back-nav,.context a,.answer-editor,.result-bottom,.skip-link,.say,.choice-list,.form-actions,.related-needs,.preference-fieldset,.access-help,.urgent{display:none}
   .result-layout{display:block}
   .contact-panel{background:white;padding:10px 0}
   .button{background:white;color:#111;border:0;padding:0;justify-content:start}
