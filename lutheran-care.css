@@ -119,9 +119,10 @@ body.questionnaire{--ink:#30312f;--text:#41423f;--muted:#666963;--primary:#b9462
 .questionnaire .questionnaire-help{display:flex;justify-content:space-between;align-items:center;gap:14px 24px;flex-wrap:wrap}
 .questionnaire .questionnaire-help a{margin-left:auto;text-align:right}
 .finish-next-steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin:28px 0}
-.finish-next-steps .finish-contact,.finish-next-steps .thank-you-resource{margin:0;padding:0;border:0;min-width:0}
-.finish-next-steps .button{display:flex;align-items:center;justify-content:center;width:100%;min-height:80px;height:auto;text-align:center;white-space:normal}
-@media(max-width:760px){.finish-next-steps{grid-template-columns:1fr;gap:20px}}
+.finish-next-steps .finish-contact,.finish-next-steps .thank-you-resource{display:flex;flex-direction:column;gap:24px;margin:0;padding:0;border:0;min-width:0}
+.finish-next-steps p{margin:0;font-size:16px;line-height:1.65}
+.finish-next-steps .button{margin-top:auto;display:flex;align-items:center;justify-content:center;width:100%;min-height:80px;height:auto;text-align:center;white-space:normal}
+@media(max-width:760px){.finish-next-steps{grid-template-columns:1fr;gap:36px}}
 .questionnaire .finish h1{max-width:24ch}
 
 .other-need-option{grid-column:1/-1;min-width:0}

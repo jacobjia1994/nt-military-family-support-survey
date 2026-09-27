@@ -515,7 +515,7 @@ function thankYouResource(config={}) {
 }
 function thankYouResourceHTML(config=globalThis.SURVEY_THANK_YOU_RESOURCE||{}) {
   const resource=thankYouResource(config);
-  return `<section class="thank-you-resource" aria-labelledby="resource-title">${resource.url?`<a class="button secondary" href="${esc(resource.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Find support in a few clicks</a>`:'<button class="button secondary" disabled>Find support in a few clicks</button><p class="small">Available soon</p>'}<p class="visually-hidden" id="resource-title">${esc(resource.title)}</p></section>`;
+  return `<section class="thank-you-resource"><p>As a thank-you for sharing your views, explore our free guide to support services for Defence members and families.</p>${resource.url?`<a class="button primary" href="${esc(resource.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Find support in a few clicks</a>`:'<button class="button primary" disabled>Find support in a few clicks</button><p class="small">Available soon</p>'}</section>`;
 }
 function renderSurvey(){
   if(!hasValidParticipation()){renderWelcome();return;}
@@ -584,8 +584,8 @@ function renderSurvey(){
   main.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>{state.returnToReview=true;state.step=b.dataset.edit;renderSurvey();focusHeading();});
 }
 function goNext(id){const steps=activeSteps(),index=steps.findIndex(s=>s.id===id);state.step=steps[index+1]?.id||'review';renderSurvey();focusHeading();}
-function contactLinkHTML(){return '<a class="button secondary" href="contact.html" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Request an interview with Lutheran Care</a>';}
-function renderFinish(){state.screen='finish';main.innerHTML=`<section class="finish"><h1 tabindex="-1">Thank you for helping strengthen the Defence community in Greater Darwin.</h1><p class="lead">As a thank-you for sharing your views, explore our free guide to support services for Defence members and families.</p><div class="finish-next-steps"><div class="finish-contact">${contactLinkHTML()}</div>${thankYouResourceHTML()}</div><button class="text-button" id="restart">Clear answers and start again</button></section>`;main.querySelector('#restart').onclick=()=>{resetAgePath();renderWelcome();};focusHeading();}
+function contactLinkHTML(){return '<a class="button primary" href="contact.html" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Request an interview</a>';}
+function renderFinish(){state.screen='finish';main.innerHTML=`<section class="finish"><h1 tabindex="-1">Thank you for helping strengthen the Defence community in Greater Darwin.</h1><div class="finish-next-steps"><section class="finish-contact"><p>Would you like to discuss your experiences and support needs further with Lutheran Care?</p>${contactLinkHTML()}</section>${thankYouResourceHTML()}</div><button class="text-button" id="restart">Clear answers and start again</button></section>`;main.querySelector('#restart').onclick=()=>{resetAgePath();renderWelcome();};focusHeading();}
 const reviewNotes = new Map();
 let libraryVersion = 'adult';
 let libraryLocation = 'nt';

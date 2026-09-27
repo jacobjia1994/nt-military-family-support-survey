@@ -983,13 +983,12 @@ test('contact links stay separate from answers and remain available in the foote
 });
 
 
-test('the free-resource link accepts a safe URL, escapes its title and never includes survey answers', () => {
+test('the free-resource link accepts a safe URL and never includes survey answers', () => {
   const url = 'https://files.example.org/defence-families/guide.pdf?download=1';
   const config = { title: 'A guide <for families> & friends', url };
   survey.setContext('adult', { roles: ['partner'], change: 'PRIVATE_ANSWER_SENTINEL', priority: ['housing'], anything: 'PRIVATE_COMMENT_SENTINEL' });
   assert.deepEqual(plain(survey.thankYouResource(config)), config);
   const html = survey.thankYouResourceHTML(config);
-  assert.match(html, /A guide &lt;for families&gt; &amp; friends/);
   assert.ok(html.includes(`href="${url}"`), 'The link is exactly the configured resource URL');
   assert.match(html, /rel="noopener noreferrer"/);
   assert.match(html, /referrerpolicy="no-referrer"/);
