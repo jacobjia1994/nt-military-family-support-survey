@@ -104,3 +104,17 @@ Long mobile questions keep Continue within reach; related links follow it. Prima
 
 
 The adult community-connection prompt now asks what has made connection easier or harder, giving positive and difficult experiences equal room in the same optional field. Its position and answer ID remain unchanged; the current revision retains this approved wording.
+
+## Interview request — current approved design, 27 September 2026
+
+A genuine, contactable mobile is mandatory for all routes; email is optional and cannot replace it. Number-format checks do not verify ownership or reachability. The selected scheduling channel controls how LC may arrange the interview: call, text or email. Email becomes selectable only after a valid email is supplied. Contact identity/channel changes clear previous contact agreement; there is no automatic switch to another channel.
+
+After viewing the first implementation, Jacob requested less explanation and clearer questions. The title is **Request an interview**; LC is already identified in the header. Remove the vague reference to completing “the survey” and all three introductory bullets about duration, team composition and participation procedure. These operational details belong in the invitation/start of the interview, not the signup introduction.
+
+Use a single form followed by one review. **Who would be interviewed?** asks only **Me / My child (under 18)**. It identifies the speaker, not their role. Professionals select Me and the applicable age group, just as family members do. An adult describing parenting experience also selects Me. Do not treat a professional role as an alternative to being the person interviewed or as an age-check bypass.
+
+The signup collects name, required mobile, optional email, preferred scheduling channel, optional contact instructions, optional interview format and one optional notes field for useful timing, topic or practical arrangements. Do not collect separate ADF relationship, organisation/role, availability or participation-needs fields at this stage. Establish relevant background in the actual interview. The under-15 self route omits interview format and substantive notes; the existing guardian declaration, age-specific agreement and safe-contact rules remain.
+
+Scheduling is a short exchange to agree a time, often a text or email using the chosen channel. It is not a preliminary interview and does not require a separate confirmation call. Keep interview format because it affects real arrangements; use plain labels and omit repeated explanations of how it differs from scheduling. Review shows relevant supplied information instead of a list of blank optional fields.
+
+The contact surface remains a clearly marked team preview, uses invented details, sends nothing and books no appointment. Finish preview is the final action until LC chooses a receiver. Jacob has asked for a convenient stable proposal, not account activation. See INTERVIEW_TEAM_GUIDE.md and INTERVIEW_RECEIVING_PROPOSAL.md. The public interview link continues to use the existing GitHub Pages site; no institutional account, participant recruitment or real collection is activated. Other survey/support behaviour remains outside this change.

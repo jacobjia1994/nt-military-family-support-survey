@@ -99,3 +99,13 @@ The current finder uses seven support domains and visible questionnaire-style ra
 Maintain `support-paths.mjs` for the current question flow and matching, `support-model.mjs` for established base routes, and `support-catalog.mjs` / `support-expanded.mjs` / `support-referrals.mjs` for officially sourced contact records. Do not infer eligibility from a broad family label or call paid onward care free. `SUPPORT_COVERAGE.md` documents the scope and limits of the expanded local/national coverage; `SUPPORT_DESIGN.md` records the design reasoning and corrected real-world scenarios. Run `node --test tests/*.test.mjs` before publication.
 
 The approved review corrections separate mental-health purpose from optional support preferences, prune irrelevant location questions, preserve the requested service type in fallback results, and make printed online contacts usable. Regression cases are in `tests/support-review-fixes.test.mjs`.
+
+
+## Interview request update — 27 September 2026
+
+The interview preview is one short form plus review. Mobile is required; email is optional. **Who would be interviewed?** distinguishes Me from My child, while professionals and parents speaking about their own experience both choose Me. Scheduling is a short exchange to agree a time via the chosen call/text/email channel, not an additional interview. Interview format remains optional. Contact instructions and one optional interview-notes box replace the separate background and arrangements questions. Existing young-person and guardian permissions remain; under-15 self requests collect contact details only.
+
+- [Interview team guide and message templates](INTERVIEW_TEAM_GUIDE.md)
+- [Institutional receiving and scheduling proposal](INTERVIEW_RECEIVING_PROPOSAL.md)
+
+LC has not chosen a receiver. The suggested first release uses LC’s own approved form service, restricted ownership, a separate small scheduling log and a coordinator/backup. The GitHub page explicitly sends nothing and books no appointment.
