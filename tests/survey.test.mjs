@@ -1495,7 +1495,7 @@ test('schema 7.1 exports locality and programme metadata without reinterpreting 
   const domains = survey.setContext('adult', answers);
   const result = plain(survey.cleanExport(answers, 'adult', domains));
   assert.equal(result.schema_version, '7.1');
-  assert.equal(result.questionnaire_revision, '2026-09-27-two-level-geography');
+  assert.equal(result.questionnaire_revision, '2026-09-27-area-priority');
   assert.equal(result.consultation_route, 'current_local');
   assert.equal(result.residence_scope, 'greater_darwin');
   assert.equal(result.recall_geography, 'time_living_in_greater_darwin');

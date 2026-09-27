@@ -6,7 +6,7 @@ window.SURVEY_GEOGRAPHY = Object.freeze({
   areas: Object.freeze([
     Object.freeze({id:'darwin',label:'Darwin'}),
     Object.freeze({id:'palmerston',label:'Palmerston'}),
-    Object.freeze({id:'litchfield',label:'Litchfield / rural area'}),
+    Object.freeze({id:'litchfield',label:'Litchfield'}),
     Object.freeze({id:'greater_darwin_other',label:'Other Greater Darwin area'}),
     Object.freeze({id:'outside',label:'Outside Greater Darwin'}),
     Object.freeze({id:'prefer',label:'Prefer not to say'})

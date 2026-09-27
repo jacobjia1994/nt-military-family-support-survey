@@ -224,7 +224,7 @@ function cleanExport(answers,version,domains) {
     if(!(copy.participation_formats||[]).includes('other'))delete copy.participation_other;
     if(!(copy.participation_enablers||[]).includes('other'))delete copy.enablers_other;
   }
-  return {schema_version:'7.1',questionnaire_revision:'2026-09-27-two-level-geography',location_precision:locationPrecision,geography_version:GEOGRAPHY?.version||null,consultation_route:route,residence_scope:residenceScope(copy),recall_months:route==='earlier_experience'?null:version==='adult'?12:3,recall_geography:'time_living_in_greater_darwin',analysis_unit:'respondent_perspective_not_household',measurement_scope:'local_support_experiences_and_programme_preferences',details_optional:true,collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'page_memory_only; not submitted',answers:copy};
+  return {schema_version:'7.1',questionnaire_revision:'2026-09-27-area-priority',location_precision:locationPrecision,geography_version:GEOGRAPHY?.version||null,consultation_route:route,residence_scope:residenceScope(copy),recall_months:route==='earlier_experience'?null:version==='adult'?12:3,recall_geography:'time_living_in_greater_darwin',analysis_unit:'respondent_perspective_not_household',measurement_scope:'local_support_experiences_and_programme_preferences',details_optional:true,collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'page_memory_only; not submitted',answers:copy};
 }
 
 const main = document.querySelector('#main');
@@ -301,7 +301,7 @@ function suburbsForArea(area) {
   return suburbs.filter(option=>option.region===area||['other','prefer'].includes(option.id));
 }
 function suburbFields() { return [
-  field('residence_area','Which area do you live in?','select',AREAS,'Optional. This helps us plan where and how to offer support.'),
+  field('residence_area','Which area do you live in?','single',AREAS,'Optional. This helps us plan where and how to offer support.'),
   field('suburb','Which suburb or locality?','select',suburbsForArea(state.answers.residence_area),'Optional. You can leave this blank.',{conditional:'local_area',placeholder:'Not specified'}),
   field('suburb_other','Which other suburb or locality?','short',[],'',{conditional:'other_suburb'}),
   field('past_residence','Have you lived in Greater Darwin before?','single',opts([['yes','Yes'],['no','No'],['unsure','Not sure'],['prefer','Prefer not to say']]),'',{conditional:'outside_suburb'})
@@ -404,6 +404,11 @@ function fieldHTML(f) {
   const v=getValue(f.key),hint=f.hint?`<span class="field-hint" id="hint-${esc(f.key)}">${esc(f.hint)}</span>`:'';
   const hidden=conditionalVisible(f)?'':'hidden';
   const describedBy=f.hint?`aria-describedby="hint-${esc(f.key)}"`:'';
+  if(f.key==='residence_area'&&f.type==='single'){
+    const primary=f.options.filter(o=>['darwin','palmerston','litchfield'].includes(o.id));
+    const secondary=f.options.filter(o=>!['darwin','palmerston','litchfield'].includes(o.id));
+    return `<fieldset class="question-group" data-field="${esc(f.key)}"><legend>${esc(f.label)}${hint}</legend><div class="choices area-primary-choices">${primary.map(o=>optionHTML(o,f,v)).join('')}</div><details class="area-other-options" ${secondary.some(o=>o.id===v)?'open':''}><summary>Other area</summary><div class="choices">${secondary.map(o=>optionHTML(o,f,v)).join('')}</div></details></fieldset>`;
+  }
   if(['single','multi'].includes(f.type)) return `<fieldset class="question-group" data-field="${esc(f.key)}" ${hidden}><legend>${esc(f.label)}${f.required?'<span class="required-label">(required)</span>':''}${hint}</legend><div class="choices ${f.key==='needs'&&!isChild()?'columns':''} ${f.options.length>6?'compact':''}">${f.options.map(o=>f.key==='needs'&&o.id==='other_need'?`<div class="other-need-option">${optionHTML(o,f,v)}${fieldHTML(page({id:'needs'}).fields.find(item=>item.key==='needs_other'))}</div>`:optionHTML(o,f,v)).join('')}</div></fieldset>`;
   let input='';
   if(f.type==='select') input=`<select class="select" id="${esc(f.key)}" name="${esc(f.key)}" ${describedBy}><option value="">${esc(f.placeholder||'Choose an option')}</option>${f.options.map(o=>`<option value="${esc(o.id)}" ${v===o.id?'selected':''}>${esc(o.label)}${o.aliases?.length?' ('+esc(o.aliases.join(' / '))+')':''}</option>`).join('')}</select>`;
@@ -571,7 +576,7 @@ function renderSurvey(){
     const input=e.target;if(!input.name)return;const f=p.fields.find(f=>f.key===input.name);if(!f)return;
     const old=getValue(f.key);let value=input.value;if(f.type==='multi')value=toggleChoice(old,input.value,f.exclusive||[]);
     setValue(f.key,value);if(JSON.stringify(old)!==JSON.stringify(value))reconcileAnswers(state.answers,f.key,domainList(),old);
-    if(f.key==='residence_area'){p=page(s);const child=p.fields.find(item=>item.key==='suburb');const wrap=form.querySelector('[data-field="suburb"]');if(child&&wrap)wrap.outerHTML=fieldHTML(child);}
+    if(f.key==='residence_area'){const otherOptions=form.querySelector('[data-field="residence_area"] .area-other-options');if(otherOptions)otherOptions.open=!['darwin','palmerston','litchfield'].includes(value);p=page(s);const child=p.fields.find(item=>item.key==='suburb');const wrap=form.querySelector('[data-field="suburb"]');if(child&&wrap)wrap.outerHTML=fieldHTML(child);}
     if(s.id==='needs'&&['needs','needs_status'].includes(f.key)&&state.version==='youth'){
       p=page(s);
       const focus=p.fields.find(item=>item.key==='focus_need');

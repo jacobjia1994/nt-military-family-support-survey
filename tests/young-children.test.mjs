@@ -52,7 +52,7 @@ test('child expressions and guardian observations remain separate without unrela
   assert.equal(session.answer('__proto__', 'Bad key'), false);
   const output = plain(session.exportAnswers());
   assert.equal(output.schema_version, '1.3');
-  assert.equal(output.questionnaire_revision, '2026-09-27-two-level-geography');
+  assert.equal(output.questionnaire_revision, '2026-09-27-area-priority');
   assert.equal(output.questionnaire_version, 'young_child_supported');
   assert.equal(output.response_mode, 'child_views');
   assert.equal(output.response_basis, 'child_expressions_recorded_by_parent_guardian');
@@ -173,7 +173,7 @@ function type(node, id, value) {
 function completeBackground(node, { adf = 'yes', area = '', locality = '', stage = '', other = '' } = {}) {
   const form = node('#young-background-form');
   form.listeners.change({ target: { name: 'adf_connection', value: adf } });
-  node('#young-area').value = area;
+  node('input[name="residence_area"]:checked').value = area;
   form.listeners.change({ target: { name: 'residence_area', value: area } });
   node('#young-suburb').value = locality;
   form.listeners.change({ target: { name: 'suburb', value: locality } });
@@ -349,11 +349,14 @@ test('background validation and scope screen keep users out until the required A
   assert.equal(controller.exportAnswers().background.adf_connection, 'unsure');
 });
 
-test('dependent native selects show only the chosen area and retain locality aliases', () => {
+test('three primary areas are visible with optional secondary choices and a dependent suburb selector', () => {
   const { main, node } = fakeMain();
   const controller = create({ main, guardianPermission: permission() });
   controller.show();
-  assert.match(main.innerHTML, /<select class="select" id="young-area" name="residence_area"/);
+  const primary = main.innerHTML.match(/<div class="choices area-primary-choices">(.*?)<\/div>/)[1];
+  assert.deepEqual([...primary.matchAll(/name="residence_area" value="([^"]+)"/g)].map(match => match[1]), ['darwin', 'palmerston', 'litchfield']);
+  assert.doesNotMatch(primary, /checked|required/);
+  assert.match(main.innerHTML, /<details class="area-other-options" ><summary>Other area<\/summary>/);
   assert.match(main.innerHTML, /id="young-suburb-group" hidden/);
   assert.doesNotMatch(main.innerHTML, /role="combobox"|locality-picker/);
   completeBackground(node, { area: 'litchfield', locality: 'holtze', stage: '5_7' });
@@ -419,6 +422,8 @@ test('Outside and Prefer not to say hide the suburb selector and cannot retain a
     assert.equal(background.location_precision, area === 'outside' ? 'area' : 'not_stated');
     assert.equal(background.geography_scope, area === 'outside' ? 'outside_greater_darwin' : 'not_stated');
     controller.showBackground();
+    assert.equal(/<details class="area-other-options" open>/.test(main.innerHTML), Boolean(area));
+    if (area) assert.match(main.innerHTML, new RegExp(`name="residence_area" value="${area}" checked`));
   }
 });
 

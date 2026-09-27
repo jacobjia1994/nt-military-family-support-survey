@@ -159,3 +159,11 @@ body.questionnaire{--ink:#30312f;--text:#41423f;--muted:#666963;--primary:#b9462
 .locality-options button{display:block;width:100%;padding:12px;text-align:left;border:0;border-radius:3px;background:transparent;color:var(--text);font:inherit;cursor:pointer}
 .locality-options button:hover,.locality-options button[aria-selected="true"]{background:var(--soft)}
 .locality-options small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+
+/* Main regions are visible immediately; exceptional locations remain secondary. */
+.area-primary-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.area-primary-choices .choice{height:100%;min-width:0}
+.area-other-options{margin-top:8px}
+.area-other-options summary{color:var(--muted);font-size:14px;line-height:1.5;min-height:44px;padding:10px 0;cursor:pointer}
+.area-other-options .choices{margin-top:8px}
+@media(max-width:600px){.area-primary-choices{grid-template-columns:1fr}}

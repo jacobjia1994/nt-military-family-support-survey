@@ -16,6 +16,7 @@ let number=0;
 function field(f){
  const options=(f.options||[]).map(o=>`<li>${esc(o.label)}${o.hint?`<span class="option-hint">${esc(o.hint)}</span>`:''}</li>`).join('');
  let answer=options?`<ul class="answers ${f.type==='multi'?'multi':'single'}">${options}</ul>`:'<div class="writing-space" aria-label="Written response space"></div>';
+ if(f.key==='residence_area'){const list=options=>`<ul class="answers single">${options.map(o=>`<li>${esc(o.label)}</li>`).join('')}</ul>`;answer=list(f.options.filter(o=>['darwin','palmerston','litchfield'].includes(o.id)))+`<details class="area-other-options"><summary>Other area</summary>${list(f.options.filter(o=>!['darwin','palmerston','litchfield'].includes(o.id)))}</details>`;}
  if(f.key==='suburb')answer=`<details class="locality-options"><summary>View all ${f.options.length} suburb/locality choices</summary>${answer}</details>`;
  return `<div class="copy-question" data-field="${esc(f.key)}"><h3><span class="q-number">${++number}.</span> ${esc(f.label)}</h3>${f.conditional?`<p class="route-note">${esc(rules[f.conditional]||f.conditional)}</p>`:''}${f.hint?`<p class="hint">${esc(f.hint)}</p>`:''}${answer}</div>`;
 }

@@ -1,6 +1,6 @@
 # Consultation flow and measurement contract
 
-Updated 27 September 2026. Adult/youth schema `7.1`, questionnaire revision `2026-09-27-two-level-geography`. Younger-child schema `1.3`, revision `2026-09-27-two-level-geography`. This remains a team-review interface without a response receiver. Collection platform and storage are for LC and its IT team to select; see [COLLECTION_HANDOFF.md](COLLECTION_HANDOFF.md).
+Updated 27 September 2026. Adult/youth schema `7.1`, questionnaire revision `2026-09-27-area-priority`. Younger-child schema `1.3`, revision `2026-09-27-area-priority`. This remains a team-review interface without a response receiver. Collection platform and storage are for LC and its IT team to select; see [COLLECTION_HANDOFF.md](COLLECTION_HANDOFF.md).
 
 ## Purpose and sequence
 
@@ -21,13 +21,13 @@ The old current/recent Greater Darwin **service-date** screen is retired. Curren
 
 | Response | Route and interpretation |
 | --- | --- |
-| Darwin, Palmerston, Litchfield / rural area, or Another area in Greater Darwin, with or without a suburb | `current_local`: main questionnaire. |
+| Darwin, Palmerston, Litchfield, or another area in Greater Darwin, with or without a suburb | `current_local`: main questionnaire. |
 | Broad area blank or Prefer not to say | `residence_unspecified`: main questionnaire; local residence must not be assumed in analysis. |
 | Outside Greater Darwin, with past residence Yes | `earlier_experience`: connection → historical comments → review. |
 | Outside Greater Darwin, with past residence blank, unsure or declined | The historical comments route remains available; past local residence is not recorded as confirmed. |
 | Outside Greater Darwin and explicitly never lived there, or no invited ADF relationship | Scope explanation; no main needs interview. |
 
-The optional broad-area dropdown controls scope. For a local area, a second optional native dropdown offers only that area’s named suburbs/localities and Other suburb or locality. The existing catalogue contains 100 names in total. Other reveals optional free text. A blank suburb preserves the area and main route; no third level is needed. Palmerston alone is not Palmerston City. Changing area clears old suburb and Other text. These are consultation routes, not declarations of entitlement to programme services.
+The optional broad-area question controls scope. Darwin, Palmerston and Litchfield are immediately visible native radio choices; a lower-emphasis Other area disclosure holds the other local area, outside and declined choices. Nothing is preselected, and a selected secondary choice keeps the disclosure open on return. For a local area, the optional native suburb dropdown offers only that area’s named suburbs/localities and Other suburb or locality. The existing catalogue contains 100 names in total. Other reveals optional free text. A blank suburb preserves the area and main route; no third level is needed. Palmerston alone is not Palmerston City. Changing area clears old suburb and Other text. These are consultation routes, not declarations of entitlement to programme services.
 
 Adults recall the past 12 months; youth recall three months. For recent arrivals, only the time since arriving in Greater Darwin is relevant. Earlier local experience has no current 12-/3-month needs denominator. Adult residence duration refers to the current or most recent stay, not accumulated postings.
 
@@ -94,7 +94,7 @@ The main notice remains `2026-09-25-v11`; the revised flow does not activate col
 
 For ages 7 or younger, a brief first step records the ADF family connection, optional child broad area and then suburb/locality, and optional 0–4/5–7 age band. Yes or unsure ADF connection continues; No shows the scope explanation. The location is recorded without pretending an undisclosed or outside location is local. Child prompts then explicitly concern family life and living in Greater Darwin. Four optional expression boxes precede guardian observations. Willingness enables the expression boxes; observation-only records do not claim child assent. Unchecking willingness clears child expressions only.
 
-The younger-child export uses schema `1.3`, revision `2026-09-27-two-level-geography`, geography metadata and distinct expression/observation fields. It is not equivalent to adult or youth need-domain self-report. The independent contact form retains its own all-age routes and safe-contact fields in [CONTACT_FORM.md](CONTACT_FORM.md).
+The younger-child export uses schema `1.3`, revision `2026-09-27-area-priority`, geography metadata and distinct expression/observation fields. It is not equivalent to adult or youth need-domain self-report. The independent contact form retains its own all-age routes and safe-contact fields in [CONTACT_FORM.md](CONTACT_FORM.md).
 
 ## Design basis
 

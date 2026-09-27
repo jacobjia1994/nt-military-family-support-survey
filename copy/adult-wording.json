@@ -85,7 +85,7 @@
         {
           "key": "residence_area",
           "label": "Which area do you live in?",
-          "type": "select",
+          "type": "single",
           "options": [
             {
               "id": "darwin",
@@ -97,7 +97,7 @@
             },
             {
               "id": "litchfield",
-              "label": "Litchfield / rural area"
+              "label": "Litchfield"
             },
             {
               "id": "greater_darwin_other",
@@ -1622,7 +1622,7 @@
         {
           "key": "residence_area",
           "label": "Which area do you live in?",
-          "type": "select",
+          "type": "single",
           "options": [
             {
               "id": "darwin",
@@ -1634,7 +1634,7 @@
             },
             {
               "id": "litchfield",
-              "label": "Litchfield / rural area"
+              "label": "Litchfield"
             },
             {
               "id": "greater_darwin_other",
@@ -3159,7 +3159,7 @@
         {
           "key": "residence_area",
           "label": "Which area do you live in?",
-          "type": "select",
+          "type": "single",
           "options": [
             {
               "id": "darwin",
@@ -3171,7 +3171,7 @@
             },
             {
               "id": "litchfield",
-              "label": "Litchfield / rural area"
+              "label": "Litchfield"
             },
             {
               "id": "greater_darwin_other",
