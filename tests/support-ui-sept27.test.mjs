@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { topics, questionsFor, preferencesFor, getResults, legacyRoute } from '../support-paths.mjs';
 import { services } from '../support-catalog.mjs';
+import { getFlowState, applyAnswer } from '../support-flow.mjs';
 
 // Exercise the shipped renderer and event handlers without a browser or network.
 function renderer() {
@@ -14,15 +15,22 @@ function renderer() {
     focus() { this.focused = true; },
     scrollIntoView() { this.scrolled = true; }
   }]));
+  pageTargets['preference-results'] = {
+    innerHTML:'',
+    querySelectorAll() { return [...this.innerHTML.matchAll(/class="alternative"/g)]; }
+  };
+  pageTargets['chat-options'] = {innerHTML:''};
+  pageTargets['preference-status'] = {textContent:''};
+  let selectedPreferences = [];
   const root = {
     innerHTML:'',
     addEventListener:(type,handler) => { handlers[type] = handler; },
     querySelector:() => null,
-    querySelectorAll:() => []
+    querySelectorAll:selector => selector === 'input[name="support-preference"]:checked' ? selectedPreferences.map(value=>({value})) : []
   };
   const location = {hash:'#home'};
   const context = vm.createContext({
-    topics,questionsFor,preferencesFor,getResults,legacyRoute,services,
+    topics,questionsFor,preferencesFor,getResults,legacyRoute,services,getFlowState,applyAnswer,
     location,
     document:{
       getElementById:id => id === 'finder' ? root : pageTargets[id] || null,
@@ -43,9 +51,15 @@ function renderer() {
     handlers.click({target:{closest:selector => selector === 'a[href^="#"]' ? anchor : null},preventDefault:() => {}});
     render(hash);
   };
-  const submit = value => {
-    handlers.submit({preventDefault:() => {},target:{id:'support-question',querySelector:() => ({value})}});
-    render();
+  const change = (questionId, value) => {
+    const group = {dataset:{questionId}};
+    const control = {
+      type:'radio', tagName:'INPUT', name:questionId, value, checked:true,
+      dataset:{questionId},
+      matches:selector => selector.includes('radio'),
+      closest:selector => selector.includes('flow-question') ? group : selector.startsWith('input') ? control : null
+    };
+    handlers.change({target:control});
   };
   const jump = targetId => {
     let prevented = false;
@@ -56,7 +70,11 @@ function renderer() {
     });
     return {prevented,target:pageTargets[targetId]};
   };
-  return {root,run,render,click,submit,jump,location};
+  const prefer = values => {
+    selectedPreferences = values;
+    handlers.change({target:{matches:selector => selector === 'input[name="support-preference"]'}});
+  };
+  return {root,run,render,click,change,jump,prefer,location,pageTargets};
 }
 
 test('chat actions promote verified chat links but not a chat availability page', () => {
@@ -68,10 +86,92 @@ test('chat actions promote verified chat links but not a chat availability page'
   assert.match(ui.run('extraAction(services.parentline)'), /How Parentline webchat works/);
 });
 
+test('radio changes reveal the next group and final contacts on the same page without submission', () => {
+  const ui = renderer();
+  ui.render('#money');
+  assert.match(ui.root.innerHTML, /data-question-id="need"/);
+  assert.doesNotMatch(ui.root.innerHTML, /data-question-id="region"/);
+  ui.change('need','essentials');
+  assert.equal(ui.location.hash, '#money');
+  assert.match(ui.root.innerHTML, /data-question-id="need"/);
+  assert.match(ui.root.innerHTML, /data-question-id="region"/);
+  assert.doesNotMatch(ui.root.innerHTML, /Lutheran Care — Alice Springs/);
+  ui.change('region','alice');
+  assert.equal(ui.location.hash, '#money');
+  assert.match(ui.root.innerHTML, /Lutheran Care — Alice Springs/);
+  assert.match(ui.root.innerHTML, /data-question-id="need"/);
+  assert.match(ui.root.innerHTML, /data-question-id="region"/);
+  assert.doesNotMatch(ui.root.innerHTML, /type="submit"/);
+});
+
+test('returning to a previous topic restores its answers instead of revisiting individual choice screens', () => {
+  const ui = renderer();
+  ui.render('#money');
+  ui.change('need','essentials');
+  ui.change('region','alice');
+  ui.render('#care');
+  ui.change('need','carer');
+  ui.change('veteranCare','no');
+  assert.equal(ui.location.hash, '#care');
+  ui.render('#money');
+  assert.equal(ui.location.hash, '#money');
+  assert.equal(ui.run('state.answers.need'), 'essentials');
+  assert.equal(ui.run('state.answers.region'), 'alice');
+  assert.match(ui.root.innerHTML, /Lutheran Care — Alice Springs/);
+});
+
+test('a jurisdiction choice does not discard the known town needed after an earlier answer changes', () => {
+  const ui = renderer();
+  ui.render('#money');
+  ui.change('need','essentials');
+  ui.change('region','alice');
+  ui.render('#relationships');
+  ui.change('need','counselling');
+  ui.change('counselling','other');
+  assert.equal(ui.run('state.answers.region'), 'nt');
+  ui.change('region','nt');
+  ui.change('need','assault');
+  assert.equal(ui.run('state.answers.region'), 'alice');
+  assert.match(ui.root.innerHTML, /Alice Springs Sexual Assault Referral Centre/);
+  assert.equal(ui.location.hash, '#relationships');
+});
+
+test('legacy question and result URLs open the topic’s progressive form without a step redirect', () => {
+  const ui = renderer();
+  ui.render('#money/q/region');
+  assert.equal(ui.location.hash, '#money');
+  assert.match(ui.root.innerHTML, /data-question-id="need"/);
+  ui.change('need','essentials');
+  ui.change('region','alice');
+  ui.render('#money/results');
+  assert.equal(ui.location.hash, '#money');
+  assert.match(ui.root.innerHTML, /Lutheran Care — Alice Springs/);
+});
+
+test('optional support updates in place without replacing the core result or questionnaire', () => {
+  const ui = renderer();
+  ui.render('#mental');
+  ui.change('need','feelings');
+  ui.change('age','26+');
+  ui.change('counselling','partner');
+  ui.change('region','alice');
+  const before = ui.root.innerHTML;
+  const originalIds = ui.run('JSON.stringify(getResults(state.topicId,state.answers).ids)');
+  ui.prefer(['lgbtq']);
+  assert.equal(ui.location.hash, '#mental');
+  assert.equal(ui.root.innerHTML, before, 'Keep the existing questions and core contact DOM');
+  assert.equal(ui.run('JSON.stringify(getResults(state.topicId,state.answers).ids)'), originalIds);
+  assert.match(ui.pageTargets['preference-results'].innerHTML, /QLife/);
+  assert.match(ui.pageTargets['chat-options'].innerHTML, /qlife.org.au/);
+  ui.prefer([]);
+  assert.doesNotMatch(ui.pageTargets['preference-results'].innerHTML, /QLife/);
+  assert.equal(ui.run('JSON.stringify(getResults(state.topicId,state.answers).ids)'), originalIds);
+});
+
 test('urgent-help and return links preserve an unfinished questionnaire and keyboard focus', () => {
   const ui = renderer();
   ui.run("state = {topicId:'care',answers:{need:'travel',connection:'serving',role:'other',dvaTravel:'no'}}");
-  ui.render('#care/q/region');
+  ui.render('#care');
   const hash = ui.location.hash;
   const before = ui.run('JSON.stringify(state)');
   for (const target of ['urgent-help', 'main']) {
@@ -82,16 +182,17 @@ test('urgent-help and return links preserve an unfinished questionnaire and keyb
     assert.equal(ui.location.hash, hash);
     assert.equal(ui.run('JSON.stringify(state)'), before);
   }
-  ui.submit('alice');
+  ui.change('region','alice');
   assert.equal(ui.run('state.answers.role'), 'other');
   assert.equal(ui.run('state.answers.dvaTravel'), 'no');
-  assert.equal(ui.location.hash, '#care/q/ntResidence');
+  assert.equal(ui.location.hash, '#care');
+  assert.match(ui.root.innerHTML, /data-question-id="ntResidence"/);
 });
 
 test('chat shortcuts are near the main contact and only use services in the result', () => {
   const ui = renderer();
   ui.run("state = {topicId:'mental',answers:{need:'feelings',age:'26+',counselling:'partner',region:'alice'}}");
-  ui.render('#mental/results');
+  ui.render('#mental');
   const contactStart = ui.root.innerHTML.indexOf('class="contact-panel"');
   const contactEnd = ui.root.innerHTML.indexOf('</aside>',contactStart);
   assert.match(ui.root.innerHTML.slice(contactStart,contactEnd), /Prefer to chat online\?/);
@@ -102,18 +203,18 @@ test('chat shortcuts are near the main contact and only use services in the resu
 test('human handoff retains food and Palmerston, has a useful script and no self-loop', () => {
   const ui = renderer();
   ui.run("state = {topicId:'money',answers:{need:'essentials',region:'palmerston'}}");
-  ui.render('#money/results');
+  ui.render('#money');
   ui.click('request-help','#help');
   assert.match(ui.root.innerHTML, /Food or other essentials/);
   assert.match(ui.root.innerHTML, /Palmerston/);
-  assert.equal(ui.location.hash, '#help/q/connection');
-  ui.submit('former');
-  assert.equal(ui.location.hash, '#help/results');
+  assert.equal(ui.location.hash, '#help');
+  ui.change('connection','former');
+  assert.equal(ui.location.hash, '#help');
   assert.match(ui.root.innerHTML, /Food or other essentials/);
   assert.match(ui.root.innerHTML, /Support is needed in Palmerston/);
   assert.match(ui.root.innerHTML, /Could you help me find another service for this need/);
   assert.doesNotMatch(ui.root.innerHTML, /data-action="request-help"/);
-  ui.click('return-to-request','#money/results');
+  ui.click('return-to-request','#money');
   assert.equal(ui.run('state.answers.need'), 'essentials');
   assert.equal(ui.run('state.answers.region'), 'palmerston');
 });
@@ -121,22 +222,20 @@ test('human handoff retains food and Palmerston, has a useful script and no self
 test('browser back from a human handoff restores the original choices', () => {
   const ui = renderer();
   ui.run("state = {topicId:'money',answers:{need:'essentials',region:'palmerston'}}");
-  ui.render('#money/results');
+  ui.render('#money');
   ui.click('request-help','#help');
-  ui.render('#money/results');
-  assert.equal(ui.location.hash, '#money/results');
+  ui.render('#money');
+  assert.equal(ui.location.hash, '#money');
   assert.equal(ui.run('state.answers.need'), 'essentials');
   assert.equal(ui.run('state.answers.region'), 'palmerston');
 });
 
-test('editing one region returns directly to results with the need retained', () => {
+test('editing one region refreshes contacts in place with the need retained', () => {
   const ui = renderer();
   ui.run("state = {topicId:'money',answers:{need:'essentials',region:'palmerston'}}");
-  ui.render('#money/results');
-  assert.match(ui.root.innerHTML, /data-action="edit-answer"/);
-  ui.click('edit-answer','#money/q/region');
-  ui.submit('alice');
-  assert.equal(ui.location.hash, '#money/results');
+  ui.render('#money');
+  ui.change('region','alice');
+  assert.equal(ui.location.hash, '#money');
   assert.equal(ui.run('state.answers.need'), 'essentials');
   assert.equal(ui.run('state.answers.region'), 'alice');
 });
@@ -144,10 +243,11 @@ test('editing one region returns directly to results with the need retained', ()
 test('editing a need requests new eligibility answers instead of showing a stale result', () => {
   const ui = renderer();
   ui.run("state = {topicId:'money',answers:{need:'essentials',region:'palmerston'}}");
-  ui.render('#money/results');
-  ui.click('edit-answer','#money/q/need');
-  ui.submit('bills');
-  assert.match(ui.location.hash, /^#money\/q\//);
+  ui.render('#money');
+  ui.change('need','bills');
+  assert.equal(ui.location.hash, '#money');
+  assert.match(ui.root.innerHTML, /data-question-id="connection"/);
+  assert.doesNotMatch(ui.root.innerHTML, /CatholicCare NT — Palmerston/);
   assert.equal(ui.run('state.answers.need'), 'bills');
   assert.equal(ui.run('state.answers.connection'), undefined);
 });

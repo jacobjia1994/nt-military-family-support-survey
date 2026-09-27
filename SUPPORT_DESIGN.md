@@ -1,6 +1,16 @@
-# Independent audit implementation — 27 September 2026
+# Current support interaction and release contract — 27 September 2026
 
-The approved independent review is implemented without changing the seven homepage domains or the survey/interview pages. The current support asset revision is `20260927-1`.
+Jacob’s latest instruction replaces the separate question pages and forced Continue actions with native choices that progressively reveal relevant questions on the same topic page. Keep answered questions visible and editable. Show matching results automatically when all required choices are complete; do not require a final Continue or Find button to reveal them.
+
+Changes to an earlier answer must clear incompatible dependent eligibility information while retaining independent answers. If the new route requires additional information, remove the old results until it is answered. Preserve the active radio or checkbox node, keyboard focus and reading position while updating dependent sections; do not move users automatically to a question, page or result. Keep the seven recognisable domains, source-bound contacts, conditional qualification, direct contact/chat actions and in-memory privacy model.
+
+Jacob has explicitly authorised direct publication of the completed support revision to the existing GitHub Pages site after verification. This supersedes the earlier read-only review and no-publication restrictions for this support revision. Incorporate the latest remote main branch before publishing, preserve unrelated survey/contact changes, and use a normal fast-forward push rather than overwriting concurrent work. This authorisation does not activate survey/contact collection or make enquiries to service providers.
+
+Acceptance checks for the new interaction cover native mouse and keyboard choices, same-page reveal, automatic results, direct editing and stale-eligibility cleanup, focus/scroll stability, mobile reflow and the existing service-matching regressions. Record completed QA and deployment evidence only after those actions occur. The historical checks below do not verify the new progressive interface.
+
+## Earlier independent audit implementation — 27 September 2026
+
+The earlier independent review was implemented without changing the seven homepage domains or the survey/interview pages. The historical record below describes asset revision `20260927-1`; the release identifier in `support.html` and its imports identifies the current build.
 
 - Chat links are direct actions beside contact details, and available chat alternatives appear near the main contact. QLife and Kids Helpline link to their verified chat pages.
 - Human navigation preserves the original need, location and suggested opening sentence. Its result has no self-loop; returning restores the original answers. State remains in memory only.
@@ -25,7 +35,7 @@ The six findings in the review of release12a6296 are implemented. This is a scop
 | Local/medical-travel mismatches | Verified Congress local route with exact audience; Patient Travel enquiry for recent arrivals and explicit funding boundary; transparent local-referral fallback | Official URLs in support-referrals.mjs; matching regressions |
 | Irrelevant questions | Branch-specific geographic scope; no region for national-only routes; no residence question for member's own Defence travel | Question-list regression cases |
 | Mixed mental choices | Five difficulty choices plus optional combinable result preferences | Grief remains selected with Safe Zone and QLife shown together |
-| Late mobile actions | Sticky Continue with last-option clearance; primary contact before access details | 390px real browser measurements |
+| Late mobile actions | The former step interface used sticky Continue; this is superseded by the current progressive flow. Keep primary contact before access details | Historical 390px real browser measurements |
 | Routine crisis banner | Notice only after actual safety selection; footer remains | Main routine-relationships notice count zero |
 | Unusable printed web links | Visible URLs/emails, check date and supplementary services | One-page A4 ShelterMe/Central Intake PDF rendered and visually checked |
 
@@ -52,7 +62,7 @@ The source audit expanded the set of actual offers, not just provider names. It 
 
 ## Verification
 
-Scenario tests cover concrete first actions and excluded inappropriate providers; full-tree enumeration checks all valid visible routes and contact references. Browser checks cover native radio keyboard behaviour, no automatic advance, conditional child ages, validation, editing and back navigation, fresh result-link recovery, mobile and narrow reflow, and absence of console errors. A source/qualification review and an independent conceptual review informed the fixes. These checks do not substitute for Jacob’s product judgment and are not described as recruited-user testing.
+The earlier scenario tests covered concrete first actions and excluded inappropriate providers; full-tree enumeration checked valid visible routes and contact references. Historical browser checks covered native radio keyboard behaviour in the former step flow, conditional child ages, validation, editing and back navigation, fresh result-link recovery, mobile and narrow reflow, and absence of console errors. A source/qualification review and an independent conceptual review informed those fixes. These historical checks do not establish that the new progressive flow has passed, substitute for Jacob’s product judgment or constitute recruited-user testing.
 
 ## Preserved boundaries
 

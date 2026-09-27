@@ -52,6 +52,27 @@
 .urgent li p{font-size:14px;margin:0;color:var(--muted)}
 .urgent-actions{display:flex;flex-wrap:wrap;gap:0 18px}
 .urgent-return{display:inline-flex;align-items:center;min-height:44px;margin-top:20px;font-size:16px}
+.flow-intro{font-size:17px;color:var(--muted);margin:14px 0 26px}
+#support-flow{max-width:780px}
+.flow-question{max-width:none}
+.flow-question+.flow-question{border-top:0;margin-top:30px;padding-top:0}
+.flow-question legend{width:100%;margin-bottom:16px}
+.flow-question legend h2{font-size:23px;line-height:1.3;letter-spacing:-.015em;margin:0}
+.flow-question .question-hint{font-size:16px;margin:0 0 16px}
+.flow-question .choice-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.flow-question .choice-row{min-height:54px;padding:13px 16px;gap:12px}
+.flow-question .choice-row strong{font-size:17px;line-height:1.4}
+.flow-question .choice-row small{font-size:14px}
+.flow-question .choice-row input{margin-top:2px}
+.flow-results{border-top:1px solid var(--line);padding-top:30px;margin-top:38px}
+.flow-results[hidden]{display:none}
+.contacts-heading{display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;margin-bottom:14px}
+.contacts-heading h2{font-size:27px;margin:0}
+.contacts-heading>a{font-size:15px;min-height:44px;display:inline-flex;align-items:center}
+.flow-results .context{display:block;border:0;padding:0;margin:0 0 25px}
+.result-main .primary-service-heading{font-size:31px;line-height:1.16;letter-spacing:-.02em;max-width:26ch;margin:0 0 12px;font-weight:700}
+#support-answers:focus,#support-contacts:focus{outline:none}
+#support-answers,#support-contacts{scroll-margin-top:24px}
 @media(max-width:700px){
   .quick-help{gap:0;padding-top:10px;font-size:14px}
   .quick-help+main{padding-top:20px}
@@ -63,6 +84,14 @@
   #support-question input{scroll-margin-block:24px 150px}
   .related-needs{margin-top:20px}
   .result-layout>.access{margin-top:18px}
+  .flow-question .choice-list{grid-template-columns:1fr}
+  .flow-question .choice-list-compact{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .flow-question legend h2{font-size:21px}
+  .flow-question .choice-row{padding:12px;gap:10px}
+  .flow-question+.flow-question{margin-top:26px;padding-top:0}
+  .flow-intro{font-size:16px;margin-bottom:23px}
+  .contacts-heading h2{font-size:25px}
+  .result-main .primary-service-heading{font-size:28px}
 }
 @media print{
   body{background:white}
@@ -87,6 +116,9 @@
   .more-services::details-content{content-visibility:visible!important;display:block!important}
   footer{display:block;border:0;margin-top:22px;padding:0}
   .checked{display:block;color:#444;font-size:11px}
+  #support-answers,.flow-intro,.contacts-heading>a{display:none}
+  .flow-results{border:0;padding:0;margin:0}
+  .result-main .primary-service-heading{font-size:25px}
 }
 @page{size:A4;margin:14mm}
 @media print{

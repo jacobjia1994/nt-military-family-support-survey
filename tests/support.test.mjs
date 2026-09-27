@@ -60,7 +60,7 @@ test('privacy and questionnaire boundaries',()=>{
  assert.match(page,/href="tel:000"/);
  assert.doesNotMatch(page+ui,/Search all topics|fetch\(|XMLHttpRequest|sendBeacon|localStorage|sessionStorage|document\.cookie/);
  assert.match(page,/connect-src 'none'/);assert.doesNotMatch(page+ui,/contact\.html|survey\.js/);
- assert.match(ui,/type="submit"/);assert.match(ui,/rel="noreferrer"/);assert.match(page,/<noscript>/);
+ assert.match(ui,/type="radio"/);assert.match(ui,/rel="noreferrer"/);assert.match(page,/<noscript>/);
 });
 test('matching asks questions needed for age-sensitive routes',()=>{
  assert.equal(fieldsFor('children','wellbeing').age,true);assert.equal(fieldsFor('money','bills').age,false);assert.equal(fieldsFor('children','school').connection,true);

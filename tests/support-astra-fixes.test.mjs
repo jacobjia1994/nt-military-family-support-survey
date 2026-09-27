@@ -4,6 +4,7 @@ import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 import {topics, questionsFor, preferencesFor, getResults, legacyRoute} from '../support-paths.mjs';
 import {services} from '../support-catalog.mjs';
+import {getFlowState, applyAnswer} from '../support-flow.mjs';
 
 const allIds = result => [
   ...result.ids,
@@ -186,7 +187,7 @@ test('the active directory preserves urgent mental-health and emergency respite 
 function contactRenderer() {
   const root = {innerHTML:'', addEventListener:()=>{}, querySelector:()=>null, querySelectorAll:()=>[]};
   const context = vm.createContext({
-    topics, questionsFor, preferencesFor, getResults, legacyRoute, services,
+    topics, questionsFor, preferencesFor, getResults, legacyRoute, services, getFlowState, applyAnswer,
     location:{hash:'#home'},
     document:{getElementById:id=>id==='finder'?root:null, querySelector:()=>null, querySelectorAll:()=>[], addEventListener:()=>{}},
     window:{addEventListener:()=>{}, scrollTo:()=>{}},

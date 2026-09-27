@@ -1,5 +1,5 @@
-import { matchSupport as baseMatch } from './support-model.mjs?v=20260927-2';
-import { regions as legacyRegions } from './support-model.mjs?v=20260927-2';
+import { matchSupport as baseMatch } from './support-model.mjs?v=20260927-3';
+import { regions as legacyRegions } from './support-model.mjs?v=20260927-3';
 const regions=[...legacyRegions.slice(0,5),['gove','Nhulunbuy / East Arnhem'],...legacyRegions.slice(5)];
 const opts = rows => rows.map(([value,label,detail])=>({value,label,...(detail?{detail}:{})}));
 const question=(id,label,rows,hint)=>({id,label,options:opts(rows),...(hint?{hint}:{})});

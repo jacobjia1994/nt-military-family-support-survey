@@ -1,8 +1,8 @@
-import {reviewedReferrals} from './support-referrals.mjs?v=20260927-2';
-import {expandedServices} from './support-expanded.mjs?v=20260927-2';
-import {nationalReviewedServices} from './support-national-reviewed.mjs?v=20260927-2';
-import {ntReviewedServices} from './support-nt-reviewed.mjs?v=20260927-2';
-import {astraReviewedServices} from './support-astra-reviewed.mjs?v=20260927-2';
+import {reviewedReferrals} from './support-referrals.mjs?v=20260927-3';
+import {expandedServices} from './support-expanded.mjs?v=20260927-3';
+import {nationalReviewedServices} from './support-national-reviewed.mjs?v=20260927-3';
+import {ntReviewedServices} from './support-nt-reviewed.mjs?v=20260927-3';
+import {astraReviewedServices} from './support-astra-reviewed.mjs?v=20260927-3';
 // Curated contact routes, independently checked against official provider sources.
 // A free first service does not imply that every onward service is free.
 const checked = '2026-09-26';

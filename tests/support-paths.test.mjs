@@ -74,7 +74,7 @@ test('all valid visible paths have sourced contacts and every included offer is 
  assert.ok(leaves>500);assert.deepEqual(Object.keys(services).filter(id=>!reached.has(id)),[]);
 });
 test('public interface uses visible labelled radios, not dropdowns',()=>{
- const ui=readFileSync(new URL('../support.js',import.meta.url),'utf8');assert.doesNotMatch(ui,/<select|<option\b/);assert.match(ui,/<fieldset/);assert.match(ui,/<legend/);assert.match(ui,/type="radio"/);assert.match(ui,/type="submit"/);
+ const ui=readFileSync(new URL('../support.js',import.meta.url),'utf8');assert.doesNotMatch(ui,/<select|<option\b/);assert.match(ui,/<fieldset/);assert.match(ui,/<legend/);assert.match(ui,/type="radio"/);
  assert.equal(topics.length,7);assert.ok(!topics.some(t=>/Talk to someone|Help for a child|Moving or/.test(t.title)));
  assert.equal(topics.find(t=>t.id==='parenting').links[0].href,'#mental/feelings');
 });

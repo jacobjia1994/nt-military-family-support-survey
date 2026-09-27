@@ -102,17 +102,21 @@ Updated after Jacob’s 26 September correction. Mode: Operate. Preserve Luthera
 
 The home has a compact title/audience line and ruled topic links, two columns on desktop and one on mobile. Labels name recognisable areas, with concrete examples. No search, dashboard, policy taxonomy or header crisis panel. A child-emotion link on the parenting page leads to the shared mental-health matcher.
 
-One question is shown per view. Full-row native radios have a visible selected state, semantic fieldset/legend, generous touch targets and an explicit Continue button. Arrow keys change selection without rerendering or advancing. Back and Change preserve choices; changing an upstream answer clears stale downstream qualifiers. Child age details appear only after the Under 18 choice, and age is absent on routes where it does not change services.
+Jacob’s latest 27 September instruction keeps the applicable questions together on one topic page. Full-row native radios retain a visible selected state, semantic fieldset/legend and generous touch targets. An answer reveals the next relevant question below; completed questions remain visible for direct editing. Results appear automatically when the required choices are complete. No Continue button or separate question view is required.
+
+Clicking or using arrow keys updates dependent content without moving focus away from the active native control or forcing a scroll to the next question or result. Changes clear stale downstream eligibility qualifiers while retaining independent answers. If newly relevant information is needed, remove the old recommendations until it is supplied. Ask age only where provider boundaries affect the available service, without asking the child’s age twice.
 
 Results retain one first contact and at most two immediate alternatives, with additional relevant offers disclosed separately. Audience, free scope, contact method and decisive access conditions are visible. The whole flow avoids storing personal details. Reloaded result links restart the necessary matching instead of showing a stale profile.
 
-Desktop, 390px mobile and 320px reflow are checked along with keyboard selection, validation, previous-answer editing and conditional resets. These are interface/scenario checks, not a claim of user testing. Survey and interview presentation remains unchanged.
+Before releasing the progressive flow, verify desktop, 390px mobile and 320px reflow, keyboard selection, focus and scroll stability, direct answer editing, conditional resets and automatic result updates. Record the resulting evidence after these checks; this design contract does not claim that the new flow has already passed or been deployed. Survey and interview presentation remains unchanged.
+
+Jacob has authorised direct publication of the completed support revision after verification to the existing GitHub Pages site. This supersedes earlier review-only restrictions for the support revision. Integrate against the latest remote main branch and retain unrelated survey/contact updates; publication does not activate form collection or service enquiries.
 
 ### Approved six-finding implementation
 
-The mental-need screen is reduced to five purpose choices; optional multi-select preferences live beside the results, preserving the original matching context. Geographic questions are pruned or use two visible NT/outside options when appropriate. Continue uses a sticky in-flow mobile action area with keyboard scroll clearance; related-help links appear after the action. Routine relationship screens omit crisis notices until an actual safety choice.
+The earlier six-finding revision preserved the original need when adding optional multi-select result preferences and pruned irrelevant geographic questions. Keep those principles, using visible NT/outside options where that is the only relevant distinction. Its sticky Continue treatment is superseded by the current progressive flow. Routine relationship screens omit crisis notices until an actual safety choice.
 
-Primary result access paragraphs follow the contact panel. In the verified 390×844 view the mental Continue button starts around y646 (formerly y1026), and the Open Arms call action around y592 (formerly y711). These measurements are representative evidence, not universal device guarantees. Print uses A4, visible URLs/mailto addresses, preserved check date, and automatically opened supplementary contacts; normal screen state is restored after printing.
+Primary result access paragraphs follow the contact panel. Earlier measurements of Continue and call-button positions describe the superseded step interface, not the current progressive layout. Print uses A4, visible URLs/mailto addresses, preserved check date, and automatically opened supplementary contacts; normal screen state is restored after printing.
 
 ## Survey copy and completion refinements
 
