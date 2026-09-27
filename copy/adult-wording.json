@@ -1,7 +1,7 @@
 {
   "invitation": {
     "title": "Defence family support survey",
-    "greeting": "Hello, NT Defence Communities!",
+    "greeting": "Hello, Defence Communities!",
     "paragraphs": [
       "Lutheran Care would like your help to plan its Defence Family Support Program in the Northern Territory.",
       "Tell us about the support you have needed, what you received and what would help now.",
@@ -140,7 +140,7 @@
           "label": "What has helped you or your family feel connected in the NT?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A sentence or two is enough. Please leave out names or other details that could identify someone."
+          "hint": "Optional. Please leave out names or other details that could identify someone."
         }
       ],
       "note": "Relationship, NT connection, optional adult age band and a positive community-connection prompt precede the substantive questions. Earlier connections retain a separate historical route."
@@ -816,7 +816,7 @@
     {
       "id": "earlier",
       "title": "Your experience in the NT",
-      "intro": "We’d like to hear what worked well and what could have been better.",
+      "intro": "",
       "fields": [
         {
           "key": "earlier_experience",
@@ -930,7 +930,7 @@
           "label": "What has helped you or your family feel connected in the NT?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A sentence or two is enough. Please leave out names or other details that could identify someone."
+          "hint": "Optional. Please leave out names or other details that could identify someone."
         }
       ],
       "note": "Relationship, NT connection, optional adult age band and a positive community-connection prompt precede the substantive questions. Earlier connections retain a separate historical route."
@@ -1606,7 +1606,7 @@
     {
       "id": "earlier",
       "title": "Your experience in the NT",
-      "intro": "We’d like to hear what worked well and what could have been better.",
+      "intro": "",
       "fields": [
         {
           "key": "earlier_experience",
@@ -1720,7 +1720,7 @@
           "label": "What has helped you or your family feel connected in the NT?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A sentence or two is enough. Please leave out names or other details that could identify someone."
+          "hint": "Optional. Please leave out names or other details that could identify someone."
         }
       ],
       "note": "Relationship, NT connection, optional adult age band and a positive community-connection prompt precede the substantive questions. Earlier connections retain a separate historical route."
@@ -2396,7 +2396,7 @@
     {
       "id": "earlier",
       "title": "Your experience in the NT",
-      "intro": "We’d like to hear what worked well and what could have been better.",
+      "intro": "",
       "fields": [
         {
           "key": "earlier_experience",

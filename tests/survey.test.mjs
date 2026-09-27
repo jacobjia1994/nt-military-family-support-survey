@@ -1141,11 +1141,11 @@ test('the 8–14 helper interruption offers a private route and cannot advance w
 });
 
 
-test('ages 7 or younger use their own controller, survive review, and clear on restart', () => {
-  let created = 0, shown = 0, reviewed = 0, reset = 0, options;
+test('ages 7 or younger use their own controller, finish, and clear on restart', () => {
+  let created = 0, shown = 0, reset = 0, options;
   context.window.SURVEY_YOUNG_CHILDREN = { create(config) {
     created += 1; options = config;
-    return { show() { shown += 1; }, showReview() { reviewed += 1; }, reset() { reset += 1; } };
+    return { show() { shown += 1; }, reset() { reset += 1; } };
   } };
   survey.resetYoung();
   survey.setParticipationContext('young');
@@ -1165,9 +1165,7 @@ test('ages 7 or younger use their own controller, survive review, and clear on r
   options.onFinish(record);
   assert.equal(survey.getUIState().screen, 'finish');
   assert.equal(survey.getUIState().youngRecord, record);
-  mainStub.querySelector('#review-answers').onclick();
-  assert.equal(reviewed, 1);
-  assert.equal(survey.getUIState().screen, 'young');
+  assert.doesNotMatch(mainStub.innerHTML, /Save my answers|Review my answers|download-answers|review-answers/);
   mainStub.querySelector('#restart').onclick();
   assert.equal(reset, 1);
   assert.equal(survey.getUIState().youngRecord, null);

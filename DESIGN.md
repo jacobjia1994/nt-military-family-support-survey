@@ -54,7 +54,7 @@ The four-section progress indicator uses thin lines and a section label. Related
 
 Adult and shared 8–17 wording, NT/outside-NT variants, and conditional follow-ups remain in the question definitions. Changing an earlier answer removes follow-ups that no longer apply. The 8–17 route combines region with connection and asks for detail about at most one optional focus area. Children aged 7 or younger use a guardian-supported form with separate child expressions and guardian observations. The separate question library and staff review pages remain outside the respondent flow.
 
-Formal presentation does not establish response collection. The current frontend has no receiver: answers remain in page memory, and the finish screen offers a local download or further changes without claiming successful submission. Selection and configuration of a private collection platform are pending. Do not add a submission-success message before a real receiving service confirms receipt.
+Formal presentation does not establish response collection. The current frontend has no receiver: answers remain in page memory, and the finish screen offers the separate interview request and support finder without claiming successful submission. Selection and configuration of a private collection platform are pending. Do not add a submission-success message before a real receiving service confirms receipt.
 
 ## Reference sources
 
@@ -113,3 +113,7 @@ Desktop, 390px mobile and 320px reflow are checked along with keyboard selection
 The mental-need screen is reduced to five purpose choices; optional multi-select preferences live beside the results, preserving the original matching context. Geographic questions are pruned or use two visible NT/outside options when appropriate. Continue uses a sticky in-flow mobile action area with keyboard scroll clearance; related-help links appear after the action. Routine relationship screens omit crisis notices until an actual safety choice.
 
 Primary result access paragraphs follow the contact panel. In the verified 390×844 view the mental Continue button starts around y646 (formerly y1026), and the Open Arms call action around y592 (formerly y711). These measurements are representative evidence, not universal device guarantees. Print uses A4, visible URLs/mailto addresses, preserved check date, and automatically opened supplementary contacts; normal screen state is restored after printing.
+
+## Survey copy and completion refinements
+
+Updated 27 September 2026. The greeting omits NT. Optional answer-length prompts and the repeated introduction before the earlier-experience question are removed; privacy instructions and the question itself remain. The completion screen no longer offers Save my answers or Review my answers. Its interview and support-finder links use the same secondary button style and equal-width desktop columns, stacking below 760px. The existing resource title appears directly below its button. The survey title, geographic scope, eligibility, region options, completion heading and action labels are unchanged pending the wording and scope discussion. These are local review changes and have not been published.

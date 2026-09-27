@@ -184,7 +184,7 @@ function cleanExport(answers,version,domains) {
 const main = document.querySelector('#main');
 const phases = ['About you','Your support','Finding support','Review'];
 const state = { version:'adult', age:null, ageAudience:null, ageRoute:null, answers:{}, step:'connection', screen:'welcome', returnToReview:false, participation:null, guardianPermission:null,youngController:null,youngRecord:null };
-const SURVEY_INVITATION = {"title": "Defence family support survey", "greeting": "Hello, NT Defence Communities!", "paragraphs": ["Lutheran Care would like your help to plan its Defence Family Support Program in the Northern Territory.", "Tell us about the support you have needed, what you received and what would help now.", "Please answer about your own experience."], "funding": "Lutheran Care received funding from Defence Member and Family Support, a branch of the Commonwealth Department of Defence, to deliver this project."};
+const SURVEY_INVITATION = {"title": "Defence family support survey", "greeting": "Hello, Defence Communities!", "paragraphs": ["Lutheran Care would like your help to plan its Defence Family Support Program in the Northern Territory.", "Tell us about the support you have needed, what you received and what would help now.", "Please answer about your own experience."], "funding": "Lutheran Care received funding from Defence Member and Family Support, a branch of the Commonwealth Department of Defence, to deliver this project."};
 const PARTICIPANT_NOTICE_VERSION = '2026-09-25-v11';
 // Formal participant wording for the internally reviewed consultation design.
 // The current build has no receiver; its technical status belongs in review.html.
@@ -271,12 +271,12 @@ function page(step) {
   if(step.id.startsWith('area:'))return areaPage(step.need||step.id.slice(5));
   const child=isChild();
   switch(step.id) {
-    case 'earlier':return {title:'Your experience in the NT',intro:'We’d like to hear what worked well and what could have been better.',fields:[field('earlier_experience',isAdult()?'What worked well during your family’s time in the NT, and what could have been better?':'What would you like to tell us about your family’s time in the NT?','text',[],privacyHint())]};
+    case 'earlier':return {title:'Your experience in the NT',intro:'',fields:[field('earlier_experience',isAdult()?'What worked well during your family’s time in the NT, and what could have been better?':'What would you like to tell us about your family’s time in the NT?','text',[],privacyHint())]};
     case 'connection':return {title:isAdult()?'Your connection to military life':'A little about your family',intro:'',fields:[
       field('roles',isAdult()?'Which describes you?':'Which describes your family?','multi',roleOptions(),'Select all that apply.',{required:true,exclusive:['none','unsure']}),
       field('serving_nt',isAdult()?'When did you or your family member last serve in the NT?':'When did your family member last serve in the NT?','single',opts([['yes','Serving in the NT now'],['recent','Within the past 12 months, but not currently'],['earlier','More than 12 months ago'],['no','No military service in the NT'],['unsure','Not sure']]),'Select one.',{required:true}),
       ...(isAdult()?[field('age_group','Which age group are you in?','single',ADULT_AGE_GROUPS,'Optional. This helps us see whether support needs differ by age.')]:[field('assistance','Is anyone helping you read or write your answers?','single',opts([['self','No, I am answering myself'],['guardian','Yes, my parent or guardian'],['other','Yes, someone else']]),'These are your answers. A helper can read or write for you, but should not choose your answers.',{required:true}),...(state.version==='youth'?[field('region','Which area do you live in now?','select',regions,'Optional. You can ask someone if you are not sure.')]:[])]),
-      ...(['adult','youth'].includes(state.version)?[field('community_connection',isAdult()?'What has helped you or your family feel connected in the NT?':'What has helped you feel welcome or included in the NT?','text',[],'Optional. A sentence or two is enough. '+privacyHint())]:[])
+      ...(['adult','youth'].includes(state.version)?[field('community_connection',isAdult()?'What has helped you or your family feel connected in the NT?':'What has helped you feel welcome or included in the NT?','text',[],'Optional. '+privacyHint())]:[])
     ]};
     case 'needs':return {title:isAdult()?'Your support needs':'Where have you needed help?',intro:isAdult()?'Support can include help from family, friends, your community or a service.':'Help can come from family, friends, school, your community or a service.',fields:[
       field('needs_status',isAdult()?`In ${period()}, have you needed any support?`:`In ${period()}, have you needed help with anything?`,'single',opts([['yes','Yes'],['no','No'],['unsure','Not sure'],['prefer','Prefer not to answer']])),
@@ -466,7 +466,7 @@ function thankYouResource(config={}) {
 }
 function thankYouResourceHTML(config=globalThis.SURVEY_THANK_YOU_RESOURCE||{}) {
   const resource=thankYouResource(config);
-  return `<section class="thank-you-resource" aria-labelledby="resource-title"><h2 id="resource-title">${esc(resource.title)}</h2>${resource.url?`<a class="button primary" href="${esc(resource.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Find support services</a>`:'<button class="button secondary" disabled>Find support services</button><p class="small">Available soon</p>'}</section>`;
+  return `<section class="thank-you-resource" aria-labelledby="resource-title">${resource.url?`<a class="button secondary" href="${esc(resource.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Find support services</a>`:'<button class="button secondary" disabled>Find support services</button><p class="small">Available soon</p>'}<p class="small" id="resource-title">${esc(resource.title)}</p></section>`;
 }
 function renderSurvey(){
   if(!hasValidParticipation()){renderWelcome();return;}
@@ -526,7 +526,7 @@ function renderSurvey(){
 }
 function goNext(id){const steps=activeSteps(),index=steps.findIndex(s=>s.id===id);state.step=steps[index+1]?.id||'review';renderSurvey();focusHeading();}
 function contactLinkHTML(){return '<a class="button secondary" href="contact.html" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Request an interview</a>';}
-function renderFinish(){state.screen='finish';main.innerHTML=`<section class="finish"><h1 tabindex="-1">Thank you for helping improve support in our NT communities.</h1><div class="finish-contact">${contactLinkHTML()}</div>${thankYouResourceHTML()}<div class="finish-actions"><button class="button secondary" id="download-answers">Save my answers</button><button class="button secondary" id="review-answers">Review my answers</button></div><button class="text-button" id="restart">Clear answers and start again</button></section>`;main.querySelector('#download-answers').onclick=()=>{const data=state.age==='young'?state.youngController.exportAnswers():cleanExport(state.answers,state.version,domainList());if(state.age!=='young')data.participation=state.participation;const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='my-nt-support-answers.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};main.querySelector('#review-answers').onclick=()=>{if(state.age==='young'){state.screen='young';state.youngController.showReview();return;}state.step='review';renderSurvey();focusHeading();};main.querySelector('#restart').onclick=()=>{resetAgePath();renderWelcome();};focusHeading();}
+function renderFinish(){state.screen='finish';main.innerHTML=`<section class="finish"><h1 tabindex="-1">Thank you for helping improve support in our NT communities.</h1><div class="finish-next-steps"><div class="finish-contact">${contactLinkHTML()}</div>${thankYouResourceHTML()}</div><button class="text-button" id="restart">Clear answers and start again</button></section>`;main.querySelector('#restart').onclick=()=>{resetAgePath();renderWelcome();};focusHeading();}
 const reviewNotes = new Map();
 let libraryVersion = 'adult';
 let libraryLocation = 'nt';
