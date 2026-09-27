@@ -163,7 +163,7 @@ test('changing an email address withdraws email-first permission and never subst
 });
 
 test('age routing uses only under 18 and adult, with one minor guardian route', () => {
-  assert.deepEqual(model.CONTACT_AGES,{minor:'Under 18',adult:'18 or older'});
+  assert.deepEqual(model.CONTACT_AGES,{adult:'18 or older',minor:'Under 18'});
   for (const age_band of ['minor','adult']) {
     const data = valid({ age_band });
     assert.deepEqual(model.requestErrors(data), {});

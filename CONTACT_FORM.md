@@ -16,7 +16,7 @@ The following purposes determine the fields. Discussion topic, suggested intervi
 
 | Purpose | Field(s) that serve it |
 | --- | --- |
-| Identify the speaker and the relevant participation process | Me / My child under 18; Under 18 / 18 or older for self only |
+| Identify the speaker and the relevant participation process | Me / My child under 18; 18 or older / Under 18 for self only |
 | Arrange contact safely | Preferred name, mandatory mobile, optional email, selected contact method and conditional voicemail permission |
 | Prepare for the subject of the interview | Dedicated **What would you like to discuss?** field, with child wording on the guardian route |
 | Find a workable appointment | Dedicated **Suggested interview date and time** field |
@@ -28,7 +28,7 @@ The following purposes determine the fields. Discussion topic, suggested intervi
 | Field | Requirement and purpose |
 | --- | --- |
 | Request for | Required: Me / My child under 18. Someone describing their own parenting or caring experience selects Me; the child option means the child will participate personally. Professional contributors also select Me. |
-| Age group | Required for self only: Under 18 / 18 or older. A professional contributor uses the same choice. The guardian route infers under 18 from My child under 18 and does not ask again. This is a routing distinction, not an assessment of capacity. |
+| Age group | Required for self only: 18 or older / Under 18. A professional contributor uses the same choice. The guardian route infers under 18 from My child under 18 and does not ask again. This is a routing distinction, not an assessment of capacity. |
 | Name to use | Required; up to 80 characters. A preferred name is sufficient. On the guardian route this is the parent or guardian’s own name, not the child’s name. |
 | Mobile number | Required on every route, including professional, guardian and under-18 self-requests. Give a genuine mobile where the requester can be reached; the guardian supplies their own number. Format validation is not proof of ownership, reachability or safety. The receiving team establishes contact through the selected channel. |
 | Email | Optional; up to 254 characters, validated when supplied. Never substitutes for the required mobile. It can be used for interview arrangements only as permitted; supplying it is not permission for marketing or unrelated follow-up. |
@@ -47,7 +47,7 @@ When text is selected, arrange the appointment by text; email works the same way
 
 ## Children, young people and guardian requests
 
-The request form uses **Under 18 / 18 or older** only. Section 4 of the [NT Age of Majority Act 1974](https://legislation.nt.gov.au/api/sitecore/Act/PDF?id=11583) sets full age at 18, but the binary selection does not decide an individual’s capacity. [OAIC Chapter B, B.59–B.61](https://www.oaic.gov.au/privacy/australian-privacy-principles/australian-privacy-principles-guidelines/chapter-b-key-concepts) explains that a child’s capacity depends on understanding and should be assessed case by case where practicable. The team establishes understanding, appropriate permission and willingness before the actual interview, asking for further age information only if needed for that arrangement. Do not add a diagnosis or capacity questionnaire online.
+The request form uses **18 or older / Under 18** only. Section 4 of the [NT Age of Majority Act 1974](https://legislation.nt.gov.au/api/sitecore/Act/PDF?id=11583) sets full age at 18, but the binary selection does not decide an individual’s capacity. [OAIC Chapter B, B.59–B.61](https://www.oaic.gov.au/privacy/australian-privacy-principles/australian-privacy-principles-guidelines/chapter-b-key-concepts) explains that a child’s capacity depends on understanding and should be assessed case by case where practicable. The team establishes understanding, appropriate permission and willingness before the actual interview, asking for further age information only if needed for that arrangement. Do not add a diagnosis or capacity questionnaire online.
 
 These are the current interview-request routes; the main survey’s separate age/permission design is unchanged:
 

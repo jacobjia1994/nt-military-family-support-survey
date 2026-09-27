@@ -1,7 +1,7 @@
 export const CONTACT_NOTICE_VERSION = '2026-09-27-contact-v5';
 export const CONTACT_LIMITS = Object.freeze({ preferred_name:80, phone:30, email:254, contact_notes:300, topic:600, suggested_time:300 });
 export const CONTACT_METHODS = Object.freeze({call:'Call me',sms:'Text me',email:'Email me'});
-export const CONTACT_AGES = Object.freeze({minor:'Under 18',adult:'18 or older'});
+export const CONTACT_AGES = Object.freeze({adult:'18 or older',minor:'Under 18'});
 export const CONTACT_REQUESTERS = Object.freeze({self:'Me',guardian:'My child (under 18)'});
 export const CONTACT_INTERVIEW_MODES = Object.freeze({phone:'Phone',video:'Video call',in_person:'In person',discuss:'No preference'});
 export const CONTACT_NOTICE = [

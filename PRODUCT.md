@@ -114,7 +114,7 @@ Jacob corrected the overly broad simplification: **discussion topic and suggeste
 | Information needed | Public question / treatment | Why it is collected |
 | --- | --- | --- |
 | Person speaking | Who would be interviewed? Me / My child (under 18) | Determines whose permission and contact details apply; professionals and parents describing their own experience select Me. |
-| Adult/minor arrangement | Your age group: Under 18 / 18 or older | Only these two groups. Guardian route already means under 18 and does not ask the same fact again. No hidden 15-year split. |
+| Adult/minor arrangement | Your age group: 18 or older / Under 18 | Only these two groups. Guardian route already means under 18 and does not ask the same fact again. No hidden 15-year split. |
 | Contact person | Name and genuine contactable mobile required; email optional | Enables the team to reach the requester. A guardian gives their own details. Email never replaces the required mobile. |
 | Conversation purpose | What would you like to discuss? (child wording on guardian route) | Optional brief topic for preparation; never combine it with time or access needs. |
 | Interview format | How would you prefer to be interviewed? | Optional phone/video/in person/no preference helps choose a real slot. |
