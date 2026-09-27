@@ -99,3 +99,13 @@ The current finder uses seven support domains and visible questionnaire-style ra
 Maintain `support-paths.mjs` for the current question flow and matching, `support-model.mjs` for established base routes, and `support-catalog.mjs` / `support-expanded.mjs` / `support-referrals.mjs` for officially sourced contact records. Do not infer eligibility from a broad family label or call paid onward care free. `SUPPORT_COVERAGE.md` documents the scope and limits of the expanded local/national coverage; `SUPPORT_DESIGN.md` records the design reasoning and corrected real-world scenarios. Run `node --test tests/*.test.mjs` before publication.
 
 The approved review corrections separate mental-health purpose from optional support preferences, prune irrelevant location questions, preserve the requested service type in fallback results, and make printed online contacts usable. Regression cases are in `tests/support-review-fixes.test.mjs`.
+
+
+## Interview request update — 27 September 2026
+
+The interview preview now requires a contactable mobile number and offers optional email. Choosing email-first contact requires an email; providing a mobile never overrides that choice. Adult, young-person, guardian and professional routes remain distinct. Optional preferences help the team arrange private interviews, while the first-contact method controls how they may initially approach the person. All fields stay in page memory; the preview explicitly sends nothing and books no appointment.
+
+- [Interview team guide and message templates](INTERVIEW_TEAM_GUIDE.md)
+- [Institutional receiving and scheduling proposal](INTERVIEW_RECEIVING_PROPOSAL.md)
+
+LC has not chosen a receiver. The proposed first release uses LC’s own approved form service, with restricted ownership, a separate small scheduling log and a named coordinator/backup. The GitHub page is currently a review surface, not a collecting service.
