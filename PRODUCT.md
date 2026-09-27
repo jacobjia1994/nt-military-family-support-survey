@@ -18,7 +18,7 @@ The dependency-free HTML/CSS/JavaScript implementation is available through the 
 
 LC may rebuild the main survey and independent interview request in its Microsoft Forms tenant, or host the current front end with an LC-approved receiver. This remains an open institutional choice. [COLLECTION_HANDOFF.md](COLLECTION_HANDOFF.md) gives the proposal, working-prototype checks and portable data contract. A platform decision must preserve meaningful questions, full optional adult detail, age/permission paths, stable IDs and safe-contact instructions. No receiver, account or storage system is activated by the current design changes.
 
-The release uses adult/youth schema `7.0`, revision `2026-09-27-local-experience-and-programmes`, and younger-child schema `1.2`, revision `2026-09-27-background`. The IT delivery includes a question bank and source archive built from the recorded commit. The source archive is a portable front end, not an already configured collection system.
+The release uses adult/youth schema `7.0`, revision `2026-09-27-local-experience-and-programmes-r2`, and younger-child schema `1.2`, revision `2026-09-27-background`. The IT delivery includes a question bank and source archive built from the recorded commit. The source archive is a portable front end, not an already configured collection system.
 
 ## Respondent experience
 
@@ -101,3 +101,6 @@ Jacob approved implementation of the six findings in the read-only review of rel
 Region is omitted when it cannot change a contact or access requirement, and becomes NT/outside-NT when that is the only relevant distinction. Adult grief uses a single adult band. A serving member's own medical-travel enquiry no longer asks NT residence. Alice Springs local Aboriginal wellbeing can lead to verified Congress services after the relevant audience check. Recent-arrival travel enquiries use Patient Travel Office guidance with the residency boundary stated, never a Medicare-claims substitute.
 
 Long mobile questions keep Continue within reach; related links follow it. Primary contact and hours precede longer access details. Routine relationship selection has no crisis panel; selected safety needs retain contextual help. Printing includes usable official URLs/emails and the check date. These scoped changes are implemented without modifying survey or interview files.
+
+
+The adult community-connection prompt now asks what has made connection easier or harder, giving positive and difficult experiences equal room in the same optional field. Its position and answer ID remain unchanged; questionnaire revision r2 records the wording change.

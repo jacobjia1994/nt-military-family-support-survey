@@ -50,7 +50,7 @@ Excluding invitation/participation choices and including review, adult main-rout
 
 ## Answer model and interpretation
 
-Adult/youth exports use schema **7.0**, revision **2026-09-27-local-experience-and-programmes**, with residence scope/route, local recall geography and the respondent-perspective analysis unit. Adult `age_group` remains optional and does not change routing. The area record retains `received`, `sources`, `barriers`, `comment`, `additional_support_now` and `support_requested`. The youth record preserves all checked needs separately from its optional focus.
+Adult/youth exports use schema **7.0**, revision **2026-09-27-local-experience-and-programmes-r2**, with residence scope/route, local recall geography and the respondent-perspective analysis unit. Adult `age_group` remains optional and does not change routing. The area record retains `received`, `sources`, `barriers`, `comment`, `additional_support_now` and `support_requested`. The youth record preserves all checked needs separately from its optional focus.
 
 New fields include `programmes`, `programme_priority`, relevant `children_ages`, `participation_formats`, `participation_enablers`, conditional `times` and `berrimah_access`, plus their applicable Other fields. Future interests stay available with No, declined or blank past need status. The participation-format measure replaces the old information/advice `delivery` measure; do not silently combine them across revisions. Preferences are not contact consent.
 

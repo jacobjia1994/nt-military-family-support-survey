@@ -1,6 +1,6 @@
 # Consultation flow and measurement contract
 
-Updated 27 September 2026. Adult/youth schema `7.0`, questionnaire revision `2026-09-27-local-experience-and-programmes`. Younger-child schema `1.2`, revision `2026-09-27-background`. This remains a team-review interface without a response receiver. Collection platform and storage are for LC and its IT team to select; see [COLLECTION_HANDOFF.md](COLLECTION_HANDOFF.md).
+Updated 27 September 2026. Adult/youth schema `7.0`, questionnaire revision `2026-09-27-local-experience-and-programmes-r2`. Younger-child schema `1.2`, revision `2026-09-27-background`. This remains a team-review interface without a response receiver. Collection platform and storage are for LC and its IT team to select; see [COLLECTION_HANDOFF.md](COLLECTION_HANDOFF.md).
 
 ## Purpose and sequence
 

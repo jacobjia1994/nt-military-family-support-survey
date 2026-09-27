@@ -718,7 +718,7 @@
         },
         {
           "key": "community_connection",
-          "label": "What, if anything, has helped you or your family feel connected in Greater Darwin?",
+          "label": "What has made it easier or harder for you or your family to feel connected in Greater Darwin?",
           "type": "text",
           "options": [],
           "hint": "Optional. Please leave out names or other details that could identify someone."
@@ -2224,7 +2224,7 @@
         },
         {
           "key": "community_connection",
-          "label": "What, if anything, has helped you or your family feel connected in Greater Darwin?",
+          "label": "What has made it easier or harder for you or your family to feel connected in Greater Darwin?",
           "type": "text",
           "options": [],
           "hint": "Optional. Please leave out names or other details that could identify someone."
@@ -3730,7 +3730,7 @@
         },
         {
           "key": "community_connection",
-          "label": "What, if anything, has helped you or your family feel connected in Greater Darwin?",
+          "label": "What has made it easier or harder for you or your family to feel connected in Greater Darwin?",
           "type": "text",
           "options": [],
           "hint": "Optional. Please leave out names or other details that could identify someone."

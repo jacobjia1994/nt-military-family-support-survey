@@ -216,7 +216,7 @@ function cleanExport(answers,version,domains) {
     if(!(copy.participation_formats||[]).includes('other'))delete copy.participation_other;
     if(!(copy.participation_enablers||[]).includes('other'))delete copy.enablers_other;
   }
-  return {schema_version:'7.0',questionnaire_revision:'2026-09-27-local-experience-and-programmes',geography_version:GEOGRAPHY?.version||null,consultation_route:route,residence_scope:residenceScope(copy),recall_months:route==='earlier_experience'?null:version==='adult'?12:3,recall_geography:'time_living_in_greater_darwin',analysis_unit:'respondent_perspective_not_household',measurement_scope:'local_support_experiences_and_programme_preferences',details_optional:true,collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'page_memory_only; not submitted',answers:copy};
+  return {schema_version:'7.0',questionnaire_revision:'2026-09-27-local-experience-and-programmes-r2',geography_version:GEOGRAPHY?.version||null,consultation_route:route,residence_scope:residenceScope(copy),recall_months:route==='earlier_experience'?null:version==='adult'?12:3,recall_geography:'time_living_in_greater_darwin',analysis_unit:'respondent_perspective_not_household',measurement_scope:'local_support_experiences_and_programme_preferences',details_optional:true,collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'page_memory_only; not submitted',answers:copy};
 }
 
 const main = document.querySelector('#main');
@@ -353,7 +353,7 @@ function page(step) {
     ]};
     case 'place':return {title:'Your life in Greater Darwin',intro:'',fields:[
       field('time_nt','How long have you lived in Greater Darwin?','single',opts([['never','I have not lived in Greater Darwin'],['under3','Less than 3 months'],['3to12','3 months to less than 1 year'],['1to3','1 year to less than 3 years'],['over3','3 years or more'],['unsure','Not sure'],['prefer','Prefer not to answer']]),'Count your current or most recent stay only.'),
-      field('community_connection','What, if anything, has helped you or your family feel connected in Greater Darwin?','text',[],'Optional. '+privacyHint())
+      field('community_connection','What has made it easier or harder for you or your family to feel connected in Greater Darwin?','text',[],'Optional. '+privacyHint())
     ]};
     default:return {title:'Check your answers',intro:'',fields:[]};
   }

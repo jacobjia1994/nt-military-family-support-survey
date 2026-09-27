@@ -520,11 +520,11 @@ test('residence precedes open reflection and youth locality remains optional on 
   assert.equal(stepsFor({ suburb: 'wagaman' }, 'youth').some(step => step.id === 'place'), false);
 });
 
-test('the optional positive connection prompt survives no-needs and earlier-experience routes', () => {
+test('the optional connection-experience prompt survives no-needs and earlier-experience routes', () => {
   for(const version of ['adult','youth']){
     const field=pageFor(version==='adult'?'place':'connection',version).fields.find(item=>item.key==='community_connection');
     assert.equal(field.required,undefined);
-    assert.match(field.label,version==='adult'?/you or your family feel connected/:/feel welcome or included/);
+    assert.match(field.label,version==='adult'?/you or your family to feel connected/:/feel welcome or included/);
     const base={roles:['partner'],serving_nt:'yes',needs_status:'no',community_connection:'The local playgroup helped us meet people.'};
     const noNeeds=plain(survey.cleanExport(base,version,domainsFor(version)));
     assert.equal(noNeeds.answers.community_connection,base.community_connection);
@@ -1400,7 +1400,7 @@ test('schema 7 exports locality and programme metadata without reinterpreting le
   const domains = survey.setContext('adult', answers);
   const result = plain(survey.cleanExport(answers, 'adult', domains));
   assert.equal(result.schema_version, '7.0');
-  assert.equal(result.questionnaire_revision, '2026-09-27-local-experience-and-programmes');
+  assert.equal(result.questionnaire_revision, '2026-09-27-local-experience-and-programmes-r2');
   assert.equal(result.consultation_route, 'current_local');
   assert.equal(result.residence_scope, 'greater_darwin');
   assert.equal(result.recall_geography, 'time_living_in_greater_darwin');

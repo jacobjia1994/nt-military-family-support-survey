@@ -12,7 +12,7 @@ Other confirmed requirements are: Greater Darwin including Litchfield; suburb/lo
 
 ## Instrument version and portable package
 
-The current adult/youth source is schema `7.0`, revision `2026-09-27-local-experience-and-programmes`; the younger-child source is schema `1.2`, revision `2026-09-27-background`. These use `collection_mode: internal_review_no_transmission`. Do not change that collection claim until the real LC receiver and acknowledgement path are implemented.
+The current adult/youth source is schema `7.0`, revision `2026-09-27-local-experience-and-programmes-r2`; the younger-child source is schema `1.2`, revision `2026-09-27-background`. These use `collection_mode: internal_review_no_transmission`. Do not change that collection claim until the real LC receiver and acknowledgement path are implemented.
 
 The release handoff package is `outputs/LC_IT_handoff/question-bank.json` plus `outputs/LC_IT_handoff/frontend-source.zip` in Jacob's delivery workspace. The archive is built from the recorded release commit. Use the question bank together with the source and [FLOW_REDESIGN.md](FLOW_REDESIGN.md) for fields, options and branch semantics; it is not an automatically deployed Forms template or receiver. [ANALYSIS_PROTOCOL.md](ANALYSIS_PROTOCOL.md) is the reporting contract for either platform.
 
