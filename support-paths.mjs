@@ -1,5 +1,5 @@
-import { matchSupport as baseMatch } from './support-model.mjs?v=20260927-1';
-import { regions as legacyRegions } from './support-model.mjs?v=20260927-1';
+import { matchSupport as baseMatch } from './support-model.mjs?v=20260927-2';
+import { regions as legacyRegions } from './support-model.mjs?v=20260927-2';
 const regions=[...legacyRegions.slice(0,5),['gove','Nhulunbuy / East Arnhem'],...legacyRegions.slice(5)];
 const opts = rows => rows.map(([value,label,detail])=>({value,label,...(detail?{detail}:{})}));
 const question=(id,label,rows,hint)=>({id,label,options:opts(rows),...(hint?{hint}:{})});
@@ -19,7 +19,7 @@ const needs = {
  money:[['bills','Debt or bills'],['income','Income has dropped or stopped'],['essentials','Food or other essentials'],['housing','Finding or keeping housing'],['tonight','Nowhere to stay tonight'],['youth-housing','A young person is at risk of losing their home'],['tenancy','A rent, bond or tenancy problem'],['defence-housing','Defence housing or a posting move'],['claims','DVA claims or benefits'],['family-crisis','Practical help during a family crisis']],
  work:[['job','Finding work or changing career'],['study','Study or training'],['partner','Career support for a Defence partner'],['reserve','Balancing Reserve service with civilian work'],['transition','Leaving Defence or recently left']],
  care:[['health','Medical advice or finding care'],['baby','Pregnancy or a new baby'],['disability','Disability support or advocacy'],['home-care','Help with daily tasks at home'],['carer','Support for an unpaid carer'],['older','Care as someone gets older'],['travel','Travel for medical treatment'],['costs','Help with healthcare costs']],
- connection:[['local','Local groups and activities'],['settle','Getting connected after a move'],['apart','Family support during time apart'],['migrant','Migrant or refugee settlement support']]
+ connection:[['local','Local groups and activities'],['defence-child','Activities for a Defence child (8–18)'],['settle','Getting connected after a move'],['apart','Family support during time apart'],['migrant','Migrant or refugee settlement support']]
 };
 const auxiliaryNeeds={private:'Anonymous support about Defence life',lgbtq:'LGBTIQA+ peer support',men:'Counselling for men (15 or older)',indigenous:'Aboriginal or Torres Strait Islander support'};
 const ageQuestion=question('age','How old is the person needing support?',[
@@ -122,14 +122,14 @@ export function questionsFor(topic,a={}) {
   if(n==='older'&&a.olderNeed==='alone'){qs.push(question('careFinderFit','Which applies?',[['eligible','65 or older (50+ if Aboriginal or Torres Strait Islander), and no trusted person able to help'],['other','Another situation or not sure']]));qs.push(regionQuestion);}
   if(n==='older'&&a.olderNeed==='care')qs.push(veteranCareQuestion);
   if(['costs','travel'].includes(n)){qs.push(connectionQuestion);if(n==='costs'||a.connection==='serving')qs.push(roleQuestion);}
-  if(n==='travel'&&!(a.connection==='serving'&&!['partner','child'].includes(a.role)))qs.push(question('dvaTravel','Does the patient have a Veteran Card that covers this treatment?',[['yes','Yes'],['no','No'],['unsure','Not sure']], 'DVA-funded travel has different rules from NT patient travel assistance.'));
+  if(n==='travel'&&!(a.connection==='serving'&&a.role==='member'))qs.push(question('dvaTravel','Does the patient have a Veteran Card that covers this treatment?',[['yes','Yes'],['no','No'],['unsure','Not sure']], 'DVA-funded travel has different rules from NT patient travel assistance.'));
   if(['disability','travel','costs'].includes(n))qs.push(regionQuestion);
   if(n==='travel'&&a.dvaTravel!=='yes'&&a.region&&a.region!=='outside')qs.push(question('ntResidence','Has the patient usually lived in the NT for at least six months?',[['yes','Yes'],['no','No'],['unsure','Not sure']], 'This affects NT patient travel assistance. Your healthcare provider must arrange the application.'));
-  if(n==='costs'&&a.connection==='serving'&&['partner','child'].includes(a.role))qs.push(question('dependant','Are they a recognised Defence dependant?',[['yes','Yes'],['no','No or not sure']]));
- } else if(topic==='connection') {if(n!=='migrant')qs.push(connectionQuestion);if(['local','settle'].includes(n))qs.push(roleQuestion);qs.push(regionQuestion);}
+  if(n==='costs'&&a.connection==='serving'&&a.role!=='member')qs.push(question('dependant','Are they a recognised Defence dependant?',[['yes','Yes'],['no','No or not sure']]));
+ } else if(topic==='connection') {if(!['migrant','defence-child'].includes(n))qs.push(connectionQuestion);if(['local','settle'].includes(n))qs.push(roleQuestion);qs.push(regionQuestion);}
  else if(topic==='help') {qs.push(connectionQuestion);}
  const regionMode=regionModeFor(topic,a);
- const filtered=qs.filter(q=>q.id!=='region'||regionMode!=='none').filter(q=>q.id!=='ntResidence'||!(topic==='care'&&n==='travel'&&a.connection==='serving'&&!['partner','child'].includes(a.role)));
+ const filtered=qs.filter(q=>q.id!=='region'||regionMode!=='none').filter(q=>q.id!=='ntResidence'||!(topic==='care'&&n==='travel'&&a.connection==='serving'&&a.role==='member'));
  return filtered.map(q=>q.id==='region'&&regionMode==='jurisdiction'?question('region','Is support needed in the Northern Territory?',[['nt','Northern Territory'],['outside','Outside the NT']]):q);
 }
 
@@ -143,8 +143,8 @@ export function regionModeFor(topic,a={}) {
   return ['feelings','treatment','grief'].includes(n)||(n==='indigenous'&&a.indigenousNeed==='local')?'full':'none';
  }
  if(topic==='relationships') {
-  if(['counselling','misconduct'].includes(n)||(n==='unsafe'&&a.violenceSupport==='any')||(n==='child-violence'&&a.childViolenceAge!=='0-12'))return 'none';
-  if(n==='separation'||(n==='legal'&&!(a.womenLegal==='yes'&&a.legalIssue==='family-civil')))return 'jurisdiction';
+  if(n==='misconduct'||(n==='unsafe'&&a.violenceSupport==='any')||(n==='child-violence'&&a.childViolenceAge!=='0-12'))return 'none';
+  if(['counselling','separation'].includes(n)||(n==='legal'&&!(a.womenLegal==='yes'&&a.legalIssue==='family-civil')))return 'jurisdiction';
   return 'full';
  }
  if(topic==='parenting') {
@@ -154,13 +154,14 @@ export function regionModeFor(topic,a={}) {
  if(topic==='money')return ['income','family-crisis','defence-housing'].includes(n)?'none':['tonight','tenancy'].includes(n)?'jurisdiction':'full';
  if(topic==='work')return n==='transition'&&(serving||(a.connection==='former'&&['recent','unsure'].includes(a.leftWhen)))?'jurisdiction':'none';
  if(topic==='care') {
-  if(n==='costs'||(n==='travel'&&(a.dvaTravel==='yes'||(a.connection==='serving'&&!['partner','child'].includes(a.role)))))return 'none';
+  if(n==='costs'||(n==='travel'&&(a.dvaTravel==='yes'||(a.connection==='serving'&&a.role==='member'))))return 'none';
   return ['disability','travel'].includes(n)||(n==='older'&&a.olderNeed==='alone')||(n==='baby'&&['nurse','young-parent','wurli'].includes(a.babyNeed))?'full':'none';
  }
- return topic==='connection'?'full':'none';
+ return topic==='connection'&&n!=='defence-child'?'full':'none';
 }
 
 export function preferencesFor(topic,a={}) {
+ if(topic==='relationships'&&['legal','separation','unsafe','refuge','assault','child-violence'].includes(a.need)&&a.region!=='outside')return [{value:'indigenous-legal',label:'Aboriginal-led legal and family violence support'}];
  if(topic!=='mental'||!['feelings','treatment','grief','suicide-loss','addiction'].includes(a.need))return [];
  const result=[{value:'anonymous',label:'Anonymous support'},{value:'lgbtq',label:'LGBTIQA+ peer support'},{value:'indigenous',label:'Aboriginal or Torres Strait Islander support'}];
  if(['adult','18-25','26+'].includes(a.age))result.push({value:'men',label:'Counselling for men'});
@@ -189,7 +190,10 @@ export function getResults(topic,a={}) {
     }
     if(n==='feelings')preferenceLink={label:'Looking for ongoing treatment or help with treatment costs?',href:'#mental/treatment'};
     if(n==='treatment'){
-     if(!child(a)&&['serving','member'].includes(a.counselling)){
+     if(!child(a)&&a.counselling==='serving'){
+      ids=['adf-healthcare','open-arms','dva-mental-treatment'];
+      if(inNT)moreIds.push('connect-wellbeing-nt');
+     }else if(!child(a)&&a.counselling==='member'){
       ids=['dva-mental-treatment',...(inNT?['connect-wellbeing-nt']:[]),'open-arms'];
      }else if(!child(a)&&a.counselling==='reserve'&&a.role==='member'){
       ids=['dva-mental-treatment',...(inNT?['connect-wellbeing-nt']:[]),'reserve-counselling'];
@@ -204,6 +208,11 @@ export function getResults(topic,a={}) {
      say='I would like help arranging ongoing mental-health care and checking the treatment or funding options I can access.';
      if(age!=='0-4')note='These services can check the right treatment and referral pathway. Eligibility and any costs depend on the programme; a referral does not guarantee an appointment.';
     }else if(region==='tennant'&&['12-17','18-25'].includes(age))moreIds.push('catholiccare-yes-tennant');
+   }
+   if(['5-11','12-17'].includes(age)){
+    // Military-aware support remains optional; the card explains family eligibility.
+    ids=[ids[0],'open-arms',...ids.slice(1)];
+    if(age==='12-17')moreIds.push('defence-kids');
    }
    if(['serving','reserve'].includes(a.counselling)&&!child(a))moreIds.push('adf-allhours');
   } else if(n==='practical-loss'){
@@ -233,10 +242,14 @@ export function getResults(topic,a={}) {
     ids=['open-arms-check','family-advice','beyondblue'];
     note='Some former partners, reservists and bereaved relatives can use Open Arms. Ask its team to check your circumstances; the other contacts do not require Defence eligibility.';
    }
+   if(inNT){
+    ids=a.counselling==='other'?['relationships-australia-nt',...ids]:[ids[0],'relationships-australia-nt',...ids.slice(1)];
+   }
   }
   else if(n==='refuge'){
    const local={darwin:'dawn-shelter',palmerston:'dawn-shelter',katherine:'kwcc',alice:'wossca',tennant:'tennant-refuge',gove:'miyalk-shelter'}[region];
    ids=['woman','woman-child'].includes(a.refugeFor)&&local&&(!['darwin','palmerston'].includes(region)||a.refugeFor==='woman-child')?[local,'respect']:['respect'];
+   if(a.refugeFor==='woman'&&['darwin','palmerston'].includes(region))ids=['catherine-booth-house','respect'];
    note='If someone is in immediate danger, call 000. Use a safer device if this one may be monitored. Ask about vacancies and any accommodation charges.';
    say='I need somewhere safe because of violence. Can you help with safe accommodation now?';
   } else if(n==='child-violence'){ids=a.childViolenceAge==='0-12'&&['darwin','palmerston'].includes(region)?['safe-reconnected','parentline']:a.childViolenceAge==='13-17'?['kids-helpline','respect']:['respect'];say='I would like help for a child affected by family violence.';}
@@ -290,7 +303,7 @@ export function getResults(topic,a={}) {
   } else if(n==='defence-housing'){
    ids=serving?(a.housingTask==='home'?['dha-housing']:a.housingTask==='removal'?['toll-transitions']:['dmfs-helpline']):['wellbeing-agency'];
    say='I need help with housing or removal arrangements for a Defence posting.';
-  } else if(n==='claims'){ids=['dva'];if(['darwin','palmerston'].includes(region))moreIds=['darwin-vfwc'];say='I would like help understanding and lodging a DVA claim.';}
+  } else if(n==='claims'){ids=inNT?['rsl-sa-nt-advocacy','dva']:['dva'];if(['darwin','palmerston'].includes(region))moreIds=['darwin-vfwc'];say='I would like help understanding and lodging a DVA claim.';}
   else if(n==='family-crisis'){
    ids=serving?['defence-emergency-care','dmfs-helpline','dva-acute-support']:['dva-acute-support','wellbeing-agency'];
    say=serving?'Our family is in a crisis and needs practical care support. Can a social worker help assess the options?':'I would like to check whether our family can access the DVA Acute Support Package.';
@@ -338,8 +351,9 @@ export function getResults(topic,a={}) {
    say='I would like help finding or arranging the right care for an older person.';
   } else if(n==='travel'){
    const office={darwin:'patient-travel-darwin',palmerston:'patient-travel-darwin',katherine:'patient-travel-katherine',alice:'patient-travel-alice',tennant:'patient-travel-tennant',gove:'patient-travel-gove'}[region]||'patient-travel-offices';
-   const familyTravel=fulltime&&['partner','child'].includes(a.role);
-   if(fulltime&&!familyTravel)ids=['defence-medical-enquiry'];
+   const memberTravel=fulltime&&a.role==='member';
+   const familyTravel=fulltime&&['partner','child','other'].includes(a.role);
+   if(memberTravel)ids=['defence-medical-enquiry'];
    else if(a.dvaTravel==='yes'){
     ids=['dva-treatment-travel','dva-booked-car'];
     note='DVA travel depends on the treatment covered by the patient’s Veteran Card and travel conditions. The NT PATS residence rule does not apply to this DVA route. Check approval before booking.';
@@ -349,17 +363,19 @@ export function getResults(topic,a={}) {
     note='PATS usually requires six months of NT residence, so funding may not apply yet. Ask the Patient Travel Office about your referral and eligibility, and ask your treating team about travel planning or other support before booking.';noteBefore=true;
    }else if(inNT){ids=[['darwin','palmerston','katherine','alice','tennant','gove'].includes(region)?'pats-'+region:'pats-nt'];if(familyTravel)ids.push('defence-medical-travel');}
    else {ids=[primaryNav];note='Travel assistance depends on the state or territory. Ask your treating clinic or this navigation team to connect you with the relevant patient travel service.';}
-   if(a.dvaTravel==='unsure'&&!(fulltime&&!familyTravel))moreIds.push('dva-treatment-travel');
+   if(a.dvaTravel==='unsure'&&!memberTravel)moreIds.push('dva-treatment-travel');
    say='I need to travel for specialist treatment. I would like help understanding the referral, eligibility and travel options before booking.';
   } else if(n==='costs'){
-   ids=fulltime&&['partner','child'].includes(a.role)&&a.dependant==='yes'?['adf-family-health','medicare-costs']:a.role==='member'&&a.connection==='former'?['dva','medicare-costs']:['medicare-costs'];
+   ids=fulltime&&a.role!=='member'&&a.dependant==='yes'?['adf-family-health','medicare-costs']:a.role==='member'&&a.connection==='former'?['dva','medicare-costs']:['medicare-costs'];
    if(fulltime&&a.role==='member')ids=['adf-healthcare','defence-medical-enquiry'];
    else if(a.role==='member'&&['former','reserve'].includes(a.connection)){ids=['dva','medicare-costs'];moreIds.push('dva-mental-treatment');}
    say='I would like to check what help is available with medical costs and what needs approval or registration.';
   }
  } else if(topic==='connection'){
   if(n==='migrant'){
-   ids=['darwin','palmerston'].includes(region)?['ramss']:['wellbeing-agency'];say='I would like help settling in and connecting with my local community.';
+   ids=['darwin','palmerston'].includes(region)?['ramss']:region==='alice'?['mcsca']:['wellbeing-agency'];say='I would like help settling in and connecting with my local community.';
+  } else if(n==='defence-child'){
+   ids=['defence-kids'];say='I would like to ask about activities for a child aged 8–18 affected by Defence family life, and whether the programme fits their situation.';
   } else if(n==='apart')base('moving','apart');
   else {const groups=region==='katherine'?'defence-groups-tindal':['darwin','palmerston'].includes(region)?'defence-groups-darwin':localOffice;ids=serving?[groups,'soldieron-connect']:['soldieron-connect','wellbeing-agency'];if(['darwin','palmerston'].includes(region)){if(['member','partner','child'].includes(a.role)&&a.connection!=='unsure')ids=['mates4mates-darwin',...ids];ids.push('mcnt-connection');}say='I would like to find local activities or groups where I can meet people.';}
  } else if(topic==='help'){ids=[primaryNav];say='I am not sure where to start. Can you help me work out which support fits my situation?';}
@@ -373,6 +389,11 @@ export function getResults(topic,a={}) {
  if(valid.has('indigenous')&&selected.has('indigenous')){
   preferenceGroups.push({title:'Aboriginal or Torres Strait Islander support',ids:n==='suicide-loss'?['thirrili','13yarn']:['13yarn'],note:n==='suicide-loss'?'Culturally appropriate support after suicide.':'13YARN is phone crisis support; it does not replace ongoing local care.',link:{label:'Find local Aboriginal-led wellbeing support',href:'#mental/indigenous'}});
 
+ }
+ if(valid.has('indigenous-legal')&&selected.has('indigenous-legal')&&inNT){
+  const knownTopEnd=['darwin','palmerston','katherine','gove'].includes(region);
+  const groups=region==='alice'?[{title:'Central Australia',ids:['caaflu-central']}]:region==='tennant'?[{title:'Barkly',ids:['caaflu-barkly']}]:knownTopEnd?[{title:'Top End and East Arnhem',ids:['naafls',...(['darwin','palmerston'].includes(region)?['daiws']:[])]}]:[{title:'Top End and East Arnhem',ids:['naafls']},{title:'Central Australia',ids:['caaflu-central']},{title:'Barkly',ids:['caaflu-barkly']}];
+  for(const group of groups)preferenceGroups.push({...group,title:'Aboriginal-led support — '+group.title,note:'An optional contact. Check the service area and who it helps below; the main support contacts remain available.'});
  }
 
  return {ids:ids.slice(0,3),moreIds,note,say,noteBefore,contextLabel,preferenceGroups,preferenceLink};

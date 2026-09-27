@@ -13,7 +13,6 @@ const questionIds = (topic, answers) => questionsFor(topic, answers).map(q => q.
 test('nationwide support does not require a location that cannot affect the answer', () => {
   const cases = [
     ['mental', { need: 'grief', age: 'adult', counselling: 'other' }],
-    ['relationships', { need: 'counselling', counselling: 'partner' }],
     ['money', { need: 'income', connection: 'former', role: 'partner' }],
     ['parenting', { need: 'childcare', connection: 'former', careHours: 'regular' }],
     ['work', { need: 'transition', connection: 'former' }]
@@ -27,6 +26,12 @@ test('nationwide support does not require a location that cannot affect the answ
       assert.deepEqual(getResults(topic, { ...answers, region }), result);
     }
   }
+  // A newly available NT counselling service now makes jurisdiction relevant.
+  const counselling = {need:'counselling', counselling:'partner'};
+  assert.equal(regionModeFor('relationships', counselling), 'jurisdiction');
+  assert.ok(questionIds('relationships', counselling).includes('region'));
+  assert.ok(allIds(getResults('relationships', {...counselling, region:'nt'})).includes('relationships-australia-nt'));
+  assert.ok(!allIds(getResults('relationships', {...counselling, region:'outside'})).includes('relationships-australia-nt'));
 });
 
 test('a full-time member seeking their own medical travel has no NT residence or region question', () => {

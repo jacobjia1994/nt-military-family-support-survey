@@ -57,7 +57,7 @@ test('every route and context resolves to short contactable sourced results',()=
 });
 test('privacy and questionnaire boundaries',()=>{
  const page=readFileSync(new URL('../support.html',import.meta.url),'utf8');const ui=readFileSync(new URL('../support.js',import.meta.url),'utf8');
- assert.ok(page.indexOf('<footer>')<page.indexOf('href="tel:000"'));
+ assert.match(page,/href="tel:000"/);
  assert.doesNotMatch(page+ui,/Search all topics|fetch\(|XMLHttpRequest|sendBeacon|localStorage|sessionStorage|document\.cookie/);
  assert.match(page,/connect-src 'none'/);assert.doesNotMatch(page+ui,/contact\.html|survey\.js/);
  assert.match(ui,/type="submit"/);assert.match(ui,/rel="noreferrer"/);assert.match(page,/<noscript>/);

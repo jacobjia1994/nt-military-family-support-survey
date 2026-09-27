@@ -1,5 +1,5 @@
-import {topics, questionsFor, preferencesFor, getResults, legacyRoute} from './support-paths.mjs?v=20260927-1';
-import {services} from './support-catalog.mjs?v=20260927-1';
+import {topics, questionsFor, preferencesFor, getResults, legacyRoute} from './support-paths.mjs?v=20260927-2';
+import {services} from './support-catalog.mjs?v=20260927-2';
 
 const root = document.getElementById('finder');
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -47,7 +47,7 @@ function showHome() {
   currentQuestion = null;
   handoff = null;
   editingAnswers = false;
-  root.innerHTML = `<h1 tabindex="-1">Find support in the NT</h1><p class="intro">Free advice and support for Defence members, veterans and families.</p><ul class="task-grid" aria-label="Choose the help you need">${topics.map(topic => `<li><a class="task-link" href="#${topic.id}"><span><strong>${esc(topic.title)}</strong><small>${esc(topic.hint)}</small></span>${arrow}</a></li>`).join('')}</ul><p class="human-link"><a href="#help">Not sure where to start?</a></p>`;
+  root.innerHTML = `<h1 tabindex="-1">Find support in the NT</h1><p class="intro">Support for Defence members, veterans and families.</p><ul class="task-grid" aria-label="Choose the help you need">${topics.map(topic => `<li><a class="task-link" href="#${topic.id}"><span><strong>${esc(topic.title)}</strong><small>${esc(topic.hint)}</small></span>${arrow}</a></li>`).join('')}</ul><p class="human-link"><a href="#help">Not sure where to start?</a></p>`;
 }
 function safetyNotice(topic) {
   if (topic.id !== 'relationships') return '';
@@ -250,6 +250,16 @@ document.querySelector('.skip-link')?.addEventListener('click', event => {
   event.preventDefault();
   document.getElementById('main').focus();
   document.getElementById('main').scrollIntoView();
+});
+// In-page help must not change the routing hash or discard an unfinished answer.
+document.addEventListener('click', event => {
+  const anchor = event.target.closest('a[data-page-jump]');
+  if (!anchor) return;
+  const target = document.getElementById(anchor.dataset.pageJump);
+  if (!target) return;
+  event.preventDefault();
+  target.focus({preventScroll:true});
+  target.scrollIntoView({block:'start'});
 });
 window.addEventListener('hashchange',render);
 let printOpened = [];

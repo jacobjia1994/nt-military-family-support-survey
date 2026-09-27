@@ -1,7 +1,8 @@
-import {reviewedReferrals} from './support-referrals.mjs?v=20260927-1';
-import {expandedServices} from './support-expanded.mjs?v=20260927-1';
-import {nationalReviewedServices} from './support-national-reviewed.mjs?v=20260927-1';
-import {ntReviewedServices} from './support-nt-reviewed.mjs?v=20260927-1';
+import {reviewedReferrals} from './support-referrals.mjs?v=20260927-2';
+import {expandedServices} from './support-expanded.mjs?v=20260927-2';
+import {nationalReviewedServices} from './support-national-reviewed.mjs?v=20260927-2';
+import {ntReviewedServices} from './support-nt-reviewed.mjs?v=20260927-2';
+import {astraReviewedServices} from './support-astra-reviewed.mjs?v=20260927-2';
 // Curated contact routes, independently checked against official provider sources.
 // A free first service does not imply that every onward service is free.
 const checked = '2026-09-26';
@@ -32,6 +33,7 @@ export const services = {
     url:'https://pay-conditions.defence.gov.au/pacman/chapter-5/part-3',sources:['https://pay-conditions.defence.gov.au/pacman/chapter-5/part-3','https://pay-conditions.defence.gov.au/form/contact-us']
   }),
   ...expandedServices,
+  ...astraReviewedServices,
   'legal-national': service({
     name: 'Find legal aid in your state or territory', audience: 'People looking for legal help in Australia', area: 'Australia-wide · official contact directory',
     offer: 'Find the appropriate legal aid service for your location and legal problem.', cost: 'Free directory. Advice and representation eligibility vary by service.',
@@ -71,16 +73,17 @@ export const services = {
     url: 'https://www.defence.gov.au/adf-members-families/family-programs-local-services/area-offices/tindal-area-office'
   }),
   'open-arms': service({
+    checked: '2026-09-27',
     name: 'Open Arms',
     audience: 'People with full-time ADF service, their partners and children, including adult children',
     area: 'Australia-wide · phone and appointments',
     offer: 'Military-aware support with stress, relationships and family life. Call to discuss individual, couple or family counselling.',
     cost: 'Free, confidential support.',
-    access: 'Contact directly. Other reservists, former partners and bereaved relatives have specific eligibility pathways.',
+    access: 'Contact directly without a Veteran Card. The team assesses suitable counselling and consent for eligible children. Other reservists, former partners and bereaved relatives have specific eligibility pathways.',
     hours: '24 hours, every day', phone: '1800 011 046',
     url: 'https://www.openarms.gov.au/who-we-help/eligibility',
     extraUrl: 'https://www.openarms.gov.au/who-we-help/eligibility', extraLabel: 'Check other eligibility pathways',
-    sources: ['https://www.openarms.gov.au/who-we-help/eligibility', 'https://www.openarms.gov.au/sites/default/files/2025-11/Open%20Arms%20Eligibility%20Matrix%202025.pdf', 'https://www.openarms.gov.au/who-we-help/family']
+    sources: ['https://www.openarms.gov.au/who-we-help/eligibility', 'https://www.openarms.gov.au/sites/default/files/2025-11/Open%20Arms%20Eligibility%20Matrix%202025.pdf', 'https://www.openarms.gov.au/who-we-help/family', 'https://www.openarms.gov.au/about/our-model-care/frequently-asked-questions']
   }),
   'darwin-mmhc': service({
     name: 'Darwin Medicare Mental Health Centre',
@@ -159,15 +162,17 @@ export const services = {
     url: 'https://headspace.org.au/headspace-centres/alice-springs/'
   }),
   'eheadspace': service({
+    checked: '2026-09-27',
     name: 'eheadspace',
     audience: 'Young people aged 12–25, and family or friends supporting them',
     area: 'Australia-wide · phone or online',
     offer: 'Talk through a young person’s mental health or wellbeing with a worker.',
     cost: 'Free support; request a callback if mobile call costs apply.',
-    access: 'No referral needed. Online chat requires an account.',
+    access: 'No referral needed. Sign in or create an account to use webchat; a wait may apply. The last new chats are accepted 30 minutes before closing.',
     hours: 'Daily 3pm–10pm, your local time', phone: '1800 650 890',
     url: 'https://headspace.org.au/online-and-phone-support/connect-with-us/',
-    sources: ['https://headspace.org.au/online-and-phone-support/connect-with-us/', 'https://headspace.org.au/emergency-assistance/', 'https://headspace.org.au/online-and-phone-support/connect-with-us/faqs/']
+    chatUrl: 'https://headspace.org.au/my-account/waiting-room/', chatLabel: 'Sign in for eheadspace webchat',
+    sources: ['https://headspace.org.au/online-and-phone-support/connect-with-us/', 'https://headspace.org.au/online-and-phone-support/updates/', 'https://headspace.org.au/emergency-assistance/', 'https://headspace.org.au/online-and-phone-support/connect-with-us/faqs/']
   }),
   'kids-helpline': service({
     checked: '2026-09-27',
@@ -181,13 +186,16 @@ export const services = {
     sources: ['https://www.kidshelpline.com.au/about/about-khl', 'https://www.kidshelpline.com.au/get-help', 'https://www.kidshelpline.com.au/get-help/webchat-counselling/']
   }),
   'parentline': service({
+    checked: '2026-09-27',
     name: 'Parentline', audience: 'Parents and carers in the NT or Queensland', area: 'NT / Queensland · phone or chat',
     offer: 'Talk with a counsellor about parenting, child behaviour, relationships or stress at home.',
     cost: 'Free counselling.',
-    access: 'You can call about a baby, child or teenager. The support is for you as their parent or carer.',
-    hours: 'Daily; check the provider’s current phone/chat hours', phone: '1300 30 1300',
+    access: 'Call about a baby, child or teenager, or open the Parentline webchat form. Chat starts with a short questionnaire and may have a queue. The counselling is for you as their parent or carer.',
+    hours: 'Daily 5:30am–11:30pm NT (6am–midnight AEST)', phone: '1300 30 1300',
     url: 'https://parentline.com.au/about',
-    extraUrl: 'https://parentline.com.au/faq/how-can-i-contact-parentline', extraLabel: 'Phone and chat availability'
+    chatUrl: 'https://www.kidshelpline.com.au/parentline-webchat', chatLabel: 'Open Parentline webchat',
+    extraUrl: 'https://parentline.com.au/get-help/webchat-counselling', extraLabel: 'How Parentline webchat works',
+    sources: ['https://parentline.com.au/about', 'https://parentline.com.au/faq/how-can-i-contact-parentline', 'https://parentline.com.au/get-help/webchat-counselling', 'https://www.kidshelpline.com.au/parentline-webchat']
   }),
   'territory-faces': service({
     name: 'Territory FACES', audience: 'NT parents, carers and people supporting a family', area: 'NT-wide · phone',
@@ -446,13 +454,14 @@ export const services = {
     sources: ['https://www.healthdirect.gov.au/how-healthdirect-can-help-you', 'https://about.healthdirect.gov.au/what-we-do/portfolio/healthdirect']
   }),
   'carer-gateway': service({
+    checked: '2026-09-27',
     name: 'Carer Gateway', audience: 'Unpaid carers of someone with disability, illness or age-related frailty', area: 'Australia-wide · local, phone and online support',
     offer: 'Ask about counselling, peer support, coaching or respite for you as a carer.',
     cost: 'Free carer support; respite and other packages are assessed.',
-    access: 'Call and select option 1. This supports unpaid carers, not ordinary childcare or roster gaps.',
-    hours: 'Mon–Fri 8am–5pm, your local time', phone: '1800 422 737',
+    access: 'Call and select option 1. If illness or an unexpected event stops you caring, ask for emergency respite on the same number at any time. Support depends on assessed need and a suitable local service. This is for unpaid caring, not ordinary childcare or roster gaps.',
+    hours: 'Regular support: Mon–Fri 8am–5pm local time. Emergency respite: 24 hours, every day.', phone: '1800 422 737',
     url: 'https://www.carergateway.gov.au/about-us/access-carer-gateway-services',
-    sources: ['https://www.carergateway.gov.au/about-us/access-carer-gateway-services', 'https://www.carergateway.gov.au/about-us/eligibility-checker', 'https://www.carergateway.gov.au/sites/default/files/documents/2024-08/1321-carer-gateway-mainstream.pdf']
+    sources: ['https://www.carergateway.gov.au/about-us/access-carer-gateway-services', 'https://www.carergateway.gov.au/about-us/eligibility-checker', 'https://www.carergateway.gov.au/help-and-support/emergency-contacts', 'https://www.carergateway.gov.au/sites/default/files/2026-03/carer-brochure-3-2025.pdf']
   }),
   'respect': service({
     name: '1800RESPECT', audience: 'Anyone experiencing violence or sexual assault, or worried about someone', area: 'Australia-wide · phone and online chat',
@@ -464,9 +473,10 @@ export const services = {
     extraUrl: 'https://www.1800respect.org.au/', extraLabel: 'Use online chat'
   }),
   'sarc-darwin': service({
+    checked: '2026-09-27',
     name: 'Darwin Sexual Assault Referral Centre', audience: 'Adults, children and non-offending family/support people', area: 'Darwin / Top End',
     offer: 'Medical help after a recent assault; counselling and information.',
-    cost: 'Free support.', access: 'Call directly to discuss care and support.',
+    cost: 'Free support.', access: 'For a recent assault, call for urgent medical advice at any time. If you are outside Darwin, explain your location and ask about the nearest appropriate clinical care before travelling.',
     hours: '24-hour help for recent sexual assault', phone: '08 8922 6472',
     url: 'https://nt.gov.au/wellbeing/hospitals-health-services/sexual-assault-referral-centres',
     sources: ['https://nt.gov.au/wellbeing/hospitals-health-services/sexual-assault-referral-centres', 'https://digitallibrary.health.nt.gov.au/nthealthserver/api/core/bitstreams/9f7647dd-f7af-445d-aec4-d6cfb0b1adba/content']

@@ -8,6 +8,12 @@ import { services } from '../support-catalog.mjs';
 // Exercise the shipped renderer and event handlers without a browser or network.
 function renderer() {
   const handlers = {};
+  const documentHandlers = {};
+  const pageTargets = Object.fromEntries(['main','urgent-help'].map(id => [id, {
+    focused:false, scrolled:false,
+    focus() { this.focused = true; },
+    scrollIntoView() { this.scrolled = true; }
+  }]));
   const root = {
     innerHTML:'',
     addEventListener:(type,handler) => { handlers[type] = handler; },
@@ -18,7 +24,11 @@ function renderer() {
   const context = vm.createContext({
     topics,questionsFor,preferencesFor,getResults,legacyRoute,services,
     location,
-    document:{getElementById:id => id === 'finder' ? root : null,querySelector:() => null},
+    document:{
+      getElementById:id => id === 'finder' ? root : pageTargets[id] || null,
+      querySelector:() => null,
+      addEventListener:(type,handler) => { documentHandlers[type] = handler; }
+    },
     window:{addEventListener:() => {},scrollTo:() => {},print:() => {}},
     history:{replaceState:(_state,_title,hash) => { location.hash = hash; }},
     localStorage:new Proxy({}, {get:() => { throw new Error('No persistent answers'); }}),
@@ -37,15 +47,45 @@ function renderer() {
     handlers.submit({preventDefault:() => {},target:{id:'support-question',querySelector:() => ({value})}});
     render();
   };
-  return {root,run,render,click,submit,location};
+  const jump = targetId => {
+    let prevented = false;
+    const anchor = {dataset:{pageJump:targetId}};
+    documentHandlers.click({
+      target:{closest:selector => selector === 'a[data-page-jump]' ? anchor : null},
+      preventDefault:() => { prevented = true; }
+    });
+    return {prevented,target:pageTargets[targetId]};
+  };
+  return {root,run,render,click,submit,jump,location};
 }
 
 test('chat actions promote verified chat links but not a chat availability page', () => {
   const ui = renderer();
   assert.match(ui.run('actionBlock(services.beyondblue,true)'), /button-secondary[^>]*href="https:\/\/www.beyondblue.org.au\/get-support\/talk-to-a-counsellor"/);
-  assert.equal(ui.run('chatAction(services.parentline)'), null);
+  assert.equal(ui.run("chatAction({extraUrl:'https://parentline.com.au/faq/how-can-i-contact-parentline',extraLabel:'Phone and chat availability'})"), null);
+  assert.equal(ui.run('chatAction(services.parentline).url'), 'https://www.kidshelpline.com.au/parentline-webchat');
   assert.equal(ui.run('extraAction(services.beyondblue)'), '');
-  assert.match(ui.run('extraAction(services.parentline)'), /Phone and chat availability/);
+  assert.match(ui.run('extraAction(services.parentline)'), /How Parentline webchat works/);
+});
+
+test('urgent-help and return links preserve an unfinished questionnaire and keyboard focus', () => {
+  const ui = renderer();
+  ui.run("state = {topicId:'care',answers:{need:'travel',connection:'serving',role:'other',dvaTravel:'no'}}");
+  ui.render('#care/q/region');
+  const hash = ui.location.hash;
+  const before = ui.run('JSON.stringify(state)');
+  for (const target of ['urgent-help', 'main']) {
+    const jump = ui.jump(target);
+    assert.equal(jump.prevented, true, 'Do not let a page anchor change the router hash');
+    assert.equal(jump.target.focused, true);
+    assert.equal(jump.target.scrolled, true);
+    assert.equal(ui.location.hash, hash);
+    assert.equal(ui.run('JSON.stringify(state)'), before);
+  }
+  ui.submit('alice');
+  assert.equal(ui.run('state.answers.role'), 'other');
+  assert.equal(ui.run('state.answers.dvaTravel'), 'no');
+  assert.equal(ui.location.hash, '#care/q/ntResidence');
 });
 
 test('chat shortcuts are near the main contact and only use services in the result', () => {

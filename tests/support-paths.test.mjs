@@ -23,7 +23,7 @@ const scenarios=[
  ['NT bereaved partner eligible Legacy','mental',{need:'practical-loss',dvaClient:'no',legacyFit:'eligible',region:'alice'},'legacy-nt',[]],
  ['Bereaved parent not assumed Legacy eligible','mental',{need:'practical-loss',dvaClient:'no',legacyFit:'other'},'wellbeing-agency',['legacy-nt']],
  ['Woman with children, Darwin refuge','relationships',{need:'refuge',refugeFor:'woman-child',region:'darwin'},'dawn-shelter',[]],
- ['Woman without children not sent to restricted Darwin shelter','relationships',{need:'refuge',refugeFor:'woman',region:'darwin'},'respect',['dawn-shelter']],
+ ['Woman without children reaches an appropriate Darwin shelter','relationships',{need:'refuge',refugeFor:'woman',region:'darwin'},'catherine-booth-house',['dawn-shelter']],
  ['Man needs safe accommodation','relationships',{need:'refuge',refugeFor:'other',region:'alice'},'respect',['wossca']],
  ['Woman Tennant Creek','relationships',{need:'refuge',refugeFor:'woman',region:'tennant'},'tennant-refuge',[]],
  ['Child affected by violence with father','relationships',{need:'child-violence',childViolenceAge:'0-12',region:'palmerston'},'safe-reconnected',['tewls']],
@@ -64,10 +64,14 @@ test('new age choices are visible on one page and legacy under18 state remains r
  qs=questionsFor('mental',{need:'feelings',age:'under18'});assert.equal(qs.find(q=>q.id==='childAge').options.length,3);assert.ok(!qs.some(q=>q.id==='counselling'));
  for(const [t,need]of[['money','essentials'],['work','job'],['parenting','parenting'],['care','carer']])assert.ok(!questionsFor(t,{need}).some(q=>['age','childAge'].includes(q.id)));
 });
-test('all valid visible paths have sourced contacts and every included offer is reachable',()=>{
+test('all valid visible paths have sourced contacts and every included offer is reachable through results or permanent urgent contacts',()=>{
  const reached=new Set();let leaves=0;
  function walk(t,a){const qs=questionsFor(t,a),q=qs.find(q=>!q.options.some(o=>o.value===a[q.id]));if(q){assert.ok(q.options.length&&q.label);for(const o of q.options)walk(t,{...a,[q.id]:o.value});return;}leaves++;const r=getResults(t,{...a,preferences:preferencesFor(t,a).map(p=>p.value)});assert.ok(r.ids.length>0&&r.ids.length<=3,`${t}:${JSON.stringify(a)}`);for(const id of [...r.ids,...r.moreIds,...(r.preferenceGroups||[]).flatMap(g=>g.ids)]){const s=services[id];assert.ok(s,id);assert.ok(s.name&&s.audience&&s.offer&&s.cost&&s.sources?.length,id);assert.equal(new URL(s.url).protocol,'https:');reached.add(id);}}
- for(const t of[...topics,{id:'help'}])walk(t.id,{});for(const need of ['private','lgbtq','men','indigenous'])walk('mental',{need});assert.ok(leaves>500);assert.deepEqual(Object.keys(services).filter(id=>!reached.has(id)),[]);
+ for(const t of[...topics,{id:'help'}])walk(t.id,{});for(const need of ['private','lgbtq','men','indigenous'])walk('mental',{need});
+ const page=readFileSync(new URL('../support.html',import.meta.url),'utf8');
+ const permanentPhones=new Set([...page.matchAll(/href="tel:([0-9]+)"/g)].map(match=>match[1]));
+ for(const [id,service]of Object.entries(services))if(service.phone&&permanentPhones.has(service.phone.replace(/\D/g,'')))reached.add(id);
+ assert.ok(leaves>500);assert.deepEqual(Object.keys(services).filter(id=>!reached.has(id)),[]);
 });
 test('public interface uses visible labelled radios, not dropdowns',()=>{
  const ui=readFileSync(new URL('../support.js',import.meta.url),'utf8');assert.doesNotMatch(ui,/<select|<option\b/);assert.match(ui,/<fieldset/);assert.match(ui,/<legend/);assert.match(ui,/type="radio"/);assert.match(ui,/type="submit"/);

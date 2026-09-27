@@ -15,8 +15,9 @@ test('children select an age once, without adult service-history questions',()=>
  }
 });
 test('a former partner can see the Open Arms eligibility enquiry from relationship counselling',()=>{
- const r=getResults('relationships',{need:'counselling',counselling:'other'});
- assert.equal(r.ids[0],'open-arms-check');
+ const r=getResults('relationships',{need:'counselling',counselling:'other',region:'nt'});
+ assert.equal(r.ids[0],'relationships-australia-nt');
+ assert.ok(r.ids.includes('open-arms-check'));
  assert.ok(r.ids.includes('family-advice'));
  assert.match(services['open-arms-check'].access,/five years.*co-parenting/);
 });
@@ -44,8 +45,10 @@ test('ADF members can find their clinical system without sending civilian famili
  assert.ok(!family.includes('adf-imsick'));
  assert.equal(family[0],'healthdirect');
 });
-test('funded mental treatment is visible to members but not assumed to be a family entitlement',()=>{
- for(const counselling of ['member','serving'])assert.equal(getResults('mental',{need:'treatment',age:'26+',counselling,region:'alice'}).ids[0],'dva-mental-treatment');
+test('funded mental treatment distinguishes serving care from former-member funding and family eligibility',()=>{
+ assert.equal(getResults('mental',{need:'treatment',age:'26+',counselling:'member',region:'alice'}).ids[0],'dva-mental-treatment');
+ assert.equal(getResults('mental',{need:'treatment',age:'26+',counselling:'serving',region:'alice'}).ids[0],'adf-healthcare');
+ assert.ok(ids('mental',{need:'treatment',age:'26+',counselling:'serving',region:'alice'}).includes('dva-mental-treatment'));
  for(const counselling of ['partner','child']){
   const r=ids('mental',{need:'treatment',age:'26+',counselling,region:'alice'});
   assert.ok(r.includes('connect-wellbeing-nt'));

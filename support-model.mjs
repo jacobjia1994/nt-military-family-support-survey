@@ -78,10 +78,11 @@ export function matchSupport(c) {
   } else if(task==='connect') {
     ids=serving ? [dmfs,'soldieron-connect'] : ['soldieron-connect','wellbeing-agency']; say='I would like to meet people. Are there free activities near me or online that suit my age and family?';
   } else if(task==='safety') {
-    const sarc={darwin:'sarc-darwin',palmerston:'sarc-darwin',katherine:'sarc-katherine',alice:'sarc-alice',tennant:'sarc-tennant'}[region];
-    ids=focus==='assault' && sarc ? [sarc,'respect'] : ['unsafe','assault'].includes(focus) ? ['respect'] : focus==='separation' ? ['family-advice',...(inNT?['legal-aid']:[])] : inNT ? ['legal-aid'] : ['legal-national'];
+    const sarc={darwin:'sarc-darwin',palmerston:'sarc-darwin',katherine:'sarc-katherine',alice:'sarc-alice',tennant:'sarc-tennant',gove:'sarc-darwin'}[region];
+    ids=focus==='assault' && region==='remote' ? ['sarc-darwin','sarc-alice','respect'] : focus==='assault' && sarc ? [sarc,'respect'] : ['unsafe','assault'].includes(focus) ? ['respect'] : focus==='separation' ? ['family-advice',...(inNT?['legal-aid']:[])] : inNT ? ['legal-aid'] : ['legal-national'];
     say=focus==='separation' ? 'I need help understanding separation and parenting arrangements.' : focus==='legal' ? 'I would like free initial advice about a legal problem.' : 'I would like to talk about my safety and the options available to me.';
     if(['unsafe','assault'].includes(focus)) note='If someone is in immediate danger, call 000. If this device is being monitored, use a safer device when you can. Leaving this page does not remove browser history.';
+    if(focus==='assault'&&['gove','remote'].includes(region))note+=' For medical support after sexual assault, call a Sexual Assault Referral Centre to arrange the nearest suitable care before travelling.';
     if(!inNT && focus==='legal') note='Choose the state or territory relevant to your legal problem.';
   } else if(task==='help') { ids=[nav]; say='I am not sure where to start. Could you help me work out which service fits my situation?'; }
   return {title, ids:[...new Set(ids)].slice(0,3), note, say};
