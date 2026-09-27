@@ -1,8 +1,8 @@
 # Defence family service consultation: participation and safeguarding
 
-25 September 2026 · Staff operating procedure for team review
+27 September 2026 · Staff operating procedure for team review
 
-This is a service consultation to plan Lutheran Care’s NT Defence Family Support Program. The participant interface shows the intended formal questionnaire. The current GitHub build is for internal review and has no response receiver; no worker is currently monitoring answers from it. This procedure sets out the operating arrangement for the team to use when collection is connected. It does not claim staff have already been appointed or completed an assessment.
+This is a service consultation to plan Lutheran Care’s Defence Family Support Program in Greater Darwin, including Litchfield. The participant interface shows the intended formal questionnaire. The current GitHub build is for internal review and has no response receiver; no worker is currently monitoring answers from it. This procedure sets out the operating arrangement for the team to use when collection is connected. It does not claim staff have already been appointed or completed an assessment.
 
 ## Responsibility within the existing project team
 
@@ -14,7 +14,11 @@ Use LC’s approved record system and existing child-safety/incident processes. 
 
 Invite participation without pressure from staff, commanders, service providers or family members. Do not make participation a condition of support or send participation lists to a chain of command. This is a conduct rule for this consultation, not a quotation from an unrelated complaints form.
 
-The full questionnaire concerns current NT service or service ending within the past 12 months. Earlier NT connections have a separate optional lessons/suggestions route; this consultation scope is not programme-benefit eligibility. Family members may live elsewhere in Australia or overseas. Residence is optional, asked only at a broad-area level for service planning, and must never exclude a respondent. “Not sure” about the service connection is retained as uncertain rather than automatically rejected.
+The consultation invites the existing current/former ADF member and family/carer relationships. The geography route now uses current residence, not the member’s local service date. Named or other Greater Darwin locality enters the main questionnaire. Locality is optional: an undisclosed answer also continues, marked as unconfirmed in analysis. Someone now outside Greater Darwin may share earlier local experience; explicitly never having lived locally leads to the scope explanation. Uncertain or declined past residence may still use the historical comments space, without being counted as confirmed former residence. This replaces the earlier service-recency rule and defines consultation scope, not programme-benefit eligibility.
+
+Adults consider only time living in Greater Darwin within the past 12 months; youth consider the past three months, or time since arrival if shorter. Historical local accounts are kept separate. No past support need still permits future programme ideas and participation preferences. Explain that these preferences do not enrol someone or authorise follow-up.
+
+Jacob has confirmed that the survey provides an important alternative when interviews are limited. Every selected adult area retains its optional detail and space for an account; do not instruct participants to choose only one or two domains. Let them answer as much as they wish, skip questions and continue. The shorter youth path retains its one optional focus. Record successful support as well as difficulties.
 
 ## Participation routes implemented in the questionnaire
 
@@ -23,7 +27,7 @@ The full questionnaire concerns current NT service or service ending within the 
 | 18+ | Read the information and give informed own consent. |
 | 15–17 | Read the age-appropriate explanation and give informed own consent; ask for help where needed. |
 | 8–14 | Parent/guardian gives permission, then the young person independently agrees to take part. The required assistance question precedes substantive responses; self/other assistance requires confirmation that a parent or guardian is present. |
-| 7 or younger | A parent/guardian gives permission. One form shows four optional child-response boxes followed by Your observations. Confirming child willingness enables the child boxes; the observation field remains available without that confirmation. |
+| 7 or younger | A parent/guardian gives permission, then answers a short ADF connection/locality/age-band step. Four optional child-expression boxes precede Your observations. Child willingness enables expression boxes; observation-only participation does not claim child assent. |
 
 Eighteen is the NT age of majority. The questionnaire’s fifteen-year split is an operational capacity approach, informed by OAIC guidance, not a universal legal consent age or a legal exclusion of younger children. Do not presume capacity if there is reason to doubt understanding. Parent/guardian involvement follows existing LC practice, adapted to a short voluntary consultation rather than a counselling intake.
 
@@ -31,7 +35,7 @@ The invitation page shows 7 or younger, 8–17 and 18 or older; its selected rou
 
 ## Assistance and individual capacity
 
-Ages 8–17 answer the required **Is anyone helping you read or write your answers?** on the connection page: **No, I am answering myself**, **Yes, my parent or guardian**, or **Yes, someone else**. Optional broad region is asked on that page too; there is no separate youth place page. This also precedes historical-experience comments. For ages 8–14, self/other assistance opens a guardian-presence screen. Confirmation allows the young person to retain their own answers with help if needed; it does not replace the guardian-permission declaration or assent on the invitation page. Changing the assistance choice clears that presence confirmation. For ages 15–17, another helper does not trigger a guardian block.
+Ages 8–17 answer the required **Is anyone helping you read or write your answers?** on the connection page: **No, I am answering myself**, **Yes, my parent or guardian**, or **Yes, someone else**. Optional suburb/locality is asked on that page too; there is no separate youth place page. This also precedes historical-experience comments. For ages 8–14, self/other assistance opens a guardian-presence screen. Confirmation allows the young person to retain their own answers with help if needed; it does not replace the guardian-permission declaration or assent on the invitation page. Changing the assistance choice clears that presence confirmation. For ages 15–17, another helper does not trigger a guardian block.
 
 Requiring a parent or guardian alongside the ordinary under-15 online route is a design policy for this unattended form. Australian law does not declare all other helpers invalid or require physical guardian presence for every minor’s response. Permission, capacity, presence, help with reading/writing and supplying a proxy opinion are distinct. See [the focused child-participation review](CHILD_PARTICIPATION_REVIEW.md).
 
@@ -43,11 +47,11 @@ A helper may read or record the child’s words but must not choose or rewrite a
 
 ## Responses for ages 7 or younger
 
-The form shows four optional child-response boxes followed by **Your observations**, without asking the parent/guardian to select a response mode. Before recording a child’s expressions, the adult confirms that they have explained participation in an age-appropriate way and the child wants to join in. Record words or describe expressions without substituting adult answers. Read or explain the recorded meaning back where the child can check it. Do not press for a response.
+The first step asks whether the child has a current/former ADF parent, carer or family member, then optionally the child’s suburb/locality and 0–4/5–7 age band. An explicit No to ADF connection leads to a scope explanation; Yes or Not sure continues. Locality, including Outside Greater Darwin or a declined answer, is retained for separate geographic interpretation. The following page makes clear that “here” means living in Greater Darwin: Darwin, Palmerston and Litchfield. It shows four optional child-response boxes followed by **Your observations**, without a response-mode selector. Before recording a child’s expressions, the adult confirms that they have explained participation in an age-appropriate way and the child wants to join in. Record words or describe expressions without substituting adult answers. Read or explain the recorded meaning back where the child can check it. Do not press for a response.
 
 The separate observation field accommodates babies and children unable to express their views without an invented child agreement. It records the adult’s perspective, not the child’s words. Refusal stops child elicitation. Unchecking willingness clears only child responses and preserves guardian observations; revoking guardian permission or using Stop clears both. Review, correction and the shared completion screen remain available.
 
-Exports use schema 1.1 and `questionnaire_version: young_child_supported`. Nonblank child responses determine whether the export contains child-willingness metadata; an empty or observation-only record never claims child assent. Do not count guardian observations as child self-report, or pool these prompts with older children’s support-area responses. Do not add names, drawings, recordings or other uploads.
+Exports use schema 1.2, revision `2026-09-27-background`, and `questionnaire_version: young_child_supported`, with the new background/geography metadata. Adult/youth records separately use schema 7.0 and revision `2026-09-27-local-experience-and-programmes`. Nonblank child responses determine whether the export contains child-willingness metadata; an empty or observation-only record never claims child assent. Do not count guardian observations as child self-report, or pool these prompts with older children’s support-area responses. Do not add names, drawings, recordings or other uploads.
 
 ## Separate requests for an interview
 
@@ -77,9 +81,11 @@ When a response does not identify a person, use the information actually availab
 
 ## Information shared with Defence
 
-Review narratives and combinations of age, broad locality, military connection and family relationship before release. Remove identifying details and aggregate or suppress small combinations where they could reasonably identify someone. Do not assume removing names is enough. No universal numerical suppression threshold is invented here. Identifiable safeguarding case information follows its lawful protection route, not the routine project-reporting route to the funder.
+Follow [ANALYSIS_PROTOCOL.md](ANALYSIS_PROTOCOL.md) for every report, dashboard, chart and statistical summary. Make clear that the data describe response records and participant perspectives, not unique families or local population prevalence; repeat the context on extracted slides/charts. Show the relevant denominator, revision and recall/cohort, and keep skipped, unasked and declined answers distinct from No. Recruitment channels and several responses from one family affect interpretation.
 
-Use the LC feedback/privacy contact for access, correction and complaints. For the consultation dataset, do not request names or contact details, issue lookup codes, keep a respondent/contact mapping or attempt to reconstruct identity for routine withdrawal requests. The v11 notice says: “You can stop before submitting. We do not collect a name or contact details for retrieving individual responses afterwards.” This explains the intended design without an absolute denial of privacy rights. Where identifiable information is volunteered unexpectedly and can reasonably be located, consider applicable access and correction rights and handle it under LC’s privacy and safeguarding procedure. Never infer permission to contact someone, make a referral or interview them again from a service-format preference.
+Review narratives and combinations of age, suburb/locality, military connection and family relationship before release. Remove identifying details and aggregate or suppress small combinations where they could reasonably identify someone. Do not assume removing names is enough. No universal numerical suppression threshold is invented here. Identifiable safeguarding case information follows its lawful protection route, not the routine project-reporting route to the funder.
+
+Use the LC feedback/privacy contact for access, correction and complaints. For the consultation dataset, do not request names or contact details, issue lookup codes, keep a respondent/contact mapping or attempt to reconstruct identity for routine withdrawal requests. The v11 notice says: “You can stop before submitting. We do not collect a name or contact details for retrieving individual responses afterwards.” This explains the intended design without an absolute denial of privacy rights. Where identifiable information is volunteered unexpectedly and can reasonably be located, consider applicable access and correction rights and handle it under LC’s privacy and safeguarding procedure. Never infer permission to contact someone, make a referral or interview them again from a programme or participation-format preference.
 
 ## Sources and support contacts
 
@@ -94,4 +100,4 @@ Use the LC feedback/privacy contact for access, correction and complaints. For t
 
 ## Digital resource
 
-Use the same public file/folder link at questionnaire completion and on the contact form. Access does not require requesting an interview or submitting contact details. Do not collect email addresses, require every optional answer, attach a response ID, append answers or use the resource to identify participants. Keep it a modest optional resource, separate from service eligibility and research/recontact consent. The team supplies the content and link in `thank-you-resource.js`; no file is currently claimed to be ready.
+Use the same standalone support navigator, `support.html`, at questionnaire completion and on the contact form. Access does not require requesting an interview or submitting contact details. Do not collect email addresses, require every optional answer, attach a response ID, append answers or use the resource to identify participants. Keep it a modest optional resource, separate from service eligibility and research/recontact consent. The existing navigator is configured in `thank-you-resource.js`; it remains NT-wide even though the consultation concerns Greater Darwin. The interview and guide have separate explanatory blocks on completion. When LC hosts or replaces the forms, preserve both destinations and their independence. Collection and storage remain undecided; see [COLLECTION_HANDOFF.md](COLLECTION_HANDOFF.md) for the IT proposal and verification steps.

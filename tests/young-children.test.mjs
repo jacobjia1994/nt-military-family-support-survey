@@ -5,11 +5,17 @@ import vm from 'node:vm';
 
 const source = readFileSync(new URL('../young-children.js', import.meta.url), 'utf8');
 const context = vm.createContext({});
+context.window = context;
+vm.runInContext(readFileSync(new URL('../geography.js', import.meta.url), 'utf8'), context, { filename: 'geography.js' });
 vm.runInContext(source, context, { filename: 'young-children.js' });
 const { createSession, create, PROMPTS, MAX_LENGTH } = context.SURVEY_YOUNG_CHILDREN;
 const plain = value => JSON.parse(JSON.stringify(value));
 const permission = () => ({ agreed: true, age_path: 'young', kind: 'parent_guardian_permission', notice_version: 'test-v1', recorded_at: '2026-09-25T00:00:00.000Z' });
-const makeSession = extra => createSession({ guardianPermission: permission(), now: () => '2026-09-25T00:01:00.000Z', ...extra });
+const makeSession = extra => {
+  const session = createSession({ guardianPermission: permission(), now: () => '2026-09-25T00:01:00.000Z', ...extra });
+  session.setBackground('adf_connection', 'yes');
+  return session;
+};
 
 function assertNoChildClaim(output) {
   assert.equal(output.response_mode, 'guardian_observations');
@@ -45,7 +51,7 @@ test('child expressions and guardian observations remain separate without unrela
   assert.equal(session.answer('phone', 'Private phone'), false);
   assert.equal(session.answer('__proto__', 'Bad key'), false);
   const output = plain(session.exportAnswers());
-  assert.equal(output.schema_version, '1.1');
+  assert.equal(output.schema_version, '1.2');
   assert.equal(output.questionnaire_version, 'young_child_supported');
   assert.equal(output.response_mode, 'child_views');
   assert.equal(output.response_basis, 'child_expressions_recorded_by_parent_guardian');
@@ -98,13 +104,14 @@ test('reset and revoked permission discard both perspectives without restoring s
   currentPermission = null;
   assert.equal(session.exportAnswers(), null);
   currentPermission = permission();
-  assertNoChildClaim(session.exportAnswers());
-  assert.deepEqual(plain(session.snapshot()), { willing: false, responses: {}, guardian_observations: '' });
+  assert.equal(session.exportAnswers(), null);
+  assert.deepEqual(plain(session.snapshot()), { background: {}, willing: false, responses: {}, guardian_observations: '' });
+  session.setBackground('adf_connection', 'yes');
   session.confirmWillingness(true);
   session.answer('likes', 'The pool');
   session.answer('guardian_observations', 'A fresh observation');
   session.reset();
-  assert.deepEqual(plain(session.snapshot()), { willing: false, responses: {}, guardian_observations: '' });
+  assert.deepEqual(plain(session.snapshot()), { background: {}, willing: false, responses: {}, guardian_observations: '' });
 });
 
 test('all four stable prompts and the separate observation use the same bounded text length', () => {
@@ -124,11 +131,14 @@ test('exports and snapshots cannot mutate stored answers or permission', () => {
   session.answer('likes', 'The park');
   const snapshot = session.snapshot();
   snapshot.responses.likes = 'Changed';
+  snapshot.background.adf_connection = 'no';
   const output = session.exportAnswers();
   output.child_responses.likes = 'Changed again';
   output.participation.guardian_permission.agreed = false;
+  output.background.adf_connection = 'no';
   assert.equal(session.exportAnswers().child_responses.likes, 'The park');
   assert.equal(session.exportAnswers().participation.guardian_permission.agreed, true);
+  assert.equal(session.exportAnswers().background.adf_connection, 'yes');
 });
 
 function fakeMain() {
@@ -159,10 +169,22 @@ function type(node, id, value) {
   node('#young-form').listeners.input({ target: field });
 }
 
-test('the unified UI shows four child boxes and observations immediately without a mode selector', () => {
-  const { main } = fakeMain();
+function completeBackground(node, { adf = 'yes', locality = '', stage = '', other = '' } = {}) {
+  const form = node('#young-background-form');
+  form.listeners.change({ target: { name: 'adf_connection', value: adf } });
+  node('#young-suburb').value = locality;
+  node('#young-stage').value = stage;
+  node('#young-suburb-other').value = other;
+  form.listeners.submit({ preventDefault() {} });
+}
+
+test('after guardian background the UI shows all four child boxes and observations without a mode selector', () => {
+  const { main, node } = fakeMain();
   const controller = create({ main, guardianPermission: permission(), prompts: ['<img src=x onerror=bad()>'] });
   assert.equal(controller.show(), true);
+  assert.match(main.innerHTML, /About your child/);
+  assert.doesNotMatch(main.innerHTML, /<textarea/);
+  completeBackground(node);
   assert.match(main.innerHTML, /&lt;img src=x onerror=bad\(\)&gt;/);
   assert.doesNotMatch(main.innerHTML, /<img src=x/);
   assert.equal((main.innerHTML.match(/<textarea/g) || []).length, 5);
@@ -177,6 +199,7 @@ test('guardian observations work without willingness and review does not invent 
   const { main, node } = fakeMain();
   const controller = create({ main, guardianPermission: permission() });
   controller.show();
+  completeBackground(node);
   type(node, 'guardian_observations', 'My baby needs a reliable childcare place.');
   node('#young-form').listeners.submit({ preventDefault() {} });
   assert.match(main.innerHTML, /My baby needs a reliable childcare place/);
@@ -189,6 +212,7 @@ test('UI willingness reversal preserves the observation field while removing chi
   const { main, node } = fakeMain();
   const controller = create({ main, guardianPermission: permission() });
   controller.show();
+  completeBackground(node);
   node('#young-willing').checked = true;
   node('#young-willing').listeners.change();
   type(node, 'likes', 'The pool');
@@ -206,14 +230,14 @@ test('stopping clears child and guardian text and calls the parent stop handler'
   let stopped = 0;
   const controller = create({ main, guardianPermission: permission(), onStop: () => stopped++ });
   controller.show();
+  completeBackground(node);
   node('#young-willing').checked = true;
   node('#young-willing').listeners.change();
   type(node, 'likes', 'The pool');
   type(node, 'guardian_observations', 'Transport is difficult.');
   node('#young-stop').onclick();
   assert.equal(stopped, 1);
-  assertNoChildClaim(controller.exportAnswers());
-  assert.equal(Object.hasOwn(controller.exportAnswers(), 'guardian_observations'), false);
+  assert.equal(controller.exportAnswers(), null);
 });
 
 test('review preserves child text on Back, escapes it, and passes the distinct record to shared finish', () => {
@@ -221,6 +245,7 @@ test('review preserves child text on Back, escapes it, and passes the distinct r
   let finished;
   const controller = create({ main, guardianPermission: permission(), onFinish: (payload, active) => { finished = { payload, active }; } });
   controller.show();
+  completeBackground(node);
   node('#young-willing').checked = true;
   node('#young-willing').listeners.change();
   type(node, 'likes', '<script>bad()</script>');
@@ -236,4 +261,113 @@ test('review preserves child text on Back, escapes it, and passes the distinct r
   assert.equal(finished.payload.questionnaire_version, 'young_child_supported');
   assert.equal(finished.payload.child_responses.likes, '<script>bad()</script>');
   assert.equal(finished.active, controller);
+});
+
+test('an explicit ADF connection is required before either perspective can be recorded or exported', () => {
+  const session = createSession({ guardianPermission: permission() });
+  assert.equal(session.canContinue(), false);
+  assert.equal(session.answer('guardian_observations', 'A childcare need'), false);
+  assert.equal(session.confirmWillingness(true), false);
+  assert.equal(session.exportAnswers(), null);
+  assert.equal(session.setBackground('adf_connection', 'foreign_military'), false);
+  assert.equal(session.canContinue(), false);
+  session.setBackground('adf_connection', 'unsure');
+  assert.equal(session.canContinue(), true);
+  assert.equal(session.answer('guardian_observations', 'An observation'), true);
+  assert.equal(session.exportAnswers().background.adf_connection, 'unsure');
+  assertNoChildClaim(session.exportAnswers());
+  session.setBackground('adf_connection', 'no');
+  assert.equal(session.canContinue(), false);
+  assert.equal(session.exportAnswers(), null);
+  session.setBackground('adf_connection', 'yes');
+  assert.equal(session.exportAnswers().guardian_observations, undefined);
+});
+
+test('canonical localities including Litchfield export their region and age without collecting a birth date', () => {
+  const session = makeSession();
+  assert.equal(context.SURVEY_GEOGRAPHY.localities.length, 100);
+  for (const suburb of ['wagaman', 'casuarina', 'stuart_park', 'humpty_doo', 'holtze']) assert.equal(session.setBackground('suburb', suburb), true);
+  assert.equal(session.setBackground('child_stage', '0_4'), true);
+  assert.equal(session.setBackground('birth_date', '2022-01-01'), false);
+  const output = plain(session.exportAnswers());
+  assert.deepEqual(output.background, { adf_connection: 'yes', suburb: 'holtze', child_stage: '0_4', region: 'litchfield', geography_scope: 'greater_darwin' });
+  assert.equal(output.geography_version, '2026-09-27');
+  assert.equal(session.setBackground('suburb', 'unrecognised'), false);
+  assert.equal(session.exportAnswers().background.suburb, 'holtze');
+});
+
+test('Other detail is cleared on locality changes and outside or undisclosed places never count as local', () => {
+  const session = makeSession();
+  session.setBackground('suburb', 'other');
+  session.setBackground('suburb_other', 'A locality');
+  assert.equal(session.exportAnswers().background.suburb_other, 'A locality');
+  session.setBackground('suburb', 'other');
+  assert.equal(session.exportAnswers().background.suburb_other, 'A locality');
+  session.setBackground('suburb', 'outside');
+  session.answer('guardian_observations', 'Our family lives elsewhere.');
+  let output = session.exportAnswers();
+  assert.equal(output.background.geography_scope, 'outside_greater_darwin');
+  assert.equal(output.background.region, 'outside_greater_darwin');
+  assert.equal(output.background.suburb_other, undefined);
+  assert.equal(output.guardian_observations, 'Our family lives elsewhere.');
+  assertNoChildClaim(output);
+  assert.equal(session.setBackground('suburb_other', 'Hidden stale value'), false);
+  for (const choice of ['prefer', '']) {
+    session.setBackground('suburb', choice);
+    output = session.exportAnswers();
+    assert.equal(output.background.geography_scope, 'not_stated');
+    assert.equal(output.background.region, null);
+  }
+  session.setBackground('suburb', 'other');
+  assert.equal(session.exportAnswers().background.suburb_other, undefined);
+});
+
+test('background validation and scope screen keep users out until the required ADF question is answered', () => {
+  const { main, node } = fakeMain();
+  const controller = create({ main, guardianPermission: permission() });
+  controller.show();
+  node('#young-background-form').listeners.submit({ preventDefault() {} });
+  assert.match(node('#young-background-error').textContent, /Please choose Yes, No or Not sure/);
+  assert.equal(controller.exportAnswers(), null);
+  completeBackground(node, { adf: 'no' });
+  assert.match(main.innerHTML, /Thank you for your interest/);
+  assert.doesNotMatch(main.innerHTML, /<textarea/);
+  node('#young-scope-back').onclick();
+  completeBackground(node, { adf: 'unsure' });
+  assert.match(main.innerHTML, /Your child’s views and needs/);
+  assert.equal(controller.exportAnswers().background.adf_connection, 'unsure');
+});
+
+test('a typed alias resolves to the canonical locality while unmatched text requires a choice or omission', () => {
+  const { main, node } = fakeMain();
+  const controller = create({ main, guardianPermission: permission() });
+  controller.show();
+  completeBackground(node, { locality: 'Unlisted spelling' });
+  assert.match(node('#young-background-error').textContent, /choose a place from the list/);
+  assert.match(main.innerHTML, /About your child/);
+  completeBackground(node, { locality: 'Robertson Barracks', stage: '5_7' });
+  assert.equal(controller.exportAnswers().background.suburb, 'holtze');
+  assert.equal(controller.exportAnswers().background.region, 'litchfield');
+  assert.equal(controller.exportAnswers().background.child_stage, '5_7');
+});
+
+test('review includes guardian background and changes preserve existing perspectives until ADF scope is withdrawn', () => {
+  const { main, node } = fakeMain();
+  const controller = create({ main, guardianPermission: permission() });
+  controller.show();
+  completeBackground(node, { locality: 'Wagaman', stage: '0_4' });
+  type(node, 'guardian_observations', 'Help to join a playgroup.');
+  controller.showReview();
+  assert.match(main.innerHTML, /Wagaman/);
+  assert.match(main.innerHTML, /0–4 years/);
+  assert.doesNotMatch(main.innerHTML, /Not answered/);
+  node('#young-edit-background').onclick();
+  completeBackground(node, { locality: 'Outside Greater Darwin', stage: '0_4' });
+  assert.equal(controller.exportAnswers().guardian_observations, 'Help to join a playgroup.');
+  controller.showReview();
+  assert.match(main.innerHTML, /Outside Greater Darwin/);
+  assert.doesNotMatch(main.innerHTML, /Wagaman/);
+  node('#young-edit-background').onclick();
+  completeBackground(node, { adf: 'no' });
+  assert.equal(controller.exportAnswers(), null);
 });

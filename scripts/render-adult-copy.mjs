@@ -11,7 +11,7 @@ if(!head.includes('<style>'))throw new Error('Reading-copy style shell missing')
 head=head.replace(/<title>[^<]*<\/title>/,'<title>Adult reading copy · Defence Family Support Survey</title>');
 const consent=previous.match(/<section class="consent-copy">[\s\S]*?<\/section>/)?.[0];
 if(!consent)throw new Error('Established adult consent shell missing');
-const rules={other_suburb:'Only shown after Other suburb or locality.',needs_list:'Only shown after Yes or Not sure to needing support.',other_need:'Only shown after Something else.',additional_support:'Only shown after Yes to extra or different support now.',live:'Only shown after choosing an in-person, group, phone or video format.',area_barriers:'The applicable version depends on whether support was sought.'};
+const rules={formal_sources:'Optional when a service or organisation source is selected.',outside_suburb:'Only shown for Outside Greater Darwin.',programme_other:'Only shown for Something else in future support.',programme_priority:'Optional when more than one programme type is selected.',children_ages:'Only shown for child-related needs or parenting/playgroup interests.',participation_other:'Only shown after Another way.',enablers_other:'Only shown after Something else in participation conditions.',in_person:'Only shown for in-person participation.',berrimah_other:'Only shown when attending Berrimah would be difficult or require help.',other_suburb:'Only shown after Another locality in Greater Darwin.',needs_list:'Only shown after Yes or Not sure to needing support.',other_need:'Only shown after Something else.',additional_support:'Only shown after Yes to extra or different support now.',live:'Only shown after choosing an in-person, group, phone or video format.',area_barriers:'The applicable version depends on whether support was sought.'};
 let number=0;
 function field(f){
  const options=(f.options||[]).map(o=>`<li>${esc(o.label)}${o.hint?`<span class="option-hint">${esc(o.hint)}</span>`:''}</li>`).join('');
@@ -21,7 +21,7 @@ function field(f){
 }
 function section(s,prefix){
  const variants=(s.variants||[]).map(v=>`<div class="branch"><h3 class="branch-title">${esc(v.title||v.label)}</h3>${v.intro?`<p>${esc(v.intro)}</p>`:''}${v.fields.map(field).join('')}</div>`).join('');
- return `<section class="copy-section" id="${prefix}-${esc(s.id)}"><h2>${esc(s.title)}</h2>${s.intro?`<p class="section-intro">${esc(s.intro)}</p>`:''}${s.id==='earlier'?'<p class="route-note">This separate route replaces the main needs questions for an earlier service connection.</p>':''}${s.note?`<p class="editor-note">${esc(s.note)}</p>`:''}${s.fields.map(field).join('')}${variants}</section>`;
+ return `<section class="copy-section" id="${prefix}-${esc(s.id)}"><h2>${esc(s.title)}</h2>${s.intro?`<p class="section-intro">${esc(s.intro)}</p>`:''}${s.id==='earlier'?'<p class="route-note">This separate route collects past local experience from people now living outside Greater Darwin.</p>':''}${s.note?`<p class="editor-note">${esc(s.note)}</p>`:''}${s.fields.map(f=>field(f)+(f.key.endsWith(s.fields.some(item=>item.key.endsWith(':service_names'))?':service_names':':sources')?variants:'')).join('')}</section>`;
 }
 const seen=new Set();
 const sections=['nt','outside','unspecified'].map(route=>{
