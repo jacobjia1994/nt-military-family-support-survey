@@ -1,4 +1,4 @@
-import {questionsFor, preferencesFor} from './support-paths.mjs?v=20260927-3';
+import {questionsFor, preferencesFor} from './support-paths.mjs?v=20260927-4';
 
 const ntRegions = new Set(['darwin','palmerston','katherine','alice','tennant','gove','remote']);
 const contextRegions = new Set([...ntRegions,'nt','outside']);

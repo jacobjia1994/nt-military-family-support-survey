@@ -1,6 +1,6 @@
-import {topics, questionsFor, preferencesFor, getResults, legacyRoute} from './support-paths.mjs?v=20260927-3';
-import {services} from './support-catalog.mjs?v=20260927-3';
-import {getFlowState, applyAnswer} from './support-flow.mjs?v=20260927-3';
+import {topics, questionsFor, preferencesFor, getResults, legacyRoute} from './support-paths.mjs?v=20260927-4';
+import {services} from './support-catalog.mjs?v=20260927-4';
+import {getFlowState, applyAnswer} from './support-flow.mjs?v=20260927-4';
 
 const root = document.getElementById('finder');
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -75,7 +75,7 @@ function chatOptions(result, primaryId) {
   const ids = [...new Set([...(result.ids || []),...(result.moreIds || []),...(result.preferenceGroups || []).flatMap(group => group.ids || [])])];
   const options = ids.filter(id => id !== primaryId && services[id] && chatAction(services[id]));
   if (!options.length) return '';
-  return `<div class="chat-options"><p><strong>Prefer to chat online?</strong></p><ul>${options.map(id => `<li>${link(chatAction(services[id]).url,services[id].name)}${services[id].hours ? `<small>${esc(services[id].hours)}</small>` : ''}</li>`).join('')}</ul><p class="chat-help">See each service below for who it helps.</p></div>`;
+  return `<div class="chat-options"><p><strong>Prefer to chat online?</strong></p><ul>${options.map(id => `<li>${link(chatAction(services[id]).url,services[id].name)}${services[id].hours ? `<small>${esc(services[id].hours)}</small>` : ''}</li>`).join('')}</ul></div>`;
 }
 function serviceDetails(service, primary=false, beforeAction='', chats='') {
   if (primary) return `<div class="result-layout"><section class="result-main"><h3 class="primary-service-heading">${esc(service.name)}</h3><p class="area">${esc(service.area)}</p><p class="offer">${esc(service.offer)}</p><p class="fit"><strong>Who it helps:</strong> ${esc(service.audience)}</p><p class="cost"><strong>Cost:</strong> ${esc(service.cost)}</p></section><aside class="contact-panel" aria-label="Contact ${esc(service.name)}">${beforeAction}${actionBlock(service,true)}${service.hours ? `<p class="hours">${esc(service.hours)}</p>` : ''}${extraAction(service)}<div id="chat-options">${chats}</div></aside>${service.access ? `<p class="access">${esc(service.access)}</p>` : ''}</div>`;
@@ -93,7 +93,7 @@ function preferenceChoices(topic, result) {
   const options = preferencesFor(topic.id,state.answers);
   if (!options.length) return '';
   const selected = Array.isArray(state.answers.preferences) ? state.answers.preferences : [];
-  return `<section class="support-preferences"><fieldset class="preference-fieldset" aria-describedby="preference-hint"><legend>Support preferences (optional)</legend><p class="question-hint" id="preference-hint">Choose any that matter to you. Extra contacts appear below.</p><div class="preference-list">${options.map((option,i) => `<label class="choice-row" for="preference-${i}"><input type="checkbox" id="preference-${i}" name="support-preference" value="${esc(option.value)}"${selected.includes(option.value) ? ' checked' : ''}${option.detail ? ` aria-describedby="preference-detail-${i}"` : ''}><span><strong>${esc(option.label)}</strong>${option.detail ? `<small id="preference-detail-${i}">${esc(option.detail)}</small>` : ''}</span></label>`).join('')}</div></fieldset><p id="preference-status" class="sr-only" role="status"></p><div id="preference-results">${preferenceGroups(result)}</div></section>`;
+  return `<section class="support-preferences"><fieldset class="preference-fieldset"><legend>Support preferences (optional)</legend><div class="preference-list">${options.map((option,i) => `<label class="choice-row" for="preference-${i}"><input type="checkbox" id="preference-${i}" name="support-preference" value="${esc(option.value)}"${selected.includes(option.value) ? ' checked' : ''}${option.detail ? ` aria-describedby="preference-detail-${i}"` : ''}><span><strong>${esc(option.label)}</strong>${option.detail ? `<small id="preference-detail-${i}">${esc(option.detail)}</small>` : ''}</span></label>`).join('')}</div></fieldset><p id="preference-status" class="sr-only" role="status"></p><div id="preference-results">${preferenceGroups(result)}</div></section>`;
 }
 function answerSummary(topicId, answers) {
   return questionsFor(topicId,answers).filter(question => ['need','age','childAge','region'].includes(question.id) && !(question.id === 'age' && answers.childAge)).map(question => question.options.find(option => option.value === answers[question.id])?.label).filter(Boolean).join(' · ');
@@ -114,7 +114,7 @@ function showFlow(topic) {
   const flow = currentFlow();
   const returnLink = topic.id==='help' && handoff ? `<a href="#${handoff.topicId}" data-action="return-to-request">Back to your original contacts</a>` : '';
   const context = topic.id==='help' && handoff ? `<p class="handoff-context"><strong>Help finding another service:</strong> ${esc(handoff.summary)}</p>` : '';
-  root.innerHTML = `<nav class="back-nav" aria-label="Support navigation"><a href="#home">All support topics</a>${returnLink}</nav><h1 tabindex="-1">${esc(topic.id==='help' && handoff ? 'Help finding another service' : topic.title)}</h1>${context}<p class="flow-intro">Choose below. Relevant questions and contacts appear on this page.</p><div id="flow-safety">${safetyNotice(topic)}</div><div id="support-answers" tabindex="-1"><form id="support-flow" aria-label="Your support choices" novalidate><div id="flow-questions">${flow.visibleQuestions.map(questionMarkup).join('')}</div></form></div><p id="flow-status" class="sr-only" role="status" aria-live="polite"></p><div id="flow-related">${relatedMarkup(topic)}</div><section id="support-contacts" class="flow-results" aria-labelledby="support-contacts-heading" tabindex="-1"${flow.complete ? '' : ' hidden'}>${flow.complete ? resultsMarkup(topic) : ''}</section>`;
+  root.innerHTML = `<nav class="back-nav" aria-label="Support navigation"><a href="#home">All support topics</a>${returnLink}</nav><h1 tabindex="-1">${esc(topic.id==='help' && handoff ? 'Help finding another service' : topic.title)}</h1>${context}<div id="flow-safety">${safetyNotice(topic)}</div><div id="support-answers" tabindex="-1"><form id="support-flow" aria-label="Your support choices" novalidate><div id="flow-questions">${flow.visibleQuestions.map(questionMarkup).join('')}</div></form></div><p id="flow-status" class="sr-only" role="status" aria-live="polite"></p><div id="flow-related">${relatedMarkup(topic)}</div><section id="support-contacts" class="flow-results" aria-labelledby="support-contacts-heading" tabindex="-1"${flow.complete ? '' : ' hidden'}>${flow.complete ? resultsMarkup(topic) : ''}</section>`;
   document.title = `${topic.title} | Lutheran Care`;
 }
 function syncFlow(topic) {

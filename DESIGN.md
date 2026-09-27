@@ -102,6 +102,8 @@ Updated after Jacob’s 26 September correction. Mode: Operate. Preserve Luthera
 
 The home has a compact title/audience line and ruled topic links, two columns on desktop and one on mobile. Labels name recognisable areas, with concrete examples. No search, dashboard, policy taxonomy or header crisis panel. A child-emotion link on the parenting page leads to the shared mental-health matcher.
 
+Questions and options stand on their own. Default to no helper paragraph or flow introduction. Do not repeat the question, instruct an obvious selection, explain why the interface asks, or narrate what appears next. Only retain wording that changes a user's actual answer or next action; keep service-specific conditions in the service card without repeating them around the form. This explicit copy rule overrides generic patterns that add explanatory hints.
+
 Jacob’s latest 27 September instruction keeps the applicable questions together on one topic page. Full-row native radios retain a visible selected state, semantic fieldset/legend and generous touch targets. An answer reveals the next relevant question below; completed questions remain visible for direct editing. Results appear automatically when the required choices are complete. No Continue button or separate question view is required.
 
 Clicking or using arrow keys updates dependent content without moving focus away from the active native control or forcing a scroll to the next question or result. Changes clear stale downstream eligibility qualifiers while retaining independent answers. If newly relevant information is needed, remove the old recommendations until it is supplied. Ask age only where provider boundaries affect the available service, without asking the child’s age twice.

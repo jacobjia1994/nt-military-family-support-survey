@@ -37,7 +37,6 @@
 .chat-options li{margin-bottom:8px}
 .chat-options li a{display:flex;align-items:center;min-height:44px;font-size:16px;font-weight:600}
 .chat-options small{display:block;font-size:13px;line-height:1.4;color:var(--text)}
-.contact-panel .chat-help{font-size:13px;margin:10px 0 0;color:var(--text)}
 .quick-help{display:flex;justify-content:space-between;align-items:center;gap:6px 24px;flex-wrap:wrap;padding-top:14px;font-size:15px}
 .quick-help>a{font-weight:650}
 .quick-help a{display:inline-flex;align-items:center;min-height:44px}
@@ -52,8 +51,7 @@
 .urgent li p{font-size:14px;margin:0;color:var(--muted)}
 .urgent-actions{display:flex;flex-wrap:wrap;gap:0 18px}
 .urgent-return{display:inline-flex;align-items:center;min-height:44px;margin-top:20px;font-size:16px}
-.flow-intro{font-size:17px;color:var(--muted);margin:14px 0 26px}
-#support-flow{max-width:780px}
+#support-flow{max-width:780px;margin-top:24px}
 .flow-question{max-width:none}
 .flow-question+.flow-question{border-top:0;margin-top:30px;padding-top:0}
 .flow-question legend{width:100%;margin-bottom:16px}
@@ -89,7 +87,6 @@
   .flow-question legend h2{font-size:21px}
   .flow-question .choice-row{padding:12px;gap:10px}
   .flow-question+.flow-question{margin-top:26px;padding-top:0}
-  .flow-intro{font-size:16px;margin-bottom:23px}
   .contacts-heading h2{font-size:25px}
   .result-main .primary-service-heading{font-size:28px}
 }
@@ -116,7 +113,7 @@
   .more-services::details-content{content-visibility:visible!important;display:block!important}
   footer{display:block;border:0;margin-top:22px;padding:0}
   .checked{display:block;color:#444;font-size:11px}
-  #support-answers,.flow-intro,.contacts-heading>a{display:none}
+  #support-answers,.contacts-heading>a{display:none}
   .flow-results{border:0;padding:0;margin:0}
   .result-main .primary-service-heading{font-size:25px}
 }
