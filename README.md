@@ -10,6 +10,8 @@ A formal questionnaire for Lutheran Care’s internal team review. The project i
 - [All ages and conditional questions](https://jacobjia1994.github.io/nt-military-family-support-survey/questions.html)
 - [Staff guide](https://jacobjia1994.github.io/nt-military-family-support-survey/review.html)
 - [Flow and measurement contract](FLOW_REDESIGN.md)
+- [Analysis and reporting protocol](ANALYSIS_PROTOCOL.md)
+- [Collection and migration handoff](COLLECTION_HANDOFF.md)
 - [Participation and safeguarding procedure](consultation-procedure.md)
 - [Legal and privacy review](LEGAL_REVIEW.md)
 - [Child participation and assistance review](CHILD_PARTICIPATION_REVIEW.md)
@@ -17,59 +19,64 @@ A formal questionnaire for Lutheran Care’s internal team review. The project i
 
 ## Questionnaire flow
 
-1. On the invitation page, choose **Adult (18 or older)** or **Child or young person (under 18)**; the latter reveals **8–17** and **7 or younger**. No route is preselected. Participation information and the required choices appear there for the selected route. Ages 8–17 make an 8–14/15–17 follow-up choice for permission only; they answer the same shorter questionnaire. All adults use one questionnaire and can optionally record 18–29, 30–39, 40–49 or 50 or older later.
-2. Answer the minimum ADF/Greater Darwin connection questions. Adults retain an optional **About you** page. Young people aged 8–17 give optional suburb or locality on the connection page, with no separate place page.
-3. Answer whether support was needed during the recall period. Yes or Not sure reveals one support-area checklist. No skips detail questions but keeps service-information preferences.
-4. Adults complete one detail page per selected area. Young people aged 8–17 can choose **one optional focus area** from the checked needs for detail; other checked needs remain recorded without repeated pages.
-5. Adults and young people may give information/advice preferences about **services and support in Greater Darwin**, including when they report no support needs.
-6. Review, finish, the separate interview request and the free resource.
+1. On the invitation page, choose **Adult (18 or older)** or **Child or young person (under 18)**; the latter reveals **8–17** and **7 or younger**. No route is preselected. Participation information and required choices appear inline. Ages 8–17 make an 8–14/15–17 choice for permission only; they answer the same shorter questionnaire.
+2. Give the ADF relationship, optionally select a broad residential area, then optionally choose a suburb/locality within that area. Adults may optionally give an age band. Youth record assistance, then may describe what helped them feel welcome. Adults on the main route next see optional residence duration and a question about what made connection easier or harder.
+3. Answer whether support was needed during time living in Greater Darwin within the recall period. Yes or Not sure reveals one support-area checklist. No skips area detail but preserves future support and participation questions.
+4. Adults have one optional detail page for every selected area. Young people aged 8–17 may choose **one optional focus area**; other checked needs remain recorded without repeated detail pages.
+5. **What could help next?** asks useful future support or activities, an optional priority among several selections, and relevant adult caring/child-age information.
+6. **Taking part** asks participation formats, conditional suitable times, practical enabling arrangements and optional Berrimah access for in-person preferences.
+7. Review and finish, with the separate interview request and free support guide.
 
-There is no second current-needs checklist, repeated closing “Your ideas” page, top-three ranking or four-week impact score. Past support received and extra support wanted now remain independent: a person can report an old gap that has since been resolved, or enough past support alongside a new request. “No” to extra help does not mean existing ongoing support is unnecessary.
+Jacob clarified on 27 September that the survey must offer substantial space because few interviews can be conducted. **Keep all optional adult follow-ups; do not cap adult detail at one or two domains.** Most fields may be left blank. The needs list retains its 17 accepted domains plus Something else; any change to that inventory remains for the team's discussion. Future programme interest is a separate planning measure, not another past-needs checklist or a compulsory ranking.
 
-The adult list retains 17 accepted domains plus “Something else”. “I did not need support in these areas” is removed from the checklist: the preceding Yes/No/Not sure/Prefer not to answer question records that distinction. The “Something else” text box appears immediately below its checkbox only when selected. The shared 8–17 checklist uses age-accessible wording. Adults can answer sources and experience for every selected area, including sufficient past support or no extra help wanted now; youth detail is limited to the one optional focus. Most questions remain optional even though they are visible.
+Each area follows past support received → help sought and barriers → experience → extra/different help wanted now. A successful support experience is welcome; sufficient past support does not hide the experience question. Current requests and past support are independent.
 
 ## Scope and recall
 
-Approved 27 September 2026: the consultation covers **Greater Darwin, including Litchfield**. `geography.js` contains 100 alphabetically ordered locality names plus **Other suburb or locality** and **Prefer not to say**. Search supports the recorded local aliases. The selected locality derives a broader analysis region without a second location question; Other offers an optional locality text field. The catalogue provenance is in `GEOGRAPHY_SOURCES.md`.
+The consultation covers **Greater Darwin, including Litchfield**. The optional broad-area question shows three primary radio choices: **Darwin**, **Palmerston** and **Litchfield**. A lower-emphasis **Other area** disclosure holds the other Greater Darwin area, outside-area and declined-answer choices. It starts collapsed unless a secondary choice is already selected; no answer is preselected. Choosing a local area reveals an optional suburb dropdown containing only its suburbs/localities, alphabetically ordered. The existing 100-name catalogue and regional mapping are retained in `geography.js`. An unlisted suburb/locality can be entered as optional Other text. Leaving the suburb dropdown blank preserves the broad-area answer; Palmerston alone never means Palmerston City. Changing area clears the previous suburb and its Other text. See `GEOGRAPHY_SOURCES.md`.
 
-The ADF relationship wording removes the former military-force question. No overseas-service transfer question is added. Needs domains and their content remain unchanged pending Monday’s discussion.
+Current/former ADF members and the existing partner, child, parent, other-family/carer relationships remain invited. The former military-force and local service-date questions are removed; no overseas-service transfer question is added. Residence now controls geography routing:
 
-ADF service timing in Greater Darwin controls the route independently of residence:
+- A Greater Darwin broad area, with or without a suburb: main questionnaire (`current_local`).
+- Undisclosed broad area: main questionnaire (`residence_unspecified`); do not infer confirmed local residence.
+- Outside Greater Darwin with previous local residence: historical comments, then review (`earlier_experience`). If past residence is uncertain, declined or blank, this historical space remains available without marking prior residence confirmed.
+- Outside Greater Darwin and explicitly never lived locally, or no invited ADF relationship: scope explanation.
 
-- Current service or service ending within the past 12 months: full questionnaire.
-- Earlier Greater Darwin service: one optional lessons/suggestions page, then review and finish; analysed separately from recent support needs.
-- Uncertain connection: full questionnaire, retained as uncertain in analysis.
-- No Greater Darwin service connection: scope explanation.
+These routes define consultation participation, not programme-benefit eligibility. A local family is not excluded because the member served elsewhere or ceased service over a year ago.
 
-These routes define consultation participation, not programme-benefit eligibility. Residence does not independently control the service-connection route. Current/former members and wider family relationships can be selected, with multiple roles allowed.
+Adults recall the past 12 months; youth recall three months. Both concern the part of that period spent living in Greater Darwin; a newer arrival considers time since arrival. Historical comments concern the earlier local experience and are analysed separately. Current requests refer to now; programme preferences include the coming months. Adult residence duration counts the current or most recent stay, not accumulated postings.
 
-The adult recall period is 12 months; the shared 8–17 period is three months. Support received, sources and barriers use the relevant period where those details are asked. Extra or different support wanted refers to now. Optional adult Greater Darwin residence duration concerns the current or most recent stay, with a never-lived-in-Greater-Darwin option; it does not add separate postings together. These periods are project design choices.
-
-Excluding the invitation-page choices and including review, the adult main route has **5 + n pages**, where n is the number of selected areas. The 8–17 route has four pages without a focus and five with one focus; adding checked needs does not add pages. The earlier-experience route remains three pages: connection, comments and review. These counts exclude a conditional guardian-presence confirmation and the separate form for ages 7 or younger; they are not measured completion times.
+Excluding invitation/participation choices and including review, adult main-route pages are **6 + n**, where n is selected domains. Youth have five pages without focus and six with a focus. The historical route has three pages. These are navigation counts, not compulsory answer counts or measured completion times; a conditional guardian-presence step is additional. The younger-child path has background, expressions/observations and review.
 
 ## Answer model and interpretation
 
-The adult schema 6.0 record stores optional `answers.age_group` on both recent and earlier-experience routes. Its four values are `18_29`, `30_39`, `40_49` and `50_plus`; they do not affect routing. The adult and shared 8–17 questionnaires also offer an optional `answers.community_connection` response on the connection page, regardless of route or support need. The adult answer model stores independent `answers.needs_status`, `answers.needs` and `answers.areas[domain_id]` records containing `received`, `additional_support_now`, `support_requested`, `sources`, `barriers` and `comment`. The shared youth response preserves all checked needs and separately identifies the one optional detailed focus. It must not present unchecked detail for other needs as No. There is no automatic migration of older child/youth answers into this revised measure.
+Adult/youth exports use schema **7.1**, revision **2026-09-27-area-priority**, with `residence_area`, optional `suburb`, `location_precision`, residence scope/route and local recall geography and the respondent-perspective analysis unit. Adult `age_group` remains optional and does not change routing. The area record retains `received`, `sources`, `barriers`, `comment`, `additional_support_now` and `support_requested`. The youth record preserves all checked needs separately from its optional focus.
 
-Only Yes or Not sure permits area selection. Changing the needs-status response to No, Prefer not to answer or blank removes dependent selections and detail while preserving general preferences. Blank or declined need status is not evidence of no need. Removing a youth focus need clears its focus detail without erasing other selected needs. Adult area questions retain their existing separation between help-seeking and reasons for not seeking. Optional unanswered fields remain missing, not “no barrier”. Use the number actually answering each field as its denominator.
+New fields include `programmes`, `programme_priority`, relevant `children_ages`, `participation_formats`, `participation_enablers`, conditional `times` and `berrimah_access`, plus their applicable Other fields. Future interests stay available with No, declined or blank past need status. The participation-format measure replaces the old information/advice `delivery` measure; do not silently combine them across revisions. Preferences are not contact consent.
 
-Records describe individuals, not unique households or NT population prevalence. Keep adult 12-month responses, shared 8–17 three-month responses, guardian observations, uncertain and confirmed connections, and earlier-experience routes distinguishable. The fictional results page illustrates an older instrument; it does not analyse the current responses.
+Changing past need status to No/declined/blank clears only dependent needs/detail, not future programmes. Adding a help source within the same branch preserves barriers; moving between seeking/non-seeking/unspecified branches clears incompatible barriers. Unselected youth focus detail and optional blanks are missing, not No. A selected area with no detail still remains a selected area.
 
-The adult detail fields retain their existing limits. Youth focus answers are deliberately shorter; the counter appears near the applicable limit. Optional questions can be left blank with one Continue button; required connection/participation choices must be completed first.
+Every statistical output must follow [ANALYSIS_PROTOCOL.md](ANALYSIS_PROTOCOL.md). Report response records and participant perspectives, not unique households or population prevalence. Include the cohort, questionnaire revision, recall context and actual denominator. Keep age routes, historical/current/undisclosed residence and guardian perspectives distinguishable. Report broad-area-only answers separately from named suburbs; never allocate them to a particular suburb. The fictional results page illustrates an older instrument and does not analyse current responses.
+
+Adult text fields retain 5,000 characters; youth fields use 1,500. A counter appears near the limit. Optional pages can be continued without completing every field; participation and ADF connection requirements remain.
 
 ## Participation and privacy
 
 The invitation page presents an adult-first choice and reveals the two under-18 routes only when selected; each route’s participation choices still appear inline. Adults and 15–17-year-olds give their own informed agreement. Ages 8–14 first have guardian permission, followed by their own assent. Ages 8–17 answer **Is anyone helping you read or write your answers?** with **No, I am answering myself**, **Yes, my parent or guardian** or **Yes, someone else**. For ages 8–14, self/other assistance requires a guardian-presence confirmation before substantive questions. This is the open online form’s design policy, not a universal legal requirement or a statement that other helpers are unlawful. For ages 15–17, another helper does not cause a guardian block.
 
-Children aged 7 or younger have one parent/guardian form: four optional boxes recording the child’s own expressions, followed by **Your observations**. There is no response-mode selector. The child boxes are visible from the start and become editable only after the adult confirms the child wants to join in; guardian observations need guardian permission but not child willingness. Unchecking willingness clears only child responses. The schema 1.1 `young_child_supported` export derives its response basis from actual child responses and never claims child assent for an observation-only record. These perspectives remain separate from older respondents’ answers. Anyone needing help with understanding, authority or safe guardian involvement can speak with an LC worker. The public form does not fabricate worker approval. Seven is a practical response-design boundary, not a universal ability or legal age. Eighteen is adulthood; the use of fifteen is an operational capacity approach, not a universal statutory consent age. Follow the staff procedure for individual assessment, assistance and safeguarding.
+Children aged 7 or younger first have a short parent/guardian background step: ADF family connection, optional child area followed by an optional suburb/locality, and optional 0–4/5–7 age band. The expressions page defines “here” as living in Greater Darwin, then shows four optional child-response boxes followed by **Your observations**. There is no response-mode selector. The child boxes become editable only after the adult confirms the child wants to join in; guardian observations need guardian permission but not child willingness. Unchecking willingness clears only child responses. The schema 1.3 `young_child_supported` export, revision `2026-09-27-area-priority`, includes geography metadata, derives its response basis from actual child responses and never claims child assent for an observation-only record. These perspectives remain separate from older respondents’ answers. Anyone needing help with understanding, authority or safe guardian involvement can speak with an LC worker. The public form does not fabricate worker approval. Seven is a practical response-design boundary, not a universal ability or legal age. Eighteen is adulthood; the use of fifteen is an operational capacity approach, not a universal statutory consent age. Follow the staff procedure for individual assessment, assistance and safeguarding.
 
 The separate interview-request form offers self and parent/guardian routes, including a limited explanation request for under-15s. A guardian supplies their own contact details. These arrangements do not replace the questionnaire's permission and assent process. See [CONTACT_FORM.md](CONTACT_FORM.md).
 
 No names, contact details or response-retrieval codes are requested in the questionnaire. Its v11 notice says people can stop before submitting and that names or contact details are not collected for retrieving individual responses afterwards. The general access, correction and complaint route remains available; unexpected identifiable content still requires appropriate handling.
 
-The questionnaire footer and thank-you screen link to the separate contact form in a new tab, without answers or participant identifiers. Contact details are not linked to questionnaire responses. Selecting a service-format preference is not permission for follow-up.
+The questionnaire footer and thank-you screen link to the separate contact form in a new tab, without answers or participant identifiers. Contact details are not linked to questionnaire responses. Selecting a participation-format preference is not permission for follow-up.
 
 Neither form has a receiving endpoint, application analytics, cookies or persistent answer store. The completion screen offers the separate interview request and support finder; it does not offer answer downloads or a return to the review screen. The contact form does not export personal details. GitHub Pages itself logs visitor IPs for security. Real responses do not belong in this repository or personal development directories. Exported questionnaire consent records carry `context: internal_review`; they are not evidence of fieldwork approval. Before real collection, LC must confirm and implement the receiving system, access, any overseas processing, retention arrangements and safe-contact procedure. See [LEGAL_REVIEW.md](LEGAL_REVIEW.md).
+
+## Collection and migration
+
+The receiving platform remains undecided: LC may use its own Microsoft Forms or host this front end with an LC-approved receiver. The current changes activate neither. [COLLECTION_HANDOFF.md](COLLECTION_HANDOFF.md) describes ownership, prototype checks, source data, exports and launch verification. The IT handoff package includes `question-bank.json` and `frontend-source.zip` under `outputs/LC_IT_handoff` in the delivery workspace; the source archive identifies its built commit. The field bank describes this revision, not a live collection endpoint.
 
 ## Development and source material
 
@@ -83,7 +90,7 @@ Examples aid recognition but are not exhaustive and do not produce separate coun
 
 ## Free resource and interview link
 
-The title is **Defence Family Support Survey**, the greeting is **Hello, Defence community!**, and the introduction names **Greater Darwin**. Answer-length hints and the duplicate earlier-experience introduction are removed. The finish says **Thank you for helping strengthen the Defence community in Greater Darwin.** Its equal-style actions are **Request an interview with Lutheran Care** and **Find support in a few clicks**, accompanied by the approved free thank-you guide description.
+The title is **Defence Family Support Survey**, the greeting is **Hello, Defence community!**, and the introduction names **Greater Darwin**. Answer-length hints and the duplicate earlier-experience introduction are removed. The finish says **Thank you for helping strengthen the Defence community in Greater Darwin.** Two independent blocks explain the interview and free guide separately. Their equally styled red/white buttons read **Request an interview** and **Find support in a few clicks**; they align on desktop and stack on mobile.
 
 `support.html` is the free, standalone NT-wide support finder. It is linked from the questionnaire completion screen and the interview form, and can be opened directly without taking part in either. `thank-you-resource.js` uses the exact first-party `support.html` path; both links open without sending answers, contact details or participant IDs. External service links point to the providers’ official pages.
 
@@ -92,3 +99,15 @@ The current finder uses seven support domains and visible questionnaire-style ra
 Maintain `support-paths.mjs` for the current question flow and matching, `support-model.mjs` for established base routes, and `support-catalog.mjs` / `support-expanded.mjs` / `support-referrals.mjs` for officially sourced contact records. Do not infer eligibility from a broad family label or call paid onward care free. `SUPPORT_COVERAGE.md` documents the scope and limits of the expanded local/national coverage; `SUPPORT_DESIGN.md` records the design reasoning and corrected real-world scenarios. Run `node --test tests/*.test.mjs` before publication.
 
 The approved review corrections separate mental-health purpose from optional support preferences, prune irrelevant location questions, preserve the requested service type in fallback results, and make printed online contacts usable. Regression cases are in `tests/support-review-fixes.test.mjs`.
+
+
+## Interview request update — 27 September 2026
+
+The interview preview is one form plus review. It asks explicitly and separately for **discussion topic**, **interview format** and **suggested interview date/time**, alongside the contact details needed to arrange it. A mobile is mandatory; email is optional. Only **Under 18 / 18 or older** are used. A guardian request already identifies the child as under 18 and does not repeat the age question. Professionals and adults discussing parenting experience choose Me.
+
+A brief, non-sensitive topic and scheduling preferences are available on every valid route. Under-18 contact requests still require LC to establish understanding, suitable permission and willingness before the interview; the form does not make that decision. One optional contact/access-needs field handles practical constraints. Suggested dates are not confirmed appointments, and arranging a time by the chosen channel is not an extra interview. The stable field-purpose contract is in PRODUCT.md and CONTACT_FORM.md.
+
+- [Interview team guide and message templates](INTERVIEW_TEAM_GUIDE.md)
+- [Institutional receiving and scheduling proposal](INTERVIEW_RECEIVING_PROPOSAL.md)
+
+LC has not chosen a receiver. The suggested first release uses LC’s own approved form service, restricted ownership, a separate small scheduling log and a coordinator/backup. The GitHub page explicitly sends nothing and books no appointment.

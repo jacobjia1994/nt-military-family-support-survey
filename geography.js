@@ -2,7 +2,15 @@
 'use strict';
 
 window.SURVEY_GEOGRAPHY = Object.freeze({
-  version: '2026-09-27',
+  version: '2026-09-27-two-level',
+  areas: Object.freeze([
+    Object.freeze({id:'darwin',label:'Darwin'}),
+    Object.freeze({id:'palmerston',label:'Palmerston'}),
+    Object.freeze({id:'litchfield',label:'Litchfield'}),
+    Object.freeze({id:'greater_darwin_other',label:'Other Greater Darwin area'}),
+    Object.freeze({id:'outside',label:'Outside Greater Darwin'}),
+    Object.freeze({id:'prefer',label:'Prefer not to say'})
+  ]),
   localities: Object.freeze([
     Object.freeze({"id": "acacia_hills", "label": "Acacia Hills", "region": "litchfield"}),
     Object.freeze({"id": "alawa", "label": "Alawa", "region": "darwin"}),
