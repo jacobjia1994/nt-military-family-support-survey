@@ -6,7 +6,7 @@ import * as model from '../contact-model.mjs';
 
 const valid = (overrides = {}) => ({
   ...model.emptyRequest(), requester: 'self', age_band: 'adult', preferred_name: 'Alex',
-  phone: '+61 412 345 678', contact_method: 'sms', consent: true, ...overrides,
+  phone: '+61 412 345 678', contact_method: 'sms', consent: true, capacity_acknowledged:true,...overrides,
 });
 const uiSource = readFileSync(new URL('../contact.js', import.meta.url), 'utf8');
 const pageSource = readFileSync(new URL('../contact.html', import.meta.url), 'utf8');
@@ -47,11 +47,11 @@ function createUI() {
   return { api: context.contactTest, main, element, windowListeners };
 }
 
-test('a self request needs only route, age band, name, phone, contact choice and explicit consent', () => {
+test('a self request needs route, age band, name, phone, contact choice, consent and capacity acknowledgement', () => {
   assert.deepEqual(model.requestErrors(valid()), {});
   assert.deepEqual(model.requestErrors(valid({ contact_notes: '', topic: '' })), {});
   for (const [key, value] of Object.entries({
-    requester: '', age_band: '', preferred_name: '  ', phone: '', contact_method: '', consent: false,
+    requester: '', age_band: '', preferred_name: '  ', phone: '', contact_method: '', consent: false,capacity_acknowledged:false,
   })) {
     assert.ok(Object.hasOwn(model.requestErrors(valid({ [key]: value })), key), key);
     assert.throws(() => model.reviewRequest(valid({ [key]: value })));
@@ -59,6 +59,35 @@ test('a self request needs only route, age band, name, phone, contact choice and
   for (const consent of [undefined, 'true', 1, null]) {
     assert.ok(model.requestErrors(valid({ consent })).consent);
   }
+});
+
+test('every participant route requires a literal true capacity acknowledgement separately from consent',()=>{
+  assert.equal(model.emptyRequest().capacity_acknowledged,false);
+  for(const route of [{requester:'self',age_band:'adult'},{requester:'self',age_band:'minor'},{requester:'guardian',age_band:'minor',guardian_authority:true}]){
+    for(const capacity_acknowledged of [false,undefined,null,'true',1]){
+      const data=valid({...route,capacity_acknowledged});
+      assert.equal(data.consent,true);
+      assert.ok(model.requestErrors(data).capacity_acknowledged);
+      assert.throws(()=>model.reviewRequest(data),/incomplete/);
+    }
+    const data=valid({...route,capacity_acknowledged:true});
+    assert.deepEqual(model.requestErrors(data),{});
+    assert.equal(model.reviewRequest(data).capacity_acknowledged,true);
+    assert.ok(model.requestErrors({...data,consent:false}).consent,'Acknowledgement never replaces contact consent');
+  }
+});
+
+test('capacity acknowledgement resets with participant identity but survives ordinary contact edits',()=>{
+  const data=valid();
+  for(const [key,value] of [['requester','guardian'],['age_band','minor']]){
+    assert.equal(model.changeRequest(data,key,value).capacity_acknowledged,false);
+  }
+  for(const [key,value] of [['preferred_name','Sam'],['phone','0400111222'],['email','sam@example.org'],['contact_method','call']]){
+    const changed=model.changeRequest(data,key,value);
+    assert.equal(changed.capacity_acknowledged,true);
+    assert.equal(changed.consent,false);
+  }
+  assert.equal(model.changeRequest(data,'capacity_acknowledged',false).consent,true);
 });
 
 test('contact method and voicemail start unselected; unknown contact methods fail', () => {
@@ -108,7 +137,7 @@ test('review data is an explicit minimum-field whitelist, separate from survey a
   }));
   assert.deepEqual(Object.keys(result).sort(), [
     'requester', 'age_band', 'preferred_name', 'phone', 'email', 'contact_method', 'voicemail',
-    'contact_notes', 'topic', 'interview_mode', 'suggested_time', 'consent', 'notice_version',
+    'contact_notes', 'topic', 'interview_mode', 'suggested_time', 'consent', 'capacity_acknowledged', 'notice_version',
   ].sort());
   assert.equal(result.preferred_name, 'Alex');
   assert.equal(result.phone, '+61 412 345 678');
@@ -116,6 +145,7 @@ test('review data is an explicit minimum-field whitelist, separate from survey a
   assert.equal(result.suggested_time, 'Tuesday afternoon');
   assert.equal(result.email, 'alex@example.org');
   assert.equal(result.notice_version, model.CONTACT_NOTICE_VERSION);
+  assert.equal(result.capacity_acknowledged,true);
   for (const marker of ['do-not-retain', 'survey-secret', 'answer-secret', '1990-01-01']) {
     assert.equal(JSON.stringify(result).includes(marker), false);
   }
@@ -222,6 +252,7 @@ test('unexpected input types cannot bypass required fields or crash validation',
     assert.ok(model.requestErrors(valid({[key]:{toString:()=> '0412345678'}}))[key],key);
   }
   assert.equal(model.changeRequest(valid(),'consent','true').consent,false);
+  assert.equal(model.changeRequest(valid(),'capacity_acknowledged','true').capacity_acknowledged,false);
   assert.equal(model.changeRequest(valid(),'phone',412345678).phone,'');
   assert.deepEqual(model.changeRequest(valid(),'survey_answers','private'),valid());
 });
@@ -290,6 +321,38 @@ test('blank optional fields remain valid and do not imply invented discussion to
   assert.equal(ui.api.getRequest().contact_notes, '');
   assert.doesNotMatch(ui.main.innerHTML,/<dt>(?:Discussion topic|Suggested interview date and time|Interview format|Contact or access needs|Email address)<\/dt>/);
   assert.doesNotMatch(ui.main.innerHTML,/Not provided|Discuss when arranging/);
+});
+
+test('the capacity notice and checkbox sit before review and gate every route without another agreement on review',()=>{
+  for(const route of [{requester:'self',age_band:'adult'},{requester:'self',age_band:'minor'},{requester:'guardian',age_band:'minor',guardian_authority:true}]){
+    const ui=createUI();
+    ui.api.setRequest(valid({...route,capacity_acknowledged:false}));
+    ui.api.renderForm();
+    assert.match(ui.main.innerHTML,/Interview availability/);
+    assert.ok(ui.main.innerHTML.includes(model.CONTACT_CAPACITY_NOTICE));
+    assert.ok(ui.main.innerHTML.includes(model.CONTACT_CAPACITY_ACKNOWLEDGEMENT));
+    const consentPosition=ui.main.innerHTML.indexOf('name="consent"');
+    const acknowledgementPosition=ui.main.innerHTML.indexOf('name="capacity_acknowledged"');
+    const reviewPosition=ui.main.innerHTML.indexOf('type="submit"');
+    assert.ok(consentPosition>=0&&acknowledgementPosition>consentPosition&&reviewPosition>acknowledgementPosition);
+    assert.equal(ui.element('[name="capacity_acknowledged"]').checked,false);
+    assert.equal(ui.element('[type="submit"]').disabled,true);
+    const form=ui.element('#contact-form');
+    form.listeners.get('change')({target:{name:'capacity_acknowledged',type:'checkbox',checked:true}});
+    assert.equal(ui.api.getRequest().capacity_acknowledged,true);
+    assert.equal(ui.element('[name="capacity_acknowledged"]').checked,true);
+    assert.equal(ui.element('[type="submit"]').disabled,false);
+    form.listeners.get('change')({target:{name:'capacity_acknowledged',type:'checkbox',checked:false}});
+    assert.equal(ui.element('[type="submit"]').disabled,true);
+    form.listeners.get('submit')({preventDefault(){}});
+    assert.match(ui.main.innerHTML,/id="contact-form"/);
+    form.listeners.get('change')({target:{name:'capacity_acknowledged',type:'checkbox',checked:true}});
+    form.listeners.get('submit')({preventDefault(){}});
+    assert.match(ui.main.innerHTML,/Check your details/);
+    assert.equal(ui.api.getRequest().capacity_acknowledged,true);
+    assert.doesNotMatch(ui.main.innerHTML,/name="capacity_acknowledged"/);
+    assert.ok(ui.main.innerHTML.includes(model.CONTACT_CAPACITY_ACKNOWLEDGEMENT)||ui.main.innerHTML.includes(model.CONTACT_CAPACITY_NOTICE));
+  }
 });
 
 test('the form clears voicemail on method changes and requires fresh consent before review', () => {

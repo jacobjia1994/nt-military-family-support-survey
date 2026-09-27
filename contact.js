@@ -1,4 +1,4 @@
-import {CONTACT_NOTICE,CONTACT_METHODS,CONTACT_AGES,CONTACT_REQUESTERS,CONTACT_INTERVIEW_MODES,CONTACT_GUARDIAN_DECLARATION,CONTACT_LIMITS,emptyRequest,contactRoute,needsTopic,needsArrangements,emailIsValid,consentText,changeRequest,requestErrors,reviewRequest,contactResource,escapeHTML as esc} from './contact-model.mjs?v=20260927-interview-4';
+import {CONTACT_NOTICE,CONTACT_METHODS,CONTACT_AGES,CONTACT_REQUESTERS,CONTACT_INTERVIEW_MODES,CONTACT_GUARDIAN_DECLARATION,CONTACT_CAPACITY_NOTICE,CONTACT_CAPACITY_ACKNOWLEDGEMENT,CONTACT_LIMITS,emptyRequest,contactRoute,needsTopic,needsArrangements,emailIsValid,consentText,changeRequest,requestErrors,reviewRequest,contactResource,escapeHTML as esc} from './contact-model.mjs?v=20260927-interview-5';
 
 // Review build: no receiver, persistence, exports or survey-response mapping.
 let request=emptyRequest();
@@ -10,6 +10,7 @@ function focusStart(){main.querySelector('h1')?.focus({preventScroll:true});wind
 function previewHTML(){return '<p class="contact-preview">Team review only. This form does not send your details. Please use invented details.</p>';}
 function privacyHTML(){return `<section class="contact-privacy" aria-labelledby="contact-privacy-title"><h2 id="contact-privacy-title">Your information</h2><div class="notice-grid">${CONTACT_NOTICE.map(([title,text])=>`<p><strong>${esc(title)}</strong>${esc(text)}</p>`).join('')}</div><p>For privacy, access or complaints, contact Lutheran Care on ${tel} or <a href="mailto:feedback@lutherancare.org.au">feedback@lutherancare.org.au</a>. Read our <a href="https://www.lutherancare.org.au/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</p></section>`;}
 function consentHTML(){return `<div id="request-agreement">${privacyHTML()}<label class="contact-check"><input type="checkbox" name="consent" ${request.consent?'checked':''}><span>${esc(consentText(request))} ${required}</span></label></div>`;}
+function capacityHTML(){return `<section class="contact-capacity" aria-labelledby="capacity-title"><h2 id="capacity-title">Interview availability</h2><p id="capacity-explanation">${esc(CONTACT_CAPACITY_NOTICE)}</p><label class="contact-check"><input type="checkbox" name="capacity_acknowledged" aria-describedby="capacity-explanation" required ${request.capacity_acknowledged?'checked':''}><span>${esc(CONTACT_CAPACITY_ACKNOWLEDGEMENT)} ${required}</span></label></section>`;}
 function resourceHTML(config=globalThis.SURVEY_THANK_YOU_RESOURCE||{}){const resource=contactResource(config);return `<section class="contact-resource" aria-labelledby="contact-resource-title"><h2 id="contact-resource-title">${esc(resource.title)}</h2><p>Explore our free guide to support services for Defence members and families.</p>${resource.url?`<a class="button secondary" href="${esc(resource.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Find support in a few clicks</a>`:'<button class="button secondary" type="button" disabled>Find support in a few clicks</button><p class="small">Available soon</p>'}</section>`;}
 function footerHTML(){return `<div class="contact-footer"><p>For help with this form, call Lutheran Care on ${tel} and ask for the NT Defence Family Support Program.</p><p>This form is for the consultation, not a counselling or service appointment. In an emergency in Australia, call 000.</p></div>${resourceHTML()}`;}
 function textField(key,label,{hint='',multiline=false}={}){
@@ -46,6 +47,7 @@ function renderForm(){
   ${textField('contact_notes','Any contact or access needs?',{hint:'For example, times not to contact you, an interpreter, accessibility needs or a support person. Leave blank if none.',multiline:true})}
   ${guardian?`<label class="contact-check"><input type="checkbox" name="guardian_authority" ${request.guardian_authority?'checked':''}><span>${esc(CONTACT_GUARDIAN_DECLARATION)} ${required}</span></label>`:''}
   ${consentHTML()}
+  ${capacityHTML()}
   <div class="contact-actions"><button class="text-button" id="clear-details" type="button">Clear details</button><button class="button primary" type="submit" disabled>Review details</button></div></div></form>${footerHTML()}`;
   const form=main.querySelector('#contact-form'),touched=new Set();
   const update=()=>{
@@ -56,6 +58,7 @@ function renderForm(){
     emailChoice.disabled=!emailIsValid(request.email);emailChoice.checked=request.contact_method==='email';
     main.querySelector('#email-contact-hint').hidden=emailIsValid(request.email);
     form.querySelector('[name="consent"]').checked=request.consent;
+    form.querySelector('[name="capacity_acknowledged"]').checked=request.capacity_acknowledged;
     form.querySelector('[type="submit"]').disabled=Object.keys(requestErrors(request)).length>0;
   };
   const save=e=>{const input=e.target;if(!input.name)return;request=changeRequest(request,input.name,input.type==='checkbox'?input.checked:input.value);if(['requester','age_band'].includes(input.name)){renderForm();main.querySelector(`[name="${input.name}"][value="${request[input.name]}"]`)?.focus();return;}update();if(touched.has(input.name))showError(input.name);};
@@ -75,6 +78,7 @@ function renderReview(){
   if(needsArrangements(details)&&details.interview_mode)rows.push(['Interview format',CONTACT_INTERVIEW_MODES[details.interview_mode]]);
   if(needsTopic(details)&&details.topic)rows.push(['Discussion topic',details.topic]);
   if(needsArrangements(details)&&details.suggested_time)rows.push(['Suggested interview date and time',details.suggested_time]);
+  rows.push(['Interview availability',CONTACT_CAPACITY_ACKNOWLEDGEMENT]);
   main.innerHTML=`${previewHTML()}<section class="contact-review"><h1 tabindex="-1">Check your details</h1><dl>${rows.map(([label,value])=>`<dt>${esc(label)}</dt><dd>${esc(value)}</dd>`).join('')}</dl><div class="contact-actions"><button class="back-button" id="edit-details" type="button">Change details</button><button class="button primary" id="finish-contact" type="button">Finish preview</button></div></section>${footerHTML()}`;
   main.querySelector('#edit-details').onclick=()=>{renderForm();focusStart();};main.querySelector('#finish-contact').onclick=renderFinish;focusStart();
 }

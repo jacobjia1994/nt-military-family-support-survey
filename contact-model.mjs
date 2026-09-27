@@ -1,4 +1,4 @@
-export const CONTACT_NOTICE_VERSION = '2026-09-27-contact-v5';
+export const CONTACT_NOTICE_VERSION = '2026-09-27-contact-v6';
 export const CONTACT_LIMITS = Object.freeze({ preferred_name:80, phone:30, email:254, contact_notes:300, topic:600, suggested_time:300 });
 export const CONTACT_METHODS = Object.freeze({call:'Call me',sms:'Text me',email:'Email me'});
 export const CONTACT_AGES = Object.freeze({adult:'18 or older',minor:'Under 18'});
@@ -13,7 +13,9 @@ export const CONTACT_NOTICE = [
 export const CONTACT_CONSENT = 'I agree to Lutheran Care contacting me as selected and using my details as described, including any sensitive information I choose to share.';
 export const CONTACT_MINOR_CONSENT = 'I would like Lutheran Care to contact me as selected. I understand how the details I provide will be used to arrange an interview. I can decide about taking part later.';
 export const CONTACT_GUARDIAN_DECLARATION = 'I have parental responsibility or legal authority to make this request for this child.';
-export function emptyRequest(){return {requester:'',age_band:'',preferred_name:'',phone:'',email:'',contact_method:'',voicemail:false,contact_notes:'',topic:'',suggested_time:'',interview_mode:'',guardian_authority:false,consent:false};}
+export const CONTACT_CAPACITY_NOTICE = 'Because this project has a limited timeframe and a small team, we may not be able to contact everyone to arrange an interview. Thank you for your understanding.';
+export const CONTACT_CAPACITY_ACKNOWLEDGEMENT = 'I understand that registering does not guarantee contact or an interview.';
+export function emptyRequest(){return {requester:'',age_band:'',preferred_name:'',phone:'',email:'',contact_method:'',voicemail:false,contact_notes:'',topic:'',suggested_time:'',interview_mode:'',guardian_authority:false,consent:false,capacity_acknowledged:false};}
 const isRecord = value => value!==null&&typeof value==='object'&&!Array.isArray(value);
 const record = value => isRecord(value)?value:{};
 const isChoice = (choices,value) => typeof value==='string'&&Object.hasOwn(choices,value);
@@ -54,7 +56,7 @@ export function emailIsValid(value){
 export function changeRequest(value,key,newValue){
   const current=record(value);
   if(!Object.hasOwn(emptyRequest(),key))return {...current};
-  const fieldValue=['voicemail','guardian_authority','consent'].includes(key)?newValue===true:typeof newValue==='string'?newValue:'';
+  const fieldValue=['voicemail','guardian_authority','consent','capacity_acknowledged'].includes(key)?newValue===true:typeof newValue==='string'?newValue:'';
   if(key==='requester'&&fieldValue!==current.requester)return {...emptyRequest(),requester:fieldValue,age_band:fieldValue==='guardian'?'minor':''};
   if(key==='age_band'&&fieldValue!==current.age_band)return {...emptyRequest(),requester:current.requester,age_band:fieldValue};
   const next={...current,[key]:fieldValue};
@@ -84,11 +86,12 @@ export function requestErrors(value){
   if(needsArrangements(data)&&supplied(data.interview_mode)&&!isChoice(CONTACT_INTERVIEW_MODES,data.interview_mode))errors.interview_mode='Choose an interview preference from the options, or leave it blank.';
   if(data.requester==='guardian'&&data.guardian_authority!==true)errors.guardian_authority='Please confirm your authority to make this request for the child.';
   if(data.consent!==true)errors.consent='Please give your agreement before continuing.';
+  if(data.capacity_acknowledged!==true)errors.capacity_acknowledged='Please confirm that you understand we may not be able to contact everyone or arrange every interview.';
   return errors;
 }
 export function reviewRequest(data){
   if(Object.keys(requestErrors(data)).length)throw new Error('Contact details are incomplete');
-  const result={requester:data.requester,age_band:data.age_band,preferred_name:text(data.preferred_name),phone:text(data.phone),email:text(data.email),contact_method:data.contact_method,voicemail:data.contact_method==='call'&&data.voicemail===true,contact_notes:text(data.contact_notes),consent:true,notice_version:CONTACT_NOTICE_VERSION};
+  const result={requester:data.requester,age_band:data.age_band,preferred_name:text(data.preferred_name),phone:text(data.phone),email:text(data.email),contact_method:data.contact_method,voicemail:data.contact_method==='call'&&data.voicemail===true,contact_notes:text(data.contact_notes),consent:true,capacity_acknowledged:true,notice_version:CONTACT_NOTICE_VERSION};
   if(needsTopic(data))result.topic=text(data.topic);
   if(needsArrangements(data)){
     result.interview_mode=text(data.interview_mode);
