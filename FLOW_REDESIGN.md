@@ -2,6 +2,8 @@
 
 Updated 28 September 2026. Adult/youth schema `7.2`, questionnaire revision `2026-09-28-topic-linked-support`. Younger-child schema `1.3`, revision `2026-09-27-area-priority`. This remains a team-review interface without a response receiver. Collection platform and storage are for LC and its IT team to select; see [COLLECTION_HANDOFF.md](COLLECTION_HANDOFF.md).
 
+**Question-design status:** the 7.2 sequence below records the deployed review version. Its repeated broad topic selections and generic per-topic format list are under reconsideration; do not use them as requirements for the next instrument. The local working direction is in [QUESTION_DESIGN_RETHINK.md](QUESTION_DESIGN_RETHINK.md). It is a candidate for review, not an approved replacement or a collection release.
+
 ## Purpose and sequence
 
 The survey supports LC's decisions about useful support, experiences worth preserving, current requests and feasible participation in Greater Darwin, including Litchfield. Jacob clarified that optional detailed accounts are particularly important because staff can conduct only a limited number of interviews. Keep the opportunity to answer every selected adult domain; do not impose a one- or two-domain limit.
