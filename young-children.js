@@ -5,7 +5,7 @@
 
   const MAX_LENGTH = 1500;
   const PROMPTS = Object.freeze([
-    Object.freeze({ id: 'likes', label: 'What do you like about living here?' }),
+    Object.freeze({ id: 'likes', label: 'What do you like about where you live or spend time with your family?' }),
     Object.freeze({ id: 'hard', label: 'Is there anything that feels hard?' }),
     Object.freeze({ id: 'help', label: 'Who helps you when you need help?' }),
     Object.freeze({ id: 'easier', label: 'What would make things a little easier?' }),
@@ -99,7 +99,7 @@
       }
       const hasChildResponses = Object.keys(childResponses).length > 0;
       return {
-        schema_version: '1.3', questionnaire_version: 'young_child_supported', questionnaire_revision: '2026-09-27-area-priority', age_path: 'young',
+        schema_version: '1.3', questionnaire_version: 'young_child_supported', questionnaire_revision: '2026-09-29-local-connection-preview', age_path: 'young',
         geography_version: geography()?.version || null,
         background: { ...background, ...locationMetadata(background) },
         response_mode: hasChildResponses ? 'child_views' : 'guardian_observations',
@@ -113,7 +113,7 @@
           guardian_permission: guardianPermission,
         } : { kind: 'parent_guardian_permission_for_observations', guardian_permission: guardianPermission },
         collection_mode: 'internal_review_no_transmission',
-        storage: 'downloaded_by_respondent; not submitted',
+        storage: 'in_memory_preview_not_submitted',
       };
     }
     return Object.freeze({ validPermission, setBackground, confirmWillingness, canContinue, answer, snapshot, exportAnswers, reset });
@@ -207,7 +207,7 @@
       if (!session.canContinue()) return showBackground();
       const values = session.snapshot();
       const observationField = responseField('guardian_observations', 'What would you like to tell us about your child’s needs or support?', values.guardian_observations);
-      main.innerHTML = `<section class="survey-layout"><form class="question-card" id="young-form" novalidate><h1 tabindex="-1">Your child’s views and needs</h1><p class="question-intro">For a parent or guardian of a child aged 7 or younger.</p><p>Talk with your child about family life and their experience of living in Greater Darwin. In these questions, “here” means Greater Darwin: Darwin, Palmerston and Litchfield.</p><p>Write down your child’s words or describe what they show you. Leave questions blank if they cannot answer or do not want to. Add your own observations at the end.</p><label class="choice consent-choice"><input type="checkbox" id="young-willing" name="child_willing" ${values.willing ? 'checked' : ''}><span class="choice-label">I have explained this to my child, and they want to take part.</span></label><p class="small" id="young-privacy">${esc(privacyHint)}</p><fieldset class="question-group young-responses" id="young-responses" ${values.willing ? '' : 'disabled'}><legend class="visually-hidden">Your child’s responses</legend>${prompts.map(prompt => responseField(prompt.id, prompt.label, values.responses[prompt.id])).join('')}</fieldset><div class="young-guardian-observations"><h2>Your observations</h2>${observationField}</div><div class="error" id="young-error" role="alert"></div><div class="question-actions"><button class="back-button" type="button" id="young-back">Back</button><button class="button primary" type="submit">Continue</button></div></form><button class="text-button" type="button" id="young-stop">Stop and clear answers</button></section>`;
+      main.innerHTML = `<section class="survey-layout"><form class="question-card" id="young-form" novalidate><h1 tabindex="-1">Your child’s views and needs</h1><p class="question-intro">For a parent or guardian of a child aged 7 or younger.</p><p>Talk with your child about family life, where they live, and any connection your family has to Greater Darwin. A child living elsewhere can describe their own experience.</p><p>Write down your child’s words or describe what they show you. Leave questions blank if they cannot answer or do not want to. Add your own observations at the end.</p><label class="choice consent-choice"><input type="checkbox" id="young-willing" name="child_willing" ${values.willing ? 'checked' : ''}><span class="choice-label">I have explained this to my child, and they want to take part.</span></label><p class="small" id="young-privacy">${esc(privacyHint)}</p><fieldset class="question-group young-responses" id="young-responses" ${values.willing ? '' : 'disabled'}><legend class="visually-hidden">Your child’s responses</legend>${prompts.map(prompt => responseField(prompt.id, prompt.label, values.responses[prompt.id])).join('')}</fieldset><div class="young-guardian-observations"><h2>Your observations</h2>${observationField}</div><div class="error" id="young-error" role="alert"></div><div class="question-actions"><button class="back-button" type="button" id="young-back">Back</button><button class="button primary" type="submit">Continue</button></div></form><button class="text-button" type="button" id="young-stop">Stop and clear answers</button></section>`;
       const form = main.querySelector('#young-form');
       const willing = main.querySelector('#young-willing');
       willing.addEventListener('change', () => {
@@ -249,7 +249,7 @@
         ['Child’s age group', CHILD_STAGES.find(option => option.id === values.background.child_stage)?.label],
       ].filter(([, value]) => value);
       const reviewRows = rows => rows.map(([label, value]) => `<section class="review-block"><div class="review-header"><h3>${esc(label)}</h3></div><p class="review-value">${esc(value)}</p></section>`).join('');
-      main.innerHTML = `<section class="survey-layout"><div class="question-card"><h1 tabindex="-1">Review your answers</h1><div class="review-header young-background-review"><h2>About your child</h2><button class="text-button" type="button" id="young-edit-background">Change</button></div>${reviewRows(backgroundRows)}${rows.length ? `<h2>Your child’s responses</h2>${reviewRows(rows)}` : ''}${values.guardian_observations.trim() ? reviewRows([['Your observations', values.guardian_observations]]) : ''}<div class="question-actions"><button class="back-button" type="button" id="young-edit">Back</button><button class="button primary" type="button" id="young-finish">Confirm and submit</button></div></div><button class="text-button" type="button" id="young-stop">Stop and clear answers</button></section>`;
+      main.innerHTML = `<section class="survey-layout"><div class="question-card"><h1 tabindex="-1">Review your answers</h1><div class="review-header young-background-review"><h2>About your child</h2><button class="text-button" type="button" id="young-edit-background">Change</button></div>${reviewRows(backgroundRows)}${rows.length ? `<h2>Your child’s responses</h2>${reviewRows(rows)}` : ''}${values.guardian_observations.trim() ? reviewRows([['Your observations', values.guardian_observations]]) : ''}<p class="small">This is a preview. Your answers are not sent or saved.</p><div class="question-actions"><button class="back-button" type="button" id="young-edit">Back</button><button class="button primary" type="button" id="young-finish">Finish preview</button></div></div><button class="text-button" type="button" id="young-stop">Stop and clear answers</button></section>`;
       main.querySelector('#young-edit').onclick = show;
       main.querySelector('#young-edit-background').onclick = showBackground;
       main.querySelector('#young-stop').onclick = stop;

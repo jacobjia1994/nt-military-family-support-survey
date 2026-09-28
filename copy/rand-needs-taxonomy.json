@@ -1,0 +1,133 @@
+{
+  "version": "2026-09-29-candidate-1",
+  "status": "candidate_recall_cues_not_a_validated_scale",
+  "audience": "adults",
+  "notes": "Nine broad groups and 45 optional concrete cues. A cue selected by a respondent is an issue mentioned, not a diagnosis, prevalence estimate, request for a Lutheran Care activity, or evidence that every example in its group applies.",
+  "sources": {
+    "strategy": {
+      "title": "Defence and Veteran Family Wellbeing Strategy 2025–2030 and First Action Plan",
+      "publisher": "Australian Government",
+      "year": 2024,
+      "localFile": "Def-Vet-Fam-Wellbeing-Strategy-and-Action-Plan.pdf",
+      "pageNote": "Printed pages are two below PDF page numbers."
+    },
+    "rand": {
+      "title": "A New Approach for Assessing the Needs of Service Members and Their Families, Appendix A",
+      "publisher": "RAND Corporation",
+      "year": 2011,
+      "localFile": "A New Approach for Assessing the Needs of Service Members and Their Families.pdf",
+      "pageNote": "Printed pages are 26 below PDF page numbers. Appendix A begins at printed page 75."
+    }
+  },
+  "categories": [
+    {
+      "id": "postings_service_changes",
+      "label": "Postings, time apart and leaving service",
+      "hint": "Changes connected with service can affect family life in different ways.",
+      "sourceRefs": [{"source":"strategy","printedPages":"26–27"},{"source":"rand","printedPages":"83–85, 93"}],
+      "items": [
+        {"id":"posting_uncertainty","label":"Not knowing when or where a posting will be","sourceRefs":[{"source":"strategy","printedPages":"26–27","basis":"direct"}]},
+        {"id":"moving_settling","label":"Moving and settling into a new place","sourceRefs":[{"source":"strategy","printedPages":"26–27","basis":"direct"},{"source":"rand","printedPages":"85","basis":"adapted"}]},
+        {"id":"service_absences","label":"Family life during deployments, training or other time apart","sourceRefs":[{"source":"strategy","printedPages":"26–27","basis":"direct"},{"source":"rand","printedPages":"84, 88","basis":"adapted"}]},
+        {"id":"return_readjustment","label":"Readjusting when someone returns after time away","sourceRefs":[{"source":"strategy","printedPages":"26–27","basis":"adapted"},{"source":"rand","printedPages":"88","basis":"direct"}]},
+        {"id":"leaving_service","label":"Preparing for or adjusting to life after service","sourceRefs":[{"source":"strategy","printedPages":"26–27","basis":"direct"}]}
+      ]
+    },
+    {
+      "id": "housing_money_transport",
+      "label": "Housing, money and getting around",
+      "sourceRefs": [{"source":"strategy","printedPages":"17, 26–27"},{"source":"rand","printedPages":"85–86"}],
+      "items": [
+        {"id":"suitable_home","label":"Finding a home that suits your household","hint":"This could include space, accessibility or pets.","sourceRefs":[{"source":"strategy","printedPages":"26–27","basis":"direct"},{"source":"rand","printedPages":"85","basis":"adapted"}]},
+        {"id":"housing_security_cost","label":"Keeping a secure or affordable home","sourceRefs":[{"source":"strategy","printedPages":"26–27","basis":"adapted"},{"source":"rand","printedPages":"85–86","basis":"adapted"}]},
+        {"id":"bills_financial_stress","label":"Bills or financial stress","sourceRefs":[{"source":"strategy","printedPages":"10, 14, 17","basis":"direct"},{"source":"rand","printedPages":"86","basis":"direct"}]},
+        {"id":"financial_information_help","label":"Finding financial information or help","sourceRefs":[{"source":"strategy","printedPages":"17, 39","basis":"direct"},{"source":"rand","printedPages":"94","basis":"adapted"}]},
+        {"id":"everyday_transport","label":"Getting to work, appointments or activities","sourceRefs":[{"source":"strategy","printedPages":"26, 43","basis":"local_inference_from_geographical_disadvantage"},{"source":"rand","printedPages":"85","basis":"direct"}]}
+      ]
+    },
+    {
+      "id": "work_study_training",
+      "label": "Work, study and training",
+      "sourceRefs": [{"source":"strategy","printedPages":"2, 27, 40"},{"source":"rand","printedPages":"84, 86"}],
+      "items": [
+        {"id":"finding_work","label":"Finding suitable work","sourceRefs":[{"source":"strategy","printedPages":"27, 40","basis":"direct"},{"source":"rand","printedPages":"86","basis":"direct"}]},
+        {"id":"career_after_move","label":"Keeping a career going after a move","sourceRefs":[{"source":"strategy","printedPages":"2, 27","basis":"direct"}]},
+        {"id":"study_training_access","label":"Starting or continuing study or training","sourceRefs":[{"source":"strategy","printedPages":"27, 40","basis":"direct"},{"source":"rand","printedPages":"84","basis":"direct"}]},
+        {"id":"career_advice","label":"Finding career advice or a way to use your skills","sourceRefs":[{"source":"strategy","printedPages":"27, 40","basis":"adapted"}]},
+        {"id":"work_care_balance","label":"Fitting work around caring or family responsibilities","sourceRefs":[{"source":"strategy","printedPages":"27","basis":"local_inference_from_employment_and_childcare_access"},{"source":"rand","printedPages":"84","basis":"adapted"}]}
+      ]
+    },
+    {
+      "id": "childcare_school",
+      "label": "Childcare and children's schooling",
+      "sourceRefs": [{"source":"strategy","printedPages":"26–27, 39, 41"},{"source":"rand","printedPages":"89"}],
+      "items": [
+        {"id":"childcare_places","label":"Finding available childcare","sourceRefs":[{"source":"strategy","printedPages":"27, 41","basis":"direct"},{"source":"rand","printedPages":"89","basis":"direct"}]},
+        {"id":"childcare_fit","label":"Childcare hours or cost that work for your family","sourceRefs":[{"source":"strategy","printedPages":"27","basis":"adapted"},{"source":"rand","printedPages":"89","basis":"direct"}]},
+        {"id":"school_enrolment","label":"Enrolling children in school after a move","sourceRefs":[{"source":"strategy","printedPages":"27, 41","basis":"direct"},{"source":"rand","printedPages":"89","basis":"adapted"}]},
+        {"id":"learning_support","label":"Learning or other support at school","sourceRefs":[{"source":"strategy","printedPages":"27, 39, 41","basis":"direct"},{"source":"rand","printedPages":"89","basis":"direct"}]},
+        {"id":"children_settling","label":"Children settling in and joining their community","sourceRefs":[{"source":"strategy","printedPages":"27, 39","basis":"direct"},{"source":"rand","printedPages":"89","basis":"adapted"}]}
+      ]
+    },
+    {
+      "id": "parenting_caring_disability",
+      "label": "Parenting, caring and disability",
+      "sourceRefs": [{"source":"strategy","printedPages":"26–27, 38–39"},{"source":"rand","printedPages":"89, 109"}],
+      "items": [
+        {"id":"parenting_during_absence","label":"Parenting while someone is away for service","sourceRefs":[{"source":"strategy","printedPages":"26–27","basis":"direct"},{"source":"rand","printedPages":"89","basis":"adapted"}]},
+        {"id":"sole_shared_parenting","label":"Sole, single or shared parenting arrangements","sourceRefs":[{"source":"strategy","printedPages":"27","basis":"direct"}]},
+        {"id":"caring_for_relative","label":"Caring for an older or unwell family member","sourceRefs":[{"source":"strategy","printedPages":"27, 38–39","basis":"direct"},{"source":"rand","printedPages":"109","basis":"direct"}]},
+        {"id":"disability_support","label":"Support for a family member with disability or additional needs","sourceRefs":[{"source":"strategy","printedPages":"26–27, 39–40","basis":"direct"},{"source":"rand","printedPages":"109","basis":"adapted"}]},
+        {"id":"practical_caring_help","label":"Practical help with caring responsibilities","sourceRefs":[{"source":"strategy","printedPages":"27","basis":"local_inference_from_flexible_supports"},{"source":"rand","printedPages":"94","basis":"adapted"}]}
+      ]
+    },
+    {
+      "id": "health_wellbeing",
+      "label": "Health and wellbeing",
+      "sourceRefs": [{"source":"strategy","printedPages":"14–17, 26–27, 41–43"},{"source":"rand","printedPages":"87, 90"}],
+      "items": [
+        {"id":"physical_healthcare","label":"Getting physical healthcare when needed","sourceRefs":[{"source":"strategy","printedPages":"14, 17, 36","basis":"direct"},{"source":"rand","printedPages":"87","basis":"adapted"}]},
+        {"id":"care_after_move","label":"Keeping healthcare going after a move","sourceRefs":[{"source":"strategy","printedPages":"26–27","basis":"local_inference_from_relocation_and_health_access"},{"source":"rand","printedPages":"87","basis":"adapted"}]},
+        {"id":"stress_emotional_wellbeing","label":"Stress or emotional wellbeing","sourceRefs":[{"source":"strategy","printedPages":"14–16, 26–27","basis":"direct"},{"source":"rand","printedPages":"90","basis":"direct"}]},
+        {"id":"mental_health_support","label":"Finding mental health support","sourceRefs":[{"source":"strategy","printedPages":"26–27, 41–43","basis":"direct"},{"source":"rand","printedPages":"94","basis":"adapted"}]},
+        {"id":"grief_bereavement","label":"Support through grief or bereavement","sourceRefs":[{"source":"strategy","printedPages":"15–16, 27, 41","basis":"direct"},{"source":"rand","printedPages":"90","basis":"adapted"}]}
+      ]
+    },
+    {
+      "id": "relationships_safety",
+      "label": "Family relationships and safety",
+      "sourceRefs": [{"source":"strategy","printedPages":"10, 21, 27, 41"},{"source":"rand","printedPages":"88"}],
+      "items": [
+        {"id":"family_communication","label":"Keeping in touch and communicating as a family","sourceRefs":[{"source":"strategy","printedPages":"10, 27","basis":"adapted"},{"source":"rand","printedPages":"88","basis":"direct"}]},
+        {"id":"changing_family_roles","label":"Changes in family roles or responsibilities","sourceRefs":[{"source":"strategy","printedPages":"27","basis":"adapted"},{"source":"rand","printedPages":"88","basis":"direct"}]},
+        {"id":"relationship_difficulties","label":"Relationship difficulties or conflict","sourceRefs":[{"source":"strategy","printedPages":"10, 21","basis":"direct"},{"source":"rand","printedPages":"88","basis":"direct"}]},
+        {"id":"relationship_ending","label":"Separation or the end of a relationship","sourceRefs":[{"source":"strategy","printedPages":"21, 27","basis":"adapted"},{"source":"rand","printedPages":"88","basis":"direct"}]},
+        {"id":"feeling_safe","label":"Feeling safe at home or in a relationship","sourceRefs":[{"source":"strategy","printedPages":"8, 14, 41","basis":"direct"},{"source":"rand","printedPages":"88","basis":"adapted"}]}
+      ]
+    },
+    {
+      "id": "community_connection",
+      "label": "Friends, community and things to do",
+      "sourceRefs": [{"source":"strategy","printedPages":"24, 27–28, 39, 43"},{"source":"rand","printedPages":"90, 97, 102"}],
+      "items": [
+        {"id":"making_friends","label":"Making or keeping friends","sourceRefs":[{"source":"strategy","printedPages":"27–28","basis":"direct"},{"source":"rand","printedPages":"102","basis":"adapted"}]},
+        {"id":"belonging_isolation","label":"Feeling connected or less alone","sourceRefs":[{"source":"strategy","printedPages":"14–15, 27–28","basis":"direct"},{"source":"rand","printedPages":"90","basis":"direct"}]},
+        {"id":"defence_community","label":"Staying connected to the Defence community","sourceRefs":[{"source":"strategy","printedPages":"27–28","basis":"direct"}]},
+        {"id":"someone_to_turn_to","label":"Having someone nearby to turn to","sourceRefs":[{"source":"strategy","printedPages":"24, 28","basis":"direct"},{"source":"rand","printedPages":"102","basis":"direct"}]},
+        {"id":"social_recreation","label":"Things to do with other people or as a family","sourceRefs":[{"source":"strategy","printedPages":"27–28, 39, 43","basis":"adapted"},{"source":"rand","printedPages":"94, 97","basis":"direct"}]}
+      ]
+    },
+    {
+      "id": "support_navigation",
+      "label": "Finding and using support",
+      "sourceRefs": [{"source":"strategy","printedPages":"24–25, 35–38"},{"source":"rand","printedPages":"83, 94, 97–103"}],
+      "items": [
+        {"id":"knowing_available_help","label":"Knowing what help is available","sourceRefs":[{"source":"strategy","printedPages":"24–25, 35–38","basis":"direct"},{"source":"rand","printedPages":"83, 94","basis":"adapted"}]},
+        {"id":"eligibility_application","label":"Understanding who can use support and how to apply","sourceRefs":[{"source":"strategy","printedPages":"24–25","basis":"adapted"},{"source":"rand","printedPages":"83, 98","basis":"adapted"}]},
+        {"id":"information_for_family","label":"Getting important information directly as a family member","sourceRefs":[{"source":"strategy","printedPages":"24–25","basis":"direct"}]},
+        {"id":"right_person_joined_up","label":"Finding the right person when several services are involved","sourceRefs":[{"source":"strategy","printedPages":"24–25","basis":"direct"},{"source":"rand","printedPages":"83, 97","basis":"adapted"}]},
+        {"id":"being_heard_understood","label":"Feeling heard and understood when asking for help","sourceRefs":[{"source":"strategy","printedPages":"24–25, 28","basis":"direct"},{"source":"rand","printedPages":"83","basis":"adapted"}]}
+      ]
+    }
+  ]
+}

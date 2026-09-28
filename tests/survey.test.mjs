@@ -25,7 +25,7 @@ const context = vm.createContext({ structuredClone, URL, document: { querySelect
 vm.runInContext(readFileSync(new URL('../geography.js', import.meta.url), 'utf8'), context);
 vm.runInContext(`${source.slice(0, bootstrap)}
   globalThis.survey = {
-    DOMAINS, SPECIAL_NEEDS, MAX_ACCOUNTS, addAccount, removeAccount, discardEmptyAccount, accountById, accountQuestionsHTML, accountsStartHTML, accountsManageHTML, practicalEligible, toggleChoice, selectedNeeds, selectedFutureNeeds, selectedDetailNeeds, hasNeedSelection, hasSoughtHelp, issueIds, selectedIssues, topicDraft, topicAccount, commitTopicDraft, topicResourceHTML,
+    DOMAINS, RAND_CATEGORIES, RAND_HELP_KINDS, RAND_CONTACT_SOURCES, SPECIAL_NEEDS, MAX_ACCOUNTS, addAccount, removeAccount, discardEmptyAccount, accountById, accountQuestionsHTML, accountsStartHTML, accountsManageHTML, practicalEligible, toggleChoice, selectedNeeds, selectedFutureNeeds, selectedDetailNeeds, hasNeedSelection, hasSoughtHelp, issueIds, selectedIssues, topicDraft, topicAccount, commitTopicDraft, topicResourceHTML, problemCatalog, problemItemIds, selectedProblemItems, selectedProblemCategories, selectedPriorities, selectedPriorityHelp, problemDetail, needChain, cleanNeedChain, cleanProblemDetail, needChainPage,
     reconcileAnswers, buildSteps, cleanExport, requiredAnswersComplete,
     selectedFocusNeed, detailedNeeds,
     thankYouResource, thankYouResourceHTML, contactLinkHTML, page, areaPage, areaBarrierField,
@@ -107,7 +107,7 @@ function SPECIAL() { return ['none', 'unsure', 'prefer']; }
 
 test('minimal background precedes accounts without a duplicate global narrative prompt', () => {
   const adult = pageFor('connection', 'adult');
-  assert.deepEqual(adult.fields.map(f => f.key), ['roles', 'residence_area', 'suburb', 'suburb_other', 'past_residence', 'age_group']);
+  assert.deepEqual(adult.fields.map(f => f.key), ['roles', 'residence_area', 'suburb', 'suburb_other', 'past_residence', 'work_posting_greater_darwin', 'age_group']);
   const place = pageFor('place', 'adult');
   assert.deepEqual(place.fields.map(f => f.key), ['time_nt']);
   assert.ok(place.fields.every(f => !f.required));
@@ -115,7 +115,7 @@ test('minimal background precedes accounts without a duplicate global narrative 
   assert.deepEqual(fieldIds(duration), ['never', 'under3', '3to12', '1to3', 'over3', 'unsure', 'prefer']);
   assert.match(duration.hint, /current or most recent stay/);
   const youth = pageFor('connection', 'youth', { residence_area: 'darwin' });
-  assert.deepEqual(youth.fields.map(f => f.key), ['roles', 'residence_area', 'suburb', 'suburb_other', 'past_residence', 'assistance']);
+  assert.deepEqual(youth.fields.map(f => f.key), ['roles', 'residence_area', 'suburb', 'suburb_other', 'past_residence', 'work_posting_greater_darwin', 'assistance']);
   assert.equal(youth.fields.find(f => f.key === 'suburb').required, undefined);
   assert.ok(fieldIds(youth.fields.find(f => f.key === 'suburb')).includes('prefer'));
   assert.deepEqual(fieldIds(youth.fields[1]), fieldIds(adult.fields[1]));
@@ -553,7 +553,7 @@ test('the 8–14 helper interruption offers a private route and cannot advance w
   form.onsubmit({ preventDefault() {} });
   assert.equal(answers.guardian_present, true);
   assert.equal(survey.getUIState().screen, 'survey');
-  assert.equal(survey.getUIState().step, 'issue_cues');
+  assert.equal(survey.getUIState().step, 'problem_screen');
 });
 
 test('ages 7 or younger use their own controller, finish, and clear on restart', () => {
@@ -767,7 +767,7 @@ test('only a zero-account route offers a general closing note; Add another repla
   }
 });
 
-test('schema 8.1 exports all 0, 1, 10 or 100 accounts without truncation or receiver state', () => {
+test('schema 9.0 exports all 0, 1, 10 or 100 supplementary accounts without truncation or receiver state', () => {
   for (const count of [0, 1, 10, 100]) {
     const answers = { roles: ['partner'], residence_area: 'darwin' };
     for (let n = 1; n <= count; n += 1) {
@@ -778,8 +778,8 @@ test('schema 8.1 exports all 0, 1, 10 or 100 accounts without truncation or rece
     }
     const original = plain(answers);
     const record = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
-    assert.equal(record.schema_version, '8.1');
-    assert.equal(record.questionnaire_revision, '2026-09-28-issue-cued-accounts');
+    assert.equal(record.schema_version, '9.0');
+    assert.equal(record.questionnaire_revision, '2026-09-29-rand-linked-needs');
     assert.equal(record.max_accounts, 100);
     assert.equal(record.recall_months, count ? 12 : null, 'The past recall marker appears only when an experience account is present');
     assert.equal(record.collection_mode, 'internal_review_no_transmission');
@@ -815,13 +815,13 @@ test('future-only records never acquire past support status or irrelevant logist
   assert.doesNotMatch(JSON.stringify(record), /HIDDEN_PROCESS_LOGISTICS|proposal_detail|berrimah_access|participation_formats/);
 });
 
-test('adult and youth routes allow 0, 1, 10 or 100 respondent-chosen accounts', () => {
+test('adult and youth routes keep 0, 1, 10 or 100 voluntary accounts after the needs sequence', () => {
   for (const version of ['adult', 'youth']) {
     for (const count of [0, 1, 10, 100]) {
       const accounts = Array.from({ length: count }, (_, n) => ({ id: `a${n + 1}`, kind: n % 2 ? 'future' : 'experience', story: `Story ${n + 1}` }));
       const steps = stepsFor({ accounts }, version).map(step => step.id);
       const describedFutureIdeas = accounts.filter(account => account.kind === 'future' && account.story.trim()).length;
-      assert.deepEqual(steps, ['connection', ...(version === 'adult' ? ['place'] : []), 'issue_cues', ...accounts.map(account => `account:${account.id}`), count ? 'accounts_manage' : 'accounts_start', ...(!count || describedFutureIdeas > 1 ? ['closing'] : []), 'review']);
+      assert.deepEqual(steps, ['connection', ...(version === 'adult' ? ['place'] : []), 'problem_screen', 'positive_future', ...accounts.map(account => `account:${account.id}`), count ? 'accounts_manage' : 'accounts_start', 'review']);
       assert.equal(steps.some(id => ['needs', 'future', 'practical'].includes(id) || id.startsWith('area:')), false);
       assert.equal(new Set(steps).size, steps.length);
     }
@@ -957,17 +957,18 @@ test('editing and deleting accounts preserve every unrelated narrative and expor
   assert.equal(record.answers.accounts.find(account => account.id === 'a7').story, 'Edited seventh account');
 });
 
-test('question library shows every topic in both answer paths for adults and youth only', () => {
+test('question library follows the actual adult and youth needs routes, including linked adult chains', () => {
   for (const version of ['adult', 'youth']) {
     const sections = plain(survey.librarySections(version, 'nt'));
-    assert.deepEqual(sections.map(section => section.id), ['connection', ...(version === 'adult' ? ['place'] : []), 'issue_cues', ...plain(survey.issueIds(version)).flatMap(id => [`topic-${id}-open`, `topic-${id}-experience`, `topic-${id}-future`]), 'accounts_start', 'account-experience', 'account-future', 'account-mixed', 'accounts_manage', 'closing', 'closing-empty', 'earlier']);
+    const categorySections = plain(survey.problemCatalog(version)).flatMap(category => version === 'adult' ? [`problem-detail-${category.id}`, `need-chain-${category.id}-general_information`, `need-chain-${category.id}-practical_help`] : [`problem-detail-${category.id}`]);
+    assert.deepEqual(sections.map(section => section.id), ['connection', ...(version === 'adult' ? ['place'] : []), 'problem_screen', 'priority_pick', ...categorySections, 'problem-detail-other_problem', ...(version === 'adult' ? ['need-chain-other_problem-general_information'] : []), 'positive_future', 'accounts_start', 'account-experience', 'account-future', 'accounts_manage', 'earlier']);
+    assert.equal(sections.find(section => section.id === 'problem_screen').fields[0].options.length, version === 'adult' ? 48 : 11);
+    assert.equal(sections.find(section => section.id === 'problem-detail-other_problem').fields.length > 0, true);
+    if (version === 'adult') assert.equal(sections.find(section => section.id.startsWith('need-chain-')).fields.some(field => field.key.startsWith('source_outcomes:')), true);
     const experience = sections.find(section => section.id === 'account-experience');
     const future = sections.find(section => section.id === 'account-future');
     assert.equal(experience.fields.some(field => field.key.endsWith(':help_status')), true);
     assert.equal(future.fields.some(field => field.key.endsWith(':help_status')), false);
-    assert.match(sections.find(section => section.id === 'account-mixed').fields.find(field => field.key.endsWith(':practical_detail')).label, /which part/i);
-    assert.equal(sections.find(section => section.id === 'closing').fields.some(field => field.key === 'priority_account_id'), false);
-    assert.deepEqual(sections.find(section => section.id === 'closing-empty').fields.map(field => field.key), ['closing_note']);
   }
   const child = plain(survey.librarySections('child', 'nt'));
   assert.equal(child.some(section => section.id.startsWith('account')), false, 'The separate under-7 route does not inherit account pages');
@@ -979,221 +980,346 @@ test('published adult reading copy uses the same preview agreement as the form',
   assert.doesNotMatch(html, /I consent to Lutheran Care collecting, using and sharing my answers/);
 });
 
-test('issue cues are optional, ordered by the visible list, and open one answer page for each selected adult or youth topic', () => {
-  for (const version of ['adult', 'youth']) {
-    const ids = plain(survey.issueIds(version));
-    assert.equal(ids.length, version === 'adult' ? 18 : 9);
-    const cue = pageFor('issue_cues', version);
-    assert.match(cue.title, /parts of life here/i);
-    assert.deepEqual(fieldIds(cue.fields[0]), ids);
-    assert.equal(cue.fields[0].required, undefined);
-    const reversed = { issue_cues: [...ids].reverse() };
-    assert.deepEqual(plain(survey.selectedIssues(reversed, version)), ids);
-    const steps = stepsFor(reversed, version).map(step => step.id);
-    assert.deepEqual(steps.filter(id => id.startsWith('topic:')), ids.map(id => `topic:${id}`));
-    assert.equal(steps.filter(id => id.startsWith('account:')).length, 0, 'cue selection does not create accounts or duplicate automatic pages');
-    assert.ok(steps.includes('accounts_manage'));
-    assert.ok(steps.indexOf('accounts_manage') > steps.indexOf(`topic:${ids.at(-1)}`));
-  }
-  const adultSeventeen = { issue_cues: plain(survey.issueIds('adult')).filter(id => id !== 'other_issue') };
-  assert.equal(stepsFor(adultSeventeen).filter(step => step.id.startsWith('topic:')).length, 17);
+
+test('adult recall catalog has nine grouped areas and 45 unique local cues, while youth has eight short cues', () => {
+  const groups = plain(survey.RAND_CATEGORIES);
+  assert.equal(groups.length, 9);
+  assert.ok(groups.every(group => group.items.length === 5));
+  const ids = groups.flatMap(group => group.items.map(item => item.id));
+  assert.equal(ids.length, 45);
+  assert.equal(new Set(ids).size, 45);
+  assert.equal(groups.some(group => group.items.some(item => item.id === 'feeling_safe')), true);
+  assert.equal(groups.some(group => 'sourceRefs' in group || group.items.some(item => 'sourceRefs' in item)), false, 'research metadata is not in the respondent bundle');
+  const adult = pageFor('problem_screen', 'adult');
+  const youth = pageFor('problem_screen', 'youth');
+  assert.deepEqual(fieldIds(adult.fields[0]).slice(0, 45), ids);
+  assert.equal(adult.fields[0].options.length, 48);
+  assert.equal(youth.fields[0].options.length, 11);
+  assert.doesNotMatch(JSON.stringify(youth), /45|TRICARE|American Red Cross/i);
+  survey.setContext('adult', {});
+  const html = survey.fieldHTML(survey.page({ id: 'problem_screen' }).fields[0]);
+  assert.equal((html.match(/class="issue-group"/g) || []).length, 9);
+  assert.match(html, /Another situation or problem/);
 });
 
-test('a selected but blank topic remains a page without becoming a substantive account', () => {
-  const answers = { roles: ['partner'], residence_area: 'darwin', issue_cues: ['schooling'] };
-  survey.setContext('adult', answers);
-  const first = survey.page({ id: 'topic:schooling', topic_id: 'schooling' });
-  assert.equal(first.fields.some(field => field.key.endsWith(':kind')), true);
-  assert.equal(first.fields.some(field => field.key.endsWith(':story')), true, 'open text is available before classifying an account');
-  assert.equal(first.fields.some(field => field.key.endsWith(':useful_change')), true);
-  assert.equal(first.fields.some(field => field.key.endsWith(':help_status')), false);
-  assert.equal(survey.commitTopicDraft(answers, 'schooling'), true);
-  assert.deepEqual(answers.accounts || [], []);
-  const draft = survey.topicDraft(answers, 'schooling');
-  draft.kind = 'experience';
-  assert.equal(survey.commitTopicDraft(answers, 'schooling'), true, 'a route choice alone is not a substantive answer');
-  assert.deepEqual(answers.accounts || [], []);
+test('no reported difficulties skips priority and linked chains but keeps positive and future openings', () => {
+  const answers = { roles: ['partner'], residence_area: 'darwin', problem_cues: ['none'], positive_support: 'A helpful neighbour', future_need: 'A clearer information point' };
+  const steps = stepsFor(answers).map(step => step.id);
+  assert.deepEqual(steps, ['connection', 'place', 'problem_screen', 'positive_future', 'accounts_start', 'review']);
   const record = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
-  assert.deepEqual(record.answers.issue_cues, ['schooling']);
-  assert.deepEqual(record.answers.accounts, []);
-  assert.equal(stepsFor(answers).some(step => step.id === 'topic:schooling'), true);
+  assert.equal(record.schema_version, '9.0');
+  assert.equal(record.questionnaire_revision, '2026-09-29-rand-linked-needs');
+  assert.deepEqual(record.answers.problem_cues, ['none']);
+  assert.deepEqual(record.answers.priority_categories, []);
+  assert.deepEqual(record.answers.problem_details, {});
+  assert.equal(record.answers.positive_support, 'A helpful neighbour');
+  assert.equal(record.answers.future_need, 'A clearer information point');
+  assert.equal(record.collection_mode, 'internal_review_no_transmission');
 });
 
-test('topic-specific pages ask situation-fitting questions and sensitive pages avoid demanding disclosures', () => {
-  const cases = [
-    ['settling', /posting, move, or leaving service/i],
-    ['schooling', /child’s experience at school or with learning/i],
-    ['people_to_turn_to', /meet people or have someone to turn to/i],
-    ['finding_services', /find information, a service, or the right person/i],
-  ];
-  for (const [id, expected] of cases) {
-    const answers = { issue_cues: [id] };
-    survey.setContext('adult', answers);
-    survey.topicDraft(answers, id).kind = 'experience';
-    const p = survey.page({ id: `topic:${id}`, topic_id: id });
-    assert.match(p.fields.find(field => field.key.endsWith(':story')).label, expected);
-    assert.ok(p.fields.some(field => field.key.endsWith(':useful_change')));
-    assert.equal(p.fields.some(field => field.key.endsWith(':formats')), false);
-  }
-  const futureMove = { issue_cues: ['settling'] };
-  survey.setContext('adult', futureMove);
-  survey.topicDraft(futureMove, 'settling').kind = 'future';
-  const futureMoveChange = survey.page({ id: 'topic:settling', topic_id: 'settling' }).fields.find(field => field.key.endsWith(':useful_change'));
-  assert.equal(futureMoveChange.label, 'What would make that posting, move or change easier for your family?');
-  assert.doesNotMatch(futureMoveChange.label, /worked well enough to keep/i);
-  for (const id of ['safety_confidential_help', 'bereavement']) {
-    const answers = { issue_cues: [id] };
-    survey.setContext('adult', answers);
-    survey.topicDraft(answers, id).kind = 'experience';
-    const p = survey.page({ id: `topic:${id}`, topic_id: id });
-    assert.equal(p.fields.some(field => field.key.endsWith(':help_status')), false);
-    assert.equal(p.fields.some(field => field.key.endsWith(':helped') || field.key.endsWith(':difficult')), false);
-    assert.match(survey.topicResourceHTML(id), /support|1800RESPECT|Griefline/i);
-  }
-  const otherAnswers = { issue_cues: ['other_issue'], issue_other: 'Pets after a move' };
-  survey.setContext('adult', otherAnswers);
-  assert.equal(survey.page({ id: 'topic:other_issue', topic_id: 'other_issue' }).title, 'Pets after a move');
+test('one or two broad areas go straight to linked detail; more than two require a maximum-two choice', () => {
+  const one = { problem_cues: ['moving_settling', 'service_absences'] };
+  assert.deepEqual(plain(survey.selectedProblemCategories(one, 'adult')), ['postings_service_changes']);
+  assert.deepEqual(stepsFor(one).filter(step => step.detail_category).map(step => step.detail_category), ['postings_service_changes']);
+  assert.equal(stepsFor(one).some(step => step.id === 'priority_pick'), false);
+  const two = { problem_cues: ['moving_settling', 'suitable_home'] };
+  assert.deepEqual(stepsFor(two).filter(step => step.detail_category).map(step => step.detail_category), ['postings_service_changes', 'housing_money_transport']);
+  assert.equal(stepsFor(two).some(step => step.id === 'priority_pick'), false);
+  const three = { problem_cues: ['moving_settling', 'suitable_home', 'finding_work'], priority_categories: ['postings_service_changes', 'work_study_training'] };
+  assert.equal(stepsFor(three).some(step => step.id === 'priority_pick'), true);
+  assert.deepEqual(stepsFor(three).filter(step => step.detail_category).map(step => step.detail_category), ['postings_service_changes', 'work_study_training']);
+  assert.deepEqual(plain(survey.selectedProblemItems(three, 'adult')), ['moving_settling', 'suitable_home', 'finding_work']);
+  const priority = pageFor('priority_pick', 'adult', three);
+  assert.deepEqual(fieldIds(priority.fields[0]), ['postings_service_changes', 'housing_money_transport', 'work_study_training']);
+  assert.match(priority.fields[0].options[0].hint, /Moving and settling/);
 });
 
-test('audited topic pairs separate the situation or goal from a useful change', () => {
-  const cases = [
-    ['adult','family_relationships','experience','What has mattered for relationships or changes in family life?','What would help with the situation you described, or what is already helping that you would like to keep?'],
-    ['adult','family_relationships','future','What would you like family life or relationships to be like in the coming months?','What could help make that possible?'],
-    ['adult','emotional_wellbeing','future','Thinking about your or your family’s wellbeing, what would you like to be different or stay the same in the coming months?','What support or change would feel useful for your family’s wellbeing?'],
-    ['youth','feelings_wellbeing','future','Thinking about your feelings or worries, what would you like to be different or stay the same soon?','What kind of help or change would feel useful to you?'],
-    ['adult','schooling','experience','What would you like us to understand about a child’s experience at school or with learning?','What would help that child settle, learn, or get the right support?'],
-    ['adult','schooling','future','What would you like school or learning to be like for a child in your family in the coming months?','What would help that child settle, learn, or get the right support?'],
-    ['youth','family_time_apart','experience','What has family life been like for you, including any time apart because of service?','What would help you with this?'],
-    ['youth','family_time_apart','future','What would you like family life to be like for you soon?','What would help you with this?'],
-  ];
-  for (const [version,id,kind,story,change] of cases) {
-    const answers = { issue_cues: [id] };
-    survey.setContext(version, answers);
-    survey.topicDraft(answers, id).kind = kind;
-    const page = survey.page({ id: `topic:${id}`, topic_id: id });
-    assert.equal(page.fields.find(field => field.key.endsWith(':story')).label, story, `${version}/${id}/${kind} story`);
-    assert.equal(page.fields.find(field => field.key.endsWith(':useful_change')).label, change, `${version}/${id}/${kind} change`);
-  }
-});
-
-test('adult and youth cues permit one cross-topic story and each topic repeats the blank-page permission', () => {
-  for (const version of ['adult','youth']) {
-    const cue = pageFor('issue_cues', version);
-    assert.match(cue.intro, /one .*page for each topic/i);
-    assert.match(cue.intro, /leave .*page blank/i);
-    assert.match(cue.intro, /tell us once|tell it once/i);
-    const id = survey.issueIds(version)[0];
-    const answers = { issue_cues: [id] };
-    survey.setContext(version, answers);
-    const topic = survey.page({ id: `topic:${id}`, topic_id: id });
-    assert.match(topic.intro, /Already covered this on another page\? You can leave this page blank and continue\./);
-  }
-});
-
-test('changing kind opens relevant questions on the same selected-topic page', () => {
-  const answers = { roles: ['partner'], residence_area: 'darwin', issue_cues: ['settling'] };
-  survey.setContext('adult', answers);
-  survey.setParticipationContext('adult', survey.participationRecord('adult', true));
-  survey.setStep('topic:settling');
-  survey.renderSurvey();
-  assert.match(mainStub.innerHTML, /data-field="accounts:draft-settling:story"/);
-  assert.match(mainStub.innerHTML, /would you like us to understand about a posting/i);
-  mainStub.querySelector('#survey-form').onchange({ target: { name: 'accounts:draft-settling:kind', value: 'experience' } });
-  assert.equal(survey.getUIState().step, 'topic:settling');
-  assert.match(mainStub.innerHTML, /data-field="accounts:draft-settling:story"/);
-  assert.match(mainStub.innerHTML, /posting, move, or leaving service/i);
-});
-
-test('neutral selected-topic writing needs no kind choice, and later kind changes preserve text but clear stale help status', () => {
-  const answers = { issue_cues: ['schooling'] };
+test('priority picker rejects a third area and skip-detail action is reachable without losing cues', () => {
+  const answers = { roles: ['partner'], residence_area: 'darwin', problem_cues: ['moving_settling', 'suitable_home', 'finding_work'] };
   const domains = survey.setContext('adult', answers);
-  const draft = survey.topicDraft(answers, 'schooling');
-  draft.story = 'Our child could use an easier school transition';
-  draft.useful_change = 'One person to explain enrolment';
-  assert.equal(survey.commitTopicDraft(answers, 'schooling'), true);
-  const account = answers.accounts[0];
-  assert.equal(account.kind, 'unspecified');
-  assert.equal(account.topic_id, 'schooling');
-  assert.equal(account.story, 'Our child could use an easier school transition');
-  let record = plain(survey.cleanExport(answers, 'adult', domains));
-  assert.equal(record.answers.accounts[0].kind, 'unspecified');
-  assert.equal(record.answers.accounts[0].useful_change, 'One person to explain enrolment');
-  survey.setValue(`accounts:${account.id}:kind`, 'experience');
-  survey.reconcileAnswers(answers, `accounts:${account.id}:kind`, domains, 'unspecified');
-  account.help_status = 'some';
-  let page = survey.page({ id: 'topic:schooling', topic_id: 'schooling' });
-  assert.equal(page.fields.some(field => field.key.endsWith(':help_status')), true);
-  survey.setValue(`accounts:${account.id}:kind`, 'future');
-  survey.reconcileAnswers(answers, `accounts:${account.id}:kind`, domains, 'experience');
-  page = survey.page({ id: 'topic:schooling', topic_id: 'schooling' });
-  assert.equal(page.fields.some(field => field.key.endsWith(':help_status')), false);
-  record = plain(survey.cleanExport(answers, 'adult', domains));
-  assert.equal(record.answers.accounts[0].kind, 'future');
-  assert.equal(record.answers.accounts[0].story, 'Our child could use an easier school transition');
-  assert.equal(record.answers.accounts[0].useful_change, 'One person to explain enrolment');
-  assert.equal(hasOwn(record.answers.accounts[0], 'help_status'), false);
-});
-
-test('topic answers export as accounts separately from cues and survive unselecting a topic', () => {
-  const answers = { roles: ['partner'], residence_area: 'darwin', issue_cues: ['settling', 'schooling'] };
-  survey.setContext('adult', answers);
-  const draft = survey.topicDraft(answers, 'settling');
-  draft.kind = 'experience';
-  draft.story = 'One move affected our school plans';
-  draft.useful_change = 'One clear transition contact';
-  assert.equal(survey.commitTopicDraft(answers, 'settling'), true);
-  assert.equal(answers.accounts.length, 1);
-  assert.equal(answers.accounts[0].topic_id, 'settling');
-  survey.setValue('issue_cues', ['schooling']);
-  survey.reconcileAnswers(answers, 'issue_cues', domainsFor('adult'), ['settling', 'schooling']);
-  assert.equal(answers.accounts[0].story, 'One move affected our school plans');
-  const record = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
-  assert.deepEqual(record.answers.issue_cues, ['schooling']);
-  assert.equal(record.answers.accounts[0].topic_id, 'settling');
-  assert.equal(record.answers.accounts[0].story, 'One move affected our school plans');
-  assert.equal(stepsFor(answers).some(step => step.id === 'topic:settling'), false);
-  assert.equal(stepsFor(answers).some(step => step.id === 'account:a1'), true, 'retained account remains editable');
-});
-
-test('ordinary Continue moves from two answered topic pages directly to manage without replaying accounts', () => {
-  const answers = { roles: ['partner'], residence_area: 'darwin', issue_cues: ['settling', 'schooling'] };
-  survey.setContext('adult', answers);
   survey.setParticipationContext('adult', survey.participationRecord('adult', true));
-  survey.goNext('issue_cues');
-  assert.equal(survey.getUIState().step, 'topic:settling');
-  let draft = survey.topicDraft(answers, 'settling');
-  draft.kind = 'experience';draft.story = 'Posting A';
-  survey.commitTopicDraft(answers, 'settling');
-  survey.goNext('topic:settling');
-  assert.equal(survey.getUIState().step, 'topic:schooling');
-  draft = survey.topicDraft(answers, 'schooling');
-  draft.kind = 'future';draft.story = 'School idea';
-  survey.commitTopicDraft(answers, 'schooling');
-  assert.equal(answers.accounts.length, 2);
-  survey.goNext('topic:schooling');
-  assert.equal(survey.getUIState().step, 'accounts_manage');
-});
-
-test('visible section count stays stable when an optional closing page disappears', () => {
-  const answers = { roles: ['partner'], residence_area: 'darwin', issue_cues: ['settling'] };
-  survey.setContext('adult', answers);
-  survey.setParticipationContext('adult', survey.participationRecord('adult', true));
-  survey.goNext('place');
-  assert.match(mainStub.innerHTML, /Section 2 of 3/);
-  survey.addAccount(answers, 'future', 'settling').story = 'A future move';
+  survey.setStep('priority_pick');
   survey.renderSurvey();
-  assert.match(mainStub.innerHTML, /Section 2 of 3/);
+  const form = mainStub.querySelector('#survey-form');
+  for (const id of ['postings_service_changes', 'housing_money_transport', 'work_study_training']) form.onchange({ target: { name: 'priority_categories', value: id, checked: true } });
+  assert.deepEqual(plain(answers.priority_categories), ['postings_service_changes', 'housing_money_transport']);
+  assert.equal(stepsFor(answers).filter(step => step.detail_category).length, 2);
+  survey.setStep('problem_screen');
+  survey.renderSurvey();
+  assert.match(mainStub.innerHTML, /Skip detailed questions/);
+  mainStub.querySelector('#survey-form').querySelector('#skip-details').onclick();
+  assert.equal(survey.getUIState().step, 'positive_future');
+  assert.equal(answers.skip_detail_questions, true);
+  assert.deepEqual(plain(survey.cleanExport(answers, 'adult', domains)).answers.problem_cues, ['moving_settling', 'suitable_home', 'finding_work']);
+  mainStub.querySelector('#back').onclick();
+  assert.equal(survey.getUIState().step, 'problem_screen');
+  mainStub.querySelector('#survey-form').onsubmit({ preventDefault() {} });
+  assert.equal(answers.skip_detail_questions, false, 'ordinary Continue restores detail after returning from an explicit skip');
+  assert.equal(survey.getUIState().step, 'priority_pick');
 });
 
-test('one hundred substantive accounts across topics retain the cap and a failed draft commit loses no text', () => {
-  const answers = { issue_cues: ['settling', 'schooling'] };
-  for (let n = 0; n < 100; n += 1) survey.addAccount(answers, n % 2 ? 'future' : 'experience', n % 2 ? 'schooling' : 'settling').story = `Entry ${n + 1}`;
-  const draft = survey.topicDraft(answers, 'schooling');
-  draft.kind = 'future';draft.story = 'Entry 101';
-  assert.equal(survey.commitTopicDraft(answers, 'schooling'), false);
-  assert.equal(answers.accounts.length, 100);
-  assert.equal(draft.story, 'Entry 101');
-  assert.equal(survey.addAccount(answers, 'experience', 'settling'), null);
+test('a priority area retains checked subissues and at most two help types for per-need follow-up', () => {
+  const answers = { problem_cues: ['moving_settling', 'service_absences', 'suitable_home'], problem_details: {
+    postings_service_changes: { focus_problems: ['service_absences'], help_kinds: ['general_information', 'social_support', 'practical_help'], priority_help: ['general_information', 'practical_help'] },
+    housing_money_transport: { help_kinds: ['general_information', 'practical_help'] }
+  } };
+  const steps = stepsFor(answers);
+  assert.equal(steps.some(step => step.id === 'priority_pick'), false);
+  assert.deepEqual(steps.filter(step => step.chain_need).map(step => [step.chain_category, step.chain_need]), [
+    ['postings_service_changes', 'general_information'], ['postings_service_changes', 'practical_help'],
+    ['housing_money_transport', 'general_information'], ['housing_money_transport', 'practical_help']
+  ]);
+  const detail = pageFor('problem_detail:postings_service_changes', 'adult', answers);
+  assert.deepEqual(fieldIds(detail.fields.find(field => field.key.endsWith(':focus_problems'))), ['moving_settling', 'service_absences']);
+  assert.equal(detail.fields.some(field => field.key.endsWith(':priority_help')), true);
+  const record = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
+  assert.deepEqual(record.answers.problem_cues, ['moving_settling', 'service_absences', 'suitable_home']);
+  assert.deepEqual(record.answers.problem_details.postings_service_changes.focus_problems, ['service_absences']);
+  assert.deepEqual(record.answers.problem_details.postings_service_changes.help_kinds, ['general_information', 'social_support', 'practical_help']);
+  assert.deepEqual(record.answers.problem_details.postings_service_changes.priority_help, ['general_information', 'practical_help']);
+  assert.equal(Object.keys(record.answers.problem_details).length, 2);
+  assert.equal(Object.values(record.answers.problem_details).reduce((n, item) => n + Object.keys(item.need_chains).length, 0), 4);
+});
+
+test('more than two reported help kinds create no detailed chains until specific priority needs are selected', () => {
+  const answers = { problem_cues: ['moving_settling'], problem_details: { postings_service_changes: { help_kinds: ['general_information', 'social_support', 'practical_help'] } } };
+  assert.equal(stepsFor(answers).filter(step => step.chain_need).length, 0);
+  const detail = pageFor('problem_detail:postings_service_changes', 'adult', answers);
+  survey.setContext('adult', answers);
+  assert.equal(survey.conditionalVisible(detail.fields.find(field => field.key.endsWith(':priority_help'))), true);
+  answers.problem_details.postings_service_changes.priority_help = ['social_support'];
+  assert.deepEqual(stepsFor(answers).filter(step => step.chain_need).map(step => step.chain_need), ['social_support']);
+  answers.problem_details.postings_service_changes.help_kinds = ['no_help_needed'];
+  assert.equal(stepsFor(answers).filter(step => step.chain_need).length, 0);
+  const record = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
+  assert.deepEqual(record.answers.problem_details.postings_service_changes.help_kinds, ['no_help_needed']);
+  assert.deepEqual(record.answers.problem_details.postings_service_changes.need_chains, {});
+});
+
+test('each adult help pathway keeps seeking, source contribution, barriers, fulfilment and current gap linked to its own need', () => {
+  const category = 'postings_service_changes';
+  const answers = { problem_cues: ['moving_settling'], problem_details: { [category]: {
+    help_kinds: ['general_information', 'practical_help'], need_chains: {
+      general_information: { seek_receipt: 'not_sought', barriers: ['where_start', 'self_manage'], met_status: 'none', current_gap: 'yes', gap_detail: 'Clearer steps' },
+      practical_help: { seek_receipt: 'sought_received', sources: ['defence', 'family_friends'], source_outcomes: { defence: 'received_partly', family_friends: 'received_fully' }, bridge: 'A neighbour offered transport', met_status: 'some', current_gap: 'yes', gap_detail: 'Reliable transport' }
+    }
+  } } };
+  const noSeek = pageFor(`need_chain:${category}:general_information`, 'adult', answers);
+  assert.match(noSeek.title, /Postings, time apart and leaving service/);
+  assert.match(noSeek.title, /Information about available support/);
+  assert.equal(noSeek.fields.some(field => field.key.endsWith(':seek_receipt')), true);
+  const received = pageFor(`need_chain:${category}:practical_help`, 'adult', answers);
+  assert.equal(received.fields.filter(field => field.key.startsWith('source_outcomes:')).length, 2);
+  survey.setContext('adult', answers);
+  assert.equal(survey.conditionalVisible(noSeek.fields.find(field => field.key.endsWith(':sources'))), false);
+  assert.equal(survey.conditionalVisible(noSeek.fields.find(field => field.key.endsWith(':barriers'))), true);
+  assert.equal(survey.conditionalVisible(received.fields.find(field => field.key.endsWith(':bridge'))), true);
+  const record = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
+  const details = record.answers.problem_details[category].need_chains;
+  assert.equal(details.general_information.seek_receipt, 'not_sought');
+  assert.equal(Object.hasOwn(details.general_information, 'sources'), false);
+  assert.deepEqual(details.general_information.barriers, ['where_start', 'self_manage']);
+  assert.equal(details.general_information.met_status, 'none');
+  assert.equal(details.practical_help.seek_receipt, 'sought_received');
+  assert.deepEqual(details.practical_help.sources, ['defence', 'family_friends']);
+  assert.deepEqual(details.practical_help.source_outcomes, { defence: 'received_partly', family_friends: 'received_fully' });
+  assert.equal(details.practical_help.met_status, 'some');
+  assert.equal(details.practical_help.current_gap, 'yes');
+  assert.equal(details.practical_help.gap_detail, 'Reliable transport');
+});
+
+test('changing a selected help kind deactivates only its own outcome chain at export', () => {
+  const category = 'postings_service_changes';
+  const answers = { problem_cues: ['moving_settling'], problem_details: { [category]: {
+    help_kinds: ['general_information', 'practical_help'], need_chains: {
+      general_information: { seek_receipt: 'sought_no_receipt', sources: ['none_found'], met_status: 'none' },
+      practical_help: { seek_receipt: 'sought_received', sources: ['defence'], met_status: 'all' }
+    }
+  } } };
+  let record = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
+  assert.deepEqual(Object.keys(record.answers.problem_details[category].need_chains), ['general_information', 'practical_help']);
+  answers.problem_details[category].help_kinds = ['practical_help'];
+  record = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
+  assert.deepEqual(Object.keys(record.answers.problem_details[category].need_chains), ['practical_help']);
+  assert.equal(answers.problem_details[category].need_chains.general_information.seek_receipt, 'sought_no_receipt', 'editing must not reassign or destroy a previous need’s answer');
+});
+
+test('youth route uses a short personal chain without the adult need taxonomy or source matrix; young-child route remains separate', () => {
+  const answers = { roles: ['child'], residence_area: 'darwin', assistance: 'self', problem_cues: ['friends_belonging', 'school_learning'], problem_details: { friends_belonging: { story: 'Hard to make friends', needed_help: 'Someone to introduce me', asked_anyone: 'no', anyone_helped: 'yes', enough: 'some', remaining_need: 'More chances to meet' } } };
+  const steps = stepsFor(answers, 'youth');
+  assert.equal(steps.some(step => step.id === 'priority_pick'), false);
+  assert.equal(steps.filter(step => step.detail_category).length, 2);
+  assert.equal(steps.some(step => step.chain_need), false);
+  const page = pageFor('problem_detail:friends_belonging', 'youth', answers);
+  assert.deepEqual(page.fields.map(field => field.key.split(':').at(-1)), ['story', 'needed_help', 'asked_anyone', 'anyone_helped', 'enough', 'remaining_need']);
+  assert.doesNotMatch(JSON.stringify(page), /general_information|defence|source_outcomes/);
+  const record = plain(survey.cleanExport(answers, 'youth', domainsFor('youth')));
+  assert.equal(record.schema_version, '9.0');
+  assert.equal(record.measurement_scope, 'youth_condensed_needs_chain');
+  assert.equal(record.answers.problem_details.friends_belonging.enough, 'some');
+  assert.equal(survey.questionnaireVersion('young'), 'child');
+  const childSteps = stepsFor({ needs_status: 'yes', needs: ['friends'] }, 'child');
+  assert.equal(childSteps.some(step => step.id === 'problem_screen' || step.id.startsWith('need_chain:')), false);
+});
+
+test('supplementary accounts remain voluntary up to 100 without creating extra source matrices', () => {
+  const answers = { problem_cues: ['none'], positive_support: 'A useful service', future_need: 'Help with a later move' };
+  for (let n = 1; n <= 100; n += 1) survey.addAccount(answers, n % 2 ? 'experience' : 'future').story = `Entry ${n}`;
+  const before = plain(answers);
+  assert.equal(survey.addAccount(answers, 'experience'), null);
+  assert.deepEqual(plain(answers), before);
+  const steps = stepsFor(answers);
+  assert.equal(steps.filter(step => step.chain_need).length, 0);
+  assert.equal(steps.filter(step => step.account_id).length, 100);
   const record = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
   assert.equal(record.answers.accounts.length, 100);
+  assert.equal(record.max_accounts, 100);
+  assert.equal(record.max_detail_chains, 4);
+  assert.deepEqual(record.answers.problem_cues, ['none']);
+});
+
+test('a current Greater Darwin work or posting connection keeps an outside resident on the full needs route', () => {
+  const answers = { roles: ['serving'], residence_area: 'outside', past_residence: 'no', work_posting_greater_darwin: 'yes', problem_cues: ['moving_settling'] };
+  assert.equal(survey.consultationRoute(answers), 'current_local');
+  assert.equal(stepsFor(answers).some(step => step.id === 'problem_screen'), true);
+  const record = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
+  assert.equal(record.answers.work_posting_greater_darwin, 'yes');
+  assert.equal(record.consultation_route, 'current_local');
+  assert.equal(record.residence_scope, 'outside_greater_darwin');
+});
+
+test('adult and youth wording includes family members living elsewhere when connected through local work or posting', () => {
+  const adultScreen = pageFor('problem_screen', 'adult');
+  assert.match(adultScreen.intro, /living, working or a Defence posting in Greater Darwin/);
+  assert.match(adultScreen.intro, /family members lived elsewhere/);
+  const youthScreen = pageFor('problem_screen', 'youth');
+  assert.match(youthScreen.intro, /past three months/);
+  assert.match(youthScreen.intro, /when you lived elsewhere/);
+  const adultFuture = pageFor('positive_future', 'adult').fields.find(field => field.key === 'future_need');
+  assert.equal(adultFuture.label, 'Thinking ahead, what help might you or your family need in the coming months?');
+  assert.match(adultFuture.hint, /connected with Greater Darwin, including when family members live elsewhere/);
+  const youthFuture = pageFor('positive_future', 'youth').fields.find(field => field.key === 'future_need');
+  assert.match(youthFuture.hint, /even if you live somewhere else/);
+  const adultAccount = pageFor('account:a1', 'adult', { accounts: [{ id: 'a1', kind: 'experience' }] });
+  assert.match(adultAccount.intro, /living, working or a Defence posting in Greater Darwin in the past 12 months/);
+  const youthAccount = pageFor('account:a1', 'youth', { accounts: [{ id: 'a1', kind: 'experience' }] });
+  assert.match(youthAccount.intro, /past three months.*even if you lived elsewhere/);
+});
+
+test('exclusive non-substantive choices and hints prevent contradictory cue, need, barrier and source answers', () => {
+  const roles = pageFor('connection', 'adult').fields.find(field => field.key === 'roles');
+  assert.deepEqual(roles.exclusive, ['none', 'unsure']);
+  assert.match(roles.hint, /None of these.*on its own/);
+  for (const version of ['adult', 'youth']) {
+    const cues = pageFor('problem_screen', version).fields.find(field => field.key === 'problem_cues');
+    assert.deepEqual(cues.exclusive, ['none', 'prefer']);
+    assert.match(cues.hint, /None of these.*Prefer not to answer.*on its own/);
+    assert.deepEqual(plain(survey.toggleChoice(['none'], cues.options[0].id, cues.exclusive)), [cues.options[0].id]);
+  }
+  const answers = { problem_cues: ['moving_settling'], problem_details: { postings_service_changes: { help_kinds: ['practical_help'] } } };
+  const detail = pageFor('problem_detail:postings_service_changes', 'adult', answers);
+  const help = detail.fields.find(field => field.key.endsWith(':help_kinds'));
+  assert.deepEqual(help.exclusive, ['no_help_needed', 'unsure_help_needed']);
+  assert.match(help.hint, /No help was needed.*Not sure whether help was needed.*on its own/);
+  assert.deepEqual(plain(survey.toggleChoice(['practical_help'], 'no_help_needed', help.exclusive)), ['no_help_needed']);
+  assert.deepEqual(plain(survey.toggleChoice(['no_help_needed'], 'unspecified_help', help.exclusive)), ['unspecified_help']);
+  const chain = pageFor('need_chain:postings_service_changes:practical_help', 'adult', { problem_cues: ['moving_settling'], problem_details: { postings_service_changes: { help_kinds: ['practical_help'], need_chains: { practical_help: { seek_receipt: 'sought_no_receipt' } } } } });
+  const sources = chain.fields.find(field => field.key.endsWith(':sources'));
+  const barriers = chain.fields.find(field => field.key.endsWith(':barriers'));
+  assert.deepEqual(sources.exclusive, ['none_found']);
+  assert.deepEqual(barriers.exclusive, ['none', 'unsure']);
+  assert.deepEqual(plain(survey.toggleChoice(['defence'], 'none_found', sources.exclusive)), ['none_found']);
+  assert.deepEqual(plain(survey.toggleChoice(['none_found'], 'defence', sources.exclusive)), ['defence']);
+});
+
+test('none_found appears only after unsuccessful or uncertain seeking and is excluded from received-help export', () => {
+  const category = 'postings_service_changes', need = 'practical_help';
+  const answers = { problem_cues: ['moving_settling'], problem_details: { [category]: { help_kinds: [need], need_chains: { [need]: { seek_receipt: 'sought_no_receipt', sources: ['none_found'] } } } } };
+  let page = pageFor(`need_chain:${category}:${need}`, 'adult', answers);
+  assert.ok(fieldIds(page.fields.find(field => field.key.endsWith(':sources'))).includes('none_found'));
+  survey.setContext('adult', answers);
+  survey.setValue(`need_chains:${category}:${need}:seek_receipt`, 'sought_received');
+  survey.reconcileAnswers(answers, `need_chains:${category}:${need}:seek_receipt`, domainsFor('adult'), 'sought_no_receipt');
+  page = pageFor(`need_chain:${category}:${need}`, 'adult', answers);
+  assert.equal(fieldIds(page.fields.find(field => field.key.endsWith(':sources'))).includes('none_found'), false);
+  let record = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
+  assert.equal(record.answers.problem_details[category].need_chains[need].sources?.includes('none_found'), false);
+  answers.problem_details[category].need_chains[need].seek_receipt = 'unsolicited';
+  answers.problem_details[category].need_chains[need].sources = ['none_found'];
+  record = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
+  assert.equal(record.answers.problem_details[category].need_chains[need].sources.includes('none_found'), false);
+  answers.problem_details[category].need_chains[need].seek_receipt = 'unsure';
+  page = pageFor(`need_chain:${category}:${need}`, 'adult', answers);
+  assert.ok(fieldIds(page.fields.find(field => field.key.endsWith(':sources'))).includes('none_found'));
+  answers.problem_details[category].need_chains[need].seek_receipt = 'not_sought';
+  survey.setContext('adult', answers);
+  assert.equal(survey.conditionalVisible(survey.page({ id: `need_chain:${category}:${need}` }).fields.find(field => field.key.endsWith(':sources'))), false);
+});
+
+test('youth adequacy appears and exports only after actual help was received', () => {
+  const category = 'friends_belonging';
+  const answers = { problem_cues: [category], problem_details: { [category]: { needed_help: 'Someone to talk to', anyone_helped: 'no', enough: 'no', remaining_need: 'A trusted person' } } };
+  survey.setContext('youth', answers);
+  let page = survey.page({ id: `problem_detail:${category}` });
+  const need = page.fields.find(field => field.key.endsWith(':needed_help'));
+  const enough = page.fields.find(field => field.key.endsWith(':enough'));
+  assert.equal(need.label, 'What help did you need with this, if any?');
+  assert.match(need.hint, /help you got and help you did not get/);
+  assert.equal(enough.label, 'Was the help you got enough?');
+  assert.equal(survey.conditionalVisible(enough), false);
+  let record = plain(survey.cleanExport(answers, 'youth', domainsFor('youth')));
+  assert.equal(Object.hasOwn(record.answers.problem_details[category], 'enough'), false);
+  assert.equal(record.answers.problem_details[category].remaining_need, 'A trusted person');
+  survey.setContext('youth', answers);
+  survey.setValue(`problem_details:${category}:anyone_helped`, 'yes');
+  survey.reconcileAnswers(answers, `problem_details:${category}:anyone_helped`, domainsFor('youth'), 'no');
+  answers.problem_details[category].enough = 'some';
+  survey.setContext('youth', answers);
+  page = survey.page({ id: `problem_detail:${category}` });
+  assert.equal(survey.conditionalVisible(page.fields.find(field => field.key.endsWith(':enough'))), true);
+  record = plain(survey.cleanExport(answers, 'youth', domainsFor('youth')));
+  assert.equal(record.answers.problem_details[category].enough, 'some');
+  survey.setContext('youth', answers);
+  survey.setValue(`problem_details:${category}:anyone_helped`, 'unsure');
+  survey.reconcileAnswers(answers, `problem_details:${category}:anyone_helped`, domainsFor('youth'), 'yes');
+  assert.equal(Object.hasOwn(answers.problem_details[category], 'enough'), false);
+});
+
+test('changing a concrete cue in the same area detaches old need and outcome answers from the active export', () => {
+  const category = 'postings_service_changes', need = 'practical_help';
+  const answers = { problem_cues: ['moving_settling'], problem_details: { [category]: { focus_problems: ['moving_settling'], specific_need: 'Help moving boxes', help_kinds: [need], need_chains: { [need]: { seek_receipt: 'sought_received', sources: ['defence'], met_status: 'all', current_gap: 'no' } } } } };
+  const domains = survey.setContext('adult', answers);
+  survey.setValue('problem_cues', ['service_absences']);
+  survey.reconcileAnswers(answers, 'problem_cues', domains, ['moving_settling']);
+  assert.equal(answers.problem_details?.[category], undefined);
+  assert.equal(answers.inactive_problem_details[category][JSON.stringify({ cues: ['moving_settling'], other: '' })].specific_need, 'Help moving boxes');
+  let record = plain(survey.cleanExport(answers, 'adult', domains));
+  assert.deepEqual(record.answers.problem_cues, ['service_absences']);
+  assert.deepEqual(record.answers.problem_details[category].need_chains, {});
+  assert.equal(JSON.stringify(record).includes('Help moving boxes'), false);
+  assert.equal(JSON.stringify(record).includes('sought_received'), false);
+  survey.setValue('problem_cues', ['moving_settling']);
+  survey.reconcileAnswers(answers, 'problem_cues', domains, ['service_absences']);
+  assert.equal(answers.problem_details[category].specific_need, 'Help moving boxes', 'exact old cue set may restore its in-memory answer');
+  record = plain(survey.cleanExport(answers, 'adult', domains));
+  assert.equal(record.answers.problem_details[category].need_chains[need].met_status, 'all');
+});
+
+test('changing seeking and receipt clears stale met and current-gap answers without assuming an unmet need', () => {
+  const category = 'postings_service_changes', need = 'general_information';
+  const answers = { problem_cues: ['moving_settling'], problem_details: { [category]: { help_kinds: [need], need_chains: { [need]: { seek_receipt: 'sought_received', sources: ['defence'], source_outcomes: { defence: 'received_fully' }, bridge: 'Easy to reach', met_status: 'all', current_gap: 'no' } } } } };
+  const domains = survey.setContext('adult', answers);
+  survey.setValue(`need_chains:${category}:${need}:seek_receipt`, 'not_sought');
+  survey.reconcileAnswers(answers, `need_chains:${category}:${need}:seek_receipt`, domains, 'sought_received');
+  const chain = answers.problem_details[category].need_chains[need];
+  for (const field of ['sources', 'source_outcomes', 'bridge', 'met_status', 'current_gap', 'gap_detail']) assert.equal(Object.hasOwn(chain, field), false, field);
+  let record = plain(survey.cleanExport(answers, 'adult', domains));
+  const exported = record.answers.problem_details[category].need_chains[need];
+  assert.equal(exported.seek_receipt, 'not_sought');
+  assert.equal(Object.hasOwn(exported, 'met_status'), false);
+  assert.equal(Object.hasOwn(exported, 'current_gap'), false);
+  chain.met_status = 'changed';chain.current_gap = 'no';
+  record = plain(survey.cleanExport(answers, 'adult', domains));
+  assert.equal(record.answers.problem_details[category].need_chains[need].met_status, 'changed');
+  assert.equal(record.answers.problem_details[category].need_chains[need].current_gap, 'no');
 });

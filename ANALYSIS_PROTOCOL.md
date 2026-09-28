@@ -1,93 +1,64 @@
 # Defence Family Support Survey — analysis and reporting protocol
 
-Approved interpretation rule: Jacob, 27 September 2026. Applies to the survey, related interview consultation and any analysis produced from them, regardless of whether collection uses the custom website or Microsoft Forms. Collection and storage platform remain to be agreed with Lutheran Care IT.
+Updated 29 September 2026. Applies to the RAND-led adult/youth schema 9.0 questionnaire, targeted interviews and related reporting. The younger-child form remains a separate schema 1.3 instrument. The current website is a preview and has **no real survey responses**; these rules govern a future LC-approved collection.
 
-## What the results represent
+## What the evidence represents
 
-Report **responses and participant perspectives**, not unique families and not population prevalence. Each submitted questionnaire is a response record. Several people in the same family may contribute, and an anonymous form may also receive repeat submissions. Unless uniqueness has actually been established, use “responses” rather than claiming an exact number of distinct people. Do not deduplicate different members of a family: their experiences are relevant in their own right. Remove only verified technical duplicates, retaining an audit record of the exclusion.
+Report **response records and participant perspectives**, not unique households or population prevalence. Several members of one family may contribute; a person could submit more than once unless a real receiving system establishes otherwise. Do not deduplicate family members. Remove only verified technical duplicates with an audit trail. Recruitment through particular bases, events, schools, groups or online channels affects who takes part.
 
-One response may contain several respondent-chosen accounts. The limit of 100 accounts is a technical ceiling, not a requested number or a measure of need. Count **responses** and **accounts** separately; one person describing several situations has still supplied one response. A connected story remains one account unless the respondent chooses to add another. Do not treat the number of accounts as prevalence or as a ranking of what matters most.
+The questionnaire's main path follows RAND's linked method: reported problem → help needed → resources contacted or not contacted → access factors → need met. [Miller et al., RAND 2011, Appendix A](https://www.rand.org/pubs/monographs/MG1124.html). The local and youth adaptations are not validated estimates of NT prevalence. The source's US population and questions are not a comparator group.
 
-The adult and 8–17 questionnaire also asks which issues the respondent **wants to talk about** before showing one page for each selected issue. This is a memory prompt and routing choice, not a direct measurement of problems, service use or unmet need. Count selected-issue responses separately from substantive accounts. A selected issue with an empty page means “selected, no detail supplied”; an unselected issue means “not selected”, not “no need”. A person may cover one connected story under one issue even when several were selected. An Other issue is a valid respondent-supplied topic, not a miscellaneous unmet-need category by default.
+## Distinct units and claims
 
-Recruitment through particular bases, events, schools, groups or online channels can affect who takes part. A high count from a suburb can inform accessible project locations, but is not evidence that the suburb has the highest rate of need. A low count does not establish low need. If channel is captured through a simple campaign code, use it to describe reach; it is not a weighting scheme or proof of representativeness. Do not introduce personal identifiers merely to obtain a household count.
+| Unit | What one row/count means | What it does not mean |
+| --- | --- | --- |
+| Response | One received questionnaire record | A verified unique person or family |
+| Problem cue | One concrete problem selected on one response | A request for help or an unmet need |
+| Detailed category | One of up to two categories a respondent chose to explain | A ranking of all selected problems in the population |
+| Help type | One kind of assistance selected for a detailed category | A programme booking or evidence that the help was available |
+| Need chain | One selected category × prioritised help type followed in detail; at most four per response | A new respondent or a full account of all reported needs |
+| Contact source | One person/service type approached or used for one linked need | Evidence that help was received or the source worked |
+| Source outcome | One optional answer about what happened with a named source for one linked need | The overall status of that need across all sources |
+| No contact | An explicit choice that no one was approached for a linked need | Proof of reluctance or a service barrier without the person's explanation |
+| Met status | The person's answer about whether one linked need was met overall | A rating of LC, of one source, or of all services in a category |
+| Supplemental account | One optional further experience or idea | Another respondent or another vote |
 
-The main purpose is to identify useful support, experiences worth preserving, unmet needs and feasible participation arrangements for Lutheran Care's programme. Counts help describe the material; open responses explain what the support would need to do.
+The adult checklist contains nine groups and 45 cues, plus Other. Youth questions use a shorter age-appropriate list. Count **responses selecting each cue** among eligible responses that answered the screen. Count category detail only among those who selected that category for follow-up, and state the base; respondents can select at most two categories for depth. If an explicit no-problem option is present, distinguish it from skipping the screen. An unselected cue is not an explicit denial of that problem. A selected cue without detail is still a cue selection.
 
-## Metadata that must accompany the data
+For each detailed **adult** category, optional focus_problems points to a subset of concrete cues the respondent had selected in that category; leaving it blank must not erase the broader selection. Report help types among people shown and answering that question. The explicit no-help-needed answer is not a skipped answer and must not enter the denominator for linked need-chain, contacted-resource or met-status distributions. When several kinds of help were chosen, priority_help identifies up to two for detailed pathways; it does not remove other selected help types. Each need chain belongs to one category and one help type. A source may be contacted for several needs, but a response-level source statistic counts that response once under the stated rule. The youth route uses shorter category-level questions; do not infer missing adult need-chain answers for youth.
 
-Keep a frozen question and option dictionary for each deployed revision, plus the raw export. The collection handover must preserve the following, using explicit `unknown` or `not_collected` when a platform has not captured an item:
+For a linked need, distinguish not sought/no receipt, sought/no receipt, sought/help received, unsolicited help, unsure and skipped. A resource approached is not necessarily a resource that supplied help. An applicable per-source outcome card records that source's reported contribution to **that need**; it is not a global service rating. Overall met status belongs to the linked need across all sources; report fully met, partly met, not met, changed/no-longer-needed, too soon, unsure, declined and skipped as available in the final answer set. Do not infer it from contact, receipt, a source card or an analyst's impression. A current-gap answer is separate from an earlier met-status answer. Barrier and bridge questions are different constructs: one concerns difficulty or non-seeking, the other what helped reach or use support. Do not attribute a general barrier to one named source unless the answer establishes that link. Preserve verbatim text and note when the branch was not shown. In the youth route, **Was the help you got enough?** is eligible only after an explicit answer that someone helped; otherwise it is not asked, never coded No by default.
 
-| Metadata | Reason |
-|---|---|
-| Dataset/export identifier, export date, collection period and collection stage (test, pilot or live) | Keep demonstrations and tests out of real results. |
-| Questionnaire revision, schema/field-map revision and original form/question identifiers | A matching field label alone does not establish comparability. |
-| Stable account ID and order within each response, experience/future kind, and applicable optional-branch state | Preserve edits and multiple connected situations without counting one response as several people. |
-| Selected issue IDs and display order, Other issue text when supplied, optional `topic_id` for issue-linked accounts, and whether a selected page received detail | Keep the prompt/route distinct from a substantive account and preserve selected-but-blank pages. A voluntary uncategorised account has no respondent-selected issue association. |
-| Age path/form, answer voice (participant or guardian observation), assistance where collected | Different questions and voices must remain distinguishable. |
-| Consultation route, selected residential area, optional suburb/locality, `location_precision` and ADF relationship/status where collected | Separate current local, former local and outside-area perspectives; service location is not residence. Keep broad-area-only records distinguishable from named suburb answers. |
-| Recall window and reference setting | Distinguish local past experience, current request and future interest. |
-| Question shown/eligible state, answer status and selected option identifiers | Preserve the difference between not asked and skipped. |
-| Recruitment channel when available, inclusions/exclusions and data-cleaning log | Describe the response cohort without pretending it is a population sample. |
+Positive_support and future_need are optional supplementary prompts. An effective-support statement is positive evidence even if no past problem was selected. A future need does not imply a problem occurred during the recall period. Optional accounts remain an additional narrative channel; their maximum of 100 active entries is technical capacity, not a measure of priority or household size. One response with 100 accounts is still one response.
 
-If Microsoft Forms does not export whether a question was displayed, derive this only where the frozen branching rules and preceding answers establish it. Otherwise record `unknown_display_status`; do not guess that a blank answer was a refusal or that an unshown option meant “no”. Store instrument revision and stage at dataset level even if the collection tool cannot add them to each record.
+## Metadata and missingness
 
-Do not silently combine earlier and revised instruments. A comparison needs an explicit mapping of identical or meaningfully comparable questions, populations, options and time windows. Keep incompatible items separate. Current/former ADF status, residence route and recall period are separate dimensions, not interchangeable labels.
+Freeze the wording, option codes, order and branch rules for every deployed revision. Keep source record ID, collection stage (test, pilot or live), dates, instrument/schema revision, questionnaire age route, consultation route, broad area, optional locality, geographic precision, relevant recall period, and each question's eligibility/shown status where available. Keep adult, youth and guardian observations distinct. Retain raw verbatim answers separately from later theme codes or edited quotations.
 
-## Geographic precision
+Blank is not No. Distinguish explicit negative/no-help/no-contact answers; Not sure; Prefer not to answer; optional blank; and not asked because of a branch. If a platform does not export displayed-state information, derive it only when the frozen route and prior answers make it unambiguous; otherwise mark unknown. Do not silently discard a field because a downstream export is easier to analyse.
 
-The first optional geography answer records the broad area; the second optionally identifies a suburb/locality within it. Preserve `residence_area`, optional `suburb` and `location_precision` (`area`, `suburb`, `other_locality` or `not_stated`). Other counts as `other_locality` only when the optional text is supplied; otherwise precision remains the selected area. Blank or declined area is `not_stated`; Outside Greater Darwin remains an area-level response with outside scope. Area-only answers contribute to the stated broad-area total but must never be spread among its suburbs or treated as a particular suburb. In particular, Palmerston is not Palmerston City, and Darwin is not Darwin City. A blank suburb does not erase a supplied area or make its local scope unknown. An unlisted locality supplied as Other text stays distinct from the canonical named catalogue until checked; preserve the original text. State the number of broad-area-only and unspecified locations beside suburb breakdowns.
+The optional geography records residence_area, suburb and location_precision (area, suburb, other_locality or not_stated). An area-only answer stays in its broad area; do not assign Palmerston to Palmerston City or Darwin to Darwin City. A separate work_posting_greater_darwin answer can identify a current local work/posting link even when residence is outside the area; this person belongs to the current-connection route but **not** the local-resident count. Outside-residence, historical-only and undisclosed-residence cohorts remain distinguishable. A person now outside the area is not counted as a current resident merely because they described earlier local experience.
 
-## Denominators and unanswered questions
+Schemas 7.2, 8.0, 8.1 and 9.0 are different instruments. Do not merge fields by similar names. A comparison needs an explicit item-by-item mapping of wording, population, recall period, answer choices and branch eligibility. Keep pilot/pretest answers and fictional examples out of live findings unless inclusion and comparability are explicitly decided and documented.
 
-For each quantitative finding, keep these counts available: responses in the cohort, responses eligible for the question, definite answers, explicit “none/no”, unsure, prefer not to answer, blank/skipped and not asked. Do not infer missing categories if the platform did not distinguish them.
+## Narrative coding and interviews
 
-- For multi-select background questions, count responses selecting each option and state the base. One response can count in several options, so percentages may total more than 100%.
-- For the initial issue list, count **responses selecting each issue** among responses that reached and answered the list. Label it “selected as a topic to discuss” rather than “experienced”, “needed help with” or “unmet need”. Show list skips separately. Do not convert a selected-but-blank issue into a substantive account or assign “no issue” to an unselected option. If reporting substantive accounts by issue, say that the base is accounts and also give the number of contributing responses; one response can supply several accounts under one issue.
-- Keep uncategorised voluntary accounts in an explicit “no respondent-selected issue” analysis bucket. Analysts may code their themes from the text, but that inferred theme is not a `topic_id` answer from the respondent.
-- Distinguish an `experience` account from a `future` idea and an `unspecified` entry written without choosing either type. Only explicitly classified, eligible experience accounts receive `help_status` and the local past recall window. Future and unspecified entries cannot be counted as past unmet need by inference. Status concerns useful help for that situation and separates some useful help from no useful help after trying or not seeking it. An experience reporting enough help remains relevant positive evidence.
-- For a support-status distribution, count accounts with an explicit answer and show how many eligible experience accounts skipped, were unsure or declined. Adult safety and bereavement experience pages omit this question, so label these **not asked** and exclude them from the eligible base. For a respondent-level summary, count a response once for a status/theme under a stated rule even when several accounts share it. Do not use all survey responses as the denominator for an experience-only question.
-- Optional helped/difficult text is shown only after the respondent opens it. A proposal type is optional assistance for wording the same useful-change answer. `practical_detail` is asked only after a described eligible personal offer and explicit opt-in; a future account's first story may supply the description when useful-change text is blank. Mixed `other` ideas may specify the relevant practical component in that free-text answer. Process-only ideas do not imply attendance. Treat unasked and skipped states separately; practical text is not a booking or predicted attendance.
-- Blank, skipped, unsure, declined and not asked are not “no”, “not interested”, “no problem” or zero. Keep the respondent's initial selected issue separate from thematic tags assigned during analysis. One account can receive several analyst theme codes without requiring the respondent to repeat the story under several issue pages.
-- Keep adult, youth and young-child forms separate where the wording, recall period or answering method differs. A guardian's observation must not be quoted as the child's own words.
-- The 100-account ceiling is technical capacity for active entries, not an instruction to provide 100 stories. Empty abandoned drafts do not count. Analyse each retained account and respondent-level summary with the appropriate denominator; neither account volume nor narrative length gives one respondent extra votes.
+Read open answers for both successful support and difficulties. A connected story may carry several analyst theme codes; count a response once per theme in respondent-level charts, with account- or category-level counts separately labelled. Preserve the original response and coding decision in restricted analysis. Remove identifying detail from shared quotations and combine small geographic cells where needed. A vivid quote illustrates meaning; it is not a frequency estimate.
 
-Read open answers for both difficulties and effective support. One response can receive several thematic codes; count responses mentioning a theme, not the number of sentences. Preserve a link to the source response in the restricted working analysis. Before sharing quotes or small geographic breakdowns, remove identifying details and combine categories when a particular presentation could identify a person. Do not invent quotations or treat a memorable quote as a frequency estimate.
+Record whether interview material was volunteered, prompted in a targeted conversation or observed during cognitive/usability pretesting. Do not represent interviewees as a random follow-up sample or pool interview frequencies with questionnaire responses. Cognitive pretests are primarily evidence about **question functioning**, not local needs.
 
-## Required context on every statistical output
+## Reporting context
 
-Every report, dashboard, chart, table and numerical summary must carry its cohort, N, collection dates, questionnaire revision, question/recall context, and the relevant denominator. State whether N counts response records or verified unique participants. For a report with several charts, common context and the interpretation note can appear once prominently at report level, with each chart showing its own subgroup/base. An extracted chart or slide must carry that context with it. This does not require a long warning beneath every chart.
+Every chart/table should identify collection dates and stage, instrument/revision, route and recall context, N response records, the question-specific eligible/answered base and relevant missing categories. Multiple-choice percentages can exceed 100%. An isolated slide or exported chart must carry its own context.
 
-A suitable compact line is:
+Suggested concise note:
 
-> Responses received [date–date]; [eligible group / form / residence route]; N = [response records]. Questionnaire [revision], [recall period]. Base for this measure: [n and definition]. [x] skipped/unknown/declined where relevant.
+> These findings describe questionnaire responses received, not unique households or a representative estimate of Defence-family needs across Greater Darwin. A selected problem does not by itself mean help was needed or unmet. Different age forms, routes and recall periods are reported separately. Percentages use the stated eligible base; multiple selections may total more than 100%.
 
-The reporting script or analyst should refuse to describe test, pilot and live stages as one live cohort. A pilot can be included only if its status and instrument comparability are explicitly documented; otherwise report it separately.
+For the team's Chinese summaries:
 
-## Reusable interpretation notes
+> 这些结果反映收到的答卷，并非独立家庭数或大达尔文地区军人家庭需求的总体估计。勾选问题不等于需要帮助，更不等于需求未满足。不同年龄问卷、路径和回顾时段分别报告；百分比采用所注明的适用分母，多选题合计可能超过100%。
 
-Use the following English note on reports and the dashboard, including printed or exported reports:
+## Historical dashboard
 
-> These findings describe the views and experiences reported by the people who took part. Response counts are not counts of unique households or estimates of how common a need is across Greater Darwin. Several members of one family may respond, and recruitment channels may affect who takes part. Each measure uses the denominator shown. Multiple-choice percentages may total more than 100%; skipped, unsure and declined answers do not mean “no need”. Different questionnaires, recall periods and consultation routes are reported separately where they are not comparable.
-
-For a chart of the initial issue list, add: “Issues selected as topics to discuss; selection alone does not establish a difficulty or unmet need.”
-
-Equivalent Chinese note for the team and Chinese summaries:
-
-> 这些结果反映参与者报告的观点与经历。答卷数量不等于独立家庭数量，也不能用于估计某种需求在大达尔文地区的发生率。同一家人的多位成员可能分别作答，招募渠道也可能影响参与者构成。各项指标采用所注明的分母；多选题的百分比合计可能超过100%。跳过、不确定和不愿回答不代表“没有需求”。题目、回顾时段或咨询路径不可比时，应分别报告。
-
-若图表使用最初的议题清单，另加：“所选议题表示希望谈及的方面；单凭勾选不能认定存在困难或未获满足的需求。”
-
-For a standalone compact chart, the short form is acceptable alongside its metadata and base:
-
-> Participant perspectives; not unique household counts or population prevalence. Family responses may overlap; recruitment affects who responds. Base: [n / eligible group].
-
-> 参与者观点；非独立家庭数或总体发生率。同一家庭可能有多份答卷，招募渠道影响参与者构成。分母：[人数或答卷数／符合条件的组别]。
-
-Where distinct individuals have not been verified, introduce counts as “N response records” / “N份答卷”, not “N people” / “N人”.
-
-## Historical example dashboard
-
-`results.html` contains 136 fixed-seed **fictional** records for an earlier instrument (`nt-life-support-fictional-v2`). The example uses adults 18+, youth 12–17, children 7–11, six-month adult/youth recall, three-month child recall and one current priority. It predates the present Greater Darwin questionnaire and is not connected to it.
-
-Its charts and data are retained as a historical illustration only. The page and printed view show the historical status, cohort and interpretation notice. The CSV repeats dataset/revision/stage/period/cohort/interpretation metadata in columns so a spreadsheet import remains rectangular. It must not be fed real revised survey answers or presented as a validated analysis system for them. Build and verify the live analysis from the eventual collection platform's frozen export dictionary.
+results.html contains 136 fixed-seed **fictional** records from an earlier instrument. It is a historical demonstration, not a v9 analysis system or a source of actual consultation results. Build a new results view only from a verified LC collection export and the frozen v9 dictionary.

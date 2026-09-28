@@ -159,6 +159,8 @@ body.questionnaire{--ink:#30312f;--text:#41423f;--muted:#666963;--primary:#b9462
 .questionnaire .topic-revisit-links{display:flex;flex-wrap:wrap;gap:10px 18px;margin:14px 0}
 .questionnaire .topic-revisit-links .text-button{font-size:14px}
 @media(max-width:760px){.questionnaire .issue-group .choices.columns{grid-template-columns:1fr}}
+.questionnaire .rand-credit{border-top:1px solid var(--line);padding-top:14px;margin:20px 0 0;font-size:13px;line-height:1.5}
+.questionnaire .question-group[data-field^="source_outcomes:"]{border-left:3px solid var(--line);padding:14px 0 14px 16px;margin:18px 0;background:var(--soft)}
 
 .other-need-option{grid-column:1/-1;min-width:0}
 .questionnaire .other-need-followup{margin:14px 0 4px;padding:0 4px}

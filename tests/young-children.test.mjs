@@ -52,7 +52,7 @@ test('child expressions and guardian observations remain separate without unrela
   assert.equal(session.answer('__proto__', 'Bad key'), false);
   const output = plain(session.exportAnswers());
   assert.equal(output.schema_version, '1.3');
-  assert.equal(output.questionnaire_revision, '2026-09-27-area-priority');
+  assert.equal(output.questionnaire_revision, '2026-09-29-local-connection-preview');
   assert.equal(output.questionnaire_version, 'young_child_supported');
   assert.equal(output.response_mode, 'child_views');
   assert.equal(output.response_basis, 'child_expressions_recorded_by_parent_guardian');
@@ -62,7 +62,7 @@ test('child expressions and guardian observations remain separate without unrela
   assert.equal(output.participation.recorded_at, '2026-09-25T00:01:00.000Z');
   assert.equal(JSON.stringify(output).includes('Private'), false);
   assert.equal(output.collection_mode, 'internal_review_no_transmission');
-  assert.equal(output.storage, 'downloaded_by_respondent; not submitted');
+  assert.equal(output.storage, 'in_memory_preview_not_submitted');
 });
 
 test('blank child boxes do not create a child response or claim assent even if willingness was checked', () => {
