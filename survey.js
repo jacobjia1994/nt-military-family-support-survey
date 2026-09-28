@@ -440,7 +440,7 @@ function cleanExport(answers,version,domains) {
 }
 
 const main = document.querySelector('#main');
-const phases = ['About you','Experiences and ideas','Closing','Review'];
+const phases = ['About you','Experiences and ideas','Review'];
 const state = { version:'adult', age:null, ageAudience:null, ageRoute:null, answers:{}, step:'connection', screen:'welcome', returnToReview:false, returnToManage:false, returnToTopic:'', participation:null, guardianPermission:null,youngController:null,youngRecord:null };
 const SURVEY_INVITATION = {"title": "Defence Family Support Survey", "greeting": "Hello, Defence community!", "paragraphs": ["Lutheran Care would like your help to plan its Defence Family Support Program in Greater Darwin.", "You can share a family experience, something that has worked well, or an idea for the coming months.", "Please answer about your own experience."], "funding": "Lutheran Care received funding from Defence Member and Family Support, a branch of the Commonwealth Department of Defence, to deliver this project."};
 const PARTICIPANT_NOTICE_VERSION = '2026-09-28-v12-preview';
@@ -867,9 +867,8 @@ function renderSurvey(){
   if(index<0){state.step=steps[1]?.id||'connection';index=steps.findIndex(item=>item.id===state.step);}
   const step=steps[index],review=step.id==='review';let content=page(step);
   const early=consultationRoute(state.answers)==='earlier_experience';
-  const hasClosing=steps.some(item=>item.id==='closing');
-  const displayPhases=early?['About you','Your experience','Review']:hasClosing?phases:['About you','Experiences and ideas','Review'];
-  const phaseIndex=early?index:hasClosing?step.phase:step.phase===3?2:step.phase;
+  const displayPhases=early?['About you','Your experience','Review']:phases;
+  const phaseIndex=early?index:Math.min(step.phase,2);
   const topicId=step.topic_id||'',account=topicId?topicAccount(state.answers,topicId):step.account_id?accountById(state.answers,step.account_id):null;
   const issueCount=selectedIssues(state.answers,state.version).length;
   const progress=topicId?`<p class="need-progress">Topic ${selectedIssues(state.answers,state.version).indexOf(topicId)+1} of ${issueCount}</p>`:step.id==='issue_cues'?`<p class="need-progress" id="issue-count">${issueCount} topic${issueCount===1?'':'s'} selected</p>`:account?`<p class="need-progress">Entry ${(state.answers.accounts||[]).findIndex(item=>item.id===account.id)+1} of ${(state.answers.accounts||[]).length}</p>`:step.need&&state.version==='child'?`<p class="need-progress">Area ${detailedNeeds(state.answers,domainList(),state.version).indexOf(step.need)+1} of ${detailedNeeds(state.answers,domainList(),state.version).length}</p>`:'';

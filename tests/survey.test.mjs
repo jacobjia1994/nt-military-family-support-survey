@@ -1174,6 +1174,17 @@ test('ordinary Continue moves from two answered topic pages directly to manage w
   assert.equal(survey.getUIState().step, 'accounts_manage');
 });
 
+test('visible section count stays stable when an optional closing page disappears', () => {
+  const answers = { roles: ['partner'], residence_area: 'darwin', issue_cues: ['settling'] };
+  survey.setContext('adult', answers);
+  survey.setParticipationContext('adult', survey.participationRecord('adult', true));
+  survey.goNext('place');
+  assert.match(mainStub.innerHTML, /Section 2 of 3/);
+  survey.addAccount(answers, 'future', 'settling').story = 'A future move';
+  survey.renderSurvey();
+  assert.match(mainStub.innerHTML, /Section 2 of 3/);
+});
+
 test('one hundred substantive accounts across topics retain the cap and a failed draft commit loses no text', () => {
   const answers = { issue_cues: ['settling', 'schooling'] };
   for (let n = 0; n < 100; n += 1) survey.addAccount(answers, n % 2 ? 'future' : 'experience', n % 2 ? 'schooling' : 'settling').story = `Entry ${n + 1}`;
