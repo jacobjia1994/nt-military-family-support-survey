@@ -1,6 +1,6 @@
 # Consultation flow and measurement contract
 
-Updated 27 September 2026. Adult/youth schema `7.1`, questionnaire revision `2026-09-27-area-priority`. Younger-child schema `1.3`, revision `2026-09-27-area-priority`. This remains a team-review interface without a response receiver. Collection platform and storage are for LC and its IT team to select; see [COLLECTION_HANDOFF.md](COLLECTION_HANDOFF.md).
+Updated 28 September 2026. Adult/youth schema `7.2`, questionnaire revision `2026-09-28-topic-linked-support`. Younger-child schema `1.3`, revision `2026-09-27-area-priority`. This remains a team-review interface without a response receiver. Collection platform and storage are for LC and its IT team to select; see [COLLECTION_HANDOFF.md](COLLECTION_HANDOFF.md).
 
 ## Purpose and sequence
 
@@ -10,9 +10,9 @@ The survey supports LC's decisions about useful support, experiences worth prese
 2. State the ADF relationship and optionally select the current broad area, followed by an optional suburb/locality from that area. Adults may optionally give their age band. Youth state who is helping them and may give a positive connection experience after these simpler questions.
 3. Adults on the main route see optional residence duration, then a question about what made community connection easier or harder. Area and suburb are together on the preceding background page.
 4. Answer whether support was needed during time living in Greater Darwin within the relevant recall period. Yes or Not sure reveals the needs checklist.
-5. Adults may answer details for every selected area. Youth may select one optional focus from their checked needs; the other needs stay recorded without repeated detail pages.
-6. All adult/youth main-route respondents reach **What could help next?**, including people with No, declined or blank past need status. Programme interest and its optional priority concern future support, not a limit on past experiences.
-7. **Taking part** asks preferred participation formats, suitable times where relevant, enabling arrangements and optional access to Berrimah for people selecting an in-person format.
+5. Ask separately which areas might benefit from support now or in the coming months. This remains available after No, declined or blank recent-need status. A past need and a future interest may be the same topic, but neither answer is inferred from the other.
+6. Adults may answer one contextual page for every selected past or future topic. That page covers recent experience when applicable, then what would help with that topic and preferred ways to get it. Youth may choose one optional focus from their past and future topics; all other selections remain recorded without repeated detail pages.
+7. For any future topic, offer one shared **Making support easier to use** page. Its general enablers and note are optional; suitable times appear for live formats, and convenient Greater Darwin areas appear for in-person formats. No LC office is presumed to be the activity venue.
 8. Review and finish. The interview request and support guide are independent optional next steps.
 
 ## Residence routing
@@ -33,37 +33,29 @@ Adults recall the past 12 months; youth recall three months. For recent arrivals
 
 ## Adult detail and youth focus
 
-The adult list retains the 17 accepted domains plus Something else. Only Yes or Not sure to needing support opens the checklist; its Other text describes an unlisted need. The needs inventory remains unchanged pending the team's discussion. There is no second needs inventory or compulsory priority ranking.
+The adult recent-needs list retains the 17 accepted domains plus Something else. Only Yes or Not sure to needing support opens that checklist; its Other text describes an unlisted recent need. The independent future-interest selector uses the same topic vocabulary so a person with no recent need can still identify a useful topic. There is no compulsory priority ranking.
 
-Each selected domain now follows one time direction:
+For a domain selected as a recent need, the contextual page follows this sequence:
 
 1. Support received during the local recall period.
 2. Sources approached during that period.
 3. Experienced barriers, or reasons for not seeking help, according to the source answer.
 4. What happened, what helped or what could have made things easier.
-5. Whether extra or different support is wanted now.
-6. If Yes, what support would help now.
+5. What would help with this topic now or in the coming months, preferred support formats and any conditions that would make it easier or more comfortable to use. These optional prompts do not require another Yes/No gate.
 
-All these detail fields remain optional and visible rather than hidden behind an extra panel. A respondent can leave a whole page blank and continue. Adult long answers retain 5,000 characters; youth long answers use 1,500. The shared 8–17 checklist and one optional detailed focus remain distinct. The adult full-depth requirement does not change that accepted shorter youth design.
-
-| Past support | Current extra/different help | Interpretation |
-| --- | --- | --- |
-| Enough | No | Existing support can remain important. |
-| Enough | Yes | A changed or newly uncovered request can exist. |
-| Some/none | No | A past gap may have resolved. |
-| Some/none | Yes | A past gap and a current request are recorded. |
+All these detail fields remain optional and visible rather than hidden behind an extra panel. A past-only page shows a compact **Add future ideas for this topic** control; choosing it adds the topic to `future_needs` and reveals its future prompts without revisiting the selector. A respondent can leave a whole page blank and continue. Adult long answers retain 5,000 characters; youth long answers use 1,500. The shared 8–17 checklist and one optional detailed focus remain distinct. The adult full-depth requirement does not change that accepted shorter youth design.
 
 Sufficient support never hides sources or the experience account. Explicit non-seeking shows reasons for not seeking, not presumed service failures. Blank, uncertain and declined answers are not No. Selected youth needs without focused detail have no implied adequacy or barrier answer.
 
 ## Future support and participation
 
-`programmes` records useful support now or in the coming months: parenting, time apart, settling, social connection, playgroups, service navigation or something else. None at present, unsure and prefer not to say are exclusive choices. An optional `programme_priority` appears when more than one substantive type is selected. It asks which would make the biggest difference; it does not remove any selected need or its detail.
+`future_needs` records topic interests now or in the coming months, independently of `needs`, which records recent experience. The two lists use matching domain IDs so the same topic can be discussed once with the right past and future prompts. A distinct `future_other_need` option and `future_needs_other` text keep an unlisted future topic separate from an unlisted past need. None at present, unsure and prefer not to say are exclusive choices. `future_priority` is optional when at least two future topics are selected; it does not hide any topic detail or impose a ranking on recent needs. `future_ideas` offers an optional space for an idea that does not fit the selected topics, including a suggestion for other families.
 
-Adults see optional `children_ages` only after selecting parenting/playgroup, or childcare/schooling/parenting-and-caring needs. It records under 5, 5–11 and 12–17, with no children under 18 and declined alternatives. Youth do not receive this adult carer question.
+Within each future-selected topic, `support_requested` records the person's own description of useful help. `formats` records how they would prefer to receive help **with that topic**; `format_other` captures another way. A past-only topic can be added to the future selector through the page's explicit control. There is no second support-status question. A preference for phone support with one topic does not become a preference for phone support with every topic. These answers do not enrol someone, book a service or authorise contact.
 
-`participation_formats` asks how the person would take part. It replaces the previous information/advice-format measure; do not silently merge old `delivery` values into the new construct. `times` appears for in-person, group, phone or video participation. Self-guided resources no longer stand in for all programme participation; multiple suitable formats can be selected. `participation_enablers` independently records practical or comfort needs such as timing, bringing children, childcare, transport, language, accessibility and understanding of Defence family life.
+Adults see optional `children_ages` only when childcare, schooling or parenting/caring is relevant in recent or future selections. It records under 5, 5–11 and 12–17, with no children under 18 and declined alternatives. Youth do not receive this adult carer question.
 
-`berrimah_access` is optional and shown only for an in-person format. A further optional explanation appears for difficulty or the need for help/adjustments. These answers inform planning, not bookings or permission to contact the respondent. None of the programme or participation fields depends on reporting a past support need.
+The shared practical page appears once whenever at least one substantive future topic is selected. `participation_enablers` records general conditions that would make support easier to use; `enablers_other` adds an unlisted condition and `practical_note` can explain differences among topics. `times` and `time_other` appear for selected live formats. When an in-person format is selected, `in_person_areas` asks which areas of Greater Darwin would be convenient; `in_person_other` can describe another area. These are broad planning preferences, not an assumption that activities happen at Lutheran Care's Berrimah office. Older global `programmes`, `programme_priority`, `participation_formats` and `berrimah_access` are different measures and must not be silently mapped to the topic-linked fields. The `participation_enablers` ID remains, but its choices and placement changed, so compare revisions only with a field-level mapping.
 
 ## Page counts and completion
 
@@ -71,22 +63,22 @@ Excluding invitation/participation choices and including review:
 
 | Route | Pages |
 | --- | --- |
-| Adult main | 6 + selected areas: 6 with none, 8 with two, 11 with five. |
-| Shared 8–17 main | 5 without focus; 6 with focus. |
+| Adult main | Background and selection pages, one contextual page per distinct past/future topic, one shared practical page when a future topic is selected, then review. |
+| Shared 8–17 main | Background and selection pages, up to one optional focus page, one shared practical page when a future topic is selected, then review. |
 | Earlier local experience | 3: connection, historical comments, review. |
 | 7 or younger | Background, child expressions/guardian observations, review. |
 
-Conditional guardian-presence confirmation is additional. These are navigation counts, not measured completion times or requirements to fill every field. The review primarily presents answers actually provided.
+Conditional guardian-presence confirmation is additional. Page counts vary with topic selections; they are not measured completion times or requirements to fill every field. The review primarily presents answers actually provided.
 
-The completion heading is **Thank you for helping strengthen the Defence community in Greater Darwin.** Two independent blocks explain an interview with LC and the free support guide. Their buttons are **Request an interview** and **Find support in a few clicks**, matching in red/white and visual weight. The guide is the existing standalone `support.html`; no contact details or survey completion are required to access it. No answers or response identifiers are transferred in these links.
+The review button says **Finish preview**. The end screen says **You have reached the end of this survey preview** and **Your answers were not sent or saved**. Two independent blocks explain an interview with LC and the free support guide. Their buttons are **Request an interview** and **Find support in a few clicks**, matching in red/white and visual weight. The guide is the existing standalone `support.html`; no contact details or survey completion are required to access it. No answers or response identifiers are transferred in these links.
 
 ## Answer preservation and reporting
 
-Schema `7.1` stores the questionnaire revision, residence route/scope, local recall frame and respondent-perspective analysis unit. The area record retains `received`, `sources`, `barriers`, `comment`, `additional_support_now` and `support_requested`. Stable domain and choice IDs remain independent of presentation order. Geography stores `residence_area` separately from optional `suburb`. Its `location_precision` is `area`, `suburb`, `other_locality` (Other with supplied text) or `not_stated`. Blank or declined area is not stated; Outside Greater Darwin has area precision and outside scope. Area-only records must not be distributed among suburbs.
+Schema `7.2` stores the questionnaire revision, residence route/scope, local recall frame and respondent-perspective analysis unit. The area record retains recent-experience fields when that topic was selected as a past need, and topic-linked future fields when support is wanted. Stable domain and choice IDs remain independent of presentation order. Geography stores `residence_area` separately from optional `suburb`. Its `location_precision` is `area`, `suburb`, `other_locality` (Other with supplied text) or `not_stated`. Blank or declined area is not stated; Outside Greater Darwin has area precision and outside scope. Area-only records must not be distributed among suburbs.
 
-Changing past needs to No/declined/blank clears dependent domain answers while preserving future programmes and participation. Removing a selected domain removes only that domain's detail; removing a youth focus removes its focus detail. Adding another source within the same help-seeking branch preserves selected barriers. Switching between seeking, not seeking and an unspecified source branch clears now-inapplicable barriers. Turning a current request away from Yes clears its request text. Changing residential area between historical and main routes clears incompatible route-dependent content. Changing area also clears the previously selected suburb and its Other text, while leaving unrelated responses intact. Changing participation formats removes only timing/Berrimah/Other fields that no longer apply.
+Changing past needs to No/declined/blank clears dependent past answers while preserving independently selected future topics and their relevant detail. Removing a topic from one selector retains detail still supported by the other selector; removing it from both clears that topic's detail. Removing a youth focus clears its focused detail but preserves checked topics. Adding another source within the same help-seeking branch preserves selected barriers. Switching between seeking, not seeking and an unspecified source branch clears now-inapplicable barriers. Changing residential area between historical and main routes clears incompatible route-dependent content. Changing area also clears the previously selected suburb and its Other text, while leaving unrelated responses intact. Changing per-topic formats removes only inapplicable Other text or shared practical fields; reducing future topics below two clears the conditional priority.
 
-Every report, chart, dashboard and numerical summary must follow [ANALYSIS_PROTOCOL.md](ANALYSIS_PROTOCOL.md): response records and participant perspectives, not unique families or population prevalence; explicit cohort, revision, recall frame and denominator; missing, declined, not asked and No kept distinct. A selected domain with no optional detail still counts as a selected domain. Historical, age-specific and guardian perspectives remain distinguishable. The fictional results page illustrates an older instrument and cannot analyse schema 7.1 responses.
+Every report, chart, dashboard and numerical summary must follow [ANALYSIS_PROTOCOL.md](ANALYSIS_PROTOCOL.md): response records and participant perspectives, not unique families or population prevalence; explicit cohort, revision, recall frame and denominator; missing, declined, not asked and No kept distinct. A selected past or future topic with no optional detail still counts as a selection. Historical, age-specific and guardian perspectives remain distinguishable. The fictional results page illustrates an older instrument and cannot analyse schema 7.2 responses.
 
 ## Participation and younger children
 

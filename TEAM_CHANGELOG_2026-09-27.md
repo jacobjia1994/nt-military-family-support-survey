@@ -2,6 +2,10 @@
 
 This note records Jacob's decisions following the comprehensive survey review. It supersedes conflicting recommendations from that review. It is a project decision record, not a claim that a collection platform has been selected or real responses have been collected.
 
+## Correction — 28 September 2026
+
+Jacob clarified that activities should not be framed as taking place at Lutheran Care's Berrimah office. The Berrimah attendance bullet below is historical and no longer guides the questionnaire. The revised survey asks about practical Greater Darwin areas only when someone is interested in an in-person format. It links future help and participation format to the selected support topic, with shared practical conditions asked once. See `FLOW_REDESIGN.md` for the current review flow.
+
 ## Retain the space for detailed responses
 
 The survey is a substantive consultation channel because staff capacity for interviews is limited. Its optional questions deliberately provide space and relevant prompts for participants who want to explain several needs. Participants can leave questions unanswered.

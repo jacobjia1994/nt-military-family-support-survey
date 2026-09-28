@@ -893,12 +893,211 @@
           "conditional": "other_need"
         }
       ],
-      "note": "Ask whether support was needed first. No skips the area questions but retains service-information preferences. Yes or Not sure opens the area list; Something else is only an unlisted need. Blank remains distinct from No."
+      "note": "Ask whether support was needed first. No skips recent-experience questions but still allows future support ideas. Yes or Not sure opens the recent area list; Something else is an unlisted recent need. Blank remains distinct from No."
+    },
+    {
+      "id": "future",
+      "title": "Looking ahead",
+      "intro": "You can share what may help now or in the coming months, even if you have not needed support recently. These choices do not sign you up for anything.",
+      "fields": [
+        {
+          "key": "future_needs",
+          "label": "Thinking about now and the coming months, in which areas could support or activities be useful to you or your family?",
+          "type": "multi",
+          "options": [
+            {
+              "id": "settling",
+              "label": "Postings or leaving service",
+              "hint": "Preparing for a move, settling in, uncertainty about postings or adjusting after service."
+            },
+            {
+              "id": "work_study",
+              "label": "Work, study or training",
+              "hint": "Finding work, keeping a career going or getting back into study."
+            },
+            {
+              "id": "housing",
+              "label": "Housing",
+              "hint": "Finding a secure home that suits your household, including accessibility needs or pets."
+            },
+            {
+              "id": "everyday_expenses",
+              "label": "Money and everyday expenses",
+              "hint": "Household bills, managing money or finding out about financial help."
+            },
+            {
+              "id": "transport",
+              "label": "Getting around",
+              "hint": "Transport to work, appointments or activities."
+            },
+            {
+              "id": "childcare",
+              "label": "Childcare",
+              "hint": "Affordable care during work, shifts or unexpected absences."
+            },
+            {
+              "id": "schooling",
+              "label": "Children’s schooling",
+              "hint": "Enrolment, changing schools, learning or getting support at school."
+            },
+            {
+              "id": "parenting_caring",
+              "label": "Parenting or caring for someone",
+              "hint": "Parenting while someone is away, sharing care or supporting a relative who is unwell."
+            },
+            {
+              "id": "physical_health",
+              "label": "Physical health and healthcare",
+              "hint": "Finding healthcare or getting the treatment you need."
+            },
+            {
+              "id": "emotional_wellbeing",
+              "label": "Mental health and wellbeing",
+              "hint": "Stress or support with how you are feeling."
+            },
+            {
+              "id": "bereavement",
+              "label": "Grief or bereavement",
+              "hint": "Emotional or practical support after someone has died."
+            },
+            {
+              "id": "disability_ongoing_needs",
+              "label": "Disability support",
+              "hint": "Getting support that meets your needs."
+            },
+            {
+              "id": "family_relationships",
+              "label": "Family relationships",
+              "hint": "Staying connected, relationship difficulties or changes in family life."
+            },
+            {
+              "id": "people_to_turn_to",
+              "label": "Friends and community",
+              "hint": "Meeting people, feeling connected or having someone to turn to."
+            },
+            {
+              "id": "military_separation",
+              "label": "Time apart because of service",
+              "hint": "Time away for deployments or training, and settling back into family life afterwards."
+            },
+            {
+              "id": "safety_confidential_help",
+              "label": "Feeling safe at home or in a relationship",
+              "hint": ""
+            },
+            {
+              "id": "finding_services",
+              "label": "Finding the right information or service",
+              "hint": "Knowing what is available to you, how to access it or who to speak to."
+            },
+            {
+              "id": "future_other_need",
+              "label": "Something else"
+            },
+            {
+              "id": "none",
+              "label": "None at the moment"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Select all that apply. You can choose an area even if you have not needed help with it recently.",
+          "exclusive": [
+            "none",
+            "unsure",
+            "prefer"
+          ]
+        },
+        {
+          "key": "future_needs_other",
+          "label": "Which area would you like to add?",
+          "type": "short",
+          "options": [],
+          "hint": "Please leave out names or other details that could identify someone.",
+          "conditional": "future_other_need"
+        },
+        {
+          "key": "future_ideas",
+          "label": "Are there any other ideas for support or activities that we have not covered?",
+          "type": "text",
+          "options": [],
+          "hint": "Optional. You can include ideas for later or for other Defence families, even if you do not want support yourself. Please leave out names or other details that could identify someone."
+        },
+        {
+          "key": "future_priority",
+          "label": "Of the areas you selected, where could support make the biggest difference to you or your family?",
+          "type": "single",
+          "options": [
+            {
+              "id": "work_study",
+              "label": "Work, study or training"
+            },
+            {
+              "id": "future_other_need",
+              "label": "Another future area"
+            },
+            {
+              "id": "equal",
+              "label": "More than one is equally important"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Optional. Choose one or leave this blank.",
+          "conditional": "future_priority"
+        },
+        {
+          "key": "children_ages",
+          "label": "Which age groups are the children you care for in?",
+          "type": "multi",
+          "options": [
+            {
+              "id": "under5",
+              "label": "Under 5"
+            },
+            {
+              "id": "5to11",
+              "label": "5–11"
+            },
+            {
+              "id": "12to17",
+              "label": "12–17"
+            },
+            {
+              "id": "none",
+              "label": "I do not care for children under 18"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to say"
+            }
+          ],
+          "hint": "Select all that apply.",
+          "exclusive": [
+            "none",
+            "prefer"
+          ],
+          "conditional": "children_ages"
+        }
+      ],
+      "note": "Everyone can name future support areas, including people with no recent need. “Something else” is separate from an unlisted past issue."
     },
     {
       "id": "area",
-      "title": "For each selected area",
-      "intro": "Think about support during your time in Greater Darwin in the past 12 months. You can leave any question blank and continue.",
+      "title": "Recent need: topic-specific questions",
+      "intro": "Think about your time living in Greater Darwin in the past 12 months. You can leave any question blank and continue.",
       "fields": [
         {
           "key": "areas:settling:received",
@@ -1001,39 +1200,6 @@
           "hint": "You could describe what helped, or what would have made things easier. Please leave out names or other details that could identify someone.",
           "need": "settling",
           "optional_detail": true
-        },
-        {
-          "key": "areas:settling:additional_support_now",
-          "label": "Would you like any extra or different support with this now?",
-          "type": "single",
-          "options": [
-            {
-              "id": "yes",
-              "label": "Yes"
-            },
-            {
-              "id": "no",
-              "label": "No"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": ""
-        },
-        {
-          "key": "areas:settling:support_requested",
-          "label": "What support would help you now?",
-          "type": "text",
-          "options": [],
-          "hint": "Please leave out names or other details that could identify someone.",
-          "need": "settling",
-          "conditional": "additional_support"
         }
       ],
       "variants": [
@@ -1214,251 +1380,126 @@
           ]
         }
       ],
-      "note": "Questions are displayed directly. Extra support requested appears only after Yes; past experience remains available to everyone selecting this area. Sources and barriers use the same recall period. Blank answers do not mean no barrier."
+      "note": "For every selected recent need, ask about prior experience. On a past-only topic, a small opt-in can add it to future interests and reveal the topic-specific help and format questions."
     },
     {
-      "id": "programmes",
-      "title": "What could help next?",
-      "intro": "Thinking about now and the coming months, you can share ideas even if you have not needed support recently.",
+      "id": "future-area",
+      "title": "Future interest without a recent need",
+      "intro": "Thinking about now and the coming months, what could help with this area? You can leave any question blank and continue.",
       "fields": [
         {
-          "key": "programmes",
-          "label": "Which support or activities would be useful to you or your family?",
-          "type": "multi",
-          "options": [
-            {
-              "id": "parenting",
-              "label": "Practical parenting support"
-            },
-            {
-              "id": "time_apart",
-              "label": "Support for family life when someone is away for service"
-            },
-            {
-              "id": "settling",
-              "label": "Help settling in after a posting or move"
-            },
-            {
-              "id": "connection",
-              "label": "Opportunities to meet other Defence members and families"
-            },
-            {
-              "id": "playgroup",
-              "label": "Playgroups for young children and their parents or carers"
-            },
-            {
-              "id": "navigation",
-              "label": "Help finding suitable services"
-            },
-            {
-              "id": "other",
-              "label": "Something else"
-            },
-            {
-              "id": "none",
-              "label": "None at present"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to say"
-            }
-          ],
-          "hint": "Select all that apply.",
-          "exclusive": [
-            "none",
-            "unsure",
-            "prefer"
-          ]
-        },
-        {
-          "key": "programme_other",
-          "label": "What else would be useful?",
+          "key": "areas:work_study:support_requested",
+          "label": "What, if anything, would help you or your family with this now or in the coming months?",
           "type": "text",
           "options": [],
-          "hint": "Please leave out names or other details that could identify someone.",
-          "conditional": "programme_other"
+          "hint": "A few words are fine. You do not need to know which service could help. Please leave out names or other details that could identify someone.",
+          "need": "work_study",
+          "future_section": true,
+          "optional_detail": true
         },
         {
-          "key": "programme_priority",
-          "label": "Which would make the biggest difference to you or your family?",
-          "type": "single",
-          "options": [
-            {
-              "id": "parenting",
-              "label": "Practical parenting support"
-            },
-            {
-              "id": "playgroup",
-              "label": "Playgroups for young children and their parents or carers"
-            },
-            {
-              "id": "other",
-              "label": "Something else"
-            }
-          ],
-          "hint": "Optional.",
-          "conditional": "programme_priority"
-        },
-        {
-          "key": "children_ages",
-          "label": "Which age groups are the children you care for in?",
-          "type": "multi",
-          "options": [
-            {
-              "id": "under5",
-              "label": "Under 5"
-            },
-            {
-              "id": "5to11",
-              "label": "5–11"
-            },
-            {
-              "id": "12to17",
-              "label": "12–17"
-            },
-            {
-              "id": "none",
-              "label": "I do not care for children under 18"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to say"
-            }
-          ],
-          "hint": "Select all that apply.",
-          "exclusive": [
-            "none",
-            "prefer"
-          ],
-          "conditional": "children_ages"
-        }
-      ],
-      "note": "Everyone can discuss useful future support, including those with no past need."
-    },
-    {
-      "id": "delivery",
-      "title": "Taking part",
-      "intro": "These questions help us plan how to offer support. Your answers do not sign you up for anything.",
-      "fields": [
-        {
-          "key": "participation_formats",
-          "label": "How would you prefer to take part in support or activities?",
+          "key": "areas:work_study:formats",
+          "label": "Which ways of getting support or joining an activity for this topic would suit you or your family?",
           "type": "multi",
           "options": [
             {
               "id": "one_to_one",
-              "label": "In person, one to one"
+              "label": "One-to-one, in person"
             },
             {
               "id": "group",
-              "label": "In person, with a group or other families"
+              "label": "A group or activity, in person"
             },
             {
               "id": "phone",
-              "label": "By phone"
+              "label": "A phone call"
             },
             {
-              "id": "video",
-              "label": "By video call or an online group"
+              "id": "video_one_to_one",
+              "label": "A one-to-one video call"
+            },
+            {
+              "id": "online_group",
+              "label": "An online group or activity"
             },
             {
               "id": "text",
-              "label": "By message or online chat"
+              "label": "Text messages or online chat"
             },
             {
               "id": "self_guided",
-              "label": "Resources or activities I can use in my own time"
-            },
-            {
-              "id": "not_wanted",
-              "label": "I would not want to take part at present"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "no_preference",
-              "label": "No particular preference"
+              "label": "Information or resources to use in my own time"
             },
             {
               "id": "other",
               "label": "Another way"
             },
             {
-              "id": "prefer",
-              "label": "Prefer not to say"
-            }
-          ],
-          "hint": "Select all that apply.",
-          "exclusive": [
-            "not_wanted",
-            "unsure",
-            "no_preference",
-            "prefer"
-          ]
-        },
-        {
-          "key": "participation_other",
-          "label": "What other way would suit you?",
-          "type": "short",
-          "options": [],
-          "hint": "",
-          "conditional": "participation_other"
-        },
-        {
-          "key": "times",
-          "label": "When would a call, meeting or activity suit you?",
-          "type": "multi",
-          "options": [
-            {
-              "id": "weekday_day",
-              "label": "Weekday daytime"
+              "id": "none_suitable",
+              "label": "None of these ways would suit"
             },
             {
-              "id": "weekday_evening",
-              "label": "Weekday evenings"
-            },
-            {
-              "id": "weekend",
-              "label": "Weekends"
-            },
-            {
-              "id": "variable",
-              "label": "It changes from week to week"
+              "id": "not_wanted",
+              "label": "Not looking to use support or activities for this"
             },
             {
               "id": "no_preference",
-              "label": "No particular preference"
+              "label": "No preference"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
             },
             {
               "id": "prefer",
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Select all that apply. Use your local time.",
+          "hint": "Select all that apply. Your answers do not sign you up for anything.",
           "exclusive": [
+            "none_suitable",
+            "not_wanted",
             "no_preference",
+            "unsure",
             "prefer"
           ],
-          "conditional": "live"
+          "need": "work_study",
+          "future_section": true
         },
         {
+          "key": "areas:work_study:format_other",
+          "label": "What other way would suit you?",
+          "type": "short",
+          "options": [],
+          "hint": "",
+          "need": "work_study",
+          "conditional": "format_other",
+          "future_section": true
+        }
+      ],
+      "note": "A future-only topic skips questions about past support. It goes straight to optional help and participation format questions for this topic."
+    },
+    {
+      "id": "practical",
+      "title": "Making support easier to use",
+      "intro": "Answer once for anything that applies. You can explain below if different things would work for different topics. You can also skip this section.",
+      "fields": [
+        {
           "key": "participation_enablers",
-          "label": "What would make it easier or more comfortable for you to take part?",
+          "label": "What, if anything, could make support or activities easier or more comfortable for you or your family to use?",
           "type": "multi",
           "options": [
             {
-              "id": "timing",
-              "label": "Times that fit around work or shifts"
+              "id": "low_cost",
+              "label": "Free or low-cost support or activities"
             },
             {
-              "id": "flexible",
-              "label": "Flexible or drop-in sessions"
+              "id": "timing",
+              "label": "Times that fit work, shifts or family life"
+            },
+            {
+              "id": "drop_in",
+              "label": "Being able to drop in without booking"
             },
             {
               "id": "bring_children",
@@ -1466,27 +1507,27 @@
             },
             {
               "id": "childcare",
-              "label": "Help with childcare or caring responsibilities"
+              "label": "Help with childcare"
             },
             {
               "id": "transport",
-              "label": "Help with transport or easy parking"
-            },
-            {
-              "id": "online",
-              "label": "An online or phone option"
+              "label": "Help with transport or parking"
             },
             {
               "id": "language",
-              "label": "Language or communication support"
+              "label": "An interpreter or support in another language"
             },
             {
               "id": "accessibility",
-              "label": "Physical, sensory or other accessibility adjustments"
+              "label": "Support that meets my access needs"
             },
             {
-              "id": "understanding",
-              "label": "People who understand Defence family life and my background"
+              "id": "defence_understanding",
+              "label": "People who understand Defence life"
+            },
+            {
+              "id": "privacy",
+              "label": "Privacy when asking for or using support"
             },
             {
               "id": "other",
@@ -1494,7 +1535,7 @@
             },
             {
               "id": "none",
-              "label": "Nothing extra needed"
+              "label": "Nothing else needed"
             },
             {
               "id": "unsure",
@@ -1502,7 +1543,7 @@
             },
             {
               "id": "prefer",
-              "label": "Prefer not to say"
+              "label": "Prefer not to answer"
             }
           ],
           "hint": "Select all that apply.",
@@ -1514,28 +1555,44 @@
         },
         {
           "key": "enablers_other",
-          "label": "What else would help you take part?",
-          "type": "text",
+          "label": "What else would make it easier?",
+          "type": "short",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone.",
           "conditional": "enablers_other"
         },
         {
-          "key": "berrimah_access",
-          "label": "How easy or difficult would it be for you to attend an activity at Lutheran Care in Berrimah?",
-          "type": "single",
+          "key": "times",
+          "label": "For a call, appointment or activity at a set time, when would usually work for you or your family?",
+          "type": "multi",
           "options": [
             {
-              "id": "easy",
-              "label": "Easy"
+              "id": "weekday_morning",
+              "label": "Weekday mornings"
             },
             {
-              "id": "with_help",
-              "label": "Possible with some help or adjustments"
+              "id": "weekday_afternoon",
+              "label": "Weekday afternoons"
             },
             {
-              "id": "difficult",
-              "label": "Difficult"
+              "id": "weekday_evening",
+              "label": "Weekday evenings"
+            },
+            {
+              "id": "weekend",
+              "label": "Weekends"
+            },
+            {
+              "id": "variable",
+              "label": "My availability changes"
+            },
+            {
+              "id": "other",
+              "label": "Other times"
+            },
+            {
+              "id": "no_preference",
+              "label": "No preference"
             },
             {
               "id": "unsure",
@@ -1543,22 +1600,93 @@
             },
             {
               "id": "prefer",
-              "label": "Prefer not to say"
+              "label": "Prefer not to answer"
             }
           ],
+          "hint": "Select all that apply.",
+          "exclusive": [
+            "no_preference",
+            "unsure",
+            "prefer"
+          ],
+          "conditional": "live"
+        },
+        {
+          "key": "time_other",
+          "label": "What other times would work?",
+          "type": "short",
+          "options": [],
           "hint": "",
+          "conditional": "time_other"
+        },
+        {
+          "key": "in_person_areas",
+          "label": "Which parts of Greater Darwin would be practical for you or your family to get to for in-person support or activities?",
+          "type": "multi",
+          "options": [
+            {
+              "id": "darwin_inner",
+              "label": "Darwin city and inner suburbs"
+            },
+            {
+              "id": "darwin_north",
+              "label": "Darwin’s northern suburbs"
+            },
+            {
+              "id": "palmerston",
+              "label": "Palmerston"
+            },
+            {
+              "id": "litchfield",
+              "label": "Rural areas around Darwin"
+            },
+            {
+              "id": "other",
+              "label": "Another area"
+            },
+            {
+              "id": "no_area",
+              "label": "None of these areas would be practical"
+            },
+            {
+              "id": "no_preference",
+              "label": "No preference"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Select any that could work. You do not need to tell us where you live.",
+          "exclusive": [
+            "no_area",
+            "no_preference",
+            "unsure",
+            "prefer"
+          ],
           "conditional": "in_person"
         },
         {
-          "key": "berrimah_other",
-          "label": "What would make this easier, or which area would suit you better?",
+          "key": "in_person_other",
+          "label": "Which other area would suit you?",
+          "type": "short",
+          "options": [],
+          "hint": "",
+          "conditional": "in_person_other"
+        },
+        {
+          "key": "practical_note",
+          "label": "Is there anything else that would help us understand what would work for you?",
           "type": "text",
           "options": [],
-          "hint": "Please leave out names or other details that could identify someone.",
-          "conditional": "berrimah_other"
+          "hint": "Optional. For example, a type of place you would prefer, or different times or access needs for different topics. Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Everyone in the main adult/youth route can describe participation preferences and conditions, independently of past needs."
+      "note": "Shown once when any future topic is selected. Timing appears for scheduled formats; Greater Darwin area choices appear for in-person formats."
     },
     {
       "id": "earlier",
@@ -2430,12 +2558,211 @@
           "conditional": "other_need"
         }
       ],
-      "note": "Ask whether support was needed first. No skips the area questions but retains service-information preferences. Yes or Not sure opens the area list; Something else is only an unlisted need. Blank remains distinct from No."
+      "note": "Ask whether support was needed first. No skips recent-experience questions but still allows future support ideas. Yes or Not sure opens the recent area list; Something else is an unlisted recent need. Blank remains distinct from No."
+    },
+    {
+      "id": "future",
+      "title": "Looking ahead",
+      "intro": "You can share what may help now or in the coming months, even if you have not needed support recently. These choices do not sign you up for anything.",
+      "fields": [
+        {
+          "key": "future_needs",
+          "label": "Thinking about now and the coming months, in which areas could support or activities be useful to you or your family?",
+          "type": "multi",
+          "options": [
+            {
+              "id": "settling",
+              "label": "Postings or leaving service",
+              "hint": "Preparing for a move, settling in, uncertainty about postings or adjusting after service."
+            },
+            {
+              "id": "work_study",
+              "label": "Work, study or training",
+              "hint": "Finding work, keeping a career going or getting back into study."
+            },
+            {
+              "id": "housing",
+              "label": "Housing",
+              "hint": "Finding a secure home that suits your household, including accessibility needs or pets."
+            },
+            {
+              "id": "everyday_expenses",
+              "label": "Money and everyday expenses",
+              "hint": "Household bills, managing money or finding out about financial help."
+            },
+            {
+              "id": "transport",
+              "label": "Getting around",
+              "hint": "Transport to work, appointments or activities."
+            },
+            {
+              "id": "childcare",
+              "label": "Childcare",
+              "hint": "Affordable care during work, shifts or unexpected absences."
+            },
+            {
+              "id": "schooling",
+              "label": "Children’s schooling",
+              "hint": "Enrolment, changing schools, learning or getting support at school."
+            },
+            {
+              "id": "parenting_caring",
+              "label": "Parenting or caring for someone",
+              "hint": "Parenting while someone is away, sharing care or supporting a relative who is unwell."
+            },
+            {
+              "id": "physical_health",
+              "label": "Physical health and healthcare",
+              "hint": "Finding healthcare or getting the treatment you need."
+            },
+            {
+              "id": "emotional_wellbeing",
+              "label": "Mental health and wellbeing",
+              "hint": "Stress or support with how you are feeling."
+            },
+            {
+              "id": "bereavement",
+              "label": "Grief or bereavement",
+              "hint": "Emotional or practical support after someone has died."
+            },
+            {
+              "id": "disability_ongoing_needs",
+              "label": "Disability support",
+              "hint": "Getting support that meets your needs."
+            },
+            {
+              "id": "family_relationships",
+              "label": "Family relationships",
+              "hint": "Staying connected, relationship difficulties or changes in family life."
+            },
+            {
+              "id": "people_to_turn_to",
+              "label": "Friends and community",
+              "hint": "Meeting people, feeling connected or having someone to turn to."
+            },
+            {
+              "id": "military_separation",
+              "label": "Time apart because of service",
+              "hint": "Time away for deployments or training, and settling back into family life afterwards."
+            },
+            {
+              "id": "safety_confidential_help",
+              "label": "Feeling safe at home or in a relationship",
+              "hint": ""
+            },
+            {
+              "id": "finding_services",
+              "label": "Finding the right information or service",
+              "hint": "Knowing what is available to you, how to access it or who to speak to."
+            },
+            {
+              "id": "future_other_need",
+              "label": "Something else"
+            },
+            {
+              "id": "none",
+              "label": "None at the moment"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Select all that apply. You can choose an area even if you have not needed help with it recently.",
+          "exclusive": [
+            "none",
+            "unsure",
+            "prefer"
+          ]
+        },
+        {
+          "key": "future_needs_other",
+          "label": "Which area would you like to add?",
+          "type": "short",
+          "options": [],
+          "hint": "Please leave out names or other details that could identify someone.",
+          "conditional": "future_other_need"
+        },
+        {
+          "key": "future_ideas",
+          "label": "Are there any other ideas for support or activities that we have not covered?",
+          "type": "text",
+          "options": [],
+          "hint": "Optional. You can include ideas for later or for other Defence families, even if you do not want support yourself. Please leave out names or other details that could identify someone."
+        },
+        {
+          "key": "future_priority",
+          "label": "Of the areas you selected, where could support make the biggest difference to you or your family?",
+          "type": "single",
+          "options": [
+            {
+              "id": "work_study",
+              "label": "Work, study or training"
+            },
+            {
+              "id": "future_other_need",
+              "label": "Another future area"
+            },
+            {
+              "id": "equal",
+              "label": "More than one is equally important"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Optional. Choose one or leave this blank.",
+          "conditional": "future_priority"
+        },
+        {
+          "key": "children_ages",
+          "label": "Which age groups are the children you care for in?",
+          "type": "multi",
+          "options": [
+            {
+              "id": "under5",
+              "label": "Under 5"
+            },
+            {
+              "id": "5to11",
+              "label": "5–11"
+            },
+            {
+              "id": "12to17",
+              "label": "12–17"
+            },
+            {
+              "id": "none",
+              "label": "I do not care for children under 18"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to say"
+            }
+          ],
+          "hint": "Select all that apply.",
+          "exclusive": [
+            "none",
+            "prefer"
+          ],
+          "conditional": "children_ages"
+        }
+      ],
+      "note": "Everyone can name future support areas, including people with no recent need. “Something else” is separate from an unlisted past issue."
     },
     {
       "id": "area",
-      "title": "For each selected area",
-      "intro": "Think about support during your time in Greater Darwin in the past 12 months. You can leave any question blank and continue.",
+      "title": "Recent need: topic-specific questions",
+      "intro": "Think about your time living in Greater Darwin in the past 12 months. You can leave any question blank and continue.",
       "fields": [
         {
           "key": "areas:settling:received",
@@ -2538,39 +2865,6 @@
           "hint": "You could describe what helped, or what would have made things easier. Please leave out names or other details that could identify someone.",
           "need": "settling",
           "optional_detail": true
-        },
-        {
-          "key": "areas:settling:additional_support_now",
-          "label": "Would you like any extra or different support with this now?",
-          "type": "single",
-          "options": [
-            {
-              "id": "yes",
-              "label": "Yes"
-            },
-            {
-              "id": "no",
-              "label": "No"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": ""
-        },
-        {
-          "key": "areas:settling:support_requested",
-          "label": "What support would help you now?",
-          "type": "text",
-          "options": [],
-          "hint": "Please leave out names or other details that could identify someone.",
-          "need": "settling",
-          "conditional": "additional_support"
         }
       ],
       "variants": [
@@ -2751,251 +3045,126 @@
           ]
         }
       ],
-      "note": "Questions are displayed directly. Extra support requested appears only after Yes; past experience remains available to everyone selecting this area. Sources and barriers use the same recall period. Blank answers do not mean no barrier."
+      "note": "For every selected recent need, ask about prior experience. On a past-only topic, a small opt-in can add it to future interests and reveal the topic-specific help and format questions."
     },
     {
-      "id": "programmes",
-      "title": "What could help next?",
-      "intro": "Thinking about now and the coming months, you can share ideas even if you have not needed support recently.",
+      "id": "future-area",
+      "title": "Future interest without a recent need",
+      "intro": "Thinking about now and the coming months, what could help with this area? You can leave any question blank and continue.",
       "fields": [
         {
-          "key": "programmes",
-          "label": "Which support or activities would be useful to you or your family?",
-          "type": "multi",
-          "options": [
-            {
-              "id": "parenting",
-              "label": "Practical parenting support"
-            },
-            {
-              "id": "time_apart",
-              "label": "Support for family life when someone is away for service"
-            },
-            {
-              "id": "settling",
-              "label": "Help settling in after a posting or move"
-            },
-            {
-              "id": "connection",
-              "label": "Opportunities to meet other Defence members and families"
-            },
-            {
-              "id": "playgroup",
-              "label": "Playgroups for young children and their parents or carers"
-            },
-            {
-              "id": "navigation",
-              "label": "Help finding suitable services"
-            },
-            {
-              "id": "other",
-              "label": "Something else"
-            },
-            {
-              "id": "none",
-              "label": "None at present"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to say"
-            }
-          ],
-          "hint": "Select all that apply.",
-          "exclusive": [
-            "none",
-            "unsure",
-            "prefer"
-          ]
-        },
-        {
-          "key": "programme_other",
-          "label": "What else would be useful?",
+          "key": "areas:work_study:support_requested",
+          "label": "What, if anything, would help you or your family with this now or in the coming months?",
           "type": "text",
           "options": [],
-          "hint": "Please leave out names or other details that could identify someone.",
-          "conditional": "programme_other"
+          "hint": "A few words are fine. You do not need to know which service could help. Please leave out names or other details that could identify someone.",
+          "need": "work_study",
+          "future_section": true,
+          "optional_detail": true
         },
         {
-          "key": "programme_priority",
-          "label": "Which would make the biggest difference to you or your family?",
-          "type": "single",
-          "options": [
-            {
-              "id": "parenting",
-              "label": "Practical parenting support"
-            },
-            {
-              "id": "playgroup",
-              "label": "Playgroups for young children and their parents or carers"
-            },
-            {
-              "id": "other",
-              "label": "Something else"
-            }
-          ],
-          "hint": "Optional.",
-          "conditional": "programme_priority"
-        },
-        {
-          "key": "children_ages",
-          "label": "Which age groups are the children you care for in?",
-          "type": "multi",
-          "options": [
-            {
-              "id": "under5",
-              "label": "Under 5"
-            },
-            {
-              "id": "5to11",
-              "label": "5–11"
-            },
-            {
-              "id": "12to17",
-              "label": "12–17"
-            },
-            {
-              "id": "none",
-              "label": "I do not care for children under 18"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to say"
-            }
-          ],
-          "hint": "Select all that apply.",
-          "exclusive": [
-            "none",
-            "prefer"
-          ],
-          "conditional": "children_ages"
-        }
-      ],
-      "note": "Everyone can discuss useful future support, including those with no past need."
-    },
-    {
-      "id": "delivery",
-      "title": "Taking part",
-      "intro": "These questions help us plan how to offer support. Your answers do not sign you up for anything.",
-      "fields": [
-        {
-          "key": "participation_formats",
-          "label": "How would you prefer to take part in support or activities?",
+          "key": "areas:work_study:formats",
+          "label": "Which ways of getting support or joining an activity for this topic would suit you or your family?",
           "type": "multi",
           "options": [
             {
               "id": "one_to_one",
-              "label": "In person, one to one"
+              "label": "One-to-one, in person"
             },
             {
               "id": "group",
-              "label": "In person, with a group or other families"
+              "label": "A group or activity, in person"
             },
             {
               "id": "phone",
-              "label": "By phone"
+              "label": "A phone call"
             },
             {
-              "id": "video",
-              "label": "By video call or an online group"
+              "id": "video_one_to_one",
+              "label": "A one-to-one video call"
+            },
+            {
+              "id": "online_group",
+              "label": "An online group or activity"
             },
             {
               "id": "text",
-              "label": "By message or online chat"
+              "label": "Text messages or online chat"
             },
             {
               "id": "self_guided",
-              "label": "Resources or activities I can use in my own time"
-            },
-            {
-              "id": "not_wanted",
-              "label": "I would not want to take part at present"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "no_preference",
-              "label": "No particular preference"
+              "label": "Information or resources to use in my own time"
             },
             {
               "id": "other",
               "label": "Another way"
             },
             {
-              "id": "prefer",
-              "label": "Prefer not to say"
-            }
-          ],
-          "hint": "Select all that apply.",
-          "exclusive": [
-            "not_wanted",
-            "unsure",
-            "no_preference",
-            "prefer"
-          ]
-        },
-        {
-          "key": "participation_other",
-          "label": "What other way would suit you?",
-          "type": "short",
-          "options": [],
-          "hint": "",
-          "conditional": "participation_other"
-        },
-        {
-          "key": "times",
-          "label": "When would a call, meeting or activity suit you?",
-          "type": "multi",
-          "options": [
-            {
-              "id": "weekday_day",
-              "label": "Weekday daytime"
+              "id": "none_suitable",
+              "label": "None of these ways would suit"
             },
             {
-              "id": "weekday_evening",
-              "label": "Weekday evenings"
-            },
-            {
-              "id": "weekend",
-              "label": "Weekends"
-            },
-            {
-              "id": "variable",
-              "label": "It changes from week to week"
+              "id": "not_wanted",
+              "label": "Not looking to use support or activities for this"
             },
             {
               "id": "no_preference",
-              "label": "No particular preference"
+              "label": "No preference"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
             },
             {
               "id": "prefer",
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Select all that apply. Use your local time.",
+          "hint": "Select all that apply. Your answers do not sign you up for anything.",
           "exclusive": [
+            "none_suitable",
+            "not_wanted",
             "no_preference",
+            "unsure",
             "prefer"
           ],
-          "conditional": "live"
+          "need": "work_study",
+          "future_section": true
         },
         {
+          "key": "areas:work_study:format_other",
+          "label": "What other way would suit you?",
+          "type": "short",
+          "options": [],
+          "hint": "",
+          "need": "work_study",
+          "conditional": "format_other",
+          "future_section": true
+        }
+      ],
+      "note": "A future-only topic skips questions about past support. It goes straight to optional help and participation format questions for this topic."
+    },
+    {
+      "id": "practical",
+      "title": "Making support easier to use",
+      "intro": "Answer once for anything that applies. You can explain below if different things would work for different topics. You can also skip this section.",
+      "fields": [
+        {
           "key": "participation_enablers",
-          "label": "What would make it easier or more comfortable for you to take part?",
+          "label": "What, if anything, could make support or activities easier or more comfortable for you or your family to use?",
           "type": "multi",
           "options": [
             {
-              "id": "timing",
-              "label": "Times that fit around work or shifts"
+              "id": "low_cost",
+              "label": "Free or low-cost support or activities"
             },
             {
-              "id": "flexible",
-              "label": "Flexible or drop-in sessions"
+              "id": "timing",
+              "label": "Times that fit work, shifts or family life"
+            },
+            {
+              "id": "drop_in",
+              "label": "Being able to drop in without booking"
             },
             {
               "id": "bring_children",
@@ -3003,27 +3172,27 @@
             },
             {
               "id": "childcare",
-              "label": "Help with childcare or caring responsibilities"
+              "label": "Help with childcare"
             },
             {
               "id": "transport",
-              "label": "Help with transport or easy parking"
-            },
-            {
-              "id": "online",
-              "label": "An online or phone option"
+              "label": "Help with transport or parking"
             },
             {
               "id": "language",
-              "label": "Language or communication support"
+              "label": "An interpreter or support in another language"
             },
             {
               "id": "accessibility",
-              "label": "Physical, sensory or other accessibility adjustments"
+              "label": "Support that meets my access needs"
             },
             {
-              "id": "understanding",
-              "label": "People who understand Defence family life and my background"
+              "id": "defence_understanding",
+              "label": "People who understand Defence life"
+            },
+            {
+              "id": "privacy",
+              "label": "Privacy when asking for or using support"
             },
             {
               "id": "other",
@@ -3031,7 +3200,7 @@
             },
             {
               "id": "none",
-              "label": "Nothing extra needed"
+              "label": "Nothing else needed"
             },
             {
               "id": "unsure",
@@ -3039,7 +3208,7 @@
             },
             {
               "id": "prefer",
-              "label": "Prefer not to say"
+              "label": "Prefer not to answer"
             }
           ],
           "hint": "Select all that apply.",
@@ -3051,28 +3220,44 @@
         },
         {
           "key": "enablers_other",
-          "label": "What else would help you take part?",
-          "type": "text",
+          "label": "What else would make it easier?",
+          "type": "short",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone.",
           "conditional": "enablers_other"
         },
         {
-          "key": "berrimah_access",
-          "label": "How easy or difficult would it be for you to attend an activity at Lutheran Care in Berrimah?",
-          "type": "single",
+          "key": "times",
+          "label": "For a call, appointment or activity at a set time, when would usually work for you or your family?",
+          "type": "multi",
           "options": [
             {
-              "id": "easy",
-              "label": "Easy"
+              "id": "weekday_morning",
+              "label": "Weekday mornings"
             },
             {
-              "id": "with_help",
-              "label": "Possible with some help or adjustments"
+              "id": "weekday_afternoon",
+              "label": "Weekday afternoons"
             },
             {
-              "id": "difficult",
-              "label": "Difficult"
+              "id": "weekday_evening",
+              "label": "Weekday evenings"
+            },
+            {
+              "id": "weekend",
+              "label": "Weekends"
+            },
+            {
+              "id": "variable",
+              "label": "My availability changes"
+            },
+            {
+              "id": "other",
+              "label": "Other times"
+            },
+            {
+              "id": "no_preference",
+              "label": "No preference"
             },
             {
               "id": "unsure",
@@ -3080,22 +3265,93 @@
             },
             {
               "id": "prefer",
-              "label": "Prefer not to say"
+              "label": "Prefer not to answer"
             }
           ],
+          "hint": "Select all that apply.",
+          "exclusive": [
+            "no_preference",
+            "unsure",
+            "prefer"
+          ],
+          "conditional": "live"
+        },
+        {
+          "key": "time_other",
+          "label": "What other times would work?",
+          "type": "short",
+          "options": [],
           "hint": "",
+          "conditional": "time_other"
+        },
+        {
+          "key": "in_person_areas",
+          "label": "Which parts of Greater Darwin would be practical for you or your family to get to for in-person support or activities?",
+          "type": "multi",
+          "options": [
+            {
+              "id": "darwin_inner",
+              "label": "Darwin city and inner suburbs"
+            },
+            {
+              "id": "darwin_north",
+              "label": "Darwin’s northern suburbs"
+            },
+            {
+              "id": "palmerston",
+              "label": "Palmerston"
+            },
+            {
+              "id": "litchfield",
+              "label": "Rural areas around Darwin"
+            },
+            {
+              "id": "other",
+              "label": "Another area"
+            },
+            {
+              "id": "no_area",
+              "label": "None of these areas would be practical"
+            },
+            {
+              "id": "no_preference",
+              "label": "No preference"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Select any that could work. You do not need to tell us where you live.",
+          "exclusive": [
+            "no_area",
+            "no_preference",
+            "unsure",
+            "prefer"
+          ],
           "conditional": "in_person"
         },
         {
-          "key": "berrimah_other",
-          "label": "What would make this easier, or which area would suit you better?",
+          "key": "in_person_other",
+          "label": "Which other area would suit you?",
+          "type": "short",
+          "options": [],
+          "hint": "",
+          "conditional": "in_person_other"
+        },
+        {
+          "key": "practical_note",
+          "label": "Is there anything else that would help us understand what would work for you?",
           "type": "text",
           "options": [],
-          "hint": "Please leave out names or other details that could identify someone.",
-          "conditional": "berrimah_other"
+          "hint": "Optional. For example, a type of place you would prefer, or different times or access needs for different topics. Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Everyone in the main adult/youth route can describe participation preferences and conditions, independently of past needs."
+      "note": "Shown once when any future topic is selected. Timing appears for scheduled formats; Greater Darwin area choices appear for in-person formats."
     },
     {
       "id": "earlier",
@@ -3967,12 +4223,211 @@
           "conditional": "other_need"
         }
       ],
-      "note": "Ask whether support was needed first. No skips the area questions but retains service-information preferences. Yes or Not sure opens the area list; Something else is only an unlisted need. Blank remains distinct from No."
+      "note": "Ask whether support was needed first. No skips recent-experience questions but still allows future support ideas. Yes or Not sure opens the recent area list; Something else is an unlisted recent need. Blank remains distinct from No."
+    },
+    {
+      "id": "future",
+      "title": "Looking ahead",
+      "intro": "You can share what may help now or in the coming months, even if you have not needed support recently. These choices do not sign you up for anything.",
+      "fields": [
+        {
+          "key": "future_needs",
+          "label": "Thinking about now and the coming months, in which areas could support or activities be useful to you or your family?",
+          "type": "multi",
+          "options": [
+            {
+              "id": "settling",
+              "label": "Postings or leaving service",
+              "hint": "Preparing for a move, settling in, uncertainty about postings or adjusting after service."
+            },
+            {
+              "id": "work_study",
+              "label": "Work, study or training",
+              "hint": "Finding work, keeping a career going or getting back into study."
+            },
+            {
+              "id": "housing",
+              "label": "Housing",
+              "hint": "Finding a secure home that suits your household, including accessibility needs or pets."
+            },
+            {
+              "id": "everyday_expenses",
+              "label": "Money and everyday expenses",
+              "hint": "Household bills, managing money or finding out about financial help."
+            },
+            {
+              "id": "transport",
+              "label": "Getting around",
+              "hint": "Transport to work, appointments or activities."
+            },
+            {
+              "id": "childcare",
+              "label": "Childcare",
+              "hint": "Affordable care during work, shifts or unexpected absences."
+            },
+            {
+              "id": "schooling",
+              "label": "Children’s schooling",
+              "hint": "Enrolment, changing schools, learning or getting support at school."
+            },
+            {
+              "id": "parenting_caring",
+              "label": "Parenting or caring for someone",
+              "hint": "Parenting while someone is away, sharing care or supporting a relative who is unwell."
+            },
+            {
+              "id": "physical_health",
+              "label": "Physical health and healthcare",
+              "hint": "Finding healthcare or getting the treatment you need."
+            },
+            {
+              "id": "emotional_wellbeing",
+              "label": "Mental health and wellbeing",
+              "hint": "Stress or support with how you are feeling."
+            },
+            {
+              "id": "bereavement",
+              "label": "Grief or bereavement",
+              "hint": "Emotional or practical support after someone has died."
+            },
+            {
+              "id": "disability_ongoing_needs",
+              "label": "Disability support",
+              "hint": "Getting support that meets your needs."
+            },
+            {
+              "id": "family_relationships",
+              "label": "Family relationships",
+              "hint": "Staying connected, relationship difficulties or changes in family life."
+            },
+            {
+              "id": "people_to_turn_to",
+              "label": "Friends and community",
+              "hint": "Meeting people, feeling connected or having someone to turn to."
+            },
+            {
+              "id": "military_separation",
+              "label": "Time apart because of service",
+              "hint": "Time away for deployments or training, and settling back into family life afterwards."
+            },
+            {
+              "id": "safety_confidential_help",
+              "label": "Feeling safe at home or in a relationship",
+              "hint": ""
+            },
+            {
+              "id": "finding_services",
+              "label": "Finding the right information or service",
+              "hint": "Knowing what is available to you, how to access it or who to speak to."
+            },
+            {
+              "id": "future_other_need",
+              "label": "Something else"
+            },
+            {
+              "id": "none",
+              "label": "None at the moment"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Select all that apply. You can choose an area even if you have not needed help with it recently.",
+          "exclusive": [
+            "none",
+            "unsure",
+            "prefer"
+          ]
+        },
+        {
+          "key": "future_needs_other",
+          "label": "Which area would you like to add?",
+          "type": "short",
+          "options": [],
+          "hint": "Please leave out names or other details that could identify someone.",
+          "conditional": "future_other_need"
+        },
+        {
+          "key": "future_ideas",
+          "label": "Are there any other ideas for support or activities that we have not covered?",
+          "type": "text",
+          "options": [],
+          "hint": "Optional. You can include ideas for later or for other Defence families, even if you do not want support yourself. Please leave out names or other details that could identify someone."
+        },
+        {
+          "key": "future_priority",
+          "label": "Of the areas you selected, where could support make the biggest difference to you or your family?",
+          "type": "single",
+          "options": [
+            {
+              "id": "work_study",
+              "label": "Work, study or training"
+            },
+            {
+              "id": "future_other_need",
+              "label": "Another future area"
+            },
+            {
+              "id": "equal",
+              "label": "More than one is equally important"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Optional. Choose one or leave this blank.",
+          "conditional": "future_priority"
+        },
+        {
+          "key": "children_ages",
+          "label": "Which age groups are the children you care for in?",
+          "type": "multi",
+          "options": [
+            {
+              "id": "under5",
+              "label": "Under 5"
+            },
+            {
+              "id": "5to11",
+              "label": "5–11"
+            },
+            {
+              "id": "12to17",
+              "label": "12–17"
+            },
+            {
+              "id": "none",
+              "label": "I do not care for children under 18"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to say"
+            }
+          ],
+          "hint": "Select all that apply.",
+          "exclusive": [
+            "none",
+            "prefer"
+          ],
+          "conditional": "children_ages"
+        }
+      ],
+      "note": "Everyone can name future support areas, including people with no recent need. “Something else” is separate from an unlisted past issue."
     },
     {
       "id": "area",
-      "title": "For each selected area",
-      "intro": "Think about support during your time in Greater Darwin in the past 12 months. You can leave any question blank and continue.",
+      "title": "Recent need: topic-specific questions",
+      "intro": "Think about your time living in Greater Darwin in the past 12 months. You can leave any question blank and continue.",
       "fields": [
         {
           "key": "areas:settling:received",
@@ -4075,39 +4530,6 @@
           "hint": "You could describe what helped, or what would have made things easier. Please leave out names or other details that could identify someone.",
           "need": "settling",
           "optional_detail": true
-        },
-        {
-          "key": "areas:settling:additional_support_now",
-          "label": "Would you like any extra or different support with this now?",
-          "type": "single",
-          "options": [
-            {
-              "id": "yes",
-              "label": "Yes"
-            },
-            {
-              "id": "no",
-              "label": "No"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": ""
-        },
-        {
-          "key": "areas:settling:support_requested",
-          "label": "What support would help you now?",
-          "type": "text",
-          "options": [],
-          "hint": "Please leave out names or other details that could identify someone.",
-          "need": "settling",
-          "conditional": "additional_support"
         }
       ],
       "variants": [
@@ -4288,251 +4710,126 @@
           ]
         }
       ],
-      "note": "Questions are displayed directly. Extra support requested appears only after Yes; past experience remains available to everyone selecting this area. Sources and barriers use the same recall period. Blank answers do not mean no barrier."
+      "note": "For every selected recent need, ask about prior experience. On a past-only topic, a small opt-in can add it to future interests and reveal the topic-specific help and format questions."
     },
     {
-      "id": "programmes",
-      "title": "What could help next?",
-      "intro": "Thinking about now and the coming months, you can share ideas even if you have not needed support recently.",
+      "id": "future-area",
+      "title": "Future interest without a recent need",
+      "intro": "Thinking about now and the coming months, what could help with this area? You can leave any question blank and continue.",
       "fields": [
         {
-          "key": "programmes",
-          "label": "Which support or activities would be useful to you or your family?",
-          "type": "multi",
-          "options": [
-            {
-              "id": "parenting",
-              "label": "Practical parenting support"
-            },
-            {
-              "id": "time_apart",
-              "label": "Support for family life when someone is away for service"
-            },
-            {
-              "id": "settling",
-              "label": "Help settling in after a posting or move"
-            },
-            {
-              "id": "connection",
-              "label": "Opportunities to meet other Defence members and families"
-            },
-            {
-              "id": "playgroup",
-              "label": "Playgroups for young children and their parents or carers"
-            },
-            {
-              "id": "navigation",
-              "label": "Help finding suitable services"
-            },
-            {
-              "id": "other",
-              "label": "Something else"
-            },
-            {
-              "id": "none",
-              "label": "None at present"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to say"
-            }
-          ],
-          "hint": "Select all that apply.",
-          "exclusive": [
-            "none",
-            "unsure",
-            "prefer"
-          ]
-        },
-        {
-          "key": "programme_other",
-          "label": "What else would be useful?",
+          "key": "areas:work_study:support_requested",
+          "label": "What, if anything, would help you or your family with this now or in the coming months?",
           "type": "text",
           "options": [],
-          "hint": "Please leave out names or other details that could identify someone.",
-          "conditional": "programme_other"
+          "hint": "A few words are fine. You do not need to know which service could help. Please leave out names or other details that could identify someone.",
+          "need": "work_study",
+          "future_section": true,
+          "optional_detail": true
         },
         {
-          "key": "programme_priority",
-          "label": "Which would make the biggest difference to you or your family?",
-          "type": "single",
-          "options": [
-            {
-              "id": "parenting",
-              "label": "Practical parenting support"
-            },
-            {
-              "id": "playgroup",
-              "label": "Playgroups for young children and their parents or carers"
-            },
-            {
-              "id": "other",
-              "label": "Something else"
-            }
-          ],
-          "hint": "Optional.",
-          "conditional": "programme_priority"
-        },
-        {
-          "key": "children_ages",
-          "label": "Which age groups are the children you care for in?",
-          "type": "multi",
-          "options": [
-            {
-              "id": "under5",
-              "label": "Under 5"
-            },
-            {
-              "id": "5to11",
-              "label": "5–11"
-            },
-            {
-              "id": "12to17",
-              "label": "12–17"
-            },
-            {
-              "id": "none",
-              "label": "I do not care for children under 18"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to say"
-            }
-          ],
-          "hint": "Select all that apply.",
-          "exclusive": [
-            "none",
-            "prefer"
-          ],
-          "conditional": "children_ages"
-        }
-      ],
-      "note": "Everyone can discuss useful future support, including those with no past need."
-    },
-    {
-      "id": "delivery",
-      "title": "Taking part",
-      "intro": "These questions help us plan how to offer support. Your answers do not sign you up for anything.",
-      "fields": [
-        {
-          "key": "participation_formats",
-          "label": "How would you prefer to take part in support or activities?",
+          "key": "areas:work_study:formats",
+          "label": "Which ways of getting support or joining an activity for this topic would suit you or your family?",
           "type": "multi",
           "options": [
             {
               "id": "one_to_one",
-              "label": "In person, one to one"
+              "label": "One-to-one, in person"
             },
             {
               "id": "group",
-              "label": "In person, with a group or other families"
+              "label": "A group or activity, in person"
             },
             {
               "id": "phone",
-              "label": "By phone"
+              "label": "A phone call"
             },
             {
-              "id": "video",
-              "label": "By video call or an online group"
+              "id": "video_one_to_one",
+              "label": "A one-to-one video call"
+            },
+            {
+              "id": "online_group",
+              "label": "An online group or activity"
             },
             {
               "id": "text",
-              "label": "By message or online chat"
+              "label": "Text messages or online chat"
             },
             {
               "id": "self_guided",
-              "label": "Resources or activities I can use in my own time"
-            },
-            {
-              "id": "not_wanted",
-              "label": "I would not want to take part at present"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "no_preference",
-              "label": "No particular preference"
+              "label": "Information or resources to use in my own time"
             },
             {
               "id": "other",
               "label": "Another way"
             },
             {
-              "id": "prefer",
-              "label": "Prefer not to say"
-            }
-          ],
-          "hint": "Select all that apply.",
-          "exclusive": [
-            "not_wanted",
-            "unsure",
-            "no_preference",
-            "prefer"
-          ]
-        },
-        {
-          "key": "participation_other",
-          "label": "What other way would suit you?",
-          "type": "short",
-          "options": [],
-          "hint": "",
-          "conditional": "participation_other"
-        },
-        {
-          "key": "times",
-          "label": "When would a call, meeting or activity suit you?",
-          "type": "multi",
-          "options": [
-            {
-              "id": "weekday_day",
-              "label": "Weekday daytime"
+              "id": "none_suitable",
+              "label": "None of these ways would suit"
             },
             {
-              "id": "weekday_evening",
-              "label": "Weekday evenings"
-            },
-            {
-              "id": "weekend",
-              "label": "Weekends"
-            },
-            {
-              "id": "variable",
-              "label": "It changes from week to week"
+              "id": "not_wanted",
+              "label": "Not looking to use support or activities for this"
             },
             {
               "id": "no_preference",
-              "label": "No particular preference"
+              "label": "No preference"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
             },
             {
               "id": "prefer",
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Select all that apply. Use your local time.",
+          "hint": "Select all that apply. Your answers do not sign you up for anything.",
           "exclusive": [
+            "none_suitable",
+            "not_wanted",
             "no_preference",
+            "unsure",
             "prefer"
           ],
-          "conditional": "live"
+          "need": "work_study",
+          "future_section": true
         },
         {
+          "key": "areas:work_study:format_other",
+          "label": "What other way would suit you?",
+          "type": "short",
+          "options": [],
+          "hint": "",
+          "need": "work_study",
+          "conditional": "format_other",
+          "future_section": true
+        }
+      ],
+      "note": "A future-only topic skips questions about past support. It goes straight to optional help and participation format questions for this topic."
+    },
+    {
+      "id": "practical",
+      "title": "Making support easier to use",
+      "intro": "Answer once for anything that applies. You can explain below if different things would work for different topics. You can also skip this section.",
+      "fields": [
+        {
           "key": "participation_enablers",
-          "label": "What would make it easier or more comfortable for you to take part?",
+          "label": "What, if anything, could make support or activities easier or more comfortable for you or your family to use?",
           "type": "multi",
           "options": [
             {
-              "id": "timing",
-              "label": "Times that fit around work or shifts"
+              "id": "low_cost",
+              "label": "Free or low-cost support or activities"
             },
             {
-              "id": "flexible",
-              "label": "Flexible or drop-in sessions"
+              "id": "timing",
+              "label": "Times that fit work, shifts or family life"
+            },
+            {
+              "id": "drop_in",
+              "label": "Being able to drop in without booking"
             },
             {
               "id": "bring_children",
@@ -4540,27 +4837,27 @@
             },
             {
               "id": "childcare",
-              "label": "Help with childcare or caring responsibilities"
+              "label": "Help with childcare"
             },
             {
               "id": "transport",
-              "label": "Help with transport or easy parking"
-            },
-            {
-              "id": "online",
-              "label": "An online or phone option"
+              "label": "Help with transport or parking"
             },
             {
               "id": "language",
-              "label": "Language or communication support"
+              "label": "An interpreter or support in another language"
             },
             {
               "id": "accessibility",
-              "label": "Physical, sensory or other accessibility adjustments"
+              "label": "Support that meets my access needs"
             },
             {
-              "id": "understanding",
-              "label": "People who understand Defence family life and my background"
+              "id": "defence_understanding",
+              "label": "People who understand Defence life"
+            },
+            {
+              "id": "privacy",
+              "label": "Privacy when asking for or using support"
             },
             {
               "id": "other",
@@ -4568,7 +4865,7 @@
             },
             {
               "id": "none",
-              "label": "Nothing extra needed"
+              "label": "Nothing else needed"
             },
             {
               "id": "unsure",
@@ -4576,7 +4873,7 @@
             },
             {
               "id": "prefer",
-              "label": "Prefer not to say"
+              "label": "Prefer not to answer"
             }
           ],
           "hint": "Select all that apply.",
@@ -4588,28 +4885,44 @@
         },
         {
           "key": "enablers_other",
-          "label": "What else would help you take part?",
-          "type": "text",
+          "label": "What else would make it easier?",
+          "type": "short",
           "options": [],
           "hint": "Please leave out names or other details that could identify someone.",
           "conditional": "enablers_other"
         },
         {
-          "key": "berrimah_access",
-          "label": "How easy or difficult would it be for you to attend an activity at Lutheran Care in Berrimah?",
-          "type": "single",
+          "key": "times",
+          "label": "For a call, appointment or activity at a set time, when would usually work for you or your family?",
+          "type": "multi",
           "options": [
             {
-              "id": "easy",
-              "label": "Easy"
+              "id": "weekday_morning",
+              "label": "Weekday mornings"
             },
             {
-              "id": "with_help",
-              "label": "Possible with some help or adjustments"
+              "id": "weekday_afternoon",
+              "label": "Weekday afternoons"
             },
             {
-              "id": "difficult",
-              "label": "Difficult"
+              "id": "weekday_evening",
+              "label": "Weekday evenings"
+            },
+            {
+              "id": "weekend",
+              "label": "Weekends"
+            },
+            {
+              "id": "variable",
+              "label": "My availability changes"
+            },
+            {
+              "id": "other",
+              "label": "Other times"
+            },
+            {
+              "id": "no_preference",
+              "label": "No preference"
             },
             {
               "id": "unsure",
@@ -4617,22 +4930,93 @@
             },
             {
               "id": "prefer",
-              "label": "Prefer not to say"
+              "label": "Prefer not to answer"
             }
           ],
+          "hint": "Select all that apply.",
+          "exclusive": [
+            "no_preference",
+            "unsure",
+            "prefer"
+          ],
+          "conditional": "live"
+        },
+        {
+          "key": "time_other",
+          "label": "What other times would work?",
+          "type": "short",
+          "options": [],
           "hint": "",
+          "conditional": "time_other"
+        },
+        {
+          "key": "in_person_areas",
+          "label": "Which parts of Greater Darwin would be practical for you or your family to get to for in-person support or activities?",
+          "type": "multi",
+          "options": [
+            {
+              "id": "darwin_inner",
+              "label": "Darwin city and inner suburbs"
+            },
+            {
+              "id": "darwin_north",
+              "label": "Darwin’s northern suburbs"
+            },
+            {
+              "id": "palmerston",
+              "label": "Palmerston"
+            },
+            {
+              "id": "litchfield",
+              "label": "Rural areas around Darwin"
+            },
+            {
+              "id": "other",
+              "label": "Another area"
+            },
+            {
+              "id": "no_area",
+              "label": "None of these areas would be practical"
+            },
+            {
+              "id": "no_preference",
+              "label": "No preference"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Select any that could work. You do not need to tell us where you live.",
+          "exclusive": [
+            "no_area",
+            "no_preference",
+            "unsure",
+            "prefer"
+          ],
           "conditional": "in_person"
         },
         {
-          "key": "berrimah_other",
-          "label": "What would make this easier, or which area would suit you better?",
+          "key": "in_person_other",
+          "label": "Which other area would suit you?",
+          "type": "short",
+          "options": [],
+          "hint": "",
+          "conditional": "in_person_other"
+        },
+        {
+          "key": "practical_note",
+          "label": "Is there anything else that would help us understand what would work for you?",
           "type": "text",
           "options": [],
-          "hint": "Please leave out names or other details that could identify someone.",
-          "conditional": "berrimah_other"
+          "hint": "Optional. For example, a type of place you would prefer, or different times or access needs for different topics. Please leave out names or other details that could identify someone."
         }
       ],
-      "note": "Everyone in the main adult/youth route can describe participation preferences and conditions, independently of past needs."
+      "note": "Shown once when any future topic is selected. Timing appears for scheduled formats; Greater Darwin area choices appear for in-person formats."
     },
     {
       "id": "earlier",

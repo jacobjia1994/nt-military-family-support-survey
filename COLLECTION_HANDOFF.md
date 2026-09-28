@@ -1,6 +1,6 @@
 # Collection, migration and analysis handoff
 
-Prepared 27 September 2026. This is an implementation proposal for Lutheran Care (LC) and its IT team. No platform, tenant, receiving endpoint or retention period has been selected by this document. No real response has been collected or uploaded as part of preparing it.
+Updated 28 September 2026. This is an implementation proposal for Lutheran Care (LC) and its IT team. No platform, tenant, receiving endpoint or retention period has been selected by this document. No real response has been collected or uploaded as part of preparing it.
 
 ## Recommendation and confirmed requirements
 
@@ -8,15 +8,15 @@ If LC already operates Microsoft 365 and its IT team supports Forms, **test a gr
 
 Jacob has clarified that the survey must provide substantial space for people to tell their stories because only a limited number of interviews will be possible. **Retain all optional adult domain follow-ups. Do not introduce a one- or two-domain cap to fit a platform or shorten the questionnaire.** Optional depth, relevant prompts, ordinary skipping and intact answers are functional requirements.
 
-Other confirmed requirements are: Greater Darwin including Litchfield; an optional broad residential area followed by an optional suburb/locality; age-appropriate participation routes; separate child expression and guardian observation; a separate opt-in interview request; and no survey/contact linkage. The needs-domain inventory remains as agreed pending the team's discussion. A platform migration must not silently change these choices.
+Other confirmed requirements are: Greater Darwin including Litchfield; an optional broad residential area followed by an optional suburb/locality; topic-specific future help and support formats; age-appropriate participation routes; separate child expression and guardian observation; a separate opt-in interview request; and no survey/contact linkage. The needs-domain inventory remains as agreed pending the team's discussion. A platform migration must not silently change these choices.
 
 ## Instrument version and portable package
 
-The current adult/youth source is schema `7.1`, revision `2026-09-27-area-priority`; the younger-child source is schema `1.3`, revision `2026-09-27-area-priority`. These use `collection_mode: internal_review_no_transmission`. Do not change that collection claim until the real LC receiver and acknowledgement path are implemented.
+The current adult/youth source is schema `7.2`, revision `2026-09-28-topic-linked-support`; the younger-child source is schema `1.3`, revision `2026-09-27-area-priority`. These use `collection_mode: internal_review_no_transmission`. Do not change that collection claim until the real LC receiver and acknowledgement path are implemented.
 
 The release handoff package is `outputs/LC_IT_handoff/question-bank.json` plus `outputs/LC_IT_handoff/frontend-source.zip` in Jacob's delivery workspace. The archive is built from the recorded release commit. Use the question bank together with the source and [FLOW_REDESIGN.md](FLOW_REDESIGN.md) for fields, options and branch semantics; it is not an automatically deployed Forms template or receiver. [ANALYSIS_PROTOCOL.md](ANALYSIS_PROTOCOL.md) is the reporting contract for either platform.
 
-In schema 7.1, `residence_area` controls scope; `suburb` is optional within a selected local area. Keep the broad area if the suburb is blank, and preserve `location_precision`: `area`, `suburb`, `other_locality` (Other with supplied text) or `not_stated`. Outside Greater Darwin is an area-level answer with outside scope; a blank or declined area is not stated. Optional `past_residence` applies to the outside-area route. These residence fields replace the former local service-date gate. Keep invited current/former ADF roles; distinguish `current_local`, `residence_unspecified`, `earlier_experience` and `outside_scope`. Recall is local lived experience, not all postings in the preceding year. Future `programmes`, optional `programme_priority` and relevant adult `children_ages` remain reachable without past needs. `participation_formats` replaces the old information/advice `delivery` construct; `times`, `participation_enablers` and optional `berrimah_access` concern actual participation. Do not map the old and new constructs as if only their labels changed. Selected adult `areas` remain available without a depth cap.
+In schema 7.2, `residence_area` controls scope; `suburb` is optional within a selected local area. Keep the broad area if the suburb is blank, and preserve `location_precision`: `area`, `suburb`, `other_locality` (Other with supplied text) or `not_stated`. Outside Greater Darwin is an area-level answer with outside scope; a blank or declined area is not stated. Optional `past_residence` applies to the outside-area route. These residence fields replace the former local service-date gate. Keep invited current/former ADF roles; distinguish `current_local`, `residence_unspecified`, `earlier_experience` and `outside_scope`. Recall is local lived experience, not all postings in the preceding year. `future_needs`, `future_ideas` and relevant adult `children_ages` remain reachable without past needs; adult `future_priority` appears only after two or more future topics. A distinct `future_other_need` avoids conflating an unlisted future topic with an unlisted past need. Under each future-selected `areas[domain_id]`, preserve `support_requested`, `formats` and `format_other`; these describe that topic rather than a universal participation preference. A past-only page can explicitly add its topic to `future_needs`. The shared practical page has `participation_enablers`, `enablers_other` and `practical_note`; conditional `times`, `time_other`, `in_person_areas` and `in_person_other` support scheduling and venue planning without naming the Berrimah office as the activity site. Do not map older global `programmes`, `programme_priority`, `participation_formats`, `berrimah_access` or information/advice `delivery` into the new constructs. The `participation_enablers` ID is retained with revised options and placement, requiring field-level comparison. Selected adult `areas` remain available without a depth cap; youth detail remains one optional focus while all selected topics are retained.
 
 For schema 1.3, carry `background.adf_connection`, `background.residence_area`, optional `background.suburb`, applicable Other text, optional child stage and geography metadata including `location_precision`. Keep actual child expressions distinct from guardian observations. The two age schemas are distinct instruments, not interchangeable rows of the same needs measure.
 
@@ -82,7 +82,7 @@ Do not use email or a browser download as the primary response store. The existi
 
 ## Platform-neutral data and analysis contract
 
-This is a logical contract, not a second executable schema. Bind the implementation to the schema 7.1 / younger-child 1.3 source and its versioned question bank, choice IDs and revisions. Forms column headings may change; preserve a versioned mapping from platform question/column identifiers to stable project field IDs.
+This is a logical contract, not a second executable schema. Bind the implementation to the schema 7.2 / younger-child 1.3 source and its versioned question bank, choice IDs and revisions. Forms column headings may change; preserve a versioned mapping from platform question/column identifiers to stable project field IDs.
 
 ### Source records
 
@@ -103,8 +103,8 @@ An initial Excel workbook can contain the following tables; CSV exports should u
 | Table | One row represents | Main purpose |
 | --- | --- | --- |
 | `responses` | One submitted survey response | Instrument, revision, recall period, scope, broad area, optional suburb, location precision and relevant background. The key identifies a record, not a person or household. |
-| `need_details` | One response and one selected need domain | Selection, support received, present request and domain-specific text. Retain selected domains even when all their follow-ups are blank. |
-| `selections` | One selected option for one multi-choice field | Reliable counting of sources, barriers and participation preferences without comma-splitting mistakes. |
+| `need_details` | One response and one selected recent or future domain | Record whether the topic was selected as a recent need, a future interest or both. Preserve applicable support received, requested help, formats and domain-specific text; retain selected topics even when follow-ups are blank. |
+| `selections` | One selected option for one multi-choice field | Reliable counting of sources, barriers and topic-specific formats without comma-splitting mistakes. Include the parent domain ID for `formats`; keep shared practical choices distinct. |
 | `narratives` | One optional text field supplied in a response | Verbatim text, topic coding and appropriately de-identified quotations. Keep the original separate from edited quotations. |
 | `dictionary` | One field/choice definition for one revision | Question wording, codes, valid values, missingness, branch rule and intended interpretation. |
 

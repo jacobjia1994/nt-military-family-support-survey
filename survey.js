@@ -94,9 +94,10 @@ const BARRIERS = {
 const NT_REGIONS = ['darwin','palmerston','litchfield','greater_darwin_other','katherine','alice','other_nt'];
 const locationFrame = region => NT_REGIONS.includes(region) ? 'nt' : ['outside_au','outside_overseas'].includes(region) ? 'outside' : 'unspecified';
 const SPECIAL_NEEDS = [];
-const liveParticipation = answers => (answers.participation_formats||[]).some(v=>['one_to_one','group','phone','video'].includes(v));
-const inPersonParticipation = answers => (answers.participation_formats||[]).some(v=>['one_to_one','group'].includes(v));
-const relevantChildStage = answers => (answers.programmes||[]).some(v=>['parenting','playgroup'].includes(v)) || (answers.needs||[]).some(v=>['childcare','schooling','parenting_caring'].includes(v));
+const activeFutureAreas = answers => Object.entries(answers.areas||{}).filter(([id])=>(answers.future_needs||[]).includes(id)).map(([,area])=>area);
+const liveParticipation = answers => activeFutureAreas(answers).some(area=>(area.formats||[]).some(v=>['one_to_one','group','phone','video_one_to_one','online_group'].includes(v)));
+const inPersonParticipation = answers => activeFutureAreas(answers).some(area=>(area.formats||[]).some(v=>['one_to_one','group'].includes(v)));
+const relevantChildStage = answers => [...(answers.needs||[]),...(answers.future_needs||[])].some(v=>['childcare','schooling','parenting_caring'].includes(v));
 const hasNeedSelection = answers => ['yes','unsure'].includes(answers.needs_status);
 function toggleChoice(current,value,exclusive=[]) {
   const values=Array.isArray(current)?current:[];
@@ -108,14 +109,31 @@ function selectedNeeds(answers,domains) {
   if(!hasNeedSelection(answers))return [];
   return (Array.isArray(answers.needs)?answers.needs:[]).filter(id=>domains.some(d=>d.id===id));
 }
+function selectedFutureNeeds(answers,domains) {
+  return (Array.isArray(answers.future_needs)?answers.future_needs:[]).filter(id=>domains.some(d=>d.id===id)||id==='future_other_need');
+}
+function selectedDetailNeeds(answers,domains,version) {
+  const past=selectedNeeds(answers,domains);
+  return version==='child'?past:[...new Set([...past,...selectedFutureNeeds(answers,domains)])];
+}
 function selectedFocusNeed(answers,domains) {
-  const ids=selectedNeeds(answers,domains);
+  const ids=selectedDetailNeeds(answers,domains,'youth');
   return ids.includes(answers.focus_need)?answers.focus_need:null;
 }
 function detailedNeeds(answers,domains,version) {
-  if(version!=='youth')return selectedNeeds(answers,domains);
+  if(version!=='youth')return selectedDetailNeeds(answers,domains,version);
   const focus=selectedFocusNeed(answers,domains);
   return focus?[focus]:[];
+}
+function reconcileAreaSelection(answers,domains,version) {
+  const retained=version==='youth'?(selectedFocusNeed(answers,domains)?[answers.focus_need]:[]):selectedDetailNeeds(answers,domains,version);
+  answers.areas=Object.fromEntries(Object.entries(answers.areas||{}).filter(([id])=>retained.includes(id)).map(([id,area])=>{
+    if(!selectedNeeds(answers,domains).includes(id))for(const key of ['received','sources','service_names','barriers','comment'])delete area[key];
+    delete area.additional_support_now;
+    return [id,area];
+  }));
+  if(!liveParticipation(answers)){delete answers.times;delete answers.time_other;}
+  if(!inPersonParticipation(answers)){delete answers.in_person_areas;delete answers.in_person_other;}
 }
 function hasFormalSource(area) { return (area.sources||[]).some(v=>['military','community','health','school','online','other'].includes(v)); }
 function hasSoughtHelp(area) { return (area.sources||[]).some(v=>!['not_sought','unsure','prefer'].includes(v)); }
@@ -131,49 +149,50 @@ function consultationRoute(answers) {
 function reconcileAnswers(answers,changed,domains,previous) {
   if(changed==='residence_area'&&previous!==answers.residence_area){delete answers.suburb;delete answers.suburb_other;}
   if(changed==='suburb'&&answers.suburb!=='other')delete answers.suburb_other;
-  if(changed==='needs_status'&&!hasNeedSelection(answers)){delete answers.needs;delete answers.needs_other;delete answers.focus_need;delete answers.areas;}
+  if(changed==='needs_status'&&!hasNeedSelection(answers)){delete answers.needs;delete answers.needs_other;}
   if(changed==='needs') {
     const ids=selectedNeeds(answers,domains);
     if(!ids.includes('other_need'))delete answers.needs_other;
-    if(!ids.includes(answers.focus_need))delete answers.focus_need;
-    const focus=selectedFocusNeed(answers,domains);
-    answers.areas=Object.fromEntries(Object.entries(answers.areas||{}).filter(([id])=>state.version==='youth'?id===focus:ids.includes(id)));
   }
-  if(changed==='focus_need')answers.areas=Object.fromEntries(Object.entries(answers.areas||{}).filter(([id])=>id===answers.focus_need));
+  if(changed==='future_needs'&&!selectedFutureNeeds(answers,domains).includes('future_other_need'))delete answers.future_needs_other;
+  if(changed==='future_needs'){
+    const ids=selectedFutureNeeds(answers,domains);
+    if(ids.length<2||!(ids.includes(answers.future_priority)||['equal','unsure','prefer'].includes(answers.future_priority)))delete answers.future_priority;
+  }
   if(changed==='needs_other'&&answers.areas)delete answers.areas.other_need;
+  if(changed==='future_needs_other'&&answers.areas)delete answers.areas.future_other_need;
+  if(['needs_status','needs','future_needs'].includes(changed)&&!selectedDetailNeeds(answers,domains,state.version).includes(answers.focus_need))delete answers.focus_need;
+  if(['needs_status','needs','future_needs','focus_need'].includes(changed))reconcileAreaSelection(answers,domains,state.version);
   if(changed.startsWith('areas:')) {
     const [,id,key]=changed.split(':');
     if(key==='sources'&&answers.areas?.[id]){const branch=values=>(values||[]).some(v=>!['not_sought','unsure','prefer'].includes(v))?'sought':(values||[]).includes('not_sought')?'not_sought':'unspecified';if(branch(previous)!==branch(answers.areas[id].sources))delete answers.areas[id].barriers;}
     if(key==='sources'&&answers.areas?.[id]&&!hasFormalSource(answers.areas[id]))delete answers.areas[id].service_names;
-    if(key==='additional_support_now'&&answers.areas?.[id]?.additional_support_now!=='yes')delete answers.areas[id].support_requested;
+    if(key==='formats'&&!(answers.areas?.[id]?.formats||[]).includes('other'))delete answers.areas[id].format_other;
+    if(key==='formats'){
+      if(!liveParticipation(answers)){delete answers.times;delete answers.time_other;}
+      if(!inPersonParticipation(answers)){delete answers.in_person_areas;delete answers.in_person_other;}
+    }
   }
   if(['residence_area','past_residence'].includes(changed)) {
     const before=consultationRoute({...answers,[changed]:previous}),after=consultationRoute(answers);
     if((before==='earlier_experience')!==(after==='earlier_experience')||(before==='outside_scope')!==(after==='outside_scope')){
-      for(const key of ['needs_status','needs','needs_other','focus_need','areas','programme_other','programmes','programme_priority','participation_formats','participation_other','participation_enablers','enablers_other','berrimah_access','berrimah_other','times','earlier_experience','time_nt','children_ages'])delete answers[key];
+      for(const key of ['needs_status','needs','needs_other','future_needs','future_needs_other','future_ideas','future_priority','focus_need','areas','in_person_areas','in_person_other','times','time_other','participation_enablers','enablers_other','practical_note','earlier_experience','time_nt','children_ages'])delete answers[key];
     }
     if(answers.residence_area!=='outside')delete answers.past_residence;
   }
-  if(changed==='programmes'){
-    if(!(answers.programmes||[]).includes('other'))delete answers.programme_other;
-    if(!(answers.programmes||[]).includes(answers.programme_priority)||(answers.programmes||[]).filter(v=>!['none','unsure','prefer'].includes(v)).length<2)delete answers.programme_priority;
-  }
-  if(['needs','needs_status','programmes'].includes(changed)&&!relevantChildStage(answers))delete answers.children_ages;
-  if(changed==='participation_formats'){
-    if(!liveParticipation(answers))delete answers.times;
-    if(!inPersonParticipation(answers)){delete answers.berrimah_access;delete answers.berrimah_other;}
-    if(!(answers.participation_formats||[]).includes('other'))delete answers.participation_other;
-  }
+  if(['needs','needs_status','future_needs'].includes(changed)&&!relevantChildStage(answers))delete answers.children_ages;
   if(changed==='participation_enablers'&&!(answers.participation_enablers||[]).includes('other'))delete answers.enablers_other;
-  if(changed==='berrimah_access'&&!['with_help','difficult'].includes(answers.berrimah_access))delete answers.berrimah_other;
+  if(changed==='times'&&!(answers.times||[]).includes('other'))delete answers.time_other;
+  if(changed==='in_person_areas'&&!(answers.in_person_areas||[]).includes('other'))delete answers.in_person_other;
   if(changed==='assistance'&&previous!==answers.assistance)delete answers.guardian_present;
-  // Future programme preferences are independent of past support needs.
+  // Future interests are independent of past support needs.
 }
 function buildSteps(answers,domains,version) {
   if(consultationRoute(answers)==='earlier_experience')return [{id:'connection',phase:0},{id:'earlier',phase:1},{id:'review',phase:2}];
   const steps=[{id:'connection',phase:0},...(version==='youth'?[]:[{id:'place',phase:0}]),{id:'needs',phase:1}];
-  for(const need of detailedNeeds(answers,domains,version))steps.push({id:'area:'+need,phase:1,need});
-  if(version!=='child')steps.push({id:'programmes',phase:2},{id:'delivery',phase:2});
+  if(version!=='child')steps.push({id:'future',phase:1});
+  for(const need of detailedNeeds(answers,domains,version))steps.push({id:'area:'+need,phase:2,need});
+  if(version!=='child'&&selectedFutureNeeds(answers,domains).length)steps.push({id:'practical',phase:2});
   steps.push({id:'review',phase:3});
   return steps;
 }
@@ -183,11 +202,11 @@ function cleanExport(answers,version,domains) {
   const allowed=['roles','residence_area','suburb','suburb_other','past_residence','assistance','guardian_present','community_connection'];
   if(version==='adult')allowed.push('age_group');
   if(route==='earlier_experience')allowed.push('earlier_experience');
-  else allowed.push('needs_status','needs','needs_other','time_nt','programmes','programme_other','programme_priority','children_ages','participation_formats','participation_other','participation_enablers','enablers_other','berrimah_access','berrimah_other','times');
+  else if(route!=='outside_scope')allowed.push('needs_status','needs','needs_other','future_needs','future_needs_other','future_ideas','future_priority','time_nt','children_ages','times','time_other','participation_enablers','enablers_other','practical_note','in_person_areas','in_person_other');
   if(version==='youth'&&route!=='earlier_experience')allowed.push('focus_need');
   for(const key of allowed)if(Object.hasOwn(answers,key))copy[key]=structuredClone(answers[key]);
-  if(version==='youth'){delete copy.time_nt;delete copy.children_ages;if(!selectedNeeds(answers,domains).includes(copy.focus_need))delete copy.focus_need;}
-  if(version==='child')delete copy.community_connection;
+  if(version==='youth'){delete copy.time_nt;delete copy.children_ages;if(!selectedDetailNeeds(answers,domains,version).includes(copy.focus_need))delete copy.focus_need;}
+  if(version==='child')for(const key of ['community_connection','future_needs','future_needs_other','future_ideas','future_priority','times','time_other','participation_enablers','enablers_other','practical_note','in_person_areas','in_person_other'])delete copy[key];
   if(!AREAS.some(area=>area.id===copy.residence_area))delete copy.residence_area;
   const locality=GEOGRAPHY?.localities.find(item=>item.id===copy.suburb&&item.region===copy.residence_area);
   if(LOCAL_AREAS.includes(copy.residence_area)){
@@ -205,26 +224,30 @@ function cleanExport(answers,version,domains) {
   if(!['self','other'].includes(copy.assistance)||copy.guardian_present!==true)delete copy.guardian_present;
   if(route!=='earlier_experience'&&route!=='outside_scope') {
     const ids=detailedNeeds(answers,domains,version);
+    const past=selectedNeeds(answers,domains),future=version==='child'?[]:selectedFutureNeeds(answers,domains);
     if(!hasNeedSelection(answers))delete copy.needs;
-    if(!selectedNeeds(answers,domains).includes('other_need'))delete copy.needs_other;
+    if(!past.includes('other_need'))delete copy.needs_other;
+    if(!future.includes('future_other_need'))delete copy.future_needs_other;
     copy.areas=Object.fromEntries(ids.map(id=>{
       const input=answers.areas?.[id]||{},area={};
-      for(const key of ['received','additional_support_now','support_requested','sources','service_names','barriers','comment'])if(Object.hasOwn(input,key))area[key]=structuredClone(input[key]);
+      for(const key of ['received','support_requested','sources','service_names','barriers','comment','formats','format_other'])if(Object.hasOwn(input,key))area[key]=structuredClone(input[key]);
+      if(!past.includes(id))for(const key of ['received','sources','service_names','barriers','comment'])delete area[key];
       if(!hasFormalSource(area)||version!=='adult')delete area.service_names;
       if(!hasSoughtHelp(area)&&!area.sources?.includes('not_sought'))delete area.barriers;
-      if(area.additional_support_now!=='yes')delete area.support_requested;
+      if(!future.includes(id))for(const key of ['support_requested','formats','format_other'])delete area[key];
+      if(!(area.formats||[]).includes('other'))delete area.format_other;
       return [id,area];
     }));
-    if(!(copy.programmes||[]).includes('other'))delete copy.programme_other;
-    if(!(copy.programmes||[]).includes(copy.programme_priority)||['none','unsure','prefer'].includes(copy.programme_priority)||(copy.programmes||[]).filter(v=>!['none','unsure','prefer'].includes(v)).length<2)delete copy.programme_priority;
+    if(version!=='adult'||future.length<2||!(future.includes(copy.future_priority)||['equal','unsure','prefer'].includes(copy.future_priority)))delete copy.future_priority;
     if(!relevantChildStage(copy))delete copy.children_ages;
     if(!liveParticipation(copy))delete copy.times;
-    if(!inPersonParticipation(copy)){delete copy.berrimah_access;delete copy.berrimah_other;}
-    if(!['with_help','difficult'].includes(copy.berrimah_access))delete copy.berrimah_other;
-    if(!(copy.participation_formats||[]).includes('other'))delete copy.participation_other;
+    if(!(copy.times||[]).includes('other'))delete copy.time_other;
+    if(!inPersonParticipation(copy)){delete copy.in_person_areas;delete copy.in_person_other;}
+    if(!(copy.in_person_areas||[]).includes('other'))delete copy.in_person_other;
     if(!(copy.participation_enablers||[]).includes('other'))delete copy.enablers_other;
+    if(future.length===0){delete copy.participation_enablers;delete copy.enablers_other;delete copy.practical_note;}
   }
-  return {schema_version:'7.1',questionnaire_revision:'2026-09-27-area-priority',location_precision:locationPrecision,geography_version:GEOGRAPHY?.version||null,consultation_route:route,residence_scope:residenceScope(copy),recall_months:route==='earlier_experience'?null:version==='adult'?12:3,recall_geography:'time_living_in_greater_darwin',analysis_unit:'respondent_perspective_not_household',measurement_scope:'local_support_experiences_and_programme_preferences',details_optional:true,collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'page_memory_only; not submitted',answers:copy};
+  return {schema_version:'7.2',questionnaire_revision:'2026-09-28-topic-linked-support',location_precision:locationPrecision,geography_version:GEOGRAPHY?.version||null,consultation_route:route,residence_scope:residenceScope(copy),recall_months:route==='earlier_experience'?null:version==='adult'?12:3,recall_geography:'time_living_in_greater_darwin',analysis_unit:'respondent_perspective_not_household',measurement_scope:'local_support_experiences_and_topic_linked_future_preferences',details_optional:true,collection_mode:'internal_review_no_transmission',questionnaire_version:version,storage:'page_memory_only; not submitted',answers:copy};
 }
 
 const main = document.querySelector('#main');
@@ -270,7 +293,8 @@ const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp
 const opts = pairs => pairs.map(([id,label,hint]) => ({id,label,hint}));
 const ADULT_AGE_GROUPS = opts([['18_29','18–29'],['30_39','30–39'],['40_49','40–49'],['50_plus','50 or older']]);
 const domainList = () => [...DOMAINS[state.version],{id:'other_need',label:'Something else'}];
-const domainLabel = id => id==='other_need' ? (state.answers.needs_other || 'Something else') : domainList().find(d=>d.id===id)?.label || id;
+const futureDomainList = () => [...DOMAINS[state.version],{id:'future_other_need',label:'Something else'}];
+const domainLabel = id => id==='other_need' ? (state.answers.needs_other || 'Something else') : id==='future_other_need' ? (state.answers.future_needs_other || 'Something else') : domainList().find(d=>d.id===id)?.label || id;
 const isAdult = () => state.version==='adult';
 const isChild = () => state.version==='child';
 const period = () => isAdult()?'the past 12 months':'the past three months';
@@ -321,19 +345,24 @@ function areaBarrierField(need) {
 function areaPage(need) {
   const key=name=>`areas:${need}:${name}`;
   const youngPerson=state.version==='youth';
-  return {title:domainLabel(need),intro:`Think about support during your time in Greater Darwin in ${period()}. You can leave any question blank and continue.`,fields:[
-    field(key('received'),isAdult()?`In ${period()}, how much of the support you needed did you receive?`:`In ${period()}, did you get enough help with this?`,'single',adequacy()),
-    field(key('sources'),isAdult()?`In ${period()}, where have you looked for support with this?`:`In ${period()}, who have you asked for help with this?`,'multi',areaSources(),'Select all that apply.',{exclusive:['not_sought','unsure','prefer'],need,optional_detail:true}),
-    ...(isAdult()?[field(key('service_names'),'Which services or organisations did you approach, if any?','text',[],'Optional. Please do not name individual staff or other people.',{need,conditional:'formal_sources',optional_detail:true})]:[]),
-    areaBarrierField(need),
-    field(key('comment'),youngPerson?'What helped, or what could have been better?':isChild()?'What happened when you needed help with this?':'What happened when you needed support with this?','text',[],(isAdult()?'You could describe what helped, or what would have made things easier. ':'You can tell us what happened, or leave this blank. ')+privacyHint(),{need,optional_detail:true}),
-    field(key('additional_support_now'),youngPerson?'Would more or different help with this be useful now?':isChild()?'Would you like more help with this now?':'Would you like any extra or different support with this now?','single',opts([['yes','Yes'],['no','No'],['unsure','Not sure'],['prefer','Prefer not to answer']])),
-    field(key('support_requested'),youngPerson?'What kind of help would be useful?':isChild()?'What help would you like now?':'What support would help you now?','text',[],privacyHint(),{need,conditional:'additional_support'})
+  const past=selectedNeeds(state.answers,domainList()).includes(need);
+  const future=selectedFutureNeeds(state.answers,domainList()).includes(need);
+  const label=domainLabel(need);
+  return {title:label,intro:past?future?`First think about your time living in Greater Darwin in ${period()}, then what could help now or in the coming months. You can leave any question blank and continue.`:`Think about your time living in Greater Darwin in ${period()}. You can leave any question blank and continue.`:'Thinking about now and the coming months, what could help with this area? You can leave any question blank and continue.',fields:[
+    ...(past?[
+      field(key('received'),isAdult()?`In ${period()}, how much of the support you needed did you receive?`:`In ${period()}, did you get enough help with this?`,'single',adequacy()),
+      field(key('sources'),isAdult()?`In ${period()}, where have you looked for support with this?`:`In ${period()}, who have you asked for help with this?`,'multi',areaSources(),'Select all that apply.',{exclusive:['not_sought','unsure','prefer'],need,optional_detail:true}),
+      ...(isAdult()?[field(key('service_names'),'Which services or organisations did you approach, if any?','text',[],'Optional. Please do not name individual staff or other people.',{need,conditional:'formal_sources',optional_detail:true})]:[]),
+      areaBarrierField(need),
+      field(key('comment'),youngPerson?'What helped, or what could have been better?':isChild()?'What happened when you needed help with this?':'What happened when you needed support with this?','text',[],(isAdult()?'You could describe what helped, or what would have made things easier. ':'You can tell us what happened, or leave this blank. ')+privacyHint(),{need,optional_detail:true})
+    ]:[]),
+    ...(future?[
+      field(key('support_requested'),youngPerson?'What could help with this now or in the next few months?':'What, if anything, would help you or your family with this now or in the coming months?','text',[],youngPerson?'A few words are fine. It is OK not to know. '+privacyHint():'A few words are fine. You do not need to know which service could help. '+privacyHint(),{need,future_section:true,optional_detail:true}),
+      field(key('formats'),youngPerson?'How would you like to get help or join in with an activity for this topic?':'Which ways of getting support or joining an activity for this topic would suit you or your family?','multi',youngPerson?opts([['one_to_one','Talking with one person face to face'],['group','A group or activity, face to face'],['phone','A phone call'],['video_one_to_one','A video call with one person'],['online_group','An online group or activity'],['text','Text messages or online chat'],['self_guided','Something I can read, watch or do in my own time'],['other','Another way'],['none_suitable','None of these ways would suit'],['not_wanted','I do not want help or activities for this'],['no_preference','No preference'],['unsure','Not sure'],['prefer','Prefer not to answer']]):opts([['one_to_one','One-to-one, in person'],['group','A group or activity, in person'],['phone','A phone call'],['video_one_to_one','A one-to-one video call'],['online_group','An online group or activity'],['text','Text messages or online chat'],['self_guided','Information or resources to use in my own time'],['other','Another way'],['none_suitable','None of these ways would suit'],['not_wanted','Not looking to use support or activities for this'],['no_preference','No preference'],['unsure','Not sure'],['prefer','Prefer not to answer']]),'Select all that apply. Your answers do not sign you up for anything.',{exclusive:['none_suitable','not_wanted','no_preference','unsure','prefer'],need,future_section:true}),
+      field(key('format_other'),'What other way would suit you?','short',[],'',{need,conditional:'format_other',future_section:true})
+    ]:[])
   ]};
 }
-const PROGRAMMES=opts([['parenting','Practical parenting support'],['time_apart','Support for family life when someone is away for service'],['settling','Help settling in after a posting or move'],['connection','Opportunities to meet other Defence members and families'],['playgroup','Playgroups for young children and their parents or carers'],['navigation','Help finding suitable services'],['other','Something else'],['none','None at present'],['unsure','Not sure'],['prefer','Prefer not to say']]);
-
-function programmeOptions(){const youthLabels={parenting:'Help for parents or carers',time_apart:'Help when someone in my family is away',settling:'Help settling in after moving',connection:'Ways to meet people and feel included',playgroup:'Things for younger children and their parents or carers',navigation:'Help finding someone to talk to or ask for help'};return PROGRAMMES.map(option=>isAdult()?option:{...option,label:youthLabels[option.id]||option.label});}
 function page(step) {
   if(step.id.startsWith('area:'))return areaPage(step.need||step.id.slice(5));
   const child=isChild();
@@ -349,22 +378,23 @@ function page(step) {
       field('needs_status',isAdult()?`In ${period()}, have you needed any support?`:`In ${period()}, have you needed help with anything?`,'single',opts([['yes','Yes'],['no','No'],['unsure','Not sure'],['prefer','Prefer not to answer']])),
       field('needs',isAdult()?'What did you need support with?':'What did you need help with?','multi',domainList(),isAdult()?'Select all that apply. Include needs that were met and support you still need now.':'Choose any that fit, including things that are going better now.',{conditional:'needs_list'}),
       field('needs_other',isAdult()?'What else did you need help with?':'What else?','short',[],privacyHint(),{conditional:'other_need'}),
-      ...(state.version==='youth'?[field('focus_need','Would you like to tell us more about one of these?','single',selectedNeeds(state.answers,domainList()).map(id=>({id,label:domainLabel(id)})),'Optional. Choose one area, or continue without choosing.',{conditional:'focus_need'})]:[])
     ]};
-    case 'programmes':return {title:'What could help next?',intro:'Thinking about now and the coming months, you can share ideas even if you have not needed support recently.',fields:[
-      field('programmes',isAdult()?'Which support or activities would be useful to you or your family?':'Which of these could be helpful for you or your family?','multi',programmeOptions(),'Select all that apply.',{exclusive:['none','unsure','prefer']}),
-      field('programme_other','What else would be useful?','text',[],privacyHint(),{conditional:'programme_other'}),
-      field('programme_priority','Which would make the biggest difference to you or your family?','single',programmeOptions().filter(o=>(state.answers.programmes||[]).includes(o.id)&&!['none','unsure','prefer'].includes(o.id)),'Optional.',{conditional:'programme_priority'}),
+    case 'future':return {title:'Looking ahead',intro:'You can share what may help now or in the coming months, even if you have not needed support recently. These choices do not sign you up for anything.',fields:[
+      field('future_needs',isAdult()?'Thinking about now and the coming months, in which areas could support or activities be useful to you or your family?':'Where could help or activities be useful to you now or in the next few months?','multi',[...futureDomainList(),...opts([['none','None at the moment'],['unsure','Not sure'],['prefer','Prefer not to answer']])],isAdult()?'Select all that apply. You can choose an area even if you have not needed help with it recently.':'Choose any that fit, even if it has not been a problem.',{exclusive:['none','unsure','prefer']}),
+      field('future_needs_other','Which area would you like to add?','short',[],privacyHint(),{conditional:'future_other_need'}),
+      field('future_ideas','Are there any other ideas for support or activities that we have not covered?','text',[],'Optional. You can include ideas for later or for other Defence families, even if you do not want support yourself. '+privacyHint()),
+      ...(isAdult()?[field('future_priority','Of the areas you selected, where could support make the biggest difference to you or your family?','single',[...selectedFutureNeeds(state.answers,domainList()).map(id=>({id,label:domainLabel(id)})),...opts([['equal','More than one is equally important'],['unsure','Not sure'],['prefer','Prefer not to answer']])],'Optional. Choose one or leave this blank.',{conditional:'future_priority'})]:[]),
+      ...(state.version==='youth'?[field('focus_need','Would you like to tell us more about one of these areas?','single',selectedDetailNeeds(state.answers,domainList(),state.version).map(id=>({id,label:domainLabel(id)})),'Optional. Choose one area, or continue without choosing.',{conditional:'focus_need'})]:[]),
       ...(isAdult()?[field('children_ages','Which age groups are the children you care for in?','multi',opts([['under5','Under 5'],['5to11','5–11'],['12to17','12–17'],['none','I do not care for children under 18'],['prefer','Prefer not to say']]),'Select all that apply.',{exclusive:['none','prefer'],conditional:'children_ages'})]:[])
     ]};
-    case 'delivery':return {title:'Taking part',intro:'These questions help us plan how to offer support. Your answers do not sign you up for anything.',fields:[
-      field('participation_formats','How would you prefer to take part in support or activities?','multi',opts([['one_to_one','In person, one to one'],['group','In person, with a group or other families'],['phone','By phone'],['video','By video call or an online group'],['text','By message or online chat'],['self_guided','Resources or activities I can use in my own time'],['not_wanted','I would not want to take part at present'],['unsure','Not sure'],['no_preference','No particular preference'],['other','Another way'],['prefer','Prefer not to say']]),'Select all that apply.',{exclusive:['not_wanted','unsure','no_preference','prefer']}),
-      field('participation_other','What other way would suit you?','short',[],'',{conditional:'participation_other'}),
-      field('times','When would a call, meeting or activity suit you?','multi',opts([['weekday_day','Weekday daytime'],['weekday_evening','Weekday evenings'],['weekend','Weekends'],['variable','It changes from week to week'],['no_preference','No particular preference'],['prefer','Prefer not to answer']]),'Select all that apply. Use your local time.',{exclusive:['no_preference','prefer'],conditional:'live'}),
-      field('participation_enablers','What would make it easier or more comfortable for you to take part?','multi',opts([['timing','Times that fit around work or shifts'],['flexible','Flexible or drop-in sessions'],['bring_children','Being able to bring children'],['childcare','Help with childcare or caring responsibilities'],['transport','Help with transport or easy parking'],['online','An online or phone option'],['language','Language or communication support'],['accessibility','Physical, sensory or other accessibility adjustments'],['understanding','People who understand Defence family life and my background'],['other','Something else'],['none','Nothing extra needed'],['unsure','Not sure'],['prefer','Prefer not to say']]),'Select all that apply.',{exclusive:['none','unsure','prefer']}),
-      field('enablers_other','What else would help you take part?','text',[],privacyHint(),{conditional:'enablers_other'}),
-      field('berrimah_access','How easy or difficult would it be for you to attend an activity at Lutheran Care in Berrimah?','single',opts([['easy','Easy'],['with_help','Possible with some help or adjustments'],['difficult','Difficult'],['unsure','Not sure'],['prefer','Prefer not to say']]),'',{conditional:'in_person'}),
-      field('berrimah_other','What would make this easier, or which area would suit you better?','text',[],privacyHint(),{conditional:'berrimah_other'})
+    case 'practical':return {title:'Making support easier to use',intro:'Answer once for anything that applies. You can explain below if different things would work for different topics. You can also skip this section.',fields:[
+      field('participation_enablers',isAdult()?'What, if anything, could make support or activities easier or more comfortable for you or your family to use?':'What would make it easier or more comfortable for you to get help or join in?','multi',isAdult()?opts([['low_cost','Free or low-cost support or activities'],['timing','Times that fit work, shifts or family life'],['drop_in','Being able to drop in without booking'],['bring_children','Being able to bring children'],['childcare','Help with childcare'],['transport','Help with transport or parking'],['language','An interpreter or support in another language'],['accessibility','Support that meets my access needs'],['defence_understanding','People who understand Defence life'],['privacy','Privacy when asking for or using support'],['other','Something else'],['none','Nothing else needed'],['unsure','Not sure'],['prefer','Prefer not to answer']]):opts([['know_before','Knowing what will happen before I join'],['trusted_person','Having someone I trust with me'],['peers','Being with people around my age'],['transport','Help getting there'],['low_cost','Free help or activities'],['understanding','Help to understand what is said or written'],['accessibility','Changes that would help me join in'],['defence_understanding','People who understand life in a Defence family'],['other','Something else'],['none','Nothing else needed'],['unsure','Not sure'],['prefer','Prefer not to answer']]),'Select all that apply.',{exclusive:['none','unsure','prefer']}),
+      field('enablers_other','What else would make it easier?','short',[],privacyHint(),{conditional:'enablers_other'}),
+      field('times',isAdult()?'For a call, appointment or activity at a set time, when would usually work for you or your family?':'When would usually work for you to talk to someone or join an activity?','multi',isAdult()?opts([['weekday_morning','Weekday mornings'],['weekday_afternoon','Weekday afternoons'],['weekday_evening','Weekday evenings'],['weekend','Weekends'],['variable','My availability changes'],['other','Other times'],['no_preference','No preference'],['unsure','Not sure'],['prefer','Prefer not to answer']]):opts([['school_hours','During school hours, if it could be arranged'],['after_school','After school'],['weekend','Weekends'],['school_holidays','School holidays'],['variable','It changes'],['other','Other times'],['no_preference','No preference'],['unsure','Not sure'],['prefer','Prefer not to answer']]),'Select all that apply.',{exclusive:['no_preference','unsure','prefer'],conditional:'live'}),
+      field('time_other','What other times would work?','short',[],'',{conditional:'time_other'}),
+      field('in_person_areas',isAdult()?'Which parts of Greater Darwin would be practical for you or your family to get to for in-person support or activities?':'Which parts of Greater Darwin could you get to for face-to-face help or activities?','multi',opts([['darwin_inner','Darwin city and inner suburbs'],['darwin_north','Darwin’s northern suburbs'],['palmerston','Palmerston'],['litchfield','Rural areas around Darwin'],['other','Another area'],['no_area','None of these areas would be practical'],['no_preference','No preference'],['unsure','Not sure'],['prefer','Prefer not to answer']]),isAdult()?'Select any that could work. You do not need to tell us where you live.':'Choose any that could work. It is OK not to know. Please do not give your home address or school name.',{exclusive:['no_area','no_preference','unsure','prefer'],conditional:'in_person'}),
+      field('in_person_other','Which other area would suit you?','short',[],'',{conditional:'in_person_other'}),
+      field('practical_note','Is there anything else that would help us understand what would work for you?','text',[],'Optional. For example, a type of place you would prefer, or different times or access needs for different topics. '+privacyHint())
     ]};
     case 'place':return {title:'Your life in Greater Darwin',intro:'',fields:[
       field('time_nt','How long have you lived in Greater Darwin?','single',opts([['never','I have not lived in Greater Darwin'],['under3','Less than 3 months'],['3to12','3 months to less than 1 year'],['1to3','1 year to less than 3 years'],['over3','3 years or more'],['unsure','Not sure'],['prefer','Prefer not to answer']]),'Count your current or most recent stay only.'),
@@ -381,24 +411,30 @@ function optionHTML(o,f,value) {
 function conditionalVisible(f) {
   if(f.conditional==='local_area')return LOCAL_AREAS.includes(state.answers.residence_area);
   if(f.conditional==='outside_suburb')return state.answers.residence_area==='outside';
-  if(f.conditional==='programme_other')return (state.answers.programmes||[]).includes('other');
-  if(f.conditional==='programme_priority')return PROGRAMMES.filter(o=>(state.answers.programmes||[]).includes(o.id)&&!['none','unsure','prefer'].includes(o.id)).length>1;
   if(f.conditional==='children_ages')return relevantChildStage(state.answers);
-  if(f.conditional==='participation_other')return (state.answers.participation_formats||[]).includes('other');
+  if(f.conditional==='future_priority')return isAdult()&&selectedFutureNeeds(state.answers,domainList()).length>1;
   if(f.conditional==='enablers_other')return (state.answers.participation_enablers||[]).includes('other');
   if(f.conditional==='in_person')return inPersonParticipation(state.answers);
-  if(f.conditional==='berrimah_other')return inPersonParticipation(state.answers)&&['with_help','difficult'].includes(state.answers.berrimah_access);
+  if(f.conditional==='in_person_other')return inPersonParticipation(state.answers)&&(state.answers.in_person_areas||[]).includes('other');
+  if(f.conditional==='time_other')return liveParticipation(state.answers)&&(state.answers.times||[]).includes('other');
   if(f.conditional==='other_suburb')return LOCAL_AREAS.includes(state.answers.residence_area)&&state.answers.suburb==='other';
   if(f.conditional==='needs_list')return hasNeedSelection(state.answers);
-  if(f.conditional==='focus_need')return state.version==='youth'&&selectedNeeds(state.answers,domainList()).length>0;
-  if(f.conditional==='additional_support')return state.answers.areas?.[f.need]?.additional_support_now==='yes';
+  if(f.conditional==='focus_need')return state.version==='youth'&&selectedDetailNeeds(state.answers,domainList(),state.version).length>0;
+  if(f.conditional==='future_other_need')return (state.answers.future_needs||[]).includes('future_other_need');
+  if(f.conditional==='format_other')return (state.answers.areas?.[f.need]?.formats||[]).includes('other');
   if(f.conditional==='formal_sources')return isAdult()&&hasFormalSource(state.answers.areas?.[f.need]||{});
   if(f.conditional==='area_barriers'){const a=state.answers.areas?.[f.need]||{};return hasSoughtHelp(a)||Boolean(a.sources?.includes('not_sought'));}
   if(f.conditional==='other_need')return hasNeedSelection(state.answers)&&Boolean(state.answers.needs?.includes('other_need'));
   if(f.conditional==='live')return liveParticipation(state.answers);
   return true;
 }
-function areaQuestionsHTML(content) { return content.fields.map(fieldHTML).join(''); }
+function areaQuestionsHTML(content,need) {
+  const past=content.fields.filter(f=>!f.future_section).map(fieldHTML).join('');
+  const future=content.fields.filter(f=>f.future_section);
+  if(future.length)return `${past}<section class="topic-future"><h2>Looking ahead: ${esc(domainLabel(need))}</h2>${future.map(fieldHTML).join('')}</section>`;
+  if(selectedNeeds(state.answers,domainList()).includes(need)&&!isChild())return `${past}<div class="topic-future-opt-in"><button class="text-button" type="button" data-add-future="${esc(need)}">Add future ideas for this topic</button></div>`;
+  return past;
+}
 
 function fieldHTML(f) {
   const v=getValue(f.key),hint=f.hint?`<span class="field-hint" id="hint-${esc(f.key)}">${esc(f.hint)}</span>`:'';
@@ -409,7 +445,7 @@ function fieldHTML(f) {
     const secondary=f.options.filter(o=>!['darwin','palmerston','litchfield'].includes(o.id));
     return `<fieldset class="question-group" data-field="${esc(f.key)}"><legend>${esc(f.label)}${hint}</legend><div class="choices area-primary-choices">${primary.map(o=>optionHTML(o,f,v)).join('')}</div><details class="area-other-options" ${secondary.some(o=>o.id===v)?'open':''}><summary>Other area</summary><div class="choices">${secondary.map(o=>optionHTML(o,f,v)).join('')}</div></details></fieldset>`;
   }
-  if(['single','multi'].includes(f.type)) return `<fieldset class="question-group" data-field="${esc(f.key)}" ${hidden}><legend>${esc(f.label)}${f.required?'<span class="required-label">(required)</span>':''}${hint}</legend><div class="choices ${f.key==='needs'&&!isChild()?'columns':''} ${f.options.length>6?'compact':''}">${f.options.map(o=>f.key==='needs'&&o.id==='other_need'?`<div class="other-need-option">${optionHTML(o,f,v)}${fieldHTML(page({id:'needs'}).fields.find(item=>item.key==='needs_other'))}</div>`:optionHTML(o,f,v)).join('')}</div></fieldset>`;
+  if(['single','multi'].includes(f.type)) return `<fieldset class="question-group" data-field="${esc(f.key)}" ${hidden}><legend>${esc(f.label)}${f.required?'<span class="required-label">(required)</span>':''}${hint}</legend><div class="choices ${['needs','future_needs'].includes(f.key)&&!isChild()?'columns':''} ${f.options.length>6?'compact':''}">${f.options.map(o=>f.key==='needs'&&o.id==='other_need'?`<div class="other-need-option">${optionHTML(o,f,v)}${fieldHTML(page({id:'needs'}).fields.find(item=>item.key==='needs_other'))}</div>`:f.key==='future_needs'&&o.id==='future_other_need'?`<div class="other-need-option">${optionHTML(o,f,v)}${fieldHTML(page({id:'future'}).fields.find(item=>item.key==='future_needs_other'))}</div>`:optionHTML(o,f,v)).join('')}</div></fieldset>`;
   let input='';
   if(f.type==='select') input=`<select class="select" id="${esc(f.key)}" name="${esc(f.key)}" ${describedBy}><option value="">${esc(f.placeholder||'Choose an option')}</option>${f.options.map(o=>`<option value="${esc(o.id)}" ${v===o.id?'selected':''}>${esc(o.label)}${o.aliases?.length?' ('+esc(o.aliases.join(' / '))+')':''}</option>`).join('')}</select>`;
   else if(f.type==='short') input=`<input class="text-input" id="${esc(f.key)}" name="${esc(f.key)}" maxlength="160" value="${esc(v||'')}" autocomplete="off" ${describedBy}>`;
@@ -567,9 +603,16 @@ function renderSurvey(){
   const steps=activeSteps();let index=steps.findIndex(s=>s.id===state.step);if(index<0){state.step=steps[1]?.id||'connection';index=steps.findIndex(s=>s.id===state.step);}const s=steps[index],review=s.id==='review';let p=page(s);
   const early=consultationRoute(state.answers)==='earlier_experience';
   const displayPhases=early?['About you','Your experience','Review']:phases,phaseIndex=early?index:s.phase;
-  main.innerHTML=`<div class="survey-layout"><section class="survey-main"><div class="step-topline"><strong>${esc(displayPhases[phaseIndex])}</strong><span>Section ${phaseIndex+1} of ${displayPhases.length}</span></div><div class="section-track" aria-hidden="true">${displayPhases.map((_,i)=>`<span class="${i<=phaseIndex?'visited':''}"></span>`).join('')}</div><form class="question-card" id="survey-form" novalidate><h1 tabindex="-1">${esc(p.title)}</h1>${p.intro?`<p class="question-intro">${esc(p.intro)}</p>`:''}${s.need&&state.version!=='youth'?`<p class="need-progress">Area ${detailedNeeds(state.answers,domainList(),state.version).indexOf(s.need)+1} of ${detailedNeeds(state.answers,domainList(),state.version).length}</p>`:''}${review?reviewHTML():s.need?areaQuestionsHTML(p,s.need):p.fields.filter(f=>f.key!=='needs_other').map(fieldHTML).join('')}<div class="error" id="form-error" role="alert"></div><div class="question-actions"><button class="back-button" type="button" id="back">Back</button><div class="action-right"><button class="button primary" type="submit">${review?'Confirm and submit':'Continue'}</button></div></div></form><button class="text-button" id="survey-help" type="button">Help or stop</button></section></div>`;
+  main.innerHTML=`<div class="survey-layout"><section class="survey-main"><div class="step-topline"><strong>${esc(displayPhases[phaseIndex])}</strong><span>Section ${phaseIndex+1} of ${displayPhases.length}</span></div><div class="section-track" aria-hidden="true">${displayPhases.map((_,i)=>`<span class="${i<=phaseIndex?'visited':''}"></span>`).join('')}</div><form class="question-card" id="survey-form" novalidate><h1 tabindex="-1">${esc(p.title)}</h1>${p.intro?`<p class="question-intro">${esc(p.intro)}</p>`:''}${s.need&&state.version!=='youth'?`<p class="need-progress">Area ${detailedNeeds(state.answers,domainList(),state.version).indexOf(s.need)+1} of ${detailedNeeds(state.answers,domainList(),state.version).length}</p>`:''}${review?reviewHTML():s.need?areaQuestionsHTML(p,s.need):p.fields.filter(f=>!['needs_other','future_needs_other'].includes(f.key)).map(fieldHTML).join('')}<div class="error" id="form-error" role="alert"></div><div class="question-actions"><button class="back-button" type="button" id="back">Back</button><div class="action-right"><button class="button primary" type="submit">${review?'Finish preview':'Continue'}</button></div></div></form><button class="text-button" id="survey-help" type="button">Help or stop</button></section></div>`;
   main.querySelector('#survey-help').onclick=renderSurveyHelp;
   const form=main.querySelector('#survey-form');
+  form.querySelector('[data-add-future]')?.addEventListener('click',()=>{
+    const before=state.answers.future_needs||[];
+    state.answers.future_needs=[...before.filter(id=>!['none','unsure','prefer'].includes(id)),s.need];
+    reconcileAnswers(state.answers,'future_needs',domainList(),before);
+    renderSurvey();
+    focusHeading();
+  });
   const refreshContinue=()=>{form.querySelector('[type="submit"]').disabled=!requiredAnswersComplete(p.fields.filter(conditionalVisible),state.answers);};
   refreshContinue();
   form.addEventListener('change',e=>{
@@ -577,13 +620,12 @@ function renderSurvey(){
     const old=getValue(f.key);let value=input.value;if(f.type==='multi')value=toggleChoice(old,input.value,f.exclusive||[]);
     setValue(f.key,value);if(JSON.stringify(old)!==JSON.stringify(value))reconcileAnswers(state.answers,f.key,domainList(),old);
     if(f.key==='residence_area'){const otherOptions=form.querySelector('[data-field="residence_area"] .area-other-options');if(otherOptions)otherOptions.open=!['darwin','palmerston','litchfield'].includes(value);p=page(s);const child=p.fields.find(item=>item.key==='suburb');const wrap=form.querySelector('[data-field="suburb"]');if(child&&wrap)wrap.outerHTML=fieldHTML(child);}
-    if(s.id==='needs'&&['needs','needs_status'].includes(f.key)&&state.version==='youth'){
+    if(s.id==='future'&&f.key==='future_needs'){
       p=page(s);
-      const focus=p.fields.find(item=>item.key==='focus_need');
-      const wrap=form.querySelector('[data-field="focus_need"]');
-      if(focus&&wrap)wrap.outerHTML=fieldHTML(focus);
+      const dependent=p.fields.find(item=>item.key===(state.version==='youth'?'focus_need':'future_priority'));
+      const wrap=form.querySelector(`[data-field="${dependent?.key}"]`);
+      if(dependent&&wrap)wrap.outerHTML=fieldHTML(dependent);
     }
-    if(f.key==='programmes'){p=page(s);const priority=p.fields.find(item=>item.key==='programme_priority');const wrap=form.querySelector('[data-field="programme_priority"]');if(priority&&wrap)wrap.outerHTML=fieldHTML(priority);}
     if(f.key.startsWith('areas:')&&f.key.endsWith(':sources')) {
       p=page(s);
       const barrier=p.fields.find(item=>item.key.endsWith(':barriers'));
@@ -603,11 +645,11 @@ function renderSurvey(){
     const old=getValue(input.name);
     setValue(input.name,input.value);
     if(old!==input.value)reconcileAnswers(state.answers,input.name,domainList(),old);
-    if(input.name==='needs_other'&&state.version==='youth'){
+    if(input.name==='future_needs_other'&&s.id==='future'){
       p=page(s);
-      const focus=p.fields.find(item=>item.key==='focus_need');
-      const wrap=form.querySelector('[data-field="focus_need"]');
-      if(focus&&wrap)wrap.outerHTML=fieldHTML(focus);
+      const dependent=p.fields.find(item=>item.key===(state.version==='youth'?'focus_need':'future_priority'));
+      const wrap=form.querySelector(`[data-field="${dependent?.key}"]`);
+      if(dependent&&wrap)wrap.outerHTML=fieldHTML(dependent);
     }
     const counter=form.querySelector(`[data-counter="${input.name}"]`);
     if(counter){counter.textContent=`${input.maxLength-input.value.length} characters remaining`;counter.hidden=input.value.length<input.maxLength*.8;}
@@ -620,7 +662,7 @@ function renderSurvey(){
 }
 function goNext(id){const steps=activeSteps(),index=steps.findIndex(s=>s.id===id);state.step=steps[index+1]?.id||'review';renderSurvey();focusHeading();}
 function contactLinkHTML(){return '<a class="button primary" href="contact.html" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Request an interview</a>';}
-function renderFinish(){state.screen='finish';main.innerHTML=`<section class="finish"><h1 tabindex="-1">Thank you for helping strengthen the Defence community in Greater Darwin.</h1><div class="finish-next-steps"><section class="finish-contact"><p>Would you like to discuss your experiences and support needs further with Lutheran Care?</p>${contactLinkHTML()}</section>${thankYouResourceHTML()}</div><button class="text-button" id="restart">Clear answers and start again</button></section>`;main.querySelector('#restart').onclick=()=>{resetAgePath();renderWelcome();};focusHeading();}
+function renderFinish(){state.screen='finish';main.innerHTML=`<section class="finish"><h1 tabindex="-1">You have reached the end of this survey preview.</h1><p>Your answers were not sent or saved.</p><div class="finish-next-steps"><section class="finish-contact"><p>Would you like to discuss your experiences and support needs further with Lutheran Care?</p>${contactLinkHTML()}</section>${thankYouResourceHTML()}</div><button class="text-button" id="restart">Clear answers and start again</button></section>`;main.querySelector('#restart').onclick=()=>{resetAgePath();renderWelcome();};focusHeading();}
 const reviewNotes = new Map();
 let libraryVersion = 'adult';
 let libraryLocation = 'nt';
@@ -628,20 +670,25 @@ let libraryLocation = 'nt';
 // Read the exact live question definitions in a temporary preview context.
 // No synthetic answers from this library enter the respondent flow or results.
 function questionLibrarySections(version,location) {
-  const original={version:state.version,answers:state.answers};const first=DOMAINS[version][0].id;
-  state.version=version;state.answers={roles:['partner'],needs_status:'yes',residence_area:location==='nt'?'darwin':location==='outside'?'outside':'prefer',suburb:location==='nt'?'casuarina':'',past_residence:location==='outside'?'yes':undefined,programmes:['parenting','playgroup','other'],participation_formats:['one_to_one','other'],participation_enablers:['other'],berrimah_access:'difficult',needs:[first],areas:{[first]:{received:'enough',additional_support_now:'yes',sources:['family']}}};
+  const original={version:state.version,answers:state.answers};const first=DOMAINS[version][0].id,second=DOMAINS[version][1].id;
+  state.version=version;state.answers={roles:['partner'],needs_status:'yes',residence_area:location==='nt'?'darwin':location==='outside'?'outside':'prefer',suburb:location==='nt'?'casuarina':'',past_residence:location==='outside'?'yes':undefined,needs:[first],...(version==='child'?{}:{future_needs:[second,'future_other_need'],future_needs_other:'Another future area',focus_need:first,in_person_areas:['darwin_inner','other']}),areas:{[first]:{received:'enough',sources:['family']},...(version==='child'?{}:{[second]:{formats:['group']}})}};
   try {
     const sections=[],add=(id,note='')=>sections.push({id,...page({id}),note});
     add('connection',version==='youth'?'ADF relationship and current residence, assistance, optional residence and a positive community-connection prompt precede the shorter youth questions. Earlier connections retain a separate historical route.':'ADF relationship and current residence, optional adult age band and a positive community-connection prompt precede the substantive questions. Earlier connections retain a separate historical route.');
     if(version!=='youth')add('place','Optional background precedes support needs. The broader area is chosen first; its suburb/locality is optional. Area-only answers retain their broader location without implying a suburb.');
-    add('needs',version==='youth'?'Ask about help needed in the past three months, then record every selected area. The young person can optionally choose one area to describe further. No still leads to information preferences.':'Ask whether support was needed first. No skips the area questions but retains service-information preferences. Yes or Not sure opens the area list; Something else is only an unlisted need. Blank remains distinct from No.');
+    add('needs',version==='youth'?'Ask about help needed in the past three months, then record every selected area. One later focus area can be chosen from recent and future topics.':'Ask whether support was needed first. No skips recent-experience questions but still allows future support ideas. Yes or Not sure opens the recent area list; Something else is an unlisted recent need. Blank remains distinct from No.');
+    if(version!=='child')add('future',version==='youth'?'Young people can name future areas even with no recent need, then optionally describe one recent or future area in detail.':'Everyone can name future support areas, including people with no recent need. “Something else” is separate from an unlisted past issue.');
     const area=areaPage(first),variants=[];
     for(const [id,title,sources] of [['sought','After looking for support',['family']],['not-sought','When support was not sought',['not_sought']]]) {
       state.answers.areas[first].sources=sources;
       variants.push({id,title,label:title,intro:'',fields:[areaBarrierField(first)]});
     }
-    sections.push({id:'area',...area,title:version==='youth'?'For one optional focus area':'For each selected area',fields:area.fields.filter(f=>!f.key.endsWith(':barriers')),variants,note:version==='youth'?'Young people can select many needs, then choose at most one to describe further. All youth questions use the past three months when asking about earlier help; extra help wanted refers to now.':'Questions are displayed directly. Extra support requested appears only after Yes; past experience remains available to everyone selecting this area. Sources and barriers use the same recall period. Blank answers do not mean no barrier.'});
-    if(version!=='child'){add('programmes','Everyone can discuss useful future support, including those with no past need.');add('delivery','Everyone in the main adult/youth route can describe participation preferences and conditions, independently of past needs.');}
+    sections.push({id:'area',...area,title:version==='youth'?'One optional focus area: recent need':'Recent need: topic-specific questions',fields:area.fields.filter(f=>!f.key.endsWith(':barriers')),variants,note:version==='child'?'Only the selected recent topic is shown; the separate guardian-supported under-7 form uses its own prompts.':version==='youth'?'The young person can select many topics, then choose at most one to describe further. Recent help questions use the past three months. On a past-only focus topic, a small opt-in can add future ideas.':'For every selected recent need, ask about prior experience. On a past-only topic, a small opt-in can add it to future interests and reveal the topic-specific help and format questions.'});
+    if(version!=='child'){
+      const futureArea=areaPage(second);
+      sections.push({id:'future-area',...futureArea,title:'Future interest without a recent need',note:'A future-only topic skips questions about past support. It goes straight to optional help and participation format questions for this topic.'});
+      add('practical','Shown once when any future topic is selected. Timing appears for scheduled formats; Greater Darwin area choices appear for in-person formats.');
+    }
     add('earlier','Separate historical route for people now outside Greater Darwin who have past local experience; not part of the recent-needs loop.');
     for(const section of sections)for(const item of section.fields){if(item.key==='suburb'){item.options=suburbs;item.options_rule='Show only localities whose region matches residence_area, plus other/prefer. Blank retains area only.';}}
     return sections;
@@ -649,7 +696,7 @@ function questionLibrarySections(version,location) {
 }
 
 function libraryFieldHTML(f) {
-  const conditional = {local_area:'Optional suburb list shown after a Greater Darwin area is chosen.',formal_sources:'Optional when a service or organisation source is selected.',outside_suburb:'Shown for Outside Greater Darwin.',programme_other:'Shown after Something else in future support.',programme_priority:'Optional when more than one support type is selected.',children_ages:'Shown for parenting, playgroup or child-related needs.',participation_other:'Shown after Another way.',enablers_other:'Shown after Something else in participation conditions.',in_person:'Shown for in-person participation.',berrimah_other:'Shown when attending Berrimah would be difficult or need adjustments.',other_suburb:'Shown when Another suburb or locality in this area is selected.',needs_list:'Shown after Yes or Not sure to needing support.',focus_need:'Shown after selecting at least one support area.',additional_support:'Shown after Yes to extra or different support now.',nt:'Shown to people living in Greater Darwin.',other_need:'Shown after “Something else” is selected.',another:'Shown after “Something else” is selected.',live:'Shown after an in-person, group, phone or video option is selected.'}[f.conditional];
+  const conditional = {local_area:'Optional suburb list shown after a Greater Darwin area is chosen.',formal_sources:'Optional when a service or organisation source is selected.',outside_suburb:'Shown for Outside Greater Darwin.',children_ages:'Shown for childcare, schooling or parenting/caring topics.',future_priority:'Shown for adults after two or more future topics are selected.',enablers_other:'Shown after Something else is selected for practical arrangements.',in_person:'Shown when an in-person support format is selected in any future topic.',in_person_other:'Shown after Another area is selected.',time_other:'Shown after Other times is selected.',other_suburb:'Shown when Another suburb or locality in this area is selected.',needs_list:'Shown after Yes or Not sure to needing recent support.',focus_need:'Shown for youth after selecting at least one recent or future area.',future_other_need:'Shown after future Something else is selected.',format_other:'Shown after Another way is selected for this topic.',other_need:'Shown after recent Something else is selected.',live:'Shown after an in-person, group, phone or video format is selected in any future topic.'}[f.conditional];
   const type = {single:'Choose one',multi:'Select all that apply',select:'Choose one area',text:'Written answer',short:'Short written answer'}[f.type];
   return `<div class="library-question"><p class="question-meta">${type} · ${f.required?'Needed to continue':'Optional'}</p><h3>${esc(f.label)}</h3>${f.hint?`<p class="field-hint">${esc(f.hint)}</p>`:''}${conditional?`<p class="branch-note">${conditional}</p>`:''}${f.options.length?`<ul class="option-list">${f.options.map(o=>`<li>${esc(o.label)}${o.hint?` <small>— ${esc(o.hint)}</small>`:''}</li>`).join('')}</ul>`:`<p class="small">${f.type==='short'?'Up to 160 characters.':`Up to ${maxTextLength(libraryVersion)} characters.`}</p>`}</div>`;
 }
@@ -670,12 +717,12 @@ function librarySectionFieldsHTML(section) {
 function renderQuestionLibrary() {
   const sections=questionLibrarySections(libraryVersion,libraryLocation);
   const versionLabel={adult:'Adults · 18 or older',youth:'Young people · 8–17'}[libraryVersion];
-  main.innerHTML=`<h1>All questions</h1><p class="lead">Read the wording, options and different paths in one place.</p><p class="small">This list uses the same questions as the survey. Follow-up examples name the first support area; a respondent sees their own choice. Notes are for your own review: they are not sent anywhere. Download them before closing or refreshing this page.</p><div class="library-tools"><label>Age version<select class="select" id="review-version"><option value="adult" ${libraryVersion==='adult'?'selected':''}>Adults · 18 or older</option><option value="youth" ${libraryVersion==='youth'?'selected':''}>Young people · 8–17</option></select></label><label>Location<select class="select" id="review-location"><option value="nt" ${libraryLocation==='nt'?'selected':''}>Living in Greater Darwin</option><option value="outside" ${libraryLocation==='outside'?'selected':''}>Other locality</option><option value="unspecified" ${libraryLocation==='unspecified'?'selected':''}>Residence not disclosed</option></select></label><button class="button secondary" id="print-questions">Print questions</button></div><p class="small" id="version-description">${versionLabel} · ${libraryLocation==='nt'?'Living in Greater Darwin':libraryLocation==='outside'?'Other locality':'Residence not disclosed'} · 27 September 2026</p><div class="notes-actions"><button class="button secondary" id="download-notes">Download review notes</button><span class="notes-status" aria-live="polite">${reviewNotes.size?`Notes in ${reviewNotes.size} section${reviewNotes.size===1?'':'s'}`:'No notes yet'}</span></div><nav class="library-index" aria-label="Question sections">${sections.map(s=>`<a href="#${s.id}">${esc(s.id==='adequacy'?'Support received':s.id==='barriers'?'Getting help':s.title)}</a>`).join('')}</nav>${sections.map(s=>{const key=`${libraryVersion}/${libraryLocation}/${s.id}`;return `<section class="library-section" id="${s.id}"><h2>${esc(s.title)}</h2><p class="small">${esc(s.intro)}</p>${s.note?`<p class="branch-note">${esc(s.note)}</p>`:''}${librarySectionFieldsHTML(s)}<label class="notes-label" for="note-${s.id}">Your review notes: ${esc(s.title)}</label><textarea class="textarea review-note" id="note-${s.id}" data-note="${key}" maxlength="4000" placeholder="Suggested wording, a missing option, or a question for the team">${esc(reviewNotes.get(key)||'')}</textarea></section>`;}).join('')}<section class="library-section" id="under-seven"><h2>Children aged 7 or younger</h2><p>A parent or guardian sees one response box per child prompt, followed by Your observations. Confirm willingness before recording the child’s own views; leave those questions blank when the child cannot or does not want to answer. The observations field remains available and records the adult’s perspective separately.</p><ol>${YOUNG_PROMPTS.map(text=>`<li>${esc(text)}</li>`).join('')}</ol><p>Each prompt has an optional written-response box. A separate optional box records parent/guardian observations. A parent or guardian can leave the child questions blank and enter only their observations, without a claim of child assent.</p><p>The 8–17 route shares one question set; an age follow-up changes only the participation steps. See the <a href="review.html#children">participation guide</a>.</p></section><div class="notes-actions"><button class="button primary" id="download-notes-bottom">Download review notes</button><a class="button secondary" href="index.html">Try the survey</a></div>`;
+  main.innerHTML=`<h1>All questions</h1><p class="lead">Read the wording, options and different paths in one place.</p><p class="small">This list uses the same questions as the survey. Examples show one recent need and one future-only interest; a respondent sees their own selections. Notes are for your own review: they are not sent anywhere. Download them before closing or refreshing this page.</p><div class="library-tools"><label>Age version<select class="select" id="review-version"><option value="adult" ${libraryVersion==='adult'?'selected':''}>Adults · 18 or older</option><option value="youth" ${libraryVersion==='youth'?'selected':''}>Young people · 8–17</option></select></label><label>Location<select class="select" id="review-location"><option value="nt" ${libraryLocation==='nt'?'selected':''}>Living in Greater Darwin</option><option value="outside" ${libraryLocation==='outside'?'selected':''}>Other locality</option><option value="unspecified" ${libraryLocation==='unspecified'?'selected':''}>Residence not disclosed</option></select></label><button class="button secondary" id="print-questions">Print questions</button></div><p class="small" id="version-description">${versionLabel} · ${libraryLocation==='nt'?'Living in Greater Darwin':libraryLocation==='outside'?'Other locality':'Residence not disclosed'} · 28 September 2026</p><div class="notes-actions"><button class="button secondary" id="download-notes">Download review notes</button><span class="notes-status" aria-live="polite">${reviewNotes.size?`Notes in ${reviewNotes.size} section${reviewNotes.size===1?'':'s'}`:'No notes yet'}</span></div><nav class="library-index" aria-label="Question sections">${sections.map(s=>`<a href="#${s.id}">${esc(s.id==='adequacy'?'Support received':s.id==='barriers'?'Getting help':s.title)}</a>`).join('')}</nav>${sections.map(s=>{const key=`${libraryVersion}/${libraryLocation}/${s.id}`;return `<section class="library-section" id="${s.id}"><h2>${esc(s.title)}</h2><p class="small">${esc(s.intro)}</p>${s.note?`<p class="branch-note">${esc(s.note)}</p>`:''}${librarySectionFieldsHTML(s)}<label class="notes-label" for="note-${s.id}">Your review notes: ${esc(s.title)}</label><textarea class="textarea review-note" id="note-${s.id}" data-note="${key}" maxlength="4000" placeholder="Suggested wording, a missing option, or a question for the team">${esc(reviewNotes.get(key)||'')}</textarea></section>`;}).join('')}<section class="library-section" id="under-seven"><h2>Children aged 7 or younger</h2><p>A parent or guardian sees one response box per child prompt, followed by Your observations. Confirm willingness before recording the child’s own views; leave those questions blank when the child cannot or does not want to answer. The observations field remains available and records the adult’s perspective separately.</p><ol>${YOUNG_PROMPTS.map(text=>`<li>${esc(text)}</li>`).join('')}</ol><p>Each prompt has an optional written-response box. A separate optional box records parent/guardian observations. A parent or guardian can leave the child questions blank and enter only their observations, without a claim of child assent.</p><p>The 8–17 route shares one question set; an age follow-up changes only the participation steps. See the <a href="review.html#children">participation guide</a>.</p></section><div class="notes-actions"><button class="button primary" id="download-notes-bottom">Download review notes</button><a class="button secondary" href="index.html">Try the survey</a></div>`;
   main.querySelector('#review-version').onchange=e=>{libraryVersion=e.target.value;renderQuestionLibrary();};
   main.querySelector('#review-location').onchange=e=>{libraryLocation=e.target.value;renderQuestionLibrary();};
   main.querySelector('#print-questions').onclick=()=>window.print();
   main.querySelectorAll('[data-note]').forEach(input=>input.addEventListener('input',()=>{if(input.value.trim())reviewNotes.set(input.dataset.note,input.value);else reviewNotes.delete(input.dataset.note);main.querySelector('.notes-status').textContent=reviewNotes.size?`Notes in ${reviewNotes.size} section${reviewNotes.size===1?'':'s'}`:'No notes yet';}));
-  const download=()=>{const entries=[...reviewNotes].map(([key,value])=>`## ${key}\n\n${value}`).join('\n\n');downloadText('nt-survey-review-notes.md',`# NT questionnaire review notes\n\nQuestionnaire: 27 September 2026\nSaved: ${new Date().toISOString()}\n\n${entries||'No notes entered.'}\n`);};
+  const download=()=>{const entries=[...reviewNotes].map(([key,value])=>`## ${key}\n\n${value}`).join('\n\n');downloadText('nt-survey-review-notes.md',`# NT questionnaire review notes\n\nQuestionnaire: 28 September 2026\nSaved: ${new Date().toISOString()}\n\n${entries||'No notes entered.'}\n`);};
   main.querySelector('#download-notes').onclick=download;main.querySelector('#download-notes-bottom').onclick=download;
 }
 
