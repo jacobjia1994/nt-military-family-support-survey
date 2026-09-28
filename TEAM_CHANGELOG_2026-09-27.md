@@ -2,6 +2,10 @@
 
 This note records Jacob's decisions following the comprehensive survey review. It supersedes conflicting recommendations from that review. It is a project decision record, not a claim that a collection platform has been selected or real responses have been collected.
 
+## Further correction — 28 September 2026: respondent-led accounts
+
+The operative adult/youth review flow is now schema `8.0`: people choose their own experience or future idea and may add another, up to 100 active entries as a technical ceiling. The normal entry is one optional story, an experience-only support-status choice and one distinct useful-change answer; extra detail and offer-specific practical conditions are optional. The 17-domain loops, youth one-focus limit, global format menu and Berrimah attendance premise in the historical decisions below are superseded. Keep the prior text as a record of how the design changed; use [FLOW_REDESIGN.md](FLOW_REDESIGN.md) for the current contract. Under-7 participation remains separate. No receiver or publication is authorised by this correction.
+
 ## Correction — 28 September 2026
 
 Jacob clarified that activities should not be framed as taking place at Lutheran Care's Berrimah office. The Berrimah attendance bullet below is historical and no longer guides the questionnaire. The revised survey asks about practical Greater Darwin areas only when someone is interested in an in-person format. It links future help and participation format to the selected support topic, with shared practical conditions asked once. See `FLOW_REDESIGN.md` for the current review flow.

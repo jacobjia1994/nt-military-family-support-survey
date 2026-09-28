@@ -1,8 +1,8 @@
 # Interview team guide
 
-27 September 2026 · Operating template for the Greater Darwin Defence Family Support consultation
+Updated 28 September 2026 · Operating template for the Greater Darwin Defence Family Support consultation
 
-Use one coordinator, one backup and one stream of private interviews, grouped into available appointment windows. Offer phone and video where the team can provide them. This is a practical proposal for discussion with Lutheran Care (LC); it does not require an existing receiver to be reviewed or demonstrated. The current website is a preview: entered details are not sent or saved, and no callback is being arranged. The templates below are for future use if LC adopts the arrangement and supplies the actual operating details; they are not messages already sent.
+The written survey is the main broad feedback channel. Use targeted conversations to clarify a decision-changing why/how, explore apparently contradictory accounts, hear a missing family perspective, or include someone who cannot comfortably contribute in writing. Use one coordinator, one backup and one stream of private interviews, grouped into available appointment windows. Offer phone and video where the team can provide them. This is a practical proposal for discussion with Lutheran Care (LC); it does not require an existing receiver to be reviewed or demonstrated. The current website is a preview: entered details are not sent or saved, and no callback is being arranged. The templates below are for future use if LC adopts the arrangement and supplies the actual operating details; they are not messages already sent.
 
 ## Set up the actual offer
 
@@ -55,7 +55,7 @@ The interview request asks self-requesters only Under 18 / 18 or older. Someone 
 
 Defence family team members can improve wording, accessibility, outreach and interpretation, and can interview where competent and authorised. Give them access to identifiable information only where their assigned task needs it. They may know participants; offer another interviewer when a relationship could inhibit speaking freely. Their own lived experience is valuable but does not represent all families. If a team member also contributes an interview, label that role clearly and avoid counting the same account more than once.
 
-Recruit beyond the team’s own friends where possible. Seek different circumstances and both helpful and difficult experiences, including people who have not used services. Do not add extensive demographic questions just to create an elaborate quota. After the first block, ask which perspective or practical uncertainty remains missing and target a small number of further conversations accordingly.
+Recruit beyond the team’s own friends where possible. Seek different circumstances and both helpful and difficult experiences, including people who have not used services. Do not add extensive demographic questions just to create an elaborate quota. After early written responses, name the specific programme choice and what remains uncertain before inviting a targeted conversation. Check service mapping and LC programme documents first when the missing fact concerns existing provision, eligibility or LC's role. Keep a spoken contribution route available when the written form is unsuitable for someone. Cognitive and usability pretesting of the questionnaire is separate from these substantive consultations; do not count pretest answers as fieldwork findings.
 
 ## Adult and family conversation: 30–40 minutes
 
@@ -63,14 +63,15 @@ Recruit beyond the team’s own friends where possible. Seek different circumsta
 
 Use brief structured notes as the default. Do not record or transcribe automatically. If a specific purpose requires recording or attributable quotations, explain it and obtain separate appropriate agreement first. Do not promise absolute anonymity: avoid identifying details in reports, particularly in a small community.
 
-Use these prompts flexibly; follow the person’s story rather than asking every prompt as a checklist.
+Start with the specific uncertainty that justified the conversation, then follow the person's account. The written survey and interview share these constructs, but this is not a script to read aloud in full:
 
-1. **Life here:** What has life in Greater Darwin been like for you or your family? What has helped you feel settled, connected or supported?
-2. **One real experience:** Can you tell us about a time when support worked well, or when you wanted support and it was difficult to get? What was happening, and what did you do first? A general example is fine; no names or sensitive detail are needed.
-3. **What made the difference:** What helped? Where did things become difficult? Did knowing where to go, eligibility, timing, cost, transport, childcare, privacy or the way you were treated play a part? Use only prompts relevant to what was said.
-4. **People not reached:** Was there support you decided not to use, or could not access? What would have made it easier? Avoid assuming everyone wants a service or currently has unmet needs.
-5. **A useful change:** If LC could improve one practical thing for families here, what would matter most? What should it keep, work with or avoid duplicating? What would make that idea usable for you?
-6. **Close the loop:** What have we missed? Summarise two or three points and ask whether that captures their meaning. Explain the confirmed plan for sharing findings; do not promise that every suggestion will be implemented.
+1. **Situation or future goal:** “Tell me about the situation or idea you have in mind.” Let the person establish context, including what has worked well. For an experience, keep the local recall period clear; a future-only idea does not need a past difficulty.
+2. **Support adequacy, when relevant:** “For this situation, did you get the support you needed?” If a comparable explicit answer is necessary, use the survey's response categories. Do not infer adequacy from silence or ask this about a future-only idea.
+3. **Useful change or preservation:** “What would you keep, and what, if anything, should be different?” The person need not design a Lutheran Care service or know who is responsible.
+4. **Practical fit, only for a described offer they might use:** “For the support or activity you have described, what would make it workable for you?” Do not ask every participant about a venue or meeting time.
+5. **Close and check:** “Looking across what we have discussed, what matters most for Lutheran Care to understand or act on?” Read back the main points and invite correction. Explain the confirmed plan for sharing findings without promising that every suggestion will be implemented.
+
+Use selective probes only where they could change the decision: what happened between seeking and getting help; why apparently helpful support left a difficulty unresolved; what would make a proposed offer a poor fit for an affected family; or how a verified existing option compares with the person's suggestion. Stop when another probe is unlikely to change the decision. A short but clear account does not automatically require a follow-up interview.
 
 If someone becomes distressed or discloses harm, pause and use the existing LC procedure. Do not seek details just to complete these prompts. A referral or service response, where wanted and appropriate, is a separate action with the relevant permissions.
 
@@ -136,7 +137,7 @@ One row per request is enough. This is a schema only; never enter real rows in G
 | Follow-up limits | Invitation/reminder sent, agreed waitlist end or reply deadline, do-not-contact instruction |
 | Required participation step | Only the necessary status, such as “worker to confirm permission”; detailed assessments stay in restricted LC records |
 
-Interview notes should record a separate interview reference, perspective, a small amount of useful context, concrete examples without identifying detail, what helped or got in the way, proposed changes and corrections made at the end. Keep any necessary link to appointment/consent records restricted within LC; never link it to the anonymous survey. Check interview permission and note retention/withdrawal arrangements with the participant using the actual LC process, not the anonymous-survey wording. Do not claim notes are irretrievable merely because the survey is anonymous.
+Interview notes should record a separate interview reference, perspective, a small amount of useful context, concrete examples without identifying detail, what helped or got in the way, proposed changes and corrections made at the end. Note whether a detail was volunteered, prompted or inferred. Keep any necessary link to appointment/consent records restricted within LC; never link it to the anonymous survey. Compare survey and interview themes side by side, without pooling raw checkbox counts with spontaneous interview mentions or treating several accounts from one response as several families. Check interview permission and note retention/withdrawal arrangements with the participant using the actual LC process, not the anonymous-survey wording. Do not claim notes are irretrievable merely because the survey is anonymous.
 
 Before absence or student placement end, the coordinator hands the backup/LC lead the current log, unresolved requests, permissions, appointment commitments, next actions and relevant record locations within the approved system. The receiving person confirms ownership. Close recruitment clearly, resolve or close outstanding invitations and waitlists, and apply LC’s retention and access arrangements; do not leave requests in a personal inbox or carry identifiable copies away after placement.
 

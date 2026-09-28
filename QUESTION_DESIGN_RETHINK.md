@@ -1,6 +1,6 @@
 # Consultation question redesign — working direction
 
-Status: **candidate for review**, 28 September 2026. This file does not change the published questionnaire or authorise response collection. The deployed schema 7.2 flow remains an implementation record, not an accepted question-design template for further iterations.
+Status: **historical working rationale**, 28 September 2026. The local schema 8.0 team-review candidate implements the respondent-led account direction; this file is not its exact field contract. The published 7.2 flow remains an earlier implementation record. No response collection or publication is authorised here. Use [FLOW_REDESIGN.md](FLOW_REDESIGN.md) for current local behavior.
 
 ## Why the current flow needs redesign
 
@@ -8,7 +8,7 @@ The same broad topics are selected for recent and future needs, followed by a lo
 
 ## Design unit
 
-Use a respondent-chosen **situation or future idea** as the optional, repeatable unit. A connected story remains one account even if analysts later give it several topic tags. Adults can add more than one account without a hard cap; there is no automatic page for every tag.
+Use a respondent-chosen **situation or future idea** as the optional, repeatable unit. A connected story remains one account even if analysts later give it several topic tags. Adults and young people may add up to **100 active entries** as technical capacity, never as a suggested number to complete. There is no automatic page for every tag.
 
 The shared information sought is: what happened or may happen; what already helped; what was difficult or absent; what change would be useful; and, only for a concrete support offer or activity the person might use, what would make that specific offer workable. The team compares these accounts with the programme brief and local service map before deciding whether LC could act directly, work with a partner, refer or report a wider gap. Respondents are not asked to know that boundary.
 
@@ -20,7 +20,7 @@ If LC needs a comparable judgement about a particular funded offer it can actual
 2. **Tell us about one situation that mattered to you or your family here. What was happening?** Future-only version: **What would you like to be easier or possible in the coming months?**
 3. For an experience only, one short support-status choice plus optional **What helped?** and **What was difficult, missing or unhelpful?** Do not ask future-only contributors to invent a help-seeking history.
 4. **Thinking about what you told us, what would be useful to keep, change or add?** A short optional answer. A small optional follow-up may clarify whether the proposal concerns information/navigation, a conversation, a group/activity, an existing-service/process change or something else. It must not recreate the old topic and format batteries.
-5. Only for a described conversation or activity the family might use: **What would make the idea you described workable for you or your family?** A process-change-only answer does not trigger a venue or attendance question.
+5. Only for a described help or activity the family might use, and after explicit opt-in: **What would make that part workable for you or your family?** A future idea may already contain the proposal in its first answer, and a mixed idea may name the relevant practical component in one free-text answer. A process-change-only answer does not trigger a venue or attendance question.
 6. Offer **Add another experience or idea**. After multiple accounts, optional priority comes *after* their explanations. A person who gave no account gets a simple final open opportunity, not a ranking question.
 
 The adult interview guide should cover the same constructs with open starter questions and flexible probes, following the participant's story. The survey and interviews can share a coding dictionary while retaining their different modes, prompts and answer statuses. Younger participants require their own age-appropriate wording and permissions; the adult draft does not validate those routes.

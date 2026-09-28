@@ -129,6 +129,20 @@ body.questionnaire{--ink:#30312f;--text:#41423f;--muted:#666963;--primary:#b9462
 @media(max-width:760px){.finish-next-steps{grid-template-columns:1fr;gap:36px}}
 .questionnaire .finish h1{max-width:24ch}
 
+.questionnaire .account-choices{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}
+.questionnaire .account-choices .button{flex:1 1 240px;text-align:center}
+.questionnaire .account-optional-control{margin:2px 0 28px}
+.questionnaire .account-optional-control .text-button{font-size:15px;text-align:left}
+.questionnaire .account-extra{border-top:1px solid var(--line);padding-top:20px;margin-top:12px}
+.questionnaire .account-extra h2{font-size:19px;margin:0 0 22px}
+.questionnaire .account-list,.questionnaire .account-review-list{padding-left:24px;margin:18px 0 26px}
+.questionnaire .account-list li,.questionnaire .account-review-list li{padding:12px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.questionnaire .account-list p{font-size:14px;color:var(--muted);margin:5px 0}
+.questionnaire .account-list-actions{display:flex;gap:20px}
+.questionnaire .account-review-list li{display:flex;justify-content:space-between;align-items:flex-start;gap:18px}
+.questionnaire .account-review-list li .text-button{flex:none;padding-top:0}
+@media(max-width:760px){.questionnaire .account-review-list li{display:block}.questionnaire .account-review-list li .text-button{margin-top:8px}}
+
 .other-need-option{grid-column:1/-1;min-width:0}
 .questionnaire .other-need-followup{margin:14px 0 4px;padding:0 4px}
 .questionnaire .other-need-followup .text-input{width:100%}
