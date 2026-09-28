@@ -142,6 +142,23 @@ body.questionnaire{--ink:#30312f;--text:#41423f;--muted:#666963;--primary:#b9462
 .questionnaire .account-review-list li{display:flex;justify-content:space-between;align-items:flex-start;gap:18px}
 .questionnaire .account-review-list li .text-button{flex:none;padding-top:0}
 @media(max-width:760px){.questionnaire .account-review-list li{display:block}.questionnaire .account-review-list li .text-button{margin-top:8px}}
+.questionnaire .preview-notice{margin:24px 0 0;padding:16px 18px;border-left:4px solid #aa6c29;background:#fff6e8;color:#493a2a}
+.questionnaire .preview-notice strong{display:block;font-size:16px;margin-bottom:4px}
+.questionnaire .welcome-intro .preview-notice p{margin:0;font-size:15px;line-height:1.55;color:inherit}
+.questionnaire .issue-cues{margin-top:8px}
+.questionnaire .issue-group{border-top:1px solid var(--line);padding-top:20px;margin-top:22px}
+.questionnaire .issue-group h2,.questionnaire .topic-revisit h2{font-size:18px;line-height:1.35;margin:0 0 14px;color:var(--ink)}
+.questionnaire .issue-group .choices.columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.questionnaire .issue-other .choice{max-width:100%}
+.questionnaire .issue-other .question-group{margin:12px 0 0}
+.questionnaire .issue-cue-note{font-size:14px;line-height:1.5;color:var(--muted);margin:18px 0 0}
+.questionnaire .topic-support{border-left:3px solid var(--line);padding:12px 16px;margin:26px 0;background:var(--soft)}
+.questionnaire .topic-support p{font-size:15px;line-height:1.6;margin:0}
+.questionnaire .topic-add-more{border-top:1px solid var(--line);margin-top:24px;padding-top:16px}
+.questionnaire .topic-revisit{border-top:1px solid var(--line);padding-top:20px;margin-top:18px}
+.questionnaire .topic-revisit-links{display:flex;flex-wrap:wrap;gap:10px 18px;margin:14px 0}
+.questionnaire .topic-revisit-links .text-button{font-size:14px}
+@media(max-width:760px){.questionnaire .issue-group .choices.columns{grid-template-columns:1fr}}
 
 .other-need-option{grid-column:1/-1;min-width:0}
 .questionnaire .other-need-followup{margin:14px 0 4px;padding:0 4px}

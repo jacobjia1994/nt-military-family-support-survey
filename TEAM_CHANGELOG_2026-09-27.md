@@ -2,11 +2,21 @@
 
 This note records Jacob's decisions following the comprehensive survey review. It supersedes conflicting recommendations from that review. It is a project decision record, not a claim that a collection platform has been selected or real responses have been collected.
 
+## Latest correction — 28 September 2026: issue prompts before detail
+
+Jacob accepted the team's proposal to show a selectable list of family-life issues near the start as a memory prompt. Each issue selected by an adult or 8–17-year-old leads to **one dedicated question page for that issue**. A person can describe an experience or future idea, add further entries under the same issue, move on without writing about a selected issue, and use an Other issue route for a topic absent from the list. The adult list has 17 issues and the youth list has eight. The total capacity remains 100 active entries across the whole response, not 100 per issue. A story spanning several issues need only be written once.
+
+The issue selection is a routing and recall aid; it is not a measured count of unmet need. Unselected issues and selected issues without narrative detail cannot be interpreted as “no need”. Keep the v8 situation-led, optional follow-ups on each issue page, with wording that fits that issue. Do not bring back the old generic participation-format list, assume a Berrimah venue, or ask a future-only contributor to invent a past help-seeking experience. The under-7 route remains separate.
+
+Writing a substantive answer does not require choosing “experience” or “future”: retain such an entry with `kind: unspecified` and do not infer a past recall window. The general add route may retain an uncategorised entry without `topic_id`; issue-page entries carry their chosen `topic_id`. On adult safety and bereavement pages, do not ask the help-status or extra helped/difficult questions merely to keep a uniform form; those fields are not asked in analysis.
+
+Jacob expressly authorised publishing this revised **preview** to the existing GitHub Pages site after implementation and verification. That authorisation does not activate a response receiver: the page still keeps answers in memory and must say clearly that nothing was sent or saved. The historical no-publication statement below applied to the prior correction and is superseded for this preview release. See [FLOW_REDESIGN.md](FLOW_REDESIGN.md) for the current contract.
+
 ## Further correction — 28 September 2026: respondent-led accounts
 
 The operative adult/youth review flow is now schema `8.0`: people choose their own experience or future idea and may add another, up to 100 active entries as a technical ceiling. The normal entry is one optional story, an experience-only support-status choice and one distinct useful-change answer; extra detail and offer-specific practical conditions are optional. The 17-domain loops, youth one-focus limit, global format menu and Berrimah attendance premise in the historical decisions below are superseded. Keep the prior text as a record of how the design changed; use [FLOW_REDESIGN.md](FLOW_REDESIGN.md) for the current contract. Under-7 participation remains separate. No receiver or publication is authorised by this correction.
 
-## Correction — 28 September 2026
+## Correction — 28 September 2026 (historical, superseded above)
 
 Jacob clarified that activities should not be framed as taking place at Lutheran Care's Berrimah office. The Berrimah attendance bullet below is historical and no longer guides the questionnaire. The revised survey asks about practical Greater Darwin areas only when someone is interested in an in-person format. It links future help and participation format to the selected support topic, with shared practical conditions asked once. See `FLOW_REDESIGN.md` for the current review flow.
 
@@ -25,7 +35,7 @@ Jacob accepted the remaining review recommendations. They guide the coordinated 
 - Use residence and local experience to distinguish consultation routes; do not use the serving member's posting location as a substitute for where the responding family lives.
 - Preserve opportunities to describe what has worked, past support needs, current desired improvements and future or preventive support, including for people reporting no past need.
 - Ask relevant caregivers about children's age stages; ask about participation format, timing and practical access separately from how participants prefer to receive information.
-- Ask about attendance at Berrimah when relevant to interest in in-person participation, rather than assuming every respondent would attend there.
+- Historical proposal, superseded: ask about attendance at Berrimah when relevant to interest in in-person participation. The current issue-page survey assumes no Berrimah activity venue and asks practical details only for a specific described help or activity after opt-in.
 - Keep recalled local experiences distinct from earlier experiences elsewhere; arrange follow-ups in a consistent time sequence.
 - Add minimal guardian-side ADF connection and locality context for the youngest children's pathway; preserve the distinction between a child's expression and an adult's observation.
 - Make help with answering available without implying the helper should choose answers. Keep youth participation and permission arrangements clear.

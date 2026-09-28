@@ -4,6 +4,8 @@ Updated 28 September 2026 · Operating template for the Greater Darwin Defence F
 
 The written survey is the main broad feedback channel. Use targeted conversations to clarify a decision-changing why/how, explore apparently contradictory accounts, hear a missing family perspective, or include someone who cannot comfortably contribute in writing. Use one coordinator, one backup and one stream of private interviews, grouped into available appointment windows. Offer phone and video where the team can provide them. This is a practical proposal for discussion with Lutheran Care (LC); it does not require an existing receiver to be reviewed or demonstrated. The current website is a preview: entered details are not sent or saved, and no callback is being arranged. The templates below are for future use if LC adopts the arrangement and supplies the actual operating details; they are not messages already sent.
 
+The survey now begins its substantive route with a selectable issue list and one question page per selected issue. In an interview, offer the same adult or youth list as a **memory aid if useful**, then let the person choose where to begin. Do not read all 17 adult or eight youth issues as a required interview battery, and do not ask them to repeat a story under every overlapping label. Record whether an issue was selected from the prompt, volunteered without it, or inferred later by the analyst. A checked issue alone does not establish a difficulty or unmet need; a survey page left blank must not be treated as a negative answer.
+
 ## Set up the actual offer
 
 The [receiving proposal](INTERVIEW_RECEIVING_PROPOSAL.md) provides a simple option for LC to adopt: an institution-owned Microsoft Forms group form, a separate contact log and manual invitations to a few real slots. It explains the platform’s practical limits and leaves Bookings as a later option; no account changes or live collection are required to review it.
@@ -64,6 +66,8 @@ Recruit beyond the team’s own friends where possible. Seek different circumsta
 Use brief structured notes as the default. Do not record or transcribe automatically. If a specific purpose requires recording or attributable quotations, explain it and obtain separate appropriate agreement first. Do not promise absolute anonymity: avoid identifying details in reports, particularly in a small community.
 
 Start with the specific uncertainty that justified the conversation, then follow the person's account. The written survey and interview share these constructs, but this is not a script to read aloud in full:
+
+If the person chooses a topic, name it in the opening question: for example, “You mentioned postings or leaving service. What happened for your family around that change?” For a future-only idea, ask what they would like to be easier or possible for that topic. An interview can cover several topics naturally, but each situation should be told once; note other relevant themes in the analysis rather than asking for a duplicate account.
 
 1. **Situation or future goal:** “Tell me about the situation or idea you have in mind.” Let the person establish context, including what has worked well. For an experience, keep the local recall period clear; a future-only idea does not need a past difficulty.
 2. **Support adequacy, when relevant:** “For this situation, did you get the support you needed?” If a comparable explicit answer is necessary, use the survey's response categories. Do not infer adequacy from silence or ask this about a future-only idea.

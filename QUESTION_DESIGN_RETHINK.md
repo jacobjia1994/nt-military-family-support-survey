@@ -1,6 +1,16 @@
 # Consultation question redesign — working direction
 
-Status: **historical working rationale**, 28 September 2026. The local schema 8.0 team-review candidate implements the respondent-led account direction; this file is not its exact field contract. The published 7.2 flow remains an earlier implementation record. No response collection or publication is authorised here. Use [FLOW_REDESIGN.md](FLOW_REDESIGN.md) for current local behavior.
+Status: **historical working rationale**, 28 September 2026. This file explains the earlier respondent-led account design and the later issue-cue correction; it is not the exact field contract. Use [FLOW_REDESIGN.md](FLOW_REDESIGN.md) for current behavior. Public preview publication is authorised, but response collection still has no receiver.
+
+## Later correction: prompts before the account
+
+An issue list can help a person remember aspects of family life that they may not think to mention in a blank first text box. Adults see 17 issues; 8–17-year-olds see eight age-appropriate issues. They may select several, including an Other issue. **Every selected issue gets one question page**, with examples and an opening question appropriate to that issue. Within that page they can describe more than one experience or future idea, up to 100 active entries for the whole response. They may leave a selected page without entering detail. A connected story need not be copied into several issue pages.
+
+The selection asks which issues the person wants to talk about, including positive experiences and future ideas. It is a prompt and route, not a screening diagnosis or proof of an unmet need. A selected issue with no substantive account is still a selected prompt, and an unselected issue is unknown rather than “no issue”. Preserve the respondent's own explanation, the experience-only support-status distinction, and practical questions only for a concrete help or activity the person described. Do not recreate the repeated delivery-format battery. The under-7 guardian-supported form remains separate.
+
+This reconciles the team's recall concern with the earlier mismatch concern: the list gets the person started, while the next page asks about the actual issue they chose. The existing 2026-09-28 reasoning below describes why a generic question sequence for every issue failed; its earlier sentence saying there is no automatic page per tag is superseded by the correction above.
+
+[ABS question-structure guidance](https://www.abs.gov.au/statistics/standards/abs-forms-design-standards/2023/general-forms-design-principles-question-structure) says examples can help recall but long lists can produce order effects; the 17 adult labels therefore use short wording and visible groups. [UK Government Analysis Function guidance](https://analysisfunction.civilservice.gov.uk/policy-store/questionnaire-design-guidance/) recommends grouping related questions and notes that preceding questions influence later answers. [Pew's randomised check-all experiment](https://www.pewresearch.org/methods/2019/05/09/when-online-survey-respondents-only-select-some-that-apply/) found under-selection compared with asking each item separately. For this consultation, the checklist is used to cue and route a story, not estimate how often each problem occurs. The exact connected web flow still needs cognitive/usability testing with intended respondents before live collection.
 
 ## Why the current flow needs redesign
 
