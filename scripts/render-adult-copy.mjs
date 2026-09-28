@@ -1,7 +1,7 @@
 import {readFileSync, writeFileSync} from 'node:fs';
 
 // The JSON is exported from the live question definitions. Keep the established
-// reading-copy CSS and consent shell, while replacing all generated wording.
+// reading-copy CSS and consent layout, while replacing all generated wording.
 const output=new URL('../adult-wording.html',import.meta.url);
 const previous=readFileSync(output,'utf8');
 const copy=JSON.parse(readFileSync(new URL('../copy/adult-wording.json',import.meta.url),'utf8'));
@@ -9,8 +9,11 @@ const esc=value=>String(value??'').replaceAll('&','&amp;').replaceAll('<','&lt;'
 let head=previous.slice(0,previous.indexOf('</head>'));
 if(!head.includes('<style>'))throw new Error('Reading-copy style shell missing');
 head=head.replace(/<title>[^<]*<\/title>/,'<title>Adult reading copy · Defence Family Support Survey</title>');
-const consent=previous.match(/<section class="consent-copy">[\s\S]*?<\/section>/)?.[0];
-if(!consent)throw new Error('Established adult consent shell missing');
+const consentShell=previous.match(/<section class="consent-copy">[\s\S]*?<\/section>/)?.[0];
+if(!consentShell)throw new Error('Established adult consent shell missing');
+const previewAgreement='I have read the information and agree to try this survey preview. I understand my answers are not sent or saved.';
+const consent=consentShell.replace(/<p class="consent-statement">[\s\S]*?<\/p>/,`<p class="consent-statement">${previewAgreement}</p>`);
+if(consent===consentShell&&!consent.includes(previewAgreement))throw new Error('Adult agreement wording was not replaced');
 const rules={local_area:'Optional: first choose an area; the live form lists only its suburbs/localities.',outside_suburb:'Only shown for Outside Greater Darwin.',other_suburb:'Only shown after Another suburb or locality in this area.',issue_other:'Only shown when Another issue is selected.',account_details:'Only shown when the respondent chooses to add more about what helped or was difficult; not asked on adult safety or bereavement pages.',account_prompt_type:'Only shown when the respondent requests one prompt for the idea; the prompt relabels the existing useful-change box.',account_practical:'Only shown after an eligible specific help or activity is described and the respondent explicitly opts in.'};
 let number=0;
 function field(f){

@@ -973,6 +973,12 @@ test('question library shows every topic in both answer paths for adults and you
   assert.equal(child.some(section => section.id.startsWith('account')), false, 'The separate under-7 route does not inherit account pages');
 });
 
+test('published adult reading copy uses the same preview agreement as the form', () => {
+  const html = readFileSync(new URL('../adult-wording.html', import.meta.url), 'utf8');
+  assert.match(html, /I have read the information and agree to try this survey preview\. I understand my answers are not sent or saved\./);
+  assert.doesNotMatch(html, /I consent to Lutheran Care collecting, using and sharing my answers/);
+});
+
 test('issue cues are optional, ordered by the visible list, and open one answer page for each selected adult or youth topic', () => {
   for (const version of ['adult', 'youth']) {
     const ids = plain(survey.issueIds(version));
