@@ -1144,6 +1144,21 @@ test('changing a selected help kind deactivates only its own outcome chain at ex
   assert.equal(answers.problem_details[category].need_chains.general_information.seek_receipt, 'sought_no_receipt', 'editing must not reassign or destroy a previous need’s answer');
 });
 
+test('review identifies the area and help kind for repeated linked questions', () => {
+  const answers = { problem_cues: ['moving_settling'], problem_details: { postings_service_changes: {
+    help_kinds: ['general_information', 'practical_help'], need_chains: {
+      general_information: { specific_for_need: 'Relocation information' },
+      practical_help: { specific_for_need: 'Moving boxes' },
+    },
+  } } };
+  survey.setContext('adult', answers);
+  const review = survey.reviewHTML();
+  assert.match(review, /<h2>Postings, time apart and leaving service — Information about available support, arrangements or entitlements<\/h2>/);
+  assert.match(review, /<h2>Postings, time apart and leaving service — Practical help, financial assistance or help with responsibilities<\/h2>/);
+  assert.match(review, /aria-label="Change: Postings, time apart and leaving service — Practical help, financial assistance or help with responsibilities: What specifically was this help needed for\?"/);
+  assert.match(review, /<p class="review-value">Moving boxes<\/p>/);
+});
+
 test('youth route uses a short personal chain without the adult need taxonomy or source matrix; young-child route remains separate', () => {
   const answers = { roles: ['child'], residence_area: 'darwin', assistance: 'self', problem_cues: ['friends_belonging', 'school_learning'], problem_details: { friends_belonging: { story: 'Hard to make friends', needed_help: 'Someone to introduce me', asked_anyone: 'no', anyone_helped: 'yes', enough: 'some', remaining_need: 'More chances to meet' } } };
   const steps = stepsFor(answers, 'youth');

@@ -1362,15 +1362,16 @@ function reviewHTML(){
   const manage=state.version==='child'||consultationRoute(state.answers)==='earlier_experience'?'':`<section class="review-section"><div class="review-header"><h2>Experiences and ideas</h2><button class="text-button" type="button" data-edit="${accounts.length?'accounts_manage':'accounts_start'}">Add or manage entries</button></div><p class="small">You have added ${accounts.length} entr${accounts.length===1?'y':'ies'}.</p>${accounts.length?`<ol class="account-review-list">${accounts.map((account,index)=>`<li><span><strong>${accountKindLabel(account)} ${index+1} · ${esc(accountTopicLabel(account))}</strong> — ${esc(accountSummaryText(account))}</span><button class="text-button" type="button" data-edit="account:${esc(account.id)}">Review or edit</button></li>`).join('')}</ol>`:''}</section>`;
   return manage+activeSteps().filter(s=>!['review','accounts_start','accounts_manage'].includes(s.id)&&!s.account_id&&!s.topic_id).map(s=>{
   const p=page(s);
+  const context=s.need||s.detail_category||s.chain_category?p.title:'';
   const rows=p.fields.filter(f=>conditionalVisible(f)&&(f.required||hasAnswer(getValue(f.key)))).map(f=>{
     const v=getValue(f.key);let text;
     if(!hasAnswer(v))text='Not answered';
     else if(f.type==='text'||f.type==='short')text=v;
     else text=(Array.isArray(v)?v:[v]).map(id=>f.options.find(o=>o.id===id)?.label||id).join('; ');
-    return `<div class="review-block"><div class="review-header"><h3>${esc(f.label)}</h3><button class="text-button" type="button" data-edit="${esc(s.id)}" data-detail="${f.optional_detail?'true':'false'}" aria-label="Change: ${esc(s.need?p.title+': ':'')}${esc(f.label)}">Change</button></div><p class="review-value">${esc(text)}</p></div>`;
+    return `<div class="review-block"><div class="review-header"><h3>${esc(f.label)}</h3><button class="text-button" type="button" data-edit="${esc(s.id)}" data-detail="${f.optional_detail?'true':'false'}" aria-label="Change: ${esc(context?context+': ':'')}${esc(f.label)}">Change</button></div><p class="review-value">${esc(text)}</p></div>`;
   }).join('');
   if(!rows)return `<section class="review-section"><div class="review-header"><h3>${esc(p.title)}</h3><button class="text-button" type="button" data-edit="${esc(s.id)}" aria-label="Add answers: ${esc(p.title)}">Add answers</button></div><p class="small">No optional answers added.</p></section>`;
-  return `<section class="review-section">${s.need?`<h2>${esc(p.title)}</h2>`:''}${rows}</section>`;
+  return `<section class="review-section">${context?`<h2>${esc(context)}</h2>`:''}${rows}</section>`;
 }).join('');}
 
 function renderSurveyHelp(){
