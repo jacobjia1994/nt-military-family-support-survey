@@ -402,11 +402,15 @@ test('the separate youth completion page reads like a real survey', () => {
   assert.doesNotMatch(source, /\b(?:fetch|sendBeacon|XMLHttpRequest|localStorage|sessionStorage)\b/);
 });
 
-test('the public adult entry uses the RAND questionnaire and no demo/status banner', () => {
-  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-  assert.match(html, /rand-adult-data\.js/);
-  assert.match(html, /rand-adult-app\.js/);
-  assert.doesNotMatch(html, /Preview only|Team review draft|Online submissions are not open|survey-availability/);
+test('both public adult entries load their separate variant and no status banner', () => {
+  const choice = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const open = readFileSync(new URL('../open-response.html', import.meta.url), 'utf8');
+  assert.match(choice, /data-survey-variant="choice"/);
+  assert.match(open, /data-survey-variant="open"/);
+  for(const html of [choice, open]) {
+    assert.match(html, /survey-variants\/app\.mjs/);
+    assert.doesNotMatch(html, /Preview only|Team review draft|Online submissions are not open|survey-availability|rand-adult-app\.js/);
+  }
 });
 
 test('the separate youth entry cannot launch the superseded adult questionnaire', () => {

@@ -1,0 +1,89 @@
+/* Both adult instruments use the existing Lutheran Care type, colour and shell. */
+.questionnaire .dual-page{margin:36px 0 0;max-width:none}
+.dual-page .step-topline{margin-bottom:18px}
+.dual-page .question-intro{margin:0 0 30px;white-space:pre-line}
+.dual-page h1{margin-bottom:20px}
+.dual-page h2{font-size:24px;line-height:1.25;margin:36px 0 15px}
+.dual-page h3{font-size:19px;line-height:1.35;margin:0 0 9px}
+.dual-page .dual-section{border-top:1px solid var(--line);padding-top:5px;margin-top:34px}
+.dual-page .dual-section:first-of-type{border-top:0;margin-top:14px}
+.dual-page .dual-section>.small{margin-bottom:18px}
+.dual-page .question-group{margin:26px 0 30px}
+.dual-page .question-group legend{margin-bottom:10px}
+.dual-page .choices{display:grid;grid-template-columns:1fr;gap:8px}
+.dual-page .choice{min-height:0;padding:12px 16px}
+.dual-page .choice-label{line-height:1.42}
+.dual-page .field-label{margin:0 0 9px}
+.dual-page .field-hint{margin:4px 0 12px}
+.dual-page .textarea{width:100%;min-height:140px;resize:vertical;overflow:auto}
+.dual-page .long-answer{min-height:164px}
+.dual-page .char-count{font-size:13px;margin:6px 0 0;text-align:right}
+.dual-page .char-count.is-over-limit{font-weight:700;color:var(--error)}
+.dual-page .field-error{font-size:14px;color:var(--error);margin:7px 0 0}
+.dual-page .field-error:empty{display:none}
+.dual-page .survey-errors{border:1px solid #dca8a1;background:#fff5f3;color:#8d2a24;border-radius:8px;padding:14px 18px;margin:20px 0}
+.dual-page .survey-errors:empty{display:none}
+.dual-page .question-actions{align-items:center}
+.dual-page .question-actions .button{white-space:normal}
+.dual-page .question-actions .back-button{font-size:15px}
+.dual-page .small-link{border:0;padding:8px 0;background:none;color:var(--primary);text-decoration:underline;text-underline-offset:3px;font-size:14px}
+.dual-page .small-link:hover{text-decoration-thickness:2px}
+.dual-page .minor-route{font-size:14px;color:var(--muted);margin-top:24px}
+.dual-page .information-block{border-top:1px solid var(--line);padding-top:12px;margin-top:20px}
+.dual-page .information-block h2{font-size:20px;margin:10px 0}
+.dual-page .information-block p{font-size:16px;line-height:1.55}
+.dual-page .intro-line:first-child{font-size:19px;font-weight:650;color:var(--ink)}
+.dual-page .intro-line{margin-bottom:14px}
+.dual-page .resource-links{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:14px;margin:24px 0}
+.dual-page .field-stack{display:grid;gap:18px}
+.dual-page .field-stack>*{min-width:0}
+.dual-page .locality-control{width:100%;max-width:580px}
+.dual-page .dependant-grid{display:grid;grid-template-columns:minmax(120px,1fr) repeat(2,minmax(95px,150px));gap:12px;align-items:center}
+.dual-page .dependant-grid>div{min-width:0}
+.dual-page .dependant-grid .grid-head{font-size:14px;font-weight:700;line-height:1.25}
+.dual-page .dependant-grid .grid-row-label{font-size:15px;font-weight:600}
+.dual-page .dependant-grid input{width:100%;min-width:0;padding:10px;border:1px solid #b4b5ac;border-radius:7px}
+.dual-page .category-card{padding:18px 0;border-top:1px solid var(--line)}
+.dual-page .category-card:first-of-type{border-top:0}
+.dual-page .category-header{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.dual-page .category-header .choice{flex:1;border:0;padding:0;background:none;box-shadow:none}
+.dual-page .category-header .choice-label{font-size:18px;font-weight:700;color:var(--ink)}
+.dual-page .category-hint{font-size:14px;color:var(--muted);margin:3px 0 0}
+.dual-page .category-card .category-body{margin:18px 0 2px 33px;padding:16px 0 4px 20px;border-left:3px solid #ead6cb}
+.dual-page .category-card .category-body .question-group{margin-top:0}
+.dual-page .category-count{font-size:13px;color:var(--muted);margin:4px 0 0 33px}
+.dual-page .inline-other{margin:8px 0 14px 33px}
+.dual-page .category-actions{display:flex;gap:12px;align-items:center;margin-left:34px;flex-wrap:wrap}
+.dual-page .category-actions button{font-size:13px}
+.dual-page .priority-recap,.dual-page .area-recall,.dual-page .need-recall,.dual-page .source-card{background:#fbfaf7;border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin:16px 0}
+.dual-page .priority-recap ul,.dual-page .area-recall ul{margin:8px 0 0;padding-left:21px}
+.dual-page .priority-recap li,.dual-page .area-recall li{margin:3px 0}
+.dual-page .need-block{border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin:18px 0}
+.dual-page .need-block h3{margin-bottom:14px}
+.dual-page .source-card h3{font-size:17px;margin-bottom:10px}
+.dual-page .source-card .question-group{margin:0}
+.dual-page .source-card .choice{font-size:15px}
+.dual-page .area-progress{font-size:14px;color:var(--muted);margin:-3px 0 20px}
+.dual-page .need-progress{font-size:14px;color:var(--muted);margin:0 0 12px}
+.dual-page .review-item{border-bottom:1px solid var(--line);padding:18px 0}
+.dual-page .review-item:last-child{border-bottom:0}
+.dual-page .review-item h3{font-size:17px;margin:0 0 7px}
+.dual-page .review-item p,.dual-page .review-item li{font-size:15px;overflow-wrap:anywhere;white-space:pre-wrap}
+.dual-page .review-item ul{padding-left:22px;margin:8px 0}
+.dual-page .review-item button{font-size:14px}
+.dual-page .review-text{white-space:pre-wrap;overflow-wrap:anywhere}
+.dual-page .review-scope{color:var(--muted);font-size:13px}
+.choice-area-page .area-section,.open-area-page .open-section{border-top:1px solid var(--line);padding-top:4px;margin-top:32px}
+.choice-area-page .area-subsection,.open-area-page .open-need{border:1px solid var(--line);border-radius:9px;padding:18px 20px;margin:17px 0}
+.choice-area-page .area-subsection h3,.open-area-page .open-need h3{font-size:18px;margin-bottom:12px}
+.choice-area-page .source-characteristic-card,.choice-area-page .source-rating-card{background:#fbfaf7;border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin:16px 0}
+.choice-area-page .source-characteristic-card h3,.choice-area-page .source-rating-card h3{font-size:17px}
+.choice-area-page .selected-issues{padding-left:21px;overflow-wrap:anywhere}
+.open-area-page .open-need-controls{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:12px 0 20px}
+.open-area-page .open-need-recall{font-size:15px;font-weight:600;color:var(--muted);margin:14px 0}
+.open-area-page .open-section .question-group{margin:21px 0}
+.open-area-page .open-recall{white-space:pre-wrap;overflow-wrap:anywhere}
+.dual-page .choice:has(input:focus-visible){outline:2px solid var(--primary)}
+.dual-page .text-input:focus,.dual-page .textarea:focus,.dual-page .select:focus{outline:2px solid var(--primary);outline-offset:2px}
+@media(max-width:760px){.questionnaire .dual-page{margin-top:26px}.dual-page h2{font-size:22px}.dual-page .category-card .category-body{margin-left:11px;padding-left:13px}.dual-page .category-count{margin-left:0}.dual-page .category-actions{margin-left:0}.dual-page .need-block{padding:16px}.dual-page .source-card{padding:15px}.dual-page .dependant-grid{grid-template-columns:minmax(94px,1fr) repeat(2,minmax(76px,1fr));gap:8px}.dual-page .dependant-grid .grid-head{font-size:12px}.dual-page .dependant-grid .grid-row-label{font-size:13px}.dual-page .dependant-grid input{font-size:16px;padding:8px}.dual-page .question-actions{flex-wrap:wrap}.dual-page .question-actions .button{margin-left:auto}}
+@media(max-width:380px){.dual-page .dependant-grid{grid-template-columns:minmax(86px,1fr) repeat(2,minmax(65px,1fr))}.dual-page .dependant-grid input{padding:7px}}

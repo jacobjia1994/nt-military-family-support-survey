@@ -1,25 +1,21 @@
-# Greater Darwin Service Member and Family Needs Survey
+# Greater Darwin Defence Family Support Survey
 
-The current adult website reconstructs the **sample questionnaire in RAND MG-1124, Appendix A**, retaining its Q1–Q67 numbering, original problem pages, needs questions, resource matrices, background items, service-attitude questions and natural closing. [RAND source PDF](https://www.rand.org/content/dam/rand/pubs/monographs/2011/RAND_MG1124.pdf). The [67-item crosswalk](RAND_ITEM_CROSSWALK.md) records every local substitution. US Service, base, welfare and demographic terms are replaced only where the Australian/Greater Darwin context requires it. The funded Lutheran Care project is listed on [Defence's Family Support Funding Program page](https://www.defence.gov.au/adf-members-families/family-programs-local-services/support-communities/defence-community-grants-family-support-funding-program).
+Two adult questionnaire alternatives are available for team review:
 
-The original RAND instrument was designed for adults. [index.html](index.html) is the RAND-based adult route; [youth.html](youth.html) retains separate 8–17 and guardian-supported younger-child local routes. Neither child route is described as a RAND-validated questionnaire. [adult-wording.html](adult-wording.html) is the generated full adult reading copy; [questions.html](questions.html) redirects to it. The historical fictional [results.html](results.html) relates to an earlier instrument and is not a result view for this version.
+- [Detailed choices](index.html) — the v4 choice-led questionnaire, with a 20-category issue list, structured need/source/outcome follow-up for up to two issue areas, and an optional 10,000-character explanation for each priority need.
+- [Open responses](open-response.html) — the v4B written-response questionnaire, with the same opening, background questions and issue list, followed by optional written questions for up to two areas and two needs per area.
 
-## Adult route
+The [team comparison page](compare.html) links to both. [Youth and younger-child routes](youth.html) remain separate. These two adult versions supersede the earlier RAND Q1–Q67 adult page; its source data, renderer and [crosswalk](RAND_ITEM_CROSSWALK.md) remain in the repository as historical work, not the current entry route.
 
-1. RAND Page 1 welcome and Page 2 participation statement.
-2. Q1–Q11: study information and key demographics.
-3. Original nine problem-domain pages Q12–Q20, Other Q21 and top-two problem categories Q22.
-4. Q23–Q25: kinds of help needed and the two most significant needs for each selected problem.
-5. Q26–Q36: up to four linked problem–need contact questions, original contacted/noncontacted military/nonmilitary characteristics, personal networks, resource-specific helpfulness and hypothetical loss of resources.
-6. Q37–Q61: background and deployment, caring, housing and employment context; Q62–Q67: attitudes toward military service and final comments.
-7. A neutral thank-you page with verified Australian support contacts.
+Both specifications were supplied by Jacob from his ChatGPT 6 Pro work. Their common front and back pages and issue catalogue are identical except for the open version’s “What to expect” paragraph. See [SURVEY_VARIANTS.md](SURVEY_VARIANTS.md) for source-package hashes and the editing workflow. The source material is adapted from [RAND MG-1124 Appendix A](https://www.rand.org/content/dam/rand/pubs/monographs/2011/RAND_MG1124.pdf); this site does not claim RAND endorsement.
 
-Source-of-truth dictionaries are [Part 1](copy/rand-appendix-part1.json), [Q12–Q20](copy/rand-appendix-q12-q20.json), [Part 2](copy/rand-appendix-part2.json) and [Part 3](copy/rand-appendix-part3.json). The page builders and renderer are `rand-adult-*.js`. Regenerate derived files after a question edit:
+## Local checks
+
+Serve the repository root over HTTP, then open both entry pages. These are static ES modules that load their specifications from `survey-variants/`.
 
 ```sh
-node scripts/build-rand-adult-data.mjs
-node scripts/render-rand-adult-copy.mjs
-node --test tests/*.test.mjs
+node scripts/sync-dual-survey-common.mjs
+node --test tests/*.test.mjs survey-variants/choice/*.test.mjs survey-variants/open/*.test.mjs
 ```
 
-The site is a **presentation demo, not a collecting service**. It has no response receiver, answer persistence or answer-bearing URL; its respondent-visible text deliberately mirrors a real questionnaire, as Jacob directed. Do not distribute the link as a live consultation channel or interpret simulated completion as receipt. Real fieldwork requires LC-approved eligibility, participant information, custody/retention, an owned receiver and a verified end-to-end submission/export. The old v10 flow, handoff and analysis notes are preserved as historical files where labelled; the current adult instrument is the RAND Appendix A reconstruction above.
+The survey pages have no answer receiver, browser answer storage or analytics. `Finish survey` displays the supplied thank-you wording without claiming receipt. Before any real collection is activated, Lutheran Care must determine the actual collection platform and project-specific information handling, then verify an end-to-end submission path. These technical facts belong in project documentation rather than the respondent-facing text for this team review build.

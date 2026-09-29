@@ -1,0 +1,3789 @@
+{
+  "scope": {
+    "population": "Current-serving military personnel based in Greater Darwin and their adult family members, including overseas military personnel and families living elsewhere.",
+    "adult_only": true,
+    "historical_standalone_ex_service_path": false,
+    "collection_enabled": false,
+    "github_change_performed": false
+  },
+  "sources": {
+    "rand": "Miller et al. (2011), A New Approach for Assessing the Needs of Service Members and Their Families, Appendix A, printed pp. 75–115; Chapter 4, pp. 37–48.",
+    "strategy": "Supplied Defence and Veteran Family Wellbeing Strategy 2025–2030 and First Action Plan.",
+    "previous_bank": "Defence_Survey_Categories_and_Issues_Team_Review.docx, carried forward through Defence_Survey_Simplified_Codex_Handoff.md.",
+    "repo": "jacobjia1994/nt-military-family-support-survey",
+    "historical_commit": "cdfe402665d6afbac1c18e554564368298bf8e86",
+    "historical_survey_blob": "bd85d438bcddb901530c781fa33cb88ad4cfef02",
+    "baseline_package": "Defence_Survey_Codex_Pack_v3.zip, supplied in this conversation.",
+    "wording_review": "Retains v3 Australian English. Funding listing, LC privacy-policy link and public feedback email, and OAIC APP 5 guidance rechecked 29 September 2026. See SOURCES.md.",
+    "historical_main_observed_in_v2": "eafab52c8374a45bb3b8a1c5b1e6d84618bf40cf",
+    "implementation_basis": "Jacob’s latest decision: retain multiple-choice needs and follow-up; compact pages; optional 10,000-character narrative for each tracked need. No fresh GitHub checkout inspected in this preparation."
+  },
+  "issue_bank": [
+    {
+      "id": "I01",
+      "title": "Defence systems, information and communication",
+      "options": [
+        {
+          "id": "I01_01",
+          "label": "Difficulty understanding Defence language, organisations or practices"
+        },
+        {
+          "id": "I01_02",
+          "label": "Difficulty understanding what support or entitlements are available to you or your family"
+        },
+        {
+          "id": "I01_03",
+          "label": "Not knowing who to contact for help or information"
+        },
+        {
+          "id": "I01_04",
+          "label": "Difficulty finding clear, accurate information that fits your circumstances"
+        },
+        {
+          "id": "I01_05",
+          "label": "Important information reaching the serving member but not other family members"
+        },
+        {
+          "id": "I01_06",
+          "label": "Not getting information early enough to prepare for an important change or event"
+        },
+        {
+          "id": "I01_07",
+          "label": "Difficulty finding a person to speak with, rather than only information online"
+        },
+        {
+          "id": "I01_08",
+          "label": "Difficulty working out which services are suitable for your family"
+        },
+        {
+          "id": "I01_09",
+          "label": "Services not working well together"
+        },
+        {
+          "id": "I01_10",
+          "label": "Difficulty getting support outside normal office hours"
+        }
+      ],
+      "prompt": "Which of the following have been issues for you or your family in the past 12 months?",
+      "controls": [
+        {
+          "id": "I01_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I01_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I01_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I01_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I01_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I01_none",
+        "I01_na",
+        "I01_prefer_not",
+        "I01_unspecified"
+      ],
+      "other_text": {
+        "id": "I01_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q12, p. 83. Strategy: pp. 24–25; Action Plan 1.1.1–1.1.3, p. 35.",
+      "help": "Select all that apply. Include issues that have now been resolved. You can leave this question unanswered.",
+      "label": "Defence systems, information and communication",
+      "navigation_hint": "Finding clear information, knowing who to contact and getting support.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I02",
+      "title": "Work and life balance",
+      "options": [
+        {
+          "id": "I02_01",
+          "label": "Your working hours or schedule making everyday life difficult"
+        },
+        {
+          "id": "I02_02",
+          "label": "Your partner’s working hours or schedule making everyday life difficult"
+        },
+        {
+          "id": "I02_03",
+          "label": "Not having enough time for exercise or healthy eating"
+        },
+        {
+          "id": "I02_04",
+          "label": "Not having enough time for rest, recreation or family life"
+        },
+        {
+          "id": "I02_05",
+          "label": "Difficulty finding nearby or affordable recreation or family activities"
+        },
+        {
+          "id": "I02_06",
+          "label": "Not having enough leave before or after a deployment"
+        },
+        {
+          "id": "I02_07",
+          "label": "Difficulty balancing work with parenting or other caring responsibilities"
+        }
+      ],
+      "prompt": "Which of the following have been issues for you or your family in the past 12 months?",
+      "controls": [
+        {
+          "id": "I02_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I02_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I02_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I02_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I02_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I02_none",
+        "I02_na",
+        "I02_prefer_not",
+        "I02_unspecified"
+      ],
+      "other_text": {
+        "id": "I02_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q13, p. 84. Strategy: pp. 20, 26–27; Action Plan 2.1, p. 39.",
+      "help": "Select all that apply. Include issues that have now been resolved. You can leave this question unanswered.",
+      "label": "Work and life balance",
+      "navigation_hint": "Working hours, time for family, rest, exercise and caring responsibilities.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I03",
+      "title": "Postings, moving and time apart",
+      "options": [
+        {
+          "id": "I03_01",
+          "label": "Difficulties moving or storing your belongings"
+        },
+        {
+          "id": "I03_02",
+          "label": "Not knowing where the next posting will be or how long you will stay"
+        },
+        {
+          "id": "I03_03",
+          "label": "Having too little notice to prepare for a posting"
+        },
+        {
+          "id": "I03_04",
+          "label": "Frequent moves disrupting family life"
+        },
+        {
+          "id": "I03_05",
+          "label": "Not being able to stay at, or move to, your preferred location"
+        },
+        {
+          "id": "I03_06",
+          "label": "Family members having to live in different locations because of service"
+        },
+        {
+          "id": "I03_07",
+          "label": "Difficulty preparing your family for time apart because of service"
+        },
+        {
+          "id": "I03_08",
+          "label": "Worrying about family members while you are apart"
+        },
+        {
+          "id": "I03_09",
+          "label": "Not receiving deployment information, or receiving information that was incorrect"
+        },
+        {
+          "id": "I03_10",
+          "label": "Difficulty adjusting to family life after a service-related absence"
+        }
+      ],
+      "prompt": "Which of the following have been issues for you or your family in the past 12 months?",
+      "controls": [
+        {
+          "id": "I03_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I03_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I03_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I03_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I03_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I03_none",
+        "I03_na",
+        "I03_prefer_not",
+        "I03_unspecified"
+      ],
+      "other_text": {
+        "id": "I03_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q12, Q14 and Q17, pp. 83, 85, 88; discussion pp. 25–26. Strategy: p. 26; support examples p. 17; Action Plan 2.8.1, p. 42.",
+      "help": "Select all that apply. Include issues that have now been resolved. You can leave this question unanswered.",
+      "label": "Postings, moving and time apart",
+      "navigation_hint": "Preparing for a move, living apart and adjusting when someone returns.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I04",
+      "title": "Housing",
+      "options": [
+        {
+          "id": "I04_01",
+          "label": "Difficulty finding suitable housing"
+        },
+        {
+          "id": "I04_02",
+          "label": "Difficulty affording suitable housing"
+        },
+        {
+          "id": "I04_03",
+          "label": "Difficulty finding housing that meets disability or other additional needs in your family"
+        },
+        {
+          "id": "I04_04",
+          "label": "Difficulty finding a rental property that allows pets"
+        },
+        {
+          "id": "I04_05",
+          "label": "Limited housing choices that suit your family’s circumstances"
+        },
+        {
+          "id": "I04_06",
+          "label": "Not having a safe or secure place to stay"
+        },
+        {
+          "id": "I04_07",
+          "label": "Difficulties working towards buying your own home"
+        },
+        {
+          "id": "I04_08",
+          "label": "Difficulty understanding housing entitlements or rental assistance"
+        }
+      ],
+      "prompt": "Which of the following have been issues for you or your family in the past 12 months?",
+      "controls": [
+        {
+          "id": "I04_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I04_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I04_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I04_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I04_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I04_none",
+        "I04_na",
+        "I04_prefer_not",
+        "I04_unspecified"
+      ],
+      "other_text": {
+        "id": "I04_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q14, p. 85. Strategy: pp. 26–27; Action Plan 2.4–2.5, p. 40.",
+      "help": "Select all that apply. Include issues that have now been resolved. You can leave this question unanswered.",
+      "label": "Housing",
+      "navigation_hint": "Finding and affording a suitable home, including accessibility and pets.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I05",
+      "title": "Household tasks and transport",
+      "options": [
+        {
+          "id": "I05_01",
+          "label": "Not having enough time to get everyday household tasks done"
+        },
+        {
+          "id": "I05_02",
+          "label": "Difficulty keeping up with housework or garden maintenance"
+        },
+        {
+          "id": "I05_03",
+          "label": "Difficulty arranging home maintenance or repairs"
+        },
+        {
+          "id": "I05_04",
+          "label": "Difficulty arranging car maintenance or repairs"
+        },
+        {
+          "id": "I05_05",
+          "label": "Not having reliable transport for everyday needs"
+        },
+        {
+          "id": "I05_06",
+          "label": "Difficulty managing extra household responsibilities while a family member is away"
+        },
+        {
+          "id": "I05_07",
+          "label": "Difficulty caring for pets during a move or service-related absence"
+        }
+      ],
+      "prompt": "Which of the following have been issues for you or your family in the past 12 months?",
+      "controls": [
+        {
+          "id": "I05_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I05_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I05_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I05_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I05_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I05_none",
+        "I05_na",
+        "I05_prefer_not",
+        "I05_unspecified"
+      ],
+      "other_text": {
+        "id": "I05_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q14, p. 85; discussion pp. 26–27. Strategy: p. 27; Action Plan 2.1, p. 39.",
+      "help": "Select all that apply. Include issues that have now been resolved. You can leave this question unanswered.",
+      "label": "Household tasks and transport",
+      "navigation_hint": "Household tasks, repairs, transport and caring for pets.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I06",
+      "title": "Work, education and career development",
+      "options": [
+        {
+          "id": "I06_01",
+          "label": "Difficulty finding suitable work for the non-serving partner in your family"
+        },
+        {
+          "id": "I06_02",
+          "label": "Difficulty finding work that matches your skills or qualifications"
+        },
+        {
+          "id": "I06_03",
+          "label": "Difficulty keeping a job or building a career through repeated moves"
+        },
+        {
+          "id": "I06_04",
+          "label": "Difficulty finding flexible or remote work that fits your family’s circumstances"
+        },
+        {
+          "id": "I06_05",
+          "label": "Difficulty maintaining professional contacts and networks"
+        },
+        {
+          "id": "I06_06",
+          "label": "Difficulty getting useful career advice or coaching"
+        },
+        {
+          "id": "I06_07",
+          "label": "Employers not recognising your skills or experience"
+        },
+        {
+          "id": "I06_08",
+          "label": "Difficulty taking up education or training opportunities"
+        },
+        {
+          "id": "I06_09",
+          "label": "Your partner having difficulty taking up education or training opportunities"
+        },
+        {
+          "id": "I06_10",
+          "label": "Difficulty understanding eligibility for education or employment assistance"
+        }
+      ],
+      "prompt": "Which of the following have been issues for you or your family in the past 12 months?",
+      "controls": [
+        {
+          "id": "I06_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I06_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I06_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I06_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I06_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I06_none",
+        "I06_na",
+        "I06_prefer_not",
+        "I06_unspecified"
+      ],
+      "other_text": {
+        "id": "I06_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q13 and Q15, pp. 84, 86; discussion p. 24. Strategy: Action Plan 2.3.1–2.3.4, p. 40.",
+      "help": "Select all that apply. Include issues that have now been resolved. You can leave this question unanswered.",
+      "label": "Work, education and career development",
+      "navigation_hint": "Finding work, maintaining a career and taking up education or training.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I07",
+      "title": "Money and managing finances",
+      "options": [
+        {
+          "id": "I07_01",
+          "label": "Not being paid correctly or on time"
+        },
+        {
+          "id": "I07_02",
+          "label": "Difficulty managing bills and the household budget"
+        },
+        {
+          "id": "I07_03",
+          "label": "Difficulty paying debts or regular bills"
+        },
+        {
+          "id": "I07_04",
+          "label": "Spending that feels out of control"
+        },
+        {
+          "id": "I07_05",
+          "label": "Losing your home because you cannot keep up with mortgage payments"
+        },
+        {
+          "id": "I07_06",
+          "label": "Bankruptcy"
+        },
+        {
+          "id": "I07_07",
+          "label": "Difficulty managing changes in household income after changes to employment or service"
+        },
+        {
+          "id": "I07_08",
+          "label": "Difficulty finding out about financial education or assistance"
+        }
+      ],
+      "prompt": "Which of the following have been issues for you or your family in the past 12 months?",
+      "controls": [
+        {
+          "id": "I07_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I07_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I07_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I07_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I07_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I07_none",
+        "I07_na",
+        "I07_prefer_not",
+        "I07_unspecified"
+      ],
+      "other_text": {
+        "id": "I07_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q14, Q15 and Q19, pp. 85–86, 90. Strategy: pp. 2, 21; Action Plan 2.1.2, p. 39.",
+      "help": "Select all that apply. Include issues that have now been resolved. You can leave this question unanswered.",
+      "label": "Money and managing finances",
+      "navigation_hint": "Pay, bills, debts, spending and changes in household income.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I08",
+      "title": "Health care and treatment",
+      "options": [
+        {
+          "id": "I08_01",
+          "label": "Difficulty getting health care"
+        },
+        {
+          "id": "I08_02",
+          "label": "Difficulty understanding health benefits or health cover"
+        },
+        {
+          "id": "I08_03",
+          "label": "Difficulty making health insurance claims or claiming back health costs"
+        },
+        {
+          "id": "I08_04",
+          "label": "Receiving poor-quality health care"
+        },
+        {
+          "id": "I08_05",
+          "label": "Difficulty arranging health care during pregnancy or childbirth"
+        },
+        {
+          "id": "I08_06",
+          "label": "Difficulty arranging health care for family members not covered by Defence family benefits"
+        },
+        {
+          "id": "I08_07",
+          "label": "Difficulty getting suitable mental health care for you or your family"
+        },
+        {
+          "id": "I08_08",
+          "label": "Difficulty getting care because services are far from where you live"
+        },
+        {
+          "id": "I08_09",
+          "label": "Difficulty getting a referral to the right health or support service"
+        },
+        {
+          "id": "I08_10",
+          "label": "Difficulty keeping care coordinated between Defence, veteran and community services"
+        }
+      ],
+      "prompt": "Which of the following have been issues for you or your family in the past 12 months?",
+      "controls": [
+        {
+          "id": "I08_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I08_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I08_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I08_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I08_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I08_none",
+        "I08_na",
+        "I08_prefer_not",
+        "I08_unspecified"
+      ],
+      "other_text": {
+        "id": "I08_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q16, p. 87. Strategy: pp. 24, 26; Action Plan 1.2.7, p. 36; 2.12, p. 43.",
+      "help": "Select all that apply. Include issues that have now been resolved. You can leave this question unanswered.",
+      "label": "Health care and treatment",
+      "navigation_hint": "Finding treatment, costs, referrals and keeping care coordinated.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I09",
+      "title": "Your own health and wellbeing",
+      "options": [
+        {
+          "id": "I09_01",
+          "label": "Feeling stressed or overwhelmed"
+        },
+        {
+          "id": "I09_02",
+          "label": "Feeling very tired"
+        },
+        {
+          "id": "I09_03",
+          "label": "Feeling low, depressed or anxious"
+        },
+        {
+          "id": "I09_04",
+          "label": "Impatience, anger or aggression affecting your wellbeing or daily life"
+        },
+        {
+          "id": "I09_05",
+          "label": "Alcohol, smoking or drug use affecting your wellbeing or daily life"
+        },
+        {
+          "id": "I09_06",
+          "label": "Physical injury or illness"
+        },
+        {
+          "id": "I09_07",
+          "label": "Difficulty communicating with other people"
+        },
+        {
+          "id": "I09_08",
+          "label": "Trouble sleeping"
+        },
+        {
+          "id": "I09_09",
+          "label": "Risk-taking, such as reckless driving, affecting your safety or daily life"
+        }
+      ],
+      "prompt": "Which of the following have affected your own health or wellbeing in the past 12 months?",
+      "controls": [
+        {
+          "id": "I09_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I09_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I09_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I09_na",
+          "label": "This area does not apply to me"
+        },
+        {
+          "id": "I09_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I09_none",
+        "I09_na",
+        "I09_prefer_not",
+        "I09_unspecified"
+      ],
+      "other_text": {
+        "id": "I09_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q19, p. 90. Other original Q19 topics are retained under money, social connection, safety and bereavement.",
+      "help": "Select all that apply. You do not need to provide a diagnosis. You can leave this question unanswered.",
+      "label": "Your own health and wellbeing",
+      "navigation_hint": "Stress, mood, sleep, physical health and other aspects of your wellbeing.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I10",
+      "title": "An adult family member’s wellbeing",
+      "options": [
+        {
+          "id": "I10_01",
+          "label": "Stress, feeling overwhelmed or tired"
+        },
+        {
+          "id": "I10_02",
+          "label": "Loneliness or boredom"
+        },
+        {
+          "id": "I10_03",
+          "label": "Depression, anxiety, anger or other troubling mood changes"
+        },
+        {
+          "id": "I10_04",
+          "label": "Alcohol, smoking or drug use affecting their wellbeing or daily life"
+        },
+        {
+          "id": "I10_05",
+          "label": "Physical injury or illness"
+        },
+        {
+          "id": "I10_06",
+          "label": "Difficulty communicating with other people"
+        },
+        {
+          "id": "I10_07",
+          "label": "Trouble sleeping"
+        },
+        {
+          "id": "I10_08",
+          "label": "Risk-taking, such as reckless driving, affecting their safety or daily life"
+        },
+        {
+          "id": "I10_09",
+          "label": "Spending that feels out of their control"
+        },
+        {
+          "id": "I10_10",
+          "label": "Grieving the loss of a friend or loved one"
+        },
+        {
+          "id": "I10_11",
+          "label": "Being affected by a crime"
+        }
+      ],
+      "prompt": "As far as you know, which of the following have affected an adult family member’s wellbeing in the past 12 months?",
+      "controls": [
+        {
+          "id": "I10_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I10_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I10_none",
+          "label": "No issues in this area, as far as I know"
+        },
+        {
+          "id": "I10_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I10_unsure",
+          "label": "Not sure"
+        },
+        {
+          "id": "I10_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I10_none",
+        "I10_na",
+        "I10_prefer_not",
+        "I10_unsure",
+        "I10_unspecified"
+      ],
+      "other_text": {
+        "id": "I10_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q20, p. 91. Wider family scope is an adaptation informed by Strategy pp. 9, 20.",
+      "help": "Think about one adult family member, such as your partner. Keep the same person in mind in any follow-up questions. Select all that apply, based only on what you know. Do not name the person or provide a diagnosis.",
+      "label": "An adult family member’s wellbeing",
+      "navigation_hint": "The wellbeing of a partner or another adult family member, as far as you know.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I11",
+      "title": "Partner relationships and separation",
+      "options": [
+        {
+          "id": "I11_01",
+          "label": "Not having enough contact with your partner during a service-related absence"
+        },
+        {
+          "id": "I11_02",
+          "label": "Difficulty communicating or expressing feelings"
+        },
+        {
+          "id": "I11_03",
+          "label": "Growing apart or wanting different things"
+        },
+        {
+          "id": "I11_04",
+          "label": "Arguments"
+        },
+        {
+          "id": "I11_05",
+          "label": "Infidelity (cheating)"
+        },
+        {
+          "id": "I11_06",
+          "label": "Separation, divorce or the end of a relationship"
+        },
+        {
+          "id": "I11_07",
+          "label": "Little or no physical affection"
+        },
+        {
+          "id": "I11_08",
+          "label": "Changes in roles or responsibilities within the relationship"
+        },
+        {
+          "id": "I11_09",
+          "label": "Difficulty reconnecting after a deployment or other service-related absence"
+        }
+      ],
+      "prompt": "Which of the following have been issues in a relationship with your current or former partner in the past 12 months?",
+      "controls": [
+        {
+          "id": "I11_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I11_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I11_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I11_na",
+          "label": "This area does not apply to me"
+        },
+        {
+          "id": "I11_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I11_none",
+        "I11_na",
+        "I11_prefer_not",
+        "I11_unspecified"
+      ],
+      "other_text": {
+        "id": "I11_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q17, p. 88. Physical or verbal abuse is retained under safety rather than treated only as relationship conflict. Strategy: Action Plan 2.10.4, p. 42.",
+      "help": "Select all that apply. You can answer about a relationship that has ended, or leave this question unanswered.",
+      "label": "Partner relationships and separation",
+      "navigation_hint": "Communication, time apart, relationship changes and separation.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I12",
+      "title": "Childcare and parenting",
+      "options": [
+        {
+          "id": "I12_01",
+          "label": "Difficulty finding an available childcare place, including waiting lists"
+        },
+        {
+          "id": "I12_02",
+          "label": "Difficulty affording childcare"
+        },
+        {
+          "id": "I12_03",
+          "label": "Childcare hours not matching the hours you need"
+        },
+        {
+          "id": "I12_04",
+          "label": "Childcare being too far away"
+        },
+        {
+          "id": "I12_05",
+          "label": "Concerns about childcare quality"
+        },
+        {
+          "id": "I12_06",
+          "label": "Difficulty managing parenting alone during a service-related absence"
+        },
+        {
+          "id": "I12_07",
+          "label": "Difficulty making parenting arrangements work as a single or separated parent"
+        },
+        {
+          "id": "I12_08",
+          "label": "Difficulty coordinating children’s care when both parents have service commitments"
+        },
+        {
+          "id": "I12_09",
+          "label": "Difficulty sharing parenting across different households or locations"
+        }
+      ],
+      "prompt": "Which of the following have been issues for you or your family in the past 12 months?",
+      "controls": [
+        {
+          "id": "I12_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I12_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I12_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I12_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I12_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I12_none",
+        "I12_na",
+        "I12_prefer_not",
+        "I12_unspecified"
+      ],
+      "other_text": {
+        "id": "I12_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q18, p. 89; discussion p. 27. Strategy: pp. 26–27; Action Plan 2.1, p. 39; 2.7.1, p. 41; 2.9.1, p. 42.",
+      "help": "Select all that apply. Include issues that have now been resolved. You can leave this question unanswered.",
+      "label": "Childcare and parenting",
+      "navigation_hint": "Childcare places, costs and hours, parenting alone and shared care.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I13",
+      "title": "Children’s and young people’s education and wellbeing",
+      "options": [
+        {
+          "id": "I13_01",
+          "label": "Concerns about a school’s quality or suitability"
+        },
+        {
+          "id": "I13_02",
+          "label": "Difficulty getting to or accessing a suitable school"
+        },
+        {
+          "id": "I13_03",
+          "label": "Difficulty meeting school-related costs"
+        },
+        {
+          "id": "I13_04",
+          "label": "Difficulty enrolling a child without a fixed address after a Defence-related move"
+        },
+        {
+          "id": "I13_05",
+          "label": "Poor or falling school results"
+        },
+        {
+          "id": "I13_06",
+          "label": "Emotional or behavioural difficulties at school"
+        },
+        {
+          "id": "I13_07",
+          "label": "Emotional or behavioural difficulties at home"
+        },
+        {
+          "id": "I13_08",
+          "label": "Difficulty bonding or reconnecting with a parent"
+        },
+        {
+          "id": "I13_09",
+          "label": "A child’s physical health concerns"
+        },
+        {
+          "id": "I13_10",
+          "label": "Difficulty adjusting after a move"
+        },
+        {
+          "id": "I13_11",
+          "label": "Difficulty joining school or community activities or building friendships"
+        },
+        {
+          "id": "I13_12",
+          "label": "Difficulty finding suitable support for an older child or young adult"
+        },
+        {
+          "id": "I13_13",
+          "label": "School or education staff not understanding the effects of Defence life"
+        }
+      ],
+      "prompt": "As far as you know, which of the following have been issues for a child or young person in your family in the past 12 months?",
+      "controls": [
+        {
+          "id": "I13_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I13_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I13_none",
+          "label": "No issues in this area, as far as I know"
+        },
+        {
+          "id": "I13_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I13_unsure",
+          "label": "Not sure"
+        },
+        {
+          "id": "I13_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I13_none",
+        "I13_na",
+        "I13_prefer_not",
+        "I13_unsure",
+        "I13_unspecified"
+      ],
+      "other_text": {
+        "id": "I13_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q18, p. 89. Strategy: Action Plan 1.2.1 and 1.2.6, p. 36; 2.2.1–2.2.2, p. 39; 2.7.2, p. 41.",
+      "help": "Select all that apply, based only on what you know. Do not include a child’s name, school name or identifying details.",
+      "label": "Children’s and young people’s education and wellbeing",
+      "navigation_hint": "Schools, friendships, adjustment, health and support for young people.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I14",
+      "title": "Disability support and caring responsibilities",
+      "options": [
+        {
+          "id": "I14_01",
+          "label": "Difficulty finding suitable support for a family member with disability or additional needs"
+        },
+        {
+          "id": "I14_02",
+          "label": "Difficulty managing care for a child with disability"
+        },
+        {
+          "id": "I14_03",
+          "label": "Difficulty managing care for an older family member"
+        },
+        {
+          "id": "I14_04",
+          "label": "Difficulty managing ongoing care for an injured or unwell family member"
+        },
+        {
+          "id": "I14_05",
+          "label": "Not knowing how to support a family member experiencing mental health difficulties"
+        },
+        {
+          "id": "I14_06",
+          "label": "Caring responsibilities placing a strain on your own wellbeing"
+        },
+        {
+          "id": "I14_07",
+          "label": "Difficulty keeping care arrangements working during a posting or service-related absence"
+        },
+        {
+          "id": "I14_08",
+          "label": "Difficulty being involved in care discussions when authorised by the person you care for"
+        },
+        {
+          "id": "I14_09",
+          "label": "Your own support needs not being recognised as a carer"
+        }
+      ],
+      "prompt": "Which of the following have been issues for you or your family in the past 12 months?",
+      "controls": [
+        {
+          "id": "I14_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I14_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I14_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I14_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I14_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I14_none",
+        "I14_na",
+        "I14_prefer_not",
+        "I14_unspecified"
+      ],
+      "other_text": {
+        "id": "I14_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "Strategy: pp. 4, 10, 17, 26–28; Action Plan 1.7.2, p. 38; 2.1.1, p. 39; 3.3.6, p. 45.",
+      "help": "Select all that apply. Include issues that have now been resolved. You can leave this question unanswered.",
+      "label": "Disability support and caring responsibilities",
+      "navigation_hint": "Finding suitable support and managing caring responsibilities.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I15",
+      "title": "Friends, community and belonging",
+      "options": [
+        {
+          "id": "I15_01",
+          "label": "Loneliness"
+        },
+        {
+          "id": "I15_02",
+          "label": "Boredom"
+        },
+        {
+          "id": "I15_03",
+          "label": "Difficulty making friends or building a local support network"
+        },
+        {
+          "id": "I15_04",
+          "label": "Losing contact with friends or support networks after a move"
+        },
+        {
+          "id": "I15_05",
+          "label": "Difficulty joining local groups or community activities"
+        },
+        {
+          "id": "I15_06",
+          "label": "Difficulty connecting with people who understand Defence life"
+        },
+        {
+          "id": "I15_07",
+          "label": "Difficulty finding activities that give you a sense of meaning or purpose"
+        },
+        {
+          "id": "I15_08",
+          "label": "Difficulty maintaining cultural, religious or spiritual connections that matter to you"
+        }
+      ],
+      "prompt": "Which of the following have been issues for you or your family in the past 12 months?",
+      "controls": [
+        {
+          "id": "I15_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I15_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I15_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I15_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I15_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I15_none",
+        "I15_na",
+        "I15_prefer_not",
+        "I15_unspecified"
+      ],
+      "other_text": {
+        "id": "I15_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q19, p. 90. Strategy: p. 2; wellbeing factors p. 14; diversity p. 20; Action Plan 2.13.1–2.13.4, p. 43.",
+      "help": "Select all that apply. Include issues that have now been resolved. You can leave this question unanswered.",
+      "label": "Friends, community and belonging",
+      "navigation_hint": "Friendships, community activities, belonging and meaningful connections.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I16",
+      "title": "Recognition, respect and inclusion",
+      "options": [
+        {
+          "id": "I16_01",
+          "label": "Difficulty getting Defence staff to listen to you, take you seriously or treat you with respect"
+        },
+        {
+          "id": "I16_02",
+          "label": "Rumours or gossip within the Defence community"
+        },
+        {
+          "id": "I16_03",
+          "label": "The effects of service on your family not being recognised"
+        },
+        {
+          "id": "I16_04",
+          "label": "Being left out of discussions or decisions that affect your family"
+        },
+        {
+          "id": "I16_05",
+          "label": "Not being recognised as family because you are not a partner or dependent child"
+        },
+        {
+          "id": "I16_06",
+          "label": "Services not understanding the circumstances of Defence families"
+        },
+        {
+          "id": "I16_07",
+          "label": "Support not meeting your cultural, language, religious or identity-related needs"
+        },
+        {
+          "id": "I16_08",
+          "label": "Not having an opportunity to influence how family support is designed"
+        }
+      ],
+      "prompt": "Which of the following have been issues for you or your family in the past 12 months?",
+      "controls": [
+        {
+          "id": "I16_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I16_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I16_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I16_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I16_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I16_none",
+        "I16_na",
+        "I16_prefer_not",
+        "I16_unspecified"
+      ],
+      "other_text": {
+        "id": "I16_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q12, p. 83. Strategy: pp. 20, 25, 28; Action Plan 1.2, p. 36.",
+      "help": "Select all that apply. Include issues that have now been resolved. You can leave this question unanswered.",
+      "label": "Recognition, respect and inclusion",
+      "navigation_hint": "Being heard, understood, respected and included.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I17",
+      "title": "Personal and family safety",
+      "options": [
+        {
+          "id": "I17_01",
+          "label": "Experiencing physical or verbal abuse"
+        },
+        {
+          "id": "I17_02",
+          "label": "Feeling unsafe because of family or domestic violence"
+        },
+        {
+          "id": "I17_03",
+          "label": "Being affected by crime, such as theft, a break-in or vandalism"
+        },
+        {
+          "id": "I17_04",
+          "label": "Concerns about a child’s safety"
+        },
+        {
+          "id": "I17_05",
+          "label": "Difficulty finding support after violence or abuse"
+        }
+      ],
+      "prompt": "Which of the following have been issues for you or your family in the past 12 months?",
+      "controls": [
+        {
+          "id": "I17_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I17_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I17_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I17_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I17_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I17_none",
+        "I17_na",
+        "I17_prefer_not",
+        "I17_unspecified"
+      ],
+      "other_text": {
+        "id": "I17_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q14, Q17, Q18 and Q19, pp. 85, 88–90. Strategy: justice and safety factor p. 14; Action Plan 2.6.1 and 2.6.5, p. 41.",
+      "help": "Select all that apply. Share only what you feel comfortable sharing. You do not need to describe an incident or identify anyone.",
+      "label": "Personal and family safety",
+      "support_note": "For support about domestic, family or sexual violence in Australia, contact 1800RESPECT on 1800 737 732. In an emergency in Australia, call 000.",
+      "support_link": {
+        "label": "1800RESPECT",
+        "url": "https://1800respect.org.au/"
+      },
+      "navigation_hint": "Feeling safe, violence or abuse, crime and concerns about a child.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I18",
+      "title": "Legal matters",
+      "options": [
+        {
+          "id": "I18_01",
+          "label": "Difficulty arranging or using a power of attorney"
+        },
+        {
+          "id": "I18_02",
+          "label": "Legal issues about parenting arrangements or other family matters"
+        },
+        {
+          "id": "I18_03",
+          "label": "Difficulties with the legal process of separation or divorce"
+        },
+        {
+          "id": "I18_04",
+          "label": "Difficulty getting legal advice or assistance relevant to your situation"
+        }
+      ],
+      "prompt": "Which of the following have been issues for you or your family in the past 12 months?",
+      "controls": [
+        {
+          "id": "I18_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I18_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I18_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I18_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I18_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I18_none",
+        "I18_na",
+        "I18_prefer_not",
+        "I18_unspecified"
+      ],
+      "other_text": {
+        "id": "I18_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q15, p. 86. Strategy: examples of legal services in the support system, p. 17.",
+      "help": "Select all that apply. Include issues that have now been resolved. You can leave this question unanswered.",
+      "label": "Legal matters",
+      "navigation_hint": "Parenting arrangements, separation and getting legal assistance.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I19",
+      "title": "Grief and bereavement",
+      "options": [
+        {
+          "id": "I19_01",
+          "label": "Grieving the loss of a friend or family member"
+        },
+        {
+          "id": "I19_02",
+          "label": "Difficulty supporting a partner or another family member who is grieving"
+        },
+        {
+          "id": "I19_03",
+          "label": "Coping with a death during service or a death related to service"
+        },
+        {
+          "id": "I19_04",
+          "label": "Coping after a death by suicide"
+        },
+        {
+          "id": "I19_05",
+          "label": "Difficulty finding bereavement support that fits your family’s circumstances"
+        },
+        {
+          "id": "I19_06",
+          "label": "Difficulty keeping community connections and support after a family member’s death"
+        }
+      ],
+      "prompt": "Which of the following have been issues for you or your family in the past 12 months?",
+      "controls": [
+        {
+          "id": "I19_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I19_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I19_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I19_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I19_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I19_none",
+        "I19_na",
+        "I19_prefer_not",
+        "I19_unspecified"
+      ],
+      "other_text": {
+        "id": "I19_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "RAND: Q19–Q20, pp. 90–91. Strategy: pp. 9, 15–16, 27–28; Action Plan 2.6.4, p. 41.",
+      "help": "Select all that apply. Share only what you feel comfortable sharing. You do not need to describe the death or identify anyone.",
+      "label": "Grief and bereavement",
+      "navigation_hint": "Grief, supporting someone after a death and maintaining support.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    },
+    {
+      "id": "I20",
+      "title": "Preparing to leave Defence or change service arrangements",
+      "options": [
+        {
+          "id": "I20_01",
+          "label": "Uncertainty about how leaving Defence will affect your family"
+        },
+        {
+          "id": "I20_02",
+          "label": "Difficulties preparing to leave service involuntarily or for medical reasons"
+        },
+        {
+          "id": "I20_03",
+          "label": "Not getting information early enough to prepare for leaving service"
+        },
+        {
+          "id": "I20_04",
+          "label": "Difficulty including family members in discussions or activities about leaving service"
+        },
+        {
+          "id": "I20_05",
+          "label": "Difficulty understanding which family supports will continue or change"
+        },
+        {
+          "id": "I20_06",
+          "label": "Difficulty getting Defence, the Department of Veterans’ Affairs (DVA) and community services to work together during transition"
+        },
+        {
+          "id": "I20_07",
+          "label": "Difficulty keeping social connections and support networks during transition"
+        },
+        {
+          "id": "I20_08",
+          "label": "Concerns about civilian employment or adjusting to civilian life"
+        },
+        {
+          "id": "I20_09",
+          "label": "Difficulties planning a change between full-time and Reserve service"
+        }
+      ],
+      "prompt": "Which of the following have been issues for you or your family in the past 12 months?",
+      "controls": [
+        {
+          "id": "I20_other",
+          "label": "Another issue in this area"
+        },
+        {
+          "id": "I20_unspecified",
+          "label": "I experienced an issue in this area, but prefer not to give details"
+        },
+        {
+          "id": "I20_none",
+          "label": "No issues in this area"
+        },
+        {
+          "id": "I20_na",
+          "label": "This area does not apply to me or my family"
+        },
+        {
+          "id": "I20_prefer_not",
+          "label": "Prefer not to answer"
+        }
+      ],
+      "exclusive_ids": [
+        "I20_none",
+        "I20_na",
+        "I20_prefer_not",
+        "I20_unspecified"
+      ],
+      "other_text": {
+        "id": "I20_other_text",
+        "label": "What other issue would you like to mention?",
+        "required": false,
+        "max_length": 10000,
+        "help": "Optional. Please do not include names or identifying details.",
+        "placement": "Immediately below Another issue in this area when selected; no extra reveal button."
+      },
+      "source_note": "Strategy: pp. 10–11, 15, 26; Action Plan 1.3.1, p. 37; 1.5.4, p. 38; definition of transfer p. 48.",
+      "help": "Select all that apply. Include issues that have now been resolved. You can leave this question unanswered.",
+      "label": "Preparing to leave Defence or change service arrangements",
+      "navigation_hint": "Preparing to leave service, changes in support and civilian life.",
+      "reporting_note_internal": "Opening this list is navigation, not evidence of an issue. A substantive item, Other or the positive unspecified control establishes a reported area."
+    }
+  ],
+  "geography": {
+    "version": "2026-09-27-two-level",
+    "source_commit": "cdfe402665d6afbac1c18e554564368298bf8e86",
+    "source_blob": "c3062d9457a05bc2d62ed368735ad53190944191",
+    "areas": [
+      {
+        "id": "darwin",
+        "label": "Darwin"
+      },
+      {
+        "id": "palmerston",
+        "label": "Palmerston"
+      },
+      {
+        "id": "litchfield",
+        "label": "Litchfield"
+      },
+      {
+        "id": "greater_darwin_other",
+        "label": "Other Greater Darwin area"
+      },
+      {
+        "id": "outside",
+        "label": "Outside Greater Darwin"
+      },
+      {
+        "id": "prefer",
+        "label": "Prefer not to answer"
+      }
+    ],
+    "localities": [
+      {
+        "id": "acacia_hills",
+        "label": "Acacia Hills",
+        "region": "litchfield"
+      },
+      {
+        "id": "alawa",
+        "label": "Alawa",
+        "region": "darwin"
+      },
+      {
+        "id": "anula",
+        "label": "Anula",
+        "region": "darwin"
+      },
+      {
+        "id": "archer",
+        "label": "Archer",
+        "region": "palmerston"
+      },
+      {
+        "id": "bakewell",
+        "label": "Bakewell",
+        "region": "palmerston"
+      },
+      {
+        "id": "bayview",
+        "label": "Bayview",
+        "region": "darwin"
+      },
+      {
+        "id": "bees_creek",
+        "label": "Bees Creek",
+        "region": "litchfield"
+      },
+      {
+        "id": "bellamack",
+        "label": "Bellamack",
+        "region": "palmerston"
+      },
+      {
+        "id": "berrimah",
+        "label": "Berrimah",
+        "region": "darwin",
+        "aliases": [
+          "Northcrest"
+        ]
+      },
+      {
+        "id": "berry_springs",
+        "label": "Berry Springs",
+        "region": "litchfield"
+      },
+      {
+        "id": "black_jungle",
+        "label": "Black Jungle",
+        "region": "litchfield"
+      },
+      {
+        "id": "blackmore",
+        "label": "Blackmore",
+        "region": "litchfield"
+      },
+      {
+        "id": "brinkin",
+        "label": "Brinkin",
+        "region": "darwin"
+      },
+      {
+        "id": "buffalo_creek",
+        "label": "Buffalo Creek",
+        "region": "darwin"
+      },
+      {
+        "id": "casuarina",
+        "label": "Casuarina",
+        "region": "darwin"
+      },
+      {
+        "id": "channel_island",
+        "label": "Channel Island",
+        "region": "litchfield"
+      },
+      {
+        "id": "charles_darwin",
+        "label": "Charles Darwin",
+        "region": "darwin"
+      },
+      {
+        "id": "coconut_grove",
+        "label": "Coconut Grove",
+        "region": "darwin"
+      },
+      {
+        "id": "coolalinga",
+        "label": "Coolalinga",
+        "region": "litchfield"
+      },
+      {
+        "id": "coonawarra",
+        "label": "Coonawarra",
+        "region": "darwin"
+      },
+      {
+        "id": "daly",
+        "label": "Daly",
+        "region": "litchfield"
+      },
+      {
+        "id": "darwin_city",
+        "label": "Darwin City",
+        "region": "darwin",
+        "aliases": [
+          "Darwin CBD",
+          "CBD"
+        ]
+      },
+      {
+        "id": "darwin_river",
+        "label": "Darwin River",
+        "region": "litchfield"
+      },
+      {
+        "id": "driver",
+        "label": "Driver",
+        "region": "palmerston"
+      },
+      {
+        "id": "durack",
+        "label": "Durack",
+        "region": "palmerston"
+      },
+      {
+        "id": "east_arm",
+        "label": "East Arm",
+        "region": "greater_darwin_other"
+      },
+      {
+        "id": "east_point",
+        "label": "East Point",
+        "region": "darwin"
+      },
+      {
+        "id": "eaton",
+        "label": "Eaton",
+        "region": "darwin"
+      },
+      {
+        "id": "elrundie",
+        "label": "Elrundie",
+        "region": "palmerston"
+      },
+      {
+        "id": "fannie_bay",
+        "label": "Fannie Bay",
+        "region": "darwin"
+      },
+      {
+        "id": "farrar",
+        "label": "Farrar",
+        "region": "palmerston"
+      },
+      {
+        "id": "fly_creek",
+        "label": "Fly Creek",
+        "region": "litchfield"
+      },
+      {
+        "id": "freds_pass",
+        "label": "Freds Pass",
+        "region": "litchfield"
+      },
+      {
+        "id": "girraween",
+        "label": "Girraween",
+        "region": "litchfield"
+      },
+      {
+        "id": "glyde_point",
+        "label": "Glyde Point",
+        "region": "litchfield"
+      },
+      {
+        "id": "gray",
+        "label": "Gray",
+        "region": "palmerston"
+      },
+      {
+        "id": "gunn",
+        "label": "Gunn",
+        "region": "palmerston"
+      },
+      {
+        "id": "gunn_point",
+        "label": "Gunn Point",
+        "region": "litchfield"
+      },
+      {
+        "id": "herbert",
+        "label": "Herbert",
+        "region": "litchfield"
+      },
+      {
+        "id": "hidden_valley",
+        "label": "Hidden Valley",
+        "region": "darwin"
+      },
+      {
+        "id": "holmes",
+        "label": "Holmes",
+        "region": "darwin"
+      },
+      {
+        "id": "holtze",
+        "label": "Holtze",
+        "region": "litchfield",
+        "aliases": [
+          "Robertson Barracks"
+        ]
+      },
+      {
+        "id": "howard_springs",
+        "label": "Howard Springs",
+        "region": "litchfield"
+      },
+      {
+        "id": "hughes",
+        "label": "Hughes",
+        "region": "litchfield"
+      },
+      {
+        "id": "humpty_doo",
+        "label": "Humpty Doo",
+        "region": "litchfield"
+      },
+      {
+        "id": "jingili",
+        "label": "Jingili",
+        "region": "darwin"
+      },
+      {
+        "id": "johnston",
+        "label": "Johnston",
+        "region": "palmerston"
+      },
+      {
+        "id": "karama",
+        "label": "Karama",
+        "region": "darwin"
+      },
+      {
+        "id": "knuckey_lagoon",
+        "label": "Knuckey Lagoon",
+        "region": "litchfield"
+      },
+      {
+        "id": "koolpinyah",
+        "label": "Koolpinyah",
+        "region": "litchfield"
+      },
+      {
+        "id": "lambells_lagoon",
+        "label": "Lambells Lagoon",
+        "region": "litchfield"
+      },
+      {
+        "id": "larrakeyah",
+        "label": "Larrakeyah",
+        "region": "darwin",
+        "aliases": [
+          "Cullen Bay"
+        ]
+      },
+      {
+        "id": "leanyer",
+        "label": "Leanyer",
+        "region": "darwin"
+      },
+      {
+        "id": "lee_point",
+        "label": "Lee Point",
+        "region": "darwin"
+      },
+      {
+        "id": "livingstone",
+        "label": "Livingstone",
+        "region": "litchfield"
+      },
+      {
+        "id": "lloyd_creek",
+        "label": "Lloyd Creek",
+        "region": "litchfield"
+      },
+      {
+        "id": "ludmilla",
+        "label": "Ludmilla",
+        "region": "darwin"
+      },
+      {
+        "id": "lyons",
+        "label": "Lyons",
+        "region": "darwin"
+      },
+      {
+        "id": "malak",
+        "label": "Malak",
+        "region": "darwin"
+      },
+      {
+        "id": "manton",
+        "label": "Manton",
+        "region": "litchfield"
+      },
+      {
+        "id": "marlow_lagoon",
+        "label": "Marlow Lagoon",
+        "region": "palmerston"
+      },
+      {
+        "id": "marrara",
+        "label": "Marrara",
+        "region": "darwin"
+      },
+      {
+        "id": "mcminns_lagoon",
+        "label": "McMinns Lagoon",
+        "region": "litchfield"
+      },
+      {
+        "id": "micket_creek",
+        "label": "Micket Creek",
+        "region": "litchfield"
+      },
+      {
+        "id": "middle_point",
+        "label": "Middle Point",
+        "region": "litchfield"
+      },
+      {
+        "id": "millner",
+        "label": "Millner",
+        "region": "darwin"
+      },
+      {
+        "id": "mitchell",
+        "label": "Mitchell",
+        "region": "palmerston"
+      },
+      {
+        "id": "moil",
+        "label": "Moil",
+        "region": "darwin"
+      },
+      {
+        "id": "moulden",
+        "label": "Moulden",
+        "region": "palmerston"
+      },
+      {
+        "id": "muirhead",
+        "label": "Muirhead",
+        "region": "darwin"
+      },
+      {
+        "id": "murrumujuk",
+        "label": "Murrumujuk",
+        "region": "litchfield"
+      },
+      {
+        "id": "nakara",
+        "label": "Nakara",
+        "region": "darwin"
+      },
+      {
+        "id": "nightcliff",
+        "label": "Nightcliff",
+        "region": "darwin"
+      },
+      {
+        "id": "noonamah",
+        "label": "Noonamah",
+        "region": "litchfield"
+      },
+      {
+        "id": "palmerston_city",
+        "label": "Palmerston City",
+        "region": "palmerston"
+      },
+      {
+        "id": "parap",
+        "label": "Parap",
+        "region": "darwin"
+      },
+      {
+        "id": "pinelands",
+        "label": "Pinelands",
+        "region": "palmerston"
+      },
+      {
+        "id": "rapid_creek",
+        "label": "Rapid Creek",
+        "region": "darwin"
+      },
+      {
+        "id": "rosebery",
+        "label": "Rosebery",
+        "region": "palmerston"
+      },
+      {
+        "id": "shoal_bay",
+        "label": "Shoal Bay",
+        "region": "litchfield"
+      },
+      {
+        "id": "southport",
+        "label": "Southport",
+        "region": "litchfield"
+      },
+      {
+        "id": "stuart_park",
+        "label": "Stuart Park",
+        "region": "darwin"
+      },
+      {
+        "id": "the_gardens",
+        "label": "The Gardens",
+        "region": "darwin"
+      },
+      {
+        "id": "the_narrows",
+        "label": "The Narrows",
+        "region": "darwin"
+      },
+      {
+        "id": "tivendale",
+        "label": "Tivendale",
+        "region": "palmerston"
+      },
+      {
+        "id": "tiwi",
+        "label": "Tiwi",
+        "region": "darwin"
+      },
+      {
+        "id": "tumbling_waters",
+        "label": "Tumbling Waters",
+        "region": "litchfield"
+      },
+      {
+        "id": "virginia",
+        "label": "Virginia",
+        "region": "litchfield"
+      },
+      {
+        "id": "wagaman",
+        "label": "Wagaman",
+        "region": "darwin"
+      },
+      {
+        "id": "wak_wak",
+        "label": "Wak Wak",
+        "region": "litchfield"
+      },
+      {
+        "id": "wanguri",
+        "label": "Wanguri",
+        "region": "darwin"
+      },
+      {
+        "id": "weddell",
+        "label": "Weddell",
+        "region": "litchfield"
+      },
+      {
+        "id": "wickham",
+        "label": "Wickham",
+        "region": "litchfield"
+      },
+      {
+        "id": "winnellie",
+        "label": "Winnellie",
+        "region": "darwin"
+      },
+      {
+        "id": "wishart",
+        "label": "Wishart",
+        "region": "palmerston"
+      },
+      {
+        "id": "woodroffe",
+        "label": "Woodroffe",
+        "region": "palmerston"
+      },
+      {
+        "id": "woolner",
+        "label": "Woolner",
+        "region": "darwin"
+      },
+      {
+        "id": "wulagi",
+        "label": "Wulagi",
+        "region": "darwin"
+      },
+      {
+        "id": "yarrawonga",
+        "label": "Yarrawonga",
+        "region": "palmerston"
+      },
+      {
+        "id": "zuccoli",
+        "label": "Zuccoli",
+        "region": "palmerston"
+      }
+    ],
+    "extra_locality_options": [
+      {
+        "id": "other",
+        "label": "Another suburb or locality in this area"
+      },
+      {
+        "id": "prefer",
+        "label": "Prefer not to answer"
+      }
+    ]
+  },
+  "needs": [
+    {
+      "id": "H01",
+      "label": "General information — what support is available, who can use it and how to access it",
+      "short_label": "General information"
+    },
+    {
+      "id": "H02",
+      "label": "Specific information — information about your own circumstances or arrangements, such as a move or time apart because of service",
+      "short_label": "Specific information"
+    },
+    {
+      "id": "H03",
+      "label": "An advocate — someone to help you get support or speak on your behalf",
+      "short_label": "An advocate"
+    },
+    {
+      "id": "H04",
+      "label": "Advice or education — guidance, knowledge or skills to help you deal with the issues",
+      "short_label": "Advice or education"
+    },
+    {
+      "id": "H05",
+      "label": "Emotional or social support",
+      "short_label": "Emotional or social support"
+    },
+    {
+      "id": "H06",
+      "label": "Professional counselling",
+      "short_label": "Professional counselling"
+    },
+    {
+      "id": "H07",
+      "label": "Practical or financial help — help with responsibilities, loans or donations",
+      "short_label": "Practical or financial help"
+    },
+    {
+      "id": "H08",
+      "label": "Activities — for fitness, recreation, managing stress or spending time together as a family",
+      "short_label": "Activities"
+    },
+    {
+      "id": "H09",
+      "label": "Another kind of help",
+      "short_label": "Another kind of help"
+    },
+    {
+      "id": "H11",
+      "label": "I needed help, but was not sure what kind",
+      "source_note_internal": "Local addition; positive need, type unspecified. Select on its own.",
+      "short_label": "Help needed — type not specified"
+    },
+    {
+      "id": "H10",
+      "label": "I did not need help in this area"
+    },
+    {
+      "id": "prefer_not",
+      "label": "Prefer not to answer"
+    }
+  ],
+  "resources": [
+    {
+      "id": "N01",
+      "label": "Government and community services outside the military, such as family services, libraries, community centres or independent Defence family organisations",
+      "kind": "nonmilitary",
+      "short_label": "Government and community services"
+    },
+    {
+      "id": "N02",
+      "label": "Clubs, recreation groups or fitness centres",
+      "kind": "nonmilitary",
+      "short_label": "Clubs, recreation groups and fitness centres"
+    },
+    {
+      "id": "N03",
+      "label": "A religious or spiritual group or leader",
+      "kind": "nonmilitary",
+      "short_label": "Religious or spiritual support"
+    },
+    {
+      "id": "N04",
+      "label": "Civilian health or counselling services, including public services, private doctors and counsellors",
+      "kind": "nonmilitary",
+      "short_label": "Civilian health and counselling services"
+    },
+    {
+      "id": "N05",
+      "label": "Online information or support outside the military, such as websites, search engines, online forums or social media",
+      "kind": "nonmilitary",
+      "short_label": "Online information and support"
+    },
+    {
+      "id": "N06",
+      "label": "Friends or family",
+      "kind": "personal",
+      "short_label": "Friends and family"
+    },
+    {
+      "id": "N07",
+      "label": "Another source of help outside the military",
+      "kind": "nonmilitary",
+      "short_label": "Another source of help"
+    },
+    {
+      "id": "M_ALL",
+      "label": "Defence or military-provided support",
+      "kind": "military",
+      "short_label": "Defence or military-provided support"
+    },
+    {
+      "id": "NO_CONTACT",
+      "label": "I did not approach or use any source, or receive any help, for this need",
+      "kind": "control"
+    },
+    {
+      "id": "unsure",
+      "label": "Not sure",
+      "kind": "control"
+    },
+    {
+      "id": "prefer_not",
+      "label": "Prefer not to answer",
+      "kind": "control"
+    }
+  ],
+  "characteristics": [
+    {
+      "id": "C01",
+      "label": "I have used this source of help for other needs."
+    },
+    {
+      "id": "C02",
+      "label": "I did not know about this source of help, or found information about it hard to find."
+    },
+    {
+      "id": "C03",
+      "label": "It was in a convenient location or easy to access."
+    },
+    {
+      "id": "C04",
+      "label": "I was concerned that using it might harm my or my family’s reputation."
+    },
+    {
+      "id": "C05",
+      "label": "It was friendly or welcoming, or made contact to offer help."
+    },
+    {
+      "id": "C06",
+      "label": "The waiting list or response time was too long."
+    },
+    {
+      "id": "C07",
+      "label": "Someone referred me to it, or it had a good reputation."
+    }
+  ],
+  "personal_networks": [
+    {
+      "id": "PN01",
+      "label": "I have friends or family members who make an effort to help with my issues and needs."
+    },
+    {
+      "id": "PN02",
+      "label": "My friends and family do not have the ability or resources to help me."
+    },
+    {
+      "id": "PN03",
+      "label": "Most or all of my friends and family live too far away."
+    },
+    {
+      "id": "PN04",
+      "label": "There is at least one person I can always count on to be there for me."
+    },
+    {
+      "id": "PN05",
+      "label": "I do not have many close relationships."
+    },
+    {
+      "id": "PN06",
+      "label": "I do not like sharing my issues or needs with friends or family."
+    },
+    {
+      "id": "PN07",
+      "label": "My friends and family have a good understanding of military life."
+    },
+    {
+      "id": "none",
+      "label": "None of these statements apply"
+    },
+    {
+      "id": "prefer_not",
+      "label": "Prefer not to answer"
+    }
+  ],
+  "helpfulness_scale": [
+    {
+      "id": "very_well",
+      "label": "Very well"
+    },
+    {
+      "id": "well",
+      "label": "Well"
+    },
+    {
+      "id": "all_right",
+      "label": "All right"
+    },
+    {
+      "id": "not_very_well",
+      "label": "Not very well"
+    },
+    {
+      "id": "not_at_all",
+      "label": "Not at all"
+    }
+  ],
+  "overall_need_scale": [
+    {
+      "id": "all",
+      "label": "All of this need was met"
+    },
+    {
+      "id": "some",
+      "label": "Some of this need was met"
+    },
+    {
+      "id": "none",
+      "label": "None of this need was met"
+    },
+    {
+      "id": "changed",
+      "label": "The situation changed and this help was no longer needed"
+    },
+    {
+      "id": "too_soon",
+      "label": "Too soon to judge"
+    },
+    {
+      "id": "unsure",
+      "label": "Not sure"
+    },
+    {
+      "id": "prefer_not",
+      "label": "Prefer not to answer"
+    }
+  ],
+  "schema_version": "gd-defence-family-survey-v4-compact-choice",
+  "version_label": "Compact, choice-led adult questionnaire",
+  "contract": {
+    "max_priority_categories": 2,
+    "max_priority_needs_per_category": 2,
+    "max_tracked_needs": 4,
+    "one_page_per_priority_category": true,
+    "needs_are_inline_sections_not_separate_routes": true,
+    "text_limit": 10000,
+    "text_counting": "Unicode code points after CRLF/CR to LF normalisation; includes spaces and newlines; never count bytes; never silently truncate.",
+    "required_text_fields": 0,
+    "substantive_issue_count": 170,
+    "category_count": 20,
+    "characteristics_scope": "one selected issue category, across its tracked needs; not each need and not the whole respondent",
+    "personal_networks_scope": "respondent-wide, asked once on the first active category page that uses friends/family",
+    "five_point_rating_plus_non_score_controls": true,
+    "collection_enabled": false,
+    "persistent_answers": false,
+    "change_youth_child_instruments": false,
+    "deploy_scope": "Replace the adult frontend through the existing repository deployment process when Codex is executing Jacob’s update instruction. Do not create or activate a response receiver."
+  },
+  "need_exclusive_ids": [
+    "H10",
+    "H11",
+    "prefer_not"
+  ],
+  "need_substantive_ids": [
+    "H01",
+    "H02",
+    "H03",
+    "H04",
+    "H05",
+    "H06",
+    "H07",
+    "H08",
+    "H09",
+    "H11"
+  ],
+  "source_exclusive_ids": [
+    "NO_CONTACT",
+    "unsure",
+    "prefer_not"
+  ],
+  "rating_response_options": [
+    {
+      "id": "very_well",
+      "label": "Very well"
+    },
+    {
+      "id": "well",
+      "label": "Well"
+    },
+    {
+      "id": "all_right",
+      "label": "All right"
+    },
+    {
+      "id": "not_very_well",
+      "label": "Not very well"
+    },
+    {
+      "id": "not_at_all",
+      "label": "Not at all"
+    },
+    {
+      "id": "no_help_received",
+      "label": "I did not receive any help from this source",
+      "scored": false
+    },
+    {
+      "id": "too_soon",
+      "label": "Too soon to say",
+      "scored": false
+    },
+    {
+      "id": "unsure",
+      "label": "Not sure",
+      "scored": false
+    },
+    {
+      "id": "prefer_not",
+      "label": "Prefer not to answer",
+      "scored": false
+    }
+  ],
+  "characteristic_response_controls": [
+    {
+      "id": "none",
+      "label": "None of these statements apply"
+    },
+    {
+      "id": "unsure",
+      "label": "Not sure"
+    },
+    {
+      "id": "prefer_not",
+      "label": "Prefer not to answer"
+    }
+  ],
+  "pages": [
+    {
+      "id": "welcome",
+      "title": "Defence Family Support Survey",
+      "intro": [
+        "Lutheran Care | Greater Darwin",
+        "Lutheran Care gratefully acknowledges funding from the Australian Government Department of Defence through the Family Support Funding Program.",
+        "Help shape a stronger Defence community in Greater Darwin.",
+        "By sharing your experiences, you can help shape support that makes everyday Defence life easier and strengthens community connections. We want to hear what has been difficult, what has helped and where support is still missing.",
+        "Lutheran Care is developing its Defence Family Support Program. Thank you for helping us understand what matters to serving members and their families."
+      ],
+      "sections": [
+        {
+          "title": "Who can take part",
+          "text": "This questionnaire is for people aged 18 or older who are currently serving in the Australian Defence Force (ADF) or another country’s military and are based in Greater Darwin, and their adult family members. Family members may live elsewhere. Family includes partners, former partners, parents, adult children, other relatives, kin and carers."
+        },
+        {
+          "title": "What to expect",
+          "text": "Most questions have answer options. You can choose up to two issue areas to tell us more about, then up to two kinds of help within each area. There is optional space to explain each need in your own words."
+        },
+        {
+          "title": "Your choice",
+          "text": "Taking part is voluntary. You can skip questions, choose not to answer or stop at any time. Some questions cover health, relationships, safety and bereavement. Share only what you feel comfortable sharing. You can review and change your answers before finishing."
+        },
+        {
+          "title": "Your information",
+          "text": "Lutheran Care will use the information you choose to share to understand local needs and plan family support. Please do not include names, street addresses, contact details, service numbers or details that could identify another person. Do not include classified or operationally sensitive information. When describing a family experience, share only what you know and do not identify the person."
+        },
+        {
+          "title": "Your privacy",
+          "text": "Lutheran Care handles personal information under its Confidentiality and Privacy Policy. Information may be shared where required or authorised by law. The policy explains how to request access to or correction of your personal information, and how to make a privacy complaint."
+        },
+        {
+          "title": "Questions or concerns",
+          "text": "For questions about the survey or your privacy, contact Lutheran Care at feedback@lutherancare.org.au and mention the Defence Family Support Program. Completing this survey is not an application for a service or activity."
+        },
+        {
+          "title": "About this questionnaire",
+          "text": "This questionnaire adapts the approach and sample survey in RAND’s A New Approach for Assessing the Needs of Service Members and Their Families (2011). The issue list also draws on the Defence and Veteran Family Wellbeing Strategy 2025–2030."
+        }
+      ],
+      "questions": [
+        {
+          "id": "consent",
+          "label": "Would you like to take part?",
+          "type": "single",
+          "required": true,
+          "options": [
+            {
+              "id": "adult_agree",
+              "label": "I am aged 18 or older. I have read the information above and agree to take part and to Lutheran Care using the information I choose to share for the purposes explained above."
+            },
+            {
+              "id": "adult_decline",
+              "label": "I am aged 18 or older, but I do not want to take part."
+            },
+            {
+              "id": "under_18",
+              "label": "I am under 18."
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "label": "Lutheran Care Privacy Policy",
+          "url": "https://www.lutherancare.org.au/privacy-policy/"
+        },
+        {
+          "label": "Contact Lutheran Care",
+          "url": "mailto:feedback@lutherancare.org.au"
+        }
+      ],
+      "buttons": [
+        "Start survey",
+        "Leave survey"
+      ]
+    },
+    {
+      "id": "about",
+      "title": "A bit about you",
+      "intro": [
+        "These questions help us understand the different experiences of people taking part. You can leave any question unanswered."
+      ],
+      "questions": [
+        {
+          "id": "role",
+          "label": "Which best describes you?",
+          "type": "single",
+          "required": false,
+          "options": [
+            {
+              "id": "service_member",
+              "label": "Currently serving member"
+            },
+            {
+              "id": "partner",
+              "label": "Spouse or partner of a currently serving member"
+            },
+            {
+              "id": "both",
+              "label": "Both a currently serving member and the spouse or partner of a currently serving member"
+            },
+            {
+              "id": "other_family",
+              "label": "Another adult family member, former partner or carer of a currently serving member"
+            },
+            {
+              "id": "prefer_not",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "help": "Choose one. “Serving member” includes ADF members and members of another country’s military.",
+          "group": "About you"
+        },
+        {
+          "id": "age_group",
+          "label": "Which age group are you in?",
+          "type": "single",
+          "required": false,
+          "options": [
+            {
+              "id": "18_29",
+              "label": "18–29"
+            },
+            {
+              "id": "30_39",
+              "label": "30–39"
+            },
+            {
+              "id": "40_49",
+              "label": "40–49"
+            },
+            {
+              "id": "50_plus",
+              "label": "50 or older"
+            },
+            {
+              "id": "prefer_not",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "group": "About you"
+        },
+        {
+          "id": "current_connection",
+          "label": "Are you or a member of your family currently serving and based in Greater Darwin?",
+          "type": "single",
+          "required": false,
+          "options": [
+            {
+              "id": "yes",
+              "label": "Yes"
+            },
+            {
+              "id": "no",
+              "label": "No"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer_not",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "help": "Answer Yes if you or your serving family member is based in Greater Darwin, even if you live elsewhere or the serving member is temporarily away for work.",
+          "group": "About you"
+        },
+        {
+          "id": "residence_area",
+          "label": "Where do you currently live?",
+          "type": "single",
+          "required": false,
+          "options": [
+            {
+              "id": "darwin",
+              "label": "Darwin"
+            },
+            {
+              "id": "palmerston",
+              "label": "Palmerston"
+            },
+            {
+              "id": "litchfield",
+              "label": "Litchfield"
+            },
+            {
+              "id": "greater_darwin_other",
+              "label": "Other Greater Darwin area"
+            },
+            {
+              "id": "outside",
+              "label": "Outside Greater Darwin"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "group": "Where you live"
+        },
+        {
+          "id": "suburb",
+          "label": "Which suburb or locality do you live in?",
+          "type": "locality_select",
+          "required": false,
+          "help": "Optional. Choose from the list for your area, or leave this blank.",
+          "options_ref": "geography.localities filtered by residence_area + geography.extra_locality_options",
+          "show_when": "residence_area is a local area",
+          "group": "Where you live"
+        },
+        {
+          "id": "suburb_other",
+          "label": "Which other suburb or locality?",
+          "type": "text",
+          "required": false,
+          "help": "Please provide only the suburb or locality, not a street address.",
+          "show_when": "suburb == other",
+          "max_length": 10000,
+          "group": "Where you live"
+        },
+        {
+          "id": "past_residence",
+          "label": "Have you lived in Greater Darwin before?",
+          "type": "single",
+          "required": false,
+          "options": [
+            {
+              "id": "yes",
+              "label": "Yes"
+            },
+            {
+              "id": "no",
+              "label": "No"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "show_when": "residence_area == outside",
+          "group": "Where you live"
+        },
+        {
+          "id": "time_local",
+          "label": "How long have you lived in Greater Darwin?",
+          "type": "single",
+          "required": false,
+          "options": [
+            {
+              "id": "under3",
+              "label": "Less than 3 months"
+            },
+            {
+              "id": "3to12",
+              "label": "3 months to less than 1 year"
+            },
+            {
+              "id": "1to3",
+              "label": "1 year to less than 3 years"
+            },
+            {
+              "id": "over3",
+              "label": "3 years or more"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "help": "Count your current period of living here, rather than adding together separate periods.",
+          "show_when": "residence_area is a local area",
+          "group": "Where you live"
+        },
+        {
+          "id": "time_past",
+          "label": "During your most recent period of living in Greater Darwin, how long did you live here?",
+          "type": "single",
+          "required": false,
+          "options": [
+            {
+              "id": "under3",
+              "label": "Less than 3 months"
+            },
+            {
+              "id": "3to12",
+              "label": "3 months to less than 1 year"
+            },
+            {
+              "id": "1to3",
+              "label": "1 year to less than 3 years"
+            },
+            {
+              "id": "over3",
+              "label": "3 years or more"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "show_when": "residence_area == outside and past_residence == yes",
+          "group": "Where you live"
+        },
+        {
+          "id": "has_dependants",
+          "label": "Does anyone depend on you or your spouse or partner for more than half of their financial support?",
+          "type": "single",
+          "required": false,
+          "group": "Your dependants",
+          "help": "Include children and adults, whether or not they live with you.",
+          "options": [
+            {
+              "id": "yes",
+              "label": "Yes"
+            },
+            {
+              "id": "no",
+              "label": "No"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer_not",
+              "label": "Prefer not to answer"
+            }
+          ]
+        },
+        {
+          "id": "dependants",
+          "label": "How many dependants do you have in each age group?",
+          "type": "dependants_grid",
+          "required": false,
+          "help": "Count each person once. For age groups with no dependants, you can enter 0. You may leave any entry blank.",
+          "rows": [
+            {
+              "id": "under_2",
+              "label": "Under 2 years"
+            },
+            {
+              "id": "2_5",
+              "label": "2–5 years"
+            },
+            {
+              "id": "6_13",
+              "label": "6–13 years"
+            },
+            {
+              "id": "14_22",
+              "label": "14–22 years"
+            },
+            {
+              "id": "23_64",
+              "label": "23–64 years"
+            },
+            {
+              "id": "65_plus",
+              "label": "65 years or over"
+            }
+          ],
+          "columns": [
+            {
+              "id": "total",
+              "label": "Number of dependants"
+            },
+            {
+              "id": "living_with",
+              "label": "Number who live with me"
+            }
+          ],
+          "controls": [],
+          "show_when": "has_dependants == yes",
+          "group": "Your dependants"
+        }
+      ],
+      "buttons": [
+        "Back",
+        "Continue"
+      ]
+    },
+    {
+      "id": "issues",
+      "title": "Issues in everyday life",
+      "intro": [
+        "Think about the past 12 months and issues connected with your or your family’s life in Greater Darwin, including a move here. If the current posting began more recently, think about the time since it began and the move, within the past 12 months.",
+        "Include issues that have now been resolved. They do not have to have been caused by military service. Family members may live elsewhere.",
+        "Select an area to see the issues it covers. Then select any issues you experienced. Answer from your own experience and, for family members, only from what you know."
+      ],
+      "sections": [
+        {
+          "id": "category_picker",
+          "title": "Which areas would you like to look at?",
+          "type": "inline_category_disclosures",
+          "options_ref": "issue_bank",
+          "helper": "You can open as many areas as you like. Detailed questions later cover up to two areas."
+        },
+        {
+          "id": "global_other",
+          "title": "Other issues",
+          "questions": [
+            {
+              "id": "other_issues_status",
+              "label": "Were there any other issues in the past 12 months that the checklists did not cover?",
+              "type": "single",
+              "required": false,
+              "options": [
+                {
+                  "id": "yes",
+                  "label": "Yes"
+                },
+                {
+                  "id": "no",
+                  "label": "No"
+                },
+                {
+                  "id": "unsure",
+                  "label": "Not sure"
+                },
+                {
+                  "id": "prefer_not",
+                  "label": "Prefer not to answer"
+                }
+              ]
+            },
+            {
+              "id": "other_issues",
+              "label": "What other issues would you like to mention?",
+              "type": "text",
+              "required": false,
+              "show_when": "other_issues_status == yes",
+              "max_length": 10000,
+              "help": "Optional. You can describe an issue even if you are not sure which area it belongs in."
+            }
+          ]
+        },
+        {
+          "id": "priority_choice",
+          "title": "Choose your priority areas",
+          "questions": [
+            {
+              "id": "priority_categories",
+              "label": "Which of these issue areas mattered most to you or your family?",
+              "type": "multi",
+              "required": false,
+              "options_ref": "positiveCategories(state)",
+              "show_when": "more than two reported areas",
+              "max_selected": 2,
+              "help": "Choose up to two for the next questions. The other issues you selected will still be included."
+            },
+            {
+              "id": "skip_detail",
+              "label": "I prefer not to answer the detailed questions",
+              "type": "checkbox",
+              "required": false,
+              "help": "Your issue selections are still included. You can add a comment before finishing."
+            }
+          ],
+          "auto_recap_one_two": "You reported issues in the following areas. The next questions will cover these areas. You can choose not to answer the detailed questions."
+        }
+      ],
+      "global_controls": [
+        {
+          "id": "none",
+          "label": "I did not experience any issues in these areas"
+        },
+        {
+          "id": "unsure",
+          "label": "Not sure"
+        },
+        {
+          "id": "prefer_not",
+          "label": "Prefer not to answer these questions"
+        }
+      ],
+      "global_controls_label": "No issues to report, or prefer not to answer?",
+      "global_controls_placement": "After category cards, before Other issues. Mutually exclusive with reported categories and an affirmative Other issues response; not with merely opened lists.",
+      "buttons": [
+        "Back",
+        "Continue"
+      ]
+    },
+    {
+      "id": "area",
+      "title": "Your experience: {category_label}",
+      "repeat": "one page per priority category, at most two pages",
+      "intro": [
+        "You selected the issues below. Think about the help you needed at the time, including help you received and help you did not receive. You can leave any question unanswered."
+      ],
+      "recall": [
+        "{category_label}",
+        "{selected_issue_labels}"
+      ],
+      "sections": [
+        {
+          "id": "needs",
+          "title": "Help you needed",
+          "questions": [
+            {
+              "id": "needs.{category_id}.selected",
+              "label": "What kinds of help did you need with these issues?",
+              "type": "multi",
+              "required": false,
+              "options": [
+                {
+                  "id": "H01",
+                  "label": "General information — what support is available, who can use it and how to access it",
+                  "short_label": "General information"
+                },
+                {
+                  "id": "H02",
+                  "label": "Specific information — information about your own circumstances or arrangements, such as a move or time apart because of service",
+                  "short_label": "Specific information"
+                },
+                {
+                  "id": "H03",
+                  "label": "An advocate — someone to help you get support or speak on your behalf",
+                  "short_label": "An advocate"
+                },
+                {
+                  "id": "H04",
+                  "label": "Advice or education — guidance, knowledge or skills to help you deal with the issues",
+                  "short_label": "Advice or education"
+                },
+                {
+                  "id": "H05",
+                  "label": "Emotional or social support",
+                  "short_label": "Emotional or social support"
+                },
+                {
+                  "id": "H06",
+                  "label": "Professional counselling",
+                  "short_label": "Professional counselling"
+                },
+                {
+                  "id": "H07",
+                  "label": "Practical or financial help — help with responsibilities, loans or donations",
+                  "short_label": "Practical or financial help"
+                },
+                {
+                  "id": "H08",
+                  "label": "Activities — for fitness, recreation, managing stress or spending time together as a family",
+                  "short_label": "Activities"
+                },
+                {
+                  "id": "H09",
+                  "label": "Another kind of help",
+                  "short_label": "Another kind of help"
+                },
+                {
+                  "id": "H11",
+                  "label": "I needed help, but was not sure what kind",
+                  "source_note_internal": "Local addition; positive need, type unspecified. Select on its own.",
+                  "short_label": "Help needed — type not specified"
+                },
+                {
+                  "id": "H10",
+                  "label": "I did not need help in this area"
+                },
+                {
+                  "id": "prefer_not",
+                  "label": "Prefer not to answer"
+                }
+              ],
+              "help": "Select all that apply.",
+              "exclusive_ids": [
+                "H10",
+                "H11",
+                "prefer_not"
+              ]
+            },
+            {
+              "id": "needs.{category_id}.other_text",
+              "label": "What other kind of help did you need?",
+              "type": "text",
+              "required": false,
+              "show_when": "H09 selected",
+              "max_length": 10000,
+              "placement": "Immediately below the selected Other option."
+            },
+            {
+              "id": "needs.{category_id}.priority",
+              "label": "Which of these kinds of help mattered most?",
+              "type": "priority_select",
+              "required": false,
+              "help": "Choose up to two for more detailed questions. The other kinds of help you selected are still included.",
+              "options_ref": "substantive needs selected for this category",
+              "show_when": "more than two substantive needs",
+              "max_selected": 2
+            },
+            {
+              "id": "needs.{category_id}.skip",
+              "label": "I prefer not to answer follow-up questions about these kinds of help",
+              "type": "checkbox",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "sources",
+          "title": "Sources of help",
+          "repeat": "one inline subsection per active need in this category, at most two",
+          "recall": [
+            "Help needed: {need_short_label}"
+          ],
+          "questions": [
+            {
+              "id": "pairs.{pair_key}.focus_issues",
+              "label": "Which of the issues you selected did you need this help with?",
+              "type": "multi",
+              "required": false,
+              "options_ref": "selected specific issue options for this category",
+              "show_when": "more than one specific issue selected in this category",
+              "help": "Select all that apply. You can leave this unanswered if the help relates to the area more generally."
+            },
+            {
+              "id": "pairs.{pair_key}.contacts",
+              "label": "For this kind of help, which sources did you try or receive help from?",
+              "type": "multi",
+              "required": false,
+              "exclusive_ids": [
+                "NO_CONTACT",
+                "unsure",
+                "prefer_not"
+              ],
+              "help": "Select all that apply. Include unsuccessful attempts, online information you used, and help offered without asking. Put official military services and their websites under Defence or military-provided support.",
+              "options": [
+                {
+                  "id": "N01",
+                  "label": "Government and community services outside the military, such as family services, libraries, community centres or independent Defence family organisations",
+                  "kind": "nonmilitary",
+                  "short_label": "Government and community services"
+                },
+                {
+                  "id": "N02",
+                  "label": "Clubs, recreation groups or fitness centres",
+                  "kind": "nonmilitary",
+                  "short_label": "Clubs, recreation groups and fitness centres"
+                },
+                {
+                  "id": "N03",
+                  "label": "A religious or spiritual group or leader",
+                  "kind": "nonmilitary",
+                  "short_label": "Religious or spiritual support"
+                },
+                {
+                  "id": "N04",
+                  "label": "Civilian health or counselling services, including public services, private doctors and counsellors",
+                  "kind": "nonmilitary",
+                  "short_label": "Civilian health and counselling services"
+                },
+                {
+                  "id": "N05",
+                  "label": "Online information or support outside the military, such as websites, search engines, online forums or social media",
+                  "kind": "nonmilitary",
+                  "short_label": "Online information and support"
+                },
+                {
+                  "id": "N06",
+                  "label": "Friends or family",
+                  "kind": "personal",
+                  "short_label": "Friends and family"
+                },
+                {
+                  "id": "N07",
+                  "label": "Another source of help outside the military",
+                  "kind": "nonmilitary",
+                  "short_label": "Another source of help"
+                },
+                {
+                  "id": "M_ALL",
+                  "label": "Defence or military-provided support",
+                  "kind": "military",
+                  "short_label": "Defence or military-provided support"
+                },
+                {
+                  "id": "NO_CONTACT",
+                  "label": "I did not approach or use any source, or receive any help, for this need",
+                  "kind": "control"
+                },
+                {
+                  "id": "unsure",
+                  "label": "Not sure",
+                  "kind": "control"
+                },
+                {
+                  "id": "prefer_not",
+                  "label": "Prefer not to answer",
+                  "kind": "control"
+                }
+              ]
+            },
+            {
+              "id": "pairs.{pair_key}.other_source",
+              "label": "What other source of help would you like to mention?",
+              "type": "text",
+              "required": false,
+              "show_when": "N07 selected for this need",
+              "max_length": 10000,
+              "help": "Optional. Describe the type of support, without naming individual people or internal military services.",
+              "placement": "Immediately below Another source of help outside the military."
+            }
+          ]
+        },
+        {
+          "id": "used",
+          "title": "Your experience of these sources of help",
+          "intro": "For this issue area, you selected the sources below for one or both kinds of help. Which statements describe your experience? Include attempts that did not lead to help.",
+          "repeat": "each distinct external service/source type selected for a tracked need in this category, once",
+          "questions": [
+            {
+              "id": "source_characteristics.{category_id}.used.{source_id}",
+              "label": "Which statements apply to this source of help?",
+              "type": "multi",
+              "required": false,
+              "exclusive_ids": [
+                "none",
+                "unsure",
+                "prefer_not"
+              ],
+              "source_heading": "{source_short_label}",
+              "help": "Select all that apply. A group may include different services; you can explain different experiences in the optional comments for the relevant need.",
+              "options": [
+                {
+                  "id": "C01",
+                  "label": "I have used this source of help for other needs."
+                },
+                {
+                  "id": "C02",
+                  "label": "I did not know about this source of help, or found information about it hard to find."
+                },
+                {
+                  "id": "C03",
+                  "label": "It was in a convenient location or easy to access."
+                },
+                {
+                  "id": "C04",
+                  "label": "I was concerned that using it might harm my or my family’s reputation."
+                },
+                {
+                  "id": "C05",
+                  "label": "It was friendly or welcoming, or made contact to offer help."
+                },
+                {
+                  "id": "C06",
+                  "label": "The waiting list or response time was too long."
+                },
+                {
+                  "id": "C07",
+                  "label": "Someone referred me to it, or it had a good reputation."
+                },
+                {
+                  "id": "none",
+                  "label": "None of these statements apply"
+                },
+                {
+                  "id": "unsure",
+                  "label": "Not sure"
+                },
+                {
+                  "id": "prefer_not",
+                  "label": "Prefer not to answer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "not_used",
+          "title": "Other sources of help",
+          "intro": "You did not select the sources below for either of the kinds of help discussed in this issue area. Based on what you knew at the time, which statements apply?",
+          "repeat": "fixed external source types N01–N05 absent from all tracked needs in this category; only if every source question in this category is explicitly answered",
+          "questions": [
+            {
+              "id": "source_characteristics.{category_id}.not_used.{source_id}",
+              "label": "Which statements apply to this source of help?",
+              "type": "multi",
+              "required": false,
+              "exclusive_ids": [
+                "none",
+                "unsure",
+                "prefer_not"
+              ],
+              "source_heading": "{source_short_label}",
+              "help": "Select all that apply, choose Not sure or leave this unanswered. You do not need to guess.",
+              "options": [
+                {
+                  "id": "C01",
+                  "label": "I have used this source of help for other needs."
+                },
+                {
+                  "id": "C02",
+                  "label": "I did not know about this source of help, or found information about it hard to find."
+                },
+                {
+                  "id": "C03",
+                  "label": "It was in a convenient location or easy to access."
+                },
+                {
+                  "id": "C04",
+                  "label": "I was concerned that using it might harm my or my family’s reputation."
+                },
+                {
+                  "id": "C05",
+                  "label": "It was friendly or welcoming, or made contact to offer help."
+                },
+                {
+                  "id": "C06",
+                  "label": "The waiting list or response time was too long."
+                },
+                {
+                  "id": "C07",
+                  "label": "Someone referred me to it, or it had a good reputation."
+                },
+                {
+                  "id": "none",
+                  "label": "None of these statements apply"
+                },
+                {
+                  "id": "unsure",
+                  "label": "Not sure"
+                },
+                {
+                  "id": "prefer_not",
+                  "label": "Prefer not to answer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "networks",
+          "title": "Friends and family",
+          "intro": "You selected friends or family as a source of help. These questions are about your support network generally.",
+          "show_when": "this category == networkOwner(state); ask once in the whole questionnaire",
+          "questions": [
+            {
+              "id": "personal_networks",
+              "label": "Which statements describe your friends and family as a source of support?",
+              "type": "multi",
+              "required": false,
+              "exclusive_ids": [
+                "none",
+                "prefer_not"
+              ],
+              "help": "Select all that apply.",
+              "options": [
+                {
+                  "id": "PN01",
+                  "label": "I have friends or family members who make an effort to help with my issues and needs."
+                },
+                {
+                  "id": "PN02",
+                  "label": "My friends and family do not have the ability or resources to help me."
+                },
+                {
+                  "id": "PN03",
+                  "label": "Most or all of my friends and family live too far away."
+                },
+                {
+                  "id": "PN04",
+                  "label": "There is at least one person I can always count on to be there for me."
+                },
+                {
+                  "id": "PN05",
+                  "label": "I do not have many close relationships."
+                },
+                {
+                  "id": "PN06",
+                  "label": "I do not like sharing my issues or needs with friends or family."
+                },
+                {
+                  "id": "PN07",
+                  "label": "My friends and family have a good understanding of military life."
+                },
+                {
+                  "id": "none",
+                  "label": "None of these statements apply"
+                },
+                {
+                  "id": "prefer_not",
+                  "label": "Prefer not to answer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "outcomes",
+          "title": "How well was this need met?",
+          "repeat": "one inline subsection per active need in this category, including no-contact and military-only paths",
+          "recall": [
+            "Help needed: {need_short_label}"
+          ],
+          "questions": [
+            {
+              "id": "pairs.{pair_key}.ratings.{source_id}",
+              "label": "How well did this source help meet this need?",
+              "type": "single",
+              "required": false,
+              "repeat": "N01–N07 selected for this exact category–need pair; never M_ALL",
+              "source_heading": "{source_short_label}",
+              "help": "If you received no help from this source, choose that option rather than rating its helpfulness.",
+              "options": [
+                {
+                  "id": "very_well",
+                  "label": "Very well"
+                },
+                {
+                  "id": "well",
+                  "label": "Well"
+                },
+                {
+                  "id": "all_right",
+                  "label": "All right"
+                },
+                {
+                  "id": "not_very_well",
+                  "label": "Not very well"
+                },
+                {
+                  "id": "not_at_all",
+                  "label": "Not at all"
+                },
+                {
+                  "id": "no_help_received",
+                  "label": "I did not receive any help from this source",
+                  "scored": false
+                },
+                {
+                  "id": "too_soon",
+                  "label": "Too soon to say",
+                  "scored": false
+                },
+                {
+                  "id": "unsure",
+                  "label": "Not sure",
+                  "scored": false
+                },
+                {
+                  "id": "prefer_not",
+                  "label": "Prefer not to answer",
+                  "scored": false
+                }
+              ]
+            },
+            {
+              "id": "pairs.{pair_key}.met_status",
+              "label": "Overall, how fully was this need met?",
+              "type": "single",
+              "required": false,
+              "help": "Think about all the help you received and anything you managed yourself. For an ongoing situation, answer about now. For a situation that ended, answer about how things stood when it ended.",
+              "options": [
+                {
+                  "id": "all",
+                  "label": "All of this need was met"
+                },
+                {
+                  "id": "some",
+                  "label": "Some of this need was met"
+                },
+                {
+                  "id": "none",
+                  "label": "None of this need was met"
+                },
+                {
+                  "id": "changed",
+                  "label": "The situation changed and this help was no longer needed"
+                },
+                {
+                  "id": "too_soon",
+                  "label": "Too soon to judge"
+                },
+                {
+                  "id": "unsure",
+                  "label": "Not sure"
+                },
+                {
+                  "id": "prefer_not",
+                  "label": "Prefer not to answer"
+                }
+              ]
+            },
+            {
+              "id": "pairs.{pair_key}.current_gap",
+              "label": "Do you or your family still need any of this help that you are not getting?",
+              "type": "single",
+              "required": false,
+              "options": [
+                {
+                  "id": "yes",
+                  "label": "Yes"
+                },
+                {
+                  "id": "no",
+                  "label": "No"
+                },
+                {
+                  "id": "unsure",
+                  "label": "Not sure"
+                },
+                {
+                  "id": "prefer_not",
+                  "label": "Prefer not to answer"
+                }
+              ]
+            },
+            {
+              "id": "pairs.{pair_key}.comments",
+              "label": "Is there anything else you would like us to understand about this need?",
+              "type": "text",
+              "required": false,
+              "max_length": 10000,
+              "rows": 6,
+              "help": "Optional. You can explain what help you needed, what happened, what worked or what is still missing. Write as much or as little as you like, up to 10,000 characters. Please leave out identifying details and do not describe internal military services.",
+              "conditional_hint": {
+                "when": "current_gap == yes",
+                "text": "You can also explain what help is still missing and what would make it work for you."
+              },
+              "placement": "Last field for this need, visible without a further reveal button; no minimum length."
+            }
+          ]
+        },
+        {
+          "id": "area_comment",
+          "title": "Anything else you would like to add?",
+          "show_when": "no active need pairs in this category",
+          "questions": [
+            {
+              "id": "needs.{category_id}.area_comment",
+              "label": "Is there anything else you would like us to understand about these issues?",
+              "type": "text",
+              "required": false,
+              "max_length": 10000,
+              "rows": 6,
+              "help": "Optional. You can tell us what has helped, what matters to you or what might help in the future. Up to 10,000 characters. Please leave out identifying details and internal military service details."
+            }
+          ]
+        }
+      ],
+      "buttons": [
+        "Back",
+        "Continue"
+      ]
+    },
+    {
+      "id": "review",
+      "title": "Before you finish",
+      "intro": [
+        "You can check your answers below and choose Edit to make changes. You do not need to repeat anything you have already told us."
+      ],
+      "sections": [
+        {
+          "id": "review_answers",
+          "title": "Check your answers",
+          "type": "active_answer_summary"
+        },
+        {
+          "id": "general_comments",
+          "title": "Anything else you would like to add?",
+          "questions": [
+            {
+              "id": "comments",
+              "label": "Is there anything else you would like us to understand about Defence life and support in Greater Darwin?",
+              "type": "text",
+              "required": false,
+              "max_length": 10000,
+              "rows": 6,
+              "help": "Optional. You can mention issues not discussed in detail, support that helps your family stay well and connected, or help you may need in the coming months. Up to 10,000 characters. Please leave out identifying details and internal military service details."
+            }
+          ]
+        }
+      ],
+      "buttons": [
+        "Back",
+        "Finish survey"
+      ]
+    },
+    {
+      "id": "thanks",
+      "title": "Thank you",
+      "intro": [
+        "Thank you for sharing your experiences and ideas, and for helping to shape a stronger, more connected Defence community in Greater Darwin."
+      ]
+    }
+  ],
+  "ui": {
+    "sections": [
+      "About you",
+      "Your issues",
+      "Your experience",
+      "Finish"
+    ],
+    "category_disclosures": "Checkboxes reveal their list inline. Titles and navigation_hint stay visible. Separate Collapse/Expand controls preserve answers; Remove area requires confirmation if answers would be removed.",
+    "top_two_placement": "Bottom of issues page, below all category cards and global Other question. Do not limit opened categories to two.",
+    "source_characteristics_presentation": "Stacked source cards, each with visible checkboxes; no wide matrix on phones.",
+    "need_block_progress": "Kind of help {index} of {count}; inside the same issue area page. Never route to a separate page per source, rating or need.",
+    "area_progress": "Issue area {index} of {count}",
+    "optional_text_hint": "Optional. Up to 10,000 characters.",
+    "text_over_limit": "Please shorten your answer to 10,000 characters or fewer. Your text has not been changed.",
+    "change_confirmation": {
+      "title": "Update your answers?",
+      "text": "This change will remove answers to follow-up questions that no longer match your selections. Answers about other issues will stay unchanged.",
+      "buttons": [
+        "Keep my answers",
+        "Update answers"
+      ]
+    },
+    "category_removal_confirmation": {
+      "title": "Remove this area?",
+      "text": "This will remove the issues and follow-up answers for this area, including any comments. You can collapse the list instead to keep your answers.",
+      "buttons": [
+        "Keep this area",
+        "Remove area"
+      ]
+    },
+    "show_full_recall": true,
+    "no_auto_advance": true,
+    "no_default_answers": true,
+    "no_time_estimate": true,
+    "forbidden_visible_terms": [
+      "demo",
+      "preview",
+      "test version",
+      "trial version",
+      "not collecting",
+      "responses are not collected",
+      "no responses will be collected",
+      "submissions are not open"
+    ],
+    "terminal_text_must_not_claim_receipt": true,
+    "keep_existing_valid_contact_and_support_controls": true
+  },
+  "system_screens": {
+    "exit": {
+      "title": "You have left the survey",
+      "text": "Thank you for your interest.",
+      "button": "Return to the start"
+    },
+    "out_of_scope": {
+      "title": "About this survey",
+      "text": "This survey is for currently serving members based in Greater Darwin and their adult family members. Family members may live elsewhere. You can go back to change your answer about your service connection, or leave the survey.",
+      "buttons": [
+        "Back",
+        "Leave survey"
+      ]
+    },
+    "under_18": {
+      "action": "Hand over to the existing youth/child route selector without carrying adult answers or consent into it."
+    },
+    "no_priorities": {
+      "text": "You can add another issue, or continue to the final comments."
+    }
+  },
+  "page_counts": {
+    "formula": "5 + number of priority issue categories",
+    "min_normal_screens": 5,
+    "max_normal_screens": 7,
+    "includes": [
+      "welcome",
+      "about",
+      "issues",
+      "zero to two area pages",
+      "review",
+      "thanks"
+    ],
+    "note": "Need subsections, inline disclosures and dialogs do not add pages. This is not a completion-time estimate."
+  },
+  "local_adaptations": [
+    "One combined demographic page; inline financial-dependant yes/no gate with RAND age-grid detail.",
+    "One issues page with 20 category disclosures and the original 170 v3 substantive items. Category headings now have navigation examples. This is not the RAND original pagination.",
+    "Category disclosure state is not an issue report. Positive unspecified issue response added; global Other is yes/no with immediate optional text.",
+    "Up to two issue categories; each has one complete follow-up page. Two priority need types maximum per category.",
+    "Multiple-choice needs and follow-ups retained, reversing the unimplemented open-first proposal. H11 is a locally added positive need of unspecified type.",
+    "Optional specific issue-to-need checkbox link replaces the separate open-ended purpose question; a missing link remains category-level information, not evidence that every issue relates to the need.",
+    "Q32/Q33 kept as choice-based source characteristics once per category-source, not per need and not globally across categories.",
+    "Q34 retained once for the respondent, embedded on the first relevant issue page.",
+    "Q35 five score levels retained; no-help-received, too-soon, unknown and refusal are separate unscored controls.",
+    "Overall need fulfilment and current unmet help retained from the previously recovered local instrument.",
+    "Every tracked need ends in a distinct optional 10,000-character narrative. No generic duplicate comments/purpose/gap boxes. Other write-ins remain inline and optional.",
+    "A fallback category comment and final global comment remain available without a reported need. No new clinical resilience score or mandatory activity menu."
+  ],
+  "notice_completion_internal": {
+    "public_policy_verified": "Lutheran Care Confidentiality and Privacy Policy and Procedure, approved 9 June 2026; link accessed 29 September 2026.",
+    "project_specific_collection_arrangements_verified": false,
+    "remaining_factual_details": [
+      "Who can see individual responses, including placement students or contractors",
+      "Who receives findings and whether any individual responses are disclosed",
+      "Collection platform, storage/access locations, overseas handling and retention period",
+      "When responses are committed and whether an identifiable response can be withdrawn after completion",
+      "Any grant-agreement prescribed acknowledgement or approved government branding"
+    ],
+    "implementation_note": "Current static GitHub implementation is unchanged by this content package. Before activating response collection, populate a prominent project-specific collection notice from actual LC arrangements. Do not publish placeholders, invent storage/access promises or describe the general policy alone as a complete collection notice.",
+    "note": "Keep technical status internal. Existing participant notice is carried from v3 with shorter invitation; before actual response collection, LC must provide the actual project-specific collection arrangements. Do not invent them or display placeholders. This does not block the requested frontend content change."
+  }
+}
