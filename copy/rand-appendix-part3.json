@@ -1,0 +1,2933 @@
+{
+  "schema": "rand_appendix_a_adult_local_part3_draft_v1",
+  "pages": [
+    {
+      "id": "page_8",
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112
+        ]
+      },
+      "title": "Background Information",
+      "intro": [
+        "Please tell us more about you and your family. This information will help us make sure we have surveys from many different types of people, and will help us understand the most important issues facing them.",
+        "Please do not enter names, contact details or service numbers. You can skip any question."
+      ],
+      "intro_variants": {
+        "family": [
+          "Please tell us more about you and your family. This information will help us make sure we have surveys from many different types of people, and will help us understand the most important issues facing them.",
+          "Please do not enter names, contact details or service numbers. You can skip any question."
+        ],
+        "single_member": [
+          "Please tell us more about yourself. This information will help us make sure we have surveys from many different types of people, and will help us understand the most important issues facing them.",
+          "Please do not enter names, contact details or service numbers. You can skip any question."
+        ]
+      },
+      "intro_variant_ref": "background_intro_variant",
+      "questions": [
+        "Q37",
+        "Q38",
+        "Q39",
+        "Q40",
+        "Q41",
+        "Q42",
+        "Q43",
+        "Q44",
+        "Q45",
+        "Q46",
+        "Q47",
+        "Q48",
+        "Q49",
+        "Q50",
+        "Q51",
+        "Q52",
+        "Q53",
+        "Q54",
+        "Q55",
+        "Q56",
+        "Q57",
+        "Q58",
+        "Q59",
+        "Q60",
+        "Q61"
+      ],
+      "subsections": [
+        {
+          "id": "military_experience",
+          "title": "Military Experience",
+          "intro": [],
+          "questions": [
+            "Q37",
+            "Q38",
+            "Q39",
+            "Q40",
+            "Q41"
+          ]
+        },
+        {
+          "id": "deployment",
+          "title": "Deployment",
+          "intro": [],
+          "questions": [
+            "Q42",
+            "Q43",
+            "Q44",
+            "Q45",
+            "Q46"
+          ],
+          "insert_before_question": {
+            "question_id": "Q44",
+            "text": "Questions about the most recent or last deployment refer to the deployment from which the service member most recently returned.",
+            "display_once": true,
+            "when": "At least one of Q44–Q46 is available; insert before the first available item if Q44 is hidden."
+          }
+        },
+        {
+          "id": "personal_background",
+          "title": "Personal Background",
+          "intro": [],
+          "questions": [
+            "Q47",
+            "Q48",
+            "Q49",
+            "Q50"
+          ],
+          "local_navigation_heading": true
+        },
+        {
+          "id": "caring_responsibilities",
+          "title": "Caring Responsibilities",
+          "intro": [],
+          "questions": [
+            "Q51",
+            "Q52",
+            "Q53",
+            "Q54"
+          ],
+          "local_navigation_heading": true
+        },
+        {
+          "id": "employment_education",
+          "title": "Employment/Education",
+          "intro": [],
+          "questions": [
+            "Q55",
+            "Q56"
+          ]
+        },
+        {
+          "id": "housing",
+          "title": "Housing",
+          "intro": [],
+          "questions": [
+            "Q57",
+            "Q58",
+            "Q59",
+            "Q60",
+            "Q61"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "page_9",
+      "source_page": {
+        "page": "Page 9",
+        "printed_pages": [
+          113,
+          114
+        ]
+      },
+      "title": "Attitudes Toward Military Service",
+      "intro": [],
+      "conditional_intro": [
+        {
+          "when": "focal_current_service is unknown and an applicable or potentially applicable member/spouse attitude route remains available.",
+          "text": "Answer this section only about current military service. You can skip it when it does not apply.",
+          "placement": "Before the available Q62–Q66 items, not as a restriction on Q67."
+        }
+      ],
+      "questions": [
+        "Q62",
+        "Q63",
+        "Q64",
+        "Q65",
+        "Q66",
+        "Q67"
+      ],
+      "subsections": [
+        {
+          "id": "service_attitudes",
+          "title": null,
+          "intro": [],
+          "questions": [
+            "Q62",
+            "Q63",
+            "Q64",
+            "Q65",
+            "Q66"
+          ]
+        },
+        {
+          "id": "additional_comments",
+          "title": "Additional Comments",
+          "intro": [],
+          "questions": [
+            "Q67"
+          ]
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q37",
+      "source_id": "RAND_A_Q37",
+      "source_question_number": 37,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          105,
+          106
+        ]
+      },
+      "local_variant_id": "RAND_A_Q37_AU_rank",
+      "kind": "single_select",
+      "label": "What is your current rank?",
+      "label_variants": {
+        "self_current": "What is your current rank?",
+        "family_current": "What is your service member’s current rank?",
+        "self_last_at_exit": "What was your rank when you last left military service?",
+        "family_last_at_exit": "What was your service member’s rank when they last left military service?",
+        "family_last_before_death": "What was your service member’s last rank?"
+      },
+      "label_variant_ref": "rank_stem",
+      "option_filter": {
+        "option_field": "menu",
+        "equals_ref": "rank_menu"
+      },
+      "options": [
+        {
+          "id": "army_private",
+          "source_option_number": null,
+          "label": "Private or equivalent",
+          "menu": "army"
+        },
+        {
+          "id": "army_lance_corporal",
+          "source_option_number": null,
+          "label": "Lance Corporal / Lance Bombardier",
+          "menu": "army"
+        },
+        {
+          "id": "army_corporal",
+          "source_option_number": null,
+          "label": "Corporal / Bombardier",
+          "menu": "army"
+        },
+        {
+          "id": "army_sergeant",
+          "source_option_number": null,
+          "label": "Sergeant",
+          "menu": "army"
+        },
+        {
+          "id": "army_wo2",
+          "source_option_number": null,
+          "label": "Warrant Officer Class 2",
+          "menu": "army"
+        },
+        {
+          "id": "army_wo1",
+          "source_option_number": null,
+          "label": "Warrant Officer Class 1",
+          "menu": "army"
+        },
+        {
+          "id": "army_officer_cadet",
+          "source_option_number": null,
+          "label": "Officer Cadet",
+          "menu": "army"
+        },
+        {
+          "id": "army_second_lieutenant",
+          "source_option_number": null,
+          "label": "Second Lieutenant",
+          "menu": "army"
+        },
+        {
+          "id": "army_lieutenant",
+          "source_option_number": null,
+          "label": "Lieutenant",
+          "menu": "army"
+        },
+        {
+          "id": "army_captain",
+          "source_option_number": null,
+          "label": "Captain",
+          "menu": "army"
+        },
+        {
+          "id": "army_major",
+          "source_option_number": null,
+          "label": "Major",
+          "menu": "army"
+        },
+        {
+          "id": "army_lieutenant_colonel",
+          "source_option_number": null,
+          "label": "Lieutenant Colonel",
+          "menu": "army"
+        },
+        {
+          "id": "army_colonel_plus",
+          "source_option_number": null,
+          "label": "Colonel or above",
+          "menu": "army"
+        },
+        {
+          "id": "army_other",
+          "source_option_number": null,
+          "label": "Other rank or training rank — please specify:",
+          "menu": "army",
+          "write_in": {
+            "id": "Q37_army_other_text",
+            "label_from": "option.label",
+            "required": false
+          }
+        },
+        {
+          "id": "army_dont_know",
+          "source_option_number": null,
+          "label": "Don’t know",
+          "menu": "army"
+        },
+        {
+          "id": "navy_seaman",
+          "source_option_number": null,
+          "label": "Seaman",
+          "menu": "navy"
+        },
+        {
+          "id": "navy_able_seaman",
+          "source_option_number": null,
+          "label": "Able Seaman",
+          "menu": "navy"
+        },
+        {
+          "id": "navy_leading_seaman",
+          "source_option_number": null,
+          "label": "Leading Seaman",
+          "menu": "navy"
+        },
+        {
+          "id": "navy_petty_officer",
+          "source_option_number": null,
+          "label": "Petty Officer",
+          "menu": "navy"
+        },
+        {
+          "id": "navy_chief_petty_officer",
+          "source_option_number": null,
+          "label": "Chief Petty Officer",
+          "menu": "navy"
+        },
+        {
+          "id": "navy_warrant_officer",
+          "source_option_number": null,
+          "label": "Warrant Officer",
+          "menu": "navy"
+        },
+        {
+          "id": "navy_midshipman",
+          "source_option_number": null,
+          "label": "Midshipman",
+          "menu": "navy"
+        },
+        {
+          "id": "navy_acting_sub_lieutenant",
+          "source_option_number": null,
+          "label": "Acting Sub Lieutenant",
+          "menu": "navy"
+        },
+        {
+          "id": "navy_sub_lieutenant",
+          "source_option_number": null,
+          "label": "Sub Lieutenant",
+          "menu": "navy"
+        },
+        {
+          "id": "navy_lieutenant",
+          "source_option_number": null,
+          "label": "Lieutenant",
+          "menu": "navy"
+        },
+        {
+          "id": "navy_lieutenant_commander",
+          "source_option_number": null,
+          "label": "Lieutenant Commander",
+          "menu": "navy"
+        },
+        {
+          "id": "navy_commander",
+          "source_option_number": null,
+          "label": "Commander",
+          "menu": "navy"
+        },
+        {
+          "id": "navy_captain_plus",
+          "source_option_number": null,
+          "label": "Captain or above",
+          "menu": "navy"
+        },
+        {
+          "id": "navy_officer_without_rank",
+          "source_option_number": null,
+          "label": "Commissioned officer without rank",
+          "menu": "navy"
+        },
+        {
+          "id": "navy_other",
+          "source_option_number": null,
+          "label": "Other rank or training rank — please specify:",
+          "menu": "navy",
+          "write_in": {
+            "id": "Q37_navy_other_text",
+            "label_from": "option.label",
+            "required": false
+          }
+        },
+        {
+          "id": "navy_dont_know",
+          "source_option_number": null,
+          "label": "Don’t know",
+          "menu": "navy"
+        },
+        {
+          "id": "air_force_aircraftman",
+          "source_option_number": null,
+          "label": "Aircraftman / Aircraftwoman",
+          "menu": "air_force"
+        },
+        {
+          "id": "air_force_leading_aircraftman",
+          "source_option_number": null,
+          "label": "Leading Aircraftman / Aircraftwoman",
+          "menu": "air_force"
+        },
+        {
+          "id": "air_force_corporal",
+          "source_option_number": null,
+          "label": "Corporal",
+          "menu": "air_force"
+        },
+        {
+          "id": "air_force_sergeant",
+          "source_option_number": null,
+          "label": "Sergeant",
+          "menu": "air_force"
+        },
+        {
+          "id": "air_force_flight_sergeant",
+          "source_option_number": null,
+          "label": "Flight Sergeant",
+          "menu": "air_force"
+        },
+        {
+          "id": "air_force_warrant_officer",
+          "source_option_number": null,
+          "label": "Warrant Officer",
+          "menu": "air_force"
+        },
+        {
+          "id": "air_force_officer_cadet",
+          "source_option_number": null,
+          "label": "Officer Cadet",
+          "menu": "air_force"
+        },
+        {
+          "id": "air_force_pilot_officer",
+          "source_option_number": null,
+          "label": "Pilot Officer",
+          "menu": "air_force"
+        },
+        {
+          "id": "air_force_flying_officer",
+          "source_option_number": null,
+          "label": "Flying Officer",
+          "menu": "air_force"
+        },
+        {
+          "id": "air_force_flight_lieutenant",
+          "source_option_number": null,
+          "label": "Flight Lieutenant",
+          "menu": "air_force"
+        },
+        {
+          "id": "air_force_squadron_leader",
+          "source_option_number": null,
+          "label": "Squadron Leader",
+          "menu": "air_force"
+        },
+        {
+          "id": "air_force_wing_commander",
+          "source_option_number": null,
+          "label": "Wing Commander",
+          "menu": "air_force"
+        },
+        {
+          "id": "air_force_group_captain_plus",
+          "source_option_number": null,
+          "label": "Group Captain or above",
+          "menu": "air_force"
+        },
+        {
+          "id": "air_force_other",
+          "source_option_number": null,
+          "label": "Other rank or training rank — please specify:",
+          "menu": "air_force",
+          "write_in": {
+            "id": "Q37_air_force_other_text",
+            "label_from": "option.label",
+            "required": false
+          }
+        },
+        {
+          "id": "air_force_dont_know",
+          "source_option_number": null,
+          "label": "Don’t know",
+          "menu": "air_force"
+        },
+        {
+          "id": "other_service_rank",
+          "source_option_number": null,
+          "label": "Rank — please specify:",
+          "menu": "other_or_unknown",
+          "write_in": {
+            "id": "Q37_rank_text",
+            "label_from": "option.label",
+            "required": false
+          }
+        },
+        {
+          "id": "other_service_dont_know",
+          "source_option_number": null,
+          "label": "Don’t know",
+          "menu": "other_or_unknown"
+        }
+      ],
+      "show_if": {
+        "gate": "role_established",
+        "unknown": "available_optional",
+        "unresolved_role": "hidden"
+      },
+      "help_text": [
+        "Check one."
+      ],
+      "response_limits": {
+        "maximum_selections": 1
+      },
+      "required": false
+    },
+    {
+      "id": "Q38",
+      "source_id": "RAND_A_Q38",
+      "source_question_number": 38,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          106
+        ]
+      },
+      "local_variant_id": "RAND_A_Q38_AU_full_time_service",
+      "kind": "number",
+      "label": "How many years of full-time military service have you completed?",
+      "label_variants": {
+        "self": "How many years of full-time military service have you completed?",
+        "spouse_partner": "How many years of full-time military service has your spouse or partner completed?",
+        "other_family": "How many years of full-time military service has your service member completed?",
+        "deceased": "How many years of full-time military service had your service member completed?"
+      },
+      "label_variant_ref": "focal_duration_referent",
+      "options": [
+        {
+          "id": "dont_know",
+          "source_option_number": null,
+          "label": "Don’t know",
+          "exclusive_with_value": true
+        }
+      ],
+      "input": {
+        "initial_value": null,
+        "minimum": 0,
+        "integer_only": true,
+        "suffix": "Years"
+      },
+      "help_text": [
+        "If less than 1 year, please enter 0.",
+        "Count full-time service, including periods of continuous full-time service in the Reserves. Do not count years of part-time Reserve membership as full-time years."
+      ],
+      "show_if": {
+        "gate": "role_established",
+        "unknown": "available_optional",
+        "unresolved_role": "hidden"
+      },
+      "required": false
+    },
+    {
+      "id": "Q39",
+      "source_id": "RAND_A_Q39",
+      "source_question_number": 39,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          106
+        ]
+      },
+      "local_variant_id": "RAND_A_Q39_AU_reported_sex",
+      "kind": "single_select",
+      "label": "What is your sex?",
+      "options": [
+        {
+          "id": "male",
+          "source_option_number": 1,
+          "label": "Male"
+        },
+        {
+          "id": "female",
+          "source_option_number": 2,
+          "label": "Female"
+        },
+        {
+          "id": "another_term",
+          "source_option_number": null,
+          "label": "Another term — please specify:",
+          "local_addition": true,
+          "write_in": {
+            "id": "Q39_other_text",
+            "label_from": "option.label",
+            "required": false
+          }
+        }
+      ],
+      "help_text": [
+        "Check one:"
+      ],
+      "show_if": {
+        "gate": "adult_consented",
+        "unknown": "available_optional"
+      },
+      "required": false
+    },
+    {
+      "id": "Q40",
+      "source_id": "RAND_A_Q40",
+      "source_question_number": 40,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          106
+        ]
+      },
+      "local_variant_id": null,
+      "kind": "number",
+      "label": "What age were you on your last birthday?",
+      "options": [],
+      "input": {
+        "initial_value": null,
+        "minimum": 0,
+        "integer_only": true,
+        "suffix": "Years"
+      },
+      "help_text": [],
+      "show_if": {
+        "gate": "adult_consented",
+        "unknown": "available_optional"
+      },
+      "required": false
+    },
+    {
+      "id": "Q41",
+      "source_id": "RAND_A_Q41",
+      "source_question_number": 41,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          107
+        ]
+      },
+      "local_variant_id": "RAND_A_Q41_AU_education",
+      "kind": "single_select",
+      "label": "What is the highest degree or level of school that you have completed?",
+      "options": [
+        {
+          "id": "school_below_year_12",
+          "source_option_number": 1,
+          "label": "School education without a Year 12 or equivalent qualification, including no formal schooling"
+        },
+        {
+          "id": "year_12",
+          "source_option_number": 2,
+          "label": "Year 12 or equivalent"
+        },
+        {
+          "id": "incomplete_further_study",
+          "source_option_number": 3,
+          "label": "Some further education or training, but no completed post-school qualification"
+        },
+        {
+          "id": "vocational_subdegree",
+          "source_option_number": 4,
+          "label": "Certificate I–IV, diploma, advanced diploma, associate degree or undergraduate certificate, including a trade qualification"
+        },
+        {
+          "id": "bachelor",
+          "source_option_number": 5,
+          "label": "Bachelor degree, including honours, or vocational degree"
+        },
+        {
+          "id": "postgraduate",
+          "source_option_number": 6,
+          "label": "Postgraduate qualification, such as a graduate certificate, graduate diploma, masters degree or doctorate"
+        },
+        {
+          "id": "other_qualification",
+          "source_option_number": null,
+          "label": "Other qualification — please specify:",
+          "local_addition": true,
+          "write_in": {
+            "id": "Q41_other_text",
+            "label_from": "option.label",
+            "required": false
+          }
+        }
+      ],
+      "help_text": [
+        "Check one:",
+        "Include qualifications completed overseas. Choose the closest description, or Other. Use option 3 only when you have undertaken further study but have no completed post-school qualification."
+      ],
+      "display_option_numbers": true,
+      "show_if": {
+        "gate": "adult_consented",
+        "unknown": "available_optional"
+      },
+      "required": false
+    },
+    {
+      "id": "Q42",
+      "source_id": "RAND_A_Q42",
+      "source_question_number": 42,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          107
+        ]
+      },
+      "local_variant_id": null,
+      "kind": "number",
+      "label": "In the past three years, about how many months have you been deployed?",
+      "label_variants": {
+        "self": "In the past three years, about how many months have you been deployed?",
+        "spouse_partner": "In the past three years, about how many months has your spouse or partner been deployed?",
+        "other_family": "In the past three years, about how many months has your service member been deployed?"
+      },
+      "label_variant_ref": "focal_referent",
+      "options": [
+        {
+          "id": "dont_know",
+          "source_option_number": null,
+          "label": "Don’t know",
+          "exclusive_with_value": true
+        }
+      ],
+      "input": {
+        "initial_value": null,
+        "minimum": 0,
+        "integer_only": false,
+        "suffix": "Months"
+      },
+      "help_text": [],
+      "show_if": {
+        "gate": "role_established",
+        "unknown": "available_optional",
+        "unresolved_role": "hidden"
+      },
+      "required": false
+    },
+    {
+      "id": "Q43",
+      "source_id": "RAND_A_Q43",
+      "source_question_number": 43,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          107
+        ]
+      },
+      "local_variant_id": "RAND_A_Q43_local_partner_deployment",
+      "kind": "number",
+      "label": "In the past three years, about how many months has your spouse or partner been deployed?",
+      "options": [
+        {
+          "id": "dont_know",
+          "source_option_number": null,
+          "label": "Don’t know",
+          "exclusive_with_value": true
+        }
+      ],
+      "input": {
+        "initial_value": null,
+        "minimum": 0,
+        "integer_only": false,
+        "suffix": "Months"
+      },
+      "help_text": [],
+      "show_if": {
+        "gate": "known_member_with_military_partner",
+        "unknown": "available_optional",
+        "unresolved_role": "hidden"
+      },
+      "required": false
+    },
+    {
+      "id": "Q44",
+      "source_id": "RAND_A_Q44",
+      "source_question_number": 44,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          107
+        ]
+      },
+      "local_variant_id": null,
+      "kind": "number",
+      "label": "How long did your most recent deployment last?",
+      "label_variants": {
+        "self": "How long did your most recent deployment last?",
+        "family": "How long did your service member’s most recent deployment last?"
+      },
+      "label_variant_ref": "self_or_family_referent",
+      "options": [],
+      "input": {
+        "initial_value": null,
+        "minimum": 0,
+        "integer_only": false,
+        "suffix": "Months"
+      },
+      "help_text": [],
+      "show_if": {
+        "gate": "known_role_recent_focal_return",
+        "unknown": "available_optional",
+        "unresolved_role": "hidden"
+      },
+      "required": false
+    },
+    {
+      "id": "Q45",
+      "source_id": "RAND_A_Q45",
+      "source_question_number": 45,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          107
+        ]
+      },
+      "local_variant_id": "RAND_A_Q45_local_partner_return",
+      "kind": "number",
+      "label": "How long have you been home since the most recent deployment?",
+      "label_variants": {
+        "member": "How long have you been home since the most recent deployment?",
+        "spouse": "How long has your service member been home since the most recent deployment?"
+      },
+      "label_variant_ref": "member_or_spouse_referent",
+      "options": [],
+      "input": {
+        "initial_value": null,
+        "minimum": 0,
+        "integer_only": false,
+        "suffix": "Months"
+      },
+      "help_text": [],
+      "show_if": {
+        "gate": "known_member_or_spouse_partner_recent_return",
+        "unknown": "available_optional",
+        "unresolved_role": "hidden"
+      },
+      "required": false
+    },
+    {
+      "id": "Q46",
+      "source_id": "RAND_A_Q46",
+      "source_question_number": 46,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          108
+        ]
+      },
+      "local_variant_id": "RAND_A_Q46_local_partner_briefings",
+      "kind": "matrix_single",
+      "label": "Did your spouse or partner attend any deployment-related briefings offered by the military?",
+      "label_variants": {
+        "member": "Did your spouse or partner attend any deployment-related briefings offered by the military?",
+        "spouse": "Did you attend any deployment-related briefings offered by the military?"
+      },
+      "label_variant_ref": "member_or_spouse_referent",
+      "row_heading": "Period",
+      "rows": [
+        {
+          "id": "before",
+          "source_row": "a",
+          "label": "Before this most recent deployment?"
+        },
+        {
+          "id": "during",
+          "source_row": "b",
+          "label": "During this most recent deployment?"
+        },
+        {
+          "id": "since",
+          "source_row": "c",
+          "label": "Since this most recent deployment?"
+        }
+      ],
+      "options": [
+        {
+          "id": "yes",
+          "source_option_number": null,
+          "label": "Yes"
+        },
+        {
+          "id": "no",
+          "source_option_number": null,
+          "label": "No"
+        },
+        {
+          "id": "dont_know",
+          "source_option_number": null,
+          "label": "I don’t know",
+          "show_if": {
+            "gate": "is_member",
+            "unknown": "hidden"
+          }
+        }
+      ],
+      "response_limits": {
+        "maximum_selections_per_row": 1
+      },
+      "initial_value": null,
+      "help_text": [],
+      "show_if": {
+        "gate": "known_member_or_spouse_partner_recent_return",
+        "unknown": "available_optional",
+        "unresolved_role": "hidden"
+      },
+      "required": false
+    },
+    {
+      "id": "Q47",
+      "source_id": "RAND_A_Q47",
+      "source_question_number": 47,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          108
+        ]
+      },
+      "local_variant_id": "RAND_A_Q47_AU_citizenship",
+      "kind": "single_select",
+      "label": "Are you an Australian citizen?",
+      "options": [
+        {
+          "id": "yes",
+          "source_option_number": 1,
+          "label": "Yes"
+        },
+        {
+          "id": "no",
+          "source_option_number": 2,
+          "label": "No"
+        }
+      ],
+      "help_text": [],
+      "show_if": {
+        "gate": "adult_consented",
+        "unknown": "available_optional"
+      },
+      "required": false
+    },
+    {
+      "id": "Q48",
+      "source_id": "RAND_A_Q48",
+      "source_question_number": 48,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          108
+        ]
+      },
+      "local_variant_id": null,
+      "kind": "single_select",
+      "label": "Is English a second language for you?",
+      "options": [
+        {
+          "id": "yes",
+          "source_option_number": 1,
+          "label": "Yes"
+        },
+        {
+          "id": "no",
+          "source_option_number": 2,
+          "label": "No"
+        }
+      ],
+      "help_text": [],
+      "show_if": {
+        "gate": "adult_consented",
+        "unknown": "available_optional"
+      },
+      "required": false
+    },
+    {
+      "id": "Q49",
+      "source_id": "RAND_A_Q49",
+      "source_question_number": 49,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          108
+        ]
+      },
+      "local_variant_id": "RAND_A_Q49_AU_indigenous_status",
+      "storage_variable": "RAND_A_Q49_AU_indigenous_status",
+      "kind": "multi_select",
+      "label": "Are you of Aboriginal or Torres Strait Islander origin?",
+      "options": [
+        {
+          "id": "no",
+          "source_option_number": null,
+          "label": "No",
+          "exclusive": true
+        },
+        {
+          "id": "aboriginal",
+          "source_option_number": null,
+          "label": "Yes, Aboriginal"
+        },
+        {
+          "id": "torres_strait_islander",
+          "source_option_number": null,
+          "label": "Yes, Torres Strait Islander"
+        }
+      ],
+      "help_text": [
+        "You may select both Yes options."
+      ],
+      "response_limits": {
+        "maximum_yes_selections": 2,
+        "exclusive_option_ids": [
+          "no"
+        ]
+      },
+      "show_if": {
+        "gate": "adult_consented",
+        "unknown": "available_optional"
+      },
+      "required": false
+    },
+    {
+      "id": "Q50",
+      "source_id": "RAND_A_Q50",
+      "source_question_number": 50,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          109
+        ]
+      },
+      "local_variant_id": "RAND_A_Q50_AU_ancestry",
+      "storage_variable": "RAND_A_Q50_AU_ancestry",
+      "kind": "multi_select",
+      "label": "What is your ancestry?",
+      "options": [
+        {
+          "id": "english",
+          "source_option_number": null,
+          "label": "English"
+        },
+        {
+          "id": "irish",
+          "source_option_number": null,
+          "label": "Irish"
+        },
+        {
+          "id": "scottish",
+          "source_option_number": null,
+          "label": "Scottish"
+        },
+        {
+          "id": "chinese",
+          "source_option_number": null,
+          "label": "Chinese"
+        },
+        {
+          "id": "italian",
+          "source_option_number": null,
+          "label": "Italian"
+        },
+        {
+          "id": "german",
+          "source_option_number": null,
+          "label": "German"
+        },
+        {
+          "id": "indian",
+          "source_option_number": null,
+          "label": "Indian"
+        },
+        {
+          "id": "greek",
+          "source_option_number": null,
+          "label": "Greek"
+        },
+        {
+          "id": "dutch",
+          "source_option_number": null,
+          "label": "Dutch"
+        },
+        {
+          "id": "australian",
+          "source_option_number": null,
+          "label": "Australian"
+        },
+        {
+          "id": "other_ancestry",
+          "source_option_number": null,
+          "label": "Other ancestry or ancestries — please specify:",
+          "write_in": {
+            "id": "Q50_other_text",
+            "label_from": "option.label",
+            "required": false
+          }
+        }
+      ],
+      "help_text": [
+        "Check all that apply:",
+        "You can include more than one ancestry."
+      ],
+      "response_limits": {
+        "maximum_selections": null
+      },
+      "show_if": {
+        "gate": "adult_consented",
+        "unknown": "available_optional"
+      },
+      "required": false
+    },
+    {
+      "id": "Q51",
+      "source_id": "RAND_A_Q51",
+      "source_question_number": 51,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          109
+        ]
+      },
+      "local_variant_id": "RAND_A_Q51_AU_caring",
+      "kind": "single_select",
+      "label": "Did you have caring responsibilities for an older family member or a family member with disability in the past year? By caring we mean doing things like shopping, home maintenance, transportation, checking on them by phone, handling finances, or arrangements for care.",
+      "label_variants": {
+        "without_partner": "Did you have caring responsibilities for an older family member or a family member with disability in the past year? By caring we mean doing things like shopping, home maintenance, transportation, checking on them by phone, handling finances, or arrangements for care.",
+        "with_partner": "Did you or your spouse or partner have caring responsibilities for an older family member or a family member with disability in the past year? By caring we mean doing things like shopping, home maintenance, transportation, checking on them by phone, handling finances, or arrangements for care."
+      },
+      "label_variant_ref": "partner_scope",
+      "options": [
+        {
+          "id": "yes",
+          "source_option_number": 1,
+          "label": "Yes"
+        },
+        {
+          "id": "no",
+          "source_option_number": 2,
+          "label": "No"
+        }
+      ],
+      "help_text": [],
+      "show_if": {
+        "gate": "adult_consented",
+        "unknown": "available_optional"
+      },
+      "required": false
+    },
+    {
+      "id": "Q52",
+      "source_id": "RAND_A_Q52",
+      "source_question_number": 52,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          109
+        ]
+      },
+      "local_variant_id": "RAND_A_Q52_AU_child_services",
+      "kind": "single_select",
+      "label": "Do one or more of your children receive special education or early intervention services?",
+      "options": [
+        {
+          "id": "yes",
+          "source_option_number": 1,
+          "label": "Yes"
+        },
+        {
+          "id": "no",
+          "source_option_number": 2,
+          "label": "No"
+        }
+      ],
+      "help_text": [
+        "Check one:"
+      ],
+      "applicability_text": [
+        {
+          "when_gate_unknown": "child_route_eligible",
+          "text": "For respondents with children."
+        }
+      ],
+      "show_if": {
+        "gate": "children_any_age_optional",
+        "unknown": "available_optional",
+        "unresolved_role": "hidden"
+      },
+      "required": false
+    },
+    {
+      "id": "Q53",
+      "source_id": "RAND_A_Q53",
+      "source_question_number": 53,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          110
+        ]
+      },
+      "local_variant_id": null,
+      "kind": "single_select",
+      "label": "Did anyone take over formal custody or guardianship of your dependants during the last deployment cycle?",
+      "options": [
+        {
+          "id": "yes",
+          "source_option_number": 1,
+          "label": "Yes"
+        },
+        {
+          "id": "no",
+          "source_option_number": 2,
+          "label": "No"
+        }
+      ],
+      "help_text": [],
+      "show_if": {
+        "gate": "known_member_or_spouse_recent_return_dependants_any_age",
+        "unknown": "available_optional",
+        "unresolved_role": "hidden"
+      },
+      "required": false
+    },
+    {
+      "id": "Q54",
+      "source_id": "RAND_A_Q54",
+      "source_question_number": 54,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          110
+        ]
+      },
+      "local_variant_id": "RAND_A_Q54_local_custody_referents",
+      "kind": "multi_select",
+      "label": "Who took custody of one or more of your dependants during your last deployment?",
+      "label_variants": {
+        "member": "Who took custody of one or more of your dependants during your last deployment?",
+        "spouse": "Who took custody of one or more of your dependants during your service member’s last deployment?"
+      },
+      "label_variant_ref": "member_or_spouse_referent",
+      "options": [
+        {
+          "id": "former_partner",
+          "source_option_number": 1,
+          "label": "Former spouse or partner"
+        },
+        {
+          "id": "unmarried_partner",
+          "source_option_number": 2,
+          "label": "Partner (not married)"
+        },
+        {
+          "id": "parent",
+          "source_option_number": 3,
+          "label": "Parent"
+        },
+        {
+          "id": "sibling",
+          "source_option_number": 4,
+          "label": "Sibling"
+        },
+        {
+          "id": "other_relative",
+          "source_option_number": 5,
+          "label": "Other relative"
+        },
+        {
+          "id": "military_friend",
+          "source_option_number": 6,
+          "label": "Friend in the military"
+        },
+        {
+          "id": "nonmilitary_friend",
+          "source_option_number": 7,
+          "label": "Friend not in the military"
+        },
+        {
+          "id": "other",
+          "source_option_number": 8,
+          "label": "Other",
+          "write_in": {
+            "id": "Q54_other_text",
+            "label": "Please specify:",
+            "required": false
+          }
+        }
+      ],
+      "help_text": [
+        "Check all that apply:"
+      ],
+      "response_limits": {
+        "maximum_selections": null
+      },
+      "show_if": {
+        "gate": "Q53_explicit_yes",
+        "unknown": "available_optional"
+      },
+      "required": false
+    },
+    {
+      "id": "Q55",
+      "source_id": "RAND_A_Q55",
+      "source_question_number": 55,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          110
+        ]
+      },
+      "local_variant_id": null,
+      "kind": "number",
+      "label": "On average, how many hours a week do you spend working at a job or working at your own business?",
+      "options": [],
+      "input": {
+        "initial_value": null,
+        "minimum": 0,
+        "integer_only": false,
+        "suffix": "Hours a week"
+      },
+      "help_text": [],
+      "show_if": {
+        "gate": "known_civilian_or_former_partner_employment",
+        "unknown": "available_optional",
+        "unresolved_role": "hidden"
+      },
+      "required": false
+    },
+    {
+      "id": "Q56",
+      "source_id": "RAND_A_Q56",
+      "source_question_number": 56,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          110
+        ]
+      },
+      "local_variant_id": "RAND_A_Q56_AU_education_hours",
+      "kind": "number",
+      "label": "On average, how many hours a week do you spend attending school, TAFE, university or another education or training institution?",
+      "options": [],
+      "input": {
+        "initial_value": null,
+        "minimum": 0,
+        "integer_only": false,
+        "suffix": "Hours a week"
+      },
+      "help_text": [],
+      "show_if": {
+        "gate": "known_civilian_or_former_partner_employment",
+        "unknown": "available_optional",
+        "unresolved_role": "hidden"
+      },
+      "required": false
+    },
+    {
+      "id": "Q57",
+      "source_id": "RAND_A_Q57",
+      "source_question_number": 57,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          111
+        ]
+      },
+      "local_variant_id": "RAND_A_Q57_AU_housing",
+      "kind": "single_select",
+      "label": "Which of the following best describes where you live?",
+      "options": [
+        {
+          "id": "defence_on_base",
+          "source_option_number": 1,
+          "label": "Defence housing on-base, including living-in accommodation"
+        },
+        {
+          "id": "defence_off_base",
+          "source_option_number": 2,
+          "label": "Defence housing off-base, such as a Service residence"
+        },
+        {
+          "id": "civilian_owned",
+          "source_option_number": 3,
+          "label": "Civilian housing that I own or pay a mortgage on"
+        },
+        {
+          "id": "civilian_rented",
+          "source_option_number": 4,
+          "label": "Civilian housing that I rent, off-base"
+        },
+        {
+          "id": "friends_family",
+          "source_option_number": 5,
+          "label": "With friends or family"
+        },
+        {
+          "id": "other_housing",
+          "source_option_number": null,
+          "label": "Another housing arrangement — please specify:",
+          "local_addition": true,
+          "write_in": {
+            "id": "Q57_other_text",
+            "label_from": "option.label",
+            "required": false
+          }
+        }
+      ],
+      "help_text": [
+        "Check one:",
+        "Choose the arrangement you consider your current home. For overseas military housing, use the corresponding on-base or off-base Defence housing option. Use Other when none fits."
+      ],
+      "show_if": {
+        "gate": "adult_consented",
+        "unknown": "available_optional"
+      },
+      "required": false
+    },
+    {
+      "id": "Q58",
+      "source_id": "RAND_A_Q58",
+      "source_question_number": 58,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          111
+        ]
+      },
+      "local_variant_id": "RAND_A_Q58_local_travel_boundary",
+      "kind": "single_select",
+      "label": "How far away from the nearest military base do you live?",
+      "options": [
+        {
+          "id": "under_30_minutes",
+          "source_option_number": 1,
+          "label": "Less than 30 minutes away"
+        },
+        {
+          "id": "minutes_30_under_60",
+          "source_option_number": 2,
+          "label": "30 minutes to less than 1 hour"
+        },
+        {
+          "id": "hours_1_to_2",
+          "source_option_number": 3,
+          "label": "1 to 2 hours"
+        },
+        {
+          "id": "over_2_hours",
+          "source_option_number": 4,
+          "label": "More than 2 hours away"
+        }
+      ],
+      "help_text": [
+        "Check one:",
+        "Think about a usual one-way journey using the transport you would normally use."
+      ],
+      "applicability_text": [
+        {
+          "when_gate_unknown": "outside_defence_housing",
+          "text": "Answer this question when you live outside Defence housing."
+        }
+      ],
+      "show_if": {
+        "gate": "outside_defence_housing",
+        "unknown": "available_optional"
+      },
+      "required": false
+    },
+    {
+      "id": "Q59",
+      "source_id": "RAND_A_Q59",
+      "source_question_number": 59,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          111
+        ]
+      },
+      "local_variant_id": "RAND_A_Q59_AU_posting_move",
+      "kind": "single_select",
+      "label": "Did you move from one military base or posting location to another in the past year?",
+      "options": [
+        {
+          "id": "yes",
+          "source_option_number": 1,
+          "label": "Yes"
+        },
+        {
+          "id": "no",
+          "source_option_number": 2,
+          "label": "No"
+        }
+      ],
+      "help_text": [
+        "This means a move because of a military posting.",
+        "Check one:"
+      ],
+      "show_if": {
+        "gate": "adult_consented",
+        "unknown": "available_optional"
+      },
+      "required": false
+    },
+    {
+      "id": "Q60",
+      "source_id": "RAND_A_Q60",
+      "source_question_number": 60,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          111
+        ]
+      },
+      "local_variant_id": "RAND_A_Q60_local_deployment_move",
+      "kind": "single_select",
+      "label": "Did your spouse or partner move away from the base and its local area during the last deployment cycle?",
+      "label_variants": {
+        "member": "Did your spouse or partner move away from the base and its local area during the last deployment cycle?",
+        "spouse": "Did you move away from the base and its local area during the last deployment cycle?"
+      },
+      "label_variant_ref": "member_or_spouse_referent",
+      "options": [
+        {
+          "id": "yes",
+          "source_option_number": 1,
+          "label": "Yes"
+        },
+        {
+          "id": "no",
+          "source_option_number": 2,
+          "label": "No"
+        },
+        {
+          "id": "not_applicable",
+          "source_option_number": 3,
+          "label": "Not applicable: my spouse or partner didn’t live on base or in the local area around the base before the last deployment cycle.",
+          "label_variants": {
+            "member": "Not applicable: my spouse or partner didn’t live on base or in the local area around the base before the last deployment cycle.",
+            "spouse": "Not applicable: I didn’t live on base or in the local area around the base before the last deployment cycle."
+          },
+          "label_variant_ref": "member_or_spouse_referent"
+        }
+      ],
+      "help_text": [
+        "Check one:"
+      ],
+      "show_if": {
+        "gate": "known_member_or_spouse_partner_recent_return",
+        "unknown": "available_optional",
+        "unresolved_role": "hidden"
+      },
+      "required": false
+    },
+    {
+      "id": "Q61",
+      "source_id": "RAND_A_Q61",
+      "source_question_number": 61,
+      "source_page": {
+        "page": "Page 8",
+        "printed_pages": [
+          112
+        ]
+      },
+      "local_variant_id": "RAND_A_Q61_local_relocation_reasons",
+      "kind": "multi_select",
+      "label": "Why did your spouse or partner move away from the base and its local area during the last deployment cycle?",
+      "label_variants": {
+        "member": "Why did your spouse or partner move away from the base and its local area during the last deployment cycle?",
+        "spouse": "Why did you move away from the base and its local area during the last deployment cycle?"
+      },
+      "label_variant_ref": "member_or_spouse_referent",
+      "options": [
+        {
+          "id": "save_money",
+          "source_option_number": 1,
+          "label": "To save money"
+        },
+        {
+          "id": "value",
+          "source_option_number": 2,
+          "label": "Best value for the money"
+        },
+        {
+          "id": "safety",
+          "source_option_number": 3,
+          "label": "Safety and security"
+        },
+        {
+          "id": "work_education",
+          "source_option_number": 4,
+          "label": "Closer to work/education"
+        },
+        {
+          "id": "schools",
+          "source_option_number": 5,
+          "label": "Better schools"
+        },
+        {
+          "id": "rules",
+          "source_option_number": 6,
+          "label": "Fewer rules"
+        },
+        {
+          "id": "privacy",
+          "source_option_number": 7,
+          "label": "Privacy"
+        },
+        {
+          "id": "specific_community",
+          "source_option_number": 8,
+          "label": "Wanted to live in a specific area or community"
+        },
+        {
+          "id": "defence_housing_unavailable",
+          "source_option_number": 9,
+          "label": "Defence housing was unavailable"
+        },
+        {
+          "id": "civilian_housing_unavailable",
+          "source_option_number": 10,
+          "label": "Civilian housing near the base was unavailable"
+        },
+        {
+          "id": "civilian_neighbours",
+          "source_option_number": 11,
+          "label": "Wanted civilian neighbours"
+        },
+        {
+          "id": "near_friends_family",
+          "source_option_number": 12,
+          "label": "Wanted to be closer to friends and family"
+        },
+        {
+          "id": "other",
+          "source_option_number": 13,
+          "label": "Other",
+          "write_in": {
+            "id": "Q61_other_text",
+            "label": "Please specify:",
+            "required": false
+          }
+        }
+      ],
+      "help_text": [
+        "Check all that apply:"
+      ],
+      "response_limits": {
+        "maximum_selections": null
+      },
+      "show_if": {
+        "gate": "Q60_explicit_yes",
+        "unknown": "available_optional"
+      },
+      "required": false
+    },
+    {
+      "id": "Q62",
+      "source_id": "RAND_A_Q62",
+      "source_question_number": 62,
+      "source_page": {
+        "page": "Page 9",
+        "printed_pages": [
+          113
+        ]
+      },
+      "local_variant_id": null,
+      "kind": "single_select",
+      "label": "How do you feel about your service member being in the military?",
+      "options": [
+        {
+          "id": "very_supportive",
+          "source_option_number": 1,
+          "label": "Very supportive"
+        },
+        {
+          "id": "fairly_supportive",
+          "source_option_number": 2,
+          "label": "Fairly supportive"
+        },
+        {
+          "id": "mixed_neutral",
+          "source_option_number": 3,
+          "label": "Mixed or neutral"
+        },
+        {
+          "id": "fairly_opposed",
+          "source_option_number": 4,
+          "label": "Fairly opposed"
+        },
+        {
+          "id": "very_opposed",
+          "source_option_number": 5,
+          "label": "Very opposed"
+        }
+      ],
+      "help_text": [
+        "Check one:"
+      ],
+      "show_if": {
+        "gate": "known_spouse_current_service_attitudes",
+        "unknown": "available_optional",
+        "unresolved_role": "hidden"
+      },
+      "required": false
+    },
+    {
+      "id": "Q63",
+      "source_id": "RAND_A_Q63",
+      "source_question_number": 63,
+      "source_page": {
+        "page": "Page 9",
+        "printed_pages": [
+          113
+        ]
+      },
+      "local_variant_id": null,
+      "kind": "single_select",
+      "label": "Do you favour your service member staying or leaving the military?",
+      "options": [
+        {
+          "id": "strongly_stay",
+          "source_option_number": 1,
+          "label": "I strongly favour staying"
+        },
+        {
+          "id": "somewhat_stay",
+          "source_option_number": 2,
+          "label": "I somewhat favour staying"
+        },
+        {
+          "id": "no_opinion",
+          "source_option_number": 3,
+          "label": "I have no opinion one way or the other"
+        },
+        {
+          "id": "somewhat_leave",
+          "source_option_number": 4,
+          "label": "I somewhat favour leaving"
+        },
+        {
+          "id": "strongly_leave",
+          "source_option_number": 5,
+          "label": "I strongly favour leaving"
+        },
+        {
+          "id": "retiring_soon",
+          "source_option_number": 6,
+          "label": "Not applicable — service member retiring soon"
+        }
+      ],
+      "help_text": [
+        "Check one:"
+      ],
+      "show_if": {
+        "gate": "known_spouse_current_service_attitudes",
+        "unknown": "available_optional",
+        "unresolved_role": "hidden"
+      },
+      "required": false
+    },
+    {
+      "id": "Q64",
+      "source_id": "RAND_A_Q64",
+      "source_question_number": 64,
+      "source_page": {
+        "page": "Page 9",
+        "printed_pages": [
+          113
+        ]
+      },
+      "local_variant_id": null,
+      "kind": "single_select",
+      "label": "Does your service member favour staying or leaving the military?",
+      "options": [
+        {
+          "id": "strongly_stay",
+          "source_option_number": 1,
+          "label": "Strongly favours staying"
+        },
+        {
+          "id": "somewhat_stay",
+          "source_option_number": 2,
+          "label": "Somewhat favours staying"
+        },
+        {
+          "id": "no_opinion",
+          "source_option_number": 3,
+          "label": "No opinion one way or the other"
+        },
+        {
+          "id": "somewhat_leave",
+          "source_option_number": 4,
+          "label": "Somewhat favours leaving"
+        },
+        {
+          "id": "strongly_leave",
+          "source_option_number": 5,
+          "label": "Strongly favours leaving"
+        },
+        {
+          "id": "dont_know",
+          "source_option_number": 6,
+          "label": "I don’t know how my service member feels"
+        }
+      ],
+      "help_text": [
+        "Check one:"
+      ],
+      "show_if": {
+        "gate": "known_spouse_attitudes_not_retiring",
+        "unknown": "available_optional",
+        "unresolved_role": "hidden"
+      },
+      "required": false
+    },
+    {
+      "id": "Q65",
+      "source_id": "RAND_A_Q65",
+      "source_question_number": 65,
+      "source_page": {
+        "page": "Page 9",
+        "printed_pages": [
+          113
+        ]
+      },
+      "local_variant_id": null,
+      "kind": "single_select",
+      "label": "How do you feel about staying in the military?",
+      "options": [
+        {
+          "id": "strongly_stay",
+          "source_option_number": 1,
+          "label": "I strongly favour staying"
+        },
+        {
+          "id": "somewhat_stay",
+          "source_option_number": 2,
+          "label": "I somewhat favour staying"
+        },
+        {
+          "id": "no_opinion",
+          "source_option_number": 3,
+          "label": "I have no opinion one way or the other"
+        },
+        {
+          "id": "somewhat_leave",
+          "source_option_number": 4,
+          "label": "I somewhat favour leaving"
+        },
+        {
+          "id": "strongly_leave",
+          "source_option_number": 5,
+          "label": "I strongly favour leaving"
+        },
+        {
+          "id": "retiring_soon",
+          "source_option_number": 6,
+          "label": "Not applicable — I will be retiring soon"
+        }
+      ],
+      "help_text": [
+        "Check one:"
+      ],
+      "show_if": {
+        "gate": "known_member_current_service_attitudes",
+        "unknown": "available_optional",
+        "unresolved_role": "hidden"
+      },
+      "required": false
+    },
+    {
+      "id": "Q66",
+      "source_id": "RAND_A_Q66",
+      "source_question_number": 66,
+      "source_page": {
+        "page": "Page 9",
+        "printed_pages": [
+          114
+        ]
+      },
+      "local_variant_id": "RAND_A_Q66_local_partner_preference",
+      "kind": "single_select",
+      "label": "How does your spouse or partner feel about your staying in the military?",
+      "options": [
+        {
+          "id": "strongly_stay",
+          "source_option_number": 1,
+          "label": "Strongly favours my staying"
+        },
+        {
+          "id": "somewhat_stay",
+          "source_option_number": 2,
+          "label": "Somewhat favours my staying"
+        },
+        {
+          "id": "no_opinion",
+          "source_option_number": 3,
+          "label": "Has no opinion one way or the other"
+        },
+        {
+          "id": "somewhat_leave",
+          "source_option_number": 4,
+          "label": "Somewhat favours my leaving"
+        },
+        {
+          "id": "strongly_leave",
+          "source_option_number": 5,
+          "label": "Strongly favours my leaving"
+        },
+        {
+          "id": "dont_know",
+          "source_option_number": 6,
+          "label": "I don’t know how my spouse or partner feels"
+        }
+      ],
+      "help_text": [
+        "Check one:"
+      ],
+      "show_if": {
+        "gate": "known_partnered_member_attitudes_not_retiring",
+        "unknown": "available_optional",
+        "unresolved_role": "hidden"
+      },
+      "required": false
+    },
+    {
+      "id": "Q67",
+      "source_id": "RAND_A_Q67",
+      "source_question_number": 67,
+      "source_page": {
+        "page": "Page 9",
+        "printed_pages": [
+          114
+        ]
+      },
+      "local_variant_id": null,
+      "kind": "text",
+      "label": "Thank you for taking the time to complete our survey. Please feel free to provide additional comments about any problems or needs you experienced in the past year or your ability to meet those needs with military or nonmilitary assistance. You may also provide any other type of related comments you would like.",
+      "field_label": "COMMENTS",
+      "options": [],
+      "input": {
+        "multiline": true,
+        "initial_value": null,
+        "minimum_length": 0
+      },
+      "help_text": [],
+      "show_if": {
+        "gate": "adult_consented",
+        "unknown": "available_optional"
+      },
+      "required": false
+    }
+  ],
+  "routing": {
+    "scope": "Adult Part 3. Use Part 1 relationship, Service, status, dependant and deployment-return answers; do not use superseded local questionnaire fields.",
+    "upstream_inputs": {
+      "Q3": "Role IDs: unmarried_member, married_member, civilian_spouse, civilian_partner, former_bereaved_partner, adult_child, parent, other_family, another_connection, none.",
+      "Q4": "Service IDs: army, navy, air_force, other_country, unsure, none.",
+      "Q5": "Focal service status IDs: permanent, reserves, continuous_full_time_reserve, former, deceased, other_status, unsure.",
+      "Q6": "Respondent's spouse/partner military-status IDs: never_served, veteran, permanent, reserves, continuous_full_time_reserve, unsure.",
+      "Q8": "Six dependant age bands and two count columns, plus no_dependants.",
+      "Q9": "Self-reporting member's return from deployment within the past year.",
+      "Q10": "Partner/family deployment-return answer; its referent depends on the respondent's role.",
+      "L-PARTNER": "Existing Part 1 current-spouse/partner routing helper.",
+      "L-CHILD": "Existing Part 1 independent-child routing helper.",
+      "adult_consent": "Existing adult-consent state.",
+      "current_partner_status": "Existing Part 1 yes/no/unknown derived state."
+    },
+    "new_local_helpers": [],
+    "execution": {
+      "gate_values": [
+        true,
+        false,
+        "unknown"
+      ],
+      "and": "false if any operand is false; true if all operands are true; otherwise unknown.",
+      "or": "true if any operand is true; false if all operands are false; otherwise unknown.",
+      "not": "Invert true/false; retain unknown.",
+      "show_if": "All items require affirmative adult consent. A true gate displays the item. A false gate hides it. An unknown gate keeps a potentially applicable item available and optional unless the item explicitly requires an affirmative triggering answer.",
+      "explicit_yes": "True only for an active yes answer. No, skipped and inapplicable all fail this display trigger but remain distinct stored states.",
+      "explicit_retirement": "True only for an active retiring_soon selection. A skipped preference question does not establish retirement.",
+      "text_scope": "Only labels, option labels, help_text, applicability_text, page text and thank_you text are respondent-facing. Gate descriptions and metadata are not.",
+      "substantive_questions_optional": true,
+      "single_select_limit": 1,
+      "multi_select_limit": "No additional selection cap unless a question explicitly supplies one.",
+      "write_in": "Display only for the selected option. An option-label reference labels the write-in without adding another visible prompt. Write-ins are optional.",
+      "numbering": "Display original question numbers once; source IDs and variant IDs remain metadata."
+    },
+    "derived_fields": {
+      "is_member": "True for Q3 unmarried_member or married_member; false for known spouse/other-family roles; unknown for another_connection, none or skipped.",
+      "is_spouse": "True for Q3 civilian_spouse or civilian_partner; false for known member/other-family roles; unknown for another_connection, none or skipped.",
+      "is_other_family": "True for Q3 former_bereaved_partner, adult_child, parent or other_family; false for known member/spouse roles; otherwise unknown.",
+      "member_or_spouse": "is_member OR is_spouse. Known other-family roles do not qualify merely because the respondent is married.",
+      "current_partner": "Map the active Part 1 current_partner_status yes/no/unknown to true/false/unknown. Do not infer no partner from unmarried_member alone.",
+      "focal_current_service": "True when active Q5 includes permanent, reserves or continuous_full_time_reserve; false when Q5 establishes former or deceased without a conflicting current selection; otherwise unknown. Another service status alone is not automatically current or former.",
+      "focal_deceased": "True only when active Q5 establishes deceased.",
+      "focal_former": "True when active Q5 establishes former and not deceased.",
+      "partner_military_service": "True when active Q6 includes veteran, permanent, reserves or continuous_full_time_reserve; false for never_served or an explicitly absent current partner; otherwise unknown.",
+      "recent_focal_return": "For a member, derive only from Q9. For a spouse or other-family respondent, derive only from Q10. Yes = true, No = false, missing = unknown. With unresolved role, retain unknown; never use whichever deployment answer happens to be positive.",
+      "young_dependent_child_gate": "Use the Part 1 age-22-or-younger dependant gate from Q8. Positive valid counts in any under-23 row establish true; explicit no_dependants or all four relevant Number totals explicitly zero establish false; otherwise unknown. L-CHILD alone cannot make this gate true.",
+      "independent_child_gate": "L-CHILD yes = true, no = false, skipped/prefer = unknown.",
+      "child_route_eligible": "young_dependent_child_gate OR independent_child_gate, preserving the Part 1 child-route extension and unknown handling.",
+      "employment_role": "True for Q3 civilian_spouse, civilian_partner or former_bereaved_partner; false for known member, adult_child, parent or other_family roles; otherwise unknown.",
+      "outside_defence_housing": "False for Q57 defence_on_base or defence_off_base; true for civilian_owned or civilian_rented; unknown for friends_family, other_housing or skipped.",
+      "rank_menu": "Q4 army -> army; navy -> navy; air_force -> air_force; other_country, unsure, none or skipped -> other_or_unknown.",
+      "rank_reference": "last_before_death for a deceased focal member; otherwise last_at_exit for a known former member; otherwise current. This records the question's reference point, not proof of current service.",
+      "rank_stem": "Use self_current/self_last_at_exit for a known member. Otherwise use family_current/family_last_at_exit/family_last_before_death according to rank_reference.",
+      "background_intro_variant": "single_member only for a member with current_partner = false; otherwise family.",
+      "focal_referent": "self for a member; spouse_partner for a civilian spouse/partner; other_family for other-family or unresolved roles.",
+      "focal_duration_referent": "deceased for a deceased focal member; otherwise use focal_referent.",
+      "self_or_family_referent": "self for a known member; otherwise family.",
+      "member_or_spouse_referent": "member for a known member; spouse for a civilian spouse/partner. If role is unresolved and an item remains optionally available, use its spouse variant and preserve role_unknown with the presented variant; never analyse this fallback as established spouse eligibility.",
+      "partner_scope": "without_partner only when current_partner = false; otherwise with_partner."
+    },
+    "gates": {
+      "adult_consented": "adult_consent is affirmative.",
+      "is_member": "Use the derived is_member value.",
+      "member_with_military_partner": "is_member AND current_partner AND partner_military_service.",
+      "recent_focal_return": "Use recent_focal_return, including other-family proxy respondents.",
+      "recent_partnered_member_or_spouse": "member_or_spouse AND current_partner AND recent_focal_return.",
+      "child_route_eligible": "Use child_route_eligible.",
+      "dependent_child_recent_member_or_spouse": "member_or_spouse AND young_dependent_child_gate AND recent_focal_return.",
+      "Q53_explicit_yes": "Q53 is active and explicitly yes.",
+      "civilian_or_former_partner_employment": "Use employment_role.",
+      "outside_defence_housing": "Use outside_defence_housing.",
+      "Q60_explicit_yes": "Q60 is active and explicitly yes.",
+      "spouse_current_service_attitudes": "is_spouse AND focal_current_service.",
+      "spouse_attitudes_not_retiring": "spouse_current_service_attitudes AND NOT explicit_retirement(Q63).",
+      "member_current_service_attitudes": "is_member AND focal_current_service.",
+      "partnered_member_attitudes_not_retiring": "member_current_service_attitudes AND current_partner AND NOT explicit_retirement(Q65).",
+      "role_established": "Q3 establishes member, spouse/partner or other-family role; an unresolved Q3 does not activate member/spouse proxy wording.",
+      "known_member_with_military_partner": "Established member role and applicable current partner/military partner condition; unresolved role is hidden.",
+      "known_role_recent_focal_return": "Established respondent role and recent focal member return; unresolved role is hidden.",
+      "known_member_or_spouse_partner_recent_return": "Established member or spouse role, current partner and recent return; unknown partner/deployment within established role remains optional.",
+      "children_any_age_optional": "Q52 remains optionally available for respondents with children of any age; Q18 age-22 gate does not exclude it.",
+      "known_member_or_spouse_recent_return_dependants_any_age": "Established member/spouse role, recent return and dependants of any age; explicit no dependants excludes; older or uncertain dependants leave item optional.",
+      "known_civilian_or_former_partner_employment": "Established civilian spouse/partner or former/bereaved partner role only.",
+      "known_spouse_current_service_attitudes": "Established spouse/partner role and current focal service; unknown service status within that role remains optional.",
+      "known_spouse_attitudes_not_retiring": "Established spouse/partner role, current service and no explicit retirement answer at Q63.",
+      "known_member_current_service_attitudes": "Established self-reporting member role and current service; unknown service status within that role remains optional.",
+      "known_partnered_member_attitudes_not_retiring": "Established member role, current partner/current service and no explicit retirement answer at Q65."
+    },
+    "deployment": {
+      "Q42": "Focal member's total deployment months falling within the past three years; not restricted to Greater Darwin deployments or recent return.",
+      "Q43": "Only the member respondent's military spouse/partner exposure. A veteran partner can qualify. Do not repeat Q42 for civilian-spouse respondents.",
+      "Q44": "Recent focal return gate; ask the length of that latest completed deployment.",
+      "Q45_Q46": "Recent return plus the member/spouse and current-partner gates. Known single members and other-family respondents do not acquire these spouse-route items.",
+      "Q46_scale": "Yes and No for both routes. I don’t know only when the respondent is a known member reporting the partner's attendance.",
+      "Q46_interpretation": "No does not distinguish a briefing not offered from a briefing offered but not attended.",
+      "timeframes": "Keep three-year exposure, latest completed deployment length and time since return separate.",
+      "definition": "Do not broaden deployment to every training exercise, posting or period apart."
+    },
+    "caring_and_employment": {
+      "Q51": "All adults, using their own current partnership for the stem; no co-residence requirement.",
+      "Q52": "Use the same child gate as Part 1, including independent children. If unknown, show the supplied For respondents with children. instruction.",
+      "Q53": "Use the dependent-child gate, not the independent-child extension alone; preserve formal custody/guardianship rather than informal childcare.",
+      "Q54": "Only explicit Q53 yes. No or skipped bypasses Q54, retaining distinct answer states.",
+      "Q55_Q56": "Civilian current and former/bereaved spouse/partner self-report. Member respondents, including dual-military members, and other relatives do not receive an extra spouse employment questionnaire.",
+      "hours": "Numeric answers concern respondent work or attendance, not a partner's hours and not total independent study time."
+    },
+    "housing": {
+      "Q57": "Respondent's current home, including outside Greater Darwin. Defence rent assistance does not turn a civilian rental into a Service residence.",
+      "Q58": "Skip explicit Defence housing. Show for civilian owned/rented housing. With friends/family, Other or skipped Q57, retain optional access with the supplied outside-Defence-housing instruction.",
+      "Q58_boundaries": "Under 30 minutes; at least 30 but under 60 minutes; 1–2 hours inclusive of exactly 2 hours; more than 2 hours.",
+      "Q59": "All adults; record their actual posting-related move, not only a posting order or someone else's move.",
+      "Q60": "Recent partnered member/spouse route only. Render the Not applicable option using the same person as the question.",
+      "Q61": "Only explicit Q60 yes. No, Not applicable and skipped bypass it but remain different states."
+    },
+    "attitudes": {
+      "civilian_spouse_route": [
+        "Q62",
+        "Q63",
+        "Q64"
+      ],
+      "member_route": [
+        "Q65",
+        "Q66"
+      ],
+      "former_deceased": "Skip current-service attitudes. Do not code previous departure as favouring leaving.",
+      "other_family": "Do not convert spouse/member attitudes into parent, adult-child or carer attitudes; proceed to Q67.",
+      "dual_military": "Use the member route about the respondent's own service.",
+      "reserves": "Current Reserve membership remains military service; it is not evidence of leaving.",
+      "unknown_service_status": "Keep the role-appropriate section optional with the supplied current-service applicability instruction.",
+      "Q63_retiring": "Explicit retiring_soon skips Q64.",
+      "Q65_retiring": "Explicit retiring_soon skips Q66.",
+      "skipped_preferences": "Skipped Q63 or Q65 does not establish retirement.",
+      "Q66_partner": "Never required and never shown for an explicitly absent current partner.",
+      "Q67": "Always available after adult consent, including no problems, no help needed, skipped chains and inapplicable attitudes."
+    },
+    "numeric_and_missing_answers": {
+      "initial_numeric_values": null,
+      "nonnegative": true,
+      "completed_integer_years": [
+        "Q38",
+        "Q40"
+      ],
+      "zero_valid": [
+        "Q38",
+        "Q42",
+        "Q43",
+        "Q44",
+        "Q45",
+        "Q55",
+        "Q56"
+      ],
+      "dont_know_numeric_fields": [
+        "Q38",
+        "Q42",
+        "Q43"
+      ],
+      "dont_know_exclusivity": "A numeric value and Don’t know cannot coexist. Selecting either clears the active alternative, without converting unknown to zero.",
+      "age": "Age is respondent age at last birthday, not focal-member age or a new eligibility gate.",
+      "full_time_zero": "Q38 zero may mean no full-time service or less than one completed year; do not distinguish those from zero alone.",
+      "no_added_hard_maxima": true,
+      "states_to_keep_separate": [
+        "value",
+        "zero",
+        "explicit_no",
+        "dont_know",
+        "skipped",
+        "inapplicable",
+        "retirement_skip",
+        "unknown_gate"
+      ],
+      "choice_nonresponse": "Do not add Not sure or Prefer not to say to items that lack them in the supplied adaptation; optional skipping remains available."
+    },
+    "demographic_and_option_rules": {
+      "Q39": "Reported sex, not sex at birth, gender identity or transgender status; no inference from other answers.",
+      "Q49": "No is exclusive; the two Yes options can coexist. Store under RAND_A_Q49_AU_indigenous_status.",
+      "Q50": "Allow all selected ancestries and Other text; no two-choice restriction. Store under RAND_A_Q50_AU_ancestry.",
+      "citizenship_language": "Do not use Q47 to infer visa/service eligibility or Q48 to infer English proficiency/interpreter need.",
+      "education": "Do not map broad Q41 groups automatically to AQF levels or formal overseas-equivalence outcomes.",
+      "rank": "Use Australian/local rank IDs and raw write-in text; no automatic US paygrade or cross-service equivalence mapping."
+    },
+    "answer_targets": {
+      "focal_service_member": [
+        "Q37",
+        "Q38",
+        "Q42",
+        "Q44",
+        "Q45"
+      ],
+      "respondent": [
+        "Q39",
+        "Q40",
+        "Q41",
+        "Q47",
+        "Q48",
+        "Q49",
+        "Q50",
+        "Q55",
+        "Q56",
+        "Q57",
+        "Q58",
+        "Q59",
+        "Q67"
+      ],
+      "Q43": "Respondent's military spouse/partner, distinct from the member respondent.",
+      "Q46": "Member route: spouse/partner's attendance, reported by the member. Spouse route: respondent's own attendance.",
+      "Q51": "Respondent's caring responsibilities; include respondent's spouse/partner under the with-partner stem.",
+      "Q52": "Respondent's children receiving the specified services.",
+      "Q53_Q54": "Respondent's dependants and formal custody during the focal member's latest completed deployment; Q54 relationships are relative to the respondent.",
+      "Q60_Q61": "Member route: spouse/partner's relocation. Spouse route: respondent's relocation.",
+      "Q62_Q63": "Civilian spouse/partner's own views about the focal member's current service.",
+      "Q64": "Civilian spouse/partner's perception of the focal member's preference.",
+      "Q65": "Currently serving member respondent's own preference.",
+      "Q66": "Member respondent's perception of the spouse/partner's preference about the respondent's service."
+    },
+    "navigation_and_state": {
+      "source_order": "Retain Q37–Q67 order and Page 8 then Page 9. Subheadings may be separate screens without reordering.",
+      "empty_subsections": "Skip a subsection whose questions are all inapplicable; never skip Q67 with the attitude section.",
+      "back_next": "Preserve stable IDs and answers during navigation.",
+      "upstream_edits": "Recompute gates, referents, rank menus and active answer attribution. Exclude inactive answers from export; do not transfer a prior answer to another person or menu item.",
+      "store_with_answers": [
+        "source_id",
+        "local_variant_id",
+        "presented_label_variant",
+        "report_target",
+        "gate_state"
+      ],
+      "rank_extra_fields": [
+        "rank_reference",
+        "rank_menu",
+        "raw_rank_write_in"
+      ],
+      "review": {
+        "title": "Review your answers",
+        "paragraphs": [
+          "You can return to any section to check or change your answers."
+        ],
+        "buttons": [
+          {
+            "id": "back",
+            "label": "Back",
+            "action": "return_to_answers"
+          },
+          {
+            "id": "confirm_submit",
+            "label": "Confirm and submit",
+            "action": "render_thank_you"
+          }
+        ],
+        "optional_answers_required": false
+      }
+    },
+    "technical_contract": {
+      "respondent_visible": false,
+      "contract_not_observed_test_result": true,
+      "completion_action": "Render the specified thank-you presentation using transient in-memory state only.",
+      "answer_receiver": false,
+      "persistent_answer_storage": false,
+      "do_not_create": [
+        "Answer-bearing network request",
+        "Answer-bearing URL",
+        "Answer log",
+        "Deferred submission queue",
+        "Receipt",
+        "submitted=true event",
+        "Fictitious response ID",
+        "Answers received message"
+      ],
+      "existing_safety_help_access": "Retain the existing verified safety/help access alongside the closing page.",
+      "collection_authority": "This serialization does not authorise collection, configure a receiver or supply LC participant-information arrangements."
+    },
+    "audit_corrections_20260929": [
+      "Unresolved Q3 role must not open both member and spouse routes or select a proxy wording.",
+      "Q52 and Q53 do not inherit Q18 age-22 limit; Q54 remains explicit Yes to Q53.",
+      "Q15 option 8 is controlled by partner service status, not both partners full-time."
+    ]
+  },
+  "thank_you": {
+    "source_pages": [
+      114,
+      115
+    ],
+    "heading": "Thank you",
+    "paragraphs": [
+      "Thank you, once again, for taking the time to complete the survey.",
+      "Lutheran Care is listening to Defence personnel and families to help shape local family support in Greater Darwin."
+    ],
+    "support": {
+      "heading": "Information and support",
+      "contacts": [
+        {
+          "id": "defence_helpline",
+          "name": "Defence Member and Family Helpline",
+          "phone": "1800 624 608",
+          "international_phone": {
+            "label": "From outside Australia:",
+            "number": "+61 2 6127 1600"
+          }
+        },
+        {
+          "id": "open_arms",
+          "name": "Open Arms — Veterans & Families Counselling",
+          "phone": "1800 011 046"
+        }
+      ],
+      "paragraphs": [
+        "Contact these services directly to ask about support."
+      ]
+    },
+    "closing_paragraphs": [
+      "You may now close this page."
+    ]
+  },
+  "coverage": {
+    "source_items": [
+      {
+        "id": "Q37",
+        "source_id": "RAND_A_Q37",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q38",
+        "source_id": "RAND_A_Q38",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q39",
+        "source_id": "RAND_A_Q39",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q40",
+        "source_id": "RAND_A_Q40",
+        "status": "retained",
+        "omission_reason": null
+      },
+      {
+        "id": "Q41",
+        "source_id": "RAND_A_Q41",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q42",
+        "source_id": "RAND_A_Q42",
+        "status": "retained",
+        "omission_reason": null
+      },
+      {
+        "id": "Q43",
+        "source_id": "RAND_A_Q43",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q44",
+        "source_id": "RAND_A_Q44",
+        "status": "retained",
+        "omission_reason": null
+      },
+      {
+        "id": "Q45",
+        "source_id": "RAND_A_Q45",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q46",
+        "source_id": "RAND_A_Q46",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q47",
+        "source_id": "RAND_A_Q47",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q48",
+        "source_id": "RAND_A_Q48",
+        "status": "retained",
+        "omission_reason": null
+      },
+      {
+        "id": "Q49",
+        "source_id": "RAND_A_Q49",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q50",
+        "source_id": "RAND_A_Q50",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q51",
+        "source_id": "RAND_A_Q51",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q52",
+        "source_id": "RAND_A_Q52",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q53",
+        "source_id": "RAND_A_Q53",
+        "status": "retained",
+        "omission_reason": null
+      },
+      {
+        "id": "Q54",
+        "source_id": "RAND_A_Q54",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q55",
+        "source_id": "RAND_A_Q55",
+        "status": "retained",
+        "omission_reason": null
+      },
+      {
+        "id": "Q56",
+        "source_id": "RAND_A_Q56",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q57",
+        "source_id": "RAND_A_Q57",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q58",
+        "source_id": "RAND_A_Q58",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q59",
+        "source_id": "RAND_A_Q59",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q60",
+        "source_id": "RAND_A_Q60",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q61",
+        "source_id": "RAND_A_Q61",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q62",
+        "source_id": "RAND_A_Q62",
+        "status": "retained",
+        "omission_reason": null
+      },
+      {
+        "id": "Q63",
+        "source_id": "RAND_A_Q63",
+        "status": "retained",
+        "omission_reason": null
+      },
+      {
+        "id": "Q64",
+        "source_id": "RAND_A_Q64",
+        "status": "retained",
+        "omission_reason": null
+      },
+      {
+        "id": "Q65",
+        "source_id": "RAND_A_Q65",
+        "status": "retained",
+        "omission_reason": null
+      },
+      {
+        "id": "Q66",
+        "source_id": "RAND_A_Q66",
+        "status": "adapted",
+        "omission_reason": null
+      },
+      {
+        "id": "Q67",
+        "source_id": "RAND_A_Q67",
+        "status": "retained",
+        "omission_reason": null
+      }
+    ],
+    "local_helpers": [],
+    "inherited_helper_references": [
+      "L-PARTNER",
+      "L-CHILD"
+    ],
+    "source_item_count": 31,
+    "unique_source_item_count": 31,
+    "omitted_source_items": []
+  },
+  "provenance": {
+    "source_label": "Complete reviewed Q37–Q67 answer to structure",
+    "source": {
+      "authors": "Laura L. Miller et al.",
+      "title": "A New Approach for Assessing the Needs of Service Members and Their Families",
+      "year": 2011,
+      "report": "MG-1124",
+      "section": "Appendix A",
+      "printed_pages": "105–115",
+      "url": "https://www.rand.org/content/dam/rand/pubs/monographs/2011/RAND_MG1124.pdf"
+    },
+    "serialization_basis": "The complete reviewed adaptation supplied in this request. No new PDF, local-file, code, frontend or respondent-test inspection is claimed.",
+    "metadata_not_respondent_copy": true,
+    "option_number_policy": "Retain source numbers where given. Null marks unnumbered columns, locally added choices or replacement menus; it is not an inferred original code.",
+    "question_map": {
+      "Q37": {
+        "source_q": "Q37",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            105,
+            106
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q37_AU_rank",
+        "note": "Current rank replaces US paygrade; Australian branch menus and generic foreign/unknown menu. Known former/deceased members receive explicit last-rank variants."
+      },
+      "Q38": {
+        "source_q": "Q38",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            106
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q38_AU_full_time_service",
+        "note": "Full-time service replaces active duty; include continuous full-time Reserve service and retain completed years and Don’t know."
+      },
+      "Q39": {
+        "source_q": "Q39",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            106
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q39_AU_reported_sex",
+        "note": "Reported-sex stem and an additional term replace ambiguous Are you wording; not an equivalent gender or sex-at-birth measure."
+      },
+      "Q40": {
+        "source_q": "Q40",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            106
+          ]
+        },
+        "status": "retained",
+        "local_variant_id": null,
+        "note": "Retain respondent age at last birthday in whole completed years."
+      },
+      "Q41": {
+        "source_q": "Q41",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            107
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q41_AU_education",
+        "note": "Six broad Australian school/qualification groups plus Other; not AQF-level or credential-equivalence codes."
+      },
+      "Q42": {
+        "source_q": "Q42",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            107
+          ]
+        },
+        "status": "retained",
+        "local_variant_id": null,
+        "note": "Retain total months in the past three years, with the supplied member/spouse/other-family referents."
+      },
+      "Q43": {
+        "source_q": "Q43",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            107
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q43_local_partner_deployment",
+        "note": "Retain separate partner deployment exposure; extend to unmarried and formerly serving military partners."
+      },
+      "Q44": {
+        "source_q": "Q44",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            107
+          ]
+        },
+        "status": "retained",
+        "local_variant_id": null,
+        "note": "Retain latest completed deployment length and recent focal-return gate."
+      },
+      "Q45": {
+        "source_q": "Q45",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            107
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q45_local_partner_return",
+        "note": "Retain time since return and printed married restriction, extended to current partners; no other-family route."
+      },
+      "Q46": {
+        "source_q": "Q46",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            108
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q46_local_partner_briefings",
+        "note": "Retain before/during/since matrix; partner extension and proxy-only uncertainty."
+      },
+      "Q47": {
+        "source_q": "Q47",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            108
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q47_AU_citizenship",
+        "note": "Australian citizenship replaces United States citizenship; omit unconfirmed research-only and benefit-eligibility explanation."
+      },
+      "Q48": {
+        "source_q": "Q48",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            108
+          ]
+        },
+        "status": "retained",
+        "local_variant_id": null,
+        "note": "Retain the exact English-as-a-second-language question; no proficiency inference."
+      },
+      "Q49": {
+        "source_q": "Q49",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            108
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q49_AU_indigenous_status",
+        "note": "Australian Indigenous status replaces the US Hispanic/Latino construct. Separate local variable; no mapping of original Yes/No codes."
+      },
+      "Q50": {
+        "source_q": "Q50",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            109
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q50_AU_ancestry",
+        "note": "Australian ancestry replaces the US race checklist. Multiple responses retained without a two-response cap; separate local variable."
+      },
+      "Q51": {
+        "source_q": "Q51",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            109
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q51_AU_caring",
+        "note": "Caring, older family member and disability terminology; extend spouse to partner while retaining examples."
+      },
+      "Q52": {
+        "source_q": "Q52",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            109
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q52_AU_child_services",
+        "note": "Retain special education/early intervention receipt; omit only the US Exceptional Family Member Program clause and use the Part 1 child route."
+      },
+      "Q53": {
+        "source_q": "Q53",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            110
+          ]
+        },
+        "status": "retained",
+        "local_variant_id": null,
+        "note": "Retain formal custody/guardianship, dependent-child and recent-deployment gates."
+      },
+      "Q54": {
+        "source_q": "Q54",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            110
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q54_local_custody_referents",
+        "note": "Former spouse or partner and Partner (not married) replace source relationship labels; spouse respondent refers to the service member's deployment."
+      },
+      "Q55": {
+        "source_q": "Q55",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            110
+          ]
+        },
+        "status": "retained",
+        "local_variant_id": null,
+        "note": "Retain exact self-report weekly work-hours question; local route includes civilian current and former/bereaved spouse/partner respondents."
+      },
+      "Q56": {
+        "source_q": "Q56",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            110
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q56_AU_education_hours",
+        "note": "Use school, TAFE, university or another education/training institution; preserve attendance hours."
+      },
+      "Q57": {
+        "source_q": "Q57",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            111
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q57_AU_housing",
+        "note": "Australian Defence/civilian housing labels and an added Other arrangement; preserve source housing distinctions."
+      },
+      "Q58": {
+        "source_q": "Q58",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            111
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q58_local_travel_boundary",
+        "note": "Retain nearest-base travel-time construct; include exactly 30 minutes in the second category and preserve exactly two hours in the third."
+      },
+      "Q59": {
+        "source_q": "Q59",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            111
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q59_AU_posting_move",
+        "note": "Replace PCS with an actual posting-related move between bases or posting locations."
+      },
+      "Q60": {
+        "source_q": "Q60",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            111
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q60_local_deployment_move",
+        "note": "Partner extension; spouse stem includes the local area and its Not applicable choice refers to I."
+      },
+      "Q61": {
+        "source_q": "Q61",
+        "source_page": {
+          "page": "Page 8",
+          "printed_pages": [
+            112
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q61_local_relocation_reasons",
+        "note": "Retain all thirteen reasons; Defence housing, partner referents and Australian spelling only."
+      },
+      "Q62": {
+        "source_q": "Q62",
+        "source_page": {
+          "page": "Page 9",
+          "printed_pages": [
+            113
+          ]
+        },
+        "status": "retained",
+        "local_variant_id": null,
+        "note": "Retain five support choices for civilian spouses/partners of currently serving members."
+      },
+      "Q63": {
+        "source_q": "Q63",
+        "source_page": {
+          "page": "Page 9",
+          "printed_pages": [
+            113
+          ]
+        },
+        "status": "retained",
+        "local_variant_id": null,
+        "note": "Retain six choices and retirement skip; Australian favour spelling."
+      },
+      "Q64": {
+        "source_q": "Q64",
+        "source_page": {
+          "page": "Page 9",
+          "printed_pages": [
+            113
+          ]
+        },
+        "status": "retained",
+        "local_variant_id": null,
+        "note": "Retain perceived member preference and Don’t know; Australian favour spelling."
+      },
+      "Q65": {
+        "source_q": "Q65",
+        "source_page": {
+          "page": "Page 9",
+          "printed_pages": [
+            113
+          ]
+        },
+        "status": "retained",
+        "local_variant_id": null,
+        "note": "Retain own-service preferences and retiring-soon skip, including current Reserve members."
+      },
+      "Q66": {
+        "source_q": "Q66",
+        "source_page": {
+          "page": "Page 9",
+          "printed_pages": [
+            114
+          ]
+        },
+        "status": "adapted",
+        "local_variant_id": "RAND_A_Q66_local_partner_preference",
+        "note": "Retain perceived spouse preference, extend to partners and preserve retirement/partnership gates."
+      },
+      "Q67": {
+        "source_q": "Q67",
+        "source_page": {
+          "page": "Page 9",
+          "printed_pages": [
+            114
+          ]
+        },
+        "status": "retained",
+        "local_variant_id": null,
+        "note": "Retain original closing comment verbatim, optional multiline COMMENTS field and availability to everyone."
+      }
+    },
+    "navigation_notes": [
+      "Personal Background and Caring Responsibilities are local navigation headings, not additional RAND questions.",
+      "The single-member introduction replaces only the first sentence; retain the common explanation and identifier instruction.",
+      "Review-screen copy is a local interface element, not an additional RAND-numbered item."
+    ],
+    "omitted_source_components": [
+      {
+        "location": "Page 8 introduction",
+        "text": "approximately 5 minutes",
+        "reason": "No locally tested completion estimate is supplied."
+      },
+      {
+        "location": "Page 8 introduction",
+        "component": "Blanket statement about not requesting identifying information",
+        "reason": "Replace it with the supplied instruction not to enter names, contact details or service numbers; do not promise detailed combinations cannot identify someone."
+      },
+      {
+        "location": "Q47",
+        "component": "Research-only or benefit-eligibility explanation",
+        "reason": "Its local applicability is not confirmed."
+      },
+      {
+        "location": "Q49",
+        "component": "Original US Hispanic/Latino flag",
+        "reason": "Replaced, not translated, by the explicitly identified Australian Indigenous-status variable."
+      },
+      {
+        "location": "Q50",
+        "component": "Original US race classification",
+        "reason": "Replaced, not recoded, by the explicitly identified Australian ancestry variable."
+      },
+      {
+        "location": "Q52",
+        "text": "or who are in the Exceptional Family Member Program (EMP)",
+        "reason": "US-specific programme clause; no substitution of NDIS enrolment, diagnosis or additional-needs recognition."
+      },
+      {
+        "location": "Final support block",
+        "component": "Military OneSource advertisement, US contact numbers and entitlement claims",
+        "reason": "Replace with the supplied Australian support contacts; do not transfer US counselling entitlements."
+      }
+    ],
+    "support_contact_verification": {
+      "basis": "The supplied reviewed adaptation states that the Defence Member and Family Helpline and Open Arms contact details were checked against official information.",
+      "new_independent_check_in_this_response": false,
+      "eligibility_claims_added": false
+    },
+    "measurement_limits": [
+      "Australian ranks are not established US paygrade equivalents; retain raw rank and current/last-at-exit/last-before-death reference points.",
+      "Broad Q41 categories are not formal AQF-level codes or overseas qualification assessments.",
+      "Q49 and Q50 are Australian replacement constructs, not statistically equivalent versions of the US items.",
+      "Q64 and Q66 report perceptions of another person's preference, not that person's direct answer.",
+      "Q62–Q66 are service-attitude indicators, not actual retention, general satisfaction or a resilience score.",
+      "Do not use detailed cross-tabulations of rank, age, ancestry, household and need pathways to report identifiable tiny groups."
+    ],
+    "unresolved_local_requirements": "LC's actual receiving system and participant-information arrangements remain separate decisions. This packet adds no new consent rights, confidentiality guarantees or authority to collect answers."
+  }
+}

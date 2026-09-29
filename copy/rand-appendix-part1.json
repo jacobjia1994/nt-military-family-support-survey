@@ -1,0 +1,2570 @@
+{
+  "schema": "rand_appendix_a_adult_local_part1_draft_v1",
+  "welcome": {
+    "source_page": {
+      "page": "Page 1",
+      "printed_pages": [
+        76
+      ]
+    },
+    "title": "Welcome to the Survey of Service Member and Family Needs",
+    "subtitle": "Lutheran Care — Greater Darwin",
+    "eligibility_text": [
+      "This adult questionnaire is for people aged 18 years or older who are current or former Australian Defence Force members, or members of their families, with a connection to Greater Darwin.",
+      "Military personnel from other countries serving in Greater Darwin and their adult family members are also welcome. Family members may live elsewhere."
+    ],
+    "adult_cta": {
+      "label": "Enter the Survey Here",
+      "route": "participant_information"
+    },
+    "exit_cta": {
+      "label": "Exit Here",
+      "route": "exit"
+    },
+    "child_prompt": "For children and young people:",
+    "child_cta": {
+      "label": "Choose the child or young person questionnaire.",
+      "route": "existing_child_youth_age_routing"
+    },
+    "exit": {
+      "text": [
+        "Thank you for your interest in the survey.",
+        "This questionnaire is intended for adult service members and family members connected with Greater Darwin."
+      ],
+      "return_cta": {
+        "label": "Return to the start",
+        "route": "welcome"
+      }
+    }
+  },
+  "participant_information": {
+    "source_page": {
+      "page": "Page 2",
+      "printed_pages": [
+        77,
+        78
+      ]
+    },
+    "title": "Service Member and Family Needs",
+    "sections": [
+      {
+        "id": "purpose",
+        "title": "Purpose of the Survey",
+        "paragraphs": [
+          "Lutheran Care wants to learn more about the needs of service members and their families and how well those needs are being met.",
+          "Lutheran Care is preparing to deliver a Defence family support program in Greater Darwin. Before activities begin, we are listening to service members and families. The consultation is intended to inform how planned family supports are developed and delivered, and to identify where other help may be needed.",
+          "The project is funded by the Australian Government Department of Defence through its Family Support Funding Program."
+        ]
+      },
+      {
+        "id": "audience",
+        "title": "Who Is Being Asked to Take the Survey",
+        "paragraphs": [
+          "This adult questionnaire is for current or former ADF members and their family members aged 18 years or older who are connected with Greater Darwin. It also includes military personnel from other countries serving in Greater Darwin and their adult family members.",
+          "Family members include spouses, partners, former partners, parents, adult children, other relatives, kin and carers. Taking part is not an application for a service or activity."
+        ]
+      },
+      {
+        "id": "participation",
+        "title": "What Survey Participation Involves",
+        "paragraphs": [
+          "Participation involves completing this web-based survey.",
+          "The survey will ask you about different kinds of problems you may have encountered in the past year, what kinds of assistance you may have needed to help you with those problems, and whether you were satisfied with the kinds of support available to you for those problems.",
+          "In the last sections, we will ask some background questions and you will have the opportunity to comment on the survey itself or on family issues that the survey did not cover."
+        ]
+      },
+      {
+        "id": "personal_information",
+        "title": "Personal Information",
+        "paragraphs": [
+          "Please do not enter names, contact details, service numbers or details that identify other people. Do not include classified or operationally sensitive information."
+        ]
+      },
+      {
+        "id": "voluntary",
+        "title": "Participation Is Entirely Voluntary",
+        "paragraphs": [
+          "Your participation in this survey is voluntary. You may decide not to participate now or at any time. If you feel uncomfortable answering any of the questions, you may skip to the next question. You may stop taking the survey at any time."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Whom to Contact",
+        "paragraphs": [
+          "For questions about the consultation, contact Lutheran Care’s Darwin Office."
+        ]
+      },
+      {
+        "id": "questionnaire_credit",
+        "title": "About the Questionnaire",
+        "paragraphs": [
+          "This adult questionnaire is adapted for Greater Darwin from the sample questionnaire in RAND’s A New Approach for Assessing the Needs of Service Members and Their Families (2011)."
+        ]
+      },
+      {
+        "id": "consent",
+        "title": "Consent to Participate",
+        "paragraphs": []
+      }
+    ],
+    "consent": {
+      "kind": "single_select",
+      "initial_value": null,
+      "choices": [
+        {
+          "id": "under_18",
+          "source_option_number": null,
+          "label": "I am under 18 years of age.",
+          "route": "existing_child_youth_age_routing",
+          "route_meaning": "Leave the adult instrument and use the existing child/young-person route selector."
+        },
+        {
+          "id": "adult_agree",
+          "source_option_number": null,
+          "label": "I am 18 years or older, and I have read this statement. I understand what it says and I agree to participate in this survey.",
+          "route": "page_3",
+          "route_meaning": "Enter the adult questionnaire."
+        },
+        {
+          "id": "adult_decline",
+          "source_option_number": null,
+          "label": "I am 18 years or older, but I do not want to participate in this survey.",
+          "route": "exit",
+          "route_meaning": "Exit without entering the adult questionnaire."
+        }
+      ],
+      "no_selection_route": "Remain on participant_information; do not infer agreement."
+    }
+  },
+  "pages": [
+    {
+      "id": "page_3",
+      "source_page": {
+        "page": "Page 3",
+        "printed_pages": [
+          79
+        ]
+      },
+      "title": "Study Information",
+      "intro": [],
+      "questions": [
+        "Q1",
+        "Q2"
+      ]
+    },
+    {
+      "id": "page_4",
+      "source_page": {
+        "page": "Page 4",
+        "printed_pages": [
+          80,
+          81
+        ]
+      },
+      "title": "Key Demographics",
+      "intro": [],
+      "questions": [
+        "Q3",
+        "L-PARTNER",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q8",
+        "L-CHILD",
+        "Q9",
+        "Q10",
+        "Q11",
+        "L-GD"
+      ]
+    },
+    {
+      "id": "page_5",
+      "source_page": {
+        "page": "Page 5",
+        "printed_pages": [
+          82
+        ]
+      },
+      "title": "Problems",
+      "intro": [
+        {
+          "type": "paragraph",
+          "text": "Life inevitably creates changes for service members and their families that can sometimes take the form of problems. Based on focus groups and prior surveys conducted with service members and spouses of service members, RAND developed a list of general categories of problems that may come up:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Military Practices and Culture",
+            "Work/Life Balance",
+            "Household Management",
+            "Financial or Legal Problems",
+            "Spouse’s or Partner’s Well-Being",
+            "Health Care System Problems",
+            "Relationship Problems",
+            "Child Well-Being",
+            "Your Own Well-Being"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "We’d like to ask you to check off the kinds of problems you experienced. Then we will ask about what you needed to deal with these problems, the ways you tried to solve the problems, and your satisfaction with the kinds of assistance available to you."
+        },
+        {
+          "type": "paragraph",
+          "text": "For this survey, think about the past year and problems connected with your or your family’s life in Greater Darwin. Family members may live elsewhere. Include problems that have been resolved as well as those that are continuing. They do not have to have been caused by military service. You can skip any question."
+        }
+      ],
+      "questions": []
+    },
+    {
+      "id": "page_5_1",
+      "source_page": {
+        "page": "Page 5.1",
+        "printed_pages": [
+          83
+        ]
+      },
+      "title": "Military Practices and Culture Problems",
+      "intro": [],
+      "questions": [
+        "Q12"
+      ]
+    },
+    {
+      "id": "page_5_2",
+      "source_page": {
+        "page": "Page 5.2",
+        "printed_pages": [
+          84
+        ]
+      },
+      "title": "Work/Life Balance Problems",
+      "intro": [],
+      "questions": [
+        "Q13"
+      ]
+    },
+    {
+      "id": "page_5_3",
+      "source_page": {
+        "page": "Page 5.3",
+        "printed_pages": [
+          85
+        ]
+      },
+      "title": "Household Management Problems",
+      "intro": [],
+      "questions": [
+        "Q14"
+      ]
+    },
+    {
+      "id": "page_5_4",
+      "source_page": {
+        "page": "Page 5.4",
+        "printed_pages": [
+          86
+        ]
+      },
+      "title": "Financial or Legal Problems",
+      "intro": [],
+      "questions": [
+        "Q15"
+      ]
+    },
+    {
+      "id": "page_5_5",
+      "source_page": {
+        "page": "Page 5.5",
+        "printed_pages": [
+          87
+        ]
+      },
+      "title": "Health Care System Problems",
+      "intro": [],
+      "questions": [
+        "Q16"
+      ]
+    },
+    {
+      "id": "page_5_6",
+      "source_page": {
+        "page": "Page 5.6",
+        "printed_pages": [
+          88
+        ]
+      },
+      "title": "Relationship Problems",
+      "intro": [],
+      "questions": [
+        "Q17"
+      ]
+    },
+    {
+      "id": "page_5_7",
+      "source_page": {
+        "page": "Page 5.7",
+        "printed_pages": [
+          89
+        ]
+      },
+      "title": "Child Well-Being Problems",
+      "intro": [],
+      "questions": [
+        "Q18"
+      ]
+    },
+    {
+      "id": "page_5_8",
+      "source_page": {
+        "page": "Page 5.8",
+        "printed_pages": [
+          90
+        ]
+      },
+      "title": "Problems with Your Own Well-Being",
+      "intro": [],
+      "questions": [
+        "Q19"
+      ]
+    },
+    {
+      "id": "page_5_9",
+      "source_page": {
+        "page": "Page 5.9",
+        "printed_pages": [
+          91
+        ]
+      },
+      "title": "Problems with Your Spouse’s or Partner’s Well-Being",
+      "intro": [],
+      "questions": [
+        "Q20"
+      ]
+    },
+    {
+      "id": "page_5_10",
+      "source_page": {
+        "page": "Page 5.10",
+        "printed_pages": [
+          92
+        ]
+      },
+      "title": "Other Problems",
+      "intro": [],
+      "questions": [
+        "Q21"
+      ]
+    },
+    {
+      "id": "page_5_11",
+      "source_page": {
+        "page": "Page 5.11",
+        "printed_pages": [
+          93
+        ]
+      },
+      "title": "Top Two Problems",
+      "intro": [],
+      "questions": [
+        "Q22"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q1",
+      "source_page": {
+        "page": "Page 3",
+        "printed_pages": [
+          79
+        ]
+      },
+      "kind": "multi_select",
+      "label": "How did you hear about this survey?",
+      "options": [
+        {
+          "id": "postcard",
+          "source_option_number": 1,
+          "label": "Postcard in the mail"
+        },
+        {
+          "id": "flyer",
+          "source_option_number": 2,
+          "label": "Flyer/poster on base"
+        },
+        {
+          "id": "unit_leader",
+          "source_option_number": 3,
+          "label": "Email/announcement from unit leader"
+        },
+        {
+          "id": "family_group",
+          "source_option_number": 4,
+          "label": "Email/announcement from a Defence family group"
+        },
+        {
+          "id": "personal_contact",
+          "source_option_number": 5,
+          "label": "Friend/family/co-worker"
+        },
+        {
+          "id": "unit_newsletter",
+          "source_option_number": 6,
+          "label": "Unit newsletter"
+        },
+        {
+          "id": "unit_website",
+          "source_option_number": 7,
+          "label": "Unit website"
+        },
+        {
+          "id": "base_newspaper",
+          "source_option_number": 8,
+          "label": "Base newspaper"
+        },
+        {
+          "id": "base_website",
+          "source_option_number": 9,
+          "label": "Base website"
+        },
+        {
+          "id": "tv",
+          "source_option_number": 10,
+          "label": "TV"
+        },
+        {
+          "id": "other",
+          "source_option_number": 11,
+          "label": "Other",
+          "write_in": {
+            "id": "Q1_other",
+            "label": "Please specify:",
+            "required": false
+          }
+        }
+      ],
+      "show_if": {
+        "ref": "adult_consent",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [
+        "Check all that apply:"
+      ],
+      "other_id": "other",
+      "none_id": null
+    },
+    {
+      "id": "Q2",
+      "source_page": {
+        "page": "Page 3",
+        "printed_pages": [
+          79
+        ]
+      },
+      "kind": "select",
+      "label": "Not including this study, how many military-related surveys or research focus groups have you been asked to participate in within the past year?",
+      "options": [
+        {
+          "id": "zero",
+          "source_option_number": null,
+          "label": "0 — None",
+          "source_value": 0
+        },
+        {
+          "id": "count_1",
+          "source_option_number": null,
+          "label": "1",
+          "source_value": 1
+        },
+        {
+          "id": "count_2",
+          "source_option_number": null,
+          "label": "2",
+          "source_value": 2
+        },
+        {
+          "id": "count_3",
+          "source_option_number": null,
+          "label": "3",
+          "source_value": 3
+        },
+        {
+          "id": "count_4",
+          "source_option_number": null,
+          "label": "4",
+          "source_value": 4
+        },
+        {
+          "id": "count_5",
+          "source_option_number": null,
+          "label": "5",
+          "source_value": 5
+        },
+        {
+          "id": "count_6",
+          "source_option_number": null,
+          "label": "6",
+          "source_value": 6
+        },
+        {
+          "id": "count_7",
+          "source_option_number": null,
+          "label": "7",
+          "source_value": 7
+        },
+        {
+          "id": "count_8",
+          "source_option_number": null,
+          "label": "8",
+          "source_value": 8
+        },
+        {
+          "id": "count_9",
+          "source_option_number": null,
+          "label": "9",
+          "source_value": 9
+        },
+        {
+          "id": "ten_plus",
+          "source_option_number": null,
+          "label": "10 or more",
+          "source_value": "10 or more"
+        }
+      ],
+      "show_if": {
+        "ref": "adult_consent",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [],
+      "other_id": null,
+      "none_id": "zero",
+      "initial_value": null
+    },
+    {
+      "id": "Q3",
+      "source_page": {
+        "page": "Page 4",
+        "printed_pages": [
+          80
+        ]
+      },
+      "kind": "single_select",
+      "label": "Which best describes you?",
+      "options": [
+        {
+          "id": "unmarried_member",
+          "source_option_number": 1,
+          "label": "Unmarried current or former service member"
+        },
+        {
+          "id": "married_member",
+          "source_option_number": 2,
+          "label": "Married current or former service member"
+        },
+        {
+          "id": "civilian_spouse",
+          "source_option_number": 3,
+          "label": "Civilian spouse of a current or former service member"
+        },
+        {
+          "id": "civilian_partner",
+          "source_option_number": null,
+          "label": "Civilian partner of a current or former service member (not married)",
+          "local_addition": true
+        },
+        {
+          "id": "former_bereaved_partner",
+          "source_option_number": null,
+          "label": "Former or bereaved spouse or partner of a service member",
+          "local_addition": true
+        },
+        {
+          "id": "adult_child",
+          "source_option_number": null,
+          "label": "Adult child of a current or former service member",
+          "local_addition": true
+        },
+        {
+          "id": "parent",
+          "source_option_number": null,
+          "label": "Parent of a current or former service member",
+          "local_addition": true
+        },
+        {
+          "id": "other_family",
+          "source_option_number": null,
+          "label": "Other family member, kin or carer of a current or former service member",
+          "local_addition": true
+        },
+        {
+          "id": "another_connection",
+          "source_option_number": null,
+          "label": "Another connection",
+          "local_addition": true,
+          "write_in": {
+            "id": "Q3_other",
+            "label": "Please specify:",
+            "required": false
+          }
+        },
+        {
+          "id": "none",
+          "source_option_number": 4,
+          "label": "None of the above"
+        }
+      ],
+      "show_if": {
+        "ref": "adult_consent",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [
+        "Check one:"
+      ],
+      "other_id": "another_connection",
+      "none_id": "none",
+      "after_question_text": [
+        "Please tell us about your military status so we can be aware of which policies and programs may apply to you.",
+        "For questions about military service, answer about yourself when you choose a service member option. Otherwise, answer about the service member your connection relates to. Use the same person for those questions, and do not give their name."
+      ]
+    },
+    {
+      "id": "L-PARTNER",
+      "source_page": null,
+      "kind": "single_select",
+      "label": "Do you currently have a spouse or partner?",
+      "options": [
+        {
+          "id": "married",
+          "source_option_number": null,
+          "label": "Yes — I am married"
+        },
+        {
+          "id": "partnered_unmarried",
+          "source_option_number": null,
+          "label": "Yes — I have a partner, but we are not married"
+        },
+        {
+          "id": "no",
+          "source_option_number": null,
+          "label": "No"
+        },
+        {
+          "id": "prefer",
+          "source_option_number": null,
+          "label": "Prefer not to say"
+        }
+      ],
+      "show_if": {
+        "ref": "show_L_PARTNER",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [],
+      "other_id": null,
+      "none_id": null,
+      "local_addition": true
+    },
+    {
+      "id": "Q4",
+      "source_page": {
+        "page": "Page 4",
+        "printed_pages": [
+          80
+        ]
+      },
+      "kind": "single_select",
+      "label": "What is or was your Service?",
+      "label_variants": {
+        "self": "What is or was your Service?",
+        "spouse_partner": "What is or was your spouse’s or partner’s Service?",
+        "family_member": "What is or was your family member’s Service?",
+        "unspecified": "What is or was the Service of the person your answers relate to?"
+      },
+      "label_variant_ref": "service_referent",
+      "options": [
+        {
+          "id": "army",
+          "source_option_number": 1,
+          "label": "Australian Army"
+        },
+        {
+          "id": "navy",
+          "source_option_number": 2,
+          "label": "Royal Australian Navy"
+        },
+        {
+          "id": "air_force",
+          "source_option_number": 3,
+          "label": "Royal Australian Air Force"
+        },
+        {
+          "id": "other_country",
+          "source_option_number": null,
+          "label": "Another country’s military",
+          "local_addition": true,
+          "write_in": {
+            "id": "Q4_other",
+            "label": "Please specify the country and Service:",
+            "required": false
+          }
+        },
+        {
+          "id": "unsure",
+          "source_option_number": null,
+          "label": "Not sure",
+          "local_addition": true
+        },
+        {
+          "id": "none",
+          "source_option_number": 5,
+          "label": "None of the above"
+        }
+      ],
+      "show_if": {
+        "ref": "adult_consent",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [
+        "Check one:"
+      ],
+      "other_id": "other_country",
+      "none_id": "none",
+      "after_question_text": [
+        "If no longer serving, select the most recent Service."
+      ]
+    },
+    {
+      "id": "Q5",
+      "source_page": {
+        "page": "Page 4",
+        "printed_pages": [
+          80
+        ]
+      },
+      "kind": "multi_select",
+      "label": "What is your current service status?",
+      "label_variants": {
+        "self": "What is your current service status?",
+        "other": "What is your service member’s current service status?"
+      },
+      "label_variant_ref": "Q5_referent",
+      "options": [
+        {
+          "id": "permanent",
+          "source_option_number": 1,
+          "label": "Permanent forces"
+        },
+        {
+          "id": "reserves",
+          "source_option_number": 3,
+          "label": "Reserves"
+        },
+        {
+          "id": "continuous_full_time_reserve",
+          "source_option_number": null,
+          "label": "Undertaking continuous full-time service as a reservist",
+          "local_addition": true
+        },
+        {
+          "id": "former",
+          "source_option_number": null,
+          "label": "Former service member — no longer in permanent or Reserve service",
+          "local_addition": true,
+          "exclusive_with": [
+            "permanent",
+            "reserves",
+            "continuous_full_time_reserve"
+          ]
+        },
+        {
+          "id": "deceased",
+          "source_option_number": null,
+          "label": "Deceased service member",
+          "local_addition": true,
+          "show_if": {
+            "ref": "self_reporting_member",
+            "op": "eq",
+            "value": false
+          },
+          "exclusive_with": [
+            "permanent",
+            "reserves",
+            "continuous_full_time_reserve"
+          ]
+        },
+        {
+          "id": "other_status",
+          "source_option_number": null,
+          "label": "Another service status",
+          "local_addition": true,
+          "write_in": {
+            "id": "Q5_other",
+            "label": "Please specify:",
+            "required": false
+          }
+        },
+        {
+          "id": "unsure",
+          "source_option_number": null,
+          "label": "Not sure",
+          "local_addition": true,
+          "exclusive_with": [
+            "permanent",
+            "reserves",
+            "continuous_full_time_reserve"
+          ]
+        }
+      ],
+      "show_if": {
+        "ref": "adult_consent",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [
+        "Check all that apply:"
+      ],
+      "other_id": "other_status",
+      "none_id": null
+    },
+    {
+      "id": "Q6",
+      "source_page": {
+        "page": "Page 4",
+        "printed_pages": [
+          80
+        ]
+      },
+      "kind": "multi_select",
+      "label": "Which best describes your spouse or partner?",
+      "options": [
+        {
+          "id": "never_served",
+          "source_option_number": 1,
+          "label": "Never served in the military",
+          "exclusive": true
+        },
+        {
+          "id": "veteran",
+          "source_option_number": 2,
+          "label": "Military veteran"
+        },
+        {
+          "id": "permanent",
+          "source_option_number": 3,
+          "label": "Currently in permanent military service"
+        },
+        {
+          "id": "reserves",
+          "source_option_number": 4,
+          "label": "Currently in the Reserves"
+        },
+        {
+          "id": "continuous_full_time_reserve",
+          "source_option_number": null,
+          "label": "Currently undertaking continuous full-time service as a reservist",
+          "local_addition": true
+        },
+        {
+          "id": "unsure",
+          "source_option_number": null,
+          "label": "Not sure",
+          "local_addition": true,
+          "exclusive": true
+        }
+      ],
+      "show_if": {
+        "ref": "show_Q6",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [
+        "Check all that apply:"
+      ],
+      "other_id": null,
+      "none_id": null
+    },
+    {
+      "id": "Q7",
+      "source_page": {
+        "page": "Page 4",
+        "printed_pages": [
+          80
+        ]
+      },
+      "kind": "number",
+      "label": "How many years have you been married to your current spouse?",
+      "options": [],
+      "show_if": {
+        "ref": "show_Q7",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [
+        "If less than 1 year, please enter 0."
+      ],
+      "other_id": null,
+      "none_id": null,
+      "input": {
+        "minimum": 0,
+        "step": 1,
+        "initial_value": null,
+        "suffix": "years"
+      }
+    },
+    {
+      "id": "Q8",
+      "source_page": {
+        "page": "Page 4",
+        "printed_pages": [
+          81
+        ]
+      },
+      "kind": "count_matrix",
+      "label": "How many dependants do you have in each age group? By dependants, we mean people who depend on you and/or your spouse or partner for more than half of their financial support.",
+      "options": [
+        {
+          "id": "no_dependants",
+          "source_option_number": null,
+          "label": "I have no dependants",
+          "exclusive_with_positive_counts": true
+        }
+      ],
+      "show_if": {
+        "ref": "adult_consent",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [],
+      "other_id": null,
+      "none_id": "no_dependants",
+      "row_heading": "Age of dependants",
+      "rows": [
+        {
+          "id": "under_2",
+          "label": "Under 2 years"
+        },
+        {
+          "id": "age_2_5",
+          "label": "2–5 years"
+        },
+        {
+          "id": "age_6_13",
+          "label": "6–13 years"
+        },
+        {
+          "id": "age_14_22",
+          "label": "14–22 years"
+        },
+        {
+          "id": "age_23_64",
+          "label": "23–64 years"
+        },
+        {
+          "id": "age_65_plus",
+          "label": "65 years or over"
+        }
+      ],
+      "columns": [
+        {
+          "id": "number",
+          "label": "Number",
+          "kind": "nonnegative_integer",
+          "initial_value": null
+        },
+        {
+          "id": "live_with_me",
+          "label": "Number who live with me",
+          "kind": "nonnegative_integer",
+          "initial_value": null
+        }
+      ]
+    },
+    {
+      "id": "L-CHILD",
+      "source_page": null,
+      "kind": "single_select",
+      "label": "Do you have any children aged 22 or younger who are not financially dependent on you?",
+      "options": [
+        {
+          "id": "yes",
+          "source_option_number": null,
+          "label": "Yes"
+        },
+        {
+          "id": "no",
+          "source_option_number": null,
+          "label": "No"
+        },
+        {
+          "id": "prefer",
+          "source_option_number": null,
+          "label": "Prefer not to say"
+        }
+      ],
+      "show_if": {
+        "ref": "adult_consent",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [],
+      "other_id": null,
+      "none_id": null,
+      "local_addition": true
+    },
+    {
+      "id": "Q9",
+      "source_page": {
+        "page": "Page 4",
+        "printed_pages": [
+          81
+        ]
+      },
+      "kind": "single_select",
+      "label": "Have you returned from a deployment within the past year?",
+      "options": [
+        {
+          "id": "yes",
+          "source_option_number": 1,
+          "label": "Yes"
+        },
+        {
+          "id": "no",
+          "source_option_number": 2,
+          "label": "No"
+        }
+      ],
+      "show_if": {
+        "ref": "self_reporting_member",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [
+        "Check one:"
+      ],
+      "other_id": null,
+      "none_id": null
+    },
+    {
+      "id": "Q10",
+      "source_page": {
+        "page": "Page 4",
+        "printed_pages": [
+          81
+        ]
+      },
+      "kind": "single_select",
+      "label": "Has your spouse or partner returned from a deployment within the past year?",
+      "label_variants": {
+        "spouse_partner": "Has your spouse or partner returned from a deployment within the past year?",
+        "family_member": "Has your family member returned from a deployment within the past year?",
+        "other_service_member": "Has the service member your answers relate to returned from a deployment within the past year?"
+      },
+      "label_variant_ref": "Q10_referent",
+      "options": [
+        {
+          "id": "yes",
+          "source_option_number": 1,
+          "label": "Yes"
+        },
+        {
+          "id": "no",
+          "source_option_number": 2,
+          "label": "No"
+        }
+      ],
+      "show_if": {
+        "ref": "show_Q10",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [
+        "Check one:"
+      ],
+      "other_id": null,
+      "none_id": null
+    },
+    {
+      "id": "Q11",
+      "source_page": {
+        "page": "Page 4",
+        "printed_pages": [
+          81
+        ]
+      },
+      "kind": "select",
+      "label": "At which military base are you currently stationed?",
+      "label_variants": {
+        "self": "At which military base are you currently stationed?",
+        "spouse_partner": "At which military base is your spouse or partner currently stationed?",
+        "family_member": "At which military base is your family member currently stationed?",
+        "unspecified": "At which military base is the service member your answers relate to currently stationed?"
+      },
+      "label_variant_ref": "service_referent",
+      "options": [
+        {
+          "id": "robertson",
+          "source_option_number": null,
+          "label": "Robertson Barracks"
+        },
+        {
+          "id": "raaf_darwin",
+          "source_option_number": null,
+          "label": "RAAF Base Darwin",
+          "local_verification": "Current Defence location terminology: https://www.defence.gov.au/defence-activities/programs-initiatives/united-states-force-posture-initiatives/infrastructure-developments"
+        },
+        {
+          "id": "larrakeyah",
+          "source_option_number": null,
+          "label": "Larrakeyah Defence Precinct"
+        },
+        {
+          "id": "other",
+          "source_option_number": null,
+          "label": "Other",
+          "write_in": {
+            "id": "Q11_other",
+            "label": "Please specify:",
+            "required": false
+          }
+        },
+        {
+          "id": "not_stationed",
+          "source_option_number": null,
+          "label": "Not currently stationed at a military base"
+        },
+        {
+          "id": "unsure",
+          "source_option_number": null,
+          "label": "Not sure"
+        }
+      ],
+      "show_if": {
+        "ref": "adult_consent",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [
+        "Base name only. Do not include unit, deployment or operational details."
+      ],
+      "other_id": "other",
+      "none_id": null,
+      "initial_value": null
+    },
+    {
+      "id": "L-GD",
+      "source_page": null,
+      "kind": "single_select",
+      "label": "Do you or your family have a connection to Greater Darwin through living, working or a military posting here, now or in the past?",
+      "options": [
+        {
+          "id": "yes",
+          "source_option_number": null,
+          "label": "Yes"
+        },
+        {
+          "id": "no",
+          "source_option_number": null,
+          "label": "No"
+        },
+        {
+          "id": "unsure",
+          "source_option_number": null,
+          "label": "Not sure"
+        }
+      ],
+      "show_if": {
+        "ref": "adult_consent",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [],
+      "other_id": null,
+      "none_id": null,
+      "local_addition": true
+    },
+    {
+      "id": "Q12",
+      "source_page": {
+        "page": "Page 5.1",
+        "printed_pages": [
+          83
+        ]
+      },
+      "kind": "multi_select",
+      "label": "Please check any problems you experienced with Military Practices and Culture during the past year:",
+      "options": [
+        {
+          "id": "rights_resources",
+          "source_option_number": 1,
+          "label": "Understanding rights and resources for single members/military families"
+        },
+        {
+          "id": "military_language",
+          "source_option_number": 2,
+          "label": "Understanding military language, organisation, culture"
+        },
+        {
+          "id": "using_system",
+          "source_option_number": 3,
+          "label": "Figuring out how to use the “system”—where to go, with whom to talk to get help or information"
+        },
+        {
+          "id": "being_respected",
+          "source_option_number": 4,
+          "label": "Getting military people to listen to you, take you seriously, treat you with respect"
+        },
+        {
+          "id": "rumours",
+          "source_option_number": 5,
+          "label": "Rumours/gossip among military people"
+        },
+        {
+          "id": "preferred_base",
+          "source_option_number": 6,
+          "label": "Not being able to stay at/go to the military base you prefer"
+        },
+        {
+          "id": "deployment_information",
+          "source_option_number": 7,
+          "label": "Lack of/incorrect information about deployments"
+        },
+        {
+          "id": "other",
+          "source_option_number": 8,
+          "label": "Other problems dealing with military practices and culture",
+          "write_in": {
+            "id": "Q12_other",
+            "label": "Please specify:",
+            "required": false
+          }
+        },
+        {
+          "id": "none",
+          "source_option_number": 9,
+          "label": "I did not experience any of the above problems.",
+          "exclusive": true
+        }
+      ],
+      "show_if": {
+        "ref": "adult_consent",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [],
+      "other_id": "other",
+      "none_id": "none"
+    },
+    {
+      "id": "Q13",
+      "source_page": {
+        "page": "Page 5.2",
+        "printed_pages": [
+          84
+        ]
+      },
+      "kind": "multi_select",
+      "label": "Please check any problems you experienced related to Work/Life Balance during the past year.",
+      "label_variants": {
+        "without_partner": "Please check any problems you experienced related to Work/Life Balance during the past year.",
+        "with_partner": "Please check any problem you or your spouse or partner experienced related to Work/Life Balance during the past year."
+      },
+      "label_variant_ref": "Q13_stem",
+      "options": [
+        {
+          "id": "exercise_diet",
+          "source_option_number": 1,
+          "label": "Finding time for physical exercise/healthy diet"
+        },
+        {
+          "id": "own_education",
+          "source_option_number": 2,
+          "label": "Being able to pursue educational opportunities"
+        },
+        {
+          "id": "partner_education",
+          "source_option_number": 3,
+          "label": "Your spouse or partner being able to pursue educational opportunities",
+          "show_if": {
+            "ref": "current_partner_status",
+            "op": "ne",
+            "value": "no"
+          }
+        },
+        {
+          "id": "recreation",
+          "source_option_number": 4,
+          "label": "Finding nearby or affordable options for recreation/stress relief/family time"
+        },
+        {
+          "id": "own_hours",
+          "source_option_number": 5,
+          "label": "Long work hours/inconvenient schedule for you"
+        },
+        {
+          "id": "partner_hours",
+          "source_option_number": 6,
+          "label": "Long work hours/inconvenient schedule for your spouse or partner",
+          "show_if": {
+            "ref": "current_partner_status",
+            "op": "ne",
+            "value": "no"
+          }
+        },
+        {
+          "id": "deployment_leave",
+          "source_option_number": 7,
+          "label": "Not enough leave time for service members before or after a deployment"
+        },
+        {
+          "id": "other",
+          "source_option_number": 8,
+          "label": "Other problem related to work/life balance",
+          "write_in": {
+            "id": "Q13_other",
+            "label": "Please specify:",
+            "required": false
+          }
+        },
+        {
+          "id": "none",
+          "source_option_number": 9,
+          "label": "I did not experience any of the above problems.",
+          "exclusive": true
+        }
+      ],
+      "show_if": {
+        "ref": "adult_consent",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [],
+      "other_id": "other",
+      "none_id": "none"
+    },
+    {
+      "id": "Q14",
+      "source_page": {
+        "page": "Page 5.3",
+        "printed_pages": [
+          85
+        ]
+      },
+      "kind": "multi_select",
+      "label": "Please check any problems regarding Household Management you experienced in the past year:",
+      "options": [
+        {
+          "id": "moving_storage",
+          "source_option_number": 1,
+          "label": "Problems with moving/storage of belongings"
+        },
+        {
+          "id": "home_crime",
+          "source_option_number": 2,
+          "label": "Home theft/break-in/vandalism"
+        },
+        {
+          "id": "transportation",
+          "source_option_number": 3,
+          "label": "Transportation problems"
+        },
+        {
+          "id": "budgeting",
+          "source_option_number": 4,
+          "label": "Problems with bills/chequebook management/budgeting"
+        },
+        {
+          "id": "time_management",
+          "source_option_number": 5,
+          "label": "Time management (getting everything done in the amount of time you have)"
+        },
+        {
+          "id": "housework",
+          "source_option_number": 6,
+          "label": "Housework/yard work problems"
+        },
+        {
+          "id": "housing",
+          "source_option_number": 7,
+          "label": "Finding suitable housing"
+        },
+        {
+          "id": "maintenance",
+          "source_option_number": 8,
+          "label": "Home/car maintenance/repairs"
+        },
+        {
+          "id": "other",
+          "source_option_number": 9,
+          "label": "Other household management problems",
+          "write_in": {
+            "id": "Q14_other",
+            "label": "Please specify:",
+            "required": false
+          }
+        },
+        {
+          "id": "none",
+          "source_option_number": 10,
+          "label": "I did not experience any of the above problems.",
+          "exclusive": true
+        }
+      ],
+      "show_if": {
+        "ref": "adult_consent",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [],
+      "other_id": "other",
+      "none_id": "none"
+    },
+    {
+      "id": "Q15",
+      "source_page": {
+        "page": "Page 5.4",
+        "printed_pages": [
+          86
+        ]
+      },
+      "kind": "multi_select",
+      "label": "Please check any Financial or Legal problems you experienced in the past year:",
+      "options": [
+        {
+          "id": "pay",
+          "source_option_number": 1,
+          "label": "Pay issues (access to pay, errors)"
+        },
+        {
+          "id": "debt_bills",
+          "source_option_number": 2,
+          "label": "Trouble paying debt or bills"
+        },
+        {
+          "id": "repossession",
+          "source_option_number": 3,
+          "label": "Repossession of home"
+        },
+        {
+          "id": "bankruptcy",
+          "source_option_number": 4,
+          "label": "Bankruptcy"
+        },
+        {
+          "id": "power_of_attorney",
+          "source_option_number": 5,
+          "label": "Power of attorney problems"
+        },
+        {
+          "id": "custody",
+          "source_option_number": 6,
+          "label": "Child custody/family legal problems"
+        },
+        {
+          "id": "separation_divorce",
+          "source_option_number": 7,
+          "label": "Legal matters relating to separation or divorce"
+        },
+        {
+          "id": "partner_employment",
+          "source_option_number": 8,
+          "label": "Finding suitable employment for nonmilitary spouse or partner",
+          "show_if": {
+            "ref": "show_Q15_partner_employment",
+            "op": "eq",
+            "value": true
+          },
+          "help_text_variants": [
+            {
+              "show_if": {
+                "ref": "civilian_spouse_partner",
+                "op": "eq",
+                "value": true
+              },
+              "text": "For this option, the nonmilitary spouse or partner is you."
+            }
+          ]
+        },
+        {
+          "id": "other",
+          "source_option_number": 9,
+          "label": "Other financial or legal problems",
+          "write_in": {
+            "id": "Q15_other",
+            "label": "Please specify:",
+            "required": false
+          }
+        },
+        {
+          "id": "none",
+          "source_option_number": 10,
+          "label": "I did not experience any of the above problems.",
+          "exclusive": true
+        }
+      ],
+      "show_if": {
+        "ref": "adult_consent",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [],
+      "other_id": "other",
+      "none_id": "none"
+    },
+    {
+      "id": "Q16",
+      "source_page": {
+        "page": "Page 5.5",
+        "printed_pages": [
+          87
+        ]
+      },
+      "kind": "multi_select",
+      "label": "Please check any problems you experienced with the Health Care System in the past year:",
+      "options": [
+        {
+          "id": "access",
+          "source_option_number": 1,
+          "label": "Getting access to military or civilian health care"
+        },
+        {
+          "id": "benefits",
+          "source_option_number": 2,
+          "label": "Understanding health care entitlements and benefits"
+        },
+        {
+          "id": "claims",
+          "source_option_number": 3,
+          "label": "Problems handling health insurance claims or health cost reimbursements"
+        },
+        {
+          "id": "dependants_health",
+          "source_option_number": 4,
+          "label": "Managing dependants’ health problems",
+          "show_if": {
+            "ref": "dependant_status",
+            "op": "ne",
+            "value": "no"
+          }
+        },
+        {
+          "id": "quality",
+          "source_option_number": 5,
+          "label": "Poor quality of military or civilian health care services"
+        },
+        {
+          "id": "pregnancy",
+          "source_option_number": 6,
+          "label": "Managing pregnancy/childbirth"
+        },
+        {
+          "id": "nondependant_family",
+          "source_option_number": 7,
+          "label": "Managing health care needs of family members who are not military dependants"
+        },
+        {
+          "id": "other",
+          "source_option_number": 8,
+          "label": "Other health care system problems",
+          "write_in": {
+            "id": "Q16_other",
+            "label": "Please specify:",
+            "required": false
+          }
+        },
+        {
+          "id": "none",
+          "source_option_number": 9,
+          "label": "I did not experience any of the above problems.",
+          "exclusive": true
+        }
+      ],
+      "show_if": {
+        "ref": "adult_consent",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [],
+      "other_id": "other",
+      "none_id": "none"
+    },
+    {
+      "id": "Q17",
+      "source_page": {
+        "page": "Page 5.6",
+        "printed_pages": [
+          88
+        ]
+      },
+      "kind": "multi_select",
+      "label": "Please check any Relationship Problems you experienced with your spouse or partner in the past year:",
+      "options": [
+        {
+          "id": "deployment_contact",
+          "source_option_number": 1,
+          "label": "Not enough contact with spouse/partner during a deployment"
+        },
+        {
+          "id": "communication",
+          "source_option_number": 2,
+          "label": "Problems communicating/expressing feelings"
+        },
+        {
+          "id": "growing_apart",
+          "source_option_number": 3,
+          "label": "Growing apart/in different directions"
+        },
+        {
+          "id": "arguments",
+          "source_option_number": 4,
+          "label": "Arguments"
+        },
+        {
+          "id": "abuse",
+          "source_option_number": 5,
+          "label": "Physical or verbal abuse"
+        },
+        {
+          "id": "infidelity",
+          "source_option_number": 6,
+          "label": "Infidelity (cheating)"
+        },
+        {
+          "id": "relationship_ending",
+          "source_option_number": 7,
+          "label": "Divorce/Separation/End of relationship"
+        },
+        {
+          "id": "affection",
+          "source_option_number": 8,
+          "label": "Little or no physical affection"
+        },
+        {
+          "id": "roles",
+          "source_option_number": 9,
+          "label": "Changing roles/responsibilities in the family/marriage"
+        },
+        {
+          "id": "reunion",
+          "source_option_number": 10,
+          "label": "Trouble reuniting/reconnecting after a deployment"
+        },
+        {
+          "id": "other",
+          "source_option_number": 11,
+          "label": "Other marital/relationship problem",
+          "write_in": {
+            "id": "Q17_other",
+            "label": "Please specify:",
+            "required": false
+          }
+        },
+        {
+          "id": "none",
+          "source_option_number": 12,
+          "label": "I did not experience any of the above problems.",
+          "exclusive": true
+        }
+      ],
+      "show_if": {
+        "ref": "adult_consent",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [],
+      "other_id": "other",
+      "none_id": "none"
+    },
+    {
+      "id": "Q18",
+      "source_page": {
+        "page": "Page 5.7",
+        "printed_pages": [
+          89
+        ]
+      },
+      "kind": "multi_select",
+      "label": "Please check any Child Well-Being problems your child or children experienced in the past year:",
+      "options": [
+        {
+          "id": "childcare",
+          "source_option_number": 1,
+          "label": "Childcare problems (quality, distance, expense, waiting list, hours, etc.)"
+        },
+        {
+          "id": "school",
+          "source_option_number": 2,
+          "label": "School problems (quality, distance, expense, access, etc.)"
+        },
+        {
+          "id": "grades",
+          "source_option_number": 3,
+          "label": "Child’s poor or dropping grades"
+        },
+        {
+          "id": "behaviour_school",
+          "source_option_number": 4,
+          "label": "Emotional/behaviour problems at school"
+        },
+        {
+          "id": "behaviour_home",
+          "source_option_number": 5,
+          "label": "Emotional/behaviour problems at home"
+        },
+        {
+          "id": "bonding",
+          "source_option_number": 6,
+          "label": "Child trouble bonding with parent"
+        },
+        {
+          "id": "health_safety",
+          "source_option_number": 7,
+          "label": "Child health and safety problems"
+        },
+        {
+          "id": "moving",
+          "source_option_number": 8,
+          "label": "Trouble adjusting after moving/relocation"
+        },
+        {
+          "id": "other",
+          "source_option_number": 9,
+          "label": "Other child well-being problem",
+          "write_in": {
+            "id": "Q18_other",
+            "label": "Please specify:",
+            "required": false
+          }
+        },
+        {
+          "id": "none",
+          "source_option_number": 10,
+          "label": "I did not experience any of the above problems.",
+          "exclusive": true
+        }
+      ],
+      "show_if": {
+        "ref": "show_Q18",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [],
+      "other_id": "other",
+      "none_id": "none"
+    },
+    {
+      "id": "Q19",
+      "source_page": {
+        "page": "Page 5.8",
+        "printed_pages": [
+          90
+        ]
+      },
+      "kind": "multi_select",
+      "label": "Please check any problems you experienced with Your Own Well-Being in the past year:",
+      "options": [
+        {
+          "id": "stress",
+          "source_option_number": 1,
+          "label": "Feeling stressed/overwhelmed/tired"
+        },
+        {
+          "id": "loneliness",
+          "source_option_number": 2,
+          "label": "Loneliness/boredom"
+        },
+        {
+          "id": "mood",
+          "source_option_number": 3,
+          "label": "Mood changes: depression, impatience, anger, aggression, anxiety"
+        },
+        {
+          "id": "substance_abuse",
+          "source_option_number": 4,
+          "label": "Substance abuse (alcohol, smoking, drugs)"
+        },
+        {
+          "id": "grief",
+          "source_option_number": 5,
+          "label": "Grieving the loss of a friend or loved one"
+        },
+        {
+          "id": "injury_illness",
+          "source_option_number": 6,
+          "label": "Physical injury/illness"
+        },
+        {
+          "id": "communication",
+          "source_option_number": 7,
+          "label": "Problems communicating with others"
+        },
+        {
+          "id": "sleep",
+          "source_option_number": 8,
+          "label": "Trouble sleeping"
+        },
+        {
+          "id": "risk_taking",
+          "source_option_number": 9,
+          "label": "Risk-taking (like reckless driving)"
+        },
+        {
+          "id": "spending",
+          "source_option_number": 10,
+          "label": "Out-of-control spending"
+        },
+        {
+          "id": "crime",
+          "source_option_number": 11,
+          "label": "Victim of a crime"
+        },
+        {
+          "id": "other",
+          "source_option_number": 12,
+          "label": "Other well-being problems",
+          "write_in": {
+            "id": "Q19_other",
+            "label": "Please specify:",
+            "required": false
+          }
+        },
+        {
+          "id": "none",
+          "source_option_number": 13,
+          "label": "I did not experience any of the above problems.",
+          "exclusive": true
+        }
+      ],
+      "show_if": {
+        "ref": "adult_consent",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [],
+      "other_id": "other",
+      "none_id": "none"
+    },
+    {
+      "id": "Q20",
+      "source_page": {
+        "page": "Page 5.9",
+        "printed_pages": [
+          91
+        ]
+      },
+      "kind": "multi_select",
+      "label": "Please check any problems related to Your Spouse’s or Partner’s Well-Being in the past year:",
+      "options": [
+        {
+          "id": "stress",
+          "source_option_number": 1,
+          "label": "Feeling stressed/overwhelmed/tired"
+        },
+        {
+          "id": "loneliness",
+          "source_option_number": 2,
+          "label": "Loneliness/boredom"
+        },
+        {
+          "id": "mood",
+          "source_option_number": 3,
+          "label": "Mood changes: depression, impatience, anger, aggression, anxiety"
+        },
+        {
+          "id": "substance_abuse",
+          "source_option_number": 4,
+          "label": "Substance abuse (alcohol, smoking, drugs)"
+        },
+        {
+          "id": "grief",
+          "source_option_number": 5,
+          "label": "Grieving the loss of a friend or loved one"
+        },
+        {
+          "id": "injury_illness",
+          "source_option_number": 6,
+          "label": "Physical injury/illness"
+        },
+        {
+          "id": "communication",
+          "source_option_number": 7,
+          "label": "Problems communicating with others"
+        },
+        {
+          "id": "sleep",
+          "source_option_number": 8,
+          "label": "Trouble sleeping"
+        },
+        {
+          "id": "risk_taking",
+          "source_option_number": 9,
+          "label": "Risk-taking (like reckless driving)"
+        },
+        {
+          "id": "spending",
+          "source_option_number": 10,
+          "label": "Out-of-control spending"
+        },
+        {
+          "id": "crime",
+          "source_option_number": 11,
+          "label": "Victim of a crime"
+        },
+        {
+          "id": "other",
+          "source_option_number": 12,
+          "label": "Other well-being problems",
+          "write_in": {
+            "id": "Q20_other",
+            "label": "Please specify:",
+            "required": false
+          }
+        },
+        {
+          "id": "none",
+          "source_option_number": 13,
+          "label": "My spouse or partner did not experience any of the above problems.",
+          "exclusive": true
+        }
+      ],
+      "show_if": {
+        "ref": "current_partner_status",
+        "op": "ne",
+        "value": "no"
+      },
+      "help_text": [
+        "Did YOUR SPOUSE OR PARTNER experience problems with:"
+      ],
+      "other_id": "other",
+      "none_id": "none"
+    },
+    {
+      "id": "Q21",
+      "source_page": {
+        "page": "Page 5.10",
+        "printed_pages": [
+          92
+        ]
+      },
+      "kind": "multiline_text",
+      "label": "Please briefly describe any other type of problem you experienced in the past year. You’ll have a chance at the end of the survey to provide more detail about these issues, if you wish.",
+      "options": [],
+      "show_if": {
+        "ref": "adult_consent",
+        "op": "eq",
+        "value": true
+      },
+      "help_text": [],
+      "other_id": null,
+      "none_id": null
+    },
+    {
+      "id": "Q22",
+      "source_page": {
+        "page": "Page 5.11",
+        "printed_pages": [
+          93
+        ]
+      },
+      "kind": "dynamic_multi_select",
+      "label": "The following is a list of the types of problems you indicated you faced in the past year. Please pick which TWO you think were the most significant types of problems you’ve dealt with:",
+      "options": [
+        {
+          "id": "Q12",
+          "source_option_number": null,
+          "label": "Military practices and culture",
+          "source_question_id": "Q12",
+          "show_if": {
+            "ref": "reported_category_ids",
+            "op": "contains",
+            "value": "Q12"
+          },
+          "detail_source": "selected_option_labels_and_other_text"
+        },
+        {
+          "id": "Q13",
+          "source_option_number": null,
+          "label": "Work/life balance",
+          "source_question_id": "Q13",
+          "show_if": {
+            "ref": "reported_category_ids",
+            "op": "contains",
+            "value": "Q13"
+          },
+          "detail_source": "selected_option_labels_and_other_text"
+        },
+        {
+          "id": "Q14",
+          "source_option_number": null,
+          "label": "Household management",
+          "source_question_id": "Q14",
+          "show_if": {
+            "ref": "reported_category_ids",
+            "op": "contains",
+            "value": "Q14"
+          },
+          "detail_source": "selected_option_labels_and_other_text"
+        },
+        {
+          "id": "Q15",
+          "source_option_number": null,
+          "label": "Financial or legal problems",
+          "source_question_id": "Q15",
+          "show_if": {
+            "ref": "reported_category_ids",
+            "op": "contains",
+            "value": "Q15"
+          },
+          "detail_source": "selected_option_labels_and_other_text"
+        },
+        {
+          "id": "Q16",
+          "source_option_number": null,
+          "label": "Health care system problems",
+          "source_question_id": "Q16",
+          "show_if": {
+            "ref": "reported_category_ids",
+            "op": "contains",
+            "value": "Q16"
+          },
+          "detail_source": "selected_option_labels_and_other_text"
+        },
+        {
+          "id": "Q17",
+          "source_option_number": null,
+          "label": "Relationship problems",
+          "source_question_id": "Q17",
+          "show_if": {
+            "ref": "reported_category_ids",
+            "op": "contains",
+            "value": "Q17"
+          },
+          "detail_source": "selected_option_labels_and_other_text"
+        },
+        {
+          "id": "Q18",
+          "source_option_number": null,
+          "label": "Child well-being",
+          "source_question_id": "Q18",
+          "show_if": {
+            "ref": "reported_category_ids",
+            "op": "contains",
+            "value": "Q18"
+          },
+          "detail_source": "selected_option_labels_and_other_text"
+        },
+        {
+          "id": "Q19",
+          "source_option_number": null,
+          "label": "Your own well-being",
+          "source_question_id": "Q19",
+          "show_if": {
+            "ref": "reported_category_ids",
+            "op": "contains",
+            "value": "Q19"
+          },
+          "detail_source": "selected_option_labels_and_other_text"
+        },
+        {
+          "id": "Q20",
+          "source_option_number": null,
+          "label": "Your spouse’s or partner’s well-being",
+          "source_question_id": "Q20",
+          "show_if": {
+            "ref": "reported_category_ids",
+            "op": "contains",
+            "value": "Q20"
+          },
+          "detail_source": "selected_option_labels_and_other_text"
+        },
+        {
+          "id": "Q21",
+          "source_option_number": null,
+          "label": "Other problems",
+          "source_question_id": "Q21",
+          "show_if": {
+            "ref": "reported_category_ids",
+            "op": "contains",
+            "value": "Q21"
+          },
+          "detail_source": "Q21_text"
+        }
+      ],
+      "show_if": {
+        "ref": "reported_category_count",
+        "op": "gt",
+        "value": 2
+      },
+      "help_text": [
+        "If you’re having trouble deciding on only two, please pick the two that you would like to address in the survey right now. There will be a place for additional comments at the end of the survey where you can describe other problems."
+      ],
+      "other_id": null,
+      "none_id": null,
+      "maximum_selections": 2,
+      "skip_allowed": true
+    }
+  ],
+  "routing": {
+    "scope": "Adult instrument only. Existing youth and under-7 routes remain separate.",
+    "condition_format": {
+      "ref": "A question answer or a derived field defined below.",
+      "operators": [
+        "eq",
+        "ne",
+        "gt",
+        "contains"
+      ],
+      "evaluation": "Apply every show_if only after adult consent. Missing relationship or household information stays unknown."
+    },
+    "entry": {
+      "adult_consent": "participant_information.consent = adult_agree",
+      "under_18": "existing_child_youth_age_routing",
+      "adult_decline": "exit",
+      "all_question_pages_require_adult_consent": true,
+      "all_substantive_questions_optional": true,
+      "initial_answers": null,
+      "no_exclusion_from": [
+        "Q3",
+        "Q4",
+        "Q11",
+        "L-GD"
+      ]
+    },
+    "page_order": [
+      "page_3",
+      "page_4",
+      "page_5",
+      "page_5_1",
+      "page_5_2",
+      "page_5_3",
+      "page_5_4",
+      "page_5_5",
+      "page_5_6",
+      "page_5_7",
+      "page_5_8",
+      "page_5_9",
+      "page_5_10",
+      "page_5_11"
+    ],
+    "page_references": "pages[].questions contains IDs referencing the single definitions in questions. Display Q1–Q22 with their original numbers; never number local helpers as RAND questions.",
+    "role_and_referent": {
+      "self_reporting_member": "Q3 is unmarried_member or married_member.",
+      "civilian_spouse_partner": "Q3 is civilian_spouse or civilian_partner.",
+      "service_referent": {
+        "self": [
+          "unmarried_member",
+          "married_member"
+        ],
+        "spouse_partner": [
+          "civilian_spouse",
+          "civilian_partner"
+        ],
+        "family_member": [
+          "former_bereaved_partner",
+          "adult_child",
+          "parent",
+          "other_family"
+        ],
+        "unspecified": [
+          "another_connection",
+          "none",
+          null
+        ]
+      },
+      "Q5_referent": "self when self_reporting_member; otherwise other, including spouse/partner and other-family respondents.",
+      "show_L_PARTNER": "Q3 is not married_member, civilian_spouse or civilian_partner. In particular, show for unmarried_member.",
+      "current_partner_status": {
+        "yes": "Q3 is married_member, civilian_spouse or civilian_partner; otherwise L-PARTNER is married or partnered_unmarried.",
+        "no": "L-PARTNER = no when the helper is active.",
+        "unknown": "Otherwise, including an active skipped or prefer answer. Q3 = unmarried_member alone does not establish no partner."
+      },
+      "marital_status": {
+        "married": "Q3 is married_member or civilian_spouse, or an active L-PARTNER answer is married.",
+        "unmarried": "Q3 is civilian_partner or unmarried_member, or an active L-PARTNER answer is partnered_unmarried or no.",
+        "unknown": "Neither marriage nor nonmarriage is established. A contradiction between Q3 and the helper must not be silently resolved by overwriting either answer."
+      },
+      "focal_person": "Self for member choices; otherwise the same service member associated with the respondent's connection. Never collect their name.",
+      "spouse_questions": "Q6, Q7, Q13 partner items and Q20 refer to the respondent's own spouse or partner, not another relative's spouse."
+    },
+    "demographic_conditions": {
+      "show_Q6": "self_reporting_member and current_partner_status = yes.",
+      "Q6_unknown_partner": "If current partnership is not established, retain the unresolved routing state; do not code an unasked Q6 as no partner or no military service.",
+      "show_Q7": "marital_status = married or unknown. Hide when known unmarried; Q7 remains optional and measures marriage duration only.",
+      "Q8": "Show to all adult respondents; no marriage or parenthood precondition.",
+      "L-CHILD": "Show after Q8 to all adult respondents. It does not alter Q8's financial-dependence definition.",
+      "Q9": "Show only to self-reporting current/former members.",
+      "show_Q10": "Show to non-self-reporting respondents. For self-reporting members, show only if active Q6 includes veteran, permanent, reserves or continuous_full_time_reserve.",
+      "Q10_referent": {
+        "spouse_partner": "Self-reporting members eligible for Q10, and Q3 civilian_spouse or civilian_partner.",
+        "family_member": "Q3 adult_child, parent or other_family.",
+        "other_service_member": "Q3 former_bereaved_partner, another_connection, none or skipped."
+      },
+      "Q10_exclusion": "For a self-reporting member, Q6 = never_served excludes Q10. A missing/uncertain Q6 is not evidence that the partner never deployed.",
+      "Q11": "Show with the service_referent variant. Ask current stationing, not last posting. Do not preselect not_stationed for former/deceased members.",
+      "L-GD": "Show after Q11. Optional; no answer creates an automatic exclusion."
+    },
+    "status_selection_rules": {
+      "Q5": {
+        "omit_deceased_for_self": true,
+        "compatible": [
+          "reserves with continuous_full_time_reserve"
+        ],
+        "current_option_ids": [
+          "permanent",
+          "reserves",
+          "continuous_full_time_reserve"
+        ],
+        "exclude_current_when_selected": [
+          "former",
+          "deceased",
+          "unsure"
+        ],
+        "foreign_national_guard": "Use other_status and its optional write-in, not an ADF National Guard category."
+      },
+      "Q6": {
+        "exclusive_ids": [
+          "never_served",
+          "unsure"
+        ],
+        "compatible": [
+          "veteran with a current-service option",
+          "reserves with continuous_full_time_reserve"
+        ]
+      }
+    },
+    "dependant_derivation": {
+      "validation": {
+        "counts": "Non-negative integers; blank is unknown, not zero.",
+        "within_row": "When both counts are supplied, live_with_me must not exceed number.",
+        "no_dependants": "Cannot coexist with any positive count. Do not fill blank numeric fields with zero."
+      },
+      "dependant_status": {
+        "yes": "At least one valid count in either column is positive.",
+        "no": "Q8 no_dependants is explicitly checked, or all six Number totals are explicitly zero, with no conflicting positive count.",
+        "unknown": "Otherwise."
+      },
+      "young_dependant_rows": [
+        "under_2",
+        "age_2_5",
+        "age_6_13",
+        "age_14_22"
+      ],
+      "young_dependant_status": {
+        "yes": "A valid count in either column of a young_dependant_rows row is positive.",
+        "no": "Q8 explicitly says no_dependants, or all four young-age Number totals are explicitly zero, with no conflicting positive count.",
+        "unknown": "Otherwise."
+      },
+      "independent_child_status": {
+        "yes": "L-CHILD = yes",
+        "no": "L-CHILD = no",
+        "unknown": "L-CHILD is skipped or prefer."
+      }
+    },
+    "problem_conditions": {
+      "sequence": "Show the original applicable Page 5.1–5.9 checklists in source order, not a global cue picker or added per-selected-item story loop.",
+      "Q12": "Show to all adult respondents.",
+      "Q13_stem": "without_partner only when current_partner_status = no; otherwise with_partner. Unknown status does not suppress partner options.",
+      "Q13_options": "Hide source options 3 and 6 only when current_partner_status = no.",
+      "Q14": "Show to all adult respondents.",
+      "show_Q15_partner_employment": "For a self-reporting member, hide Q15 option 8 when there is explicitly no current partner OR Q6 establishes that the partner is in permanent military service or continuous full-time Reserve service. Do not require the respondent Q5 to be full-time. Keep the option for a civilian spouse/partner or unresolved partner service status.",
+      "Q15_civilian_hint": "Show the option-specific hint to civilian_spouse and civilian_partner respondents, referring to their own employment.",
+      "Q16": "Show to all adult respondents; hide source option 4 only when dependant_status = no. Keep option 7 independently available.",
+      "Q17": "Show to all adult respondents, including those currently single, because a relationship may have ended during the past year.",
+      "show_Q18": "Show unless both young_dependant_status = no and independent_child_status = no. Thus show when either is yes or either remains unknown.",
+      "Q18_age": "Retain the source age threshold of 22 or younger; this remains adult report, not child self-report.",
+      "Q19": "Show to all adult respondents.",
+      "Q20": "Hide only when current_partner_status = no. Otherwise available and optional; retain spouse/partner, not another-adult wording.",
+      "Q21": "Show after the applicable problem pages to all adult respondents."
+    },
+    "problem_answer_states": {
+      "checklist_ids": [
+        "Q12",
+        "Q13",
+        "Q14",
+        "Q15",
+        "Q16",
+        "Q17",
+        "Q18",
+        "Q19",
+        "Q20"
+      ],
+      "none_exclusive": true,
+      "other_requires_write_in": false,
+      "positive": "At least one active option other than none is selected; a selected Other counts even if its write-in is blank.",
+      "explicit_none": "The exclusive none option is selected.",
+      "skipped": "An applicable question has no active selection.",
+      "inapplicable": "The question was not displayed because of an explicit routing condition.",
+      "Q21_substantive_text": "Nonblank text after trimming whitespace.",
+      "hidden_answers": "Exclude inactive answers from active reporting and category generation without turning them into explicit negative answers."
+    },
+    "Q21_Q22": {
+      "reported_category_ids": "In Q12–Q20 source order, include every category with a positive answer. Append Q21 when its text is substantive.",
+      "reported_category_count": "Number of reported_category_ids.",
+      "zero_categories": "Bypass Q22 and Q23–Q36; continue to original Page 8 Background Information in Part 3. Preserve explicit-none, skipped and inapplicable states separately.",
+      "one_or_two_categories": "Do not display Q22. Carry all reported categories forward and record selection_mode = carried_forward, not an explicit importance ranking.",
+      "more_than_two_categories": "Display Q22 with only reported categories. Allow at most two selections and permit skipping.",
+      "Q22_skipped": "Carry no categories into detailed needs questions; retain all reported problems and record priority_selection_skipped. Never select the first two automatically.",
+      "Q22_answered": "Carry the selected one or two categories forward in original category order; selection_mode = respondent_selected.",
+      "category_details": "For Q12–Q20 display checked substantive option labels and the active Other text beneath each category. For Q21 display its text.",
+      "selection_unit": "Problem category, not an individual problem checkbox.",
+      "retain_all_reported_problems": true
+    },
+    "part2_handoff": {
+      "destination": "Q23–Q24",
+      "maximum_categories": 2,
+      "fields": [
+        "problem_id",
+        "problem_label",
+        "selected_problem_ids",
+        "selected_problem_labels",
+        "other_text",
+        "selection_mode"
+      ],
+      "problem_id": "Stable Q12–Q21 category ID.",
+      "problem_label": "Exact matching Q22 category-option label.",
+      "selected_problem_ids": "Active substantive option IDs from the originating checklist; for Q21 use a stable Q21_text item.",
+      "selected_problem_labels": "Exact selected checklist labels; for Q21 use the respondent's text.",
+      "other_text": "Active category-specific Other text, or null; do not merge unrelated Other descriptions.",
+      "retain_origins": true
+    },
+    "navigation_and_display": {
+      "preserve_back_next_state": true,
+      "show_progress_indicator": true,
+      "no_unconfigured_survey_help_links": true,
+      "hidden_upstream_edits": "Recompute routing and exclude now-inactive answers from active export. Do not attach stored answers to a different person, category or need.",
+      "downstream_additional_comments": "Required elsewhere because Q21 and Q22 promise an end-of-survey opportunity.",
+      "additional_accounts": "Any later voluntary account supplement must not replace Q21/Q22 or add required chains.",
+      "later_review_button": "Confirm and submit",
+      "neutral_closing": "Thank you for your time."
+    },
+    "technical_contract": {
+      "respondent_visible": false,
+      "transient_in_memory_only": true,
+      "answer_receiver": false,
+      "answer_persistence": false,
+      "no_answers_in": [
+        "network requests",
+        "URLs",
+        "logs",
+        "persistent storage",
+        "submission queues"
+      ],
+      "do_not_claim": [
+        "Answers received",
+        "Response saved",
+        "Receipt number",
+        "This response will be analysed"
+      ]
+    }
+  },
+  "provenance": {
+    "source_label": "Complete reviewed Part 1 answer to structure",
+    "source": {
+      "title": "A New Approach for Assessing the Needs of Service Members and Their Families",
+      "authors": "Laura L. Miller et al.",
+      "year": 2011,
+      "report": "MG-1124",
+      "section": "Appendix A",
+      "url": "https://www.rand.org/content/dam/rand/pubs/monographs/2011/RAND_MG1124.pdf"
+    },
+    "basis": "Serialised from the complete reviewed adaptation supplied in this request; no fresh PDF, code or frontend inspection is claimed.",
+    "metadata_not_respondent_copy": true,
+    "source_option_numbers": "Retain the source numbers expressly supplied in the reviewed adaptation. Null denotes an unnumbered or local choice; array order preserves display order.",
+    "general_spelling_substitutions": {
+      "organization": "organisation",
+      "Rumors": "Rumours",
+      "behavior": "behaviour",
+      "dependents": "dependants",
+      "checkbook": "chequebook"
+    },
+    "page_edits": {
+      "welcome": {
+        "edit_type": "narrow_substitute",
+        "note": "Greater Darwin, broader adult family and overseas-military invitation; omit US Military OneSource contacts."
+      },
+      "participant_information": {
+        "edit_type": "narrow_substitute",
+        "note": "LC purpose, funding and current listening phase; omit unsupported US authority/licence, timing and confidentiality assurances; preserve consent choices."
+      },
+      "page_5": {
+        "edit_type": "narrow_substitute",
+        "note": "Attribute development to RAND, use spouse/partner and Your Own Well-Being labels, and add a separate Greater Darwin reference-period paragraph."
+      }
+    },
+    "questions": {
+      "Q1": {
+        "source_q": "Q1",
+        "edit_type": "narrow_substitute",
+        "note": "Option 4 uses Defence family group; all 11 choices retained."
+      },
+      "Q2": {
+        "source_q": "Q2",
+        "edit_type": "keep",
+        "note": "Original question and 0–10-or-more dropdown; blank initial state."
+      },
+      "Q3": {
+        "source_q": "Q3",
+        "edit_type": "narrow_substitute",
+        "note": "Current/former wording, partner/family choices and focal-person clarification; source option 4 no longer exits."
+      },
+      "Q4": {
+        "source_q": "Q4",
+        "edit_type": "narrow_substitute",
+        "note": "Australian Service labels; retain source IDs 1, 2, 3 and 5; foreign Service and uncertainty choices replace a US-only branch menu."
+      },
+      "Q5": {
+        "source_q": "Q5",
+        "edit_type": "narrow_substitute",
+        "note": "Permanent/Reserve terminology, continuous full-time Reserve and former/deceased/other/uncertain states; omit source National Guard option 2."
+      },
+      "Q6": {
+        "source_q": "Q6",
+        "edit_type": "narrow_substitute",
+        "note": "Spouse/partner and Australian service terminology; continuous full-time Reserve and uncertainty choices."
+      },
+      "Q7": {
+        "source_q": "Q7",
+        "edit_type": "keep",
+        "note": "Marriage duration remains marriage duration."
+      },
+      "Q8": {
+        "source_q": "Q8",
+        "edit_type": "narrow_substitute",
+        "note": "Original definition, six bands and two columns; spouse or partner and Australian spelling only."
+      },
+      "Q9": {
+        "source_q": "Q9",
+        "edit_type": "keep",
+        "note": "Deployment question unchanged, including the past-year period."
+      },
+      "Q10": {
+        "source_q": "Q10",
+        "edit_type": "narrow_substitute",
+        "note": "Spouse/partner and explicitly labelled other-family referents; retain deployment and Yes/No."
+      },
+      "Q11": {
+        "source_q": "Q11",
+        "edit_type": "narrow_substitute",
+        "note": "Current-base construct retained; Australian location menu and family referents."
+      },
+      "Q12": {
+        "source_q": "Q12",
+        "edit_type": "keep",
+        "note": "All nine choices; Australian spelling only."
+      },
+      "Q13": {
+        "source_q": "Q13",
+        "edit_type": "narrow_substitute",
+        "note": "Both stems and nine choices retained; spouse/partner wording and partner-item gates."
+      },
+      "Q14": {
+        "source_q": "Q14",
+        "edit_type": "keep",
+        "note": "All ten choices; chequebook spelling only."
+      },
+      "Q15": {
+        "source_q": "Q15",
+        "edit_type": "narrow_substitute",
+        "note": "Repossession, separation/divorce terminology and partner extension; retain every source option and civilian-respondent employment clarification."
+      },
+      "Q16": {
+        "source_q": "Q16",
+        "edit_type": "narrow_substitute",
+        "note": "Military/civilian access and quality, entitlements and claims wording; retain nine choices and distinct dependant items."
+      },
+      "Q17": {
+        "source_q": "Q17",
+        "edit_type": "keep",
+        "note": "All twelve choices and past-year spouse/partner stem; no current-single exclusion."
+      },
+      "Q18": {
+        "source_q": "Q18",
+        "edit_type": "narrow_substitute",
+        "note": "Original ten choices and age-22 dependant gate; extend access via L-CHILD without changing the question."
+      },
+      "Q19": {
+        "source_q": "Q19",
+        "edit_type": "keep",
+        "note": "All thirteen choices unchanged."
+      },
+      "Q20": {
+        "source_q": "Q20",
+        "edit_type": "narrow_substitute",
+        "note": "Spouse/partner wording and current-partner gate; all thirteen choices retained."
+      },
+      "Q21": {
+        "source_q": "Q21",
+        "edit_type": "keep",
+        "note": "Original open question and no-problem bypass, without recoding missingness."
+      },
+      "Q22": {
+        "source_q": "Q22",
+        "edit_type": "keep",
+        "note": "Original top-two-category wording, category reminders and explanation; Q21 remains eligible."
+      }
+    },
+    "local_helpers": {
+      "L-PARTNER": {
+        "source_q": null,
+        "edit_type": "local_addition",
+        "note": "Current-partner routing when Q3 does not establish it; not a RAND-numbered question."
+      },
+      "L-CHILD": {
+        "source_q": null,
+        "edit_type": "local_addition",
+        "note": "Access to Q18 for parents of financially independent children aged 22 or younger."
+      },
+      "L-GD": {
+        "source_q": null,
+        "edit_type": "local_addition",
+        "note": "Separate Greater Darwin connection from current base; no residence-duration replacement or exclusion gate."
+      }
+    },
+    "omitted_source_content": [
+      "US Military OneSource welcome contact block",
+      "Survey licence and U.S.C. 10, section 1782 statements",
+      "Unvalidated less-than-20-minutes claim",
+      "Unsupported confidentiality, deletion, access and command assurances",
+      "Unconfirmed without-any-negative-consequences assurance",
+      "US Marines as an ADF branch",
+      "National Guard as an Australian service category",
+      "Automatic exit for Q3 None of the above"
+    ],
+    "unresolved_LC_facts": [
+      "LC must confirm final consultation inclusion and geographic boundary separately from funded-service eligibility.",
+      "Real collection needs actual participant-information and data-handling arrangements; no anonymity, retention, deletion or command-access assurances are invented.",
+      "LC must supply a usable approved contact channel and any applicable complaints/review arrangements; no placeholder addresses or approvals are invented."
+    ],
+    "programme_stage": "Funding/planned delivery is described in the supplied reviewed answer; the pre-activity listening stage is Jacob's supplied project fact.",
+    "implementation_limit": "Formal copy does not authorise actual recruitment or collection. Keep the supplied no-receiver/no-persistence technical contract."
+  },
+  "coverage": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8",
+    "Q9",
+    "Q10",
+    "Q11",
+    "Q12",
+    "Q13",
+    "Q14",
+    "Q15",
+    "Q16",
+    "Q17",
+    "Q18",
+    "Q19",
+    "Q20",
+    "Q21",
+    "Q22"
+  ]
+}

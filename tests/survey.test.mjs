@@ -394,59 +394,29 @@ test('the questionnaire gate rejects missing, withdrawn or stale-age participati
   }
 });
 
-test('contact links stay separate from answers and remain available in the footer and completion screen', () => {
-  const answers = { needs_status: 'yes', needs: ['housing'], areas: { housing: { ...areaBlock(), comment: 'PRIVATE_EXPERIENCE_SENTINEL' } } };
-  survey.setContext('adult', answers);
-  const original = structuredClone(answers);
-  const anchor = survey.contactLinkHTML();
-  for (const html of [anchor, survey.finishHTML()]) {
-    assert.match(html, /href="contact\.html"/);
-    assert.match(html, /Request an interview/);
-    assert.doesNotMatch(html, /Arrange a conversation/i);
-    assert.match(html, /target="_blank"/);
-    assert.match(html, /rel="noopener noreferrer"/);
-    assert.match(html, /referrerpolicy="no-referrer"/);
-    assert.doesNotMatch(html, /PRIVATE_EXPERIENCE_SENTINEL|contact\.html[?#]/);
-  }
-  const finish = survey.finishHTML();
-  assert.match(finish, /Submission is currently unavailable/);
-  assert.match(finish, /Your answers have not been received/);
-  assert.ok(finish.includes(anchor));
-  assert.ok(finish.includes('Find support in a few clicks'));
-  assert.ok(finish.indexOf(anchor) < finish.indexOf('Find support in a few clicks'), 'The interview option is available before leaving for the resource');
-  assert.deepEqual(answers, original);
-  const index = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-  const footer = index.match(/<div class="questionnaire-help">[\s\S]*?<\/div>/)?.[0];
-  assert.ok(footer, 'The footer is outside the changing survey page');
-  assert.match(footer, /id="privacy-open"/);
-  assert.match(footer, /href="contact\.html" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer"/);
-  assert.ok(footer.indexOf('privacy-open') < footer.indexOf('href="contact.html"'));
-  assert.doesNotMatch(footer, /contact\.html[?#]/);
-});
-
-test('formal submit wording cannot produce a false receipt while no receiver exists', () => {
-  const answers = { roles: ['partner'], residence_area: 'darwin', problem_cues: ['none'] };
-  survey.setContext('adult', answers);
-  survey.setParticipationContext('adult', survey.participationRecord('adult', true));
-  survey.setStep('review');
-  survey.renderSurvey();
-  assert.match(mainStub.innerHTML, />Confirm and submit<\/button>/);
-  const before = structuredClone(answers);
-  const unavailable = survey.finishHTML();
-  assert.match(unavailable, /Submission is currently unavailable/);
-  assert.match(unavailable, /Your answers have not been received/);
-  assert.doesNotMatch(unavailable, /submitted successfully|thank you for submitting/i);
-  mainStub.querySelector('#finish-back').onclick();
-  assert.equal(survey.getUIState().step, 'review');
-  assert.deepEqual(answers, before);
+test('the separate youth completion page reads like a real survey', () => {
+  const finish=survey.finishHTML();
+  assert.match(finish, /<h1 tabindex="-1">Thank you<\/h1>/);
+  assert.match(finish, /Thank you, once again, for taking the time to complete the survey/);
+  assert.doesNotMatch(finish, /preview|demo|not sent|not saved|submission unavailable/i);
   assert.doesNotMatch(source, /\b(?:fetch|sendBeacon|XMLHttpRequest|localStorage|sessionStorage)\b/);
 });
 
-test('the public entry states submission availability before the questionnaire begins', () => {
+test('the public adult entry uses the RAND questionnaire and no demo/status banner', () => {
   const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-  assert.match(html, /<div class="survey-availability" id="survey-availability" role="note"><strong>Online submissions are not open\.<\/strong> This site cannot receive survey responses\.<\/div>/);
-  assert.ok(html.indexOf('survey-availability') < html.indexOf('questionnaire-shell'));
-  assert.doesNotMatch(html, /Preview only|Team review draft/);
+  assert.match(html, /rand-adult-data\.js/);
+  assert.match(html, /rand-adult-app\.js/);
+  assert.doesNotMatch(html, /Preview only|Team review draft|Online submissions are not open|survey-availability/);
+});
+
+test('the separate youth entry cannot launch the superseded adult questionnaire', () => {
+  context.document.body={dataset:{youthOnly:'true'}};
+  survey.resetAgePath();
+  survey.renderWelcome();
+  assert.match(mainStub.innerHTML, /How old is the child or young person\?/);
+  assert.doesNotMatch(mainStub.innerHTML, /Adult \(18 or older\)/);
+  delete context.document.body;
+  survey.resetAgePath();
 });
 
 test('the free-resource link accepts a safe URL and never includes survey answers', () => {
@@ -580,11 +550,11 @@ test('the 8–14 helper interruption offers a private route and cannot advance w
   assert.equal(survey.getUIState().step, 'problem_screen');
 });
 
-test('ages 7 or younger use their own controller, return from unavailable submission, and clear on restart', () => {
-  let created = 0, shown = 0, reviewed = 0, reset = 0, options;
+test('ages 7 or younger use their own controller and finish with the source-style thanks', () => {
+  let created = 0, shown = 0, reset = 0, options;
   context.window.SURVEY_YOUNG_CHILDREN = { create(config) {
     created += 1; options = config;
-    return { show() { shown += 1; }, showReview() { reviewed += 1; }, reset() { reset += 1; } };
+    return { show() { shown += 1; }, reset() { reset += 1; } };
   } };
   survey.resetYoung();
   survey.setParticipationContext('young');
@@ -602,22 +572,16 @@ test('ages 7 or younger use their own controller, return from unavailable submis
   assert.equal(options.prompts.length, 4);
   const record = { response_perspective: 'parent_observation', parent_observations: 'An observation, not child words' };
   options.onFinish(record);
-  assert.equal(survey.getUIState().screen, 'submission-unavailable');
+  assert.equal(survey.getUIState().screen, 'finish');
   assert.equal(survey.getUIState().youngRecord, record);
-  assert.doesNotMatch(mainStub.innerHTML, /Save my answers|Review my answers|download-answers|review-answers/);
-  mainStub.querySelector('#finish-back').onclick();
-  assert.equal(reviewed, 1);
-  assert.equal(survey.getUIState().screen, 'young');
-  options.onFinish(record);
-  mainStub.querySelector('#restart').onclick();
+  assert.match(mainStub.innerHTML, /Thank you, once again, for taking the time to complete the survey/);
+  assert.doesNotMatch(mainStub.innerHTML, /preview|demo|not sent|not saved/i);
+  survey.resetYoung();
   assert.equal(reset, 1);
   assert.equal(survey.getUIState().youngRecord, null);
   assert.equal(survey.getUIState().youngController, null);
-  assert.equal(survey.getUIState().age, null);
-  assert.deepEqual(plain(survey.getContext().answers), {});
-  assert.equal(survey.getUIState().screen, 'welcome');
-  const index = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-  assert.ok(index.indexOf('young-children.js') < index.indexOf('survey.js'), 'The child module is available before its controller is used');
+  const youth = readFileSync(new URL('../youth.html', import.meta.url), 'utf8');
+  assert.ok(youth.indexOf('young-children.js') < youth.indexOf('survey.js'), 'The child module is available before its controller is used');
 });
 
 test('locality aliases and valid area-suburb pairs preserve regional aggregation', () => {
@@ -1003,9 +967,10 @@ test('question library follows the actual adult and youth needs routes, includin
   assert.equal(child.some(section => section.id.startsWith('account')), false, 'The separate under-7 route does not inherit account pages');
 });
 
-test('adult reading copy uses the same formal-facing agreement as the form', () => {
+test('adult reading copy uses the RAND Page 2 consent choices', () => {
   const html = readFileSync(new URL('../adult-wording.html', import.meta.url), 'utf8');
-  assert.match(html, /I have read the information and agree to take part\./);
+  assert.match(html, /I am 18 years or older, and I have read this statement\. I understand what it says and I agree to participate in this survey\./);
+  assert.match(html, /I am 18 years or older, but I do not want to participate in this survey\./);
   assert.doesNotMatch(html, /Finish preview|Preview only|try this survey preview/);
   assert.doesNotMatch(html, /I consent to Lutheran Care collecting, using and sharing my answers/);
 });

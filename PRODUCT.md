@@ -1,51 +1,19 @@
-# Greater Darwin Defence Family Support Survey
+# Service Member and Family Needs Survey — current product contract
 
 <!-- impeccable:product-schema 1 -->
 
-## Platform
+## Purpose
 
-web
+Lutheran Care is preparing a Defence-funded family support programme for Greater Darwin and is listening to Defence personnel and family members about their problems, related needs, resources used or avoided, and how well help addressed the need. The adult questionnaire is a high-fidelity local adaptation of the [RAND MG-1124 Appendix A sample survey](https://www.rand.org/content/dam/rand/pubs/monographs/2011/RAND_MG1124.pdf), not a new 9×5 issue-cue instrument. The [item crosswalk](RAND_ITEM_CROSSWALK.md) names every retained or adapted Q1–Q67 question. RAND permits tailored adoption; this version has not been validated for Greater Darwin.
 
-## Purpose and users
+## Respondent presentation
 
-The survey helps Lutheran Care hear from Defence members and families in Greater Darwin about concrete difficulties, help needed, pathways through Defence, community and personal resources, unmet needs, effective support and future priorities. The written questionnaire is the broad feedback channel; targeted interviews are used when a decision-changing why/how question, missing perspective or written participation barrier remains. This is needs assessment for the community, **not** only a poll of which LC activities people would attend.
+The main `index.html` follows RAND's page order: adult entry and participation, Q1–Q11 study/background, Q12–Q22 original problem domains and top two, Q23–Q36 needs and resource matrices, Q37–Q61 background, Q62–Q67 military attitudes and comments, then a natural thank-you with Australian support numbers. Retain question numbering, source option wording, the military/nonmilitary/personal-network distinction, original matrix dimensions and dynamic routing. Use Australian Service, Defence support, local base and demographic wording only where the US original cannot describe this population. Progress and Back/Continue controls remain visible; the final button reads **Confirm and submit**.
 
-The main adult path follows the linked method in Laura L. Miller et al., *A New Approach for Assessing the Needs of Service Members and Their Families* (RAND, 2011), Appendix A. [RAND source](https://www.rand.org/pubs/monographs/MG1124.html). Credit: **Adult questionnaire adapted from Miller et al. (2011), RAND MG-1124, Appendix A.** No RAND endorsement is claimed. The original US adult military questionnaire is adapted for NT scope and a smaller consultation, rather than copied with its US demographics, pay grades, installation questions or consent claims. The linked method is the methodological basis; this local instrument still needs target-respondent cognitive and usability testing.
+The RAND sample covers adults. `youth.html` contains a separate local 8–17/younger-child route; it is not called a RAND survey. A family member living elsewhere may still describe a Greater Darwin work or posting connection. Do not imply every requested support is already provided by Lutheran Care or that every activity is at Berrimah.
 
-## Operating state
+## Technical and analysis boundary
 
-The public GitHub Pages release is a **formal-facing demonstration** with no response receiver. One website-status notice before the questionnaire tells public visitors that online submission is not open; the question screens themselves use proposed final wording. Answers are held only in page memory and are not transmitted or saved. The final button says **Confirm and submit**, but the unavailable-submission state must not claim LC received anything; it preserves answers for return to review. Contact and support pages are independent; no ID or answer crosses from the survey into the interview request. The historical 136-record fictional dashboard belongs to an older questionnaire and cannot be used as a v9 results system.
+This static GitHub Pages release has **no answer receiver or persistence**. Every visible survey screen, including thanks, is written as a real questionnaire at Jacob's express direction; internal project files alone record the noncollection state. The rendered thank-you is not an evidence receipt, response ID or actual submission. Before real collection, LC must approve participant information, eligibility, answer custody, retention, and an end-to-end receiving/export test.
 
-Current adult/youth record schema: 9.0; questionnaire revision: 2026-09-29-rand-formal-copy. The under-7 guardian-supported schema remains 1.3. Keep a versioned wording/option/branch dictionary and do not silently merge earlier schema 8.1 accounts with this instrument. The question bank is derived from live definitions by scripts/export-handoff.mjs.
-
-## Respondent experience
-
-Use the LC logo, quiet header, readable natural Australian English, native accessible controls and clear Back/Continue/Review actions. Keep the question library and team resources outside the respondent flow. The front page explains the Defence-funded programme, Lutheran Care's current listening stage, voluntary participation, relevant child permission and the adult RAND adaptation. It does not display preview or demo wording. Names, service numbers and detailed identifying facts are not requested in survey answers.
-
-The substantive flow is:
-
-1. ADF relationship, current local work/posting connection, optional residential area and matching suburb/locality, optional adult duration of residence on the same page, and minimal other background.
-2. A problem checklist: nine adult categories containing 45 concrete local cues, or a shorter youth list. Include Other. This asks about actual difficulties in the local 12-month adult or three-month youth window; an explicit no-listed-problem option remains distinct from a blank.
-3. Up to two selected categories for structured follow-up. All other checked problems remain recorded. Prioritisation limits the depth route, not the person's ability to report problems.
-4. For each chosen category, connect its selected problem cues to all reported help types and, if needed, up to two help types for deeper follow-up. A problem without requested assistance remains valid.
-5. For each **adult** chosen category × priority help type (at most four), ask about seeking and receipt, source contact, access barrier or bridge, whether that particular need was met overall and any current gap. The youth route asks a shorter age-appropriate sequence within a chosen category. Ask only applicable questions. Contact, receipt and met need are distinct.
-6. Optional effective support, future/preventive need and further accounts. The older open-account design is a supplement. Its 100 active-entry cap is a technical ceiling, not a target or way to give one person 100 votes.
-7. Compact review and **Confirm and submit**. Without a receiver, the form returns an accessible submission-unavailable message, retains the answers in page memory and never displays a success receipt.
-
-The source instrument's cross-resource matrices and US benefit/policy items are not copied as fixed batteries. Local answer options and the linked path should support LC decisions without suggesting LC controls Defence policy, healthcare or every service. No activity is presumed to be held at Berrimah.
-
-## Participation routes and scope
-
-Adult (18+) and shared youth (8–17) pathways preserve the existing age/permission approach. For 8–14, guardian permission and the young person's assent start unchecked; 15–17-year-olds give their own informed agreement under the project's participation procedure. Assistance with reading/writing does not authorise a helper to choose answers. The under-7 form remains guardian supported, with child expression and adult observation kept separate. Its first prompt covers where the child lives **or spends time with family**, so a child living elsewhere can speak from their own experience. Optional residence is recorded without redefining the child's words. The child review uses **Confirm and submit** and shares the same unavailable-submission result. See [CHILD_PARTICIPATION_REVIEW.md](CHILD_PARTICIPATION_REVIEW.md) and [consultation-procedure.md](consultation-procedure.md).
-
-Greater Darwin includes Darwin, Palmerston and Litchfield. Optional residential geography is broad area then matching suburb/locality; no precise suburb is inferred from area alone. A separate optional current work/posting connection can put someone living elsewhere on the current-local consultation route. Residence, work/posting and ADF relationship remain separate facts. Earlier local experience without a current connection is a historical route; undisclosed location remains unspecified.
-
-## Contact, support and publication
-
-The separate contact.html asks for safe arrangement details and does not receive survey answers. A registration is not a confirmed interview, and the preview does not book or transmit one. The support.html finder is a free, standalone NT resource. These are independent finish-page choices. Existing contact and support design contracts are in [CONTACT_FORM.md](CONTACT_FORM.md) and [SUPPORT_DESIGN.md](SUPPORT_DESIGN.md).
-
-Jacob authorised publication of the **demonstration** after implementation and verification. This does not authorise an improvised receiver or actual fieldwork launch. LC must choose production custody, verify a real submission and export, define access/retention and approve participant information before collecting answers. See [COLLECTION_HANDOFF.md](COLLECTION_HANDOFF.md).
-
-## Interpretation
-
-Report counts of response records, problems selected, detailed categories, help types, resources contacted, met-status answers and supplemental accounts separately. A selected problem is not an unmet need; no contact is not necessarily a barrier; a partly met answer is not a total failure. Blank, explicit negative, unsure, declined and not asked are distinct. A respondent can mention several situations but remains one response, and responses are not unique households or population prevalence. Use [ANALYSIS_PROTOCOL.md](ANALYSIS_PROTOCOL.md) for every output.
+Keep original source item IDs, local substitutions and respondent answers distinct. A selected problem is not automatically a needed service; a contact is not evidence the resource helped; Q35 rates a contacted resource for a specific problem–need pair, whereas Q36 is a hypothetical loss question. Up to four priority problem–need pairs receive the detailed resource path. Do not infer Greater Darwin population prevalence from any later volunteer responses. The separate interview-request and support-finder pages are independent and have no answer linkage.

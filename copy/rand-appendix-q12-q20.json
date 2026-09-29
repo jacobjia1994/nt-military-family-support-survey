@@ -1,0 +1,677 @@
+{
+  "schema": "rand_mg1124_appendix_a_q12_q20_local_v1",
+  "source": "RAND MG-1124 Appendix A, printed pp 83-91",
+  "status": "candidate_local_wording_check_against_original_pdf_before_publication",
+  "categories": [
+    {
+      "id": "Q12",
+      "source_page": 83,
+      "options": [
+        {
+          "id": "Q12_1",
+          "source_number": 1,
+          "label": "Understanding rights and resources for single members/military families",
+          "write_in": false
+        },
+        {
+          "id": "Q12_2",
+          "source_number": 2,
+          "label": "Understanding military language, organisation, culture",
+          "write_in": false
+        },
+        {
+          "id": "Q12_3",
+          "source_number": 3,
+          "label": "Figuring out how to use the “system”—where to go, with whom to talk to get help or information",
+          "write_in": false
+        },
+        {
+          "id": "Q12_4",
+          "source_number": 4,
+          "label": "Getting military people to listen to you, take you seriously, treat you with respect",
+          "write_in": false
+        },
+        {
+          "id": "Q12_5",
+          "source_number": 5,
+          "label": "Rumours/gossip among military people",
+          "write_in": false
+        },
+        {
+          "id": "Q12_6",
+          "source_number": 6,
+          "label": "Not being able to stay at/go to the military base you prefer",
+          "write_in": false
+        },
+        {
+          "id": "Q12_7",
+          "source_number": 7,
+          "label": "Lack of/incorrect information about deployments",
+          "write_in": false
+        },
+        {
+          "id": "Q12_8",
+          "source_number": 8,
+          "label": "Other problems dealing with military practices and culture",
+          "write_in": true
+        },
+        {
+          "id": "Q12_9",
+          "source_number": 9,
+          "label": "I did not experience any of the above problems.",
+          "write_in": false
+        }
+      ],
+      "title": "Military Practices and Culture Problems",
+      "stem": "Please check any problems you experienced with Military Practices and Culture during the past year:",
+      "other_id": "Q12_8",
+      "none_id": "Q12_9",
+      "applies_when": "all_adults"
+    },
+    {
+      "id": "Q13",
+      "source_page": 84,
+      "options": [
+        {
+          "id": "Q13_1",
+          "source_number": 1,
+          "label": "Finding time for physical exercise/healthy diet",
+          "write_in": false
+        },
+        {
+          "id": "Q13_2",
+          "source_number": 2,
+          "label": "Being able to pursue educational opportunities",
+          "write_in": false
+        },
+        {
+          "id": "Q13_3",
+          "source_number": 3,
+          "label": "Your spouse or partner being able to pursue educational opportunities",
+          "write_in": false
+        },
+        {
+          "id": "Q13_4",
+          "source_number": 4,
+          "label": "Finding nearby or affordable options for recreation/stress relief/family time",
+          "write_in": false
+        },
+        {
+          "id": "Q13_5",
+          "source_number": 5,
+          "label": "Long work hours/inconvenient schedule for you",
+          "write_in": false
+        },
+        {
+          "id": "Q13_6",
+          "source_number": 6,
+          "label": "Long work hours/inconvenient schedule for your spouse or partner",
+          "write_in": false
+        },
+        {
+          "id": "Q13_7",
+          "source_number": 7,
+          "label": "Not enough leave time for service members before or after a deployment",
+          "write_in": false
+        },
+        {
+          "id": "Q13_8",
+          "source_number": 8,
+          "label": "Other problem related to work/life balance",
+          "write_in": true
+        },
+        {
+          "id": "Q13_9",
+          "source_number": 9,
+          "label": "I did not experience any of the above problems.",
+          "write_in": false
+        }
+      ],
+      "title": "Work/Life Balance Problems",
+      "stem": "Please check any problems you experienced related to Work/Life Balance during the past year.",
+      "stem_partnered": "Please check any problem you or your spouse or partner experienced related to Work/Life Balance during the past year.",
+      "other_id": "Q13_8",
+      "none_id": "Q13_9",
+      "applies_when": "all_adults"
+    },
+    {
+      "id": "Q14",
+      "source_page": 85,
+      "options": [
+        {
+          "id": "Q14_1",
+          "source_number": 1,
+          "label": "Problems with moving/storage of belongings",
+          "write_in": false
+        },
+        {
+          "id": "Q14_2",
+          "source_number": 2,
+          "label": "Home theft/break-in/vandalism",
+          "write_in": false
+        },
+        {
+          "id": "Q14_3",
+          "source_number": 3,
+          "label": "Transportation problems",
+          "write_in": false
+        },
+        {
+          "id": "Q14_4",
+          "source_number": 4,
+          "label": "Problems with bills/chequebook management/budgeting",
+          "write_in": false
+        },
+        {
+          "id": "Q14_5",
+          "source_number": 5,
+          "label": "Time management (getting everything done in the amount of time you have)",
+          "write_in": false
+        },
+        {
+          "id": "Q14_6",
+          "source_number": 6,
+          "label": "Housework/yard work problems",
+          "write_in": false
+        },
+        {
+          "id": "Q14_7",
+          "source_number": 7,
+          "label": "Finding suitable housing",
+          "write_in": false
+        },
+        {
+          "id": "Q14_8",
+          "source_number": 8,
+          "label": "Home/car maintenance/repairs",
+          "write_in": false
+        },
+        {
+          "id": "Q14_9",
+          "source_number": 9,
+          "label": "Other household management problems",
+          "write_in": true
+        },
+        {
+          "id": "Q14_10",
+          "source_number": 10,
+          "label": "I did not experience any of the above problems.",
+          "write_in": false
+        }
+      ],
+      "title": "Household Management Problems",
+      "stem": "Please check any problems regarding Household Management you experienced in the past year:",
+      "other_id": "Q14_9",
+      "none_id": "Q14_10",
+      "applies_when": "all_adults"
+    },
+    {
+      "id": "Q15",
+      "source_page": 86,
+      "options": [
+        {
+          "id": "Q15_1",
+          "source_number": 1,
+          "label": "Pay issues (access to pay, errors)",
+          "write_in": false
+        },
+        {
+          "id": "Q15_2",
+          "source_number": 2,
+          "label": "Trouble paying debt or bills",
+          "write_in": false
+        },
+        {
+          "id": "Q15_3",
+          "source_number": 3,
+          "label": "Repossession of home",
+          "write_in": false
+        },
+        {
+          "id": "Q15_4",
+          "source_number": 4,
+          "label": "Bankruptcy",
+          "write_in": false
+        },
+        {
+          "id": "Q15_5",
+          "source_number": 5,
+          "label": "Power of attorney problems",
+          "write_in": false
+        },
+        {
+          "id": "Q15_6",
+          "source_number": 6,
+          "label": "Child custody/family legal problems",
+          "write_in": false
+        },
+        {
+          "id": "Q15_7",
+          "source_number": 7,
+          "label": "Legal matters relating to separation or divorce",
+          "write_in": false
+        },
+        {
+          "id": "Q15_8",
+          "source_number": 8,
+          "label": "Finding suitable employment for nonmilitary spouse or partner",
+          "write_in": false
+        },
+        {
+          "id": "Q15_9",
+          "source_number": 9,
+          "label": "Other financial or legal problems",
+          "write_in": true
+        },
+        {
+          "id": "Q15_10",
+          "source_number": 10,
+          "label": "I did not experience any of the above problems.",
+          "write_in": false
+        }
+      ],
+      "title": "Financial or Legal Problems",
+      "stem": "Please check any Financial or Legal problems you experienced in the past year:",
+      "other_id": "Q15_9",
+      "none_id": "Q15_10",
+      "applies_when": "all_adults"
+    },
+    {
+      "id": "Q16",
+      "source_page": 87,
+      "options": [
+        {
+          "id": "Q16_1",
+          "source_number": 1,
+          "label": "Getting access to military or civilian health care",
+          "write_in": false
+        },
+        {
+          "id": "Q16_2",
+          "source_number": 2,
+          "label": "Understanding health care entitlements and benefits",
+          "write_in": false
+        },
+        {
+          "id": "Q16_3",
+          "source_number": 3,
+          "label": "Problems handling health insurance claims or health cost reimbursements",
+          "write_in": false
+        },
+        {
+          "id": "Q16_4",
+          "source_number": 4,
+          "label": "Managing dependants’ health problems",
+          "write_in": false
+        },
+        {
+          "id": "Q16_5",
+          "source_number": 5,
+          "label": "Poor quality of military or civilian health care services",
+          "write_in": false
+        },
+        {
+          "id": "Q16_6",
+          "source_number": 6,
+          "label": "Managing pregnancy/childbirth",
+          "write_in": false
+        },
+        {
+          "id": "Q16_7",
+          "source_number": 7,
+          "label": "Managing health care needs of family members who are not military dependants",
+          "write_in": false
+        },
+        {
+          "id": "Q16_8",
+          "source_number": 8,
+          "label": "Other health care system problems",
+          "write_in": true
+        },
+        {
+          "id": "Q16_9",
+          "source_number": 9,
+          "label": "I did not experience any of the above problems.",
+          "write_in": false
+        }
+      ],
+      "title": "Health Care System Problems",
+      "stem": "Please check any problems you experienced with the Health Care System in the past year:",
+      "other_id": "Q16_8",
+      "none_id": "Q16_9",
+      "applies_when": "all_adults"
+    },
+    {
+      "id": "Q17",
+      "source_page": 88,
+      "options": [
+        {
+          "id": "Q17_1",
+          "source_number": 1,
+          "label": "Not enough contact with spouse/partner during a deployment",
+          "write_in": false
+        },
+        {
+          "id": "Q17_2",
+          "source_number": 2,
+          "label": "Problems communicating/expressing feelings",
+          "write_in": false
+        },
+        {
+          "id": "Q17_3",
+          "source_number": 3,
+          "label": "Growing apart/in different directions",
+          "write_in": false
+        },
+        {
+          "id": "Q17_4",
+          "source_number": 4,
+          "label": "Arguments",
+          "write_in": false
+        },
+        {
+          "id": "Q17_5",
+          "source_number": 5,
+          "label": "Physical or verbal abuse",
+          "write_in": false
+        },
+        {
+          "id": "Q17_6",
+          "source_number": 6,
+          "label": "Infidelity (cheating)",
+          "write_in": false
+        },
+        {
+          "id": "Q17_7",
+          "source_number": 7,
+          "label": "Divorce/Separation/End of relationship",
+          "write_in": false
+        },
+        {
+          "id": "Q17_8",
+          "source_number": 8,
+          "label": "Little or no physical affection",
+          "write_in": false
+        },
+        {
+          "id": "Q17_9",
+          "source_number": 9,
+          "label": "Changing roles/responsibilities in the family/marriage",
+          "write_in": false
+        },
+        {
+          "id": "Q17_10",
+          "source_number": 10,
+          "label": "Trouble reuniting/reconnecting after a deployment",
+          "write_in": false
+        },
+        {
+          "id": "Q17_11",
+          "source_number": 11,
+          "label": "Other marital/relationship problem",
+          "write_in": true
+        },
+        {
+          "id": "Q17_12",
+          "source_number": 12,
+          "label": "I did not experience any of the above problems.",
+          "write_in": false
+        }
+      ],
+      "title": "Relationship Problems",
+      "stem": "Please check any Relationship Problems you experienced with your spouse or partner in the past year:",
+      "other_id": "Q17_11",
+      "none_id": "Q17_12",
+      "applies_when": "current_spouse_or_partner"
+    },
+    {
+      "id": "Q18",
+      "source_page": 89,
+      "options": [
+        {
+          "id": "Q18_1",
+          "source_number": 1,
+          "label": "Childcare problems (quality, distance, expense, waiting list, hours, etc.)",
+          "write_in": false
+        },
+        {
+          "id": "Q18_2",
+          "source_number": 2,
+          "label": "School problems (quality, distance, expense, access, etc.)",
+          "write_in": false
+        },
+        {
+          "id": "Q18_3",
+          "source_number": 3,
+          "label": "Child’s poor or dropping grades",
+          "write_in": false
+        },
+        {
+          "id": "Q18_4",
+          "source_number": 4,
+          "label": "Emotional/behaviour problems at school",
+          "write_in": false
+        },
+        {
+          "id": "Q18_5",
+          "source_number": 5,
+          "label": "Emotional/behaviour problems at home",
+          "write_in": false
+        },
+        {
+          "id": "Q18_6",
+          "source_number": 6,
+          "label": "Child trouble bonding with parent",
+          "write_in": false
+        },
+        {
+          "id": "Q18_7",
+          "source_number": 7,
+          "label": "Child health and safety problems",
+          "write_in": false
+        },
+        {
+          "id": "Q18_8",
+          "source_number": 8,
+          "label": "Trouble adjusting after moving/relocation",
+          "write_in": false
+        },
+        {
+          "id": "Q18_9",
+          "source_number": 9,
+          "label": "Other child well-being problem",
+          "write_in": true
+        },
+        {
+          "id": "Q18_10",
+          "source_number": 10,
+          "label": "I did not experience any of the above problems.",
+          "write_in": false
+        }
+      ],
+      "title": "Child Well-Being Problems",
+      "stem": "Please check any Child Well-Being problems your child or children experienced in the past year:",
+      "other_id": "Q18_9",
+      "none_id": "Q18_10",
+      "applies_when": "child_22_or_younger"
+    },
+    {
+      "id": "Q19",
+      "source_page": 90,
+      "options": [
+        {
+          "id": "Q19_1",
+          "source_number": 1,
+          "label": "Feeling stressed/overwhelmed/tired",
+          "write_in": false
+        },
+        {
+          "id": "Q19_2",
+          "source_number": 2,
+          "label": "Loneliness/boredom",
+          "write_in": false
+        },
+        {
+          "id": "Q19_3",
+          "source_number": 3,
+          "label": "Mood changes: depression, impatience, anger, aggression, anxiety",
+          "write_in": false
+        },
+        {
+          "id": "Q19_4",
+          "source_number": 4,
+          "label": "Substance abuse (alcohol, smoking, drugs)",
+          "write_in": false
+        },
+        {
+          "id": "Q19_5",
+          "source_number": 5,
+          "label": "Grieving the loss of a friend or loved one",
+          "write_in": false
+        },
+        {
+          "id": "Q19_6",
+          "source_number": 6,
+          "label": "Physical injury/illness",
+          "write_in": false
+        },
+        {
+          "id": "Q19_7",
+          "source_number": 7,
+          "label": "Problems communicating with others",
+          "write_in": false
+        },
+        {
+          "id": "Q19_8",
+          "source_number": 8,
+          "label": "Trouble sleeping",
+          "write_in": false
+        },
+        {
+          "id": "Q19_9",
+          "source_number": 9,
+          "label": "Risk-taking (like reckless driving)",
+          "write_in": false
+        },
+        {
+          "id": "Q19_10",
+          "source_number": 10,
+          "label": "Out-of-control spending",
+          "write_in": false
+        },
+        {
+          "id": "Q19_11",
+          "source_number": 11,
+          "label": "Victim of a crime",
+          "write_in": false
+        },
+        {
+          "id": "Q19_12",
+          "source_number": 12,
+          "label": "Other well-being problems",
+          "write_in": true
+        },
+        {
+          "id": "Q19_13",
+          "source_number": 13,
+          "label": "I did not experience any of the above problems.",
+          "write_in": false
+        }
+      ],
+      "title": "Problems with Your Own Well-Being",
+      "stem": "Please check any problems you experienced with Your Own Well-Being in the past year:",
+      "other_id": "Q19_12",
+      "none_id": "Q19_13",
+      "applies_when": "all_adults"
+    },
+    {
+      "id": "Q20",
+      "source_page": 91,
+      "options": [
+        {
+          "id": "Q20_1",
+          "source_number": 1,
+          "label": "Feeling stressed/overwhelmed/tired",
+          "write_in": false
+        },
+        {
+          "id": "Q20_2",
+          "source_number": 2,
+          "label": "Loneliness/boredom",
+          "write_in": false
+        },
+        {
+          "id": "Q20_3",
+          "source_number": 3,
+          "label": "Mood changes: depression, impatience, anger, aggression, anxiety",
+          "write_in": false
+        },
+        {
+          "id": "Q20_4",
+          "source_number": 4,
+          "label": "Substance abuse (alcohol, smoking, drugs)",
+          "write_in": false
+        },
+        {
+          "id": "Q20_5",
+          "source_number": 5,
+          "label": "Grieving the loss of a friend or loved one",
+          "write_in": false
+        },
+        {
+          "id": "Q20_6",
+          "source_number": 6,
+          "label": "Physical injury/illness",
+          "write_in": false
+        },
+        {
+          "id": "Q20_7",
+          "source_number": 7,
+          "label": "Problems communicating with others",
+          "write_in": false
+        },
+        {
+          "id": "Q20_8",
+          "source_number": 8,
+          "label": "Trouble sleeping",
+          "write_in": false
+        },
+        {
+          "id": "Q20_9",
+          "source_number": 9,
+          "label": "Risk-taking (like reckless driving)",
+          "write_in": false
+        },
+        {
+          "id": "Q20_10",
+          "source_number": 10,
+          "label": "Out-of-control spending",
+          "write_in": false
+        },
+        {
+          "id": "Q20_11",
+          "source_number": 11,
+          "label": "Victim of a crime",
+          "write_in": false
+        },
+        {
+          "id": "Q20_12",
+          "source_number": 12,
+          "label": "Other well-being problems",
+          "write_in": true
+        },
+        {
+          "id": "Q20_13",
+          "source_number": 13,
+          "label": "My spouse or partner did not experience any of the above problems.",
+          "write_in": false
+        }
+      ],
+      "title": "Problems with Your Spouse’s or Partner’s Well-Being",
+      "stem": "Please check any problems related to Your Spouse’s or Partner’s Well-Being in the past year:",
+      "other_id": "Q20_12",
+      "none_id": "Q20_13",
+      "applies_when": "current_spouse_or_partner"
+    }
+  ]
+}

@@ -1,0 +1,1079 @@
+{
+  "schema": "rand_appendix_a_adult_local_part2_draft_v1",
+  "help_options": [
+    {
+      "id": "H01",
+      "label": "General information: for example, about rules or policies, or about what’s available and how to access it"
+    },
+    {
+      "id": "H02",
+      "label": "Specific information: for example, about training or deployment schedules or how spouses or partners can reach deployed ADF members"
+    },
+    {
+      "id": "H03",
+      "label": "An advocate: someone to try to get help for you"
+    },
+    {
+      "id": "H04",
+      "label": "Advice or education: people with experience to recommend the best solution for someone in your situation"
+    },
+    {
+      "id": "H05",
+      "label": "Emotional or social support"
+    },
+    {
+      "id": "H06",
+      "label": "Professional counselling"
+    },
+    {
+      "id": "H07",
+      "label": "A helping hand: loans, donations, services to help out with some of your responsibilities"
+    },
+    {
+      "id": "H08",
+      "label": "Activities: for fitness, recreation, stress relief, family bonding"
+    },
+    {
+      "id": "H09",
+      "label": "Other needs that don’t fit into the categories above.",
+      "write_in": {
+        "id": "H09_text",
+        "label": "Please specify:",
+        "required": false
+      }
+    },
+    {
+      "id": "H10",
+      "label": "I had no need for assistance in this area.",
+      "exclusive": true
+    }
+  ],
+  "resource_options": [
+    {
+      "id": "M01",
+      "group": "military",
+      "label": "Unit-linked family support group or family liaison volunteers",
+      "write_in": null
+    },
+    {
+      "id": "M02",
+      "group": "military",
+      "label": "Unit members who did not deploy with the rest",
+      "write_in": null
+    },
+    {
+      "id": "M03",
+      "group": "military",
+      "label": "Local Defence family and welfare services, including a Defence Member and Family Support (DMFS) area office",
+      "write_in": null
+    },
+    {
+      "id": "M04",
+      "group": "military",
+      "label": "Defence Member and Family Helpline",
+      "write_in": null
+    },
+    {
+      "id": "M05",
+      "group": "military",
+      "label": "Unit member, leader or chain of command",
+      "write_in": null
+    },
+    {
+      "id": "M06",
+      "group": "military",
+      "label": "ADF chaplain or members of a military religious or spiritual group",
+      "write_in": null
+    },
+    {
+      "id": "M07",
+      "group": "military",
+      "label": "Military doctor or counsellor",
+      "write_in": null
+    },
+    {
+      "id": "M08",
+      "group": "military",
+      "label": "Military relief or welfare fund, such as the Navy Relief Trust Fund, Army Relief Trust Fund or RAAF Welfare Trust Fund",
+      "write_in": null
+    },
+    {
+      "id": "M09",
+      "group": "military",
+      "label": "Other military contacts",
+      "write_in": {
+        "id": "M09_text",
+        "label": "Please specify:",
+        "required": false
+      }
+    },
+    {
+      "id": "N01",
+      "group": "nonmilitary",
+      "label": "Government or community resources, for example government family services, public libraries or community centres",
+      "write_in": null
+    },
+    {
+      "id": "N02",
+      "group": "nonmilitary",
+      "label": "Private clubs, organisations, recreation or fitness centres",
+      "write_in": null
+    },
+    {
+      "id": "N03",
+      "group": "nonmilitary",
+      "label": "Religious or spiritual group or leader",
+      "write_in": null
+    },
+    {
+      "id": "N04",
+      "group": "nonmilitary",
+      "label": "Private doctor or counsellor",
+      "write_in": null
+    },
+    {
+      "id": "N05",
+      "group": "nonmilitary",
+      "label": "Internet resources, such as health-information websites, search engines, online forums or social media",
+      "write_in": null
+    },
+    {
+      "id": "N06",
+      "group": "nonmilitary",
+      "label": "Personal networks — friends and family",
+      "write_in": null
+    },
+    {
+      "id": "N07",
+      "group": "nonmilitary",
+      "label": "Other nonmilitary contacts",
+      "write_in": {
+        "id": "N07_text",
+        "label": "Please specify:",
+        "required": false
+      }
+    },
+    {
+      "id": "NO_CONTACT",
+      "group": null,
+      "label": "I didn’t contact anyone for help with this need.",
+      "write_in": null,
+      "exclusive": true
+    }
+  ],
+  "characteristic_options": [
+    {
+      "id": "C01",
+      "label": "Have used them for other needs"
+    },
+    {
+      "id": "C02",
+      "label": "Unaware of them / difficult to find information about them"
+    },
+    {
+      "id": "C03",
+      "label": "Convenient location / easy to access"
+    },
+    {
+      "id": "C04",
+      "label": "Might hurt my or my family member’s reputation to use them"
+    },
+    {
+      "id": "C05",
+      "label": "Friendly / welcoming / reached out to me"
+    },
+    {
+      "id": "C06",
+      "label": "Wait list / response time too long"
+    },
+    {
+      "id": "C07",
+      "label": "Referred / good reputation"
+    }
+  ],
+  "personal_network_statements": [
+    {
+      "id": "PN01",
+      "label": "I have friends or family members who make an effort to help me with my problems and needs."
+    },
+    {
+      "id": "PN02",
+      "label": "People in my personal networks do not have the ability or resources to help me."
+    },
+    {
+      "id": "PN03",
+      "label": "Most or all of my friends and family live too far away from me."
+    },
+    {
+      "id": "PN04",
+      "label": "There is at least one person I can always count on to be there for me."
+    },
+    {
+      "id": "PN05",
+      "label": "I do not have many close relationships."
+    },
+    {
+      "id": "PN06",
+      "label": "I don’t like to reveal my problems or needs to my friends and family."
+    },
+    {
+      "id": "PN07",
+      "label": "People in my personal networks have a good understanding of what military life is like."
+    }
+  ],
+  "helpfulness_scale": [
+    {
+      "id": "1",
+      "label": "Very well"
+    },
+    {
+      "id": "2",
+      "label": "Well"
+    },
+    {
+      "id": "3",
+      "label": "All right"
+    },
+    {
+      "id": "4",
+      "label": "Not very well"
+    },
+    {
+      "id": "5",
+      "label": "Not at all"
+    }
+  ],
+  "loss_impact_scale": [
+    {
+      "id": "1",
+      "label": "There would be little to no impact on me or my family"
+    },
+    {
+      "id": "2",
+      "label": "There would be some impact on me or my family"
+    },
+    {
+      "id": "3",
+      "label": "There would be a serious impact on me or my family"
+    },
+    {
+      "id": "4",
+      "label": "I don’t know whether there would be any impact"
+    }
+  ],
+  "loss_resource_rows": [
+    {
+      "id": "Q36_a",
+      "resource_id": "M01",
+      "type": "single_select",
+      "label": "Unit-linked family support group or family liaison volunteers",
+      "scale_ref": "loss_impact_scale",
+      "write_in": null,
+      "required": false
+    },
+    {
+      "id": "Q36_b",
+      "resource_id": "M02",
+      "type": "single_select",
+      "label": "Unit members who did not deploy with the rest",
+      "scale_ref": "loss_impact_scale",
+      "write_in": null,
+      "required": false
+    },
+    {
+      "id": "Q36_c",
+      "resource_id": "M03",
+      "type": "single_select",
+      "label": "Local Defence family and welfare services, including a Defence Member and Family Support (DMFS) area office",
+      "scale_ref": "loss_impact_scale",
+      "write_in": null,
+      "required": false
+    },
+    {
+      "id": "Q36_d",
+      "resource_id": "M04",
+      "type": "single_select",
+      "label": "Defence Member and Family Helpline",
+      "scale_ref": "loss_impact_scale",
+      "write_in": null,
+      "required": false
+    },
+    {
+      "id": "Q36_e",
+      "resource_id": "M05",
+      "type": "single_select",
+      "label": "Unit member, leader or chain of command",
+      "scale_ref": "loss_impact_scale",
+      "write_in": null,
+      "required": false
+    },
+    {
+      "id": "Q36_f",
+      "resource_id": "M06",
+      "type": "single_select",
+      "label": "ADF chaplain or members of a military religious or spiritual group",
+      "scale_ref": "loss_impact_scale",
+      "write_in": null,
+      "required": false
+    },
+    {
+      "id": "Q36_g",
+      "resource_id": "M07",
+      "type": "single_select",
+      "label": "Military doctor or counsellor",
+      "scale_ref": "loss_impact_scale",
+      "write_in": null,
+      "required": false
+    },
+    {
+      "id": "Q36_h",
+      "resource_id": "M08",
+      "type": "single_select",
+      "label": "Military relief or welfare fund, such as the Navy Relief Trust Fund, Army Relief Trust Fund or RAAF Welfare Trust Fund",
+      "scale_ref": "loss_impact_scale",
+      "write_in": null,
+      "required": false
+    },
+    {
+      "id": "Q36_i",
+      "resource_id": "M09",
+      "type": "single_select",
+      "label": "Other military contacts",
+      "scale_ref": "loss_impact_scale",
+      "write_in": {
+        "id": "Q36_i_text",
+        "label": "Please specify:",
+        "required": false
+      },
+      "required": false
+    },
+    {
+      "id": "Q36_j",
+      "type": "text",
+      "label": "Comments:",
+      "required": false
+    }
+  ],
+  "question_stems": {
+    "Q23_Q24": {
+      "intro": "You indicated you faced the following types of problems in the past year:",
+      "problem_heading": "{problem_label}",
+      "problem_items": "{selected_problem_labels}",
+      "question": "Which of the following kinds of help did you NEED to deal with them?",
+      "instruction": "Please check all that apply:"
+    },
+    "Q25": {
+      "intro_variants": {
+        "one_of_two_categories": "The following is a list of the types of needs you indicated that you had for dealing with one of your top two problems. Please pick which TWO you think were the most significant needs you had:",
+        "only_category": "The following is a list of the types of needs you indicated that you had for dealing with this problem. Please pick which TWO you think were the most significant needs you had:",
+        "both_categories": "The following is a list of the types of needs you indicated that you had for dealing with your problems. For each problem category, please pick which TWO you think were the most significant needs you had:"
+      },
+      "category_heading": "{problem_label} — Pick two",
+      "option_labels": {
+        "H01": "General information",
+        "H02": "Specific information",
+        "H03": "An advocate",
+        "H04": "Advice or education",
+        "H05": "Emotional or social support",
+        "H06": "Professional counselling",
+        "H07": "A helping hand",
+        "H08": "Activities",
+        "H09": "Other needs"
+      },
+      "other_need_detail": "{other_need_description}",
+      "instruction": "If you’re having trouble deciding on only two, please pick the two that you would like to address in the survey right now. There will be a place for additional comments at the end of the survey where you can describe other needs."
+    },
+    "Q26_Q29": {
+      "intro": "For help with {problem_label}, you said that you needed the following:",
+      "need_context": "{need_full_label}",
+      "question": "Please check any of the following you contacted to try to meet this need.",
+      "instruction": "Using online information counts here, even if you did not speak to anyone. Include contacts that did not result in help. For each source, select the closest category.",
+      "group_headings": {
+        "military": "Military contacts",
+        "nonmilitary": "Nonmilitary contacts"
+      },
+      "internet_hint": "For an organisation’s own website, select that organisation’s category. Use Internet resources for other online sources."
+    },
+    "Q30": {
+      "intro": "You indicated you did not contact any of the following military resources for the particular needs you just described. However, we’d like to know whether any of the following statements apply to these resources.",
+      "instruction": "Please check any that apply:",
+      "row_heading": "Military resources not contacted"
+    },
+    "Q31": {
+      "intro": "We’d like to know more about the following military resources you indicated that you did contact for the particular needs you described.",
+      "instruction": "Please check all of the statements that apply to these resources.",
+      "row_heading": "Military resources contacted"
+    },
+    "Q32": {
+      "intro": "You indicated you did not contact any of the following nonmilitary resources for the particular needs you described. However, we’d like to know whether any of the following statements apply to these resources.",
+      "instruction": "Please check all of the statements that apply:",
+      "row_heading": "Nonmilitary resources not contacted"
+    },
+    "Q33": {
+      "intro": "We’d like to know more about the following nonmilitary resources you indicated that you did contact for the particular needs you described.",
+      "instruction": "Please check all of the statements that apply:",
+      "row_heading": "Nonmilitary resources contacted"
+    },
+    "Q34": {
+      "intro": "We’d like to know more about your personal networks, which you indicated that you did contact for the particular needs you described earlier in the survey.",
+      "instruction": "Please check all of the statements that apply to your personal networks — friends and family:"
+    },
+    "Q35": {
+      "review_intro": "To review, you indicated that the most important problems and needs for you in the past year were:",
+      "review_problem_heading": "{problem_label}",
+      "review_need_item": "{need_label}",
+      "question": "Please tell us how well each of these contacts you made helped to meet your needs with:",
+      "problem_heading": "{problem_label}",
+      "need_heading": "{need_label}",
+      "comments_label": "Comments:"
+    },
+    "Q36": {
+      "question": "What impact, if any, might there be if you were no longer able to access the following resources to help you address any problems you or your family might face?",
+      "row_heading": "If the following were no longer available to help you…"
+    }
+  },
+  "routing": {
+    "scope": "Adult Appendix A Part 2 only; do not apply these routes to the separate youth or under-7 instruments.",
+    "sequence": [
+      "Q23",
+      "Q24",
+      "Q25",
+      "Q26",
+      "Q27",
+      "Q28",
+      "Q29",
+      "Q30",
+      "Q31",
+      "Q32",
+      "Q33",
+      "Q34",
+      "Q35",
+      "Q36",
+      "downstream_background_or_closing"
+    ],
+    "template_bindings": {
+      "Q23": "Q23_Q24",
+      "Q24": "Q23_Q24",
+      "Q25": "Q25",
+      "Q26": "Q26_Q29",
+      "Q27": "Q26_Q29",
+      "Q28": "Q26_Q29",
+      "Q29": "Q26_Q29",
+      "Q30": "Q30",
+      "Q31": "Q31",
+      "Q32": "Q32",
+      "Q33": "Q33",
+      "Q34": "Q34",
+      "Q35": "Q35",
+      "Q36": "Q36"
+    },
+    "input_contract": {
+      "selected_problem_categories": {
+        "source_question": "Q22",
+        "maximum": 2,
+        "fields": [
+          "problem_id",
+          "problem_label",
+          "selected_problem_ids",
+          "selected_problem_labels"
+        ],
+        "order": "Preserve the incoming problem-category order. Do not treat display order as an additional ranking."
+      },
+      "answer_controls_optional": true,
+      "interpolation": {
+        "problem_label": "Exact incoming label for the relevant selected problem category.",
+        "selected_problem_labels": "Ordered array of that category's checked specific-problem labels; render as separate items, not a literal array string.",
+        "need_label": "The relevant short label from question_stems.Q25.option_labels.",
+        "need_full_label": "The full help_options label. For H09, also display its supplied write-in description on a separate line when present.",
+        "other_need_description": "The H09 write-in for this problem category only; omit its display when blank."
+      }
+    },
+    "section_bypass": [
+      {
+        "when": "No problem category is supplied from Q22.",
+        "action": "Skip Q23–Q36 and continue to downstream_background_or_closing.",
+        "answer_state": "Retain whether the upstream answer was explicit no problems or missing; do not merge them."
+      },
+      {
+        "when": "Every supplied problem category has an explicit H10 answer.",
+        "action": "Skip Q25–Q36 and continue to downstream_background_or_closing.",
+        "answer_state": "Explicit no assistance needed."
+      },
+      {
+        "when": "No problem–need pair can be generated after the needs and priority questions, including because applicable questions were skipped.",
+        "action": "Skip Q26–Q36 and continue to downstream_background_or_closing.",
+        "answer_state": "Retain each actual answer state; do not convert missing or unprioritised needs to no assistance needed."
+      }
+    ],
+    "Q23": {
+      "show_when": "At least one selected problem category is supplied.",
+      "problem_slot": 1,
+      "options_ref": "help_options",
+      "selection": "multiple",
+      "exclusive_option_ids": [
+        "H10"
+      ],
+      "exclusive_scope": "This problem category's entire help question.",
+      "write_in": "Show H09_text only when H09 is selected. Its text is optional and scoped to this problem category."
+    },
+    "Q24": {
+      "show_when": "A second selected problem category is supplied.",
+      "problem_slot": 2,
+      "options_ref": "help_options",
+      "selection": "multiple",
+      "exclusive_option_ids": [
+        "H10"
+      ],
+      "exclusive_scope": "This problem category's entire help question.",
+      "write_in": "Show H09_text only when H09 is selected. Its text is optional and scoped to this problem category."
+    },
+    "Q25": {
+      "show_when": "At least one selected problem category has more than two selected needs among H01–H09.",
+      "category_panels": "Only categories with more than two selected needs.",
+      "intro_variant": {
+        "only_category": "Only one problem category was supplied, and it requires prioritisation.",
+        "one_of_two_categories": "Two problem categories were supplied, but only one requires prioritisation.",
+        "both_categories": "Both supplied problem categories require prioritisation."
+      },
+      "options": "Only needs selected for the applicable category, ordered H01–H09 and labelled using question_stems.Q25.option_labels.",
+      "other_description": "Display the H09 write-in beneath its short label when supplied.",
+      "selection_count_when_answered": 2,
+      "skip_allowed": true,
+      "incomplete_selection": "One priority selection is an incomplete draft, not a completed two-need choice. Allow completion or skipping; never select a second need automatically.",
+      "on_skip": "Generate no detailed pairs for the affected category. Retain all its reported needs and record that prioritisation was skipped.",
+      "categories_with_one_or_two_needs": "Bypass Q25 for that category and carry all its selected H01–H09 needs into follow-up.",
+      "categories_with_H10_or_blank": "Generate no pairs for that category; preserve explicit no-need and missing as distinct states."
+    },
+    "pair_generation": {
+      "maximum_pairs": 4,
+      "pair_key_fields": [
+        "problem_id",
+        "need_id"
+      ],
+      "order": "Incoming problem-category order, then original H01–H09 order within each category.",
+      "question_assignment": "Assign Q26 to the first generated pair, Q27 to the second, Q28 to the third and Q29 to the fourth. Omit unused question instances.",
+      "include": "Needs carried forward directly when there were one or two, or the two valid Q25 priorities when there were more than two.",
+      "exclude": [
+        "H10",
+        "Skipped need answers",
+        "Categories requiring Q25 where no valid priority answer was completed"
+      ],
+      "retain": "All reported problems and needs remain recorded even when not selected for detailed follow-up.",
+      "sequence_constraint": "Complete the applicable Q26–Q29 contact questions before Q30–Q36; do not replace this with a full outcome interview after each pair."
+    },
+    "Q26_Q29": {
+      "show_when": "The corresponding generated pair exists.",
+      "options_ref": "resource_options",
+      "selection": "multiple",
+      "group_order": [
+        "military",
+        "nonmilitary"
+      ],
+      "ungrouped_last_option": "NO_CONTACT",
+      "exclusive_option_ids": [
+        "NO_CONTACT"
+      ],
+      "exclusive_scope": "The whole contact question, across both resource groups.",
+      "exclusive_behaviour": "Selecting NO_CONTACT deselects all resources; selecting any resource deselects NO_CONTACT.",
+      "write_ins": "Show the selected M09 or N07 write-in beneath that option. Keep its answer scoped to this problem–need pair. A blank write-in does not invalidate the selected category.",
+      "internet_hint_placement": "Beneath N05.",
+      "contact_definition": "Selected resources include attempts without help received and use of online information; they do not establish service receipt.",
+      "answered_states": {
+        "contacts_selected": "One or more M01–M09 or N01–N07 options selected, with NO_CONTACT absent.",
+        "explicit_no_contact": "NO_CONTACT selected alone.",
+        "skipped": "No resource or NO_CONTACT option selected."
+      }
+    },
+    "aggregate_resource_sets": {
+      "scope": "Only the generated problem–need pairs followed through in Q26–Q29.",
+      "contacted": "Union of actual resource selections across answered contact questions; exclude NO_CONTACT.",
+      "noncontacted_allowed_when": "Every generated contact question has either contacts_selected or explicit_no_contact status.",
+      "military_noncontacted_universe": [
+        "M01",
+        "M02",
+        "M03",
+        "M04",
+        "M05",
+        "M06",
+        "M07",
+        "M08"
+      ],
+      "nonmilitary_noncontacted_universe": [
+        "N01",
+        "N02",
+        "N03",
+        "N04",
+        "N05"
+      ],
+      "noncontacted": "For the relevant universe, subtract the contacted union.",
+      "no_double_assignment": "A category contacted for any followed-through need belongs in the contacted set, not also in the noncontacted set.",
+      "missing_contact_question": "Suppress both aggregated noncontacted matrices when any generated contact question was skipped. Known-contact matrices remain available.",
+      "personal_networks": "Exclude N06 from Q30–Q33; assess it separately in Q34.",
+      "other_resources": {
+        "noncontacted_rows": "Never invent a noncontacted Other military or Other nonmilitary resource.",
+        "contacted_rows": "Include selected M09 and N07 entries with their write-in descriptions when present.",
+        "identity": "Retain Other descriptions and responses under their originating problem_id, need_id and resource_id. Do not automatically merge different entries into a single named provider.",
+        "row_key_for_other": [
+          "problem_id",
+          "need_id",
+          "resource_id"
+        ]
+      },
+      "standard_row_key": [
+        "resource_id"
+      ],
+      "row_order": "Original resource_options order; order separate Other entries by their originating pair order."
+    },
+    "shared_characteristic_matrix": {
+      "options_ref": "characteristic_options",
+      "column_count": 7,
+      "cell_control": "checkbox",
+      "multiple_characteristics_per_row": true,
+      "positive_and_negative_can_coexist": true,
+      "display_count": "At most once per applicable Q30–Q33 block, not once per pair.",
+      "row_labels": "Use the final resource_options labels, with supplied Other descriptions as context.",
+      "blank_interpretation": "An unchecked characteristic is not evidence of its opposite. A blank row is unanswered or unendorsed, not an all-negative assessment.",
+      "scope_of_answers": "Resource characteristics across followed-through needs; do not assign them automatically to every individual problem–need pair."
+    },
+    "Q30": {
+      "show_when": "Noncontacted classification is allowed and at least one military noncontacted row exists.",
+      "row_set": "military_noncontacted_universe minus contacted",
+      "matrix_ref": "shared_characteristic_matrix",
+      "skip_when_empty": true
+    },
+    "Q31": {
+      "show_when": "At least one military resource was selected in an answered contact question.",
+      "row_set": "Contacted military resources, including separately retained selected M09 entries.",
+      "matrix_ref": "shared_characteristic_matrix",
+      "skip_when_empty": true
+    },
+    "Q32": {
+      "show_when": "Noncontacted classification is allowed and at least one nonmilitary noncontacted row exists.",
+      "row_set": "nonmilitary_noncontacted_universe minus contacted",
+      "matrix_ref": "shared_characteristic_matrix",
+      "skip_when_empty": true
+    },
+    "Q33": {
+      "show_when": "At least one nonmilitary resource other than N06 was selected in an answered contact question.",
+      "row_set": "Contacted N01–N05 plus separately retained selected N07 entries.",
+      "matrix_ref": "shared_characteristic_matrix",
+      "skip_when_empty": true
+    },
+    "Q34": {
+      "show_when": "N06 was selected for at least one generated problem–need pair.",
+      "display_count": 1,
+      "options_ref": "personal_network_statements",
+      "selection": "multiple",
+      "exclusive_options": [],
+      "blank_interpretation": "Do not infer the opposite of unselected statements.",
+      "scope": "Respondent's personal networks across the followed-through needs, not a separate assessment for each pair."
+    },
+    "Q35": {
+      "review": "Show the review once, listing the followed-through problem categories and their selected needs.",
+      "repeat": "One resource-helpfulness matrix for each generated pair with actual selected contacts.",
+      "maximum_matrices": 4,
+      "row_set": "Only resources selected for that exact pair in Q26–Q29, including N06 and selected Other entries.",
+      "row_order": "Original resource_options order.",
+      "scale_ref": "helpfulness_scale",
+      "column_count": 5,
+      "row_control": "single-select radio",
+      "required": false,
+      "comments": {
+        "type": "text",
+        "label_ref": "question_stems.Q35.comments_label",
+        "scope": [
+          "problem_id",
+          "need_id"
+        ],
+        "placement": "Below each displayed pair matrix.",
+        "required": false
+      },
+      "no_contact_or_skipped": "Do not display a resource-rating matrix for a pair without selected resources. Do not invent a No contact row or assign Not at all.",
+      "failed_contact": "A contacted resource can be rated Not at all; this does not establish that a service was delivered.",
+      "no_cross_pair_copying": true,
+      "blank_rating": "Unknown; do not default to a scale value."
+    },
+    "Q36": {
+      "show_when": "The respondent remains in Part 2 with at least one generated problem–need pair, regardless of whether contacts were made or contact questions were skipped.",
+      "display_count": 1,
+      "rows_ref": "loss_resource_rows",
+      "scale_ref": "loss_impact_scale",
+      "rated_resource_rows": 9,
+      "response_columns": 4,
+      "row_control": "single-select radio",
+      "required": false,
+      "contact_filter": false,
+      "other_write_in": "Q36_i_text is optional, belongs to Q36 and is not assumed to describe an Other contact from a particular need.",
+      "comments_field": "Q36_j",
+      "scope": "Potential loss of access for any problems the respondent or family might face, not only the selected needs.",
+      "after": "downstream_background_or_closing"
+    },
+    "missing_answers_and_edits": {
+      "distinguish": [
+        "Explicit no assistance needed",
+        "Explicit no contact",
+        "Skipped",
+        "Not selected for depth",
+        "Incomplete priority draft",
+        "Unknown rating"
+      ],
+      "never_infer": [
+        "A skipped question means no problem, no need or no contact.",
+        "A contact selection means a service was received.",
+        "Noncontact means the need was unmet.",
+        "Q35 ratings determine an all-sources overall-need-met value.",
+        "An unchecked characteristic proves the opposite."
+      ],
+      "upstream_changes": "Recompute dependent pairs, rows and display conditions. Exclude inactive downstream answers from active export; never reattach them to another problem or need because its display number changed.",
+      "stable_keys": {
+        "needs": [
+          "respondent_id",
+          "problem_id",
+          "need_id"
+        ],
+        "contacts_and_Q35": [
+          "respondent_id",
+          "problem_id",
+          "need_id",
+          "resource_id"
+        ],
+        "standard_resource_characteristics": [
+          "respondent_id",
+          "resource_id",
+          "characteristic_id"
+        ],
+        "other_resource_characteristics": [
+          "respondent_id",
+          "problem_id",
+          "need_id",
+          "resource_id",
+          "characteristic_id"
+        ],
+        "personal_networks": [
+          "respondent_id",
+          "statement_id"
+        ],
+        "loss_impact": [
+          "respondent_id",
+          "resource_id"
+        ]
+      }
+    },
+    "presentation": {
+      "wide_screens": "Retain the separate matrices with the source-order resource rows and response columns.",
+      "narrow_screens": "Render each matrix row as a labelled block with the same checkbox or radio options in the same order; do not remove or combine items.",
+      "do_not_repeat_aggregate_blocks_per_pair": true
+    },
+    "downstream_contract": {
+      "additional_comments_opportunity": "Retain an end-of-survey additional-comments opportunity because Q25 promises one.",
+      "part2_is_not_original_survey_end": true,
+      "do_not_automatically_restore": [
+        "US pay-grade questions",
+        "US service-retention questions"
+      ]
+    }
+  },
+  "provenance": {
+    "source": {
+      "label": "RAND Appendix A extracted source, Q23–Q36",
+      "authors": "Laura L. Miller et al.",
+      "title": "A New Approach for Assessing the Needs of Service Members and Their Families",
+      "year": 2011,
+      "report": "MG-1124",
+      "section": "Appendix A",
+      "printed_pages": "94–104",
+      "url": "https://www.rand.org/content/dam/rand/pubs/monographs/2011/RAND_MG1124.pdf"
+    },
+    "serialization_basis": "The immediately preceding completed Q23–Q36 source-faithful adaptation and the Appendix A extraction supplied in this conversation. No new file, source-code, frontend or respondent testing is claimed.",
+    "visibility": "This provenance and all routing rules are implementation metadata, not respondent-facing copy.",
+    "general_edit": "Use the settled Australian spelling and punctuation. Keep the adult instrument separate from youth and under-7 routes.",
+    "item_groups": {
+      "help_options": {
+        "original_question_ids": [
+          "Q23",
+          "Q24"
+        ],
+        "classification": "narrow SUBSTITUTE",
+        "note": "Retain all ten choices. H02 adds partners and replaces troops with ADF members; H06 uses counselling. H10 remains exclusive."
+      },
+      "resource_options": {
+        "original_question_ids": [
+          "Q26",
+          "Q27",
+          "Q28",
+          "Q29"
+        ],
+        "reused_in": [
+          "Q30",
+          "Q31",
+          "Q32",
+          "Q33",
+          "Q35",
+          "Q36"
+        ],
+        "classification": "narrow SUBSTITUTE",
+        "note": "Retain nine military and seven nonmilitary categories, personal networks separately, and the exclusive whole-question no-contact option. Use the adopted Australian or neutral labels."
+      },
+      "characteristic_options": {
+        "original_question_ids": [
+          "Q30",
+          "Q31",
+          "Q32",
+          "Q33"
+        ],
+        "classification": "narrow SUBSTITUTE",
+        "note": "Retain all seven compound characteristics. C04 replaces the spouse-specific reference with family member; do not split the compound columns."
+      },
+      "personal_network_statements": {
+        "original_question_ids": [
+          "Q34"
+        ],
+        "classification": "KEEP",
+        "note": "PN01–PN07 correspond to original statements 1–7 in order; wording is carried from the completed adaptation."
+      },
+      "helpfulness_scale": {
+        "original_question_ids": [
+          "Q35"
+        ],
+        "classification": "KEEP",
+        "note": "IDs are string encodings of original values 1–5. Retain their original order and settled labels."
+      },
+      "loss_impact_scale": {
+        "original_question_ids": [
+          "Q36"
+        ],
+        "classification": "KEEP",
+        "note": "IDs are string encodings of original values 1–4; all four choices are retained."
+      },
+      "loss_resource_rows": {
+        "original_question_ids": [
+          "Q36"
+        ],
+        "classification": "narrow SUBSTITUTE",
+        "note": "Keep rows a–i and comments j, using the same Australian military resource labels as the contact catalogue. The preceding adaptation restored g–i and j beyond the supplied extraction's ending at f."
+      },
+      "question_stems": {
+        "Q23_Q24": {
+          "original_question_ids": [
+            "Q23",
+            "Q24"
+          ],
+          "classification": "KEEP",
+          "note": "Replace printed worked examples with the actual selected category and checked problems."
+        },
+        "Q25": {
+          "original_question_ids": [
+            "Q25"
+          ],
+          "classification": "narrow SUBSTITUTE",
+          "note": "Retain the source alternatives and two-needs instruction; add only the grammatical variant for a respondent with one problem category."
+        },
+        "Q26_Q29": {
+          "original_question_ids": [
+            "Q26",
+            "Q27",
+            "Q28",
+            "Q29"
+          ],
+          "classification": "narrow SUBSTITUTE",
+          "note": "Keep the contact question and pair reminders; add the settled clarification for online information, unsuccessful contacts and source classification."
+        },
+        "Q30": {
+          "original_question_ids": [
+            "Q30"
+          ],
+          "classification": "narrow SUBSTITUTE",
+          "note": "Use did not contact rather than did not use, matching the evidence collected in Q26–Q29."
+        },
+        "Q31": {
+          "original_question_ids": [
+            "Q31"
+          ],
+          "classification": "narrow SUBSTITUTE",
+          "note": "Keep the contact-based stem; align the row heading and use the shared local resource labels."
+        },
+        "Q32": {
+          "original_question_ids": [
+            "Q32"
+          ],
+          "classification": "narrow SUBSTITUTE",
+          "note": "Use did not contact and correct the source example's inconsistent resources used heading."
+        },
+        "Q33": {
+          "original_question_ids": [
+            "Q33"
+          ],
+          "classification": "narrow SUBSTITUTE",
+          "note": "Keep the contact-based stem; align the row heading and use the shared local resource labels."
+        },
+        "Q34": {
+          "original_question_ids": [
+            "Q34"
+          ],
+          "classification": "KEEP",
+          "note": "Keep the personal-network introduction and seven-statement block."
+        },
+        "Q35": {
+          "original_question_ids": [
+            "Q35"
+          ],
+          "classification": "KEEP",
+          "note": "Keep the review, separate matrix for each problem–need pair, five-point resource ratings and comments."
+        },
+        "Q36": {
+          "original_question_ids": [
+            "Q36"
+          ],
+          "classification": "KEEP",
+          "note": "Keep the resource-loss question and four-column response structure; resource substitutions are documented separately."
+        }
+      },
+      "routing": {
+        "original_question_ids": [
+          "Q23",
+          "Q24",
+          "Q25",
+          "Q26",
+          "Q27",
+          "Q28",
+          "Q29",
+          "Q30",
+          "Q31",
+          "Q32",
+          "Q33",
+          "Q34",
+          "Q35",
+          "Q36"
+        ],
+        "classification": "narrow SUBSTITUTE",
+        "note": "Retain Appendix A sequence, up to four contact pairs, aggregate characteristics, pair-specific helpfulness and general resource-loss assessment. Carry forward the reviewed optional-answer and missing-data safeguards."
+      }
+    },
+    "resource_crosswalk": {
+      "M01": {
+        "original": "Family Readiness Group / Key Volunteers / Key Spouse Volunteers",
+        "note": "Neutral unit-family support label; no named local scheme is asserted."
+      },
+      "M02": {
+        "original": "Rear detachment / unit members who did not deploy with the rest",
+        "note": "Retain the plain-language description without asserting a locally named Rear Detachment service."
+      },
+      "M03": {
+        "original": "FMWR / MCCS / AFRC / Navy Fleet and Family Support Center",
+        "note": "Functional substitution using local Defence family and welfare services and a DMFS area office; not a claim of identical organisational remit."
+      },
+      "M04": {
+        "original": "Military OneSource and Service-specific OneSource variants",
+        "note": "Use the Defence Member and Family Helpline as the adopted information, assistance and referral entry point; distinguish it from subsequent local-team contact."
+      },
+      "M05": {
+        "original": "Unit member, troop leader, or chain of command",
+        "note": "Remove troop from the leader reference."
+      },
+      "M06": {
+        "original": "Chaplain or members of military religious or spiritual group; Q36 row f: Chaplain",
+        "note": "Use the consistent ADF chaplain or military religious/spiritual-group category across the local instrument."
+      },
+      "M07": {
+        "original": "Military doctor or counselor",
+        "note": "Australian spelling only."
+      },
+      "M08": {
+        "original": "Relief/aid society",
+        "note": "Use military relief or welfare fund with the Australian fund examples adopted in the preceding response; do not imply universal eligibility."
+      },
+      "M09": {
+        "original": "Other military contacts",
+        "note": "Retain the category and optional write-in."
+      },
+      "N01": {
+        "original": "Government or community resources, with US welfare-programme and community examples",
+        "note": "Replace US-specific examples with government family services, public libraries and community centres."
+      },
+      "N02": {
+        "original": "Private clubs, organizations, recreation or fitness centers",
+        "note": "Australian spelling only."
+      },
+      "N03": {
+        "original": "Religious or spiritual group or leader",
+        "note": "Retain."
+      },
+      "N04": {
+        "original": "Private doctor or counselor",
+        "note": "Australian spelling only."
+      },
+      "N05": {
+        "original": "Internet resources, with WebMD, Google, Craigslist, Wikipedia and Yahoo examples",
+        "note": "Retain the category with neutral online-resource types and the adopted organisation-website classification hint."
+      },
+      "N06": {
+        "original": "Personal networks (friends, family)",
+        "note": "Retain as a distinct category, with Q34 rather than the service-characteristics matrix."
+      },
+      "N07": {
+        "original": "Other nonmilitary contacts",
+        "note": "Retain the category and optional write-in."
+      },
+      "NO_CONTACT": {
+        "original": "Q26–Q29 Nonmilitary Contacts option 8",
+        "note": "Retain its wording but display after both groups and enforce exclusivity across the entire question."
+      }
+    },
+    "local_confirmation": [
+      {
+        "resource_id": "M01",
+        "note": "LC confirmation is needed before adding a specific Greater Darwin unit-linked family scheme name or interpreting its noncontact as failure to access an available scheme. Retain the generic cue meanwhile."
+      },
+      {
+        "resource_id": "M02",
+        "note": "LC confirmation is needed before adding a formal local unit-service name. Retain the plain-language cue meanwhile."
+      }
+    ],
+    "source_grid_examples": {
+      "Q30": {
+        "resource_rows": 5,
+        "characteristic_columns": 7
+      },
+      "Q31": {
+        "resource_rows": 3,
+        "characteristic_columns": 7
+      },
+      "Q32": {
+        "resource_rows": 3,
+        "characteristic_columns": 7
+      },
+      "Q33": {
+        "resource_rows": 3,
+        "characteristic_columns": 7
+      },
+      "Q35": {
+        "resource_rows": 6,
+        "rating_columns": 5,
+        "comments": true
+      },
+      "Q36": {
+        "resource_rows": 9,
+        "rating_columns": 4,
+        "comments": true
+      },
+      "note": "Q30–Q33 and Q35 printed row memberships are examples, not fixed assignments. The repeated Internet example must not become a forced duplicate across the aggregate contacted and noncontacted sets."
+    },
+    "measurement_limits": [
+      "Q26–Q29 establish contact or information-resource use to try to meet a need, not a separate service-receipt or service-uptake status.",
+      "C01 explicitly concerns use for other needs; do not reinterpret it as receipt for the selected pair.",
+      "Q30–Q33 retain resource characteristics and potential barriers or bridges, not separate definitive causal reasons for every individual need.",
+      "Q35 measures each contact's helpfulness for a particular problem–need pair; it does not independently measure whether that need was met overall across all sources.",
+      "Do not manufacture overall need-met values, current gaps or service receipt from the retained fields. Additional measurements would require separately labelled local supplements."
+    ],
+    "omissions": {
+      "whole_question_blocks": [],
+      "respondent_visible_omissions": [
+        "US Service-specific organisation names replaced by the documented labels",
+        "Static worked examples",
+        "Source programming instructions"
+      ],
+      "programme_note": "Do not add the planned Lutheran Care Defence programme as an already operating resource or a resource respondents could lose. Existing LC-service contact can be represented under government or community resources."
+    }
+  },
+  "completion_marker": "CODEX-BRIDGE-DONE: rand-part2-structured-20260929"
+}

@@ -1,0 +1,28 @@
+.rand-adult .rand-intro{white-space:pre-line;line-height:1.6;margin:0 0 28px;color:var(--text)}
+.rand-adult .rand-subtitle{font-weight:700;color:var(--primary);margin:0 0 24px}
+.rand-adult.rand-opening .question-card>p{max-width:65ch}
+.rand-adult .rand-entry-actions{justify-content:flex-start;flex-wrap:wrap;margin:28px 0}
+.rand-adult .rand-information-section{border-top:1px solid var(--line);padding-top:20px;margin:20px 0}
+.rand-adult .rand-information-section h2{font-size:21px;margin:0 0 10px}
+.rand-adult .rand-information-section p{margin:0 0 12px}
+.rand-adult .rand-question{border:0;margin:0 0 34px;padding:0;min-width:0}
+.rand-adult .rand-question>legend,.rand-adult .rand-question>label,.rand-adult .rand-question>h2{display:block;font-size:18px;font-weight:700;line-height:1.45;color:var(--ink);margin:0 0 14px}
+.rand-adult .rand-number{font-weight:700;color:var(--primary)}
+.rand-adult .rand-question .choice{margin:0 0 8px}
+.rand-adult .rand-option-group{margin:18px 0 22px}
+.rand-adult .rand-option-group h3{font-size:16px;margin:0 0 12px;color:var(--ink)}
+.rand-adult .rand-question .field-hint{margin:0 0 16px}
+.rand-adult .rand-question textarea,.rand-adult .rand-question select,.rand-adult .rand-question input[type=number],.rand-adult .rand-write-in input{display:block;max-width:100%;width:100%;border:1px solid var(--line);border-radius:6px;padding:12px 14px;font:inherit;color:var(--ink);background:#fff}
+.rand-adult .rand-question textarea{min-height:120px;resize:vertical}
+.rand-adult .rand-number-input{display:flex;align-items:center;gap:10px;margin:0 0 10px}
+.rand-adult .rand-number-input input{max-width:180px}
+.rand-adult .rand-write-in{display:block;margin:8px 0 16px 32px;font-size:14px}
+.rand-adult .rand-write-in input{margin-top:6px}
+.rand-adult .rand-matrix-row{border:1px solid var(--line);border-radius:8px;padding:18px;margin:0 0 14px;min-width:0}
+.rand-adult .rand-matrix-row legend{font-weight:700;font-size:16px;line-height:1.45;padding:0 5px}
+.rand-adult .rand-matrix-cells{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.rand-adult .rand-matrix-cell{display:flex;align-items:flex-start;gap:8px;font-size:14px;line-height:1.4;cursor:pointer}
+.rand-adult .rand-matrix-cell input[type=checkbox],.rand-adult .rand-matrix-cell input[type=radio]{flex:none;width:18px;height:18px;accent-color:var(--primary)}
+.rand-adult .rand-matrix-cell input[type=number]{margin-top:5px}
+@media(max-width:760px){.rand-adult .rand-matrix-cells{grid-template-columns:1fr 1fr}.rand-adult .rand-matrix-row{padding:14px}}
+@media(max-width:420px){.rand-adult .rand-matrix-cells{grid-template-columns:1fr}}

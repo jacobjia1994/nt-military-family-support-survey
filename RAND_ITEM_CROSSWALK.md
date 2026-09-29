@@ -1,39 +1,79 @@
-# RAND needs survey to local consultation: item crosswalk
+# RAND Appendix A to Greater Darwin questionnaire crosswalk
 
-Status: candidate design aid, 29 September 2026. The respondent-facing recall cues are in [`copy/rand-needs-taxonomy.json`](copy/rand-needs-taxonomy.json). The JSON has nine broad categories and 45 concrete cues for adults. Its labels are proposed local wording, **not** an official Australian list or a validated needs scale.
+The adult questionnaire is based directly on the sample survey in [RAND MG-1124, Appendix A](https://www.rand.org/content/dam/rand/pubs/monographs/2011/RAND_MG1124.pdf), printed pp. 75–115. Its 67 numbered questions are all retained or locally adapted; no numbered question is replaced by the former 9×5 local cue board. The authors explicitly permit adoption and tailoring, but this local version is not validated for Greater Darwin. The separate youth and younger-child paths are local instruments, not RAND items.
 
-## What the source contributes
+| RAND item | Printed page | Treatment | Narrow local change or retained function |
+|---|---:|---|---|
+| Q1 | 79 | Adapted | Option 4 uses Defence family group; all 11 choices retained. |
+| Q2 | 79 | Retained | Original question and 0–10-or-more dropdown; blank initial state. |
+| Q3 | 80 | Adapted | Current/former wording, partner/family choices and focal-person clarification; source option 4 no longer exits. |
+| Q4 | 80 | Adapted | Australian Service labels; retain source IDs 1, 2, 3 and 5; foreign Service and uncertainty choices replace a US-only branch menu. |
+| Q5 | 80 | Adapted | Permanent/Reserve terminology, continuous full-time Reserve and former/deceased/other/uncertain states; omit source National Guard option 2. |
+| Q6 | 80 | Adapted | Spouse/partner and Australian service terminology; continuous full-time Reserve and uncertainty choices. |
+| Q7 | 80 | Retained | Marriage duration remains marriage duration. |
+| Q8 | 81 | Adapted | Original definition, six bands and two columns; spouse or partner and Australian spelling only. |
+| Q9 | 81 | Retained | Deployment question unchanged, including the past-year period. |
+| Q10 | 81 | Adapted | Spouse/partner and explicitly labelled other-family referents; retain deployment and Yes/No. |
+| Q11 | 81 | Adapted | Current-base construct retained; Australian location menu and family referents. |
+| Q12 | 83 | Retained | All nine choices; Australian spelling only. |
+| Q13 | 84 | Adapted | Both stems and nine choices retained; spouse/partner wording and partner-item gates. |
+| Q14 | 85 | Retained | All ten choices; chequebook spelling only. |
+| Q15 | 86 | Adapted | Repossession, separation/divorce terminology and partner extension; retain every source option and civilian-respondent employment clarification. |
+| Q16 | 87 | Adapted | Military/civilian access and quality, entitlements and claims wording; retain nine choices and distinct dependant items. |
+| Q17 | 88 | Retained | All twelve choices and past-year spouse/partner stem; no current-single exclusion. |
+| Q18 | 89 | Adapted | Original ten choices and age-22 dependant gate; extend access via L-CHILD without changing the question. |
+| Q19 | 90 | Retained | All thirteen choices unchanged. |
+| Q20 | 91 | Adapted | Spouse/partner wording and current-partner gate; all thirteen choices retained. |
+| Q21 | 92 | Retained | Original open question and no-problem bypass, without recoding missingness. |
+| Q22 | 93 | Retained | Original top-two-category wording, category reminders and explanation; Q21 remains eligible. |
+| Q23 | 94 | Adapted | Retain ten original need choices; replace US troops/spouse wording with ADF member/partner terms. |
+| Q24 | 95 | Adapted | Repeat the original need question for the second chosen problem category. |
+| Q25 | 96 | Retained | Keep the two most significant needs selection when more than two were chosen. |
+| Q26 | 97 | Adapted | Keep original military/nonmilitary contact groups, with verified or neutral Australian resource labels. |
+| Q27 | 97 | Adapted | Repeat Q26 for the second linked problem–need pair. |
+| Q28 | 97 | Adapted | Repeat Q26 for the third linked problem–need pair. |
+| Q29 | 97 | Adapted | Repeat Q26 for the fourth linked problem–need pair. |
+| Q30 | 98 | Adapted | Keep all seven characteristics for military resources not contacted; align use/contact wording. |
+| Q31 | 99 | Adapted | Keep all seven characteristics for military resources contacted. |
+| Q32 | 100 | Adapted | Keep all seven characteristics for nonmilitary resources not contacted. |
+| Q33 | 101 | Adapted | Keep all seven characteristics for nonmilitary resources contacted. |
+| Q34 | 102 | Retained | Keep seven statements about personal networks. |
+| Q35 | 103 | Retained | Keep five-point helpfulness rating for each contacted resource and linked need. |
+| Q36 | 104 | Adapted | Keep nine resource rows and four loss-impact choices with Australian resource labels. |
+| Q37 | 105–106 | Adapted | Current rank replaces US paygrade; Australian branch menus and generic foreign/unknown menu. Known former/deceased members receive explicit last-rank variants. |
+| Q38 | 106 | Adapted | Full-time service replaces active duty; include continuous full-time Reserve service and retain completed years and Don’t know. |
+| Q39 | 106 | Adapted | Reported-sex stem and an additional term replace ambiguous Are you wording; not an equivalent gender or sex-at-birth measure. |
+| Q40 | 106 | Retained | Retain respondent age at last birthday in whole completed years. |
+| Q41 | 107 | Adapted | Six broad Australian school/qualification groups plus Other; not AQF-level or credential-equivalence codes. |
+| Q42 | 107 | Retained | Retain total months in the past three years, with the supplied member/spouse/other-family referents. |
+| Q43 | 107 | Adapted | Retain separate partner deployment exposure; extend to unmarried and formerly serving military partners. |
+| Q44 | 107 | Retained | Retain latest completed deployment length and recent focal-return gate. |
+| Q45 | 107 | Adapted | Retain time since return and printed married restriction, extended to current partners; no other-family route. |
+| Q46 | 108 | Adapted | Retain before/during/since matrix; partner extension and proxy-only uncertainty. |
+| Q47 | 108 | Adapted | Australian citizenship replaces United States citizenship; omit unconfirmed research-only and benefit-eligibility explanation. |
+| Q48 | 108 | Retained | Retain the exact English-as-a-second-language question; no proficiency inference. |
+| Q49 | 108 | Adapted | Australian Indigenous status replaces the US Hispanic/Latino construct. Separate local variable; no mapping of original Yes/No codes. |
+| Q50 | 109 | Adapted | Australian ancestry replaces the US race checklist. Multiple responses retained without a two-response cap; separate local variable. |
+| Q51 | 109 | Adapted | Caring, older family member and disability terminology; extend spouse to partner while retaining examples. |
+| Q52 | 109 | Adapted | Retain special education/early intervention receipt; omit only the US Exceptional Family Member Program clause and use the Part 1 child route. |
+| Q53 | 110 | Retained | Retain formal custody/guardianship, dependent-child and recent-deployment gates. |
+| Q54 | 110 | Adapted | Former spouse or partner and Partner (not married) replace source relationship labels; spouse respondent refers to the service member's deployment. |
+| Q55 | 110 | Retained | Retain exact self-report weekly work-hours question; local route includes civilian current and former/bereaved spouse/partner respondents. |
+| Q56 | 110 | Adapted | Use school, TAFE, university or another education/training institution; preserve attendance hours. |
+| Q57 | 111 | Adapted | Australian Defence/civilian housing labels and an added Other arrangement; preserve source housing distinctions. |
+| Q58 | 111 | Adapted | Retain nearest-base travel-time construct; include exactly 30 minutes in the second category and preserve exactly two hours in the third. |
+| Q59 | 111 | Adapted | Replace PCS with an actual posting-related move between bases or posting locations. |
+| Q60 | 111 | Adapted | Partner extension; spouse stem includes the local area and its Not applicable choice refers to I. |
+| Q61 | 112 | Adapted | Retain all thirteen reasons; Defence housing, partner referents and Australian spelling only. |
+| Q62 | 113 | Retained | Retain five support choices for civilian spouses/partners of currently serving members. |
+| Q63 | 113 | Retained | Retain six choices and retirement skip; Australian favour spelling. |
+| Q64 | 113 | Retained | Retain perceived member preference and Don’t know; Australian favour spelling. |
+| Q65 | 113 | Retained | Retain own-service preferences and retiring-soon skip, including current Reserve members. |
+| Q66 | 114 | Adapted | Retain perceived spouse preference, extend to partners and preserve retirement/partnership gates. |
+| Q67 | 114 | Retained | Retain original closing comment verbatim, optional multiline COMMENTS field and availability to everyone. |
 
-RAND's *A New Approach for Assessing the Needs of Service Members and Their Families* (2011), Appendix A, printed pp. 75–115 (PDF pp. 101–141), is an example of a linked needs assessment. The authors state on printed p. 75 that the novel contribution is **not** its individual items: it is the connection from a respondent's problem to the help needed, sources contacted, access barriers or facilitators, and whether the need was met. They explicitly permit other organisations to adopt and tailor the instrument. The source's US organisation names, eligibility, consent claims and demographic categories do not describe Lutheran Care NT or Australian Defence families.
+## Additional local routing, outside RAND numbering
 
-The prototype received 699 usable responses from eligible US service members and spouses at two Army/Marine bases; the average completion time was about 18 minutes (printed pp. 50–51). Appendix A was revised after that pilot (p. 54). Neither the revised form nor the Australian wording here has been established as a validated scale. RAND warns that a small local sample creates very sparse cells after several layers of branching (printed pp. 63–64). Use descriptive summaries unless the actual sampling and response numbers support a stronger claim.
+The local helpers L-PARTNER, L-CHILD and L-GD clarify current partner, independent-child and Greater Darwin connection when the broader consultation population makes the original branch information insufficient. They are explicitly separate from RAND Q1–Q67. Australian Service names, local Defence bases, health-system terminology, source organisations and cultural-demographic questions are narrow substitutions documented in the JSON question dictionaries under `copy/`. The original US survey licence, consent claims, Military OneSource contact block and unverified completion-time estimate are not reproduced.
 
-## Item-block mapping
-
-| RAND block | Source location, printed pages | Intended local function and adaptation |
-|---|---:|---|
-| Q12–20: nine US military and family problem-domain lists | 83–91 | Use the Australian Strategy to create a memory board of broad issues and concrete optional cues. The 45 cues in the JSON cover postings, everyday life, children and carers, health, relationships, community and finding support. A respondent's selection records **only that selected cue**. It does not prove that every example within its broad group applies. No US base, benefit or provider names are carried across. |
-| Q21: other problem, free text | 92 | Keep a visible **Something else** route so the list does not define what may count as a need. An empty issue board must not prevent someone from describing a positive experience or future idea. |
-| Q22: choose the two most significant problem **categories** from a recap of selected concrete problems | 93 | Show the selected groups together with the respondent's selected cues, and invite a small number of priorities for the deeper chain. RAND describes its two-category cutoff as somewhat arbitrary and chosen to keep the survey near 20 minutes (main text p. 40). It is a follow-up limit, not a claim that other selected issues do not matter. Save all selected cues for descriptive counts; do not make one full page per every checked cue. |
-| Q23–24: needed types of help for each priority problem | 94–95 | Ask what would help with the displayed issue: information, advice, advocacy, social or emotional support, professional support, practical help, activities or another form, with **no help needed** as a valid answer. Use ordinary Australian terms and avoid assuming that Lutheran Care offers every form. A current need, a past need and a future idea should not be conflated. |
-| Q25: if many need types were selected, focus on at most two per problem | 96 | Use only if the resulting resource questions would otherwise repeat excessively. Preserve every need type selected, but make clear which one or two the person is choosing to describe now. A skipped deeper branch does not mean no need or no barrier. |
-| Q26–29: for each priority problem/need pair, select military, nonmilitary and personal resources contacted | 97 | Ask **whether anyone or anything was approached for this need**, including Defence/DVA, other government or community providers, friends or family, and no one. Local examples must be checked against actual Australian/NT services. Distinguish **did not seek help** from **tried but could not get help** and from **help received**. |
-| Q30–34: attributes of military/nonmilitary resources used and not used; personal network | 98–102 | Retain the causal question: what made a relevant source easier or harder to use? Ask concise, situation-linked follow-ups about information, eligibility, time, location, trust, fit and coordination. Do not copy the original repeated US resource-by-attribute grids: a small LC sample and mobile respondent experience do not justify that length. Safety questions should never request incident or identifying details. |
-| Q35: how well each contacted resource met each priority need | 103 | Ask whether the help actually addressed the stated need, including partial help. A resource being contacted, a service being received and a need being met are three distinct results. If no one was contacted, ask about the unmet need without forcing a satisfaction rating. |
-| Q36: impact if a named resource were lost | 104 | Omit the long hypothetical provider matrix. A short optional prompt asking what existing help should **continue** better serves this local consultation and guards against treating a currently prevented problem as proof the supporting service is unnecessary. RAND itself cautions against using low priority counts to justify cuts (main text p. 59). |
-
-The US sample continues with extensive background questions, service-retention attitudes and a final comment (Q37–67, printed pp. 105–115). Those are not part of the local needs chain. Ask only background facts needed for this consultation's actual audience, routing and interpretation; use an optional closing space for matters not captured. Consent and privacy statements must describe the real local collection setup.
-
-## Current wording refinement
-
-The adult checklist now asks which situations were **difficult** during the last 12 months, including difficulties already resolved. A selected cue therefore records a respondent-identified difficulty, not merely that a life event happened. With more than two selected areas, the person chooses which **mattered most** for detailed follow-up; if only one or two were selected, they carry forward automatically and must not be analysed as an explicit comparative ranking. The category page asks for the situation once, while each linked help page asks what that particular help needed to do or change. The outcome question concerns the particular need across all sources, followed separately by any help still missing now. These changes preserve RAND's problem → priority need → resource → met-need links while reducing repetitive narration.
-
-## How the Australian source informed the recall cues
-
-The Australian Government's *Defence and Veteran Family Wellbeing Strategy 2025–2030* and First Action Plan (2024) is a **coverage source**, not a respondent-tested questionnaire. Its printed pp. 24–25 directly describe difficulty finding support, information not reaching family members, disconnected services, and feeling unheard. Printed pp. 26–27 discuss relocation, posting certainty, absences, transition, children's schooling, partner employment, suitable housing, childcare, mental health, carers and bereavement. Printed pp. 27–28 cover community connection and recognition of varied family structures. The JSON gives printed-page source references for each cue and marks locally inferred wording. In particular, **transport** is a local practical cue supported by RAND's household-management item and the Strategy's discussion of geographical disadvantage; the Strategy does not offer it as a standalone validated category.
-
-The cue list asks what matters to a family. It must not be interpreted as a menu of funded Lutheran Care activities. Where a respondent proposes a specific service or activity, that is a proposal to assess against the organisation's remit and capacity, not an implied offer or registration.
-
-## Review before real collection
-
-Ask a small set of target adult respondents to find their own situation in the issue board and explain, in their own words, what they believe each priority and follow-up question means. Check that they can leave an issue unselected, add an unlisted issue, describe useful existing support, and stop after a short answer. The national Strategy and RAND pilot support the structure; they do not establish that these exact local labels are comfortable or complete for NT families. Youth and child wording needs a separate age-appropriate review: RAND Appendix A was for US adults and spouses aged 18 or older (printed pp. 76–78).
+The active adult respondent flow is Page 1 welcome → Page 2 participation → Q1–Q11 study/background → Q12–Q22 problem pages → Q23–Q36 needs/resources/outcomes where applicable → Q37–Q61 background → Q62–Q67 service attitudes and comments → neutral thank-you. The website is a presentation demo only; it has no response receiver or persistent answer store. These implementation facts belong in internal documentation, not respondent-visible questionnaire copy.
