@@ -19,7 +19,7 @@
     if(['single','multi'].includes(question.kind)){
       const type=question.kind==='single'?'radio':'checkbox';
       const renderOption=option=>{
-        const otherLabel=typeof option.write_in==='object'?option.write_in.label:'Please specify:';
+        const otherLabel=option.write_in&&typeof option.write_in==='object'?option.write_in.label:'Please specify:';
         const other=option.write_in&&((type==='radio'?value===option.id:Array.isArray(value)&&value.includes(option.id)))?`<label class="rand-write-in">${escapeHTML(otherLabel)} <input type="text" name="${escapeHTML(question.id)}:other:${escapeHTML(option.id)}" maxlength="500" value="${escapeHTML(answers[`${question.id}:other:${option.id}`]||'')}"></label>`:'';
         return `<div class="rand-option">${optionHTML(question,option,value,type)}${other}</div>`;
       };
@@ -58,9 +58,9 @@
     throw new TypeError(`Unsupported RAND question kind: ${question.kind}`);
   }
 
-  function create({main,buildPages,onFinish,onExit}){
+  function create({main,buildPages,onFinish,onExit,initialAnswers={}}){
     if(!main||typeof buildPages!=='function')throw new TypeError('RAND adult survey needs a main element and page builder.');
-    const answers={};
+    const answers=structuredClone(initialAnswers);
     let pageId=null;
     const pages=()=>buildPages(answers).filter(Boolean);
     const currentPage=()=>pages().find(page=>page.id===pageId)||pages()[0];
