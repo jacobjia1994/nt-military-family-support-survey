@@ -5,6 +5,7 @@ import crypto from 'node:crypto';
 import {createOpenSurveyModel,NEED_FIELDS,characterCount} from './open-model.mjs';
 const spec=JSON.parse(fs.readFileSync(new URL('./open-survey-spec.json',import.meta.url)));
 const baseline=JSON.parse(fs.readFileSync(new URL('./reference/choice-v4-spec.json',import.meta.url)));
+const currentChoice=JSON.parse(fs.readFileSync(new URL('../choice/survey-spec.json',import.meta.url)));
 const model=createOpenSurveyModel(spec,baseline);
 const one=()=>({consent:'adult_agree',current_connection:'yes',issues:{I04:{selected:['I04_01']}}});
 const two=()=>({...one(),issues:{I04:{selected:['I04_01']},I12:{selected:['I12_01']}}});
@@ -12,7 +13,7 @@ const write=(s,field,value,needId='n1',categoryId='I04')=>model.setText(s,{categ
 const clone=structuredClone;
 for(const k of ['scope','issue_bank','geography','system_screens'])test(`unchanged common component: ${k}`,()=>assert.deepEqual(spec[k],baseline[k]));
 for(const id of ['about','issues','review','thanks'])test(`unchanged page: ${id}`,()=>assert.deepEqual(spec.pages.find(p=>p.id===id),baseline.pages.find(p=>p.id===id)));
-test('welcome differs only in What to expect',()=>{const w=clone(spec.pages[0]);w.sections.find(x=>x.title==='What to expect').text=baseline.pages[0].sections.find(x=>x.title==='What to expect').text;assert.deepEqual(w,baseline.pages[0]);});
+test('current welcome differs only in What to expect',()=>{const w=clone(spec.pages[0]);w.sections.find(x=>x.title==='What to expect').text=currentChoice.pages[0].sections.find(x=>x.title==='What to expect').text;assert.deepEqual(w,currentChoice.pages[0]);});
 test('170 issue options and 100 localities remain',()=>{assert.equal(spec.issue_bank.flatMap(c=>c.options).length,170);assert.equal(spec.geography.localities.length,100);});
 test('reference files have original fingerprints',()=>{const check=JSON.parse(fs.readFileSync(new URL('./BASELINE-CHECK.json',import.meta.url)));for(const [p,k] of [['reference/choice-v4-spec.json','baseline_spec_sha256'],['shared/v4-common-core.mjs','shared_core_sha256']])assert.equal(crypto.createHash('sha256').update(fs.readFileSync(new URL(p,import.meta.url))).digest('hex'),check[k]);});
 for(const q of model.fieldSpecs)test(`middle question is optional text only: ${q.field}`,()=>{assert.equal(q.type,'text');assert.equal(q.required,false);assert.equal(q.max_length,10000);assert.equal(q.options,undefined);assert.equal(q.options_ref,undefined);});

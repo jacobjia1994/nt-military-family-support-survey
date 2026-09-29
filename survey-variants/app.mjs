@@ -172,7 +172,7 @@ function renderAbout(spec, model, answers, errors) {
     if (!grouped.has(group)) grouped.set(group, []);
     grouped.get(group).push(question);
   }
-  const sections = [...grouped.entries()].map(([group, questions]) => {
+  const sections = [...grouped.values()].map(questions => {
     const content = questions.map(question => {
       const path = question.id;
       if (question.type === 'single') return choicesQuestion({path, label: question.label, help: question.help, options: question.options, value: answers[path], errors});
@@ -190,7 +190,7 @@ function renderAbout(spec, model, answers, errors) {
       }
       return '';
     }).join('');
-    return `<section class="dual-section"><h2>${escapeHtml(group)}</h2>${content}</section>`;
+    return `<div class="about-fields">${content}</div>`;
   }).join('');
   return `<section class="survey-layout dual-page"><h1 tabindex="-1">${escapeHtml(page.title)}</h1>${renderIntro(page.intro)}${sections}${renderActions({})}</section>`;
 }
@@ -320,7 +320,7 @@ function renderReview(spec, model, answers, errors) {
 function renderWelcome(spec, answers, errors) {
   const page = specPage(spec, 'welcome');
   const consent = page.questions?.find(question => question.id === 'consent') || {};
-  return `<section class="welcome dual-page"><h1 tabindex="-1">${escapeHtml(page.title)}</h1><div class="welcome-intro">${renderIntro(page.intro, 'lead')}</div>${(page.sections || []).map(section => `<section class="information-block"><h2>${escapeHtml(section.title)}</h2><p>${escapeHtml(section.text)}</p></section>`).join('')}<div class="resource-links">${(page.links || []).map(link => `<a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`).join('')}</div><div class="welcome-card">${choicesQuestion({path: 'consent', label: consent.label, options: consent.options, value: answers.consent, errors, idPrefix: 'consent'})}<div class="question-actions"><button type="button" class="button primary" data-action="start">${escapeHtml(page.buttons?.[0] || 'Start survey')}</button><button type="button" class="skip-button" data-action="leave">${escapeHtml(page.buttons?.[1] || 'Leave survey')}</button></div></div></section>`;
+  return `<section class="welcome dual-page"><h1 tabindex="-1">${escapeHtml(page.title)}</h1><div class="welcome-intro">${renderIntro(page.intro, 'lead')}</div>${(page.sections || []).map(section => `<section class="information-block"><h2>${escapeHtml(section.title)}</h2><p>${escapeHtml(section.text)}</p></section>`).join('')}<div class="resource-links">${(page.links || []).map(link => `<a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`).join('')}</div><div class="welcome-card">${choicesQuestion({path: 'consent', label: consent.label, options: consent.options, value: answers.consent, errors, idPrefix: 'consent'})}<div class="question-actions"><button type="button" class="button primary" data-action="start">${escapeHtml(page.buttons?.[0] || 'Start survey')}</button><button type="button" class="skip-button" data-action="leave">${escapeHtml(page.buttons?.[1] || 'Leave survey')}</button></div></div>${page.funding_acknowledgement ? `<p class="funding-acknowledgement">${escapeHtml(page.funding_acknowledgement)}</p>` : ''}</section>`;
 }
 
 function renderTerminal(spec, kind) {
@@ -815,7 +815,10 @@ window.addEventListener('pageshow', event => {
 });
 
 async function loadJson(url) {
-  const response = await fetch(new URL(url, moduleUrl));
+  const requestUrl = new URL(url, moduleUrl);
+  const revision = new URL(moduleUrl).searchParams.get('v');
+  if (revision) requestUrl.searchParams.set('v', revision);
+  const response = await fetch(requestUrl);
   if (!response.ok) throw new Error(`Unable to load questionnaire specification (${response.status}).`);
   return response.json();
 }

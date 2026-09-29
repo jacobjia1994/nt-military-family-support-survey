@@ -2581,12 +2581,12 @@
       "id": "welcome",
       "title": "Defence Family Support Survey",
       "intro": [
-        "Lutheran Care | Greater Darwin",
-        "Lutheran Care gratefully acknowledges funding from the Australian Government Department of Defence through the Family Support Funding Program.",
-        "Help shape a stronger Defence community in Greater Darwin.",
+        "Hello Defense Communities,",
+        "Have your say and help shape a stronger Defence community in Greater Darwin.",
         "By sharing your experiences, you can help shape support that makes everyday Defence life easier and strengthens community connections. We want to hear what has been difficult, what has helped and where support is still missing.",
         "Lutheran Care is developing its Defence Family Support Program. Thank you for helping us understand what matters to serving members and their families."
       ],
+      "funding_acknowledgement": "Lutheran Care gratefully acknowledges funding from the Australian Government Department of Defence through the Family Support Funding Program.",
       "sections": [
         {
           "title": "Who can take part",

@@ -19,8 +19,8 @@ test('both entries load the same respondent app with isolated variants',()=>{
     assert.doesNotMatch(page,/rand-adult-bootstrap\.js|survey\.js/);
     assert.doesNotMatch(page,/>[^<]*(?:demo|preview|not collecting|responses are not collected)[^<]*</i);
   }
-  assert.match(html('compare.html'),/href="index\.html"/);
-  assert.match(html('compare.html'),/href="open-response\.html"/);
+  assert.match(html('compare.html'),/href="index\.html\?v=/);
+  assert.match(html('compare.html'),/href="open-response\.html\?v=/);
 });
 
 test('the variants share all common catalogue and pages except one welcome paragraph',()=>{

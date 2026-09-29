@@ -34,6 +34,9 @@
 .dual-page .information-block p{font-size:16px;line-height:1.55}
 .dual-page .intro-line:first-child{font-size:19px;font-weight:650;color:var(--ink)}
 .dual-page .intro-line{margin-bottom:14px}
+.questionnaire .welcome .welcome-intro p.lead:first-child{font-size:18px;font-weight:650;color:var(--ink)}
+.questionnaire .welcome .welcome-intro p.lead:nth-child(2){font-size:23px;line-height:1.35;font-weight:700;color:var(--ink);margin:8px 0 19px}
+.questionnaire .welcome .funding-acknowledgement{font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:400;line-height:1.5;color:#6b6d67;border-top:1px solid var(--line);padding-top:18px;margin:28px 0 0}
 .dual-page .resource-links{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:14px;margin:24px 0}
 .dual-page .field-stack{display:grid;gap:18px}
 .dual-page .field-stack>*{min-width:0}
