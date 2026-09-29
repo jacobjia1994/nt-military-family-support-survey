@@ -28,7 +28,7 @@
       "items": [
         {"id":"posting_uncertainty","label":"Not knowing when or where a posting will be","sourceRefs":[{"source":"strategy","printedPages":"26–27","basis":"direct"}]},
         {"id":"moving_settling","label":"Moving and settling into a new place","sourceRefs":[{"source":"strategy","printedPages":"26–27","basis":"direct"},{"source":"rand","printedPages":"85","basis":"adapted"}]},
-        {"id":"service_absences","label":"Family life during deployments, training or other time apart","sourceRefs":[{"source":"strategy","printedPages":"26–27","basis":"direct"},{"source":"rand","printedPages":"84, 88","basis":"adapted"}]},
+        {"id":"service_absences","label":"Managing family life during deployments, training or other time apart","sourceRefs":[{"source":"strategy","printedPages":"26–27","basis":"direct"},{"source":"rand","printedPages":"84, 88","basis":"adapted"}]},
         {"id":"return_readjustment","label":"Readjusting when someone returns after time away","sourceRefs":[{"source":"strategy","printedPages":"26–27","basis":"adapted"},{"source":"rand","printedPages":"88","basis":"direct"}]},
         {"id":"leaving_service","label":"Preparing for or adjusting to life after service","sourceRefs":[{"source":"strategy","printedPages":"26–27","basis":"direct"}]}
       ]
@@ -102,7 +102,7 @@
         {"id":"changing_family_roles","label":"Changes in family roles or responsibilities","sourceRefs":[{"source":"strategy","printedPages":"27","basis":"adapted"},{"source":"rand","printedPages":"88","basis":"direct"}]},
         {"id":"relationship_difficulties","label":"Relationship difficulties or conflict","sourceRefs":[{"source":"strategy","printedPages":"10, 21","basis":"direct"},{"source":"rand","printedPages":"88","basis":"direct"}]},
         {"id":"relationship_ending","label":"Separation or the end of a relationship","sourceRefs":[{"source":"strategy","printedPages":"21, 27","basis":"adapted"},{"source":"rand","printedPages":"88","basis":"direct"}]},
-        {"id":"feeling_safe","label":"Feeling safe at home or in a relationship","sourceRefs":[{"source":"strategy","printedPages":"8, 14, 41","basis":"direct"},{"source":"rand","printedPages":"88","basis":"adapted"}]}
+        {"id":"feeling_safe","label":"Concerns about safety at home or in a relationship","sourceRefs":[{"source":"strategy","printedPages":"8, 14, 41","basis":"direct"},{"source":"rand","printedPages":"88","basis":"adapted"}]}
       ]
     },
     {
@@ -122,7 +122,7 @@
       "label": "Finding and using support",
       "sourceRefs": [{"source":"strategy","printedPages":"24–25, 35–38"},{"source":"rand","printedPages":"83, 94, 97–103"}],
       "items": [
-        {"id":"knowing_available_help","label":"Knowing what help is available","sourceRefs":[{"source":"strategy","printedPages":"24–25, 35–38","basis":"direct"},{"source":"rand","printedPages":"83, 94","basis":"adapted"}]},
+        {"id":"knowing_available_help","label":"Finding clear information about available help","sourceRefs":[{"source":"strategy","printedPages":"24–25, 35–38","basis":"direct"},{"source":"rand","printedPages":"83, 94","basis":"adapted"}]},
         {"id":"eligibility_application","label":"Understanding who can use support and how to apply","sourceRefs":[{"source":"strategy","printedPages":"24–25","basis":"adapted"},{"source":"rand","printedPages":"83, 98","basis":"adapted"}]},
         {"id":"information_for_family","label":"Getting important information directly as a family member","sourceRefs":[{"source":"strategy","printedPages":"24–25","basis":"direct"}]},
         {"id":"right_person_joined_up","label":"Finding the right person when several services are involved","sourceRefs":[{"source":"strategy","printedPages":"24–25","basis":"direct"},{"source":"rand","printedPages":"83, 97","basis":"adapted"}]},

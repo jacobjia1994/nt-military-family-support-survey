@@ -1,6 +1,6 @@
 {
   "schema_version": "9.0",
-  "questionnaire_revision": "2026-09-29-rand-linked-needs",
+  "questionnaire_revision": "2026-09-29-rand-formal-copy",
   "source": {
     "credit": "Adult questionnaire adapted from Miller et al. (2011), RAND MG-1124, Appendix A.",
     "title": "A New Approach for Assessing the Needs of Service Members and Their Families",
@@ -12,32 +12,30 @@
     "adaptation": "Locally worded Greater Darwin adult instrument; the source US adult questionnaire and this adaptation are not interchangeable or locally validated. No RAND endorsement is claimed."
   },
   "invitation": {
-    "title": "Defence Family Support Survey",
-    "greeting": "Hello, Defence community!",
+    "title": "Help shape Defence family support in Greater Darwin",
+    "greeting": "Your experience can help shape what comes next.",
     "paragraphs": [
-      "Lutheran Care wants to understand the real needs of Defence personnel and families who live or work in Greater Darwin, or have a posting connected with this area.",
-      "The questions cover difficulties, help that was needed or received, support that has worked, and what may be needed next. You can mention needs beyond Lutheran Care’s own services.",
-      "Your answers would help plan support and connections; this preview does not sign you up for anything."
+      "Lutheran Care is preparing to deliver a new Defence family support program in Greater Darwin. Before activities begin, we want to hear from ADF members and Defence families connected with this area, including family members who live elsewhere while someone works or is posted here.",
+      "Tell us what has been difficult, what has helped, and where support has been hard to find. We want to understand your needs and gaps in local services, including matters beyond Lutheran Care’s planned activities.",
+      "Your views will help shape how the funded program is developed and delivered, and where other support may be needed. By taking part, you can help make everyday life and community connection better for Defence families here.",
+      "Taking part is voluntary and does not sign you up for an activity."
     ],
-    "funding": "Lutheran Care received funding from Defence Member and Family Support, a branch of the Commonwealth Department of Defence, to deliver this project."
+    "funding": "This project is funded by the Australian Government Department of Defence through its Family Support Funding Program.",
+    "source_credit": "The adult questionnaire is adapted for Greater Darwin from the sample survey in RAND’s A New Approach for Assessing the Needs of Service Members and Their Families (2011)."
   },
-  "notice_version": "2026-09-28-v12-preview",
+  "notice_version": "2026-09-29-v13-formal-copy",
   "notice": [
     [
       "Your choice",
-      "Trying this preview is voluntary. Most questions are optional."
+      "Taking part is voluntary. Most questions are optional. You can skip a question or stop before submitting."
     ],
     [
-      "Privacy",
-      "This preview does not send or save your answers. They remain in this browser page until you close or reload it. Please leave out names, addresses, service numbers and other identifying details. The separate contact form does not receive your survey answers."
+      "Sharing your experience",
+      "Some questions concern personal or difficult experiences. Share only what you feel comfortable sharing. Please leave out names, addresses, service numbers and details that could identify other people."
     ],
     [
-      "Future consultation",
-      "If Lutheran Care later opens a live survey, it will explain how answers are collected, stored, used to plan the Defence Family Support Program and shared with Defence. A live survey would require its own collection and privacy arrangements."
-    ],
-    [
-      "Before you finish",
-      "There is no submission in this preview. You can stop and clear your answers at any time."
+      "Purpose",
+      "This survey is designed to understand Defence family needs and local service gaps so Lutheran Care can plan appropriate support. It is not a request for individual assistance or a booking for an activity."
     ],
     [
       "Questions or complaints",
@@ -51,12 +49,12 @@
   "nt": [
     {
       "id": "connection",
-      "title": "A little about you",
+      "title": "About you and your connection to Greater Darwin",
       "intro": "",
       "fields": [
         {
           "key": "roles",
-          "label": "Which describes you?",
+          "label": "Which of these describes your connection to the Defence community?",
           "type": "multi",
           "options": [
             {
@@ -92,8 +90,32 @@
           ]
         },
         {
+          "key": "work_posting_greater_darwin",
+          "label": "Do you or someone in your Defence family currently work or have a Defence posting in Greater Darwin?",
+          "type": "single",
+          "options": [
+            {
+              "id": "yes",
+              "label": "Yes"
+            },
+            {
+              "id": "no",
+              "label": "No"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Optional. You can answer Yes even if you live elsewhere."
+        },
+        {
           "key": "residence_area",
-          "label": "Which area do you live in?",
+          "label": "Where do you currently live?",
           "type": "single",
           "options": [
             {
@@ -121,7 +143,7 @@
               "label": "Prefer not to say"
             }
           ],
-          "hint": "Optional. This helps us plan where and how to offer support."
+          "hint": "Optional. This helps us understand where local needs may arise."
         },
         {
           "key": "suburb",
@@ -689,62 +711,6 @@
           "conditional": "outside_suburb"
         },
         {
-          "key": "work_posting_greater_darwin",
-          "label": "Do you or someone in your Defence family currently work or have a posting in Greater Darwin?",
-          "type": "single",
-          "options": [
-            {
-              "id": "yes",
-              "label": "Yes"
-            },
-            {
-              "id": "no",
-              "label": "No"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Optional. You can answer Yes even if you live elsewhere."
-        },
-        {
-          "key": "age_group",
-          "label": "Which age group are you in?",
-          "type": "single",
-          "options": [
-            {
-              "id": "18_29",
-              "label": "18–29"
-            },
-            {
-              "id": "30_39",
-              "label": "30–39"
-            },
-            {
-              "id": "40_49",
-              "label": "40–49"
-            },
-            {
-              "id": "50_plus",
-              "label": "50 or older"
-            }
-          ],
-          "hint": "Optional."
-        }
-      ],
-      "note": "ADF relationship, optional local area and adult age band precede the account route."
-    },
-    {
-      "id": "place",
-      "title": "Your life in Greater Darwin",
-      "intro": "",
-      "fields": [
-        {
           "key": "time_nt",
           "label": "How long have you lived in Greater Darwin?",
           "type": "single",
@@ -778,19 +744,43 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Count your current or most recent stay only."
+          "hint": "Optional. Count your current or most recent stay only."
+        },
+        {
+          "key": "age_group",
+          "label": "Which age group are you in?",
+          "type": "single",
+          "options": [
+            {
+              "id": "18_29",
+              "label": "18–29"
+            },
+            {
+              "id": "30_39",
+              "label": "30–39"
+            },
+            {
+              "id": "40_49",
+              "label": "40–49"
+            },
+            {
+              "id": "50_plus",
+              "label": "50 or older"
+            }
+          ],
+          "hint": "Optional."
         }
       ],
-      "note": "Optional local background. The broader area is chosen first; suburb or locality is optional."
+      "note": "ADF relationship, optional local area and adult age band precede the account route."
     },
     {
       "id": "problem_screen",
-      "title": "Which situations have affected you or your family?",
-      "intro": "Thinking about the past 12 months, choose situations that were difficult or needed attention for you or your family in connection with living, working or a Defence posting in Greater Darwin. You can include experiences while family members lived elsewhere. Include things you handled successfully as well as things still unresolved. You can skip any topic or leave this question blank.",
+      "title": "Which of these have been difficult for you or your family in the past 12 months?",
+      "intro": "Think about experiences connected with living or working in Greater Darwin, or with a Defence posting here. Include difficulties you managed successfully or that are now resolved, including times when family members lived elsewhere. They do not have to have been caused by military service. You may leave this question blank.",
       "fields": [
         {
           "key": "problem_cues",
-          "label": "Situations your family has dealt with",
+          "label": "Situations that were difficult",
           "type": "multi",
           "options": [
             {
@@ -805,7 +795,7 @@
             },
             {
               "id": "service_absences",
-              "label": "Family life during deployments, training or other time apart",
+              "label": "Managing family life during deployments, training or other time apart",
               "hint": ""
             },
             {
@@ -965,7 +955,7 @@
             },
             {
               "id": "feeling_safe",
-              "label": "Feeling safe at home or in a relationship",
+              "label": "Concerns about safety at home or in a relationship",
               "hint": ""
             },
             {
@@ -995,7 +985,7 @@
             },
             {
               "id": "knowing_available_help",
-              "label": "Knowing what help is available",
+              "label": "Finding clear information about available help",
               "hint": ""
             },
             {
@@ -1050,8 +1040,8 @@
     },
     {
       "id": "priority_pick",
-      "title": "Which two areas would you most like to explain?",
-      "intro": "Choose up to two areas to follow through in more detail. Your other selections stay recorded; you can add further comments later. This choice is about what you would like to explain now, not a ranking of every family’s needs.",
+      "title": "Which of these areas mattered most to you or your family?",
+      "intro": "Choose up to two for the follow-up questions. Your other selections remain included, and you can describe additional experiences later. When several matter equally, choose the ones you most want to explain.",
       "fields": [
         {
           "key": "priority_categories",
@@ -1061,7 +1051,7 @@
             {
               "id": "postings_service_changes",
               "label": "Postings, time apart and leaving service",
-              "hint": "Not knowing when or where a posting will be; Moving and settling into a new place; Family life during deployments, training or other time apart; Readjusting when someone returns af"
+              "hint": "Not knowing when or where a posting will be; Moving and settling into a new place; Managing family life during deployments, training or other time apart; Readjusting when someone r"
             },
             {
               "id": "housing_money_transport",
@@ -1091,7 +1081,7 @@
             {
               "id": "relationships_safety",
               "label": "Family relationships and safety",
-              "hint": "Keeping in touch and communicating as a family; Changes in family roles or responsibilities; Relationship difficulties or conflict; Separation or the end of a relationship; Feeling"
+              "hint": "Keeping in touch and communicating as a family; Changes in family roles or responsibilities; Relationship difficulties or conflict; Separation or the end of a relationship; Concern"
             },
             {
               "id": "community_connection",
@@ -1101,7 +1091,7 @@
             {
               "id": "support_navigation",
               "label": "Finding and using support",
-              "hint": "Knowing what help is available; Understanding who can use support and how to apply; Getting important information directly as a family member; Finding the right person when several"
+              "hint": "Finding clear information about available help; Understanding who can use support and how to apply; Getting important information directly as a family member; Finding the right per"
             }
           ],
           "hint": "Optional. Select at most two.",
@@ -1113,7 +1103,7 @@
     {
       "id": "problem-detail-postings_service_changes",
       "title": "Postings, time apart and leaving service",
-      "intro": "You selected: Not knowing when or where a posting will be; Moving and settling into a new place; Family life during deployments, training or other time apart; Readjusting when someone returns after time away; Preparing for or adjusting to life after service. You may leave any question blank. Please avoid identifying details.",
+      "intro": "You selected: Not knowing when or where a posting will be; Moving and settling into a new place; Managing family life during deployments, training or other time apart; Readjusting when someone returns after time away; Preparing for or adjusting to life after service. You may leave any question blank. Please avoid identifying details.",
       "fields": [
         {
           "key": "problem_details:postings_service_changes:focus_problems",
@@ -1130,7 +1120,7 @@
             },
             {
               "id": "service_absences",
-              "label": "Family life during deployments, training or other time apart"
+              "label": "Managing family life during deployments, training or other time apart"
             },
             {
               "id": "return_readjustment",
@@ -1216,7 +1206,7 @@
         },
         {
           "key": "problem_details:postings_service_changes:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -1232,17 +1222,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "postings_service_changes",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:postings_service_changes:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "postings_service_changes"
         }
       ],
@@ -1255,10 +1245,10 @@
       "fields": [
         {
           "key": "need_chains:postings_service_changes:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "postings_service_changes",
           "chain_need": "general_information"
         },
@@ -1517,7 +1507,7 @@
         },
         {
           "key": "need_chains:postings_service_changes:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -1545,13 +1535,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "postings_service_changes",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:postings_service_changes:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -1591,10 +1581,10 @@
       "fields": [
         {
           "key": "need_chains:postings_service_changes:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "postings_service_changes",
           "chain_need": "practical_help"
         },
@@ -1789,7 +1779,7 @@
         },
         {
           "key": "need_chains:postings_service_changes:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -1817,13 +1807,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "postings_service_changes",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:postings_service_changes:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -1963,7 +1953,7 @@
         },
         {
           "key": "problem_details:housing_money_transport:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -1979,17 +1969,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "housing_money_transport",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:housing_money_transport:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "housing_money_transport"
         }
       ],
@@ -2002,10 +1992,10 @@
       "fields": [
         {
           "key": "need_chains:housing_money_transport:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "housing_money_transport",
           "chain_need": "general_information"
         },
@@ -2264,7 +2254,7 @@
         },
         {
           "key": "need_chains:housing_money_transport:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -2292,13 +2282,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "housing_money_transport",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:housing_money_transport:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -2338,10 +2328,10 @@
       "fields": [
         {
           "key": "need_chains:housing_money_transport:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "housing_money_transport",
           "chain_need": "practical_help"
         },
@@ -2536,7 +2526,7 @@
         },
         {
           "key": "need_chains:housing_money_transport:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -2564,13 +2554,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "housing_money_transport",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:housing_money_transport:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -2709,7 +2699,7 @@
         },
         {
           "key": "problem_details:work_study_training:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -2725,17 +2715,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "work_study_training",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:work_study_training:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "work_study_training"
         }
       ],
@@ -2748,10 +2738,10 @@
       "fields": [
         {
           "key": "need_chains:work_study_training:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "work_study_training",
           "chain_need": "general_information"
         },
@@ -3010,7 +3000,7 @@
         },
         {
           "key": "need_chains:work_study_training:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -3038,13 +3028,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "work_study_training",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:work_study_training:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -3084,10 +3074,10 @@
       "fields": [
         {
           "key": "need_chains:work_study_training:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "work_study_training",
           "chain_need": "practical_help"
         },
@@ -3282,7 +3272,7 @@
         },
         {
           "key": "need_chains:work_study_training:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -3310,13 +3300,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "work_study_training",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:work_study_training:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -3455,7 +3445,7 @@
         },
         {
           "key": "problem_details:childcare_school:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -3471,17 +3461,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "childcare_school",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:childcare_school:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "childcare_school"
         }
       ],
@@ -3494,10 +3484,10 @@
       "fields": [
         {
           "key": "need_chains:childcare_school:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "childcare_school",
           "chain_need": "general_information"
         },
@@ -3756,7 +3746,7 @@
         },
         {
           "key": "need_chains:childcare_school:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -3784,13 +3774,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "childcare_school",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:childcare_school:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -3830,10 +3820,10 @@
       "fields": [
         {
           "key": "need_chains:childcare_school:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "childcare_school",
           "chain_need": "practical_help"
         },
@@ -4028,7 +4018,7 @@
         },
         {
           "key": "need_chains:childcare_school:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -4056,13 +4046,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "childcare_school",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:childcare_school:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -4201,7 +4191,7 @@
         },
         {
           "key": "problem_details:parenting_caring_disability:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -4217,17 +4207,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "parenting_caring_disability",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:parenting_caring_disability:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "parenting_caring_disability"
         }
       ],
@@ -4240,10 +4230,10 @@
       "fields": [
         {
           "key": "need_chains:parenting_caring_disability:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "parenting_caring_disability",
           "chain_need": "general_information"
         },
@@ -4502,7 +4492,7 @@
         },
         {
           "key": "need_chains:parenting_caring_disability:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -4530,13 +4520,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "parenting_caring_disability",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:parenting_caring_disability:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -4576,10 +4566,10 @@
       "fields": [
         {
           "key": "need_chains:parenting_caring_disability:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "parenting_caring_disability",
           "chain_need": "practical_help"
         },
@@ -4774,7 +4764,7 @@
         },
         {
           "key": "need_chains:parenting_caring_disability:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -4802,13 +4792,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "parenting_caring_disability",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:parenting_caring_disability:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -4947,7 +4937,7 @@
         },
         {
           "key": "problem_details:health_wellbeing:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -4963,17 +4953,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "health_wellbeing",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:health_wellbeing:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "health_wellbeing"
         }
       ],
@@ -4986,10 +4976,10 @@
       "fields": [
         {
           "key": "need_chains:health_wellbeing:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "health_wellbeing",
           "chain_need": "general_information"
         },
@@ -5248,7 +5238,7 @@
         },
         {
           "key": "need_chains:health_wellbeing:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -5276,13 +5266,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "health_wellbeing",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:health_wellbeing:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -5322,10 +5312,10 @@
       "fields": [
         {
           "key": "need_chains:health_wellbeing:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "health_wellbeing",
           "chain_need": "practical_help"
         },
@@ -5520,7 +5510,7 @@
         },
         {
           "key": "need_chains:health_wellbeing:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -5548,13 +5538,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "health_wellbeing",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:health_wellbeing:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -5590,7 +5580,7 @@
     {
       "id": "problem-detail-relationships_safety",
       "title": "Family relationships and safety",
-      "intro": "You selected: Keeping in touch and communicating as a family; Changes in family roles or responsibilities; Relationship difficulties or conflict; Separation or the end of a relationship; Feeling safe at home or in a relationship. You may leave any question blank. Please avoid identifying details.",
+      "intro": "You selected: Keeping in touch and communicating as a family; Changes in family roles or responsibilities; Relationship difficulties or conflict; Separation or the end of a relationship; Concerns about safety at home or in a relationship. You may leave any question blank. Please avoid identifying details.",
       "fields": [
         {
           "key": "problem_details:relationships_safety:focus_problems",
@@ -5615,7 +5605,7 @@
             },
             {
               "id": "feeling_safe",
-              "label": "Feeling safe at home or in a relationship"
+              "label": "Concerns about safety at home or in a relationship"
             }
           ],
           "hint": "Optional. You can choose more than one if they are connected.",
@@ -5693,7 +5683,7 @@
         },
         {
           "key": "problem_details:relationships_safety:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -5709,17 +5699,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "relationships_safety",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:relationships_safety:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "relationships_safety"
         }
       ],
@@ -5732,10 +5722,10 @@
       "fields": [
         {
           "key": "need_chains:relationships_safety:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "relationships_safety",
           "chain_need": "general_information"
         },
@@ -5994,7 +5984,7 @@
         },
         {
           "key": "need_chains:relationships_safety:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -6022,13 +6012,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "relationships_safety",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:relationships_safety:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -6068,10 +6058,10 @@
       "fields": [
         {
           "key": "need_chains:relationships_safety:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "relationships_safety",
           "chain_need": "practical_help"
         },
@@ -6266,7 +6256,7 @@
         },
         {
           "key": "need_chains:relationships_safety:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -6294,13 +6284,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "relationships_safety",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:relationships_safety:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -6439,7 +6429,7 @@
         },
         {
           "key": "problem_details:community_connection:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -6455,17 +6445,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "community_connection",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:community_connection:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "community_connection"
         }
       ],
@@ -6478,10 +6468,10 @@
       "fields": [
         {
           "key": "need_chains:community_connection:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "community_connection",
           "chain_need": "general_information"
         },
@@ -6740,7 +6730,7 @@
         },
         {
           "key": "need_chains:community_connection:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -6768,13 +6758,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "community_connection",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:community_connection:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -6814,10 +6804,10 @@
       "fields": [
         {
           "key": "need_chains:community_connection:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "community_connection",
           "chain_need": "practical_help"
         },
@@ -7012,7 +7002,7 @@
         },
         {
           "key": "need_chains:community_connection:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -7040,13 +7030,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "community_connection",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:community_connection:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -7082,7 +7072,7 @@
     {
       "id": "problem-detail-support_navigation",
       "title": "Finding and using support",
-      "intro": "You selected: Knowing what help is available; Understanding who can use support and how to apply; Getting important information directly as a family member; Finding the right person when several services are involved; Feeling heard and understood when asking for help. You may leave any question blank. Please avoid identifying details.",
+      "intro": "You selected: Finding clear information about available help; Understanding who can use support and how to apply; Getting important information directly as a family member; Finding the right person when several services are involved; Feeling heard and understood when asking for help. You may leave any question blank. Please avoid identifying details.",
       "fields": [
         {
           "key": "problem_details:support_navigation:focus_problems",
@@ -7091,7 +7081,7 @@
           "options": [
             {
               "id": "knowing_available_help",
-              "label": "Knowing what help is available"
+              "label": "Finding clear information about available help"
             },
             {
               "id": "eligibility_application",
@@ -7185,7 +7175,7 @@
         },
         {
           "key": "problem_details:support_navigation:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -7201,17 +7191,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "support_navigation",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:support_navigation:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "support_navigation"
         }
       ],
@@ -7224,10 +7214,10 @@
       "fields": [
         {
           "key": "need_chains:support_navigation:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "support_navigation",
           "chain_need": "general_information"
         },
@@ -7486,7 +7476,7 @@
         },
         {
           "key": "need_chains:support_navigation:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -7514,13 +7504,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "support_navigation",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:support_navigation:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -7560,10 +7550,10 @@
       "fields": [
         {
           "key": "need_chains:support_navigation:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "support_navigation",
           "chain_need": "practical_help"
         },
@@ -7758,7 +7748,7 @@
         },
         {
           "key": "need_chains:support_navigation:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -7786,13 +7776,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "support_navigation",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:support_navigation:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -7902,7 +7892,7 @@
         },
         {
           "key": "problem_details:other_problem:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -7910,17 +7900,17 @@
               "label": "Information about available support, arrangements or entitlements"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "other_problem",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:other_problem:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "other_problem"
         }
       ],
@@ -7933,10 +7923,10 @@
       "fields": [
         {
           "key": "need_chains:other_problem:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "other_problem",
           "chain_need": "general_information"
         },
@@ -8127,7 +8117,7 @@
         },
         {
           "key": "need_chains:other_problem:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -8155,13 +8145,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "other_problem",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:other_problem:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -8446,12 +8436,12 @@
   "outside": [
     {
       "id": "connection",
-      "title": "A little about you",
+      "title": "About you and your connection to Greater Darwin",
       "intro": "",
       "fields": [
         {
           "key": "roles",
-          "label": "Which describes you?",
+          "label": "Which of these describes your connection to the Defence community?",
           "type": "multi",
           "options": [
             {
@@ -8487,8 +8477,32 @@
           ]
         },
         {
+          "key": "work_posting_greater_darwin",
+          "label": "Do you or someone in your Defence family currently work or have a Defence posting in Greater Darwin?",
+          "type": "single",
+          "options": [
+            {
+              "id": "yes",
+              "label": "Yes"
+            },
+            {
+              "id": "no",
+              "label": "No"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Optional. You can answer Yes even if you live elsewhere."
+        },
+        {
           "key": "residence_area",
-          "label": "Which area do you live in?",
+          "label": "Where do you currently live?",
           "type": "single",
           "options": [
             {
@@ -8516,7 +8530,7 @@
               "label": "Prefer not to say"
             }
           ],
-          "hint": "Optional. This helps us plan where and how to offer support."
+          "hint": "Optional. This helps us understand where local needs may arise."
         },
         {
           "key": "suburb",
@@ -9084,64 +9098,8 @@
           "conditional": "outside_suburb"
         },
         {
-          "key": "work_posting_greater_darwin",
-          "label": "Do you or someone in your Defence family currently work or have a posting in Greater Darwin?",
-          "type": "single",
-          "options": [
-            {
-              "id": "yes",
-              "label": "Yes"
-            },
-            {
-              "id": "no",
-              "label": "No"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Optional. You can answer Yes even if you live elsewhere."
-        },
-        {
-          "key": "age_group",
-          "label": "Which age group are you in?",
-          "type": "single",
-          "options": [
-            {
-              "id": "18_29",
-              "label": "18–29"
-            },
-            {
-              "id": "30_39",
-              "label": "30–39"
-            },
-            {
-              "id": "40_49",
-              "label": "40–49"
-            },
-            {
-              "id": "50_plus",
-              "label": "50 or older"
-            }
-          ],
-          "hint": "Optional."
-        }
-      ],
-      "note": "ADF relationship, optional local area and adult age band precede the account route."
-    },
-    {
-      "id": "place",
-      "title": "Your life in Greater Darwin",
-      "intro": "",
-      "fields": [
-        {
           "key": "time_nt",
-          "label": "How long have you lived in Greater Darwin?",
+          "label": "How long did you live in Greater Darwin during your most recent stay?",
           "type": "single",
           "options": [
             {
@@ -9173,19 +9131,43 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Count your current or most recent stay only."
+          "hint": "Optional."
+        },
+        {
+          "key": "age_group",
+          "label": "Which age group are you in?",
+          "type": "single",
+          "options": [
+            {
+              "id": "18_29",
+              "label": "18–29"
+            },
+            {
+              "id": "30_39",
+              "label": "30–39"
+            },
+            {
+              "id": "40_49",
+              "label": "40–49"
+            },
+            {
+              "id": "50_plus",
+              "label": "50 or older"
+            }
+          ],
+          "hint": "Optional."
         }
       ],
-      "note": "Optional local background. The broader area is chosen first; suburb or locality is optional."
+      "note": "ADF relationship, optional local area and adult age band precede the account route."
     },
     {
       "id": "problem_screen",
-      "title": "Which situations have affected you or your family?",
-      "intro": "Thinking about the past 12 months, choose situations that were difficult or needed attention for you or your family in connection with living, working or a Defence posting in Greater Darwin. You can include experiences while family members lived elsewhere. Include things you handled successfully as well as things still unresolved. You can skip any topic or leave this question blank.",
+      "title": "Which of these have been difficult for you or your family in the past 12 months?",
+      "intro": "Think about experiences connected with living or working in Greater Darwin, or with a Defence posting here. Include difficulties you managed successfully or that are now resolved, including times when family members lived elsewhere. They do not have to have been caused by military service. You may leave this question blank.",
       "fields": [
         {
           "key": "problem_cues",
-          "label": "Situations your family has dealt with",
+          "label": "Situations that were difficult",
           "type": "multi",
           "options": [
             {
@@ -9200,7 +9182,7 @@
             },
             {
               "id": "service_absences",
-              "label": "Family life during deployments, training or other time apart",
+              "label": "Managing family life during deployments, training or other time apart",
               "hint": ""
             },
             {
@@ -9360,7 +9342,7 @@
             },
             {
               "id": "feeling_safe",
-              "label": "Feeling safe at home or in a relationship",
+              "label": "Concerns about safety at home or in a relationship",
               "hint": ""
             },
             {
@@ -9390,7 +9372,7 @@
             },
             {
               "id": "knowing_available_help",
-              "label": "Knowing what help is available",
+              "label": "Finding clear information about available help",
               "hint": ""
             },
             {
@@ -9445,8 +9427,8 @@
     },
     {
       "id": "priority_pick",
-      "title": "Which two areas would you most like to explain?",
-      "intro": "Choose up to two areas to follow through in more detail. Your other selections stay recorded; you can add further comments later. This choice is about what you would like to explain now, not a ranking of every family’s needs.",
+      "title": "Which of these areas mattered most to you or your family?",
+      "intro": "Choose up to two for the follow-up questions. Your other selections remain included, and you can describe additional experiences later. When several matter equally, choose the ones you most want to explain.",
       "fields": [
         {
           "key": "priority_categories",
@@ -9456,7 +9438,7 @@
             {
               "id": "postings_service_changes",
               "label": "Postings, time apart and leaving service",
-              "hint": "Not knowing when or where a posting will be; Moving and settling into a new place; Family life during deployments, training or other time apart; Readjusting when someone returns af"
+              "hint": "Not knowing when or where a posting will be; Moving and settling into a new place; Managing family life during deployments, training or other time apart; Readjusting when someone r"
             },
             {
               "id": "housing_money_transport",
@@ -9486,7 +9468,7 @@
             {
               "id": "relationships_safety",
               "label": "Family relationships and safety",
-              "hint": "Keeping in touch and communicating as a family; Changes in family roles or responsibilities; Relationship difficulties or conflict; Separation or the end of a relationship; Feeling"
+              "hint": "Keeping in touch and communicating as a family; Changes in family roles or responsibilities; Relationship difficulties or conflict; Separation or the end of a relationship; Concern"
             },
             {
               "id": "community_connection",
@@ -9496,7 +9478,7 @@
             {
               "id": "support_navigation",
               "label": "Finding and using support",
-              "hint": "Knowing what help is available; Understanding who can use support and how to apply; Getting important information directly as a family member; Finding the right person when several"
+              "hint": "Finding clear information about available help; Understanding who can use support and how to apply; Getting important information directly as a family member; Finding the right per"
             }
           ],
           "hint": "Optional. Select at most two.",
@@ -9508,7 +9490,7 @@
     {
       "id": "problem-detail-postings_service_changes",
       "title": "Postings, time apart and leaving service",
-      "intro": "You selected: Not knowing when or where a posting will be; Moving and settling into a new place; Family life during deployments, training or other time apart; Readjusting when someone returns after time away; Preparing for or adjusting to life after service. You may leave any question blank. Please avoid identifying details.",
+      "intro": "You selected: Not knowing when or where a posting will be; Moving and settling into a new place; Managing family life during deployments, training or other time apart; Readjusting when someone returns after time away; Preparing for or adjusting to life after service. You may leave any question blank. Please avoid identifying details.",
       "fields": [
         {
           "key": "problem_details:postings_service_changes:focus_problems",
@@ -9525,7 +9507,7 @@
             },
             {
               "id": "service_absences",
-              "label": "Family life during deployments, training or other time apart"
+              "label": "Managing family life during deployments, training or other time apart"
             },
             {
               "id": "return_readjustment",
@@ -9611,7 +9593,7 @@
         },
         {
           "key": "problem_details:postings_service_changes:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -9627,17 +9609,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "postings_service_changes",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:postings_service_changes:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "postings_service_changes"
         }
       ],
@@ -9650,10 +9632,10 @@
       "fields": [
         {
           "key": "need_chains:postings_service_changes:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "postings_service_changes",
           "chain_need": "general_information"
         },
@@ -9912,7 +9894,7 @@
         },
         {
           "key": "need_chains:postings_service_changes:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -9940,13 +9922,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "postings_service_changes",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:postings_service_changes:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -9986,10 +9968,10 @@
       "fields": [
         {
           "key": "need_chains:postings_service_changes:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "postings_service_changes",
           "chain_need": "practical_help"
         },
@@ -10184,7 +10166,7 @@
         },
         {
           "key": "need_chains:postings_service_changes:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -10212,13 +10194,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "postings_service_changes",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:postings_service_changes:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -10358,7 +10340,7 @@
         },
         {
           "key": "problem_details:housing_money_transport:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -10374,17 +10356,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "housing_money_transport",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:housing_money_transport:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "housing_money_transport"
         }
       ],
@@ -10397,10 +10379,10 @@
       "fields": [
         {
           "key": "need_chains:housing_money_transport:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "housing_money_transport",
           "chain_need": "general_information"
         },
@@ -10659,7 +10641,7 @@
         },
         {
           "key": "need_chains:housing_money_transport:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -10687,13 +10669,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "housing_money_transport",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:housing_money_transport:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -10733,10 +10715,10 @@
       "fields": [
         {
           "key": "need_chains:housing_money_transport:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "housing_money_transport",
           "chain_need": "practical_help"
         },
@@ -10931,7 +10913,7 @@
         },
         {
           "key": "need_chains:housing_money_transport:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -10959,13 +10941,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "housing_money_transport",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:housing_money_transport:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -11104,7 +11086,7 @@
         },
         {
           "key": "problem_details:work_study_training:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -11120,17 +11102,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "work_study_training",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:work_study_training:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "work_study_training"
         }
       ],
@@ -11143,10 +11125,10 @@
       "fields": [
         {
           "key": "need_chains:work_study_training:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "work_study_training",
           "chain_need": "general_information"
         },
@@ -11405,7 +11387,7 @@
         },
         {
           "key": "need_chains:work_study_training:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -11433,13 +11415,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "work_study_training",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:work_study_training:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -11479,10 +11461,10 @@
       "fields": [
         {
           "key": "need_chains:work_study_training:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "work_study_training",
           "chain_need": "practical_help"
         },
@@ -11677,7 +11659,7 @@
         },
         {
           "key": "need_chains:work_study_training:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -11705,13 +11687,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "work_study_training",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:work_study_training:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -11850,7 +11832,7 @@
         },
         {
           "key": "problem_details:childcare_school:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -11866,17 +11848,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "childcare_school",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:childcare_school:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "childcare_school"
         }
       ],
@@ -11889,10 +11871,10 @@
       "fields": [
         {
           "key": "need_chains:childcare_school:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "childcare_school",
           "chain_need": "general_information"
         },
@@ -12151,7 +12133,7 @@
         },
         {
           "key": "need_chains:childcare_school:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -12179,13 +12161,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "childcare_school",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:childcare_school:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -12225,10 +12207,10 @@
       "fields": [
         {
           "key": "need_chains:childcare_school:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "childcare_school",
           "chain_need": "practical_help"
         },
@@ -12423,7 +12405,7 @@
         },
         {
           "key": "need_chains:childcare_school:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -12451,13 +12433,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "childcare_school",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:childcare_school:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -12596,7 +12578,7 @@
         },
         {
           "key": "problem_details:parenting_caring_disability:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -12612,17 +12594,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "parenting_caring_disability",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:parenting_caring_disability:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "parenting_caring_disability"
         }
       ],
@@ -12635,10 +12617,10 @@
       "fields": [
         {
           "key": "need_chains:parenting_caring_disability:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "parenting_caring_disability",
           "chain_need": "general_information"
         },
@@ -12897,7 +12879,7 @@
         },
         {
           "key": "need_chains:parenting_caring_disability:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -12925,13 +12907,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "parenting_caring_disability",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:parenting_caring_disability:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -12971,10 +12953,10 @@
       "fields": [
         {
           "key": "need_chains:parenting_caring_disability:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "parenting_caring_disability",
           "chain_need": "practical_help"
         },
@@ -13169,7 +13151,7 @@
         },
         {
           "key": "need_chains:parenting_caring_disability:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -13197,13 +13179,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "parenting_caring_disability",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:parenting_caring_disability:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -13342,7 +13324,7 @@
         },
         {
           "key": "problem_details:health_wellbeing:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -13358,17 +13340,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "health_wellbeing",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:health_wellbeing:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "health_wellbeing"
         }
       ],
@@ -13381,10 +13363,10 @@
       "fields": [
         {
           "key": "need_chains:health_wellbeing:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "health_wellbeing",
           "chain_need": "general_information"
         },
@@ -13643,7 +13625,7 @@
         },
         {
           "key": "need_chains:health_wellbeing:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -13671,13 +13653,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "health_wellbeing",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:health_wellbeing:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -13717,10 +13699,10 @@
       "fields": [
         {
           "key": "need_chains:health_wellbeing:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "health_wellbeing",
           "chain_need": "practical_help"
         },
@@ -13915,7 +13897,7 @@
         },
         {
           "key": "need_chains:health_wellbeing:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -13943,13 +13925,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "health_wellbeing",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:health_wellbeing:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -13985,7 +13967,7 @@
     {
       "id": "problem-detail-relationships_safety",
       "title": "Family relationships and safety",
-      "intro": "You selected: Keeping in touch and communicating as a family; Changes in family roles or responsibilities; Relationship difficulties or conflict; Separation or the end of a relationship; Feeling safe at home or in a relationship. You may leave any question blank. Please avoid identifying details.",
+      "intro": "You selected: Keeping in touch and communicating as a family; Changes in family roles or responsibilities; Relationship difficulties or conflict; Separation or the end of a relationship; Concerns about safety at home or in a relationship. You may leave any question blank. Please avoid identifying details.",
       "fields": [
         {
           "key": "problem_details:relationships_safety:focus_problems",
@@ -14010,7 +13992,7 @@
             },
             {
               "id": "feeling_safe",
-              "label": "Feeling safe at home or in a relationship"
+              "label": "Concerns about safety at home or in a relationship"
             }
           ],
           "hint": "Optional. You can choose more than one if they are connected.",
@@ -14088,7 +14070,7 @@
         },
         {
           "key": "problem_details:relationships_safety:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -14104,17 +14086,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "relationships_safety",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:relationships_safety:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "relationships_safety"
         }
       ],
@@ -14127,10 +14109,10 @@
       "fields": [
         {
           "key": "need_chains:relationships_safety:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "relationships_safety",
           "chain_need": "general_information"
         },
@@ -14389,7 +14371,7 @@
         },
         {
           "key": "need_chains:relationships_safety:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -14417,13 +14399,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "relationships_safety",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:relationships_safety:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -14463,10 +14445,10 @@
       "fields": [
         {
           "key": "need_chains:relationships_safety:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "relationships_safety",
           "chain_need": "practical_help"
         },
@@ -14661,7 +14643,7 @@
         },
         {
           "key": "need_chains:relationships_safety:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -14689,13 +14671,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "relationships_safety",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:relationships_safety:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -14834,7 +14816,7 @@
         },
         {
           "key": "problem_details:community_connection:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -14850,17 +14832,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "community_connection",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:community_connection:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "community_connection"
         }
       ],
@@ -14873,10 +14855,10 @@
       "fields": [
         {
           "key": "need_chains:community_connection:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "community_connection",
           "chain_need": "general_information"
         },
@@ -15135,7 +15117,7 @@
         },
         {
           "key": "need_chains:community_connection:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -15163,13 +15145,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "community_connection",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:community_connection:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -15209,10 +15191,10 @@
       "fields": [
         {
           "key": "need_chains:community_connection:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "community_connection",
           "chain_need": "practical_help"
         },
@@ -15407,7 +15389,7 @@
         },
         {
           "key": "need_chains:community_connection:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -15435,13 +15417,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "community_connection",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:community_connection:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -15477,7 +15459,7 @@
     {
       "id": "problem-detail-support_navigation",
       "title": "Finding and using support",
-      "intro": "You selected: Knowing what help is available; Understanding who can use support and how to apply; Getting important information directly as a family member; Finding the right person when several services are involved; Feeling heard and understood when asking for help. You may leave any question blank. Please avoid identifying details.",
+      "intro": "You selected: Finding clear information about available help; Understanding who can use support and how to apply; Getting important information directly as a family member; Finding the right person when several services are involved; Feeling heard and understood when asking for help. You may leave any question blank. Please avoid identifying details.",
       "fields": [
         {
           "key": "problem_details:support_navigation:focus_problems",
@@ -15486,7 +15468,7 @@
           "options": [
             {
               "id": "knowing_available_help",
-              "label": "Knowing what help is available"
+              "label": "Finding clear information about available help"
             },
             {
               "id": "eligibility_application",
@@ -15580,7 +15562,7 @@
         },
         {
           "key": "problem_details:support_navigation:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -15596,17 +15578,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "support_navigation",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:support_navigation:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "support_navigation"
         }
       ],
@@ -15619,10 +15601,10 @@
       "fields": [
         {
           "key": "need_chains:support_navigation:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "support_navigation",
           "chain_need": "general_information"
         },
@@ -15881,7 +15863,7 @@
         },
         {
           "key": "need_chains:support_navigation:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -15909,13 +15891,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "support_navigation",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:support_navigation:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -15955,10 +15937,10 @@
       "fields": [
         {
           "key": "need_chains:support_navigation:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "support_navigation",
           "chain_need": "practical_help"
         },
@@ -16153,7 +16135,7 @@
         },
         {
           "key": "need_chains:support_navigation:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -16181,13 +16163,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "support_navigation",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:support_navigation:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -16297,7 +16279,7 @@
         },
         {
           "key": "problem_details:other_problem:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -16305,17 +16287,17 @@
               "label": "Information about available support, arrangements or entitlements"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "other_problem",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:other_problem:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "other_problem"
         }
       ],
@@ -16328,10 +16310,10 @@
       "fields": [
         {
           "key": "need_chains:other_problem:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "other_problem",
           "chain_need": "general_information"
         },
@@ -16522,7 +16504,7 @@
         },
         {
           "key": "need_chains:other_problem:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -16550,13 +16532,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "other_problem",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:other_problem:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -16841,12 +16823,12 @@
   "unspecified": [
     {
       "id": "connection",
-      "title": "A little about you",
+      "title": "About you and your connection to Greater Darwin",
       "intro": "",
       "fields": [
         {
           "key": "roles",
-          "label": "Which describes you?",
+          "label": "Which of these describes your connection to the Defence community?",
           "type": "multi",
           "options": [
             {
@@ -16882,8 +16864,32 @@
           ]
         },
         {
+          "key": "work_posting_greater_darwin",
+          "label": "Do you or someone in your Defence family currently work or have a Defence posting in Greater Darwin?",
+          "type": "single",
+          "options": [
+            {
+              "id": "yes",
+              "label": "Yes"
+            },
+            {
+              "id": "no",
+              "label": "No"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "hint": "Optional. You can answer Yes even if you live elsewhere."
+        },
+        {
           "key": "residence_area",
-          "label": "Which area do you live in?",
+          "label": "Where do you currently live?",
           "type": "single",
           "options": [
             {
@@ -16911,7 +16917,7 @@
               "label": "Prefer not to say"
             }
           ],
-          "hint": "Optional. This helps us plan where and how to offer support."
+          "hint": "Optional. This helps us understand where local needs may arise."
         },
         {
           "key": "suburb",
@@ -17479,62 +17485,6 @@
           "conditional": "outside_suburb"
         },
         {
-          "key": "work_posting_greater_darwin",
-          "label": "Do you or someone in your Defence family currently work or have a posting in Greater Darwin?",
-          "type": "single",
-          "options": [
-            {
-              "id": "yes",
-              "label": "Yes"
-            },
-            {
-              "id": "no",
-              "label": "No"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "hint": "Optional. You can answer Yes even if you live elsewhere."
-        },
-        {
-          "key": "age_group",
-          "label": "Which age group are you in?",
-          "type": "single",
-          "options": [
-            {
-              "id": "18_29",
-              "label": "18–29"
-            },
-            {
-              "id": "30_39",
-              "label": "30–39"
-            },
-            {
-              "id": "40_49",
-              "label": "40–49"
-            },
-            {
-              "id": "50_plus",
-              "label": "50 or older"
-            }
-          ],
-          "hint": "Optional."
-        }
-      ],
-      "note": "ADF relationship, optional local area and adult age band precede the account route."
-    },
-    {
-      "id": "place",
-      "title": "Your life in Greater Darwin",
-      "intro": "",
-      "fields": [
-        {
           "key": "time_nt",
           "label": "How long have you lived in Greater Darwin?",
           "type": "single",
@@ -17568,19 +17518,43 @@
               "label": "Prefer not to answer"
             }
           ],
-          "hint": "Count your current or most recent stay only."
+          "hint": "Optional. Count your current or most recent stay only."
+        },
+        {
+          "key": "age_group",
+          "label": "Which age group are you in?",
+          "type": "single",
+          "options": [
+            {
+              "id": "18_29",
+              "label": "18–29"
+            },
+            {
+              "id": "30_39",
+              "label": "30–39"
+            },
+            {
+              "id": "40_49",
+              "label": "40–49"
+            },
+            {
+              "id": "50_plus",
+              "label": "50 or older"
+            }
+          ],
+          "hint": "Optional."
         }
       ],
-      "note": "Optional local background. The broader area is chosen first; suburb or locality is optional."
+      "note": "ADF relationship, optional local area and adult age band precede the account route."
     },
     {
       "id": "problem_screen",
-      "title": "Which situations have affected you or your family?",
-      "intro": "Thinking about the past 12 months, choose situations that were difficult or needed attention for you or your family in connection with living, working or a Defence posting in Greater Darwin. You can include experiences while family members lived elsewhere. Include things you handled successfully as well as things still unresolved. You can skip any topic or leave this question blank.",
+      "title": "Which of these have been difficult for you or your family in the past 12 months?",
+      "intro": "Think about experiences connected with living or working in Greater Darwin, or with a Defence posting here. Include difficulties you managed successfully or that are now resolved, including times when family members lived elsewhere. They do not have to have been caused by military service. You may leave this question blank.",
       "fields": [
         {
           "key": "problem_cues",
-          "label": "Situations your family has dealt with",
+          "label": "Situations that were difficult",
           "type": "multi",
           "options": [
             {
@@ -17595,7 +17569,7 @@
             },
             {
               "id": "service_absences",
-              "label": "Family life during deployments, training or other time apart",
+              "label": "Managing family life during deployments, training or other time apart",
               "hint": ""
             },
             {
@@ -17755,7 +17729,7 @@
             },
             {
               "id": "feeling_safe",
-              "label": "Feeling safe at home or in a relationship",
+              "label": "Concerns about safety at home or in a relationship",
               "hint": ""
             },
             {
@@ -17785,7 +17759,7 @@
             },
             {
               "id": "knowing_available_help",
-              "label": "Knowing what help is available",
+              "label": "Finding clear information about available help",
               "hint": ""
             },
             {
@@ -17840,8 +17814,8 @@
     },
     {
       "id": "priority_pick",
-      "title": "Which two areas would you most like to explain?",
-      "intro": "Choose up to two areas to follow through in more detail. Your other selections stay recorded; you can add further comments later. This choice is about what you would like to explain now, not a ranking of every family’s needs.",
+      "title": "Which of these areas mattered most to you or your family?",
+      "intro": "Choose up to two for the follow-up questions. Your other selections remain included, and you can describe additional experiences later. When several matter equally, choose the ones you most want to explain.",
       "fields": [
         {
           "key": "priority_categories",
@@ -17851,7 +17825,7 @@
             {
               "id": "postings_service_changes",
               "label": "Postings, time apart and leaving service",
-              "hint": "Not knowing when or where a posting will be; Moving and settling into a new place; Family life during deployments, training or other time apart; Readjusting when someone returns af"
+              "hint": "Not knowing when or where a posting will be; Moving and settling into a new place; Managing family life during deployments, training or other time apart; Readjusting when someone r"
             },
             {
               "id": "housing_money_transport",
@@ -17881,7 +17855,7 @@
             {
               "id": "relationships_safety",
               "label": "Family relationships and safety",
-              "hint": "Keeping in touch and communicating as a family; Changes in family roles or responsibilities; Relationship difficulties or conflict; Separation or the end of a relationship; Feeling"
+              "hint": "Keeping in touch and communicating as a family; Changes in family roles or responsibilities; Relationship difficulties or conflict; Separation or the end of a relationship; Concern"
             },
             {
               "id": "community_connection",
@@ -17891,7 +17865,7 @@
             {
               "id": "support_navigation",
               "label": "Finding and using support",
-              "hint": "Knowing what help is available; Understanding who can use support and how to apply; Getting important information directly as a family member; Finding the right person when several"
+              "hint": "Finding clear information about available help; Understanding who can use support and how to apply; Getting important information directly as a family member; Finding the right per"
             }
           ],
           "hint": "Optional. Select at most two.",
@@ -17903,7 +17877,7 @@
     {
       "id": "problem-detail-postings_service_changes",
       "title": "Postings, time apart and leaving service",
-      "intro": "You selected: Not knowing when or where a posting will be; Moving and settling into a new place; Family life during deployments, training or other time apart; Readjusting when someone returns after time away; Preparing for or adjusting to life after service. You may leave any question blank. Please avoid identifying details.",
+      "intro": "You selected: Not knowing when or where a posting will be; Moving and settling into a new place; Managing family life during deployments, training or other time apart; Readjusting when someone returns after time away; Preparing for or adjusting to life after service. You may leave any question blank. Please avoid identifying details.",
       "fields": [
         {
           "key": "problem_details:postings_service_changes:focus_problems",
@@ -17920,7 +17894,7 @@
             },
             {
               "id": "service_absences",
-              "label": "Family life during deployments, training or other time apart"
+              "label": "Managing family life during deployments, training or other time apart"
             },
             {
               "id": "return_readjustment",
@@ -18006,7 +17980,7 @@
         },
         {
           "key": "problem_details:postings_service_changes:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -18022,17 +17996,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "postings_service_changes",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:postings_service_changes:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "postings_service_changes"
         }
       ],
@@ -18045,10 +18019,10 @@
       "fields": [
         {
           "key": "need_chains:postings_service_changes:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "postings_service_changes",
           "chain_need": "general_information"
         },
@@ -18307,7 +18281,7 @@
         },
         {
           "key": "need_chains:postings_service_changes:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -18335,13 +18309,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "postings_service_changes",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:postings_service_changes:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -18381,10 +18355,10 @@
       "fields": [
         {
           "key": "need_chains:postings_service_changes:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "postings_service_changes",
           "chain_need": "practical_help"
         },
@@ -18579,7 +18553,7 @@
         },
         {
           "key": "need_chains:postings_service_changes:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -18607,13 +18581,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "postings_service_changes",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:postings_service_changes:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -18753,7 +18727,7 @@
         },
         {
           "key": "problem_details:housing_money_transport:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -18769,17 +18743,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "housing_money_transport",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:housing_money_transport:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "housing_money_transport"
         }
       ],
@@ -18792,10 +18766,10 @@
       "fields": [
         {
           "key": "need_chains:housing_money_transport:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "housing_money_transport",
           "chain_need": "general_information"
         },
@@ -19054,7 +19028,7 @@
         },
         {
           "key": "need_chains:housing_money_transport:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -19082,13 +19056,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "housing_money_transport",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:housing_money_transport:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -19128,10 +19102,10 @@
       "fields": [
         {
           "key": "need_chains:housing_money_transport:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "housing_money_transport",
           "chain_need": "practical_help"
         },
@@ -19326,7 +19300,7 @@
         },
         {
           "key": "need_chains:housing_money_transport:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -19354,13 +19328,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "housing_money_transport",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:housing_money_transport:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -19499,7 +19473,7 @@
         },
         {
           "key": "problem_details:work_study_training:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -19515,17 +19489,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "work_study_training",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:work_study_training:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "work_study_training"
         }
       ],
@@ -19538,10 +19512,10 @@
       "fields": [
         {
           "key": "need_chains:work_study_training:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "work_study_training",
           "chain_need": "general_information"
         },
@@ -19800,7 +19774,7 @@
         },
         {
           "key": "need_chains:work_study_training:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -19828,13 +19802,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "work_study_training",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:work_study_training:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -19874,10 +19848,10 @@
       "fields": [
         {
           "key": "need_chains:work_study_training:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "work_study_training",
           "chain_need": "practical_help"
         },
@@ -20072,7 +20046,7 @@
         },
         {
           "key": "need_chains:work_study_training:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -20100,13 +20074,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "work_study_training",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:work_study_training:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -20245,7 +20219,7 @@
         },
         {
           "key": "problem_details:childcare_school:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -20261,17 +20235,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "childcare_school",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:childcare_school:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "childcare_school"
         }
       ],
@@ -20284,10 +20258,10 @@
       "fields": [
         {
           "key": "need_chains:childcare_school:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "childcare_school",
           "chain_need": "general_information"
         },
@@ -20546,7 +20520,7 @@
         },
         {
           "key": "need_chains:childcare_school:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -20574,13 +20548,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "childcare_school",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:childcare_school:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -20620,10 +20594,10 @@
       "fields": [
         {
           "key": "need_chains:childcare_school:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "childcare_school",
           "chain_need": "practical_help"
         },
@@ -20818,7 +20792,7 @@
         },
         {
           "key": "need_chains:childcare_school:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -20846,13 +20820,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "childcare_school",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:childcare_school:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -20991,7 +20965,7 @@
         },
         {
           "key": "problem_details:parenting_caring_disability:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -21007,17 +20981,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "parenting_caring_disability",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:parenting_caring_disability:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "parenting_caring_disability"
         }
       ],
@@ -21030,10 +21004,10 @@
       "fields": [
         {
           "key": "need_chains:parenting_caring_disability:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "parenting_caring_disability",
           "chain_need": "general_information"
         },
@@ -21292,7 +21266,7 @@
         },
         {
           "key": "need_chains:parenting_caring_disability:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -21320,13 +21294,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "parenting_caring_disability",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:parenting_caring_disability:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -21366,10 +21340,10 @@
       "fields": [
         {
           "key": "need_chains:parenting_caring_disability:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "parenting_caring_disability",
           "chain_need": "practical_help"
         },
@@ -21564,7 +21538,7 @@
         },
         {
           "key": "need_chains:parenting_caring_disability:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -21592,13 +21566,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "parenting_caring_disability",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:parenting_caring_disability:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -21737,7 +21711,7 @@
         },
         {
           "key": "problem_details:health_wellbeing:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -21753,17 +21727,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "health_wellbeing",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:health_wellbeing:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "health_wellbeing"
         }
       ],
@@ -21776,10 +21750,10 @@
       "fields": [
         {
           "key": "need_chains:health_wellbeing:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "health_wellbeing",
           "chain_need": "general_information"
         },
@@ -22038,7 +22012,7 @@
         },
         {
           "key": "need_chains:health_wellbeing:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -22066,13 +22040,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "health_wellbeing",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:health_wellbeing:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -22112,10 +22086,10 @@
       "fields": [
         {
           "key": "need_chains:health_wellbeing:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "health_wellbeing",
           "chain_need": "practical_help"
         },
@@ -22310,7 +22284,7 @@
         },
         {
           "key": "need_chains:health_wellbeing:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -22338,13 +22312,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "health_wellbeing",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:health_wellbeing:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -22380,7 +22354,7 @@
     {
       "id": "problem-detail-relationships_safety",
       "title": "Family relationships and safety",
-      "intro": "You selected: Keeping in touch and communicating as a family; Changes in family roles or responsibilities; Relationship difficulties or conflict; Separation or the end of a relationship; Feeling safe at home or in a relationship. You may leave any question blank. Please avoid identifying details.",
+      "intro": "You selected: Keeping in touch and communicating as a family; Changes in family roles or responsibilities; Relationship difficulties or conflict; Separation or the end of a relationship; Concerns about safety at home or in a relationship. You may leave any question blank. Please avoid identifying details.",
       "fields": [
         {
           "key": "problem_details:relationships_safety:focus_problems",
@@ -22405,7 +22379,7 @@
             },
             {
               "id": "feeling_safe",
-              "label": "Feeling safe at home or in a relationship"
+              "label": "Concerns about safety at home or in a relationship"
             }
           ],
           "hint": "Optional. You can choose more than one if they are connected.",
@@ -22483,7 +22457,7 @@
         },
         {
           "key": "problem_details:relationships_safety:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -22499,17 +22473,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "relationships_safety",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:relationships_safety:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "relationships_safety"
         }
       ],
@@ -22522,10 +22496,10 @@
       "fields": [
         {
           "key": "need_chains:relationships_safety:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "relationships_safety",
           "chain_need": "general_information"
         },
@@ -22784,7 +22758,7 @@
         },
         {
           "key": "need_chains:relationships_safety:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -22812,13 +22786,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "relationships_safety",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:relationships_safety:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -22858,10 +22832,10 @@
       "fields": [
         {
           "key": "need_chains:relationships_safety:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "relationships_safety",
           "chain_need": "practical_help"
         },
@@ -23056,7 +23030,7 @@
         },
         {
           "key": "need_chains:relationships_safety:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -23084,13 +23058,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "relationships_safety",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:relationships_safety:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -23229,7 +23203,7 @@
         },
         {
           "key": "problem_details:community_connection:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -23245,17 +23219,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "community_connection",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:community_connection:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "community_connection"
         }
       ],
@@ -23268,10 +23242,10 @@
       "fields": [
         {
           "key": "need_chains:community_connection:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "community_connection",
           "chain_need": "general_information"
         },
@@ -23530,7 +23504,7 @@
         },
         {
           "key": "need_chains:community_connection:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -23558,13 +23532,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "community_connection",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:community_connection:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -23604,10 +23578,10 @@
       "fields": [
         {
           "key": "need_chains:community_connection:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "community_connection",
           "chain_need": "practical_help"
         },
@@ -23802,7 +23776,7 @@
         },
         {
           "key": "need_chains:community_connection:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -23830,13 +23804,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "community_connection",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:community_connection:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -23872,7 +23846,7 @@
     {
       "id": "problem-detail-support_navigation",
       "title": "Finding and using support",
-      "intro": "You selected: Knowing what help is available; Understanding who can use support and how to apply; Getting important information directly as a family member; Finding the right person when several services are involved; Feeling heard and understood when asking for help. You may leave any question blank. Please avoid identifying details.",
+      "intro": "You selected: Finding clear information about available help; Understanding who can use support and how to apply; Getting important information directly as a family member; Finding the right person when several services are involved; Feeling heard and understood when asking for help. You may leave any question blank. Please avoid identifying details.",
       "fields": [
         {
           "key": "problem_details:support_navigation:focus_problems",
@@ -23881,7 +23855,7 @@
           "options": [
             {
               "id": "knowing_available_help",
-              "label": "Knowing what help is available"
+              "label": "Finding clear information about available help"
             },
             {
               "id": "eligibility_application",
@@ -23975,7 +23949,7 @@
         },
         {
           "key": "problem_details:support_navigation:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -23991,17 +23965,17 @@
               "label": "Practical help, financial assistance or help with responsibilities"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "support_navigation",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:support_navigation:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "support_navigation"
         }
       ],
@@ -24014,10 +23988,10 @@
       "fields": [
         {
           "key": "need_chains:support_navigation:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "support_navigation",
           "chain_need": "general_information"
         },
@@ -24276,7 +24250,7 @@
         },
         {
           "key": "need_chains:support_navigation:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -24304,13 +24278,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "support_navigation",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:support_navigation:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -24350,10 +24324,10 @@
       "fields": [
         {
           "key": "need_chains:support_navigation:practical_help:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "support_navigation",
           "chain_need": "practical_help"
         },
@@ -24548,7 +24522,7 @@
         },
         {
           "key": "need_chains:support_navigation:practical_help:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -24576,13 +24550,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "support_navigation",
           "chain_need": "practical_help"
         },
         {
           "key": "need_chains:support_navigation:practical_help:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {
@@ -24692,7 +24666,7 @@
         },
         {
           "key": "problem_details:other_problem:priority_help",
-          "label": "Which two kinds of help mattered most for these difficulties?",
+          "label": "Which kinds of help mattered most for these difficulties?",
           "type": "multi",
           "options": [
             {
@@ -24700,17 +24674,17 @@
               "label": "Information about available support, arrangements or entitlements"
             }
           ],
-          "hint": "Optional. Your other selections remain recorded.",
+          "hint": "Optional. Choose up to two for the follow-up questions. The other kinds of help you selected remain included.",
           "detail_category": "other_problem",
           "conditional": "problem_priority_help",
           "max_selected": 2
         },
         {
           "key": "problem_details:other_problem:specific_need",
-          "label": "Briefly, what was happening, and what help (if any) was needed?",
+          "label": "Briefly, what was happening?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can mention how it affected everyday life. A few words are enough. Please leave out names or other details that could identify someone.",
           "detail_category": "other_problem"
         }
       ],
@@ -24723,10 +24697,10 @@
       "fields": [
         {
           "key": "need_chains:other_problem:general_information:specific_for_need",
-          "label": "What specifically was this help needed for?",
+          "label": "What did you need this help to do or change?",
           "type": "text",
           "options": [],
-          "hint": "Optional. A few words are enough. Please leave out names or other details that could identify someone.",
+          "hint": "Optional. You can leave this blank if you have already explained it. Please leave out names or other details that could identify someone.",
           "chain_category": "other_problem",
           "chain_need": "general_information"
         },
@@ -24917,7 +24891,7 @@
         },
         {
           "key": "need_chains:other_problem:general_information:met_status",
-          "label": "By now, or by the end of that situation, how much of this need had been met, taking all sources together?",
+          "label": "Overall, how fully was this particular need met?",
           "type": "single",
           "options": [
             {
@@ -24945,13 +24919,13 @@
               "label": "Not sure"
             }
           ],
-          "hint": "Optional. Receiving some help does not necessarily mean the need was met.",
+          "hint": "Optional. Think about all sources of help together. For an ongoing situation, answer about now; for one that ended, answer about how things stood when it ended.",
           "chain_category": "other_problem",
           "chain_need": "general_information"
         },
         {
           "key": "need_chains:other_problem:general_information:current_gap",
-          "label": "Is any of this help still missing for you or your family now?",
+          "label": "Do you or your family still need any of this help that you are not getting?",
           "type": "single",
           "options": [
             {

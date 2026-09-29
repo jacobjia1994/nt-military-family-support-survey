@@ -99,7 +99,7 @@
       }
       const hasChildResponses = Object.keys(childResponses).length > 0;
       return {
-        schema_version: '1.3', questionnaire_version: 'young_child_supported', questionnaire_revision: '2026-09-29-local-connection-preview', age_path: 'young',
+        schema_version: '1.3', questionnaire_version: 'young_child_supported', questionnaire_revision: '2026-09-29-local-connection-formal-copy', age_path: 'young',
         geography_version: geography()?.version || null,
         background: { ...background, ...locationMetadata(background) },
         response_mode: hasChildResponses ? 'child_views' : 'guardian_observations',
@@ -249,7 +249,7 @@
         ['Child’s age group', CHILD_STAGES.find(option => option.id === values.background.child_stage)?.label],
       ].filter(([, value]) => value);
       const reviewRows = rows => rows.map(([label, value]) => `<section class="review-block"><div class="review-header"><h3>${esc(label)}</h3></div><p class="review-value">${esc(value)}</p></section>`).join('');
-      main.innerHTML = `<section class="survey-layout"><div class="question-card"><h1 tabindex="-1">Review your answers</h1><div class="review-header young-background-review"><h2>About your child</h2><button class="text-button" type="button" id="young-edit-background">Change</button></div>${reviewRows(backgroundRows)}${rows.length ? `<h2>Your child’s responses</h2>${reviewRows(rows)}` : ''}${values.guardian_observations.trim() ? reviewRows([['Your observations', values.guardian_observations]]) : ''}<p class="small">This is a preview. Your answers are not sent or saved.</p><div class="question-actions"><button class="back-button" type="button" id="young-edit">Back</button><button class="button primary" type="button" id="young-finish">Finish preview</button></div></div><button class="text-button" type="button" id="young-stop">Stop and clear answers</button></section>`;
+      main.innerHTML = `<section class="survey-layout"><div class="question-card"><h1 tabindex="-1">Review your answers</h1><div class="review-header young-background-review"><h2>About your child</h2><button class="text-button" type="button" id="young-edit-background">Change</button></div>${reviewRows(backgroundRows)}${rows.length ? `<h2>Your child’s responses</h2>${reviewRows(rows)}` : ''}${values.guardian_observations.trim() ? reviewRows([['Your observations', values.guardian_observations]]) : ''}<div class="question-actions"><button class="back-button" type="button" id="young-edit">Back</button><button class="button primary" type="button" id="young-finish">Confirm and submit</button></div></div><button class="text-button" type="button" id="young-stop">Stop and clear answers</button></section>`;
       main.querySelector('#young-edit').onclick = show;
       main.querySelector('#young-edit-background').onclick = showBackground;
       main.querySelector('#young-stop').onclick = stop;

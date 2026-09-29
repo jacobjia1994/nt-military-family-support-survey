@@ -107,19 +107,18 @@ function SPECIAL() { return ['none', 'unsure', 'prefer']; }
 
 test('minimal background precedes accounts without a duplicate global narrative prompt', () => {
   const adult = pageFor('connection', 'adult');
-  assert.deepEqual(adult.fields.map(f => f.key), ['roles', 'residence_area', 'suburb', 'suburb_other', 'past_residence', 'work_posting_greater_darwin', 'age_group']);
-  const place = pageFor('place', 'adult');
-  assert.deepEqual(place.fields.map(f => f.key), ['time_nt']);
-  assert.ok(place.fields.every(f => !f.required));
-  const duration = place.fields.find(f => f.key === 'time_nt');
+  assert.deepEqual(adult.fields.map(f => f.key), ['roles', 'work_posting_greater_darwin', 'residence_area', 'suburb', 'suburb_other', 'past_residence', 'time_nt', 'age_group']);
+  const duration = adult.fields.find(f => f.key === 'time_nt');
+  assert.equal(duration.required, undefined);
   assert.deepEqual(fieldIds(duration), ['never', 'under3', '3to12', '1to3', 'over3', 'unsure', 'prefer']);
   assert.match(duration.hint, /current or most recent stay/);
+  assert.match(pageFor('connection', 'adult', { residence_area: 'outside' }).fields.find(f => f.key === 'time_nt').label, /most recent stay/);
   const youth = pageFor('connection', 'youth', { residence_area: 'darwin' });
-  assert.deepEqual(youth.fields.map(f => f.key), ['roles', 'residence_area', 'suburb', 'suburb_other', 'past_residence', 'work_posting_greater_darwin', 'assistance']);
+  assert.deepEqual(youth.fields.map(f => f.key), ['roles', 'work_posting_greater_darwin', 'residence_area', 'suburb', 'suburb_other', 'past_residence', 'assistance']);
   assert.equal(youth.fields.find(f => f.key === 'suburb').required, undefined);
   assert.ok(fieldIds(youth.fields.find(f => f.key === 'suburb')).includes('prefer'));
-  assert.deepEqual(fieldIds(youth.fields[1]), fieldIds(adult.fields[1]));
-  assert.equal(stepsFor({ residence_area: 'darwin', suburb: 'wagaman' }, 'youth').some(step => step.id === 'place'), false);
+  assert.deepEqual(fieldIds(youth.fields.find(f => f.key === 'residence_area')), fieldIds(adult.fields.find(f => f.key === 'residence_area')));
+  assert.equal(stepsFor({ residence_area: 'darwin', suburb: 'wagaman' }, 'adult').some(step => step.id === 'place'), false);
   const stale = plain(survey.cleanExport({ residence_area: 'darwin', community_connection: 'OLD_GLOBAL_STORY' }, 'adult', domainsFor('adult')));
   assert.equal(hasOwn(stale.answers, 'community_connection'), false);
 });
@@ -410,8 +409,8 @@ test('contact links stay separate from answers and remain available in the foote
     assert.doesNotMatch(html, /PRIVATE_EXPERIENCE_SENTINEL|contact\.html[?#]/);
   }
   const finish = survey.finishHTML();
-  assert.match(finish, /You have reached the end of this survey preview/);
-  assert.match(finish, /Your answers were not sent or saved/);
+  assert.match(finish, /Submission is currently unavailable/);
+  assert.match(finish, /Your answers have not been received/);
   assert.ok(finish.includes(anchor));
   assert.ok(finish.includes('Find support in a few clicks'));
   assert.ok(finish.indexOf(anchor) < finish.indexOf('Find support in a few clicks'), 'The interview option is available before leaving for the resource');
@@ -423,6 +422,31 @@ test('contact links stay separate from answers and remain available in the foote
   assert.match(footer, /href="contact\.html" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer"/);
   assert.ok(footer.indexOf('privacy-open') < footer.indexOf('href="contact.html"'));
   assert.doesNotMatch(footer, /contact\.html[?#]/);
+});
+
+test('formal submit wording cannot produce a false receipt while no receiver exists', () => {
+  const answers = { roles: ['partner'], residence_area: 'darwin', problem_cues: ['none'] };
+  survey.setContext('adult', answers);
+  survey.setParticipationContext('adult', survey.participationRecord('adult', true));
+  survey.setStep('review');
+  survey.renderSurvey();
+  assert.match(mainStub.innerHTML, />Confirm and submit<\/button>/);
+  const before = structuredClone(answers);
+  const unavailable = survey.finishHTML();
+  assert.match(unavailable, /Submission is currently unavailable/);
+  assert.match(unavailable, /Your answers have not been received/);
+  assert.doesNotMatch(unavailable, /submitted successfully|thank you for submitting/i);
+  mainStub.querySelector('#finish-back').onclick();
+  assert.equal(survey.getUIState().step, 'review');
+  assert.deepEqual(answers, before);
+  assert.doesNotMatch(source, /\b(?:fetch|sendBeacon|XMLHttpRequest|localStorage|sessionStorage)\b/);
+});
+
+test('the public entry states submission availability before the questionnaire begins', () => {
+  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  assert.match(html, /<div class="survey-availability" id="survey-availability" role="note"><strong>Online submissions are not open\.<\/strong> This site cannot receive survey responses\.<\/div>/);
+  assert.ok(html.indexOf('survey-availability') < html.indexOf('questionnaire-shell'));
+  assert.doesNotMatch(html, /Preview only|Team review draft/);
 });
 
 test('the free-resource link accepts a safe URL and never includes survey answers', () => {
@@ -556,11 +580,11 @@ test('the 8–14 helper interruption offers a private route and cannot advance w
   assert.equal(survey.getUIState().step, 'problem_screen');
 });
 
-test('ages 7 or younger use their own controller, finish, and clear on restart', () => {
-  let created = 0, shown = 0, reset = 0, options;
+test('ages 7 or younger use their own controller, return from unavailable submission, and clear on restart', () => {
+  let created = 0, shown = 0, reviewed = 0, reset = 0, options;
   context.window.SURVEY_YOUNG_CHILDREN = { create(config) {
     created += 1; options = config;
-    return { show() { shown += 1; }, reset() { reset += 1; } };
+    return { show() { shown += 1; }, showReview() { reviewed += 1; }, reset() { reset += 1; } };
   } };
   survey.resetYoung();
   survey.setParticipationContext('young');
@@ -578,9 +602,13 @@ test('ages 7 or younger use their own controller, finish, and clear on restart',
   assert.equal(options.prompts.length, 4);
   const record = { response_perspective: 'parent_observation', parent_observations: 'An observation, not child words' };
   options.onFinish(record);
-  assert.equal(survey.getUIState().screen, 'finish');
+  assert.equal(survey.getUIState().screen, 'submission-unavailable');
   assert.equal(survey.getUIState().youngRecord, record);
   assert.doesNotMatch(mainStub.innerHTML, /Save my answers|Review my answers|download-answers|review-answers/);
+  mainStub.querySelector('#finish-back').onclick();
+  assert.equal(reviewed, 1);
+  assert.equal(survey.getUIState().screen, 'young');
+  options.onFinish(record);
   mainStub.querySelector('#restart').onclick();
   assert.equal(reset, 1);
   assert.equal(survey.getUIState().youngRecord, null);
@@ -679,11 +707,12 @@ test('blank, declined and legacy-only areas never acquire a location from hidden
     assert.equal(result.consultation_route, 'residence_unspecified');
     for (const key of ['region', 'suburb', 'suburb_other', 'past_residence']) assert.equal(hasOwn(result.answers, key), false, key);
   }
-  const outside = plain(survey.cleanExport({ residence_area: 'outside', suburb: 'wagaman', suburb_other: 'HIDDEN_DETAIL', past_residence: 'yes' }, 'adult', domainsFor('adult')));
+  const outside = plain(survey.cleanExport({ residence_area: 'outside', suburb: 'wagaman', suburb_other: 'HIDDEN_DETAIL', past_residence: 'yes', time_nt: '1to3' }, 'adult', domainsFor('adult')));
   assert.equal(outside.answers.residence_area, 'outside');
   assert.equal(outside.answers.region, 'outside_greater_darwin');
   assert.equal(outside.residence_scope, 'outside_greater_darwin');
   assert.equal(outside.consultation_route, 'earlier_experience');
+  assert.equal(outside.answers.time_nt, '1to3', 'duration answered on the first page stays with the earlier-experience route');
   assert.equal(outside.location_precision, 'area');
   for (const key of ['suburb', 'suburb_other']) assert.equal(hasOwn(outside.answers, key), false);
 });
@@ -779,7 +808,7 @@ test('schema 9.0 exports all 0, 1, 10 or 100 supplementary accounts without trun
     const original = plain(answers);
     const record = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
     assert.equal(record.schema_version, '9.0');
-    assert.equal(record.questionnaire_revision, '2026-09-29-rand-linked-needs');
+    assert.equal(record.questionnaire_revision, '2026-09-29-rand-formal-copy');
     assert.equal(record.max_accounts, 100);
     assert.equal(record.recall_months, count ? 12 : null, 'The past recall marker appears only when an experience account is present');
     assert.equal(record.collection_mode, 'internal_review_no_transmission');
@@ -821,7 +850,7 @@ test('adult and youth routes keep 0, 1, 10 or 100 voluntary accounts after the n
       const accounts = Array.from({ length: count }, (_, n) => ({ id: `a${n + 1}`, kind: n % 2 ? 'future' : 'experience', story: `Story ${n + 1}` }));
       const steps = stepsFor({ accounts }, version).map(step => step.id);
       const describedFutureIdeas = accounts.filter(account => account.kind === 'future' && account.story.trim()).length;
-      assert.deepEqual(steps, ['connection', ...(version === 'adult' ? ['place'] : []), 'problem_screen', 'positive_future', ...accounts.map(account => `account:${account.id}`), count ? 'accounts_manage' : 'accounts_start', 'review']);
+      assert.deepEqual(steps, ['connection', 'problem_screen', 'positive_future', ...accounts.map(account => `account:${account.id}`), count ? 'accounts_manage' : 'accounts_start', 'review']);
       assert.equal(steps.some(id => ['needs', 'future', 'practical'].includes(id) || id.startsWith('area:')), false);
       assert.equal(new Set(steps).size, steps.length);
     }
@@ -961,7 +990,7 @@ test('question library follows the actual adult and youth needs routes, includin
   for (const version of ['adult', 'youth']) {
     const sections = plain(survey.librarySections(version, 'nt'));
     const categorySections = plain(survey.problemCatalog(version)).flatMap(category => version === 'adult' ? [`problem-detail-${category.id}`, `need-chain-${category.id}-general_information`, `need-chain-${category.id}-practical_help`] : [`problem-detail-${category.id}`]);
-    assert.deepEqual(sections.map(section => section.id), ['connection', ...(version === 'adult' ? ['place'] : []), 'problem_screen', 'priority_pick', ...categorySections, 'problem-detail-other_problem', ...(version === 'adult' ? ['need-chain-other_problem-general_information'] : []), 'positive_future', 'accounts_start', 'account-experience', 'account-future', 'accounts_manage', 'earlier']);
+    assert.deepEqual(sections.map(section => section.id), ['connection', 'problem_screen', 'priority_pick', ...categorySections, 'problem-detail-other_problem', ...(version === 'adult' ? ['need-chain-other_problem-general_information'] : []), 'positive_future', 'accounts_start', 'account-experience', 'account-future', 'accounts_manage', 'earlier']);
     assert.equal(sections.find(section => section.id === 'problem_screen').fields[0].options.length, version === 'adult' ? 48 : 11);
     assert.equal(sections.find(section => section.id === 'problem-detail-other_problem').fields.length > 0, true);
     if (version === 'adult') assert.equal(sections.find(section => section.id.startsWith('need-chain-')).fields.some(field => field.key.startsWith('source_outcomes:')), true);
@@ -974,9 +1003,10 @@ test('question library follows the actual adult and youth needs routes, includin
   assert.equal(child.some(section => section.id.startsWith('account')), false, 'The separate under-7 route does not inherit account pages');
 });
 
-test('published adult reading copy uses the same preview agreement as the form', () => {
+test('adult reading copy uses the same formal-facing agreement as the form', () => {
   const html = readFileSync(new URL('../adult-wording.html', import.meta.url), 'utf8');
-  assert.match(html, /I have read the information and agree to try this survey preview\. I understand my answers are not sent or saved\./);
+  assert.match(html, /I have read the information and agree to take part\./);
+  assert.doesNotMatch(html, /Finish preview|Preview only|try this survey preview/);
   assert.doesNotMatch(html, /I consent to Lutheran Care collecting, using and sharing my answers/);
 });
 
@@ -1005,10 +1035,10 @@ test('adult recall catalog has nine grouped areas and 45 unique local cues, whil
 test('no reported difficulties skips priority and linked chains but keeps positive and future openings', () => {
   const answers = { roles: ['partner'], residence_area: 'darwin', problem_cues: ['none'], positive_support: 'A helpful neighbour', future_need: 'A clearer information point' };
   const steps = stepsFor(answers).map(step => step.id);
-  assert.deepEqual(steps, ['connection', 'place', 'problem_screen', 'positive_future', 'accounts_start', 'review']);
+  assert.deepEqual(steps, ['connection', 'problem_screen', 'positive_future', 'accounts_start', 'review']);
   const record = plain(survey.cleanExport(answers, 'adult', domainsFor('adult')));
   assert.equal(record.schema_version, '9.0');
-  assert.equal(record.questionnaire_revision, '2026-09-29-rand-linked-needs');
+  assert.equal(record.questionnaire_revision, '2026-09-29-rand-formal-copy');
   assert.deepEqual(record.answers.problem_cues, ['none']);
   assert.deepEqual(record.answers.priority_categories, []);
   assert.deepEqual(record.answers.problem_details, {});
@@ -1155,7 +1185,7 @@ test('review identifies the area and help kind for repeated linked questions', (
   const review = survey.reviewHTML();
   assert.match(review, /<h2>Postings, time apart and leaving service — Information about available support, arrangements or entitlements<\/h2>/);
   assert.match(review, /<h2>Postings, time apart and leaving service — Practical help, financial assistance or help with responsibilities<\/h2>/);
-  assert.match(review, /aria-label="Change: Postings, time apart and leaving service — Practical help, financial assistance or help with responsibilities: What specifically was this help needed for\?"/);
+  assert.match(review, /aria-label="Change: Postings, time apart and leaving service — Practical help, financial assistance or help with responsibilities: What did you need this help to do or change\?"/);
   assert.match(review, /<p class="review-value">Moving boxes<\/p>/);
 });
 
@@ -1205,7 +1235,7 @@ test('a current Greater Darwin work or posting connection keeps an outside resid
 
 test('adult and youth wording includes family members living elsewhere when connected through local work or posting', () => {
   const adultScreen = pageFor('problem_screen', 'adult');
-  assert.match(adultScreen.intro, /living, working or a Defence posting in Greater Darwin/);
+  assert.match(adultScreen.intro, /living or working in Greater Darwin, or with a Defence posting here/);
   assert.match(adultScreen.intro, /family members lived elsewhere/);
   const youthScreen = pageFor('problem_screen', 'youth');
   assert.match(youthScreen.intro, /past three months/);

@@ -1,6 +1,6 @@
 # Defence Family Support Survey — analysis and reporting protocol
 
-Updated 29 September 2026. Applies to the RAND-led adult/youth schema 9.0 questionnaire, targeted interviews and related reporting. The younger-child form remains a separate schema 1.3 instrument. The current website is a preview and has **no real survey responses**; these rules govern a future LC-approved collection.
+Updated 29 September 2026. Applies to the RAND-led adult/youth schema 9.0 questionnaire, targeted interviews and related reporting. The younger-child form remains a separate schema 1.3 instrument. The current website is a noncollecting demonstration and has **no real survey responses**; these rules govern a future LC-approved collection.
 
 ## What the evidence represents
 
@@ -14,7 +14,7 @@ The questionnaire's main path follows RAND's linked method: reported problem →
 | --- | --- | --- |
 | Response | One received questionnaire record | A verified unique person or family |
 | Problem cue | One concrete problem selected on one response | A request for help or an unmet need |
-| Detailed category | One of up to two categories a respondent chose to explain | A ranking of all selected problems in the population |
+| Detailed category | One of up to two categories followed in depth; if more than two were selected, the respondent chose which mattered most, whereas one or two carry forward automatically | A complete ranking of all problems or evidence that an auto-carried area was explicitly prioritised |
 | Help type | One kind of assistance selected for a detailed category | A programme booking or evidence that the help was available |
 | Need chain | One selected category × prioritised help type followed in detail; at most four per response | A new respondent or a full account of all reported needs |
 | Contact source | One person/service type approached or used for one linked need | Evidence that help was received or the source worked |
@@ -23,7 +23,7 @@ The questionnaire's main path follows RAND's linked method: reported problem →
 | Met status | The person's answer about whether one linked need was met overall | A rating of LC, of one source, or of all services in a category |
 | Supplemental account | One optional further experience or idea | Another respondent or another vote |
 
-The adult checklist contains nine groups and 45 cues, plus Other. Youth questions use a shorter age-appropriate list. Count **responses selecting each cue** among eligible responses that answered the screen. Count category detail only among those who selected that category for follow-up, and state the base; respondents can select at most two categories for depth. If an explicit no-problem option is present, distinguish it from skipping the screen. An unselected cue is not an explicit denial of that problem. A selected cue without detail is still a cue selection.
+The adult checklist contains nine groups and 45 cues, plus Other. Youth questions use a shorter age-appropriate list. Count **responses selecting each cue** among eligible responses that answered the screen. Count category detail only among those whose category proceeded to follow-up, and state the base; respondents can follow at most two categories for depth. A person with more than two selected categories chooses which mattered most; one or two selected categories proceed automatically, without an explicit comparative priority answer. Distinguish an explicit no-problem option from skipping the screen. An unselected cue is not an explicit denial of that problem. A selected cue without detail is still a cue selection.
 
 For each detailed **adult** category, optional focus_problems points to a subset of concrete cues the respondent had selected in that category; leaving it blank must not erase the broader selection. Report help types among people shown and answering that question. The explicit no-help-needed answer is not a skipped answer and must not enter the denominator for linked need-chain, contacted-resource or met-status distributions. When several kinds of help were chosen, priority_help identifies up to two for detailed pathways; it does not remove other selected help types. Each need chain belongs to one category and one help type. A source may be contacted for several needs, but a response-level source statistic counts that response once under the stated rule. The youth route uses shorter category-level questions; do not infer missing adult need-chain answers for youth.
 

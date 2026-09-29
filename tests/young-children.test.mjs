@@ -52,7 +52,7 @@ test('child expressions and guardian observations remain separate without unrela
   assert.equal(session.answer('__proto__', 'Bad key'), false);
   const output = plain(session.exportAnswers());
   assert.equal(output.schema_version, '1.3');
-  assert.equal(output.questionnaire_revision, '2026-09-29-local-connection-preview');
+  assert.equal(output.questionnaire_revision, '2026-09-29-local-connection-formal-copy');
   assert.equal(output.questionnaire_version, 'young_child_supported');
   assert.equal(output.response_mode, 'child_views');
   assert.equal(output.response_basis, 'child_expressions_recorded_by_parent_guardian');
@@ -257,6 +257,8 @@ test('review preserves child text on Back, escapes it, and passes the distinct r
   assert.match(main.innerHTML, /&lt;script&gt;bad\(\)&lt;\/script&gt;/);
   assert.doesNotMatch(main.innerHTML, /<script>/);
   assert.match(main.innerHTML, /Your child’s responses/);
+  assert.match(main.innerHTML, /Confirm and submit/);
+  assert.doesNotMatch(main.innerHTML, /preview|not sent or saved/i);
   node('#young-edit').onclick();
   assert.match(main.innerHTML, /&lt;script&gt;bad\(\)&lt;\/script&gt;/);
   assert.match(main.innerHTML, /name="child_willing" checked/);
