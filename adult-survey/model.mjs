@@ -215,7 +215,7 @@ export function createAdultSurveyModel(spec) {
           error('experiences', 'Please choose an existing experience.');
         }
       }
-      validateNarrative(answers.final_comment, 'final_comment', experience.final_question || {max_length: MAX_TEXT_CHARACTERS});
+      validateNarrative(answers.final_comment, 'final_comment', experience.legacy_final_question || {max_length: MAX_TEXT_CHARACTERS});
     }
     return errors;
   }

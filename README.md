@@ -1,8 +1,8 @@
 # Greater Darwin Defence Family Support Survey
 
-The [adult survey](index.html) has four stages: Welcome, A bit about you, Your experiences, and Thank you. In Your experiences, each respondent-created page has the same five optional written questions. Respondents can add as many experiences as they choose, return to edit them, or delete an experience with confirmation. At least one blank initial experience remains. Background questions retain their required answers and refusal controls.
+The [adult survey](index.html) has four stages: Welcome, A bit about you, Your experiences, and Thank you. In Your experiences, each respondent-created page has the same six optional written questions. Respondents can add as many experiences as they choose, return to edit them, or delete an experience with confirmation. At least one blank initial experience remains. Background questions retain their required answers and refusal controls.
 
-The experience prompts cover a situation or ongoing part of life, how the family dealt with it, access to wanted help, what changed, and missing or better support. They need not describe the most difficult situation or something caused by military service. The finish action reveals one optional final comment and the existing check for identifying information at the end of the current experience; Thank you appears after confirmation.
+The experience prompts cover a situation or ongoing part of life, how respondents or their families dealt with it, access to wanted help, what changed, and missing or better support. They need not describe the most difficult situation or something caused by military service. The sixth question offers optional comments about that experience. The finish action reveals the existing check for identifying information at the end of the current experience; Thank you appears after confirmation.
 
 The thank-you page links to the separate [interview request](contact.html) and [NT support finder](support.html). These resources operate independently of survey answers.
 

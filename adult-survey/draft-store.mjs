@@ -41,9 +41,26 @@ function migrateLegacyAnswers(answers) {
         support: responses.missing_help ?? '',
       },
     }],
-    final_comment: responses.anything_else ?? '',
+    final_comment: Object.hasOwn(responses, 'anything_else') ? responses.anything_else : '',
     // Keep every old answer, including answers without a one-to-one new question.
     previous_responses: {...responses},
+  };
+}
+
+// The sixth field is additive within v4. Only move a known string into an
+// absent field: an existing additional answer, even blank, always takes priority.
+function moveFinalComment(answers) {
+  const first = answers.experiences[0];
+  if (!Object.hasOwn(answers, 'final_comment') || typeof answers.final_comment !== 'string'
+      || Object.hasOwn(first.responses, 'additional')) return answers;
+  const {final_comment, ...remaining} = answers;
+  return {
+    ...remaining,
+    experiences: [
+      {...first, responses: {...first.responses, additional: final_comment}},
+      ...answers.experiences.slice(1),
+    ],
+    ...(final_comment.length > 0 ? {final_comment_moved_to: first.id} : {}),
   };
 }
 
@@ -145,10 +162,11 @@ export function createDraftStore({storage, schemaVersion, now = Date.now} = {}) 
       if (migrate && payload.answers.responses !== undefined && !isRecord(payload.answers.responses)) {
         return {status: 'incompatible', raw};
       }
-      const answers = migrate ? migrateLegacyAnswers(payload.answers) : payload.answers;
+      let answers = migrate ? migrateLegacyAnswers(payload.answers) : payload.answers;
       if (schemaVersion === EXPERIENCE_SCHEMA_VERSION && !hasExperiences(answers)) {
         return rejectStored('invalid');
       }
+      if (schemaVersion === EXPERIENCE_SCHEMA_VERSION) answers = moveFinalComment(answers);
       return {
         status: 'available',
         ...(migrate ? {migratedFrom: LEGACY_SCHEMA_VERSION} : {}),

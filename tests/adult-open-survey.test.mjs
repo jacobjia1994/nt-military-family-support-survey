@@ -38,7 +38,7 @@ test('one adult entry has four stages and no issue-selection or youth route', ()
   }
 });
 
-test('consent and visible background questions remain required, while five experience answers are optional', () => {
+test('consent and visible background questions remain required, while six experience answers are optional', () => {
   assert.equal(model.validate({}, 'welcome').length, 1);
   assert.equal(model.validate({consent: 'under_18'}, 'welcome').length, 1);
   assert.deepEqual(model.validate(agreed, 'welcome'), []);
@@ -51,11 +51,11 @@ test('consent and visible background questions remain required, while five exper
   assert.deepEqual(blankAnswers.experiences, [{id: 'blank', responses: {}}]);
   assert.deepEqual(model.validate(blankAnswers, 'experience'), []);
   assert.deepEqual(model.validate(complete(), 'experience'), []);
-  assert.deepEqual(experience.questions.map(question => question.id), ['situation', 'actions', 'access', 'outcome', 'support']);
+  assert.deepEqual(experience.questions.map(question => question.id), ['situation', 'actions', 'access', 'outcome', 'support', 'additional']);
   assert.ok(experience.questions.every(question => question.type === 'text' && question.required === false && question.max_length === 5000));
-  assert.equal(experience.final_question.id, 'final_comment');
-  assert.equal(experience.final_question.required, false);
-  assert.equal(experience.final_question.max_length, 5000);
+  assert.equal(experience.legacy_final_question.id, 'final_comment');
+  assert.equal(experience.legacy_final_question.required, false);
+  assert.equal(experience.legacy_final_question.max_length, 5000);
 });
 
 test('community connection follows role with the approved multiple choice wording and conditional Other field', () => {
@@ -219,17 +219,66 @@ test('an existing v4 draft lacking the new question resumes intact and requires 
   assert.deepEqual(state, before);
 });
 
-test('experience prompts retain the approved five questions and guidance', () => {
+test('experience prompts retain the approved six questions and personal or family guidance', () => {
   assert.deepEqual(experience.questions.map(question => [question.label, question.help || '']), [
     ['What was happening, and how did it affect everyday life for you or your family?', ''],
-    ['How did you or your family deal with it?', 'Tell us what you did yourself, who you turned to, or what help was offered. What were you hoping would change?'],
-    ['What made it easier or harder to get any help you wanted?', 'This could include knowing where to look, getting a response or being able to use what was offered. If you did not seek help, you can say why.'],
-    ['What changed, if anything, and how are things now?', 'Tell us what helped or did not help, and what remains unresolved, if anything.'],
-    ['Looking back, what support was missing or could have worked better, if anything?', 'Tell us what you wanted help with and what would have made a difference. You can also say what worked well and should continue.']
+    ['How did you or your family deal with it?', 'Tell us what you or your family did on your own, who was approached for help, or what help was offered. What changes were you or your family hoping for?'],
+    ['What made it easier or harder to get any help you or your family wanted?', 'This could include knowing where to look, getting a response or being able to use what was offered. If you or your family did not seek help, you can say why.'],
+    ['What changed for you or your family, if anything, and how are things now?', 'Tell us what helped or did not help, and what remains unresolved for you or your family, if anything.'],
+    ['Looking back, what support was missing or could have worked better for you or your family, if anything?', 'Tell us what you or your family wanted help with and what would have made a difference. You can also say what worked well and should continue.'],
+    ['Is there anything else you would like us to know about this experience?', 'Optional.']
   ]);
 });
 
-test('all five answers and the final comment accept omitted, empty, whitespace or short text without mutation', () => {
+test('each experience has its own sixth optional comment and the current spec has no new global final question', () => {
+  const additional = experience.questions[5];
+  assert.equal(additional.id, 'additional');
+  assert.equal(additional.label, 'Is there anything else you would like us to know about this experience?');
+  assert.equal(additional.type, 'text');
+  assert.equal(additional.required, false);
+  assert.equal(additional.max_length, 5000);
+  assert.equal(additional.rows, 6);
+  assert.equal(additional.help, 'Optional.');
+  assert.ok(experience.intro.join(' ').includes('You can describe your own experience, your family’s experience, or both. Answer from your own perspective and share only what you know.'));
+  assert.equal(Object.hasOwn(experience, 'final_question'), false);
+  assert.equal(experience.questions.some(question => question.id === 'final_comment'), false);
+  assert.doesNotMatch(experience.intro.join(' '), /\b(?:short|brief|concise)\b|a few words|one sentence/i);
+});
+
+test('missing additional answers are optional and model helpers never create a new global final comment', () => {
+  const state = complete();
+  delete state.experiences[0].responses.additional;
+  const before = structuredClone(state);
+  assert.deepEqual(model.validate(state, 'experience'), []);
+  assert.deepEqual(model.validate(state, 'experience', 'first'), []);
+  assert.deepEqual(state, before);
+  let blank = ensureExperiences(validAbout(), () => 'blank-first');
+  blank = appendExperience(blank, () => 'blank-second');
+  assert.deepEqual(model.validate(blank, 'experience'), []);
+  assert.ok(blank.experiences.every(entry => !Object.hasOwn(entry.responses, 'additional')));
+  assert.equal(Object.hasOwn(blank, 'final_comment'), false);
+  assert.equal(Object.hasOwn(model.reconcile(removeExperience(blank, 'blank-second')), 'final_comment'), false);
+  const allBlank = ensureExperiences(validAbout(), () => 'initial');
+  assert.deepEqual(model.validate(allBlank, 'experience'), []);
+  assert.equal(Object.hasOwn(allBlank, 'final_comment'), false);
+});
+
+test('a migrated additional answer is validated by its stable experience ID and a retained legacy comment stays separate', () => {
+  const state = appendExperience(complete(), () => 'second');
+  state.experiences[0].responses.additional = 'a'.repeat(5001);
+  state.final_comment_moved_to = 'first';
+  const before = structuredClone(state);
+  assert.deepEqual(model.validate(state, 'experience', 'second'), []);
+  assert.deepEqual(model.validate(state, 'experience').map(error => error.path), ['experiences.first.responses.additional']);
+  assert.deepEqual(state, before);
+  state.final_comment = 'b'.repeat(5001);
+  assert.deepEqual(model.validate(state, 'experience', 'second').map(error => error.path), ['final_comment']);
+  assert.deepEqual(model.validate(state, 'experience').map(error => error.path), ['experiences.first.responses.additional', 'final_comment']);
+  assert.equal(state.experiences[0].responses.additional, before.experiences[0].responses.additional);
+  assert.equal(state.final_comment_moved_to, 'first');
+});
+
+test('all six answers and the preserved legacy comment accept omitted, empty, whitespace or a single letter without mutation', () => {
   for (const question of [...experience.questions, {id: 'final_comment'}]) {
     for (const value of [undefined, '', ' ', '\n\r\t', '　', 'a', '.', ' ?', 'n/a']) {
       const state = complete();
@@ -261,15 +310,15 @@ test('optional written answers reject non-string values rather than coercing or 
 
 test('every current survey text question has a limit of 5000 characters or fewer', () => {
   assert.equal(MAX_TEXT_CHARACTERS, 5000);
-  const questions = [...spec.pages.flatMap(page => page.questions || []), experience.final_question].filter(question => question.type === 'text');
-  assert.equal(questions.length, 8);
+  const questions = [...spec.pages.flatMap(page => page.questions || []), experience.legacy_final_question].filter(question => question.type === 'text');
+  assert.equal(questions.length, 9);
   for (const question of questions) {
     assert.ok(Number.isSafeInteger(question.max_length) && question.max_length > 0 && question.max_length <= MAX_TEXT_CHARACTERS, question.id);
   }
 });
 
-test('all experience answers and the final comment accept 5000 characters and retain rejected 5001-character text', () => {
-  for (const question of [...experience.questions, {id: 'final_comment', max_length: experience.final_question.max_length}]) {
+test('all experience answers and the legacy comment accept 5000 characters and retain rejected 5001-character text', () => {
+  for (const question of [...experience.questions, {id: 'final_comment', max_length: experience.legacy_final_question.max_length}]) {
     assert.equal(question.max_length, 5000);
     for (const text of ['a'.repeat(5000), 'a\r\n'.repeat(2500), '😀'.repeat(2500)]) {
       const state = complete();
