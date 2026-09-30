@@ -71,6 +71,7 @@ export function createAdultSurveyModel(spec) {
   const about = spec.pages.find(page => page.id === 'about');
   const experience = spec.pages.find(page => page.id === 'experience');
   const localAreas = ['darwin', 'palmerston', 'litchfield', 'greater_darwin_other'];
+  const hasOtherCommunityConnection = answers => Array.isArray(answers.community_connection) && answers.community_connection.includes('other');
 
   function visibleLocationFields(answers) {
     const fields = ['residence_area'];
@@ -83,6 +84,10 @@ export function createAdultSurveyModel(spec) {
 
   function reconcile(answers, previousAnswers) {
     const next = structuredClone(answers);
+    if (Array.isArray(next.community_connection) && next.community_connection.includes('prefer_not')) {
+      next.community_connection = ['prefer_not'];
+    }
+    if (!hasOtherCommunityConnection(next)) delete next.community_connection_other;
     if (previousAnswers && previousAnswers.residence_area !== next.residence_area) {
       delete next.suburb;
       delete next.suburb_other;
@@ -120,12 +125,25 @@ export function createAdultSurveyModel(spec) {
       for (const question of about.questions) {
         const value = answers[question.id];
         if (question.id === 'dependants_count' && answers.has_dependants !== 'yes') continue;
-        if (question.show_when && question.type !== 'integer_group' && !visible.includes(question.id)) continue;
+        if (question.id === 'community_connection_other') {
+          if (!hasOtherCommunityConnection(answers)) continue;
+        } else if (question.show_when && question.type !== 'integer_group' && !visible.includes(question.id)) continue;
         if (question.type === 'single' || question.type === 'locality_select') {
           if (question.required && !present(value)) error(question.id, 'Please choose an answer.');
         }
         if (question.type === 'single' && present(value) && !question.options.some(item => item.id === value)) {
           error(question.id, 'Choose one of the listed answers.');
+        }
+        if (question.type === 'multiple') {
+          if (!present(value) || (Array.isArray(value) && value.length === 0)) {
+            if (question.required) error(question.id, 'Please choose at least one answer.');
+          } else if (!Array.isArray(value) || [...value].some(selected => !question.options.some(item => item.id === selected))) {
+            error(question.id, 'Choose from the listed answers.');
+          } else if (new Set(value).size !== value.length) {
+            error(question.id, 'Choose each answer only once.');
+          } else if (value.includes('prefer_not') && value.length > 1) {
+            error(question.id, 'Choose Prefer not to answer on its own.');
+          }
         }
         if (question.type === 'text') {
           if (question.required && !hasText(value) && (!present(value) || typeof value === 'string')) {

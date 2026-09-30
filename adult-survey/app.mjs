@@ -1,5 +1,5 @@
-import {createAdultSurveyModel, characterCount, normaliseNewlines, ensureExperiences, appendExperience, removeExperience} from './model.mjs?v=20260930-7';
-import {createDraftStore, DRAFT_STORAGE_KEY} from './draft-store.mjs?v=20260930-7';
+import {createAdultSurveyModel, characterCount, normaliseNewlines, ensureExperiences, appendExperience, removeExperience} from './model.mjs?v=20260930-8';
+import {createDraftStore, DRAFT_STORAGE_KEY} from './draft-store.mjs?v=20260930-8';
 const moduleUrl = import.meta.url;
 const main = document.querySelector('#main');
 const text = value => String(value ?? '');
@@ -96,6 +96,21 @@ function choicesQuestion({path, label, help = '', options = [], value, primaryId
   </fieldset>`;
 }
 
+function multipleChoicesQuestion({path, label, help = '', options = [], value, errors = []}) {
+  const selected = Array.isArray(value) ? value : [];
+  const questionId = idFor(`multiple-${path}`);
+  return `<fieldset class="question-group" data-question-path="${escapeHtml(path)}" aria-describedby="${questionId}-hint ${questionId}-error">
+    <legend>${escapeHtml(label)}</legend>
+    ${help ? `<p id="${questionId}-hint" class="field-hint">${escapeHtml(help)}</p>` : ''}
+    <div class="choices">${options.map(option => {
+      const inputId = idFor(`choice-${path}-${option.id}`);
+      return `<label class="choice" for="${escapeHtml(inputId)}"><input id="${escapeHtml(inputId)}" type="checkbox" name="${escapeHtml(path)}" value="${escapeHtml(option.id)}" data-path="${escapeHtml(path)}" data-kind="multiple"${selected.includes(option.id) ? ' checked' : ''}><span class="choice-body"><span class="choice-label">${escapeHtml(option.label)}</span></span></label>`;
+    }).join('')}</div>
+    ${selected.length ? `<button type="button" class="clear-answer" data-action="clear-answer" data-path="${escapeHtml(path)}" aria-label="${escapeHtml(`Clear answer: ${label}`)}">Clear answer</button>` : ''}
+    <p id="${questionId}-error" class="field-error" data-error-for="${escapeHtml(path)}"${questionError(path, errors) ? '' : ' hidden'}>${escapeHtml(questionError(path, errors))}</p>
+  </fieldset>`;
+}
+
 function selectQuestion({path, label, help = '', options = [], value, errors = []}) {
   const inputId = idFor(`select-${path}`);
   const optionsHtml = [`<option value="">Choose an option</option>`, ...options.map(option => `<option value="${escapeHtml(option.id)}"${value === option.id ? ' selected' : ''}>${escapeHtml(option.label)}</option>`)].join('');
@@ -124,6 +139,7 @@ function renderAbout(spec, model, answers, errors) {
   for (const question of page.questions || []) {
     if (question.id === 'suburb' && !visible.includes('suburb')) continue;
     if (question.id === 'suburb_other' && !visible.includes('suburb_other')) continue;
+    if (question.id === 'community_connection_other' && !(Array.isArray(answers.community_connection) && answers.community_connection.includes('other'))) continue;
     const group = question.group || 'About you';
     if (!grouped.has(group)) grouped.set(group, []);
     grouped.get(group).push(question);
@@ -132,6 +148,7 @@ function renderAbout(spec, model, answers, errors) {
     const content = questions.map(question => {
       const path = question.id;
       if (question.type === 'single') return choicesQuestion({path, label: question.label, help: question.help, options: question.options, value: answers[path], primaryIds: question.primary_option_ids, secondaryIds: question.secondary_option_ids, disclosureLabel: question.disclosure_label, errors});
+      if (question.type === 'multiple') return multipleChoicesQuestion({path, label: question.label, help: question.help, options: question.options, value: answers[path], errors});
       if (question.type === 'text') return textQuestion({path, label: question.label, help: question.help, value: readPath(answers, path), maxLength: question.max_length, errors});
       if (question.type === 'locality_select') {
         const area = answers.residence_area;
@@ -362,6 +379,12 @@ function updateField(element) {
   if (kind === 'consent') value = element.checked ? 'adult_agree' : undefined;
   else if (kind === 'numeric-refusal') value = element.checked ? true : undefined;
   else if (kind === 'single') { if (!element.checked) return; value = element.value; }
+  else if (kind === 'multiple') {
+    const selected = Array.isArray(readPath(answers, path)) ? readPath(answers, path) : [];
+    if (element.checked && element.value === 'prefer_not') value = ['prefer_not'];
+    else if (element.checked) value = [...selected.filter(id => id !== 'prefer_not' && id !== element.value), element.value];
+    else value = selected.filter(id => id !== element.value);
+  }
   else if (kind === 'number') value = element.validity.badInput ? NaN : element.value === '' ? undefined : Number(element.value);
   else value = normaliseNewlines(element.value);
   setPath(answers, path, value);
@@ -377,7 +400,7 @@ function updateField(element) {
     showTextLimit(element);
     return;
   }
-  if (['single', 'select', 'numeric-refusal'].includes(kind)) {
+  if (['single', 'multiple', 'select', 'numeric-refusal'].includes(kind)) {
     answers = model.reconcile(answers, previousState);
     errors = [];
     render({preserveFocus: true});

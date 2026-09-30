@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync, existsSync} from 'node:fs';
 import {createAdultSurveyModel, characterCount, MAX_TEXT_CHARACTERS, PAGE_ORDER, createExperience, ensureExperiences, appendExperience, removeExperience} from '../adult-survey/model.mjs';
+import {createDraftStore, DRAFT_STORAGE_KEY, DRAFT_TTL_MS} from '../adult-survey/draft-store.mjs';
 
 const read = path => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const spec = JSON.parse(read('adult-survey/survey-spec.json'));
@@ -12,6 +13,7 @@ const agreed = {consent: 'adult_agree'};
 const validAbout = () => ({
   ...agreed,
   role: 'service_member',
+  community_connection: ['defence_greater_darwin'],
   age_group: '18_29',
   current_connection: 'yes',
   residence_area: 'outside',
@@ -42,7 +44,7 @@ test('consent and visible background questions remain required, while five exper
   assert.deepEqual(model.validate(agreed, 'welcome'), []);
   assert.ok(about.questions.every(question => question.required));
   assert.deepEqual(model.validate(agreed, 'about').map(error => error.path), [
-    'role', 'age_group', 'current_connection', 'residence_area', 'nt_duration.years', 'nt_duration.months', 'has_dependants'
+    'role', 'community_connection', 'age_group', 'current_connection', 'residence_area', 'nt_duration.years', 'nt_duration.months', 'has_dependants'
   ]);
   assert.deepEqual(model.validate(validAbout(), 'about'), []);
   const blankAnswers = ensureExperiences(validAbout(), () => 'blank');
@@ -54,6 +56,167 @@ test('consent and visible background questions remain required, while five exper
   assert.equal(experience.final_question.id, 'final_comment');
   assert.equal(experience.final_question.required, false);
   assert.equal(experience.final_question.max_length, 5000);
+});
+
+test('community connection follows role with the approved multiple choice wording and conditional Other field', () => {
+  assert.deepEqual(about.questions.slice(0, 3).map(question => question.id), ['role', 'community_connection', 'community_connection_other']);
+  const question = about.questions[1];
+  assert.equal(question.label, 'What is your connection to the Greater Darwin Defence community?');
+  assert.equal(question.type, 'multiple');
+  assert.equal(question.required, true);
+  assert.equal(question.help, 'Select all that apply.');
+  assert.deepEqual(question.options, [
+    {id: 'live_greater_darwin', label: 'I live in Greater Darwin'},
+    {id: 'family_connections', label: 'I have family or close connections in Greater Darwin'},
+    {id: 'defence_greater_darwin', label: 'I am connected to Defence in Greater Darwin'},
+    {id: 'local_defence_elsewhere_nt', label: 'I live in Greater Darwin and have a Defence connection elsewhere in the NT'},
+    {id: 'outside_community_connection', label: 'I live outside Greater Darwin but have another connection to the community'},
+    {id: 'other', label: 'Other'},
+    {id: 'prefer_not', label: 'Prefer not to answer'}
+  ]);
+  const other = about.questions[2];
+  assert.equal(other.label, 'Please specify');
+  assert.equal(other.type, 'text');
+  assert.equal(other.required, true);
+  assert.equal(other.show_when, 'community_connection includes other');
+  assert.equal(other.max_length, 5000);
+  assert.equal(spec.answer_schema_version, 'adult_open_experiences_v4');
+});
+
+test('community connection accepts every listed answer or several substantive choices without changing eligibility', () => {
+  const question = about.questions.find(question => question.id === 'community_connection');
+  const values = [
+    ...question.options.map(option => [option.id]),
+    ['live_greater_darwin', 'family_connections', 'defence_greater_darwin'],
+    ['outside_community_connection', 'local_defence_elsewhere_nt', 'other']
+  ];
+  for (const community_connection of values) {
+    const state = {...complete(), community_connection, community_connection_other: 'Another connection'};
+    const before = structuredClone(state);
+    for (const page of ['about', 'experience']) assert.deepEqual(model.validate(state, page), []);
+    assert.deepEqual(state, before);
+  }
+  const state = {...complete(), community_connection: ['local_defence_elsewhere_nt'], current_connection: 'no'};
+  assert.deepEqual(model.validate(state, 'experience').map(error => error.path), ['current_connection']);
+});
+
+test('community connection requires a non-empty array of distinct listed choices', () => {
+  const invalid = [
+    undefined, null, '', [], 'defence_greater_darwin', {}, false, 0,
+    ['unknown'], [null], [0], [false], [{}], [['defence_greater_darwin']],
+    ['defence_greater_darwin', 'unknown'], ['defence_greater_darwin', 'defence_greater_darwin'],
+    ['prefer_not', 'prefer_not'], Array(1)
+  ];
+  for (const community_connection of invalid) {
+    const state = {...complete(), community_connection};
+    const before = structuredClone(state);
+    for (const page of ['about', 'experience']) assert.deepEqual(model.validate(state, page).map(error => error.path), ['community_connection']);
+    assert.deepEqual(state, before);
+  }
+  for (const community_connection of [['prefer_not', 'defence_greater_darwin'], ['other', 'prefer_not'], ['prefer_not', 'other', 'family_connections']]) {
+    const state = {...complete(), community_connection, community_connection_other: 'Details'};
+    const before = structuredClone(state);
+    for (const page of ['about', 'experience']) {
+      assert.deepEqual(model.validate(state, page), [{path: 'community_connection', message: 'Choose Prefer not to answer on its own.'}]);
+    }
+    assert.deepEqual(state, before);
+  }
+});
+
+test('reconciling refusal or deselecting Other clears only its hidden text and retains all other answers', () => {
+  const state = {...complete(), community_connection: ['other', 'prefer_not', 'family_connections'], community_connection_other: 'Private detail', final_comment: 'Final text'};
+  const before = structuredClone(state);
+  const next = model.reconcile(state);
+  assert.deepEqual(next.community_connection, ['prefer_not']);
+  assert.equal(next.community_connection_other, undefined);
+  assert.deepEqual(model.validate(next, 'experience'), []);
+  const {community_connection, community_connection_other, ...unchanged} = before;
+  const {community_connection: nextSelection, community_connection_other: nextOther, ...retained} = next;
+  assert.deepEqual(retained, unchanged);
+  assert.deepEqual(state, before);
+  const reselected = model.reconcile({...next, community_connection: ['other']}, next);
+  assert.equal(reselected.community_connection_other, undefined);
+  assert.deepEqual(model.validate(reselected, 'experience').map(error => error.path), ['community_connection_other']);
+  for (const selection of [['family_connections'], ['prefer_not'], []]) {
+    const candidate = {...before, community_connection: selection};
+    const reconciled = model.reconcile(candidate, before);
+    assert.equal(reconciled.community_connection_other, undefined);
+    assert.deepEqual(reconciled.experiences, before.experiences);
+    assert.equal(candidate.community_connection_other, 'Private detail');
+  }
+  const visible = {...complete(), community_connection: ['other', 'family_connections'], community_connection_other: ' Keep this text '};
+  assert.deepEqual(model.reconcile(visible, visible), visible);
+});
+
+test('Other community connection text is required only when selected independently of locality visibility', () => {
+  const state = {...complete(), community_connection: ['other']};
+  assert.deepEqual(model.visibleLocationFields(state), ['residence_area']);
+  for (const value of [undefined, null, '', ' ', '\n\r\t', '　']) {
+    state.community_connection_other = value;
+    for (const page of ['about', 'experience']) assert.deepEqual(model.validate(state, page).map(error => error.path), ['community_connection_other']);
+  }
+  for (const value of [0, true, ['not text'], {text: 'answer'}]) {
+    state.community_connection_other = value;
+    assert.deepEqual(model.validate(state, 'about'), [{path: 'community_connection_other', message: 'Use text for this answer.'}]);
+  }
+  state.community_connection_other = 'a';
+  assert.deepEqual(model.validate(state, 'about'), []);
+  assert.deepEqual(model.validate(state, 'experience'), []);
+  for (const value of ['a'.repeat(5001), ['hidden text'], null]) {
+    const hidden = {...complete(), community_connection_other: value};
+    const before = structuredClone(hidden);
+    for (const page of ['about', 'experience']) assert.deepEqual(model.validate(hidden, page), []);
+    assert.deepEqual(hidden, before);
+    assert.equal(model.reconcile(hidden).community_connection_other, undefined);
+  }
+});
+
+test('Other community connection text accepts 5000 normalized characters and preserves longer text for correction', () => {
+  for (const value of ['a'.repeat(5000), 'a\r\n'.repeat(2500), '😀'.repeat(2500)]) {
+    const state = {...complete(), community_connection: ['other'], community_connection_other: value};
+    for (const page of ['about', 'experience']) assert.deepEqual(model.validate(state, page), []);
+    state.community_connection_other += 'b';
+    const before = structuredClone(state);
+    for (const page of ['about', 'experience']) {
+      const errors = model.validate(state, page);
+      assert.deepEqual(errors.map(error => error.path), ['community_connection_other']);
+      assert.match(errors[0].message, /5,000/);
+      assert.deepEqual(state, before);
+    }
+    assert.equal(model.reconcile(state).community_connection_other, before.community_connection_other);
+  }
+});
+
+test('an existing v4 draft lacking the new question resumes intact and requires only the missing community answer', () => {
+  const state = appendExperience(complete(), () => 'saved-second');
+  delete state.community_connection;
+  state.experiences[1].responses = {situation: ' Saved ongoing situation\r\n', outcome: '<b>Raw saved text</b>'};
+  state.final_comment = 'Saved final comment';
+  state.previous_responses = {help_needed: 'Legacy answer retained'};
+  const before = structuredClone(state);
+  const schemaVersion = 'adult_open_experiences_v4';
+  const savedAt = Date.UTC(2026, 8, 30);
+  const values = new Map();
+  const storage = {
+    getItem: key => values.get(key) ?? null,
+    setItem: (key, value) => values.set(key, value),
+    removeItem: key => values.delete(key)
+  };
+  const saveStore = createDraftStore({storage, schemaVersion, now: () => savedAt});
+  assert.equal(saveStore.save({answers: state, pageId: 'experience', experienceId: 'saved-second'}).status, 'saved');
+  const savedRaw = values.get(DRAFT_STORAGE_KEY);
+  const result = createDraftStore({storage, schemaVersion: spec.answer_schema_version, now: () => savedAt + 1000}).load();
+  assert.equal(result.status, 'available');
+  assert.equal(result.draft.experienceId, 'saved-second');
+  assert.equal(result.draft.updatedAt, savedAt);
+  assert.equal(result.draft.expiresAt, savedAt + DRAFT_TTL_MS);
+  assert.deepEqual(result.draft.answers, before);
+  assert.equal(values.get(DRAFT_STORAGE_KEY), savedRaw);
+  const restored = model.reconcile(ensureExperiences(result.draft.answers));
+  assert.deepEqual(restored, before);
+  for (const page of ['about', 'experience']) assert.deepEqual(model.validate(restored, page).map(error => error.path), ['community_connection']);
+  assert.deepEqual(model.validate({...restored, community_connection: ['prefer_not']}, 'experience'), []);
+  assert.deepEqual(state, before);
 });
 
 test('experience prompts retain the approved five questions and guidance', () => {
@@ -99,7 +262,7 @@ test('optional written answers reject non-string values rather than coercing or 
 test('every current survey text question has a limit of 5000 characters or fewer', () => {
   assert.equal(MAX_TEXT_CHARACTERS, 5000);
   const questions = [...spec.pages.flatMap(page => page.questions || []), experience.final_question].filter(question => question.type === 'text');
-  assert.equal(questions.length, 7);
+  assert.equal(questions.length, 8);
   for (const question of questions) {
     assert.ok(Number.isSafeInteger(question.max_length) && question.max_length > 0 && question.max_length <= MAX_TEXT_CHARACTERS, question.id);
   }

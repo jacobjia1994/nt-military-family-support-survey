@@ -682,6 +682,53 @@
           "group": "About you"
         },
         {
+          "id": "community_connection",
+          "group": "About you",
+          "label": "What is your connection to the Greater Darwin Defence community?",
+          "type": "multiple",
+          "help": "Select all that apply.",
+          "required": true,
+          "options": [
+            {
+              "id": "live_greater_darwin",
+              "label": "I live in Greater Darwin"
+            },
+            {
+              "id": "family_connections",
+              "label": "I have family or close connections in Greater Darwin"
+            },
+            {
+              "id": "defence_greater_darwin",
+              "label": "I am connected to Defence in Greater Darwin"
+            },
+            {
+              "id": "local_defence_elsewhere_nt",
+              "label": "I live in Greater Darwin and have a Defence connection elsewhere in the NT"
+            },
+            {
+              "id": "outside_community_connection",
+              "label": "I live outside Greater Darwin but have another connection to the community"
+            },
+            {
+              "id": "other",
+              "label": "Other"
+            },
+            {
+              "id": "prefer_not",
+              "label": "Prefer not to answer"
+            }
+          ]
+        },
+        {
+          "id": "community_connection_other",
+          "group": "About you",
+          "label": "Please specify",
+          "type": "text",
+          "required": true,
+          "show_when": "community_connection includes other",
+          "max_length": 5000
+        },
+        {
           "id": "age_group",
           "label": "Which age group are you in?",
           "type": "single",

@@ -6,7 +6,7 @@ The front end has no answer receiver or analytics. It saves only unfinished loca
 
 ## Current data model
 
-The answer schema is `adult_open_experiences_v4`: shared background, `experiences: [{id, responses: {situation, actions, access, outcome, support}}]`, and one `final_comment`. Each experience's stable ID persists through navigation, deletion of other experiences and draft recovery. Display numbers may change after deletion, while IDs and answers do not. The number of experiences is not capped.
+The answer schema is `adult_open_experiences_v4`: shared background (including the `community_connection` array and conditional `community_connection_other` text), `experiences: [{id, responses: {situation, actions, access, outcome, support}}]`, and one `final_comment`. Each experience's stable ID persists through navigation, deletion of other experiences and draft recovery. Display numbers may change after deletion, while IDs and answers do not. The number of experiences is not capped.
 
 Old single-group v3 drafts retain their original text and expiry on read. Related answers are mapped into one experience, all originals are preserved for participant review, and the stored version changes only after resume/save. Unknown versions are kept until the respondent explicitly chooses to clear them, with a local backup download available.
 
