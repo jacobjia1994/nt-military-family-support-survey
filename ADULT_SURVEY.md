@@ -18,7 +18,7 @@ The final checkbox is: I have checked my answers and removed details that could 
 
 Who can take part appears inside the Welcome information/confirmation box immediately before the consent checkbox, with no duplicate outside. Existing eligibility, family definition, serving connection/residence separation, required/refusal rules, numeric limits, contacts and privacy/reporting rights remain. Community connection stays the second question, with seven approved options, Select all that apply and exclusive Prefer not to answer. Selecting Other opens a required single-line Please specify immediately below that option. Locality Other has the same single-line field directly below its select control. Deselecting the controlling option clears hidden in-memory text. All Clear answer controls are removed; refusal options remain.
 
-The invitation remains Your experience matters, using Australian Defence spelling. RAND and Defence strategy references are always expanded in the Welcome footer. Thank-you buttons read Request an interview and Find support in the NT; their destinations remain contact.html and support.html.
+The invitation remains Your experience matters, using Australian Defence spelling. RAND and Defence strategy references are always expanded in the Welcome footer. Survey and privacy email contacts and the Privacy Policy link appear below them, centred on three separate lines at the bottom of Welcome. Thank-you buttons read Request an interview and Find support in the NT; their destinations remain contact.html and support.html.
 
 ## In-memory data only
 
