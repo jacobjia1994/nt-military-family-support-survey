@@ -1,4 +1,4 @@
-import {createAdultSurveyModel, characterCount, normaliseNewlines, ensureExperiences, appendExperience, removeExperience} from './model.mjs?v=20260930-12';
+import {createAdultSurveyModel, characterCount, normaliseNewlines, ensureExperiences, appendExperience, removeExperience} from './model.mjs?v=20260930-13';
 const moduleUrl = import.meta.url;
 const main = document.querySelector('#main');
 const text = value => String(value ?? '');
@@ -180,7 +180,7 @@ function renderWelcome(spec, answers, errors) {
 
 function renderExperienceIntro(spec) {
   const page = specPage(spec, 'experience');
-  return `<section class="survey-layout dual-page experience-intro"><h1 tabindex="-1">${escapeHtml(page.title)}</h1><p class="privacy-notice">${escapeHtml(page.privacy_notice)}</p>${renderIntro(page.intro)}<div class="question-actions"><button type="button" class="back-button" data-action="back">Back</button><button type="button" class="button primary" data-action="start-experience">${escapeHtml(page.start_button)}</button></div></section>`;
+  return `<section class="survey-layout dual-page experience-intro"><h1 tabindex="-1">${escapeHtml(page.title)}</h1>${renderIntro(page.intro)}<p class="question-intro">${escapeHtml(page.privacy_notice)}</p><div class="question-actions"><button type="button" class="back-button" data-action="back">Back</button><button type="button" class="button primary" data-action="start-experience">${escapeHtml(page.start_button)}</button></div></section>`;
 }
 
 function renderExperience(spec, answers, errors) {

@@ -4,7 +4,7 @@
 
 Four stages: Welcome → A bit about you → Experiences → Thank you. The centered progress indicator remains on Experiences during the introduction and review sub-screens; review does not indicate submission or completion.
 
-The first visit to Experiences displays the concise introduction and Start describing your experience, with no questions visible yet. It covers the past 12 months, personal/family/both perspectives and known facts, the Greater Darwin serving link including family living elsewhere, experiences not necessarily caused by military service, the purpose and optional answers. Identifying-details guidance appears once at the top of this introduction. Classified/operationally sensitive information is addressed once in Welcome. Adding further experiences does not repeat the introduction gate.
+The first visit to Experiences displays the concise introduction and Start describing your experience, with no questions visible yet. It covers the past 12 months, personal/family/both perspectives and known facts, the Greater Darwin serving link including family living elsewhere, experiences not necessarily caused by military service, the purpose and optional answers. Identifying-details guidance is the final ordinary paragraph of this introduction, immediately before Start describing your experience. Classified/operationally sensitive information is addressed once in Welcome. Adding further experiences does not repeat the introduction gate.
 
 ## Questions and navigation
 
