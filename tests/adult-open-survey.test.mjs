@@ -37,7 +37,7 @@ test('one adult entry has four stages and no issue-selection or youth route', ()
   }
 });
 
-test('consent and visible background questions remain required, while six experience answers are optional', () => {
+test('consent and visible background questions remain required, while seven experience answers are optional', () => {
   assert.equal(model.validate({}, 'welcome').length, 1);
   assert.equal(model.validate({consent: 'under_18'}, 'welcome').length, 1);
   assert.deepEqual(model.validate(agreed, 'welcome'), []);
@@ -50,7 +50,7 @@ test('consent and visible background questions remain required, while six experi
   assert.deepEqual(blankAnswers.experiences, [{id: 'blank', responses: {}}]);
   assert.deepEqual(model.validate(blankAnswers, 'experience'), []);
   assert.deepEqual(model.validate(complete(), 'experience'), []);
-  assert.deepEqual(experience.questions.map(question => question.id), ['situation', 'actions', 'access', 'outcome', 'support', 'additional']);
+  assert.deepEqual(experience.questions.map(question => question.id), ['situation', 'needs', 'awareness', 'response', 'needs_met', 'improvement', 'additional']);
   assert.ok(experience.questions.every(question => question.type === 'text' && question.required === false && question.max_length === 5000));
 });
 
@@ -77,7 +77,7 @@ test('community connection follows role with the approved multiple choice wordin
   assert.equal(other.show_when, 'community_connection includes other');
   assert.equal(other.max_length, 5000);
   assert.equal(other.input_mode, 'single_line');
-  assert.equal(spec.answer_schema_version, 'adult_open_in_memory_v5');
+  assert.equal(spec.answer_schema_version, 'adult_open_in_memory_v6');
 });
 
 test('community connection accepts every listed answer or several substantive choices without changing eligibility', () => {
@@ -184,19 +184,20 @@ test('Other community connection text accepts 5000 normalized characters and pre
   }
 });
 
-test('experience prompts retain the approved six questions and personal or family guidance', () => {
-  assert.deepEqual(experience.questions.map(question => [question.label, question.help || '']), [
-    ['What was happening, and how did it affect everyday life for you or your family?', ''],
-    ['How did you or your family deal with it?', 'Tell us what you or your family did on your own, who was approached for help, or what help was offered. What changes were you or your family hoping for?'],
-    ['What made it easier or harder to get any help you or your family wanted?', 'This could include knowing where to look, getting a response or being able to use what was offered. If you or your family did not seek help, you can say why.'],
-    ['What changed for you or your family, if anything, and how are things now?', 'Tell us what helped or did not help, and what remains unresolved for you or your family, if anything.'],
-    ['Looking back, what support was missing or could have worked better for you or your family, if anything?', 'Tell us what you or your family wanted help with and what would have made a difference. You can also say what worked well and should continue.'],
-    ['Is there anything else you would like us to know about this experience?', 'Optional.']
+test('experience prompts retain the approved six core questions and optional comment in order', () => {
+  assert.deepEqual(experience.questions.map(question => [question.id, question.label, question.help || '']), [
+    ['situation', 'What was happening, and how did it affect everyday life for you or your family?', ''],
+    ['needs', 'What did you or your family need at the time?', 'Think about what would have helped with the situation you described. You do not need to name a service.'],
+    ['awareness', 'At the time, what support did you or your family know about that might help?', 'This could include family, friends, community groups or services. Include support you knew about but did not use, or say if you did not know where to turn.'],
+    ['response', 'How did you or your family respond to the situation?', 'Describe what you did yourselves and any help you sought or received. What made getting help easier or harder? If you did not seek help, you can explain why.'],
+    ['needs_met', 'How well were the needs you described met?', 'What helped, and what remained unmet, if anything? You can answer whether or not you received help from others.'],
+    ['improvement', 'What support, if any, could be improved or added to better meet these needs?', 'Describe what would make the biggest difference and what would help you or your family use that support.'],
+    ['additional', 'Is there anything else you would like us to know about this experience?', 'Optional.']
   ]);
 });
 
-test('each experience has its own sixth optional comment with concise shared guidance', () => {
-  const additional = experience.questions[5];
+test('each experience has its own seventh optional comment with concise shared guidance', () => {
+  const additional = experience.questions[6];
   assert.equal(additional.id, 'additional');
   assert.equal(additional.label, 'Is there anything else you would like us to know about this experience?');
   assert.equal(additional.type, 'text');
@@ -223,7 +224,7 @@ test('missing additional answers remain optional for every experience', () => {
   assert.deepEqual(model.validate(allBlank, 'experience'), []);
 });
 
-test('all six experience answers accept omitted, empty, whitespace or a single letter without mutation', () => {
+test('all seven experience answers accept omitted, empty, whitespace or a single letter without mutation', () => {
   for (const question of experience.questions) {
     for (const value of [undefined, '', ' ', '\n\r\t', '　', 'a', '.', ' ?', 'n/a']) {
       const state = complete();
@@ -254,7 +255,7 @@ test('optional written answers reject non-string values rather than coercing or 
 test('every current survey text question has a limit of 5000 characters or fewer', () => {
   assert.equal(MAX_TEXT_CHARACTERS, 5000);
   const questions = spec.pages.flatMap(page => page.questions || []).filter(question => question.type === 'text');
-  assert.equal(questions.length, 8);
+  assert.equal(questions.length, 9);
   for (const question of questions) {
     assert.ok(Number.isSafeInteger(question.max_length) && question.max_length > 0 && question.max_length <= MAX_TEXT_CHARACTERS, question.id);
   }
@@ -309,7 +310,7 @@ test('visible other-locality text is required, accepts a letter and retains over
 
 test('narratives keep raw text and use the newline-normalised UTF-16 character count', () => {
   const state = complete();
-  state.experiences[0].responses.actions = '<script>alert(1)</script> Military friend, not a coded answer.';
+  state.experiences[0].responses.response = '<script>alert(1)</script> Military friend, not a coded answer.';
   const before = structuredClone(state);
   assert.deepEqual(model.validate(state, 'experience'), []);
   assert.deepEqual(state, before);
@@ -485,27 +486,42 @@ test('review shows refusal labels without exposing refused or hidden numeric and
   assert.deepEqual(state, before);
 });
 
-test('review keeps stable experience IDs and complete raw multiline text in a detached projection', () => {
-  const raw = '  <script>literal text</script> & "quotes"\r\nsecond line\rfinal line 😀  '.padEnd(5000, '字');
+test('review keeps all seven independent answers per experience, stable IDs and complete raw multiline text', () => {
+  const rawFor = (experienceId, questionId) => `  ${experienceId} / ${questionId}: <script>literal text</script> & "quotes"\r\nsecond line\rfinal line 😀  `.padEnd(5000, '字');
   const state = appendExperience(complete(), () => 'second');
-  state.experiences[0].responses = Object.fromEntries(experience.questions.map(question => [question.id, raw]));
-  state.experiences[1].responses = {situation: '', actions: ' \n\t', additional: '　'};
+  for (const entry of state.experiences) entry.responses = Object.fromEntries(experience.questions.map(question => [question.id, rawFor(entry.id, question.id)]));
   const before = structuredClone(state);
   assert.deepEqual(model.validate(state, 'review'), []);
   const projection = model.review(state);
   assert.deepEqual(projection.experiences.map(entry => [entry.id, entry.number]), [['first', 1], ['second', 2]]);
-  assert.deepEqual(projection.experiences[0].questions.map(question => [question.id, question.label]), experience.questions.map(question => [question.id, question.label]));
-  for (const question of projection.experiences[0].questions) assert.deepEqual(question.answers, [raw]);
-  for (const question of projection.experiences[1].questions) assert.deepEqual(question.answers, ['Not answered']);
+  for (const entry of projection.experiences) {
+    assert.deepEqual(entry.questions.map(question => [question.id, question.label]), experience.questions.map(question => [question.id, question.label]));
+    assert.equal(entry.questions.length, 7);
+    for (const question of entry.questions) assert.deepEqual(question.answers, [rawFor(entry.id, question.id)]);
+  }
+  assert.equal(new Set(projection.experiences.flatMap(entry => entry.questions.map(question => question.answers[0]))).size, 14);
   assert.deepEqual(state, before);
+  const missing = structuredClone(state);
+  delete missing.experiences[0].responses.needs;
+  const missingBefore = structuredClone(missing);
+  assert.deepEqual(model.validate(missing, 'review'), []);
+  for (const entry of model.review(missing).experiences) {
+    for (const question of entry.questions) {
+      assert.deepEqual(question.answers, [entry.id === 'first' && question.id === 'needs' ? 'Not answered' : rawFor(entry.id, question.id)]);
+    }
+  }
+  assert.deepEqual(missing, missingBefore);
+  const blank = ensureExperiences(validAbout(), () => 'blank');
+  assert.ok(model.review(blank).experiences[0].questions.every(question => question.answers[0] === 'Not answered'));
   projection.about[0].answers[0] = 'Edited display copy';
   projection.experiences[0].questions[0].answers[0] = 'Edited display copy';
   assert.deepEqual(state, before);
   const afterDeletion = model.review(removeExperience(state, 'first'));
   assert.deepEqual(afterDeletion.experiences.map(entry => [entry.id, entry.number]), [['second', 1]]);
+  for (const question of afterDeletion.experiences[0].questions) assert.deepEqual(question.answers, [rawFor('second', question.id)]);
 });
 
-test('review validation checks all six answers, background, consent and eligibility regardless of active ID', () => {
+test('review validation checks all seven answers, background, consent and eligibility regardless of active ID', () => {
   for (const question of experience.questions) {
     const state = appendExperience(complete(), () => 'second');
     state.experiences[0].responses[question.id] = 'a'.repeat(5001);
@@ -537,12 +553,12 @@ test('review validation checks all six answers, background, consent and eligibil
 
 test('active-page validation isolates text checks, while finishing checks every experience by stable ID', () => {
   const state = appendExperience(complete(), () => 'second');
-  state.experiences[0].responses.access = 'a'.repeat(5001);
+  state.experiences[0].responses.awareness = 'a'.repeat(5001);
   state.experiences[1].responses.situation = 'Current answer';
   const before = structuredClone(state);
   assert.deepEqual(model.validate(state, 'experience', 'second'), []);
-  assert.deepEqual(model.validate(state, 'experience').map(error => error.path), ['experiences.first.responses.access']);
-  assert.deepEqual(model.validate(state, 'experience', 'first').map(error => error.path), ['experiences.first.responses.access']);
+  assert.deepEqual(model.validate(state, 'experience').map(error => error.path), ['experiences.first.responses.awareness']);
+  assert.deepEqual(model.validate(state, 'experience', 'first').map(error => error.path), ['experiences.first.responses.awareness']);
   assert.deepEqual(model.validate(state, 'experience', 'missing').map(error => error.path), ['experiences']);
   assert.deepEqual(state, before);
   delete state.role;

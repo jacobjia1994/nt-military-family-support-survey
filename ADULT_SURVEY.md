@@ -8,9 +8,9 @@ The first visit to Experiences displays the concise introduction and Start descr
 
 ## Questions and navigation
 
-The five core labels/helpers remain unchanged from d015e3a. Each experience has six optional fields: situation, actions, access, outcome, support and additional. Each permits blank/whitespace answers and keeps the 5,000 newline-normalised UTF-16-character rule, without a counter or silent truncation. Stable IDs preserve association during Back/Next/add/delete and review edits. There is no fixed maximum number of experiences. Deletion requires confirmation, preserves other IDs and answers, and keeps at least one experience.
+The six core questions follow the approved order: situation, needs, awareness, response, needs met or unmet, and support improvements. An optional additional comment follows. The seven field IDs are situation, needs, awareness, response, needs_met, improvement and additional. Each permits blank/whitespace answers and keeps the 5,000 newline-normalised UTF-16-character rule, without a counter or silent truncation. Stable IDs preserve association during Back/Next/add/delete and review edits. There is no fixed maximum number of experiences. Deletion requires confirmation, preserves other IDs and answers, and keeps at least one experience.
 
-The former experience selector is removed. Back and Next move in sequence. Finish survey opens the single final review containing all visible background answers and all six questions for every experience in original question order. Choice labels, multiple selections, conditional Other text and numeric/refusal answers display correctly. Empty optional answers read Not answered, without an error. Long text and special characters remain fully visible. Edit background or Edit Experience N returns to the corresponding input screen, with Return to review preserving other answers.
+The former experience selector is removed. Back and Next move in sequence. Finish survey opens the single final review containing all visible background answers and all seven questions for every experience in original question order. Choice labels, multiple selections, conditional Other text and numeric/refusal answers display correctly. Empty optional answers read Not answered, without an error. Long text and special characters remain fully visible. Edit background or Edit Experience N returns to the corresponding input screen, with Return to review preserving other answers.
 
 The final checkbox is: I have checked my answers and removed details that could identify me or anyone else. Confirm and submit requires it and validates the whole response before showing separate Thank you. No additional comment box or duplicate introduction appears at review.
 
@@ -22,7 +22,7 @@ The invitation remains Your experience matters, using Australian Defence spellin
 
 ## In-memory data only
 
-Answer schema: adult_open_in_memory_v5. One in-memory answer object holds shared background and experiences: [{id, responses}]. The application has no persistence dependency, storage access, migration, resume prompt, saved-progress UI or 30-day promise. Refreshing/closing starts a blank survey. Back/Next within the running page and editing/returning to review do not lose answers. Returning from a browser-cached page resets the in-memory survey as a fresh visit.
+Answer schema: adult_open_in_memory_v6. One in-memory answer object holds shared background and experiences: [{id, responses}]. The application has no persistence dependency, storage access, migration, resume prompt, saved-progress UI or 30-day promise. Refreshing/closing starts a blank survey. Back/Next within the running page and editing/returning to review do not lose answers. Returning from a browser-cached page resets the in-memory survey as a fresh visit.
 
 Historical browser storage keys and answers are not read, written or deleted. Earlier storage is left untouched; no automatic migration occurs. The removed draft-store source and dedicated tests are no longer active dependencies.
 

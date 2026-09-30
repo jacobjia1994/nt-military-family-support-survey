@@ -1,5 +1,5 @@
 {
-  "schema_version": "adult_open_2026_09_30_in_memory_review",
+  "schema_version": "adult_open_2026_09_30_need_centred",
   "variant": "adult_open_response",
   "scope": {
     "population": "Current-serving military personnel based in Greater Darwin and their adult family members, including overseas military personnel and families living elsewhere.",
@@ -954,36 +954,45 @@
           "rows": 6
         },
         {
-          "id": "actions",
-          "label": "How did you or your family deal with it?",
-          "help": "Tell us what you or your family did on your own, who was approached for help, or what help was offered. What changes were you or your family hoping for?",
+          "id": "needs",
+          "label": "What did you or your family need at the time?",
+          "help": "Think about what would have helped with the situation you described. You do not need to name a service.",
           "type": "text",
           "required": false,
           "max_length": 5000,
           "rows": 6
         },
         {
-          "id": "access",
-          "label": "What made it easier or harder to get any help you or your family wanted?",
-          "help": "This could include knowing where to look, getting a response or being able to use what was offered. If you or your family did not seek help, you can say why.",
+          "id": "awareness",
+          "label": "At the time, what support did you or your family know about that might help?",
+          "help": "This could include family, friends, community groups or services. Include support you knew about but did not use, or say if you did not know where to turn.",
           "type": "text",
           "required": false,
           "max_length": 5000,
           "rows": 6
         },
         {
-          "id": "outcome",
-          "label": "What changed for you or your family, if anything, and how are things now?",
-          "help": "Tell us what helped or did not help, and what remains unresolved for you or your family, if anything.",
+          "id": "response",
+          "label": "How did you or your family respond to the situation?",
+          "help": "Describe what you did yourselves and any help you sought or received. What made getting help easier or harder? If you did not seek help, you can explain why.",
           "type": "text",
           "required": false,
           "max_length": 5000,
           "rows": 6
         },
         {
-          "id": "support",
-          "label": "Looking back, what support was missing or could have worked better for you or your family, if anything?",
-          "help": "Tell us what you or your family wanted help with and what would have made a difference. You can also say what worked well and should continue.",
+          "id": "needs_met",
+          "label": "How well were the needs you described met?",
+          "help": "What helped, and what remained unmet, if anything? You can answer whether or not you received help from others.",
+          "type": "text",
+          "required": false,
+          "max_length": 5000,
+          "rows": 6
+        },
+        {
+          "id": "improvement",
+          "label": "What support, if any, could be improved or added to better meet these needs?",
+          "help": "Describe what would make the biggest difference and what would help you or your family use that support.",
           "type": "text",
           "required": false,
           "max_length": 5000,
@@ -1040,5 +1049,5 @@
       ]
     }
   },
-  "answer_schema_version": "adult_open_in_memory_v5"
+  "answer_schema_version": "adult_open_in_memory_v6"
 }

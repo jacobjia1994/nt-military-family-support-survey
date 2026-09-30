@@ -1,4 +1,4 @@
-import {createAdultSurveyModel, characterCount, normaliseNewlines, ensureExperiences, appendExperience, removeExperience} from './model.mjs?v=20260930-11';
+import {createAdultSurveyModel, characterCount, normaliseNewlines, ensureExperiences, appendExperience, removeExperience} from './model.mjs?v=20260930-12';
 const moduleUrl = import.meta.url;
 const main = document.querySelector('#main');
 const text = value => String(value ?? '');

@@ -1,6 +1,6 @@
 # Greater Darwin Defence Family Support Survey
 
-The [adult survey](index.html) has four stages: Welcome, A bit about you, Experiences, and Thank you. The first visit to Experiences shows the introduction and Start describing your experience before the questions. Each experience has the same five core questions and one optional additional question; all six written answers may be left blank. Respondents can add as many experiences as they choose, move back and forward to edit, or delete an experience with confirmation. At least one experience remains.
+The [adult survey](index.html) has four stages: Welcome, A bit about you, Experiences, and Thank you. The first visit to Experiences shows the introduction and Start describing your experience before the questions. Each experience has the same six core questions and one optional additional question; all seven written answers may be left blank. Respondents can add as many experiences as they choose, move back and forward to edit, or delete an experience with confirmation. At least one experience remains.
 
 Finish survey opens a complete review of the background and every experience in question order. Full answers are visible, with blank answers marked Not answered. Respondents can edit the background or an individual experience and return to review. The identifying-information confirmation is required before Confirm and submit opens Thank you.
 
