@@ -1,4 +1,4 @@
-import {createAdultSurveyModel, characterCount, normaliseNewlines, ensureExperiences, appendExperience, removeExperience} from './model.mjs?v=20260930-16';
+import {createAdultSurveyModel, characterCount, normaliseNewlines, ensureExperiences, appendExperience, removeExperience} from './model.mjs?v=20260930-17';
 const moduleUrl = import.meta.url;
 const main = document.querySelector('#main');
 const text = value => String(value ?? '');
@@ -237,7 +237,7 @@ function render({preserveFocus = false} = {}) {
     content = `<section class="finish dual-page"><h1 tabindex="-1">${escapeHtml(screen.title)}</h1><p class="lead">${escapeHtml(screen.text)}</p><div class="question-actions"><button class="button secondary" type="button" data-action="back">Back</button></div></section>`;
   }
   const activeStageIndex = stages.findIndex(([id]) => id === activeStage);
-  const progress = `<div class="stage-progress"><div class="step-topline" aria-hidden="true"><span>${escapeHtml(stages[activeStageIndex][1])}</span></div><ol class="section-track" aria-label="Survey stages">${stages.map(([id, label], index) => `<li aria-label="${escapeHtml(label)}"${index <= activeStageIndex ? ' class="visited"' : ''}${id === activeStage ? ' aria-current="step"' : ''}><span class="stage-label sr-only">${escapeHtml(label)}</span></li>`).join('')}</ol></div>`;
+  const progress = `<div class="stage-progress"><ol class="section-track" aria-label="Survey stages">${stages.map(([id, label], index) => `<li aria-label="${escapeHtml(label)}"${index <= activeStageIndex ? ' class="visited"' : ''}${id === activeStage ? ' aria-current="step"' : ''}><span class="stage-label sr-only">${escapeHtml(label)}</span></li>`).join('')}</ol></div>`;
   main.innerHTML = progress + content;
   main.dataset.page = pageId;
   if (errors.length) main.querySelector('h1').insertAdjacentHTML('afterend', '<div class="survey-errors" role="alert"><p>Please check the highlighted questions.</p></div>');

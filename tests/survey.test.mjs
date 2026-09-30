@@ -405,8 +405,8 @@ test('the separate youth completion page reads like a real survey', () => {
 test('the sole public adult entry loads the current app and the old open entry redirects', () => {
   const entry = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const oldOpenEntry = readFileSync(new URL('../open-response.html', import.meta.url), 'utf8');
-  assert.match(entry, /adult-survey\/app\.mjs\?v=20260930-16/);
-  assert.match(entry, /adult-survey\/survey\.css\?v=20260930-16/);
+  assert.match(entry, /adult-survey\/app\.mjs\?v=20260930-17/);
+  assert.match(entry, /adult-survey\/survey\.css\?v=20260930-17/);
   assert.doesNotMatch(entry, /data-survey-variant|survey-variants|rand-adult-app\.js|survey\.js\?/);
   assert.doesNotMatch(entry, /Preview only|Team review draft|Online submissions are not open|survey-availability/);
   assert.match(oldOpenEntry, /http-equiv="refresh" content="0; url=index\.html"/);

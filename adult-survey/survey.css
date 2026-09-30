@@ -100,7 +100,6 @@
 
 /* Original segmented progress, adapted to the current four survey phases. */
 .stage-progress{margin:28px 0 0}
-.stage-progress .step-topline{justify-content:flex-end}
 .stage-progress .section-track{display:flex;gap:8px;list-style:none;padding:0;margin:0}
 .stage-progress .section-track li{height:3px;flex:1;background:#ebe7e1;border-radius:2px}
 .stage-progress .section-track li.visited{background:#c55737}

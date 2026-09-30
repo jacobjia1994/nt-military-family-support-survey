@@ -2,7 +2,7 @@
 
 ## Current approved design — 30 September 2026
 
-Four stages: Welcome → A bit about you → Experiences → Thank you. The four-segment progress strip uses the original orange-red for reached phases, including the current phase, and light grey for upcoming phases. The current phase label appears above it, without page numbering. It remains on Experiences during the introduction and review sub-screens; review does not indicate submission or completion.
+Four stages: Welcome → A bit about you → Experiences → Thank you. The four-segment progress strip uses the original orange-red for reached phases, including the current phase, and light grey for upcoming phases. Only the coloured segments are visible; stage names and the current phase remain available to screen readers, without page numbering. It remains on Experiences during the introduction and review sub-screens; review does not indicate submission or completion.
 
 The first visit to Experiences displays the concise introduction and Start describing your experience, with no questions visible yet. It covers the past 12 months, personal/family/both perspectives and known facts, the Greater Darwin serving link including family living elsewhere, experiences not necessarily caused by military service, the purpose and optional answers. Identifying-details guidance is the final ordinary paragraph of this introduction, immediately before Start describing your experience. Classified/operationally sensitive information is addressed once in Welcome. Adding further experiences does not repeat the introduction gate.
 
