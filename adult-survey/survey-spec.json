@@ -1,0 +1,1060 @@
+{
+  "schema_version": "adult_open_2026_09_30",
+  "variant": "adult_open_response",
+  "scope": {
+    "population": "Current-serving military personnel based in Greater Darwin and their adult family members, including overseas military personnel and families living elsewhere.",
+    "adult_only": true,
+    "collection_enabled": false
+  },
+  "geography": {
+    "version": "2026-09-27-two-level",
+    "source_commit": "cdfe402665d6afbac1c18e554564368298bf8e86",
+    "source_blob": "c3062d9457a05bc2d62ed368735ad53190944191",
+    "areas": [
+      {
+        "id": "darwin",
+        "label": "Darwin"
+      },
+      {
+        "id": "palmerston",
+        "label": "Palmerston"
+      },
+      {
+        "id": "litchfield",
+        "label": "Litchfield"
+      },
+      {
+        "id": "greater_darwin_other",
+        "label": "Other Greater Darwin area"
+      },
+      {
+        "id": "outside",
+        "label": "Outside Greater Darwin"
+      },
+      {
+        "id": "prefer",
+        "label": "Prefer not to answer"
+      }
+    ],
+    "localities": [
+      {
+        "id": "acacia_hills",
+        "label": "Acacia Hills",
+        "region": "litchfield"
+      },
+      {
+        "id": "alawa",
+        "label": "Alawa",
+        "region": "darwin"
+      },
+      {
+        "id": "anula",
+        "label": "Anula",
+        "region": "darwin"
+      },
+      {
+        "id": "archer",
+        "label": "Archer",
+        "region": "palmerston"
+      },
+      {
+        "id": "bakewell",
+        "label": "Bakewell",
+        "region": "palmerston"
+      },
+      {
+        "id": "bayview",
+        "label": "Bayview",
+        "region": "darwin"
+      },
+      {
+        "id": "bees_creek",
+        "label": "Bees Creek",
+        "region": "litchfield"
+      },
+      {
+        "id": "bellamack",
+        "label": "Bellamack",
+        "region": "palmerston"
+      },
+      {
+        "id": "berrimah",
+        "label": "Berrimah",
+        "region": "darwin",
+        "aliases": [
+          "Northcrest"
+        ]
+      },
+      {
+        "id": "berry_springs",
+        "label": "Berry Springs",
+        "region": "litchfield"
+      },
+      {
+        "id": "black_jungle",
+        "label": "Black Jungle",
+        "region": "litchfield"
+      },
+      {
+        "id": "blackmore",
+        "label": "Blackmore",
+        "region": "litchfield"
+      },
+      {
+        "id": "brinkin",
+        "label": "Brinkin",
+        "region": "darwin"
+      },
+      {
+        "id": "buffalo_creek",
+        "label": "Buffalo Creek",
+        "region": "darwin"
+      },
+      {
+        "id": "casuarina",
+        "label": "Casuarina",
+        "region": "darwin"
+      },
+      {
+        "id": "channel_island",
+        "label": "Channel Island",
+        "region": "litchfield"
+      },
+      {
+        "id": "charles_darwin",
+        "label": "Charles Darwin",
+        "region": "darwin"
+      },
+      {
+        "id": "coconut_grove",
+        "label": "Coconut Grove",
+        "region": "darwin"
+      },
+      {
+        "id": "coolalinga",
+        "label": "Coolalinga",
+        "region": "litchfield"
+      },
+      {
+        "id": "coonawarra",
+        "label": "Coonawarra",
+        "region": "darwin"
+      },
+      {
+        "id": "daly",
+        "label": "Daly",
+        "region": "litchfield"
+      },
+      {
+        "id": "darwin_city",
+        "label": "Darwin City",
+        "region": "darwin",
+        "aliases": [
+          "Darwin CBD",
+          "CBD"
+        ]
+      },
+      {
+        "id": "darwin_river",
+        "label": "Darwin River",
+        "region": "litchfield"
+      },
+      {
+        "id": "driver",
+        "label": "Driver",
+        "region": "palmerston"
+      },
+      {
+        "id": "durack",
+        "label": "Durack",
+        "region": "palmerston"
+      },
+      {
+        "id": "east_arm",
+        "label": "East Arm",
+        "region": "greater_darwin_other"
+      },
+      {
+        "id": "east_point",
+        "label": "East Point",
+        "region": "darwin"
+      },
+      {
+        "id": "eaton",
+        "label": "Eaton",
+        "region": "darwin"
+      },
+      {
+        "id": "elrundie",
+        "label": "Elrundie",
+        "region": "palmerston"
+      },
+      {
+        "id": "fannie_bay",
+        "label": "Fannie Bay",
+        "region": "darwin"
+      },
+      {
+        "id": "farrar",
+        "label": "Farrar",
+        "region": "palmerston"
+      },
+      {
+        "id": "fly_creek",
+        "label": "Fly Creek",
+        "region": "litchfield"
+      },
+      {
+        "id": "freds_pass",
+        "label": "Freds Pass",
+        "region": "litchfield"
+      },
+      {
+        "id": "girraween",
+        "label": "Girraween",
+        "region": "litchfield"
+      },
+      {
+        "id": "glyde_point",
+        "label": "Glyde Point",
+        "region": "litchfield"
+      },
+      {
+        "id": "gray",
+        "label": "Gray",
+        "region": "palmerston"
+      },
+      {
+        "id": "gunn",
+        "label": "Gunn",
+        "region": "palmerston"
+      },
+      {
+        "id": "gunn_point",
+        "label": "Gunn Point",
+        "region": "litchfield"
+      },
+      {
+        "id": "herbert",
+        "label": "Herbert",
+        "region": "litchfield"
+      },
+      {
+        "id": "hidden_valley",
+        "label": "Hidden Valley",
+        "region": "darwin"
+      },
+      {
+        "id": "holmes",
+        "label": "Holmes",
+        "region": "darwin"
+      },
+      {
+        "id": "holtze",
+        "label": "Holtze",
+        "region": "litchfield",
+        "aliases": [
+          "Robertson Barracks"
+        ]
+      },
+      {
+        "id": "howard_springs",
+        "label": "Howard Springs",
+        "region": "litchfield"
+      },
+      {
+        "id": "hughes",
+        "label": "Hughes",
+        "region": "litchfield"
+      },
+      {
+        "id": "humpty_doo",
+        "label": "Humpty Doo",
+        "region": "litchfield"
+      },
+      {
+        "id": "jingili",
+        "label": "Jingili",
+        "region": "darwin"
+      },
+      {
+        "id": "johnston",
+        "label": "Johnston",
+        "region": "palmerston"
+      },
+      {
+        "id": "karama",
+        "label": "Karama",
+        "region": "darwin"
+      },
+      {
+        "id": "knuckey_lagoon",
+        "label": "Knuckey Lagoon",
+        "region": "litchfield"
+      },
+      {
+        "id": "koolpinyah",
+        "label": "Koolpinyah",
+        "region": "litchfield"
+      },
+      {
+        "id": "lambells_lagoon",
+        "label": "Lambells Lagoon",
+        "region": "litchfield"
+      },
+      {
+        "id": "larrakeyah",
+        "label": "Larrakeyah",
+        "region": "darwin",
+        "aliases": [
+          "Cullen Bay"
+        ]
+      },
+      {
+        "id": "leanyer",
+        "label": "Leanyer",
+        "region": "darwin"
+      },
+      {
+        "id": "lee_point",
+        "label": "Lee Point",
+        "region": "darwin"
+      },
+      {
+        "id": "livingstone",
+        "label": "Livingstone",
+        "region": "litchfield"
+      },
+      {
+        "id": "lloyd_creek",
+        "label": "Lloyd Creek",
+        "region": "litchfield"
+      },
+      {
+        "id": "ludmilla",
+        "label": "Ludmilla",
+        "region": "darwin"
+      },
+      {
+        "id": "lyons",
+        "label": "Lyons",
+        "region": "darwin"
+      },
+      {
+        "id": "malak",
+        "label": "Malak",
+        "region": "darwin"
+      },
+      {
+        "id": "manton",
+        "label": "Manton",
+        "region": "litchfield"
+      },
+      {
+        "id": "marlow_lagoon",
+        "label": "Marlow Lagoon",
+        "region": "palmerston"
+      },
+      {
+        "id": "marrara",
+        "label": "Marrara",
+        "region": "darwin"
+      },
+      {
+        "id": "mcminns_lagoon",
+        "label": "McMinns Lagoon",
+        "region": "litchfield"
+      },
+      {
+        "id": "micket_creek",
+        "label": "Micket Creek",
+        "region": "litchfield"
+      },
+      {
+        "id": "middle_point",
+        "label": "Middle Point",
+        "region": "litchfield"
+      },
+      {
+        "id": "millner",
+        "label": "Millner",
+        "region": "darwin"
+      },
+      {
+        "id": "mitchell",
+        "label": "Mitchell",
+        "region": "palmerston"
+      },
+      {
+        "id": "moil",
+        "label": "Moil",
+        "region": "darwin"
+      },
+      {
+        "id": "moulden",
+        "label": "Moulden",
+        "region": "palmerston"
+      },
+      {
+        "id": "muirhead",
+        "label": "Muirhead",
+        "region": "darwin"
+      },
+      {
+        "id": "murrumujuk",
+        "label": "Murrumujuk",
+        "region": "litchfield"
+      },
+      {
+        "id": "nakara",
+        "label": "Nakara",
+        "region": "darwin"
+      },
+      {
+        "id": "nightcliff",
+        "label": "Nightcliff",
+        "region": "darwin"
+      },
+      {
+        "id": "noonamah",
+        "label": "Noonamah",
+        "region": "litchfield"
+      },
+      {
+        "id": "palmerston_city",
+        "label": "Palmerston City",
+        "region": "palmerston"
+      },
+      {
+        "id": "parap",
+        "label": "Parap",
+        "region": "darwin"
+      },
+      {
+        "id": "pinelands",
+        "label": "Pinelands",
+        "region": "palmerston"
+      },
+      {
+        "id": "rapid_creek",
+        "label": "Rapid Creek",
+        "region": "darwin"
+      },
+      {
+        "id": "rosebery",
+        "label": "Rosebery",
+        "region": "palmerston"
+      },
+      {
+        "id": "shoal_bay",
+        "label": "Shoal Bay",
+        "region": "litchfield"
+      },
+      {
+        "id": "southport",
+        "label": "Southport",
+        "region": "litchfield"
+      },
+      {
+        "id": "stuart_park",
+        "label": "Stuart Park",
+        "region": "darwin"
+      },
+      {
+        "id": "the_gardens",
+        "label": "The Gardens",
+        "region": "darwin"
+      },
+      {
+        "id": "the_narrows",
+        "label": "The Narrows",
+        "region": "darwin"
+      },
+      {
+        "id": "tivendale",
+        "label": "Tivendale",
+        "region": "palmerston"
+      },
+      {
+        "id": "tiwi",
+        "label": "Tiwi",
+        "region": "darwin"
+      },
+      {
+        "id": "tumbling_waters",
+        "label": "Tumbling Waters",
+        "region": "litchfield"
+      },
+      {
+        "id": "virginia",
+        "label": "Virginia",
+        "region": "litchfield"
+      },
+      {
+        "id": "wagaman",
+        "label": "Wagaman",
+        "region": "darwin"
+      },
+      {
+        "id": "wak_wak",
+        "label": "Wak Wak",
+        "region": "litchfield"
+      },
+      {
+        "id": "wanguri",
+        "label": "Wanguri",
+        "region": "darwin"
+      },
+      {
+        "id": "weddell",
+        "label": "Weddell",
+        "region": "litchfield"
+      },
+      {
+        "id": "wickham",
+        "label": "Wickham",
+        "region": "litchfield"
+      },
+      {
+        "id": "winnellie",
+        "label": "Winnellie",
+        "region": "darwin"
+      },
+      {
+        "id": "wishart",
+        "label": "Wishart",
+        "region": "palmerston"
+      },
+      {
+        "id": "woodroffe",
+        "label": "Woodroffe",
+        "region": "palmerston"
+      },
+      {
+        "id": "woolner",
+        "label": "Woolner",
+        "region": "darwin"
+      },
+      {
+        "id": "wulagi",
+        "label": "Wulagi",
+        "region": "darwin"
+      },
+      {
+        "id": "yarrawonga",
+        "label": "Yarrawonga",
+        "region": "palmerston"
+      },
+      {
+        "id": "zuccoli",
+        "label": "Zuccoli",
+        "region": "palmerston"
+      }
+    ],
+    "extra_locality_options": [
+      {
+        "id": "other",
+        "label": "Another suburb or locality in this area"
+      },
+      {
+        "id": "prefer",
+        "label": "Prefer not to answer"
+      }
+    ]
+  },
+  "pages": [
+    {
+      "id": "welcome",
+      "title": "Defence Family Support Survey",
+      "intro": [
+        "Hello Defense Communities,",
+        "Have your say and help shape a stronger Defence community in Greater Darwin.",
+        "Tell us what has been difficult, what has helped and what support is still missing for you or your family."
+      ],
+      "funding_acknowledgement": "Lutheran Care gratefully acknowledges funding from the Australian Government Department of Defence through the Family Support Funding Program.",
+      "sections": [
+        {
+          "title": "Who can take part",
+          "text": "People aged 18 or older who are currently serving in the Australian Defence Force (ADF) or another country’s military and are based in Greater Darwin, and their adult family members. Family members may live elsewhere. Family includes partners, former partners, parents, adult children, other relatives, kin and carers."
+        },
+        {
+          "title": "Taking part",
+          "text": "Taking part is voluntary. After a few background questions, you can share your experiences in your own words. All questions are optional. You can skip questions, go back to change answers or stop before submitting. Share only what you feel comfortable sharing."
+        },
+        {
+          "title": "Your information",
+          "text": "Lutheran Care will use the information you choose to share to understand local needs and plan family support. Please leave out names, addresses, contact details, service numbers and other details that could identify you or someone else. Do not include classified or operationally sensitive information."
+        },
+        {
+          "title": "Your privacy",
+          "text": "Lutheran Care handles personal information under its Confidentiality and Privacy Policy. Information may be shared where required or authorised by law. The policy explains how to request access to or correction of your personal information, and how to make a privacy complaint."
+        }
+      ],
+      "questions": [
+        {
+          "id": "consent",
+          "label": "Would you like to take part?",
+          "type": "consent",
+          "required": true,
+          "options": [
+            {
+              "id": "adult_agree",
+              "label": "I am aged 18 or older. I have read the information above and agree to take part and to Lutheran Care using the information I choose to share for the purposes explained above."
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "label": "Lutheran Care Privacy Policy",
+          "url": "https://www.lutherancare.org.au/privacy-policy/"
+        },
+        {
+          "label": "Contact Lutheran Care",
+          "url": "mailto:feedback@lutherancare.org.au"
+        }
+      ],
+      "buttons": [
+        "Start survey",
+        "Leave survey"
+      ],
+      "contact_note": "For questions or privacy concerns, email feedback@lutherancare.org.au and mention the Defence Family Support Program. This survey is not an application for a service or activity.",
+      "source_note": "This questionnaire draws on RAND’s A New Approach for Assessing the Needs of Service Members and Their Families (2011) and the Defence and Veteran Family Wellbeing Strategy 2025–2030."
+    },
+    {
+      "id": "about",
+      "title": "A bit about you",
+      "intro": [
+        "These questions help us understand the different experiences of people taking part. You can leave any question unanswered."
+      ],
+      "questions": [
+        {
+          "id": "role",
+          "label": "Which best describes you?",
+          "type": "single",
+          "required": false,
+          "options": [
+            {
+              "id": "service_member",
+              "label": "Currently serving member"
+            },
+            {
+              "id": "partner",
+              "label": "Spouse or partner of a currently serving member"
+            },
+            {
+              "id": "both",
+              "label": "Both a currently serving member and the spouse or partner of a currently serving member"
+            },
+            {
+              "id": "other_family",
+              "label": "Another adult family member, former partner or carer of a currently serving member"
+            },
+            {
+              "id": "prefer_not",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "help": "Choose one. “Serving member” includes ADF members and members of another country’s military.",
+          "group": "About you"
+        },
+        {
+          "id": "age_group",
+          "label": "Which age group are you in?",
+          "type": "single",
+          "required": false,
+          "options": [
+            {
+              "id": "18_29",
+              "label": "18–29"
+            },
+            {
+              "id": "30_39",
+              "label": "30–39"
+            },
+            {
+              "id": "40_49",
+              "label": "40–49"
+            },
+            {
+              "id": "50_plus",
+              "label": "50 or older"
+            },
+            {
+              "id": "prefer_not",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "group": "About you"
+        },
+        {
+          "id": "current_connection",
+          "label": "Are you or a member of your family currently serving and based in Greater Darwin?",
+          "type": "single",
+          "required": false,
+          "options": [
+            {
+              "id": "yes",
+              "label": "Yes"
+            },
+            {
+              "id": "no",
+              "label": "No"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer_not",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "help": "Answer Yes if you or your serving family member is based in Greater Darwin, even if you live elsewhere or the serving member is temporarily away for work.",
+          "group": "About you"
+        },
+        {
+          "id": "residence_area",
+          "label": "Where do you currently live?",
+          "type": "single",
+          "required": false,
+          "options": [
+            {
+              "id": "darwin",
+              "label": "Darwin"
+            },
+            {
+              "id": "palmerston",
+              "label": "Palmerston"
+            },
+            {
+              "id": "litchfield",
+              "label": "Litchfield"
+            },
+            {
+              "id": "greater_darwin_other",
+              "label": "Other Greater Darwin area"
+            },
+            {
+              "id": "outside",
+              "label": "Outside Greater Darwin"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "group": "Where you live"
+        },
+        {
+          "id": "suburb",
+          "label": "Which suburb or locality do you live in?",
+          "type": "locality_select",
+          "required": false,
+          "help": "Optional. Choose from the list for your area, or leave this blank.",
+          "options_ref": "geography.localities filtered by residence_area + geography.extra_locality_options",
+          "show_when": "residence_area is a local area",
+          "group": "Where you live"
+        },
+        {
+          "id": "suburb_other",
+          "label": "Which other suburb or locality?",
+          "type": "text",
+          "required": false,
+          "help": "Please provide only the suburb or locality, not a street address.",
+          "show_when": "suburb == other",
+          "max_length": 10000,
+          "group": "Where you live"
+        },
+        {
+          "id": "past_residence",
+          "label": "Have you lived in Greater Darwin before?",
+          "type": "single",
+          "required": false,
+          "options": [
+            {
+              "id": "yes",
+              "label": "Yes"
+            },
+            {
+              "id": "no",
+              "label": "No"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "show_when": "residence_area == outside",
+          "group": "Where you live"
+        },
+        {
+          "id": "time_local",
+          "label": "How long have you lived in Greater Darwin?",
+          "type": "single",
+          "required": false,
+          "options": [
+            {
+              "id": "under3",
+              "label": "Less than 3 months"
+            },
+            {
+              "id": "3to12",
+              "label": "3 months to less than 1 year"
+            },
+            {
+              "id": "1to3",
+              "label": "1 year to less than 3 years"
+            },
+            {
+              "id": "over3",
+              "label": "3 years or more"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "help": "Count your current period of living here, rather than adding together separate periods.",
+          "show_when": "residence_area is a local area",
+          "group": "Where you live"
+        },
+        {
+          "id": "time_past",
+          "label": "During your most recent period of living in Greater Darwin, how long did you live here?",
+          "type": "single",
+          "required": false,
+          "options": [
+            {
+              "id": "under3",
+              "label": "Less than 3 months"
+            },
+            {
+              "id": "3to12",
+              "label": "3 months to less than 1 year"
+            },
+            {
+              "id": "1to3",
+              "label": "1 year to less than 3 years"
+            },
+            {
+              "id": "over3",
+              "label": "3 years or more"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer",
+              "label": "Prefer not to answer"
+            }
+          ],
+          "show_when": "residence_area == outside and past_residence == yes",
+          "group": "Where you live"
+        },
+        {
+          "id": "has_dependants",
+          "label": "Does anyone depend on you or your spouse or partner for more than half of their financial support?",
+          "type": "single",
+          "required": false,
+          "group": "Your dependants",
+          "help": "Include children and adults, whether or not they live with you.",
+          "options": [
+            {
+              "id": "yes",
+              "label": "Yes"
+            },
+            {
+              "id": "no",
+              "label": "No"
+            },
+            {
+              "id": "unsure",
+              "label": "Not sure"
+            },
+            {
+              "id": "prefer_not",
+              "label": "Prefer not to answer"
+            }
+          ]
+        },
+        {
+          "id": "dependants",
+          "label": "How many dependants do you have in each age group?",
+          "type": "dependants_grid",
+          "required": false,
+          "help": "Count each person once. For age groups with no dependants, you can enter 0. You may leave any entry blank.",
+          "rows": [
+            {
+              "id": "under_2",
+              "label": "Under 2 years"
+            },
+            {
+              "id": "2_5",
+              "label": "2–5 years"
+            },
+            {
+              "id": "6_13",
+              "label": "6–13 years"
+            },
+            {
+              "id": "14_22",
+              "label": "14–22 years"
+            },
+            {
+              "id": "23_64",
+              "label": "23–64 years"
+            },
+            {
+              "id": "65_plus",
+              "label": "65 years or over"
+            }
+          ],
+          "columns": [
+            {
+              "id": "total",
+              "label": "Number of dependants"
+            },
+            {
+              "id": "living_with",
+              "label": "Number who live with me"
+            }
+          ],
+          "controls": [],
+          "show_when": "has_dependants == yes",
+          "group": "Your dependants"
+        }
+      ],
+      "buttons": [
+        "Back",
+        "Continue"
+      ]
+    },
+    {
+      "id": "experience",
+      "title": "Your experiences",
+      "intro": [
+        "All questions are optional. Write as much or as little as you like."
+      ],
+      "questions": [
+        {
+          "id": "difficulties",
+          "label": "What was difficult for you or your family in the Great Darwin Region in the past 12 months?",
+          "help": "Tell us what happened and how it affected everyday life.",
+          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
+          "type": "text",
+          "required": false,
+          "max_length": 100000,
+          "rows": 8
+        },
+        {
+          "id": "help_needed",
+          "label": "What help, if any, did you or your family need to deal with these difficulties?",
+          "help": "Include help you received as well as help you needed but could not get. You do not need to know which service could provide it.",
+          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
+          "type": "text",
+          "required": false,
+          "max_length": 100000,
+          "rows": 8
+        },
+        {
+          "id": "help_sources",
+          "label": "Where did you look for help, and what help did you receive?",
+          "help": "You can include services, online information, friends and family, or help offered without asking. You can also tell us if you managed without help or did not seek any.",
+          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
+          "type": "text",
+          "required": false,
+          "max_length": 100000,
+          "rows": 8
+        },
+        {
+          "id": "support_access",
+          "label": "What made it easier or harder to get support outside the military?",
+          "help": "You can also tell us why you chose not to seek or use support.",
+          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
+          "type": "text",
+          "required": false,
+          "max_length": 100000,
+          "rows": 8
+        },
+        {
+          "id": "support_fit",
+          "label": "How well did the support you received outside the military meet your needs?",
+          "help": "Please explain what it helped with and what it did not. If you used more than one source, say which you mean.",
+          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
+          "type": "text",
+          "required": false,
+          "max_length": 100000,
+          "rows": 8
+        },
+        {
+          "id": "missing_help",
+          "label": "What help, if any, are you or your family still missing now?",
+          "help": "Tell us what would make the biggest difference, and what would make that help work for you. You can also say that nothing more is needed.",
+          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
+          "type": "text",
+          "required": false,
+          "max_length": 100000,
+          "rows": 8
+        },
+        {
+          "id": "anything_else",
+          "label": "Is there anything else you want to add?",
+          "help": "",
+          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
+          "type": "text",
+          "required": false,
+          "max_length": 100000,
+          "rows": 8
+        }
+      ],
+      "confirmation_label": "I have checked my answers and removed identifying details where possible.",
+      "buttons": [
+        "Back",
+        "Confirm and submit"
+      ]
+    },
+    {
+      "id": "thanks",
+      "title": "Thank you",
+      "intro": [
+        "Thank you for sharing your experiences and ideas, and for helping to shape a stronger, more connected Defence community in Greater Darwin."
+      ],
+      "links": [
+        {
+          "label": "Interview request survey",
+          "url": "contact.html"
+        },
+        {
+          "label": "Find local services in NT",
+          "url": "support.html"
+        }
+      ]
+    }
+  ],
+  "system_screens": {
+    "exit": {
+      "title": "You have left the survey",
+      "text": "Thank you for your interest.",
+      "button": "Return to the start"
+    },
+    "out_of_scope": {
+      "title": "About this survey",
+      "text": "This survey is for currently serving members based in Greater Darwin and their adult family members. Family members may live elsewhere. You can go back to change your answer about your service connection, or leave the survey.",
+      "buttons": [
+        "Back",
+        "Leave survey"
+      ]
+    }
+  },
+  "editorial_note": "Six supplied questions and final comment retained verbatim. About page questions/options and geography retained without changes."
+}

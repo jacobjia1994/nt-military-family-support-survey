@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import test from 'node:test';
 import vm from 'node:vm';
 
@@ -402,15 +402,16 @@ test('the separate youth completion page reads like a real survey', () => {
   assert.doesNotMatch(source, /\b(?:fetch|sendBeacon|XMLHttpRequest|localStorage|sessionStorage)\b/);
 });
 
-test('both public adult entries load their separate variant and no status banner', () => {
-  const choice = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-  const open = readFileSync(new URL('../open-response.html', import.meta.url), 'utf8');
-  assert.match(choice, /data-survey-variant="choice"/);
-  assert.match(open, /data-survey-variant="open"/);
-  for(const html of [choice, open]) {
-    assert.match(html, /survey-variants\/app\.mjs/);
-    assert.doesNotMatch(html, /Preview only|Team review draft|Online submissions are not open|survey-availability|rand-adult-app\.js/);
-  }
+test('the sole public adult entry loads the current app and the old open entry redirects', () => {
+  const entry = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const oldOpenEntry = readFileSync(new URL('../open-response.html', import.meta.url), 'utf8');
+  assert.match(entry, /adult-survey\/app\.mjs\?v=20260930-2/);
+  assert.match(entry, /adult-survey\/survey\.css\?v=20260930-2/);
+  assert.doesNotMatch(entry, /data-survey-variant|survey-variants|rand-adult-app\.js|survey\.js\?/);
+  assert.doesNotMatch(entry, /Preview only|Team review draft|Online submissions are not open|survey-availability/);
+  assert.match(oldOpenEntry, /http-equiv="refresh" content="0; url=index\.html"/);
+  assert.match(oldOpenEntry, /href="index\.html"/);
+  assert.doesNotMatch(oldOpenEntry, /<script|location\.|data-survey-variant/);
 });
 
 test('the separate youth entry cannot launch the superseded adult questionnaire', () => {
@@ -584,8 +585,7 @@ test('ages 7 or younger use their own controller and finish with the source-styl
   assert.equal(reset, 1);
   assert.equal(survey.getUIState().youngRecord, null);
   assert.equal(survey.getUIState().youngController, null);
-  const youth = readFileSync(new URL('../youth.html', import.meta.url), 'utf8');
-  assert.ok(youth.indexOf('young-children.js') < youth.indexOf('survey.js'), 'The child module is available before its controller is used');
+  assert.equal(existsSync(new URL('../youth.html', import.meta.url)), false, 'The historical child controller has no public questionnaire entry');
 });
 
 test('locality aliases and valid area-suburb pairs preserve regional aggregation', () => {
@@ -971,12 +971,12 @@ test('question library follows the actual adult and youth needs routes, includin
   assert.equal(child.some(section => section.id.startsWith('account')), false, 'The separate under-7 route does not inherit account pages');
 });
 
-test('adult reading copy uses the RAND Page 2 consent choices', () => {
-  const html = readFileSync(new URL('../adult-wording.html', import.meta.url), 'utf8');
-  assert.match(html, /I am 18 years or older, and I have read this statement\. I understand what it says and I agree to participate in this survey\./);
-  assert.match(html, /I am 18 years or older, but I do not want to participate in this survey\./);
-  assert.doesNotMatch(html, /Finish preview|Preview only|try this survey preview/);
-  assert.doesNotMatch(html, /I consent to Lutheran Care collecting, using and sharing my answers/);
+test('the obsolete adult reading copy is removed and question links reach the current entry', () => {
+  assert.equal(existsSync(new URL('../adult-wording.html', import.meta.url)), false);
+  const html = readFileSync(new URL('../questions.html', import.meta.url), 'utf8');
+  assert.match(html, /http-equiv="refresh" content="0; url=index\.html"/);
+  assert.match(html, /href="index\.html"/);
+  assert.doesNotMatch(html, /adult-wording|rand-adult|survey-variants|<script|location\./);
 });
 
 

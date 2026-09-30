@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {existsSync,readFileSync} from 'node:fs';
 import test from 'node:test';
 
 const problems=JSON.parse(readFileSync(new URL('../copy/rand-appendix-q12-q20.json',import.meta.url),'utf8'));
@@ -34,10 +34,9 @@ test('source crosswalk covers every numbered RAND item without replacing the ori
   assert.deepEqual(rows,Array.from({length:67},(_,index)=>index+1));
 });
 
-test('adult reading copy presents all RAND numbered questions and natural thanks',()=>{
-  const html=readFileSync(new URL('../adult-wording.html',import.meta.url),'utf8');
-  const ids=[...html.matchAll(/<h3>Q(\d+)\./g)].map(match=>Number(match[1]));
-  assert.deepEqual(ids,Array.from({length:67},(_,index)=>index+1));
-  assert.match(html,/Thank you, once again, for taking the time to complete the survey/);
-  assert.doesNotMatch(html,/\b(?:preview|demo)\b|not sent|not saved|Online submissions are not open/i);
+test('historical RAND instruments are retained as sources without a public reading-page entry',()=>{
+  assert.equal(existsSync(new URL('../adult-wording.html',import.meta.url)),false);
+  const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  assert.match(html,/adult-survey\/app\.mjs/);
+  assert.doesNotMatch(html,/rand-adult|adult-wording|survey-variants/);
 });
