@@ -405,13 +405,21 @@ test('the separate youth completion page reads like a real survey', () => {
 test('the sole public adult entry loads the current app and the old open entry redirects', () => {
   const entry = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const oldOpenEntry = readFileSync(new URL('../open-response.html', import.meta.url), 'utf8');
-  assert.match(entry, /adult-survey\/app\.mjs\?v=20260930-9/);
-  assert.match(entry, /adult-survey\/survey\.css\?v=20260930-9/);
+  assert.match(entry, /adult-survey\/app\.mjs\?v=20260930-10/);
+  assert.match(entry, /adult-survey\/survey\.css\?v=20260930-10/);
   assert.doesNotMatch(entry, /data-survey-variant|survey-variants|rand-adult-app\.js|survey\.js\?/);
   assert.doesNotMatch(entry, /Preview only|Team review draft|Online submissions are not open|survey-availability/);
   assert.match(oldOpenEntry, /http-equiv="refresh" content="0; url=index\.html"/);
   assert.match(oldOpenEntry, /href="index\.html"/);
   assert.doesNotMatch(oldOpenEntry, /<script|location\.|data-survey-variant/);
+});
+
+test('the active adult entry has no autosave or browser draft dependency', () => {
+  const adultApp = readFileSync(new URL('../adult-survey/app.mjs', import.meta.url), 'utf8');
+  assert.doesNotMatch(adultApp, /\b(?:localStorage|sessionStorage|indexedDB|createDraftStore|DRAFT_STORAGE_KEY)\b|draft-store\.mjs/);
+  assert.doesNotMatch(adultApp, /\.(?:getItem|setItem|removeItem)\s*\(|addEventListener\s*\(\s*['"]storage['"]/);
+  assert.equal(existsSync(new URL('../adult-survey/draft-store.mjs', import.meta.url)), false);
+  assert.equal(existsSync(new URL('./adult-survey-draft.test.mjs', import.meta.url)), false);
 });
 
 test('the separate youth entry cannot launch the superseded adult questionnaire', () => {

@@ -1,11 +1,11 @@
 {
-  "schema_version": "adult_open_2026_09_30_multiple_experiences",
+  "schema_version": "adult_open_2026_09_30_in_memory_review",
   "variant": "adult_open_response",
   "scope": {
     "population": "Current-serving military personnel based in Greater Darwin and their adult family members, including overseas military personnel and families living elsewhere.",
     "adult_only": true,
     "collection_enabled": false,
-    "draft_storage": "same_browser_local"
+    "answer_state": "page_memory_only"
   },
   "geography": {
     "version": "2026-09-27-two-level",
@@ -624,7 +624,7 @@
         },
         {
           "title": "Protecting privacy",
-          "text": "We do not ask for names or contact details. Please leave out names, addresses, contact details, service numbers and other identifying, classified or operationally sensitive information. Unfinished answers can be resumed on the same device and browser for up to 30 days after the last save; you can clear saved progress at any time."
+          "text": "We do not ask for names or contact details. Please do not include classified or operationally sensitive information. Answers are not automatically saved. Refreshing or closing this page clears your answers."
         },
         {
           "title": "Privacy and your rights",
@@ -726,7 +726,8 @@
           "type": "text",
           "required": true,
           "show_when": "community_connection includes other",
-          "max_length": 5000
+          "max_length": 5000,
+          "input_mode": "single_line"
         },
         {
           "id": "age_group",
@@ -838,13 +839,14 @@
         },
         {
           "id": "suburb_other",
-          "label": "Which other suburb or locality?",
+          "label": "Please specify",
           "type": "text",
           "required": true,
           "help": "Please provide only the suburb or locality, not a street address.",
           "show_when": "suburb == other",
           "max_length": 5000,
-          "group": "Where you live"
+          "group": "Where you live",
+          "input_mode": "single_line"
         },
         {
           "id": "nt_duration",
@@ -935,11 +937,10 @@
       "id": "experience",
       "title": "Your experiences",
       "intro": [
-        "Think about the past 12 months. Choose one situation or ongoing part of life that you would like us to understand. Use that experience for the questions below.",
-        "You can describe your own experience, your family’s experience, or both. Answer from your own perspective and share only what you know.",
-        "This can be a continuing or repeated part of life, or a few related situations. It does not have to be your most difficult or serious experience.",
+        "Think about the past 12 months. Choose a situation, an ongoing or repeated part of life, or a few related situations that you would like us to understand.",
+        "You can describe your own experience, your family’s experience, or both. Answer from your own perspective and share what you know.",
         "Describe an experience from a time when you or your currently serving family member was based in Greater Darwin, even if you lived elsewhere. It does not need to have been caused by military service.",
-        "These questions will guide you through what happened, how you responded, and what helped or was missing. Your answers will help Lutheran Care understand where services, activities or other support could better meet the needs of serving members and their families.",
+        "The questions follow your experience step by step, helping you reflect on the support you had, what you needed, and what could be improved.",
         "You can leave any question blank. You can add another experience or finish whenever you are ready."
       ],
       "questions": [
@@ -947,7 +948,6 @@
           "id": "situation",
           "label": "What was happening, and how did it affect everyday life for you or your family?",
           "help": "",
-          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
           "max_length": 5000,
@@ -957,7 +957,6 @@
           "id": "actions",
           "label": "How did you or your family deal with it?",
           "help": "Tell us what you or your family did on your own, who was approached for help, or what help was offered. What changes were you or your family hoping for?",
-          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
           "max_length": 5000,
@@ -967,7 +966,6 @@
           "id": "access",
           "label": "What made it easier or harder to get any help you or your family wanted?",
           "help": "This could include knowing where to look, getting a response or being able to use what was offered. If you or your family did not seek help, you can say why.",
-          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
           "max_length": 5000,
@@ -977,7 +975,6 @@
           "id": "outcome",
           "label": "What changed for you or your family, if anything, and how are things now?",
           "help": "Tell us what helped or did not help, and what remains unresolved for you or your family, if anything.",
-          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
           "max_length": 5000,
@@ -987,7 +984,6 @@
           "id": "support",
           "label": "Looking back, what support was missing or could have worked better for you or your family, if anything?",
           "help": "Tell us what you or your family wanted help with and what would have made a difference. You can also say what worked well and should continue.",
-          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
           "max_length": 5000,
@@ -997,26 +993,22 @@
           "id": "additional",
           "label": "Is there anything else you would like us to know about this experience?",
           "help": "Optional.",
-          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
           "max_length": 5000,
           "rows": 6
         }
       ],
-      "confirmation_label": "I have checked my answers and removed identifying details where possible.",
       "buttons": [
         "Back",
         "Add another experience",
         "Finish survey"
       ],
-      "legacy_final_question": {
-        "id": "final_comment",
-        "label": "Your saved final comment (optional)",
-        "type": "text",
-        "required": false,
-        "max_length": 5000,
-        "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers."
+      "privacy_notice": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
+      "start_button": "Start describing your experience",
+      "review": {
+        "title": "Review your answers",
+        "confirmation_label": "I have checked my answers and removed details that could identify me or anyone else."
       }
     },
     {
@@ -1027,12 +1019,12 @@
       ],
       "links": [
         {
-          "label": "Interview request survey",
+          "label": "Request an interview",
           "url": "contact.html",
           "description": "Would you like to discuss your experiences and support needs further with Lutheran Care?"
         },
         {
-          "label": "Find local services in NT",
+          "label": "Find support in the NT",
           "url": "support.html",
           "description": "Explore our free guide to support services for Defence members and families in the NT."
         }
@@ -1048,6 +1040,5 @@
       ]
     }
   },
-  "answer_schema_version": "adult_open_experiences_v4",
-  "draft_notice": "Unfinished answers are saved in this browser. Use the same device and browser to return later."
+  "answer_schema_version": "adult_open_in_memory_v5"
 }

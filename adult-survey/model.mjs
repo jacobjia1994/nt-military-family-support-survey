@@ -82,6 +82,15 @@ export function createAdultSurveyModel(spec) {
     return fields;
   }
 
+  function visibleAboutQuestions(answers) {
+    const visible = visibleLocationFields(answers);
+    return about.questions.filter(question => {
+      if (question.id === 'dependants_count') return answers.has_dependants === 'yes';
+      if (question.id === 'community_connection_other') return hasOtherCommunityConnection(answers);
+      return !question.show_when || question.type === 'integer_group' || visible.includes(question.id);
+    });
+  }
+
   function reconcile(answers, previousAnswers) {
     const next = structuredClone(answers);
     if (Array.isArray(next.community_connection) && next.community_connection.includes('prefer_not')) {
@@ -120,14 +129,12 @@ export function createAdultSurveyModel(spec) {
     if (pageId === 'welcome' && answers.consent !== 'adult_agree') {
       error('consent', 'Please confirm that you are aged 18 or older and agree to take part.');
     }
-    if (pageId === 'about' || pageId === 'experience') {
+    const finishing = pageId === 'experience' || pageId === 'review';
+    const activeId = pageId === 'review' ? undefined : activeExperienceId;
+    if (pageId === 'about' || finishing) {
       const visible = visibleLocationFields(answers);
-      for (const question of about.questions) {
+      for (const question of visibleAboutQuestions(answers)) {
         const value = answers[question.id];
-        if (question.id === 'dependants_count' && answers.has_dependants !== 'yes') continue;
-        if (question.id === 'community_connection_other') {
-          if (!hasOtherCommunityConnection(answers)) continue;
-        } else if (question.show_when && question.type !== 'integer_group' && !visible.includes(question.id)) continue;
         if (question.type === 'single' || question.type === 'locality_select') {
           if (question.required && !present(value)) error(question.id, 'Please choose an answer.');
         }
@@ -182,7 +189,7 @@ export function createAdultSurveyModel(spec) {
         }
       }
     }
-    if (pageId === 'experience') {
+    if (finishing) {
       if (answers.consent !== 'adult_agree') error('consent', 'Please agree to take part before finishing.');
       if (answers.current_connection === 'no') error('current_connection', spec.system_screens.out_of_scope.text);
       function validateNarrative(value, path, question) {
@@ -202,7 +209,7 @@ export function createAdultSurveyModel(spec) {
             continue;
           }
           used.add(entry.id);
-          if (activeExperienceId !== undefined && entry.id !== activeExperienceId) continue;
+          if (activeId !== undefined && entry.id !== activeId) continue;
           if (entry.responses !== undefined && !isRecord(entry.responses)) {
             error(`experiences.${entry.id}.responses`, 'Use text for these answers.');
             continue;
@@ -211,14 +218,55 @@ export function createAdultSurveyModel(spec) {
             validateNarrative(entry.responses?.[question.id], `experiences.${entry.id}.responses.${question.id}`, question);
           }
         }
-        if (activeExperienceId !== undefined && !entries.some(entry => entry?.id === activeExperienceId)) {
+        if (activeId !== undefined && !entries.some(entry => entry?.id === activeId)) {
           error('experiences', 'Please choose an existing experience.');
         }
       }
-      validateNarrative(answers.final_comment, 'final_comment', experience.legacy_final_question || {max_length: MAX_TEXT_CHARACTERS});
     }
     return errors;
   }
 
-  return {visibleLocationFields, reconcile, validate, createExperience, ensureExperiences, appendExperience, removeExperience};
+  /** A detached display projection; answer text is retained exactly as entered. */
+  function review(answers) {
+    const displayText = value => hasText(value) ? value : 'Not answered';
+    function backgroundAnswers(question) {
+      const value = answers[question.id];
+      if (question.type === 'single') return [question.options.find(option => option.id === value)?.label || 'Not answered'];
+      if (question.type === 'multiple') {
+        const selected = Array.isArray(value) ? value : [];
+        const labels = question.options.filter(option => selected.includes(option.id)).map(option => option.label);
+        return labels.length ? labels : ['Not answered'];
+      }
+      if (question.type === 'locality_select') {
+        const options = [...spec.geography.localities.filter(locality => locality.region === answers.residence_area), ...spec.geography.extra_locality_options];
+        return [options.find(option => option.id === value)?.label || 'Not answered'];
+      }
+      if (question.type === 'integer_group') {
+        if (question.refusal_path && readPath(answers, question.refusal_path) === true) return [question.refusal_label];
+        return question.fields.map(field => {
+          const number = readPath(answers, field.path);
+          return `${field.label}: ${Number.isSafeInteger(number) ? number : 'Not answered'}`;
+        });
+      }
+      return [displayText(value)];
+    }
+    return {
+      about: visibleAboutQuestions(answers).map(question => ({
+        id: question.id,
+        label: question.label,
+        answers: backgroundAnswers(question),
+      })),
+      experiences: (Array.isArray(answers.experiences) ? answers.experiences : []).map((entry, index) => ({
+        id: entry?.id,
+        number: index + 1,
+        questions: experience.questions.map(question => ({
+          id: question.id,
+          label: question.label,
+          answers: [displayText(entry?.responses?.[question.id])],
+        })),
+      })),
+    };
+  }
+
+  return {visibleLocationFields, reconcile, validate, review, createExperience, ensureExperiences, appendExperience, removeExperience};
 }
