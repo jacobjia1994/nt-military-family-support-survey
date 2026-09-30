@@ -33,26 +33,31 @@
 .dual-page .question-actions .back-button{font-size:15px}
 .dual-page .submit-confirmation{border-top:1px solid var(--line);padding-top:24px;margin-top:32px}
 .dual-page .submit-confirmation .choice{background:none;border:0;padding:0}
-.dual-page .information-block{margin-top:26px}
-.dual-page .information-block h2{font-size:20px;margin:0 0 10px}
-.dual-page .information-block p{font-size:17px;line-height:1.6;margin:0 0 10px}
-.dual-page .privacy-details{font-size:15px;line-height:1.6;margin:20px 0 28px}
-.dual-page .privacy-details summary{cursor:pointer;color:var(--primary);text-decoration:underline;text-underline-offset:3px;padding:8px 0}
-.dual-page .privacy-details p{margin:8px 0 12px}
-.dual-page .participation-points{font-size:17px;line-height:1.6;padding-left:22px;margin:12px 0}
-.dual-page .participation-points li{padding-left:4px;margin:8px 0}
-.dual-page .contact-note,.dual-page .source-note{font-size:14px;line-height:1.5;margin:20px 0}
+.dual-page .source-note{font-size:14px;line-height:1.5;margin:20px 0}
 .dual-page .source-note summary{cursor:pointer;text-decoration:underline;text-underline-offset:3px}
-.questionnaire .welcome .welcome-intro p.lead:first-child{font-size:18px;font-weight:650;color:var(--ink)}
-.questionnaire .welcome .welcome-intro p.lead{font-size:18px;line-height:1.6;margin:0 0 14px}
-.questionnaire .welcome .welcome-intro p.welcome-invitation{font-size:20px;font-weight:500;color:var(--ink)}
+.questionnaire .welcome-v3 h1{font-size:40px;line-height:1.12;max-width:none;margin-bottom:20px}
+.questionnaire .welcome-v3 .welcome-intro{margin-bottom:24px}
+.questionnaire .welcome-v3 .welcome-intro .welcome-invitation{font-size:21px;font-weight:500;line-height:1.4;color:var(--ink);margin:0 0 10px}
+.questionnaire .welcome-v3 .welcome-intro .welcome-purpose{font-size:17px;line-height:1.55;margin:0;color:var(--text)}
+.welcome-v3 .welcome-eligibility{margin:0 0 28px}
+.welcome-v3 .welcome-eligibility h2{font-size:16px;line-height:1.4;letter-spacing:0;margin:0 0 6px}
+.welcome-v3 .welcome-eligibility p{font-size:16px;line-height:1.55;margin:0;color:var(--text)}
+.welcome-v3 .welcome-information{padding:24px;border:1px solid #c8c1b6;border-radius:8px;background:var(--soft)}
+.welcome-v3 .welcome-information>h2{font-size:20px;line-height:1.35;margin:0 0 18px;letter-spacing:0}
+.welcome-v3 .welcome-information-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 32px}
+.welcome-v3 .welcome-information-grid h3{font-size:16px;line-height:1.4;font-weight:650;letter-spacing:0;margin:0 0 7px}
+.welcome-v3 .welcome-information-grid p{font-size:16px;line-height:1.55;margin:0}
+.welcome-v3 .welcome-contact-line{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:14px;line-height:1.55;margin-top:24px;overflow-wrap:anywhere}
+.welcome-v3 .welcome-agreement{border-top:1px solid #d7d1c7;padding-top:18px;margin-top:18px}
+.welcome-v3 .agreement-choice{display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:15px;font-weight:600;line-height:1.5}
+.welcome-v3 .agreement-choice input{accent-color:var(--primary);width:19px;height:19px;flex-shrink:0;margin:2px 0 0}
+.welcome-v3 .agreement-choice:has(input:focus-visible){outline:2px solid var(--primary);outline-offset:5px}
 .questionnaire .welcome .funding-acknowledgement{font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:400;line-height:1.5;color:#6b6d67;border-top:1px solid var(--line);padding-top:18px;margin:28px 0 0}
 .questionnaire .welcome .questionnaire-footer{margin-top:34px}
 .questionnaire .welcome .questionnaire-footer .funding-acknowledgement{margin-top:0}
 .questionnaire .welcome .questionnaire-footer .source-note{margin:14px 0 0;color:var(--muted)}
-.questionnaire .welcome .welcome-card{padding-top:20px}
-.questionnaire .welcome .welcome-card h2{font-size:20px;line-height:1.35;margin:0 0 14px}
 .questionnaire .welcome .question-actions{border-top:0;padding-top:0;margin-top:20px}
+.welcome-v3 .question-actions .button{min-width:190px}
 .dual-page .resource-links{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:14px;margin:20px 0}
 .dual-page .locality-control{width:100%;max-width:580px}
 .dual-page .finish-next-steps{margin-top:38px;gap:28px}
@@ -67,4 +72,10 @@
   .dual-page .number-field .text-input{font-size:16px}
   .dual-page .question-actions{flex-wrap:wrap}
   .dual-page .textarea{font-size:16px}
+  .questionnaire .welcome-v3 h1{font-size:33px;line-height:1.12}
+  .questionnaire .welcome-v3 .welcome-intro .welcome-invitation{font-size:20px}
+  .welcome-v3 .welcome-information{padding:16px}
+  .welcome-v3 .welcome-information-grid{grid-template-columns:1fr;gap:20px}
+  .welcome-v3 .question-actions>span{display:none}
+  .welcome-v3 .question-actions .button{width:100%}
 }

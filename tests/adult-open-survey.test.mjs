@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync, existsSync} from 'node:fs';
-import {createAdultSurveyModel, characterCount, PAGE_ORDER} from '../adult-survey/model.mjs';
+import {createAdultSurveyModel, characterCount, MAX_TEXT_CHARACTERS, PAGE_ORDER} from '../adult-survey/model.mjs';
 
 const read = path => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const spec = JSON.parse(read('adult-survey/survey-spec.json'));
@@ -35,9 +35,19 @@ test('consent is required; background and all seven narrative answers remain opt
   assert.equal(experience.questions[6].label, 'Is there anything else you want to add?');
 });
 
-test('every narrative accepts its configured character maximum and rejects one more without changing text', () => {
+test('every current survey text question has a limit of 5000 characters or fewer', () => {
+  assert.equal(MAX_TEXT_CHARACTERS, 5000);
+  const questions = spec.pages.flatMap(page => page.questions || []).filter(question => question.type === 'text');
+  assert.equal(questions.length, 8);
+  for (const question of questions) {
+    assert.ok(Number.isSafeInteger(question.max_length) && question.max_length > 0 && question.max_length <= MAX_TEXT_CHARACTERS, question.id);
+  }
+});
+
+test('all seven narratives accept 5000 characters and reject 5001 without changing text', () => {
   for (const question of experience.questions) {
-    const value = 'a'.repeat(question.max_length);
+    assert.equal(question.max_length, 5000);
+    const value = 'a'.repeat(5000);
     const state = {...agreed, responses: {[question.id]: value}};
     assert.deepEqual(model.validate(state, 'experience'), []);
     state.responses[question.id] += 'b';
@@ -47,8 +57,24 @@ test('every narrative accepts its configured character maximum and rejects one m
     assert.equal(errors[0].path, `responses.${question.id}`);
     assert.deepEqual(state, before);
   }
-  const all = {...agreed, responses: Object.fromEntries(experience.questions.map(question => [question.id, 'z'.repeat(question.max_length)]))};
+  const all = {...agreed, responses: Object.fromEntries(experience.questions.map(question => [question.id, 'z'.repeat(5000)]))};
   assert.deepEqual(model.validate(all, 'experience'), []);
+});
+
+test('the optional locality text accepts 5000 characters and retains 5001 for correction', () => {
+  const question = about.questions.find(question => question.id === 'suburb_other');
+  assert.equal(question.max_length, 5000);
+  const state = {...agreed, residence_area: 'darwin', suburb: 'other', suburb_other: 'a'.repeat(5000)};
+  assert.deepEqual(model.validate(state, 'about'), []);
+  assert.deepEqual(model.validate(state, 'experience'), []);
+  state.suburb_other += 'b';
+  const before = structuredClone(state);
+  for (const page of ['about', 'experience']) {
+    const errors = model.validate(state, page);
+    assert.equal(errors.length, 1);
+    assert.equal(errors[0].path, 'suburb_other');
+    assert.deepEqual(state, before);
+  }
 });
 
 test('narratives keep raw text and use the newline-normalised UTF-16 character count', () => {

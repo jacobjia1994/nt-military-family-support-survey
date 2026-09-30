@@ -1,5 +1,5 @@
 /** Adult narrative questionnaire. Answers stay in memory; no classification or transport. */
-export const MAX_TEXT_CHARACTERS = 10_000;
+export const MAX_TEXT_CHARACTERS = 5_000;
 export const PAGE_ORDER = Object.freeze(['welcome', 'about', 'experience', 'thanks']);
 export const normaliseNewlines = value => String(value ?? '').replace(/\r\n?/g, '\n');
 // Match native textarea maxlength. English characters occupy one UTF-16 unit.

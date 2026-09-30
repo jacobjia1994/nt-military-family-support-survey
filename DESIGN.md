@@ -30,7 +30,7 @@ Updated 30 September 2026. The current respondent presentation is defined by `in
 
 This is a questionnaire with a clear institutional owner. The opening identifies Lutheran Care, explains the Defence-funded program and invites people to help shape useful local support. The respondent page has no website navigation, promotional panels, review links or draft/test badges. Its warmth comes from the wording, familiar branding and generous spacing.
 
-Use natural Australian English: Defence, family members, local connections and support. Explain the value of taking part without promises that every suggestion will be implemented. Keep necessary participation and privacy information short; the welcome has a visible core and an expandable privacy layer before agreement. Each question should be easy to understand when read aloud.
+Use natural Australian English: Defence, family members, local connections and support. Explain the value of taking part without promises that every suggestion will be implemented. Keep necessary participation and privacy information short; the welcome groups its notice and agreement in one softly tinted information panel, two columns on desktop and stacked on mobile. Each question should be easy to understand when read aloud.
 
 ## Brand and typography
 
@@ -132,3 +132,8 @@ The completion heading is Thank you for helping strengthen the Defence community
 ## 27 September: optional depth and decision-useful routing
 
 Jacob clarified that the survey substitutes for interviews the team cannot staff. Keep full optional question space for every selected adult need; no adult focus cap, no forced short answers and no hiding the ordinary detail fields. Place past support, sources and experience before present wishes; the area introduction says any question may be left blank. Programme/participation inputs are optional and available even after No past need. Keep the existing visual identity and finish blocks. The review summary lists answers without repeating every skipped optional item, with an Add answers action for empty sections. The scope route follows the selected residential area; service-location history is no longer an eligibility proxy. The youngest form has a compact guardian background page using the same geographical concept. No collection endpoint is selected by these interface edits.
+
+
+## Current welcome composition — 30 September 2026
+
+The supplied screenshot and old LC Microsoft Forms page prompted a full first-page rethink after the vertical draft was rejected. Use one survey title, a specific invitation, compact eligibility, and one Your information panel with four titled text blocks. Consent is integrated at the panel bottom; Start follows it. This supersedes the separate privacy accordion and agreement card. Panel body is 16px with 1.55 line height, padding 24px and a 32px column gap; mobile stacks the blocks with 20px padding. Preserve the existing brand and footer acknowledgement. Main text fields now allow 5,000 characters, with no counter.

@@ -1,5 +1,5 @@
 {
-  "schema_version": "adult_open_2026_09_30_refined",
+  "schema_version": "adult_open_2026_09_30_welcome_v3",
   "variant": "adult_open_response",
   "scope": {
     "population": "Current-serving military personnel based in Greater Darwin and their adult family members, including overseas military personnel and families living elsewhere.",
@@ -559,25 +559,10 @@
       "id": "welcome",
       "title": "Defence Family Support Survey",
       "intro": [
-        "Hello, Defence community!",
-        "Have your say and help shape a stronger Defence community in Greater Darwin.",
-        "Lutheran Care is developing its Defence Family Support Program. We want to understand everyday difficulties, what helps and what support is missing, to plan family support in Greater Darwin."
+        "Tell us about everyday life and family support in Greater Darwin.",
+        "Your experiences will help Lutheran Care plan useful support for serving members and their families."
       ],
       "funding_acknowledgement": "Lutheran Care gratefully acknowledges funding from the Australian Government Department of Defence through the Family Support Funding Program.",
-      "sections": [
-        {
-          "title": "Who can take part",
-          "text": "Adults currently serving in the Australian Defence Force (ADF) or another country’s military and based in Greater Darwin, and their adult family members. Family may live elsewhere and includes partners, former partners, parents, adult children, other relatives, kin and carers."
-        },
-        {
-          "title": "Taking part",
-          "text": "Taking part is voluntary. After optional background questions, there are six written questions and space for other comments. You can skip questions, go back to change answers or stop before finishing. Share only what you feel comfortable sharing. This survey is for planning, not a request for individual help."
-        },
-        {
-          "title": "Your information",
-          "text": "We do not ask for names or contact details. Please avoid details that identify you or anyone else, including addresses and service numbers. A story can identify someone even without names. Do not include classified or operationally sensitive information."
-        }
-      ],
       "questions": [
         {
           "id": "consent",
@@ -587,7 +572,7 @@
           "options": [
             {
               "id": "adult_agree",
-              "label": "I am 18 or older. I have read the information above and agree to take part. I consent to Lutheran Care collecting and using the information I choose to share, including any health or other sensitive information about me, to understand needs and plan family support."
+              "label": "I am 18 or older and agree to take part. I consent to Lutheran Care collecting and using the information I choose to share, including any health or other sensitive information about me, as described above."
             }
           ]
         }
@@ -601,19 +586,7 @@
       "buttons": [
         "Start survey"
       ],
-      "contact_note": "Questions or privacy concerns:",
       "source_note": "This questionnaire draws on RAND’s A New Approach for Assessing the Needs of Service Members and Their Families (2011) and the Defence and Veteran Family Wellbeing Strategy 2025–2030.",
-      "privacy_detail": {
-        "title": "More about privacy",
-        "paragraphs": [
-          "Lutheran Care’s Privacy Policy explains how to request access to or correction of personal information and how to make a privacy complaint. Information may be disclosed where required or authorised by law.",
-          "Without identifying details, we may not be able to locate your answers later to change or remove them. Please describe your experience without identifying other people."
-        ]
-      },
-      "contact_link": {
-        "label": "feedback@lutherancare.org.au",
-        "url": "mailto:feedback@lutherancare.org.au"
-      },
       "source_links": [
         {
           "label": "A New Approach for Assessing the Needs of Service Members and Their Families (2011)",
@@ -622,6 +595,41 @@
         {
           "label": "Defence and Veteran Family Wellbeing Strategy 2025–2030",
           "url": "https://www.defence.gov.au/about/strategic-planning/defence-veteran-family-wellbeing-strategy-2025-2030"
+        }
+      ],
+      "eligibility": {
+        "title": "Who can take part",
+        "text": "Adults currently serving with the ADF or another country’s military and based in Greater Darwin, and their adult family members. Family members may live elsewhere; this includes partners, former partners, relatives, kin and carers."
+      },
+      "information_title": "Your information",
+      "information_blocks": [
+        {
+          "title": "Your choice",
+          "text": "Taking part is voluntary. You can skip any background or written question, or stop before submitting."
+        },
+        {
+          "title": "How answers are used",
+          "text": "Lutheran Care will use your answers to plan its Defence Family Support Program. We may use de-identified survey information in reports and share it with funding partners."
+        },
+        {
+          "title": "Protecting privacy",
+          "text": "We do not ask for names or contact details. Please leave out identifying details, including service numbers, and classified or operationally sensitive information."
+        },
+        {
+          "title": "Privacy and your rights",
+          "text": "Our Privacy Policy explains access, correction and complaints. Without identifying details, we may be unable to find your answers later. Information may be disclosed where required or authorised by law."
+        }
+      ],
+      "contact_links": [
+        {
+          "label": "ntcomms@lutherancare.org.au",
+          "url": "mailto:ntcomms@lutherancare.org.au",
+          "purpose": "Survey questions"
+        },
+        {
+          "label": "feedback@lutherancare.org.au",
+          "url": "mailto:feedback@lutherancare.org.au",
+          "purpose": "Privacy concerns"
         }
       ]
     },
@@ -761,7 +769,7 @@
           "required": false,
           "help": "Please provide only the suburb or locality, not a street address.",
           "show_when": "suburb == other",
-          "max_length": 10000,
+          "max_length": 5000,
           "group": "Where you live"
         },
         {
@@ -855,7 +863,7 @@
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
-          "max_length": 10000,
+          "max_length": 5000,
           "rows": 8
         },
         {
@@ -865,7 +873,7 @@
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
-          "max_length": 10000,
+          "max_length": 5000,
           "rows": 8
         },
         {
@@ -875,7 +883,7 @@
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
-          "max_length": 10000,
+          "max_length": 5000,
           "rows": 8
         },
         {
@@ -885,7 +893,7 @@
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
-          "max_length": 10000,
+          "max_length": 5000,
           "rows": 8
         },
         {
@@ -895,7 +903,7 @@
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
-          "max_length": 10000,
+          "max_length": 5000,
           "rows": 8
         },
         {
@@ -905,7 +913,7 @@
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
-          "max_length": 10000,
+          "max_length": 5000,
           "rows": 8
         },
         {
@@ -915,7 +923,7 @@
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
-          "max_length": 10000,
+          "max_length": 5000,
           "rows": 8
         }
       ],
