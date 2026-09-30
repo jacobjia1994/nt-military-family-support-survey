@@ -937,11 +937,10 @@
       "id": "experience",
       "title": "Your experiences",
       "intro": [
-        "Think about life in the Greater Darwin region over the past 12 months. Choose a situation, an ongoing or repeated part of life, or a few related situations that you would like us to understand.",
-        "You can describe your own experience, your family’s experience, or both. Answer from your own perspective and share what you know.",
-        "Describe an experience from a time when you or your currently serving family member was based in Greater Darwin, even if you lived elsewhere. It does not need to have been caused by military service.",
-        "The questions follow your experience step by step, helping you reflect on the support you had, what you needed, and what could be improved.",
-        "You can leave any question blank. You can add another experience or finish whenever you are ready."
+        "The following questions are designed to walk you through a reflection on your lived experience and any gaps in local services or support, with your needs at the centre throughout.",
+        "Think about the past 12 months, while you or your serving family member was based in Greater Darwin. Choose one situation or ongoing experience to describe. You can share an experience even if you lived elsewhere, and it does not have to be related to military service.",
+        "You can describe your own experience, your family’s experience, or both. Share what you know from your own perspective.",
+        "You can leave any question blank, and add another experience or finish whenever you’re ready."
       ],
       "questions": [
         {

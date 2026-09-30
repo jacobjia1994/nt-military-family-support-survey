@@ -2,7 +2,7 @@
 
 ## Current approved design — 30 September 2026
 
-Four stages: Welcome → A bit about you → Experiences → Thank you. The centered progress indicator remains on Experiences during the introduction and review sub-screens; review does not indicate submission or completion.
+Four stages: Welcome → A bit about you → Experiences → Thank you. The four-segment progress strip uses the original orange-red for reached phases, including the current phase, and light grey for upcoming phases. The current phase label appears above it, without page numbering. It remains on Experiences during the introduction and review sub-screens; review does not indicate submission or completion.
 
 The first visit to Experiences displays the concise introduction and Start describing your experience, with no questions visible yet. It covers the past 12 months, personal/family/both perspectives and known facts, the Greater Darwin serving link including family living elsewhere, experiences not necessarily caused by military service, the purpose and optional answers. Identifying-details guidance is the final ordinary paragraph of this introduction, immediately before Start describing your experience. Classified/operationally sensitive information is addressed once in Welcome. Adding further experiences does not repeat the introduction gate.
 
@@ -16,7 +16,7 @@ The final checkbox is: I have checked my answers and removed details that could 
 
 ## Background and participant information
 
-Existing eligibility, family definition, serving connection/residence separation, required/refusal rules, numeric limits, contacts and privacy/reporting rights remain. Community connection stays the second question, with seven approved options, Select all that apply and exclusive Prefer not to answer. Selecting Other opens a required single-line Please specify immediately below that option. Locality Other has the same single-line field directly below its select control. Deselecting the controlling option clears hidden in-memory text. All Clear answer controls are removed; refusal options remain.
+Who can take part appears inside the Welcome information/confirmation box immediately before the consent checkbox, with no duplicate outside. Existing eligibility, family definition, serving connection/residence separation, required/refusal rules, numeric limits, contacts and privacy/reporting rights remain. Community connection stays the second question, with seven approved options, Select all that apply and exclusive Prefer not to answer. Selecting Other opens a required single-line Please specify immediately below that option. Locality Other has the same single-line field directly below its select control. Deselecting the controlling option clears hidden in-memory text. All Clear answer controls are removed; refusal options remain.
 
 The invitation remains Your experience matters, using Australian Defence spelling. RAND and Defence strategy references are always expanded in the Welcome footer. Thank-you buttons read Request an interview and Find support in the NT; their destinations remain contact.html and support.html.
 

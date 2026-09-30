@@ -96,12 +96,12 @@
   .experience-actions .back-button{margin:0 0 4px}
 }
 
-/* Four survey phases, centred within the questionnaire content. */
-.stage-progress{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;max-width:700px;list-style:none;padding:0;margin:28px auto 0;color:#626660}
-.stage-progress li{display:flex;align-items:center;justify-content:center;min-width:0;padding:4px 0;text-align:center;font-size:14px;line-height:1.5}
-.stage-progress .stage-label{display:block;max-width:100%;overflow-wrap:normal}
-.stage-progress li[aria-current="step"]{color:var(--text);font-weight:700}
-.stage-progress li[aria-current="step"] .stage-label{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+/* Original segmented progress, adapted to the current four survey phases. */
+.stage-progress{margin:28px 0 0}
+.stage-progress .step-topline{justify-content:flex-end}
+.stage-progress .section-track{display:flex;gap:8px;list-style:none;padding:0;margin:0}
+.stage-progress .section-track li{height:3px;flex:1;background:#ebe7e1;border-radius:2px}
+.stage-progress .section-track li.visited{background:#c55737}
 
 /* Other text follows its option and uses a restrained width on desktop. */
 .dual-page .other-specify{padding:0 0 0 48px;margin:4px 0 8px;min-width:0}
@@ -119,8 +119,7 @@
 .delete-experience-prompt>div{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center}
 
 @media(max-width:760px){
-  .stage-progress{gap:4px;margin-top:22px}
-  .stage-progress li{font-size:12px}
+  .stage-progress{margin-top:22px}
   .dual-page .other-specify input.text-input{width:100%;font-size:16px}
   .review-page .review-answer{font-size:16px}
   .review-page .question-actions .button,.experience-intro .question-actions .button{width:100%;white-space:normal}
