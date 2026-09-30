@@ -1,6 +1,6 @@
 # Greater Darwin Defence Family Support Survey
 
-The [adult survey](index.html) uses four pages: Welcome, A bit about you, Your experience, and Thank you. The main page has six written questions and one optional final comment, each allowing up to 100,000 characters. The existing background questions and options are retained for later team revisions.
+The [adult survey](index.html) uses four pages: Welcome, A bit about you, Your experience, and Thank you. The main page has six written questions and one optional final comment, each allowing up to 10,000 characters. Background questions are optional, with area-first location choices, simple dependant counts and numeric NT residence duration.
 
 Jacob selected this single open-response questionnaire on 30 September 2026. The detailed-choice questionnaire and the youth/younger-child questionnaire entry have been removed. Previous instruments remain recoverable through Git history. See [ADULT_SURVEY.md](ADULT_SURVEY.md) for the current wording and editing scope.
 

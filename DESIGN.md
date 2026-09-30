@@ -24,13 +24,13 @@ rounded:
 
 # Lutheran Care questionnaire: implemented design
 
-Updated 25 September 2026. The respondent presentation is defined by `index.html`, `survey.js` and `lutheran-care.css`, which overrides the shared `survey.css` styles. Product and collection arrangements are recorded in `PRODUCT.md`.
+Updated 30 September 2026. The current respondent presentation is defined by `index.html`, `adult-survey/app.mjs`, `adult-survey/survey.css` and the shared Lutheran Care styles. The adult-only four-page contract in ADULT_SURVEY.md supersedes older route descriptions below. Product and collection arrangements are recorded in `PRODUCT.md`.
 
 ## Direction
 
 This is a questionnaire with a clear institutional owner. The opening identifies Lutheran Care, explains the Defence-funded program and invites people to help shape useful local support. The respondent page has no website navigation, promotional panels, review links or draft/test badges. Its warmth comes from the wording, familiar branding and generous spacing.
 
-Use natural Australian English: Defence, family members, local connections and support. Explain the value of taking part without promises that every suggestion will be implemented. Keep necessary participation and privacy information short; “About your answers” remains available throughout. Each question should be easy to understand when read aloud.
+Use natural Australian English: Defence, family members, local connections and support. Explain the value of taking part without promises that every suggestion will be implemented. Keep necessary participation and privacy information short; the welcome has a visible core and an expandable privacy layer before agreement. Each question should be easy to understand when read aloud.
 
 ## Brand and typography
 
@@ -48,7 +48,7 @@ Below 760px, the outer frame disappears into a white page; padding becomes 24px 
 
 Radio and checkbox options use full clickable rows, a 56px minimum height, a fine border and modest rounding. The adult, under-18 and revealed child-age choices use the same row height, typography, borders, spacing and checked/focus treatment as the questionnaire's other radio options. They stack in one column, with the child-age follow-up separated by its question label rather than an inset rail or oversized cards. Selected options gain a pale orange tint and a terracotta border as well as a checked control. Primary buttons are at least 52px high. Text fields use 17px type and text areas have a 156px minimum height. Keyboard focus has a visible orange outline; reduced-motion settings remove the short choice transitions.
 
-The four-section progress indicator uses thin lines and a section label. Related questions can share a page. Back, Continue and Change remain plain, predictable actions. The final review lets people check answers before finishing.
+The four-section progress indicator uses thin lines and a section label. Related questions can share a page. Back, Continue and Change remain plain, predictable actions. The third page ends with a brief answer confirmation; there is no separate review page.
 
 ## Preserved questionnaire behaviour
 

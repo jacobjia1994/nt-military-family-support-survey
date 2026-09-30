@@ -1,5 +1,5 @@
 {
-  "schema_version": "adult_open_2026_09_30",
+  "schema_version": "adult_open_2026_09_30_refined",
   "variant": "adult_open_response",
   "scope": {
     "population": "Current-serving military personnel based in Greater Darwin and their adult family members, including overseas military personnel and families living elsewhere.",
@@ -30,10 +30,6 @@
       {
         "id": "outside",
         "label": "Outside Greater Darwin"
-      },
-      {
-        "id": "prefer",
-        "label": "Prefer not to answer"
       }
     ],
     "localities": [
@@ -555,10 +551,6 @@
       {
         "id": "other",
         "label": "Another suburb or locality in this area"
-      },
-      {
-        "id": "prefer",
-        "label": "Prefer not to answer"
       }
     ]
   },
@@ -567,27 +559,23 @@
       "id": "welcome",
       "title": "Defence Family Support Survey",
       "intro": [
-        "Hello Defense Communities,",
+        "Hello, Defence community!",
         "Have your say and help shape a stronger Defence community in Greater Darwin.",
-        "Tell us what has been difficult, what has helped and what support is still missing for you or your family."
+        "Lutheran Care is developing its Defence Family Support Program. We want to understand everyday difficulties, what helps and what support is missing, to plan family support in Greater Darwin."
       ],
       "funding_acknowledgement": "Lutheran Care gratefully acknowledges funding from the Australian Government Department of Defence through the Family Support Funding Program.",
       "sections": [
         {
           "title": "Who can take part",
-          "text": "People aged 18 or older who are currently serving in the Australian Defence Force (ADF) or another country’s military and are based in Greater Darwin, and their adult family members. Family members may live elsewhere. Family includes partners, former partners, parents, adult children, other relatives, kin and carers."
+          "text": "Adults currently serving in the Australian Defence Force (ADF) or another country’s military and based in Greater Darwin, and their adult family members. Family may live elsewhere and includes partners, former partners, parents, adult children, other relatives, kin and carers."
         },
         {
           "title": "Taking part",
-          "text": "Taking part is voluntary. After a few background questions, you can share your experiences in your own words. All questions are optional. You can skip questions, go back to change answers or stop before submitting. Share only what you feel comfortable sharing."
+          "text": "Taking part is voluntary. After optional background questions, there are six written questions and space for other comments. You can skip questions, go back to change answers or stop before finishing. Share only what you feel comfortable sharing. This survey is for planning, not a request for individual help."
         },
         {
           "title": "Your information",
-          "text": "Lutheran Care will use the information you choose to share to understand local needs and plan family support. Please leave out names, addresses, contact details, service numbers and other details that could identify you or someone else. Do not include classified or operationally sensitive information."
-        },
-        {
-          "title": "Your privacy",
-          "text": "Lutheran Care handles personal information under its Confidentiality and Privacy Policy. Information may be shared where required or authorised by law. The policy explains how to request access to or correction of your personal information, and how to make a privacy complaint."
+          "text": "We do not ask for names or contact details. Please avoid details that identify you or anyone else, including addresses and service numbers. A story can identify someone even without names. Do not include classified or operationally sensitive information."
         }
       ],
       "questions": [
@@ -599,7 +587,7 @@
           "options": [
             {
               "id": "adult_agree",
-              "label": "I am aged 18 or older. I have read the information above and agree to take part and to Lutheran Care using the information I choose to share for the purposes explained above."
+              "label": "I am 18 or older. I have read the information above and agree to take part. I consent to Lutheran Care collecting and using the information I choose to share, including any health or other sensitive information about me, to understand needs and plan family support."
             }
           ]
         }
@@ -608,18 +596,34 @@
         {
           "label": "Lutheran Care Privacy Policy",
           "url": "https://www.lutherancare.org.au/privacy-policy/"
-        },
-        {
-          "label": "Contact Lutheran Care",
-          "url": "mailto:feedback@lutherancare.org.au"
         }
       ],
       "buttons": [
-        "Start survey",
-        "Leave survey"
+        "Start survey"
       ],
-      "contact_note": "For questions or privacy concerns, email feedback@lutherancare.org.au and mention the Defence Family Support Program. This survey is not an application for a service or activity.",
-      "source_note": "This questionnaire draws on RAND’s A New Approach for Assessing the Needs of Service Members and Their Families (2011) and the Defence and Veteran Family Wellbeing Strategy 2025–2030."
+      "contact_note": "Questions or privacy concerns:",
+      "source_note": "This questionnaire draws on RAND’s A New Approach for Assessing the Needs of Service Members and Their Families (2011) and the Defence and Veteran Family Wellbeing Strategy 2025–2030.",
+      "privacy_detail": {
+        "title": "More about privacy",
+        "paragraphs": [
+          "Lutheran Care’s Privacy Policy explains how to request access to or correction of personal information and how to make a privacy complaint. Information may be disclosed where required or authorised by law.",
+          "Without identifying details, we may not be able to locate your answers later to change or remove them. Please describe your experience without identifying other people."
+        ]
+      },
+      "contact_link": {
+        "label": "feedback@lutherancare.org.au",
+        "url": "mailto:feedback@lutherancare.org.au"
+      },
+      "source_links": [
+        {
+          "label": "A New Approach for Assessing the Needs of Service Members and Their Families (2011)",
+          "url": "https://www.rand.org/content/dam/rand/pubs/monographs/2011/RAND_MG1124.pdf"
+        },
+        {
+          "label": "Defence and Veteran Family Wellbeing Strategy 2025–2030",
+          "url": "https://www.defence.gov.au/about/strategic-planning/defence-veteran-family-wellbeing-strategy-2025-2030"
+        }
+      ]
     },
     {
       "id": "about",
@@ -649,10 +653,6 @@
             {
               "id": "other_family",
               "label": "Another adult family member, former partner or carer of a currently serving member"
-            },
-            {
-              "id": "prefer_not",
-              "label": "Prefer not to answer"
             }
           ],
           "help": "Choose one. “Serving member” includes ADF members and members of another country’s military.",
@@ -679,10 +679,6 @@
             {
               "id": "50_plus",
               "label": "50 or older"
-            },
-            {
-              "id": "prefer_not",
-              "label": "Prefer not to answer"
             }
           ],
           "group": "About you"
@@ -704,10 +700,6 @@
             {
               "id": "unsure",
               "label": "Not sure"
-            },
-            {
-              "id": "prefer_not",
-              "label": "Prefer not to answer"
             }
           ],
           "help": "Answer Yes if you or your serving family member is based in Greater Darwin, even if you live elsewhere or the serving member is temporarily away for work.",
@@ -738,13 +730,19 @@
             {
               "id": "outside",
               "label": "Outside Greater Darwin"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
             }
           ],
-          "group": "Where you live"
+          "group": "Where you live",
+          "primary_option_ids": [
+            "darwin",
+            "palmerston",
+            "litchfield"
+          ],
+          "secondary_option_ids": [
+            "greater_darwin_other",
+            "outside"
+          ],
+          "disclosure_label": "Other area"
         },
         {
           "id": "suburb",
@@ -767,107 +765,38 @@
           "group": "Where you live"
         },
         {
-          "id": "past_residence",
-          "label": "Have you lived in Greater Darwin before?",
-          "type": "single",
+          "id": "nt_duration",
+          "label": "How long have you lived in the NT?",
+          "type": "integer_group",
           "required": false,
-          "options": [
+          "help": "Count your current or most recent stay.",
+          "fields": [
             {
-              "id": "yes",
-              "label": "Yes"
+              "id": "years",
+              "path": "nt_duration.years",
+              "label": "Years",
+              "min": 0,
+              "max": 99,
+              "required": false
             },
             {
-              "id": "no",
-              "label": "No"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
+              "id": "months",
+              "path": "nt_duration.months",
+              "label": "Months",
+              "min": 0,
+              "max": 11,
+              "required": false
             }
           ],
-          "show_when": "residence_area == outside",
-          "group": "Where you live"
-        },
-        {
-          "id": "time_local",
-          "label": "How long have you lived in Greater Darwin?",
-          "type": "single",
-          "required": false,
-          "options": [
-            {
-              "id": "under3",
-              "label": "Less than 3 months"
-            },
-            {
-              "id": "3to12",
-              "label": "3 months to less than 1 year"
-            },
-            {
-              "id": "1to3",
-              "label": "1 year to less than 3 years"
-            },
-            {
-              "id": "over3",
-              "label": "3 years or more"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "help": "Count your current period of living here, rather than adding together separate periods.",
-          "show_when": "residence_area is a local area",
-          "group": "Where you live"
-        },
-        {
-          "id": "time_past",
-          "label": "During your most recent period of living in Greater Darwin, how long did you live here?",
-          "type": "single",
-          "required": false,
-          "options": [
-            {
-              "id": "under3",
-              "label": "Less than 3 months"
-            },
-            {
-              "id": "3to12",
-              "label": "3 months to less than 1 year"
-            },
-            {
-              "id": "1to3",
-              "label": "1 year to less than 3 years"
-            },
-            {
-              "id": "over3",
-              "label": "3 years or more"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer",
-              "label": "Prefer not to answer"
-            }
-          ],
-          "show_when": "residence_area == outside and past_residence == yes",
           "group": "Where you live"
         },
         {
           "id": "has_dependants",
-          "label": "Does anyone depend on you or your spouse or partner for more than half of their financial support?",
+          "label": "Do you have any dependants?",
           "type": "single",
           "required": false,
           "group": "Your dependants",
-          "help": "Include children and adults, whether or not they live with you.",
+          "help": "Include children or adults who rely on you for care or financial support.",
           "options": [
             {
               "id": "yes",
@@ -876,60 +805,33 @@
             {
               "id": "no",
               "label": "No"
-            },
-            {
-              "id": "unsure",
-              "label": "Not sure"
-            },
-            {
-              "id": "prefer_not",
-              "label": "Prefer not to answer"
             }
           ]
         },
         {
-          "id": "dependants",
-          "label": "How many dependants do you have in each age group?",
-          "type": "dependants_grid",
+          "id": "dependants_count",
+          "label": "How many dependants do you have?",
+          "type": "integer_group",
           "required": false,
-          "help": "Count each person once. For age groups with no dependants, you can enter 0. You may leave any entry blank.",
-          "rows": [
-            {
-              "id": "under_2",
-              "label": "Under 2 years"
-            },
-            {
-              "id": "2_5",
-              "label": "2–5 years"
-            },
-            {
-              "id": "6_13",
-              "label": "6–13 years"
-            },
-            {
-              "id": "14_22",
-              "label": "14–22 years"
-            },
-            {
-              "id": "23_64",
-              "label": "23–64 years"
-            },
-            {
-              "id": "65_plus",
-              "label": "65 years or over"
-            }
-          ],
-          "columns": [
+          "help": "Count each person once. You can leave either entry blank.",
+          "fields": [
             {
               "id": "total",
-              "label": "Number of dependants"
+              "path": "dependants.total",
+              "label": "Total number of dependants",
+              "min": 0,
+              "max": 9007199254740991,
+              "required": false
             },
             {
               "id": "living_with",
-              "label": "Number who live with me"
+              "path": "dependants.living_with",
+              "label": "Number who live with you",
+              "min": 0,
+              "max": 9007199254740991,
+              "required": false
             }
           ],
-          "controls": [],
           "show_when": "has_dependants == yes",
           "group": "Your dependants"
         }
@@ -941,7 +843,7 @@
     },
     {
       "id": "experience",
-      "title": "Your experiences",
+      "title": "Your living experiences",
       "intro": [
         "All questions are optional. Write as much or as little as you like."
       ],
@@ -953,7 +855,7 @@
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
-          "max_length": 100000,
+          "max_length": 10000,
           "rows": 8
         },
         {
@@ -963,7 +865,7 @@
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
-          "max_length": 100000,
+          "max_length": 10000,
           "rows": 8
         },
         {
@@ -973,7 +875,7 @@
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
-          "max_length": 100000,
+          "max_length": 10000,
           "rows": 8
         },
         {
@@ -983,7 +885,7 @@
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
-          "max_length": 100000,
+          "max_length": 10000,
           "rows": 8
         },
         {
@@ -993,7 +895,7 @@
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
-          "max_length": 100000,
+          "max_length": 10000,
           "rows": 8
         },
         {
@@ -1003,7 +905,7 @@
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
-          "max_length": 100000,
+          "max_length": 10000,
           "rows": 8
         },
         {
@@ -1013,7 +915,7 @@
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
           "required": false,
-          "max_length": 100000,
+          "max_length": 10000,
           "rows": 8
         }
       ],
@@ -1021,40 +923,36 @@
       "buttons": [
         "Back",
         "Confirm and submit"
-      ]
+      ],
+      "subtitle": "in the Great Darwin Region"
     },
     {
       "id": "thanks",
       "title": "Thank you",
       "intro": [
-        "Thank you for sharing your experiences and ideas, and for helping to shape a stronger, more connected Defence community in Greater Darwin."
+        "Thank you for helping strengthen the Defence community in Greater Darwin."
       ],
       "links": [
         {
           "label": "Interview request survey",
-          "url": "contact.html"
+          "url": "contact.html",
+          "description": "Would you like to discuss your experiences and support needs further with Lutheran Care?"
         },
         {
           "label": "Find local services in NT",
-          "url": "support.html"
+          "url": "support.html",
+          "description": "Explore our free guide to support services for Defence members and families in the NT."
         }
       ]
     }
   ],
   "system_screens": {
-    "exit": {
-      "title": "You have left the survey",
-      "text": "Thank you for your interest.",
-      "button": "Return to the start"
-    },
     "out_of_scope": {
       "title": "About this survey",
-      "text": "This survey is for currently serving members based in Greater Darwin and their adult family members. Family members may live elsewhere. You can go back to change your answer about your service connection, or leave the survey.",
+      "text": "This survey is for currently serving members based in Greater Darwin and their adult family members. Family members may live elsewhere. You can go back to change your answer about your service connection.",
       "buttons": [
-        "Back",
-        "Leave survey"
+        "Back"
       ]
     }
-  },
-  "editorial_note": "Six supplied questions and final comment retained verbatim. About page questions/options and geography retained without changes."
+  }
 }
