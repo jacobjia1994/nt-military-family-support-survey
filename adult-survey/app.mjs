@@ -1,5 +1,5 @@
-import {createAdultSurveyModel, characterCount, normaliseNewlines} from './model.mjs?v=20260930-6';
-import {createDraftStore, DRAFT_STORAGE_KEY} from './draft-store.mjs?v=20260930-6';
+import {createAdultSurveyModel, characterCount, normaliseNewlines, ensureExperiences, appendExperience, removeExperience} from './model.mjs?v=20260930-7';
+import {createDraftStore, DRAFT_STORAGE_KEY} from './draft-store.mjs?v=20260930-7';
 const moduleUrl = import.meta.url;
 const main = document.querySelector('#main');
 const text = value => String(value ?? '');
@@ -24,13 +24,20 @@ function pathParts(path) {
 }
 
 function readPath(object, path) {
-  return pathParts(path).reduce((value, part) => value?.[part], object);
+  const parts = pathParts(path);
+  if (parts[0] === 'experiences') return parts.slice(2).reduce((value, part) => value?.[part], object.experiences?.find(item => item.id === parts[1]));
+  return parts.reduce((value, part) => value?.[part], object);
 }
 
 function setPath(object, path, value) {
   const parts = pathParts(path);
   if (!parts.length) return;
   let target = object;
+  if (parts[0] === 'experiences') {
+    target = object.experiences?.find(item => item.id === parts[1]);
+    if (!target) return;
+    parts.splice(0, 2);
+  }
   for (const part of parts.slice(0, -1)) {
     if (!target[part] || typeof target[part] !== 'object' || Array.isArray(target[part])) target[part] = {};
     target = target[part];
@@ -53,7 +60,7 @@ function errorElement(path, errors) {
   return `<p class="field-error" data-error-for="${escapeHtml(path)}"${message ? '' : ' hidden'}>${escapeHtml(message)}</p>`;
 }
 
-function textQuestion({path, label, help = '', privacyHint = '', value = '', rows = 6, maxLength = 5000, errors = [], className = ''}) {
+function textQuestion({path, label, help = '', privacyHint = '', value = '', rows = 6, maxLength = 5000, errors = [], className = '', required = true}) {
   const inputId = idFor(`text-${path}`);
   const normalised = normaliseNewlines(value);
   const descriptions = [help && `${inputId}-hint`, privacyHint && `${inputId}-privacy`, `${inputId}-error`].filter(Boolean).join(' ');
@@ -61,7 +68,7 @@ function textQuestion({path, label, help = '', privacyHint = '', value = '', row
     <label class="field-label" for="${escapeHtml(inputId)}">${escapeHtml(label)}</label>
     ${help ? `<p id="${inputId}-hint" class="field-hint">${escapeHtml(help)}</p>` : ''}
     ${privacyHint ? `<p id="${inputId}-privacy" class="privacy-hint">${escapeHtml(privacyHint)}</p>` : ''}
-    <textarea id="${escapeHtml(inputId)}" name="${escapeHtml(path)}" class="textarea" rows="${Number(rows) || 6}" required aria-required="true" aria-describedby="${descriptions} ${inputId}-limit"${questionError(path, errors) ? ' aria-invalid="true"' : ''} spellcheck="true" data-path="${escapeHtml(path)}" data-kind="text" data-max-length="${maxLength}">${escapeHtml(normalised)}</textarea>
+    <textarea id="${escapeHtml(inputId)}" name="${escapeHtml(path)}" class="textarea" rows="${Number(rows) || 6}"${required ? ' required aria-required="true"' : ''} aria-describedby="${descriptions} ${inputId}-limit"${questionError(path, errors) ? ' aria-invalid="true"' : ''} spellcheck="true" data-path="${escapeHtml(path)}" data-kind="text" data-max-length="${maxLength}">${escapeHtml(normalised)}</textarea>
     <p id="${inputId}-limit" class="limit-hint" data-limit-for="${escapeHtml(path)}" hidden></p>
     <p id="${inputId}-error" class="field-error" data-error-for="${escapeHtml(path)}"${questionError(path, errors) ? '' : ' hidden'}>${escapeHtml(questionError(path, errors))}</p>
   </div>`;
@@ -158,10 +165,31 @@ function renderWelcome(spec, answers, errors) {
   return `<section class="welcome dual-page welcome-v3"><h1 tabindex="-1">${escapeHtml(page.title)}</h1><div class="welcome-intro">${page.intro.map((line, index) => `<p class="${index === 0 ? 'welcome-invitation' : 'welcome-purpose'}">${escapeHtml(line)}</p>`).join('')}</div><section class="welcome-eligibility"><h2>${escapeHtml(page.eligibility.title)}</h2><p>${escapeHtml(page.eligibility.text)}</p></section><section class="welcome-information" aria-labelledby="welcome-information-title"><h2 id="welcome-information-title">${escapeHtml(page.information_title)}</h2><div class="welcome-information-grid">${page.information_blocks.map(block => `<section><h3>${escapeHtml(block.title)}</h3><p>${escapeHtml(block.text)}</p></section>`).join('')}</div><div class="welcome-contact-line">${page.contact_links.map(link => `<span>${escapeHtml(link.purpose)}: <a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a></span>`).join('')}${page.links.map(linkMarkup).join('')}</div><div class="welcome-agreement"><label class="agreement-choice" for="adult-consent"><input id="adult-consent" type="checkbox" data-path="consent" data-kind="consent"${answers.consent === 'adult_agree' ? ' checked' : ''} aria-describedby="consent-error"${questionError('consent', errors) ? ' aria-invalid="true"' : ''}><span>${escapeHtml(consent.label)}</span></label><p id="consent-error" class="field-error"${questionError('consent', errors) ? '' : ' hidden'}>${escapeHtml(questionError('consent', errors))}</p></div></section>${renderActions({back: false, continueLabel: 'Start survey'})}<footer class="questionnaire-footer"><p class="funding-acknowledgement">${escapeHtml(page.funding_acknowledgement)}</p><details class="source-note"><summary>About this questionnaire</summary><p>${sourceText}</p></details></footer></section>`;
 }
 
+const previousLabels = {
+  difficulties: 'What was difficult for you or your family in the Greater Darwin Region in the past 12 months?',
+  help_needed: 'What help, if any, did you or your family need to deal with these difficulties?',
+  help_sources: 'Where did you look for help, and what help did you receive?',
+  support_access: 'What made it easier or harder to get support outside the military?',
+  support_fit: 'How well did the support you received outside the military meet your needs?',
+  missing_help: 'What help, if any, are you or your family still missing now?',
+  anything_else: 'Is there anything else you want to add?',
+};
+
+function previousAnswers() {
+  if (!answers.previous_responses) return '';
+  return `<section class="migration-note"><p>The questions have changed. We have kept your previous answers and placed related answers in an experience. Please check and edit them; your complete original answers are kept below.</p><details class="previous-answers"><summary>View your previous answers</summary>${Object.entries(answers.previous_responses).map(([id, value]) => `<h3>${escapeHtml(previousLabels[id] || id)}</h3><p class="previous-answer">${escapeHtml(value)}</p>`).join('')}</details></section>`;
+}
+
 function renderExperience(spec, answers, errors) {
   const page = specPage(spec, 'experience');
-  const questions = page.questions.map(question => textQuestion({path: `responses.${question.id}`, label: question.label, help: question.help, privacyHint: question.privacy_hint, value: answers.responses?.[question.id], maxLength: question.max_length, rows: question.rows, errors, className: 'narrative-answer'})).join('');
-  return `<section class="survey-layout dual-page experience-page"><h1 tabindex="-1">${escapeHtml(page.title)}</h1><p class="page-subtitle">${escapeHtml(page.subtitle || '')}</p>${renderIntro(page.intro)}${questions}<div class="submit-confirmation"><label class="choice" for="confirm-answers"><input id="confirm-answers" type="checkbox" data-path="confirmed" data-kind="confirmation" aria-describedby="confirmation-error"${confirmed ? ' checked' : ''}><span class="choice-body"><span class="choice-label">${escapeHtml(page.confirmation_label)}</span></span></label><p id="confirmation-error" class="field-error"${questionError('confirmed', errors) ? '' : ' hidden'}>${escapeHtml(questionError('confirmed', errors))}</p></div>${renderActions({continueLabel: 'Confirm and submit'})}</section>`;
+  const current = answers.experiences.find(item => item.id === experienceId) || answers.experiences[0];
+  experienceId = current.id;
+  const number = answers.experiences.indexOf(current) + 1;
+  const switcher = answers.experiences.length > 1 ? `<div class="experience-switcher"><label for="experience-select">Review an experience</label><select id="experience-select" class="select" data-kind="experience-selector">${answers.experiences.map((item, index) => `<option value="${escapeHtml(item.id)}"${item.id === experienceId ? ' selected' : ''}>Experience ${index + 1}</option>`).join('')}</select></div>` : '';
+  const questions = page.questions.map(question => textQuestion({path: `experiences.${current.id}.responses.${question.id}`, label: question.label, help: question.help, privacyHint: question.privacy_hint, value: current.responses?.[question.id], maxLength: question.max_length, rows: question.rows, errors, className: 'narrative-answer', required: false})).join('');
+  const final = finishing ? `<section class="final-comments" aria-labelledby="finish-title"><h2 id="finish-title" tabindex="-1">Before you finish</h2>${textQuestion({path: 'final_comment', label: page.final_question.label, privacyHint: page.final_question.privacy_hint, value: answers.final_comment, maxLength: page.final_question.max_length, rows: 4, errors, required: false})}<div class="submit-confirmation"><label class="choice" for="confirm-answers"><input id="confirm-answers" type="checkbox" data-path="confirmed" data-kind="confirmation" aria-describedby="confirmation-error"${confirmed ? ' checked' : ''}><span class="choice-body"><span class="choice-label">${escapeHtml(page.confirmation_label)}</span></span></label><p id="confirmation-error" class="field-error"${questionError('confirmed', errors) ? '' : ' hidden'}>${escapeHtml(questionError('confirmed', errors))}</p></div><button type="button" class="button primary" data-action="submit-survey">Confirm and submit</button></section>` : '';
+  const deletion = deleteRequest ? `<section class="delete-experience-prompt" role="alert"><p>Delete Experience ${answers.experiences.findIndex(item => item.id === deleteRequest) + 1}? Its answers will be removed from this survey and its saved progress in this browser.</p><div class="resume-actions"><button type="button" class="button secondary" data-action="cancel-delete">Keep this experience</button><button type="button" class="button primary" data-action="confirm-delete">Delete experience</button></div></section>` : '';
+  return `<section class="survey-layout dual-page experience-page"><h1 tabindex="-1">Experience ${number}</h1>${switcher}${number === 1 ? previousAnswers() : ''}<div class="experience-intro">${renderIntro(page.intro)}</div>${questions}<div class="experience-actions"><button type="button" class="back-button" data-action="back">Back</button><button type="button" class="button secondary" data-action="add-experience">Add another experience</button><button type="button" class="button primary" data-action="finish-survey">Finish survey</button></div>${answers.experiences.length > 1 ? '<button type="button" class="small-text-action delete-experience" data-action="delete-experience">Delete this experience</button>' : ''}${deletion}${final}</section>`;
 }
 
 function renderThanks(spec) {
@@ -173,6 +201,10 @@ let spec;
 let model;
 let answers = {};
 let pageId = 'welcome';
+let experienceId = null;
+let finishing = false;
+let deleteRequest = null;
+let protectedDraftRaw = null;
 let errors = [];
 let confirmed = false;
 let dirty = false;
@@ -196,19 +228,20 @@ function requestRestart(kind) {
 
 function draftControls() {
   if (!dirty || answers.consent !== 'adult_agree' || pageId === 'thanks') return '';
-  const message = draftStatus === 'saved' ? 'Progress saved in this browser.' : draftStatus === 'unavailable' ? 'This browser cannot save progress. Keep this page open until you finish.' : 'Saving progress…';
+  const message = protectedDraftRaw ? 'Your previous saved answers have been kept. Download them or clear them before starting a new survey.' : draftStatus === 'saved' ? 'Progress saved in this browser.' : draftStatus === 'unavailable' ? 'This browser cannot save progress. Keep this page open until you finish.' : 'Saving progress…';
   return `<div class="draft-controls"><span data-draft-status>${escapeHtml(message)}</span><button type="button" class="small-text-action" data-action="clear-draft">Clear saved progress</button></div>`;
 }
 
 function resumePrompt() {
+  if (protectedDraftRaw) return '<section class="resume-prompt" role="alert"><h2>Keep your saved answers</h2><p>This saved survey uses a different version. Your saved answers have been kept. You can download a copy before choosing to clear them and start again.</p><div class="resume-actions"><button type="button" class="button secondary" data-action="download-draft">Download saved answers</button><button type="button" class="small-text-action" data-action="new-survey">Start a new survey</button></div></section>';
   if (!pendingDraft) return '';
-  return '<section class="resume-prompt" aria-labelledby="resume-title"><h2 id="resume-title">Continue your survey</h2><p>Saved progress is available in this browser.</p><div class="resume-actions"><button type="button" class="button primary" data-action="resume-draft">Resume survey</button><button type="button" class="small-text-action" data-action="new-survey">Start a new survey</button></div></section>';
+  return `<section class="resume-prompt" aria-labelledby="resume-title"><h2 id="resume-title">Continue your survey</h2><p>${pendingDraft.migratedFrom ? 'Your saved answers are available. The questions have changed; your previous answers will be kept for you to review.' : 'Saved progress is available in this browser.'}</p><div class="resume-actions"><button type="button" class="button primary" data-action="resume-draft">Resume survey</button><button type="button" class="small-text-action" data-action="new-survey">Start a new survey</button></div></section>`;
 }
 
 function saveDraftNow() {
   window.clearTimeout(saveTimer);
-  if (!draftStore || pendingDraft || !dirty || answers.consent !== 'adult_agree' || pageId === 'thanks') return;
-  const result = draftStore.save({answers, pageId: pageId === 'out_of_scope' ? 'about' : pageId});
+  if (!draftStore || pendingDraft || protectedDraftRaw || !dirty || answers.consent !== 'adult_agree' || pageId === 'thanks') return;
+  const result = draftStore.save({answers, pageId: pageId === 'out_of_scope' ? 'about' : pageId, experienceId});
   draftStatus = result.status;
   const status = main.querySelector('[data-draft-status]');
   if (status) status.textContent = draftStatus === 'saved' ? 'Progress saved in this browser.' : 'This browser cannot save progress. Keep this page open until you finish.';
@@ -227,13 +260,13 @@ function clearDraft() {
   const result = draftStore?.clear();
   clearFailed = result?.status === 'unavailable';
   pendingDraft = null;
+  if (!clearFailed) protectedDraftRaw = null;
   draftStatus = 'idle';
 }
 
 function render({preserveFocus = false} = {}) {
   const focusId = preserveFocus ? document.activeElement?.id : null;
-  const pages = ['welcome', 'about', 'experience', 'thanks'];
-  const index = pages.indexOf(pageId);
+  const stages = [['welcome', 'Welcome'], ['about', 'About you'], ['experience', 'Your experiences'], ['thanks', 'Thank you']];
   let content;
   if (pageId === 'welcome') content = renderWelcome(spec, answers, errors);
   else if (pageId === 'about') content = renderAbout(spec, model, answers, errors);
@@ -244,10 +277,10 @@ function render({preserveFocus = false} = {}) {
     content = `<section class="finish dual-page"><h1 tabindex="-1">${escapeHtml(screen.title)}</h1><p class="lead">${escapeHtml(screen.text)}</p><div class="finish-actions"><button class="button secondary" type="button" data-action="back">Back</button></div></section>`;
   }
   const summary = errors.length ? '<div class="survey-errors" role="alert"><p>Please check the highlighted questions.</p></div>' : '';
-  const progress = index >= 0 ? `<p class="page-progress">Page ${index + 1} of 4</p>` : '';
+  const progress = `<ol class="stage-progress" aria-label="Survey stages">${stages.map(([id, label]) => `<li${id === pageId ? ' aria-current="step"' : ''}>${escapeHtml(label)}</li>`).join('')}</ol>`;
   main.innerHTML = progress + content + draftControls() + restartPrompt();
   main.dataset.page = pageId;
-  if (pageId === 'welcome' && pendingDraft) main.querySelector('h1')?.insertAdjacentHTML('afterend', resumePrompt());
+  if (pageId === 'welcome' && (pendingDraft || protectedDraftRaw)) main.querySelector('h1')?.insertAdjacentHTML('afterend', resumePrompt());
   if (clearFailed) main.insertAdjacentHTML('beforeend', '<p class="draft-warning">Saved progress could not be cleared. Please remove this site’s saved data in your browser settings.</p>');
   if (summary) main.querySelector('h1').insertAdjacentHTML('afterend', summary);
   if (preserveFocus && focusId) document.getElementById(focusId)?.focus({preventScroll: true});
@@ -273,31 +306,55 @@ function clearAnswers() {
   answers = {};
   confirmed = false;
   dirty = false;
+  experienceId = null;
+  finishing = false;
+  deleteRequest = null;
 }
 
 function continueSurvey() {
   errors = model.validate(answers, pageId);
-  if (pageId === 'experience' && !confirmed) errors.push({path: 'confirmed', message: 'Please check your answers and tick the confirmation before submitting.'});
   if (errors.length) { render(); return; }
   if (pageId === 'welcome') {
-    if (pendingDraft) {
-      requestRestart('start');
-      return;
-    }
+    if (pendingDraft || protectedDraftRaw) { requestRestart('start'); return; }
     routeTo('about');
+  } else if (pageId === 'about') {
+    if (answers.current_connection === 'no') { routeTo('out_of_scope'); return; }
+    answers = ensureExperiences(answers);
+    experienceId = answers.experiences.some(item => item.id === experienceId) ? experienceId : answers.experiences[0].id;
+    finishing = false;
+    routeTo('experience');
   }
-  else if (pageId === 'about') routeTo(answers.current_connection === 'no' ? 'out_of_scope' : 'experience');
-  else if (pageId === 'experience') {
-    // Only unfinished local drafts exist; this release still has no receiver.
-    clearDraft();
-    clearAnswers();
-    routeTo('thanks');
+}
+
+function switchExperience(id) {
+  if (!answers.experiences?.some(item => item.id === id)) return;
+  saveDraftNow();
+  experienceId = id;
+  finishing = false;
+  deleteRequest = null;
+  routeTo('experience');
+}
+
+function submitSurvey() {
+  errors = model.validate(answers, 'experience');
+  if (!confirmed) errors.push({path: 'confirmed', message: 'Please check your answers and tick the confirmation before submitting.'});
+  if (errors.length) {
+    const first = errors[0].path;
+    if (first.startsWith('experiences.')) experienceId = first.split('.')[1];
+    else if (!['final_comment', 'confirmed'].includes(first)) pageId = 'about';
+    render();
+    return;
   }
+  // Frontend review only. No receiver, transmission or receipt claim.
+  clearDraft();
+  clearAnswers();
+  routeTo('thanks');
 }
 
 function updateField(element) {
   const path = element.dataset.path;
   const kind = element.dataset.kind;
+  if (kind === 'experience-selector') { switchExperience(element.value); return; }
   if (!path) return;
   if (kind === 'confirmation') { confirmed = element.checked; return; }
   let value;
@@ -308,16 +365,16 @@ function updateField(element) {
   else if (kind === 'number') value = element.validity.badInput ? NaN : element.value === '' ? undefined : Number(element.value);
   else value = normaliseNewlines(element.value);
   setPath(answers, path, value);
+  if (kind === 'consent' && value === 'adult_agree') answers = ensureExperiences(answers);
   dirty = true;
   confirmed = false;
   document.getElementById('confirm-answers')?.removeAttribute('checked');
   const confirmation = document.getElementById('confirm-answers');
   if (confirmation) confirmation.checked = false;
-  if (kind === 'consent' && !element.checked && !pendingDraft) clearDraft();
+  if (kind === 'consent' && !element.checked && !pendingDraft && !protectedDraftRaw) clearDraft();
   scheduleDraftSave();
   if (kind === 'text') {
-    const hint = [...main.querySelectorAll('[data-limit-for]')].find(item => item.dataset.limitFor === path);
-    if (hint && !hint.hidden) showTextLimit(element);
+    showTextLimit(element);
     return;
   }
   if (['single', 'select', 'numeric-refusal'].includes(kind)) {
@@ -357,7 +414,9 @@ main?.addEventListener('click', event => {
     const saved = pendingDraft;
     if (!saved) return;
     pendingDraft = null;
-    answers = model.reconcile(saved.answers);
+    answers = ensureExperiences(model.reconcile(saved.answers));
+    experienceId = answers.experiences.some(item => item.id === saved.experienceId) ? saved.experienceId : answers.experiences[0].id;
+    finishing = false;
     confirmed = false;
     dirty = true;
     draftStatus = 'saved';
@@ -385,8 +444,65 @@ main?.addEventListener('click', event => {
     routeTo('welcome');
     return;
   }
+  if (action === 'download-draft') {
+    if (!protectedDraftRaw) return;
+    const url = URL.createObjectURL(new Blob([protectedDraftRaw], {type: 'application/json'}));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'defence-family-survey-saved-answers.json';
+    link.click();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    return;
+  }
+  if (action === 'add-experience') {
+    saveDraftNow();
+    answers = appendExperience(answers);
+    experienceId = answers.experiences.at(-1).id;
+    finishing = false;
+    deleteRequest = null;
+    confirmed = false;
+    dirty = true;
+    routeTo('experience');
+    return;
+  }
+  if (action === 'finish-survey') {
+    saveDraftNow();
+    finishing = true;
+    deleteRequest = null;
+    errors = [];
+    render();
+    const heading = document.getElementById('finish-title');
+    heading?.focus();
+    heading?.scrollIntoView({block: 'start'});
+    return;
+  }
+  if (action === 'submit-survey') { submitSurvey(); return; }
+  if (action === 'delete-experience' && answers.experiences.length > 1) {
+    deleteRequest = experienceId;
+    render({preserveFocus: true});
+    main.querySelector('[data-action="cancel-delete"]')?.focus();
+    return;
+  }
+  if (action === 'cancel-delete') { deleteRequest = null; render({preserveFocus: true}); return; }
+  if (action === 'confirm-delete') {
+    const index = answers.experiences.findIndex(item => item.id === deleteRequest);
+    answers = removeExperience(answers, deleteRequest);
+    experienceId = answers.experiences[Math.max(0, index - 1)]?.id || answers.experiences[0].id;
+    deleteRequest = null;
+    finishing = false;
+    confirmed = false;
+    dirty = true;
+    routeTo('experience');
+    return;
+  }
   if (action === 'continue') continueSurvey();
-  else if (action === 'back') routeTo(pageId === 'experience' || pageId === 'out_of_scope' ? 'about' : 'welcome');
+  else if (action === 'back') {
+    if (pageId === 'experience') {
+      const index = answers.experiences.findIndex(item => item.id === experienceId);
+      if (index > 0) switchExperience(answers.experiences[index - 1].id);
+      else { finishing = false; deleteRequest = null; routeTo('about'); }
+    } else routeTo(pageId === 'out_of_scope' ? 'about' : 'welcome');
+  }
   else if (action === 'clear-answer') {
     const previousState = {residence_area: answers.residence_area};
     setPath(answers, control.dataset.path, undefined);
@@ -427,6 +543,7 @@ window.addEventListener('pageshow', event => {
     const saved = draftStore.load();
     clearAnswers();
     pendingDraft = saved.status === 'available' ? saved.draft : null;
+    protectedDraftRaw = saved.status === 'incompatible' ? saved.raw : null;
     pageId = 'welcome';
     errors = [];
     render();
@@ -448,6 +565,7 @@ async function boot() {
     draftStore = createDraftStore({storage, schemaVersion: spec.answer_schema_version});
     const saved = draftStore.load();
     pendingDraft = saved.status === 'available' ? saved.draft : null;
+    protectedDraftRaw = saved.status === 'incompatible' ? saved.raw : null;
     if (saved.status === 'unavailable') draftStatus = 'unavailable';
     render();
   } catch {

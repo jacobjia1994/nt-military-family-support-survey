@@ -1,5 +1,5 @@
 {
-  "schema_version": "adult_open_2026_09_30_required_drafts",
+  "schema_version": "adult_open_2026_09_30_multiple_experiences",
   "variant": "adult_open_response",
   "scope": {
     "population": "Current-serving military personnel based in Greater Darwin and their adult family members, including overseas military personnel and families living elsewhere.",
@@ -568,8 +568,10 @@
       "id": "welcome",
       "title": "Defence Family Support Survey",
       "intro": [
-        "Tell us about everyday life and family support in Greater Darwin.",
-        "Your experiences will help Lutheran Care plan useful support for serving members and their families."
+        "Your experience matters. Help shape Defence family support in Greater Darwin.",
+        "Lutheran Care is planning support and activities through its Defence Family Support Program. Your answers will help shape what it offers.",
+        "We welcome positive experiences as well as challenges, including what is working well and what could be better.",
+        "We welcome different cultural perspectives, family circumstances and experiences of Defence life."
       ],
       "funding_acknowledgement": "Lutheran Care gratefully acknowledges funding from the Australian Government Department of Defence through the Family Support Funding Program.",
       "questions": [
@@ -608,21 +610,21 @@
       ],
       "eligibility": {
         "title": "Who can take part",
-        "text": "Adults currently serving with the ADF or another country’s military and based in Greater Darwin, and their adult family members. Family members may live elsewhere; this includes partners, former partners, relatives, kin and carers."
+        "text": "Adults currently serving with the ADF or another country’s military and based in Greater Darwin, and their adult family members. Family members may live elsewhere; this includes partners, former partners, relatives, kin and carers. Greater Darwin includes Darwin, Palmerston and Litchfield."
       },
       "information_title": "Your information",
       "information_blocks": [
         {
           "title": "Your choice",
-          "text": "Taking part is voluntary. You can choose Prefer not to answer where offered, or stop before submitting."
+          "text": "Taking part is voluntary. You can choose Prefer not to answer where offered, or stop before submitting. You can go back to check and change your answers before submitting."
         },
         {
           "title": "How answers are used",
-          "text": "Lutheran Care will use your answers to plan its Defence Family Support Program. We may use de-identified survey information in reports and share it with funding partners."
+          "text": "Lutheran Care will use your answers to plan its Defence Family Support Program. We may use de-identified survey information in reports and share it with funding partners. Completing this survey does not register you for a service or activity."
         },
         {
           "title": "Protecting privacy",
-          "text": "We do not ask for names or contact details. Please leave out identifying, classified or operationally sensitive information. Unfinished answers stay in this browser and can be resumed for up to 30 days; you can clear them at any time."
+          "text": "We do not ask for names or contact details. Please leave out names, addresses, contact details, service numbers and other identifying, classified or operationally sensitive information. Unfinished answers can be resumed on the same device and browser for up to 30 days after the last save; you can clear saved progress at any time."
         },
         {
           "title": "Privacy and your rights",
@@ -884,88 +886,79 @@
     },
     {
       "id": "experience",
-      "title": "Your living experiences",
+      "title": "Your experiences",
       "intro": [
-        "Please answer each question. Share as much or as little as you feel comfortable sharing."
+        "Think about the past 12 months. Choose one situation or ongoing part of life that you would like us to understand. Use that experience for the questions below. Short answers are welcome.",
+        "This can be a continuing or repeated part of life, or a few related situations. It does not have to be your most difficult or serious experience.",
+        "Focus on your own experience while you or your currently serving family member was based in Greater Darwin, even if you lived elsewhere. It does not need to have been caused by military service.",
+        "You can leave any question blank. You can add another experience or finish whenever you are ready."
       ],
       "questions": [
         {
-          "id": "difficulties",
-          "label": "What was difficult for you or your family in the Great Darwin Region in the past 12 months?",
-          "help": "Tell us what happened and how it affected everyday life.",
-          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
-          "type": "text",
-          "required": true,
-          "max_length": 5000,
-          "rows": 8
-        },
-        {
-          "id": "help_needed",
-          "label": "What help, if any, did you or your family need to deal with these difficulties?",
-          "help": "Include help you received as well as help you needed but could not get. You do not need to know which service could provide it.",
-          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
-          "type": "text",
-          "required": true,
-          "max_length": 5000,
-          "rows": 8
-        },
-        {
-          "id": "help_sources",
-          "label": "Where did you look for help, and what help did you receive?",
-          "help": "You can include services, online information, friends and family, or help offered without asking. You can also tell us if you managed without help or did not seek any.",
-          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
-          "type": "text",
-          "required": true,
-          "max_length": 5000,
-          "rows": 8
-        },
-        {
-          "id": "support_access",
-          "label": "What made it easier or harder to get support outside the military?",
-          "help": "You can also tell us why you chose not to seek or use support.",
-          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
-          "type": "text",
-          "required": true,
-          "max_length": 5000,
-          "rows": 8
-        },
-        {
-          "id": "support_fit",
-          "label": "How well did the support you received outside the military meet your needs?",
-          "help": "Please explain what it helped with and what it did not. If you used more than one source, say which you mean.",
-          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
-          "type": "text",
-          "required": true,
-          "max_length": 5000,
-          "rows": 8
-        },
-        {
-          "id": "missing_help",
-          "label": "What help, if any, are you or your family still missing now?",
-          "help": "Tell us what would make the biggest difference, and what would make that help work for you. You can also say that nothing more is needed.",
-          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
-          "type": "text",
-          "required": true,
-          "max_length": 5000,
-          "rows": 8
-        },
-        {
-          "id": "anything_else",
-          "label": "Is there anything else you want to add?",
+          "id": "situation",
+          "label": "What was happening, and how did it affect everyday life for you or your family?",
           "help": "",
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
-          "required": true,
+          "required": false,
           "max_length": 5000,
-          "rows": 8
+          "rows": 6
+        },
+        {
+          "id": "actions",
+          "label": "How did you or your family deal with it?",
+          "help": "Tell us what you did yourself, who you turned to, or what help was offered. What were you hoping would change?",
+          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
+          "type": "text",
+          "required": false,
+          "max_length": 5000,
+          "rows": 6
+        },
+        {
+          "id": "access",
+          "label": "What made it easier or harder to get any help you wanted?",
+          "help": "This could include knowing where to look, getting a response or being able to use what was offered. If you did not seek help, you can say why.",
+          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
+          "type": "text",
+          "required": false,
+          "max_length": 5000,
+          "rows": 6
+        },
+        {
+          "id": "outcome",
+          "label": "What changed, if anything, and how are things now?",
+          "help": "Tell us what helped or did not help, and what remains unresolved, if anything.",
+          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
+          "type": "text",
+          "required": false,
+          "max_length": 5000,
+          "rows": 6
+        },
+        {
+          "id": "support",
+          "label": "Looking back, what support was missing or could have worked better, if anything?",
+          "help": "Tell us what you wanted help with and what would have made a difference. You can also say what worked well and should continue.",
+          "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
+          "type": "text",
+          "required": false,
+          "max_length": 5000,
+          "rows": 6
         }
       ],
       "confirmation_label": "I have checked my answers and removed identifying details where possible.",
       "buttons": [
         "Back",
-        "Confirm and submit"
+        "Add another experience",
+        "Finish survey"
       ],
-      "subtitle": "in the Great Darwin Region"
+      "final_question": {
+        "id": "final_comment",
+        "label": "Is there anything else you want to add? (optional)",
+        "type": "text",
+        "required": false,
+        "max_length": 5000,
+        "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers."
+      }
     },
     {
       "id": "thanks",
@@ -996,6 +989,6 @@
       ]
     }
   },
-  "answer_schema_version": "adult_open_answers_v3",
+  "answer_schema_version": "adult_open_experiences_v4",
   "draft_notice": "Unfinished answers are saved in this browser. Use the same device and browser to return later."
 }

@@ -4,6 +4,59 @@ export const PAGE_ORDER = Object.freeze(['welcome', 'about', 'experience', 'than
 export const normaliseNewlines = value => String(value ?? '').replace(/\r\n?/g, '\n');
 // Match native textarea maxlength. English characters occupy one UTF-16 unit.
 export const characterCount = value => normaliseNewlines(value).length;
+
+const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+const usableExperienceId = value => typeof value === 'string' && /^[A-Za-z0-9_-]+$/.test(value) && !['__proto__', 'constructor', 'prototype'].includes(value);
+const defaultExperienceId = () => globalThis.crypto?.randomUUID?.() || `experience-${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+
+function uniqueExperienceId(idFactory, used) {
+  const candidate = idFactory();
+  const base = usableExperienceId(candidate) ? candidate : defaultExperienceId();
+  let id = base;
+  for (let suffix = 2; used.has(id); suffix += 1) id = `${base}-${suffix}`;
+  return id;
+}
+
+/** A blank experience has its own stable identity and independent answer object. */
+export function createExperience(idFactory = defaultExperienceId) {
+  return {id: uniqueExperienceId(idFactory, new Set()), responses: {}};
+}
+
+/** Clone answers, retaining every experience and ensuring one uniquely identified page. */
+export function ensureExperiences(answers = {}, idFactory = defaultExperienceId) {
+  if (!isRecord(answers)) throw new TypeError('Survey answers must be an object.');
+  const next = structuredClone(answers);
+  if (next.experiences !== undefined && !Array.isArray(next.experiences)) {
+    throw new TypeError('Experiences must be an array.');
+  }
+  const existing = next.experiences || [];
+  const used = new Set(existing.filter(isRecord).map(entry => entry.id).filter(usableExperienceId));
+  const seen = new Set();
+  next.experiences = existing.map(entry => {
+    if (!isRecord(entry)) throw new TypeError('Each experience must be an object.');
+    if (!usableExperienceId(entry.id) || seen.has(entry.id)) entry.id = uniqueExperienceId(idFactory, used);
+    used.add(entry.id);
+    seen.add(entry.id);
+    if (entry.responses === undefined) entry.responses = {};
+    return entry;
+  });
+  if (!next.experiences.length) next.experiences.push(createExperience(idFactory));
+  return next;
+}
+
+export function appendExperience(answers, idFactory = defaultExperienceId) {
+  const next = ensureExperiences(answers, idFactory);
+  const used = new Set(next.experiences.map(entry => entry.id));
+  next.experiences.push({id: uniqueExperienceId(idFactory, used), responses: {}});
+  return next;
+}
+
+/** A missing ID or the last remaining experience is left in place. */
+export function removeExperience(answers, experienceId) {
+  const next = ensureExperiences(answers);
+  if (next.experiences.length > 1) next.experiences = next.experiences.filter(entry => entry.id !== experienceId);
+  return next;
+}
 const present = value => value !== undefined && value !== null && value !== '';
 const hasText = value => typeof value === 'string' && value.trim().length > 0;
 const readPath = (object, path) => path.split('.').reduce((value, part) => value?.[part], object);
@@ -56,7 +109,7 @@ export function createAdultSurveyModel(spec) {
     return next;
   }
 
-  function validate(answers, pageId) {
+  function validate(answers, pageId, activeExperienceId) {
     const errors = [];
     const error = (path, message) => errors.push({path, message});
     if (pageId === 'welcome' && answers.consent !== 'adult_agree') {
@@ -114,21 +167,40 @@ export function createAdultSurveyModel(spec) {
     if (pageId === 'experience') {
       if (answers.consent !== 'adult_agree') error('consent', 'Please agree to take part before finishing.');
       if (answers.current_connection === 'no') error('current_connection', spec.system_screens.out_of_scope.text);
-      for (const question of experience.questions) {
-        const value = answers.responses?.[question.id];
-        if (question.required && !hasText(value) && (!present(value) || typeof value === 'string')) {
-          error(`responses.${question.id}`, 'Please enter an answer.');
-          continue;
-        }
-        if (value === undefined) continue;
-        if (typeof value !== 'string') error(`responses.${question.id}`, 'Use text for this answer.');
+      function validateNarrative(value, path, question) {
+        if (value === undefined) return;
+        if (typeof value !== 'string') error(path, 'Use text for this answer.');
         else if (characterCount(value) > question.max_length) {
-          error(`responses.${question.id}`, `Please shorten your answer to ${question.max_length.toLocaleString('en-AU')} characters or fewer. Your text has not been changed.`);
+          error(path, `Please shorten your answer to ${question.max_length.toLocaleString('en-AU')} characters or fewer. Your text has not been changed.`);
         }
       }
+      const entries = answers.experiences;
+      if (!Array.isArray(entries) || entries.length === 0) error('experiences', 'Please check your experiences before finishing.');
+      else {
+        const used = new Set();
+        for (const [index, entry] of entries.entries()) {
+          if (!isRecord(entry) || !usableExperienceId(entry.id) || used.has(entry.id)) {
+            error(`experiences.${index}`, 'Please check this experience before finishing.');
+            continue;
+          }
+          used.add(entry.id);
+          if (activeExperienceId !== undefined && entry.id !== activeExperienceId) continue;
+          if (entry.responses !== undefined && !isRecord(entry.responses)) {
+            error(`experiences.${entry.id}.responses`, 'Use text for these answers.');
+            continue;
+          }
+          for (const question of experience.questions) {
+            validateNarrative(entry.responses?.[question.id], `experiences.${entry.id}.responses.${question.id}`, question);
+          }
+        }
+        if (activeExperienceId !== undefined && !entries.some(entry => entry?.id === activeExperienceId)) {
+          error('experiences', 'Please choose an existing experience.');
+        }
+      }
+      validateNarrative(answers.final_comment, 'final_comment', experience.final_question || {max_length: MAX_TEXT_CHARACTERS});
     }
     return errors;
   }
 
-  return {visibleLocationFields, reconcile, validate};
+  return {visibleLocationFields, reconcile, validate, createExperience, ensureExperiences, appendExperience, removeExperience};
 }
