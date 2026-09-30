@@ -1,7 +1,7 @@
-import {createAdultSurveyModel, characterCount, normaliseNewlines} from './model.mjs?v=20260930-4';
+import {createAdultSurveyModel, characterCount, normaliseNewlines} from './model.mjs?v=20260930-6';
+import {createDraftStore, DRAFT_STORAGE_KEY} from './draft-store.mjs?v=20260930-6';
 const moduleUrl = import.meta.url;
 const main = document.querySelector('#main');
-const clone = value => value === undefined ? undefined : structuredClone(value);
 const text = value => String(value ?? '');
 const present = value => value !== undefined && value !== null && value !== '';
 
@@ -61,7 +61,7 @@ function textQuestion({path, label, help = '', privacyHint = '', value = '', row
     <label class="field-label" for="${escapeHtml(inputId)}">${escapeHtml(label)}</label>
     ${help ? `<p id="${inputId}-hint" class="field-hint">${escapeHtml(help)}</p>` : ''}
     ${privacyHint ? `<p id="${inputId}-privacy" class="privacy-hint">${escapeHtml(privacyHint)}</p>` : ''}
-    <textarea id="${escapeHtml(inputId)}" name="${escapeHtml(path)}" class="textarea" rows="${Number(rows) || 6}" aria-describedby="${descriptions} ${inputId}-limit"${questionError(path, errors) ? ' aria-invalid="true"' : ''} spellcheck="true" data-path="${escapeHtml(path)}" data-kind="text" data-max-length="${maxLength}">${escapeHtml(normalised)}</textarea>
+    <textarea id="${escapeHtml(inputId)}" name="${escapeHtml(path)}" class="textarea" rows="${Number(rows) || 6}" required aria-required="true" aria-describedby="${descriptions} ${inputId}-limit"${questionError(path, errors) ? ' aria-invalid="true"' : ''} spellcheck="true" data-path="${escapeHtml(path)}" data-kind="text" data-max-length="${maxLength}">${escapeHtml(normalised)}</textarea>
     <p id="${inputId}-limit" class="limit-hint" data-limit-for="${escapeHtml(path)}" hidden></p>
     <p id="${inputId}-error" class="field-error" data-error-for="${escapeHtml(path)}"${questionError(path, errors) ? '' : ' hidden'}>${escapeHtml(questionError(path, errors))}</p>
   </div>`;
@@ -73,12 +73,12 @@ function choicesQuestion({path, label, help = '', options = [], value, primaryId
     const id = text(option.id);
     const inputId = idFor(`${idPrefix}-${path}-${id}`);
     return `<label class="choice" for="${escapeHtml(inputId)}">
-      <input id="${escapeHtml(inputId)}" type="radio" name="${escapeHtml(name)}" value="${escapeHtml(id)}" data-path="${escapeHtml(path)}" data-kind="single"${value === id ? ' checked' : ''}>
+      <input id="${escapeHtml(inputId)}" type="radio" name="${escapeHtml(name)}" value="${escapeHtml(id)}" required aria-required="true" data-path="${escapeHtml(path)}" data-kind="single"${value === id ? ' checked' : ''}>
       <span class="choice-body"><span class="choice-label">${escapeHtml(option.label)}</span>${option.hint ? `<span class="choice-hint">${escapeHtml(option.hint)}</span>` : ''}</span>
     </label>`;
   };
   const optionsHtml = primaryIds.length
-    ? `<div class="choices area-primary-choices">${options.filter(option => primaryIds.includes(option.id)).map(optionMarkup).join('')}</div><details class="area-other-options"${secondaryIds.includes(value) ? ' open' : ''}><summary>${escapeHtml(disclosureLabel)}</summary><div class="choices">${options.filter(option => secondaryIds.includes(option.id)).map(optionMarkup).join('')}</div></details>`
+    ? `<div class="choices area-primary-choices">${options.filter(option => primaryIds.includes(option.id)).map(optionMarkup).join('')}</div><details class="area-other-options"${secondaryIds.includes(value) ? ' open' : ''}><summary>${escapeHtml(disclosureLabel)}</summary><div class="choices">${options.filter(option => secondaryIds.includes(option.id)).map(optionMarkup).join('')}</div></details><div class="choices refusal-choices">${options.filter(option => !primaryIds.includes(option.id) && !secondaryIds.includes(option.id)).map(optionMarkup).join('')}</div>`
     : `<div class="choices">${options.map(optionMarkup).join('')}</div>`;
   return `<fieldset class="question-group" data-question-path="${escapeHtml(path)}">
     <legend>${escapeHtml(label)}</legend>
@@ -95,7 +95,7 @@ function selectQuestion({path, label, help = '', options = [], value, errors = [
   return `<div class="question-group">
     <label class="field-label" for="${escapeHtml(inputId)}">${escapeHtml(label)}</label>
     ${help ? `<p class="field-hint">${escapeHtml(help)}</p>` : ''}
-    <select id="${escapeHtml(inputId)}" name="${escapeHtml(path)}" class="select locality-control" data-path="${escapeHtml(path)}" data-kind="select">${optionsHtml}</select>
+    <select id="${escapeHtml(inputId)}" name="${escapeHtml(path)}" class="select locality-control" required aria-required="true" data-path="${escapeHtml(path)}" data-kind="select">${optionsHtml}</select>
     ${errorElement(path, errors)}
   </div>`;
 }
@@ -103,7 +103,7 @@ function selectQuestion({path, label, help = '', options = [], value, errors = [
 function numberInput({path, label, value, min = 0, max = Number.MAX_SAFE_INTEGER, errors = []}) {
   const inputId = idFor(`number-${path}`);
   const shown = value === undefined || value === null ? '' : value;
-  return `<div class="number-field"><label class="field-label" for="${escapeHtml(inputId)}">${escapeHtml(label)}</label><input id="${escapeHtml(inputId)}" class="text-input" type="number" min="${min}" max="${max}" step="1" inputmode="numeric" value="${escapeHtml(shown)}" data-path="${escapeHtml(path)}" data-kind="number"${questionError(path, errors) ? ' aria-invalid="true"' : ''}>${errorElement(path, errors)}</div>`;
+  return `<div class="number-field"><label class="field-label" for="${escapeHtml(inputId)}">${escapeHtml(label)}</label><input id="${escapeHtml(inputId)}" class="text-input" type="number" min="${min}" max="${max}" step="1" inputmode="numeric" required aria-required="true" value="${escapeHtml(shown)}" data-path="${escapeHtml(path)}" data-kind="number"${questionError(path, errors) ? ' aria-invalid="true"' : ''}>${errorElement(path, errors)}</div>`;
 }
 
 function renderIntro(lines, className = 'question-intro') {
@@ -134,7 +134,9 @@ function renderAbout(spec, model, answers, errors) {
       }
       if (question.type === 'integer_group') {
         if (question.id === 'dependants_count' && answers.has_dependants !== 'yes') return '';
-        return `<fieldset class="question-group"><legend>${escapeHtml(question.label)}</legend>${question.help ? `<p class="field-hint">${escapeHtml(question.help)}</p>` : ''}<div class="number-pair${question.id === 'nt_duration' ? ' duration-fields' : ''}">${question.fields.map(field => numberInput({...field, value: readPath(answers, field.path), errors})).join('')}</div></fieldset>`;
+        const refused = readPath(answers, question.refusal_path) === true;
+        const refusalId = idFor(`refusal-${question.id}`);
+        return `<fieldset class="question-group"><legend>${escapeHtml(question.label)}</legend>${question.help ? `<p class="field-hint">${escapeHtml(question.help)}</p>` : ''}${refused ? '' : `<div class="number-pair${question.id === 'nt_duration' ? ' duration-fields' : ''}">${question.fields.map(field => numberInput({...field, value: readPath(answers, field.path), errors})).join('')}</div>`}<label class="numeric-refusal" for="${refusalId}"><input id="${refusalId}" type="checkbox" data-path="${escapeHtml(question.refusal_path)}" data-kind="numeric-refusal"${refused ? ' checked' : ''}><span>${escapeHtml(question.refusal_label)}</span></label></fieldset>`;
       }
       return '';
     }).join('');
@@ -174,6 +176,59 @@ let pageId = 'welcome';
 let errors = [];
 let confirmed = false;
 let dirty = false;
+let draftStore;
+let pendingDraft = null;
+let saveTimer;
+let draftStatus = 'idle';
+let clearFailed = false;
+let restartRequest = null;
+
+function restartPrompt() {
+  if (!restartRequest) return '';
+  return '<section class="restart-prompt" role="alert"><p>Start again? This will clear your saved progress and current answers in this browser.</p><div class="resume-actions"><button type="button" class="button secondary" data-action="cancel-restart">Keep my progress</button><button type="button" class="button primary" data-action="confirm-restart">Clear and start again</button></div></section>';
+}
+
+function requestRestart(kind) {
+  restartRequest = kind;
+  render({preserveFocus: true});
+  main.querySelector('[data-action="cancel-restart"]')?.focus();
+}
+
+function draftControls() {
+  if (!dirty || answers.consent !== 'adult_agree' || pageId === 'thanks') return '';
+  const message = draftStatus === 'saved' ? 'Progress saved in this browser.' : draftStatus === 'unavailable' ? 'This browser cannot save progress. Keep this page open until you finish.' : 'Saving progress…';
+  return `<div class="draft-controls"><span data-draft-status>${escapeHtml(message)}</span><button type="button" class="small-text-action" data-action="clear-draft">Clear saved progress</button></div>`;
+}
+
+function resumePrompt() {
+  if (!pendingDraft) return '';
+  return '<section class="resume-prompt" aria-labelledby="resume-title"><h2 id="resume-title">Continue your survey</h2><p>Saved progress is available in this browser.</p><div class="resume-actions"><button type="button" class="button primary" data-action="resume-draft">Resume survey</button><button type="button" class="small-text-action" data-action="new-survey">Start a new survey</button></div></section>';
+}
+
+function saveDraftNow() {
+  window.clearTimeout(saveTimer);
+  if (!draftStore || pendingDraft || !dirty || answers.consent !== 'adult_agree' || pageId === 'thanks') return;
+  const result = draftStore.save({answers, pageId: pageId === 'out_of_scope' ? 'about' : pageId});
+  draftStatus = result.status;
+  const status = main.querySelector('[data-draft-status]');
+  if (status) status.textContent = draftStatus === 'saved' ? 'Progress saved in this browser.' : 'This browser cannot save progress. Keep this page open until you finish.';
+}
+
+function scheduleDraftSave() {
+  draftStatus = 'saving';
+  const status = main.querySelector('[data-draft-status]');
+  if (status) status.textContent = 'Saving progress…';
+  window.clearTimeout(saveTimer);
+  saveTimer = window.setTimeout(saveDraftNow, 300);
+}
+
+function clearDraft() {
+  window.clearTimeout(saveTimer);
+  const result = draftStore?.clear();
+  clearFailed = result?.status === 'unavailable';
+  pendingDraft = null;
+  draftStatus = 'idle';
+}
 
 function render({preserveFocus = false} = {}) {
   const focusId = preserveFocus ? document.activeElement?.id : null;
@@ -188,10 +243,12 @@ function render({preserveFocus = false} = {}) {
     const screen = spec.system_screens[pageId];
     content = `<section class="finish dual-page"><h1 tabindex="-1">${escapeHtml(screen.title)}</h1><p class="lead">${escapeHtml(screen.text)}</p><div class="finish-actions"><button class="button secondary" type="button" data-action="back">Back</button></div></section>`;
   }
-  const summary = errors.length ? `<div class="survey-errors" role="alert"><p>Please check the following:</p><ul>${errors.map(error => `<li>${escapeHtml(error.message)}</li>`).join('')}</ul></div>` : '';
+  const summary = errors.length ? '<div class="survey-errors" role="alert"><p>Please check the highlighted questions.</p></div>' : '';
   const progress = index >= 0 ? `<p class="page-progress">Page ${index + 1} of 4</p>` : '';
-  main.innerHTML = progress + content;
+  main.innerHTML = progress + content + draftControls() + restartPrompt();
   main.dataset.page = pageId;
+  if (pageId === 'welcome' && pendingDraft) main.querySelector('h1')?.insertAdjacentHTML('afterend', resumePrompt());
+  if (clearFailed) main.insertAdjacentHTML('beforeend', '<p class="draft-warning">Saved progress could not be cleared. Please remove this site’s saved data in your browser settings.</p>');
   if (summary) main.querySelector('h1').insertAdjacentHTML('afterend', summary);
   if (preserveFocus && focusId) document.getElementById(focusId)?.focus({preventScroll: true});
   else {
@@ -208,6 +265,7 @@ function render({preserveFocus = false} = {}) {
 function routeTo(next) {
   pageId = next;
   errors = [];
+  saveDraftNow();
   render();
 }
 
@@ -221,11 +279,17 @@ function continueSurvey() {
   errors = model.validate(answers, pageId);
   if (pageId === 'experience' && !confirmed) errors.push({path: 'confirmed', message: 'Please check your answers and tick the confirmation before submitting.'});
   if (errors.length) { render(); return; }
-  if (pageId === 'welcome') routeTo('about');
+  if (pageId === 'welcome') {
+    if (pendingDraft) {
+      requestRestart('start');
+      return;
+    }
+    routeTo('about');
+  }
   else if (pageId === 'about') routeTo(answers.current_connection === 'no' ? 'out_of_scope' : 'experience');
   else if (pageId === 'experience') {
-    // This presentation release has no answer receiver. Do not claim receipt,
-    // persist a response, or introduce transport without the collection handover.
+    // Only unfinished local drafts exist; this release still has no receiver.
+    clearDraft();
     clearAnswers();
     routeTo('thanks');
   }
@@ -239,6 +303,7 @@ function updateField(element) {
   let value;
   const previousState = {residence_area: answers.residence_area};
   if (kind === 'consent') value = element.checked ? 'adult_agree' : undefined;
+  else if (kind === 'numeric-refusal') value = element.checked ? true : undefined;
   else if (kind === 'single') { if (!element.checked) return; value = element.value; }
   else if (kind === 'number') value = element.validity.badInput ? NaN : element.value === '' ? undefined : Number(element.value);
   else value = normaliseNewlines(element.value);
@@ -248,12 +313,14 @@ function updateField(element) {
   document.getElementById('confirm-answers')?.removeAttribute('checked');
   const confirmation = document.getElementById('confirm-answers');
   if (confirmation) confirmation.checked = false;
+  if (kind === 'consent' && !element.checked && !pendingDraft) clearDraft();
+  scheduleDraftSave();
   if (kind === 'text') {
     const hint = [...main.querySelectorAll('[data-limit-for]')].find(item => item.dataset.limitFor === path);
     if (hint && !hint.hidden) showTextLimit(element);
     return;
   }
-  if (['single', 'select'].includes(kind)) {
+  if (['single', 'select', 'numeric-refusal'].includes(kind)) {
     answers = model.reconcile(answers, previousState);
     errors = [];
     render({preserveFocus: true});
@@ -286,6 +353,38 @@ main?.addEventListener('click', event => {
   if (!control || !main.contains(control)) return;
   event.preventDefault();
   const action = control.dataset.action;
+  if (action === 'resume-draft') {
+    const saved = pendingDraft;
+    if (!saved) return;
+    pendingDraft = null;
+    answers = model.reconcile(saved.answers);
+    confirmed = false;
+    dirty = true;
+    draftStatus = 'saved';
+    let target = saved.pageId;
+    if (model.validate(answers, 'welcome').length) target = 'welcome';
+    else if (target === 'experience' && model.validate(answers, 'about').length) target = 'about';
+    routeTo(target);
+    return;
+  }
+  if (action === 'new-survey' || action === 'clear-draft') {
+    requestRestart(action === 'new-survey' ? 'new' : 'clear');
+    return;
+  }
+  if (action === 'cancel-restart') {
+    restartRequest = null;
+    render({preserveFocus: true});
+    return;
+  }
+  if (action === 'confirm-restart') {
+    const kind = restartRequest;
+    restartRequest = null;
+    clearDraft();
+    if (kind === 'start') { routeTo('about'); return; }
+    clearAnswers();
+    routeTo('welcome');
+    return;
+  }
   if (action === 'continue') continueSurvey();
   else if (action === 'back') routeTo(pageId === 'experience' || pageId === 'out_of_scope' ? 'about' : 'welcome');
   else if (action === 'clear-answer') {
@@ -294,6 +393,7 @@ main?.addEventListener('click', event => {
     answers = model.reconcile(answers, previousState);
     confirmed = false;
     dirty = true;
+    scheduleDraftSave();
     errors = [];
     render({preserveFocus: true});
     const question = [...main.querySelectorAll('[data-question-path]')].find(item => item.dataset.questionPath === control.dataset.path);
@@ -302,13 +402,35 @@ main?.addEventListener('click', event => {
 });
 
 window.addEventListener('beforeunload', event => {
-  if (!dirty) return;
+  saveDraftNow();
+  if (!dirty || draftStatus === 'saved') return;
   event.preventDefault();
   event.returnValue = '';
 });
-window.addEventListener('pagehide', () => clearAnswers());
+window.addEventListener('pagehide', saveDraftNow);
+window.addEventListener('storage', event => {
+  if (!model || event.key !== DRAFT_STORAGE_KEY || event.newValue !== null) return;
+  // Completion or clearing in another tab must not resurrect an old draft.
+  window.clearTimeout(saveTimer);
+  pendingDraft = null;
+  restartRequest = null;
+  clearAnswers();
+  pageId = 'welcome';
+  errors = [];
+  render();
+});
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') saveDraftNow();
+});
 window.addEventListener('pageshow', event => {
-  if (event.persisted && model) { clearAnswers(); routeTo('welcome'); }
+  if (event.persisted && model) {
+    const saved = draftStore.load();
+    clearAnswers();
+    pendingDraft = saved.status === 'available' ? saved.draft : null;
+    pageId = 'welcome';
+    errors = [];
+    render();
+  }
 });
 
 async function boot() {
@@ -321,6 +443,12 @@ async function boot() {
     if (!response.ok) throw new Error('Please refresh the page and try again.');
     spec = await response.json();
     model = createAdultSurveyModel(spec);
+    let storage;
+    try { storage = window.localStorage; } catch { /* Some browser privacy modes deny storage. */ }
+    draftStore = createDraftStore({storage, schemaVersion: spec.answer_schema_version});
+    const saved = draftStore.load();
+    pendingDraft = saved.status === 'available' ? saved.draft : null;
+    if (saved.status === 'unavailable') draftStatus = 'unavailable';
     render();
   } catch {
     main.innerHTML = '<section class="finish"><h1>Unable to load this questionnaire</h1><p>Please refresh the page and try again.</p></section>';

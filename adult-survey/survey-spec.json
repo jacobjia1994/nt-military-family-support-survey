@@ -1,10 +1,11 @@
 {
-  "schema_version": "adult_open_2026_09_30_welcome_v3",
+  "schema_version": "adult_open_2026_09_30_required_drafts",
   "variant": "adult_open_response",
   "scope": {
     "population": "Current-serving military personnel based in Greater Darwin and their adult family members, including overseas military personnel and families living elsewhere.",
     "adult_only": true,
-    "collection_enabled": false
+    "collection_enabled": false,
+    "draft_storage": "same_browser_local"
   },
   "geography": {
     "version": "2026-09-27-two-level",
@@ -30,6 +31,10 @@
       {
         "id": "outside",
         "label": "Outside Greater Darwin"
+      },
+      {
+        "id": "prefer_not",
+        "label": "Prefer not to answer"
       }
     ],
     "localities": [
@@ -551,6 +556,10 @@
       {
         "id": "other",
         "label": "Another suburb or locality in this area"
+      },
+      {
+        "id": "prefer_not",
+        "label": "Prefer not to answer"
       }
     ]
   },
@@ -605,7 +614,7 @@
       "information_blocks": [
         {
           "title": "Your choice",
-          "text": "Taking part is voluntary. You can skip any background or written question, or stop before submitting."
+          "text": "Taking part is voluntary. You can choose Prefer not to answer where offered, or stop before submitting."
         },
         {
           "title": "How answers are used",
@@ -613,7 +622,7 @@
         },
         {
           "title": "Protecting privacy",
-          "text": "We do not ask for names or contact details. Please leave out identifying details, including service numbers, and classified or operationally sensitive information."
+          "text": "We do not ask for names or contact details. Please leave out identifying, classified or operationally sensitive information. Unfinished answers stay in this browser and can be resumed for up to 30 days; you can clear them at any time."
         },
         {
           "title": "Privacy and your rights",
@@ -637,14 +646,14 @@
       "id": "about",
       "title": "A bit about you",
       "intro": [
-        "These questions help us understand the different experiences of people taking part. You can leave any question unanswered."
+        "Please answer each question before continuing."
       ],
       "questions": [
         {
           "id": "role",
           "label": "Which best describes you?",
           "type": "single",
-          "required": false,
+          "required": true,
           "options": [
             {
               "id": "service_member",
@@ -661,6 +670,10 @@
             {
               "id": "other_family",
               "label": "Another adult family member, former partner or carer of a currently serving member"
+            },
+            {
+              "id": "prefer_not",
+              "label": "Prefer not to answer"
             }
           ],
           "help": "Choose one. “Serving member” includes ADF members and members of another country’s military.",
@@ -670,7 +683,7 @@
           "id": "age_group",
           "label": "Which age group are you in?",
           "type": "single",
-          "required": false,
+          "required": true,
           "options": [
             {
               "id": "18_29",
@@ -687,6 +700,10 @@
             {
               "id": "50_plus",
               "label": "50 or older"
+            },
+            {
+              "id": "prefer_not",
+              "label": "Prefer not to answer"
             }
           ],
           "group": "About you"
@@ -695,7 +712,7 @@
           "id": "current_connection",
           "label": "Are you or a member of your family currently serving and based in Greater Darwin?",
           "type": "single",
-          "required": false,
+          "required": true,
           "options": [
             {
               "id": "yes",
@@ -708,6 +725,10 @@
             {
               "id": "unsure",
               "label": "Not sure"
+            },
+            {
+              "id": "prefer_not",
+              "label": "Prefer not to answer"
             }
           ],
           "help": "Answer Yes if you or your serving family member is based in Greater Darwin, even if you live elsewhere or the serving member is temporarily away for work.",
@@ -717,7 +738,7 @@
           "id": "residence_area",
           "label": "Where do you currently live?",
           "type": "single",
-          "required": false,
+          "required": true,
           "options": [
             {
               "id": "darwin",
@@ -738,6 +759,10 @@
             {
               "id": "outside",
               "label": "Outside Greater Darwin"
+            },
+            {
+              "id": "prefer_not",
+              "label": "Prefer not to answer"
             }
           ],
           "group": "Where you live",
@@ -756,8 +781,8 @@
           "id": "suburb",
           "label": "Which suburb or locality do you live in?",
           "type": "locality_select",
-          "required": false,
-          "help": "Optional. Choose from the list for your area, or leave this blank.",
+          "required": true,
+          "help": "Choose from the list for your area.",
           "options_ref": "geography.localities filtered by residence_area + geography.extra_locality_options",
           "show_when": "residence_area is a local area",
           "group": "Where you live"
@@ -766,7 +791,7 @@
           "id": "suburb_other",
           "label": "Which other suburb or locality?",
           "type": "text",
-          "required": false,
+          "required": true,
           "help": "Please provide only the suburb or locality, not a street address.",
           "show_when": "suburb == other",
           "max_length": 5000,
@@ -776,7 +801,7 @@
           "id": "nt_duration",
           "label": "How long have you lived in the NT?",
           "type": "integer_group",
-          "required": false,
+          "required": true,
           "help": "Count your current or most recent stay.",
           "fields": [
             {
@@ -785,7 +810,7 @@
               "label": "Years",
               "min": 0,
               "max": 99,
-              "required": false
+              "required": true
             },
             {
               "id": "months",
@@ -793,16 +818,18 @@
               "label": "Months",
               "min": 0,
               "max": 11,
-              "required": false
+              "required": true
             }
           ],
-          "group": "Where you live"
+          "group": "Where you live",
+          "refusal_path": "nt_duration.prefer_not",
+          "refusal_label": "Prefer not to answer"
         },
         {
           "id": "has_dependants",
           "label": "Do you have any dependants?",
           "type": "single",
-          "required": false,
+          "required": true,
           "group": "Your dependants",
           "help": "Include children or adults who rely on you for care or financial support.",
           "options": [
@@ -813,6 +840,10 @@
             {
               "id": "no",
               "label": "No"
+            },
+            {
+              "id": "prefer_not",
+              "label": "Prefer not to answer"
             }
           ]
         },
@@ -820,8 +851,8 @@
           "id": "dependants_count",
           "label": "How many dependants do you have?",
           "type": "integer_group",
-          "required": false,
-          "help": "Count each person once. You can leave either entry blank.",
+          "required": true,
+          "help": "Count each person once.",
           "fields": [
             {
               "id": "total",
@@ -829,7 +860,7 @@
               "label": "Total number of dependants",
               "min": 0,
               "max": 9007199254740991,
-              "required": false
+              "required": true
             },
             {
               "id": "living_with",
@@ -837,11 +868,13 @@
               "label": "Number who live with you",
               "min": 0,
               "max": 9007199254740991,
-              "required": false
+              "required": true
             }
           ],
           "show_when": "has_dependants == yes",
-          "group": "Your dependants"
+          "group": "Your dependants",
+          "refusal_path": "dependants.prefer_not",
+          "refusal_label": "Prefer not to answer"
         }
       ],
       "buttons": [
@@ -853,7 +886,7 @@
       "id": "experience",
       "title": "Your living experiences",
       "intro": [
-        "All questions are optional. Write as much or as little as you like."
+        "Please answer each question. Share as much or as little as you feel comfortable sharing."
       ],
       "questions": [
         {
@@ -862,7 +895,7 @@
           "help": "Tell us what happened and how it affected everyday life.",
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
-          "required": false,
+          "required": true,
           "max_length": 5000,
           "rows": 8
         },
@@ -872,7 +905,7 @@
           "help": "Include help you received as well as help you needed but could not get. You do not need to know which service could provide it.",
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
-          "required": false,
+          "required": true,
           "max_length": 5000,
           "rows": 8
         },
@@ -882,7 +915,7 @@
           "help": "You can include services, online information, friends and family, or help offered without asking. You can also tell us if you managed without help or did not seek any.",
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
-          "required": false,
+          "required": true,
           "max_length": 5000,
           "rows": 8
         },
@@ -892,7 +925,7 @@
           "help": "You can also tell us why you chose not to seek or use support.",
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
-          "required": false,
+          "required": true,
           "max_length": 5000,
           "rows": 8
         },
@@ -902,7 +935,7 @@
           "help": "Please explain what it helped with and what it did not. If you used more than one source, say which you mean.",
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
-          "required": false,
+          "required": true,
           "max_length": 5000,
           "rows": 8
         },
@@ -912,7 +945,7 @@
           "help": "Tell us what would make the biggest difference, and what would make that help work for you. You can also say that nothing more is needed.",
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
-          "required": false,
+          "required": true,
           "max_length": 5000,
           "rows": 8
         },
@@ -922,7 +955,7 @@
           "help": "",
           "privacy_hint": "Please leave out details that could identify you or anyone else, such as names, addresses, contact details or service numbers.",
           "type": "text",
-          "required": false,
+          "required": true,
           "max_length": 5000,
           "rows": 8
         }
@@ -962,5 +995,7 @@
         "Back"
       ]
     }
-  }
+  },
+  "answer_schema_version": "adult_open_answers_v3",
+  "draft_notice": "Unfinished answers are saved in this browser. Use the same device and browser to return later."
 }

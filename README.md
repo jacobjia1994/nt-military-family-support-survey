@@ -1,6 +1,6 @@
 # Greater Darwin Defence Family Support Survey
 
-The [adult survey](index.html) uses four pages: Welcome, A bit about you, Your experience, and Thank you. The main page has six written questions and one optional final comment, each allowing up to 5,000 characters. Background questions are optional, with area-first location choices, simple dependant counts and numeric NT residence duration.
+The [adult survey](index.html) uses four pages: Welcome, A bit about you, Your experience, and Thank you. The main page has six written questions and one final comment, each allowing up to 5,000 characters. Every visible question requires a response. Choices include Prefer not to answer; numeric groups offer an explicit refusal; text requires non-whitespace content within the 5,000-character limit.
 
 Jacob selected this single open-response questionnaire on 30 September 2026. The detailed-choice questionnaire and the youth/younger-child questionnaire entry have been removed. Previous instruments remain recoverable through Git history. See [ADULT_SURVEY.md](ADULT_SURVEY.md) for the current wording and editing scope.
 
@@ -14,4 +14,6 @@ Serve the repository root over HTTP and open `index.html`. The static ES module 
 node --test tests/*.test.mjs
 ```
 
-The survey has no answer receiver, persistent browser answer storage or analytics. `Confirm and submit` ends the in-memory walkthrough and displays neutral thanks without claiming that a response has been received. The independent interview request is also a review form without a receiving endpoint. Before real collection, Lutheran Care needs an agreed receiving system and information-handling arrangements, followed by an end-to-end submission check. These implementation details remain in project documentation.
+The survey has no answer receiver or analytics. Unfinished progress is automatically saved in this browser after adult agreement and can be resumed on the same device/browser for up to 30 days since the last save. Closing/reopening does not send drafts to Lutheran Care. Saved progress can be cleared; completion clears the local draft. Browser data cleanup, private mode and browser eviction can prevent recovery. The app reports saving failures without losing the current in-page text.
+
+`Confirm and submit` ends this presentation with neutral thanks; it does not deliver a completed response to a receiver. The independent interview request remains separate. Real collection still requires Lutheran Care’s receiving arrangement and project-specific information handling.

@@ -137,3 +137,8 @@ Jacob clarified that the survey substitutes for interviews the team cannot staff
 ## Current welcome composition — 30 September 2026
 
 The supplied screenshot and old LC Microsoft Forms page prompted a full first-page rethink after the vertical draft was rejected. Use one survey title, a specific invitation, compact eligibility, and one Your information panel with four titled text blocks. Consent is integrated at the panel bottom; Start follows it. This supersedes the separate privacy accordion and agreement card. Panel body is 16px with 1.55 line height, padding 24px and a 32px column gap; mobile stacks the blocks with 20px padding. Preserve the existing brand and footer acknowledgement. Main text fields now allow 5,000 characters, with no counter.
+
+
+## Required answers and local draft continuation — 30 September 2026
+
+The current required-answer policy supersedes earlier optional-answer statements for the adult entry. Restore Prefer not to answer in choices, use explicit refusal for numeric groups, and require every visible field before continuing. Keep the main prompt order and avoid extra respondent explanation of the design rationale. Privacy hint width equals the input width. Same-browser local drafts are disclosed, resumable without an account, and cleared after completion or explicit restart; final confirmation is never auto-restored.

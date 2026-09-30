@@ -1,11 +1,18 @@
-/** Adult narrative questionnaire. Answers stay in memory; no classification or transport. */
+/** Adult narrative questionnaire. Pure validation; no classification or transport. */
 export const MAX_TEXT_CHARACTERS = 5_000;
 export const PAGE_ORDER = Object.freeze(['welcome', 'about', 'experience', 'thanks']);
 export const normaliseNewlines = value => String(value ?? '').replace(/\r\n?/g, '\n');
 // Match native textarea maxlength. English characters occupy one UTF-16 unit.
 export const characterCount = value => normaliseNewlines(value).length;
 const present = value => value !== undefined && value !== null && value !== '';
+const hasText = value => typeof value === 'string' && value.trim().length > 0;
 const readPath = (object, path) => path.split('.').reduce((value, part) => value?.[part], object);
+const deletePath = (object, path) => {
+  const parts = path.split('.');
+  const key = parts.pop();
+  const parent = parts.reduce((value, part) => value?.[part], object);
+  if (parent && typeof parent === 'object') delete parent[key];
+};
 
 export function createAdultSurveyModel(spec) {
   const about = spec.pages.find(page => page.id === 'about');
@@ -41,6 +48,11 @@ export function createAdultSurveyModel(spec) {
     }
     if (next.has_dependants !== 'yes') delete next.dependants;
     else if (next.dependants && typeof next.dependants === 'object') delete next.dependants.counts;
+    for (const question of about.questions) {
+      if (question.type === 'integer_group' && question.refusal_path && readPath(next, question.refusal_path) === true) {
+        for (const field of question.fields) deletePath(next, field.path);
+      }
+    }
     return next;
   }
 
@@ -56,17 +68,28 @@ export function createAdultSurveyModel(spec) {
         const value = answers[question.id];
         if (question.id === 'dependants_count' && answers.has_dependants !== 'yes') continue;
         if (question.show_when && question.type !== 'integer_group' && !visible.includes(question.id)) continue;
+        if (question.type === 'single' || question.type === 'locality_select') {
+          if (question.required && !present(value)) error(question.id, 'Please choose an answer.');
+        }
         if (question.type === 'single' && present(value) && !question.options.some(item => item.id === value)) {
           error(question.id, 'Choose one of the listed answers.');
         }
-        if (question.type === 'text' && present(value)) {
-          if (typeof value !== 'string') error(question.id, 'Use text for this answer.');
-          else if (characterCount(value) > question.max_length) error(question.id, `Please use ${question.max_length.toLocaleString('en-AU')} characters or fewer.`);
+        if (question.type === 'text') {
+          if (question.required && !hasText(value) && (!present(value) || typeof value === 'string')) {
+            error(question.id, 'Please enter an answer.');
+          } else if (present(value)) {
+            if (typeof value !== 'string') error(question.id, 'Use text for this answer.');
+            else if (characterCount(value) > question.max_length) error(question.id, `Please use ${question.max_length.toLocaleString('en-AU')} characters or fewer.`);
+          }
         }
         if (question.type === 'integer_group') {
+          if (question.refusal_path && readPath(answers, question.refusal_path) === true) continue;
           for (const field of question.fields) {
             const number = readPath(answers, field.path);
-            if (!present(number)) continue;
+            if (!present(number)) {
+              if (field.required) error(field.path, 'Please enter a number.');
+              continue;
+            }
             if (!Number.isSafeInteger(number) || number < field.min || number > field.max) {
               const message = field.max === Number.MAX_SAFE_INTEGER
                 ? 'Enter a whole number of zero or more.'
@@ -80,10 +103,10 @@ export function createAdultSurveyModel(spec) {
         const allowed = [...spec.geography.localities.filter(item => item.region === answers.residence_area), ...spec.geography.extra_locality_options];
         if (!allowed.some(item => item.id === answers.suburb)) error('suburb', 'Choose a suburb or locality in the selected area.');
       }
-      if (answers.has_dependants === 'yes') {
+      if (answers.has_dependants === 'yes' && answers.dependants?.prefer_not !== true) {
         const total = answers.dependants?.total;
         const livingWith = answers.dependants?.living_with;
-        if (Number.isSafeInteger(total) && Number.isSafeInteger(livingWith) && livingWith > total) {
+        if (Number.isSafeInteger(total) && total >= 0 && Number.isSafeInteger(livingWith) && livingWith >= 0 && livingWith > total) {
           error('dependants.living_with', 'The number living with you cannot exceed the total.');
         }
       }
@@ -93,6 +116,10 @@ export function createAdultSurveyModel(spec) {
       if (answers.current_connection === 'no') error('current_connection', spec.system_screens.out_of_scope.text);
       for (const question of experience.questions) {
         const value = answers.responses?.[question.id];
+        if (question.required && !hasText(value) && (!present(value) || typeof value === 'string')) {
+          error(`responses.${question.id}`, 'Please enter an answer.');
+          continue;
+        }
         if (value === undefined) continue;
         if (typeof value !== 'string') error(`responses.${question.id}`, 'Use text for this answer.');
         else if (characterCount(value) > question.max_length) {
