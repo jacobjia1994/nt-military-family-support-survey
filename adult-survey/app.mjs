@@ -1,4 +1,4 @@
-import {createAdultSurveyModel, characterCount, normaliseNewlines, ensureExperiences, appendExperience, removeExperience} from './model.mjs?v=20260930-10';
+import {createAdultSurveyModel, characterCount, normaliseNewlines, ensureExperiences, appendExperience, removeExperience} from './model.mjs?v=20260930-11';
 const moduleUrl = import.meta.url;
 const main = document.querySelector('#main');
 const text = value => String(value ?? '');
@@ -235,7 +235,7 @@ function render({preserveFocus = false} = {}) {
     const screen = spec.system_screens[pageId];
     content = `<section class="finish dual-page"><h1 tabindex="-1">${escapeHtml(screen.title)}</h1><p class="lead">${escapeHtml(screen.text)}</p><div class="question-actions"><button class="button secondary" type="button" data-action="back">Back</button></div></section>`;
   }
-  const progress = `<ol class="stage-progress" aria-label="Survey stages">${stages.map(([id, label], index) => `<li${id === activeStage ? ' aria-current="step"' : ''}><span class="stage-number" aria-hidden="true">${index + 1}</span><span class="stage-label">${escapeHtml(label)}</span></li>`).join('')}</ol>`;
+  const progress = `<ol class="stage-progress" aria-label="Survey stages">${stages.map(([id, label]) => `<li${id === activeStage ? ' aria-current="step"' : ''}><span class="stage-label">${escapeHtml(label)}</span></li>`).join('')}</ol>`;
   main.innerHTML = progress + content;
   main.dataset.page = pageId;
   if (errors.length) main.querySelector('h1').insertAdjacentHTML('afterend', '<div class="survey-errors" role="alert"><p>Please check the highlighted questions.</p></div>');
