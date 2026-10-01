@@ -945,8 +945,8 @@
       "questions": [
         {
           "id": "situation",
-          "label": "What was happening, and how did it affect everyday life for you or your family?",
-          "help": "",
+          "label": "Over the past 12 months, what challenges, if any, have made day-to-day life difficult for you or your family?",
+          "help": "Choose one situation and tell us how it affected everyday life.",
           "type": "text",
           "required": false,
           "max_length": 5000,
@@ -954,8 +954,8 @@
         },
         {
           "id": "needs",
-          "label": "What did you or your family need at the time?",
-          "help": "Think about what would have helped with the situation you described. You do not need to name a service.",
+          "label": "What did you or your family need to make things easier?",
+          "help": "Tell us what you needed help with. You do not need to name a service.",
           "type": "text",
           "required": false,
           "max_length": 5000,
@@ -963,8 +963,8 @@
         },
         {
           "id": "awareness",
-          "label": "At the time, what support did you or your family know about that might help?",
-          "help": "This could include family, friends, community groups or services. Include support you knew about but did not use, or say if you did not know where to turn.",
+          "label": "At the time, who or where did you know you could turn to for help?",
+          "help": "This could include family, friends, community groups or services, even if you did not use them. If you did not know where to turn, you can say so.",
           "type": "text",
           "required": false,
           "max_length": 5000,
@@ -972,8 +972,8 @@
         },
         {
           "id": "response",
-          "label": "How did you or your family respond to the situation?",
-          "help": "Describe what you did yourselves and any help you sought or received. What made getting help easier or harder? If you did not seek help, you can explain why.",
+          "label": "What did you or your family do to deal with the situation?",
+          "help": "Include anything you did yourselves and any help you sought or received. Tell us if anything made getting help difficult, or why you chose not to seek it.",
           "type": "text",
           "required": false,
           "max_length": 5000,
@@ -981,8 +981,8 @@
         },
         {
           "id": "needs_met",
-          "label": "How well were the needs you described met?",
-          "help": "What helped, and what remained unmet, if anything? You can answer whether or not you received help from others.",
+          "label": "Looking back at what you needed, what was met and what was still missing?",
+          "help": "Tell us what helped and what did not. You can answer even if you did not receive help from others.",
           "type": "text",
           "required": false,
           "max_length": 5000,
@@ -990,8 +990,8 @@
         },
         {
           "id": "improvement",
-          "label": "What support, if any, could be improved or added to better meet these needs?",
-          "help": "Describe what would make the biggest difference and what would help you or your family use that support.",
+          "label": "What could local services or community groups do better to support you or your family in a situation like this?",
+          "help": "You can suggest changes to existing support or something new, including what would make it easier to use.",
           "type": "text",
           "required": false,
           "max_length": 5000,

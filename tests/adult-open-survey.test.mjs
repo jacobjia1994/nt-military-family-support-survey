@@ -186,12 +186,12 @@ test('Other community connection text accepts 5000 normalized characters and pre
 
 test('experience prompts retain the approved six core questions and optional comment in order', () => {
   assert.deepEqual(experience.questions.map(question => [question.id, question.label, question.help || '']), [
-    ['situation', 'What was happening, and how did it affect everyday life for you or your family?', ''],
-    ['needs', 'What did you or your family need at the time?', 'Think about what would have helped with the situation you described. You do not need to name a service.'],
-    ['awareness', 'At the time, what support did you or your family know about that might help?', 'This could include family, friends, community groups or services. Include support you knew about but did not use, or say if you did not know where to turn.'],
-    ['response', 'How did you or your family respond to the situation?', 'Describe what you did yourselves and any help you sought or received. What made getting help easier or harder? If you did not seek help, you can explain why.'],
-    ['needs_met', 'How well were the needs you described met?', 'What helped, and what remained unmet, if anything? You can answer whether or not you received help from others.'],
-    ['improvement', 'What support, if any, could be improved or added to better meet these needs?', 'Describe what would make the biggest difference and what would help you or your family use that support.'],
+    ['situation', 'Over the past 12 months, what challenges, if any, have made day-to-day life difficult for you or your family?', 'Choose one situation and tell us how it affected everyday life.'],
+    ['needs', 'What did you or your family need to make things easier?', 'Tell us what you needed help with. You do not need to name a service.'],
+    ['awareness', 'At the time, who or where did you know you could turn to for help?', 'This could include family, friends, community groups or services, even if you did not use them. If you did not know where to turn, you can say so.'],
+    ['response', 'What did you or your family do to deal with the situation?', 'Include anything you did yourselves and any help you sought or received. Tell us if anything made getting help difficult, or why you chose not to seek it.'],
+    ['needs_met', 'Looking back at what you needed, what was met and what was still missing?', 'Tell us what helped and what did not. You can answer even if you did not receive help from others.'],
+    ['improvement', 'What could local services or community groups do better to support you or your family in a situation like this?', 'You can suggest changes to existing support or something new, including what would make it easier to use.'],
     ['additional', 'Is there anything else you would like us to know about this experience?', 'Optional.']
   ]);
 });
