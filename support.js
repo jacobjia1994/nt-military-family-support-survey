@@ -203,7 +203,7 @@ function showFlow(topic) {
  const back=activeJourney&&activeJourney.choices.length>1?`<a href="#task/${esc(activeJourney.id)}">${esc(activeJourney.title)}</a>`:'';
  const context=topic.id==='help'&&handoff?`<p class="handoff-context">${esc(handoff.summary)}</p>`:'';
  const qIndex=question?flow.questions.filter(q=>!fixedQuestionIds().has(q.id)).findIndex(q=>q.id===question.id):-1;
- root.innerHTML=`<nav class="back-nav" aria-label="Support navigation"><a href="#home">All help</a>${back}${topic.id==='help'&&handoff?`<a href="${handoff.entryKey?'#task/'+handoff.entryKey:'#'+handoff.topicId}" data-action="return-to-request">Your original contacts</a>`:''}</nav><h1 tabindex="-1">${esc(title)}</h1>${context}<div id="flow-safety">${safetyNotice(topic)}</div>${choiceRecord(flow)}${question?`<form id="support-flow" aria-label="Your support choices" novalidate><div id="flow-questions">${questionMarkup(question)}</div><div class="form-actions"><button type="submit" class="button" id="flow-next"${state.answers[question.id]?'':' disabled'}>${flow.complete?'Update contacts':'Next'}</button>${qIndex>0?'<button type="button" class="text-button" data-action="previous-question">Back</button>':''}</div></form>`:''}<p id="flow-status" class="sr-only" role="status" aria-live="polite"></p><div id="flow-related">${relatedMarkup(topic)}</div><section id="support-contacts" class="flow-results" aria-labelledby="support-contacts-heading" tabindex="-1"${flow.complete&&!question?'':' hidden'}>${flow.complete&&!question?resultsMarkup(topic):''}</section>`;
+ root.innerHTML=`<nav class="back-nav" aria-label="Support navigation"><a href="#home">All help</a>${back}${topic.id==='help'&&handoff?`<a href="${handoff.entryKey?'#task/'+handoff.entryKey:'#'+handoff.topicId}" data-action="return-to-request">Your original contacts</a>`:''}</nav><h1 tabindex="-1">${esc(title)}</h1>${context}<div id="flow-safety">${safetyNotice(topic)}</div>${choiceRecord(flow)}${question?`<form id="support-flow" aria-label="Your support choices" novalidate><div id="flow-questions">${questionMarkup(question)}</div>${qIndex>0?'<div class="form-actions"><button type="button" class="text-button" data-action="previous-question">Back</button></div>':''}</form>`:''}<p id="flow-status" class="sr-only" role="status" aria-live="polite"></p><div id="flow-related">${relatedMarkup(topic)}</div><section id="support-contacts" class="flow-results" aria-labelledby="support-contacts-heading" tabindex="-1"${flow.complete&&!question?'':' hidden'}>${flow.complete&&!question?resultsMarkup(topic):''}</section>`;
  document.title=`${title} | NT Defence family support | Lutheran Care`;
 }
 function syncFlow(topic){showFlow(topic);}
@@ -254,7 +254,7 @@ function render() {
     if(state.entryKey){rememberAnswers();state={topicId:null,answers:{}};}
     initialiseTopic(topic.id,seededNeed);
     // Old question/result links still open the appropriate topic. Answers are
-    // memory-only and choices never add a history entry or navigate to a page.
+    // memory-only; each choice records a restorable step on the same page.
     // Keep named deep links intact; eligibility answers stay only in memory.
     showFlow(topic);
     rememberView();
@@ -277,15 +277,19 @@ root.addEventListener('change', event => {
     document.getElementById('preference-status').textContent = count ? `${count} additional ${count===1 ? 'contact' : 'contacts'} shown below. Your main contact stays the same.` : state.answers.preferences.length ? 'Preferences updated. Your main contact stays the same. Check any eligibility notes below.' : 'Your main contact stays the same. No additional contacts selected.';
     return;
   }
-  if (!event.target.matches('input[type="radio"]')) return;
-  const next=document.getElementById('flow-next');
-  if(next)next.disabled=false;
+  if (!event.target.matches('input[type="radio"]') || !root.querySelector('#flow-questions fieldset')?.contains(event.target)) return;
+  advanceQuestion();
 });
-root.addEventListener('submit', event => {
-  event.preventDefault();
-  if(event.target.id==='support-flow')advanceQuestion();
+root.addEventListener('submit', event => { event.preventDefault(); });
+root.addEventListener('keydown', event => {
+  if((event.key==='Enter' || (event.key===' ' && event.target.checked)) && event.target.matches('input[type="radio"]') && root.querySelector('#flow-questions fieldset')?.contains(event.target)) {
+    event.preventDefault();event.target.click();
+  }
 });
 root.addEventListener('click', event => {
+  const radio=event.target.closest('input[type="radio"]');
+  // Re-selecting the checked answer after Back/Edit emits no change event.
+  if(radio?.checked && root.querySelector('#flow-questions fieldset')?.contains(radio) && state.answers[radio.name]===radio.value) { advanceQuestion();return; }
   const change=event.target.closest('[data-action="edit-answer"]');
   if(change){editingQuestion=change.dataset.question;rememberView(true);showFlow(topicById(state.topicId));focusHeading();return;}
   if(event.target.closest('[data-action="previous-question"]')){

@@ -13,9 +13,10 @@ import { verifiedDefence } from '../support-verified-data.mjs';
 function renderer() {
   const handlers = {}, documentHandlers = {}, windowHandlers = {};
   const pageTargets = {};
+  let focused=null;
   const target = id => pageTargets[id] ||= {
     focused:false, scrolled:false, innerHTML:'', textContent:'',
-    focus() { this.focused=true; },
+    focus() { this.focused=true; focused=id; },
     scrollIntoView() { this.scrolled=true; },
     setAttribute(name,value) { this[name]=value; },
     matches() { return false; }
@@ -33,9 +34,11 @@ function renderer() {
         const controls=[...group[2].matchAll(/<input type="radio"[^>]*name="([^"]+)" value="([^"]+)"([^>]*)>/g)]
           .map(match=>({
             type:'radio',name:match[1],value:match[2],checked:match[3].includes(' checked'),
-            matches:selector=>selector==='input[type="radio"]'
+            matches:selector=>selector==='input[type="radio"]',
+            closest:selector=>selector==='input[type="radio"]'?controls.find(input=>input.value===match[2]):null,
+            click:()=>activateControl(controls.find(input=>input.value===match[2]))
           }));
-        field={id:group[1],controls,querySelector:selector=>selector==='input:checked'?controls.find(input=>input.checked)||null:null};
+        field={id:group[1],controls,contains:control=>controls.includes(control),querySelector:selector=>selector==='input:checked'?controls.find(input=>input.checked)||null:null};
       }
       const button=html.match(/<button[^>]*id="flow-next"([^>]*)>/);
       next=button?{disabled:button[1].includes(' disabled')}:null;
@@ -105,21 +108,42 @@ function renderer() {
     });
   }
   const navigate=hash=>click(undefined,hash);
-  function change(questionId,value) {
+  function radio(questionId,value) {
     assert.equal(field?.id,questionId,'Choose only the current rendered question');
     const control=field.controls.find(input=>input.value===value);
     assert.ok(control,'Choose an offered radio value');
+    return control;
+  }
+  function activateControl(control) {
+    const priorField=field, wasChecked=control.checked;
+    assert.ok(priorField?.contains(control),'Activate a current rendered control');
+    handlers.pointerdown?.({target:control});
+    for(const input of priorField.controls)input.checked=input===control;
+    handlers.click({target:control,preventDefault:()=>{}});
+    // A native re-selection emits click only. New selections emit change after
+    // click; that event may refer to a now-detached control after progression.
+    if(!wasChecked)handlers.change({target:control});
+  }
+  const choose=(id,value)=>activateControl(radio(id,value));
+  function change(questionId,value) {
+    const control=radio(questionId,value);
     for(const input of field.controls)input.checked=input===control;
     handlers.change({target:control});
   }
+  function key(questionId,value,key) {
+    const control=radio(questionId,value);
+    let prevented=false;
+    handlers.keydown?.({target:control,key,preventDefault:()=>{prevented=true;}});
+    // Real browsers leave an already checked radio unchanged on Space.
+    // Only unchecked Space has a native click/change default.
+    if(!prevented&&(key===' '||key==='Spacebar')&&!control.checked)activateControl(control);
+    return prevented;
+  }
   function submit() {
     let prevented=false;
-    assert.ok(field,'Next needs a currently rendered question');
-    assert.equal(next.disabled,false,'Next is enabled after selecting an answer');
     handlers.submit({target:{id:'support-flow'},preventDefault:()=>{prevented=true;}});
-    assert.equal(prevented,true,'Next does not submit personal information');
+    assert.equal(prevented,true,'A form event cannot submit personal information');
   }
-  const choose=(id,value)=>{change(id,value);submit();};
   function edit(id) {
     assert.ok(html.includes('data-action="edit-answer" data-question="'+id+'"'),'Only visible editable answers have Change');
     click('edit-answer',undefined,id);
@@ -148,7 +172,8 @@ function renderer() {
   }
   return {root,run,render,navigate,click,change,submit,choose,edit,jump,prefer,
     location,pageTargets,back:()=>traverse(-1),forward:()=>traverse(1),
-    question:()=>field?.id,selected:()=>field?.controls.find(input=>input.checked)?.value,next:()=>next};
+    question:()=>field?.id,selected:()=>field?.controls.find(input=>input.checked)?.value,next:()=>next,
+    focus:()=>focused,key,radio,dispatchChange:control=>handlers.change({target:control}),historySize:()=>historyEntries.length};
 }
 
 const resultCatalogues=ui=>JSON.parse(ui.run('JSON.stringify(currentResults().ids.map(id=>Number(services[id].appearance.catalogue_id)))'));
@@ -170,23 +195,19 @@ test('contact actions use verified channels and exclude an outage phone',()=>{
   assert.doesNotMatch(ui.run("link('javascript:alert(1)','Unsafe')"),/href=/);
 });
 
-test('native radio selection waits for Next and then shows the next question or contacts',()=>{
+test('a radio choice immediately commits the answer and shows contacts without Next',()=>{
   const ui=renderer();
   ui.navigate('#task/money/2');
   assert.equal(ui.question(),'region','The task already chose food and essentials');
-  const before=ui.root.innerHTML;
-  const answers=ui.run('JSON.stringify(state.answers)');
-  ui.change('region','alice');
-  assert.equal(ui.root.innerHTML,before,'Do not replace the radio DOM during native selection');
-  assert.equal(ui.run('JSON.stringify(state.answers)'),answers,'Selection is not committed before Next');
-  assert.equal(ui.next().disabled,false);
-  ui.submit();
+  ui.choose('region','alice');
+  assert.equal(ui.run('state.answers.region'),'alice');
   assert.equal(ui.location.hash,'#task/money/2');
   assert.equal(ui.question(),undefined);
   assert.match(ui.root.innerHTML,/Lutheran Care/);
   assert.match(ui.root.innerHTML,/Your support contacts/);
   assert.match(ui.root.innerHTML,/Your choices · change/);
-  assert.doesNotMatch(ui.root.innerHTML,/data-question-id="need"/);
+  assert.equal(ui.focus(),'contacts-heading');
+  assert.doesNotMatch(ui.root.innerHTML,/id="flow-next"|type="submit"/);
 });
 
 test('returning to a previous task restores its committed answers',()=>{
@@ -216,7 +237,7 @@ test('a jurisdiction choice retains the town needed by a later named local task'
   assert.equal(ui.location.hash,'#relationships/assault');
 });
 
-test('legacy question and result URLs retain their hash and use the current Next flow',()=>{
+test('legacy question and result URLs retain their hash and use the current immediate-choice flow',()=>{
   const ui=renderer();
   ui.navigate('#money/q/region');
   assert.equal(ui.location.hash,'#money/q/region');
@@ -320,15 +341,14 @@ test('browser Back and Forward through a human handoff restore actual history sn
   assert.match(ui.root.innerHTML,/Palmerston/);
 });
 
-test('editing a committed region waits for Next and retains the selected need',()=>{
+test('editing a committed region immediately refreshes contacts and retains the selected need',()=>{
   const ui=renderer();
   ui.navigate('#task/money/2');
   ui.choose('region','palmerston');
   const previous=resultCatalogues(ui);
   ui.edit('region');
   ui.change('region','alice');
-  assert.equal(ui.run('state.answers.region'),'palmerston');
-  ui.submit();
+  assert.equal(ui.run('state.answers.region'),'alice');
   assert.equal(ui.location.hash,'#task/money/2');
   assert.equal(ui.run('state.answers.need'),'essentials');
   assert.equal(ui.run('state.answers.region'),'alice');
@@ -382,7 +402,7 @@ test('previous-question Back edits committed answers and browser Forward restore
   assert.equal(ui.question(),'age');
 });
 
-test('browser Back after Next shows the previous native radio selected and Forward restores contacts',()=>{
+test('browser Back after a choice shows the previous native radio selected and Forward restores contacts',()=>{
   const ui=renderer();
   ui.navigate('#task/money/2');
   ui.choose('region','alice');
@@ -395,4 +415,74 @@ test('browser Back after Next shows the previous native radio selected and Forwa
   ui.forward();
   assert.equal(ui.question(),undefined);
   assert.match(ui.root.innerHTML,/Your support contacts/);
+});
+
+test('re-selecting the checked answer after Back needs no change event or Next button',()=>{
+  const ui=renderer();
+  ui.navigate('#task/money/2');
+  ui.choose('region','alice');
+  ui.back();
+  assert.equal(ui.question(),'region');
+  assert.equal(ui.selected(),'alice');
+  ui.choose('region','alice');
+  assert.equal(ui.question(),undefined);
+  assert.equal(ui.run('state.answers.region'),'alice');
+  assert.equal(ui.focus(),'contacts-heading');
+});
+
+test('keyboard choice advances once and Enter or Space can replay a preselected answer',()=>{
+  const ui=renderer();
+  ui.navigate('#task/mental-health/0');
+  const oldAgeControl=ui.radio('age','26+');
+  ui.change('age','26+');
+  assert.equal(ui.question(),'counselling');
+  assert.equal(ui.focus(),'question-heading');
+  const historySize=ui.historySize();
+  ui.dispatchChange(oldAgeControl);
+  assert.equal(ui.question(),'counselling','Detached controls cannot advance the new screen');
+  assert.equal(ui.historySize(),historySize);
+  ui.choose('counselling','member');
+  ui.choose('region','darwin');
+  ui.back();
+  assert.equal(ui.key('region','darwin','Enter'),true);
+  assert.equal(ui.question(),undefined);
+  ui.back();
+  assert.equal(ui.key('region','darwin',' '),true,'Checked Space needs explicit activation');
+  assert.equal(ui.question(),undefined);
+});
+
+test('editing patient role invalidates incompatible treatment qualifications immediately',()=>{
+  const ui=renderer();
+  ui.navigate('#task/health/3');
+  ui.choose('connection','serving');
+  ui.choose('role','other');
+  ui.choose('dvaTravel','yes');
+  assert.equal(ui.question(),undefined);
+  ui.edit('role');
+  ui.choose('role','member');
+  assert.equal(ui.run('state.answers.dvaTravel'),undefined);
+  assert.equal(ui.question(),'region');
+  ui.choose('region','alice');
+  ui.edit('role');
+  ui.choose('role','other');
+  assert.equal(ui.question(),'dvaTravel');
+  assert.doesNotMatch(ui.root.innerHTML,/class="primary-service-heading"/);
+});
+
+test('a form event cannot advance an unanswered question or submit the page',()=>{
+  const ui=renderer();
+  ui.navigate('#task/money/2');
+  const before=ui.run('JSON.stringify(state)');
+  ui.submit();
+  assert.equal(ui.question(),'region');
+  assert.equal(ui.run('JSON.stringify(state)'),before);
+});
+
+test('Space on an unchecked radio retains native selection and advances immediately',()=>{
+  const ui=renderer();
+  ui.navigate('#task/money/2');
+  assert.equal(ui.key('region','alice',' '),false,'Unchecked Space keeps the native default');
+  assert.equal(ui.run('state.answers.region'),'alice');
+  assert.equal(ui.question(),undefined);
+  assert.equal(ui.focus(),'contacts-heading');
 });
