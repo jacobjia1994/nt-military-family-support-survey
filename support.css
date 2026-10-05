@@ -5,11 +5,13 @@
   font-display: swap;
 }
 
-/* Shared Lutheran Care colours and the existing local font. */
+/* Existing Karla body font; restrained accents and explicit text hierarchy. */
 :root {
   --ink: #001234;
   --text: #41423f;
-  --muted: #54595f;
+  --muted: #5b6066;
+  --heading: #3f444b;
+  --action: #b84527;
   --accent: #001234;
   --focus: #d3502d;
   --line: #dedbd5;
@@ -19,13 +21,13 @@
   --white: #fff;
   font-family: Karla, Arial, sans-serif;
   font-synthesis: none;
-  color: var(--ink);
+  color: var(--text);
   background: var(--page);
 }
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-body { margin: 0; font-size: 18px; line-height: 1.5; }
+body { margin: 0; font-size: 17px; line-height: 1.65; }
 button, input, select { font: inherit; }
 button { cursor: pointer; }
 button:disabled { cursor: default; opacity: .55; }
@@ -38,13 +40,15 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
 }
 ::selection { background: #f4d2bc; color: var(--ink); }
 p { max-width: 68ch; margin: 0 0 14px; }
-h1, h2, h3 { color: var(--ink); font-weight: 650; }
+h1, h2, h3 { color: var(--heading); font-weight: 600; }
 h1 {
   max-width: none;
   margin: 0 0 12px;
-  font-size: 38px;
-  line-height: 1.14;
-  letter-spacing: -.025em;
+  color: var(--ink);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.02em;
   text-wrap: wrap;
   overflow-wrap: normal;
   word-break: normal;
@@ -66,7 +70,7 @@ main:focus { outline: none; }
 .skip-link { position: absolute; top: -100px; left: 20px; z-index: 5; background: var(--white); padding: 12px; }
 .skip-link:focus { top: 8px; }
 
-/* The page identity stays simple; the title and audience identify each page. */
+/* Specific titles and existing header markers identify each page. */
 .page-shell { max-width: 1000px; margin: 0 auto; padding: 30px 48px 26px; }
 .site-header {
   display: flex;
@@ -129,10 +133,10 @@ main { padding-top: 28px; min-height: 420px; }
 /* Homepage links are plain rows, grouped only to make scanning easier. */
 .home-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 48px; }
 .home-group { min-width: 0; }
-.home-group h2 { margin: 0 0 9px; font-size: 21px; }
+.home-group h2 { margin: 0 0 10px; font-size: 20px; font-weight: 700; }
 .home-links, .task-grid, .extra-task-grid { list-style: none; padding: 0; margin: 0; }
 .home-links li { border-bottom: 1px solid var(--line); }
-.home-links .extra-task-link { min-height: 50px; padding: 11px 0; font-size: 18px; line-height: 1.35; text-decoration: none; }
+.home-links .extra-task-link { min-height: 50px; padding: 11px 0; color: var(--text); font-size: 18px; line-height: 1.45; text-decoration: none; }
 .home-links .extra-task-link:hover strong { text-decoration: underline; text-underline-offset: .2em; }
 .home-group h2 { scroll-margin-top: 24px; }
 .task-link {
@@ -142,11 +146,11 @@ main { padding-top: 28px; min-height: 420px; }
   gap: 16px;
   min-height: 50px;
   padding: 11px 0;
-  color: var(--ink);
+  color: var(--text);
   text-decoration: none;
 }
 .task-link > span { min-width: 0; }
-.task-link strong { display: block; font-size: 18px; font-weight: 500; line-height: 1.35; }
+.task-link strong { display: block; font-size: 18px; font-weight: 400; line-height: 1.45; }
 .task-link small { display: block; margin-top: 4px; font-size: 15px; line-height: 1.4; color: var(--muted); }
 .task-link svg { width: 19px; height: 19px; flex: 0 0 19px; stroke: var(--accent); }
 .task-link:hover strong { text-decoration: underline; text-underline-offset: .2em; }
@@ -163,7 +167,8 @@ main { padding-top: 28px; min-height: 420px; }
 .extra-help > summary { cursor: pointer; min-height: 44px; padding: 8px 0; font-size: 18px; font-weight: 650; }
 .extra-task-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 38px; }
 .extra-task-link { display: flex; align-items: center; min-height: 44px; padding: 9px 0; font-size: 16px; }
-.extra-task-link strong { font-weight: 500; }
+.extra-task-link strong { font-weight: 400; }
+.home-help { margin: 12px 0 26px; }
 
 /* Answers stay visible while one necessary question is asked at a time. */
 .answer-record {
@@ -180,7 +185,7 @@ main { padding-top: 28px; min-height: 420px; }
 .answer-record li > span { min-width: 0; }
 .answer-record small, .answer-record strong { display: block; }
 .answer-record small { font-size: 14px; line-height: 1.4; color: var(--muted); }
-.answer-record strong { margin-top: 2px; font-weight: 500; line-height: 1.4; }
+.answer-record strong { margin-top: 2px; color: var(--text); font-weight: 600; line-height: 1.5; }
 .answer-record button, .answer-record a { flex-shrink: 0; min-height: 44px; }
 .answer-record a { display: inline-flex; align-items: center; }
 .handoff-context { margin-bottom: 18px; font-size: 16px; }
@@ -190,7 +195,7 @@ main { padding-top: 28px; min-height: 420px; }
 .flow-back .text-button { justify-content: flex-start; }
 .choice-fieldset { min-width: 0; max-width: 780px; margin: 0; padding: 0; border: 0; }
 .choice-fieldset legend { max-width: 100%; width: 100%; margin-bottom: 16px; padding: 0; }
-.choice-fieldset legend h2 { margin: 0; font-size: 23px; line-height: 1.3; }
+.choice-fieldset legend h2 { margin: 0; font-size: 26px; font-weight: 600; line-height: 1.3; }
 #flow-questions legend h2, #support-contacts-heading { scroll-margin-top: clamp(80px, 25vh, 180px); }
 .question-hint { margin: 0 0 16px; color: var(--muted); font-size: 16px; }
 .choice-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
@@ -200,7 +205,7 @@ main { padding-top: 28px; min-height: 420px; }
   gap: 12px;
   min-height: 56px;
   padding: 13px 16px;
-  border: 1px solid #a6a59e;
+  border: 1px solid #8b8e91;
   border-radius: 4px;
   background: var(--white);
   cursor: pointer;
@@ -211,8 +216,8 @@ main { padding-top: 28px; min-height: 420px; }
 .choice-row:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 3px; }
 .choice-row input { width: 21px; height: 21px; flex: 0 0 21px; margin: 2px 0 0; accent-color: var(--accent); }
 .choice-row input:focus-visible { outline: none; }
-.choice-row strong { display: block; font-size: 17px; line-height: 1.4; font-weight: 600; }
-.choice-row small { display: block; margin-top: 4px; font-size: 14px; line-height: 1.4; color: var(--text); }
+.choice-row strong { display: block; color: var(--text); font-size: 17px; line-height: 1.45; font-weight: 500; }
+.choice-row small { display: block; margin-top: 4px; font-size: 14px; line-height: 1.55; color: var(--muted); }
 .form-actions { position: static; display: flex; align-items: center; flex-wrap: wrap; gap: 12px 20px; margin: 18px 0 12px; }
 .related-needs { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 20px; font-size: 16px; }
 .related-needs a { display: inline-flex; align-items: center; min-height: 44px; }
@@ -224,7 +229,7 @@ main { padding-top: 28px; min-height: 420px; }
 /* Full contact cards keep direct actions and published conditions together. */
 .flow-results { margin-top: 24px; }
 .contacts-heading { margin-bottom: 16px; }
-.contacts-heading h2 { margin: 0; font-size: 27px; }
+.contacts-heading h2 { margin: 0; color: var(--muted); font-size: 18px; font-weight: 500; line-height: 1.4; }
 .service-card {
   min-width: 0;
   margin: 0 0 20px;
@@ -234,10 +239,10 @@ main { padding-top: 28px; min-height: 420px; }
   background: var(--white);
 }
 .service-card-head { min-width: 0; margin-bottom: 16px; }
-.service-card-head h3 { margin: 0 0 8px; font-size: 24px; overflow-wrap: break-word; }
-.service-card .offer { margin: 0 0 8px; color: var(--text); font-size: 18px; line-height: 1.45; }
+.service-card-head h3 { margin: 0 0 10px; color: var(--heading); font-size: 24px; font-weight: 600; line-height: 1.3; overflow-wrap: break-word; }
+.service-card .offer { margin: 0 0 10px; color: var(--text); font-size: 17px; line-height: 1.6; }
 .area { margin: 0 0 8px; font-size: 15px; color: var(--muted); }
-.fit-note { margin: 0; font-size: 15px; color: var(--text); }
+.fit-note { margin: 0; font-size: 15px; line-height: 1.65; color: var(--muted); }
 .contact-panel { min-width: 0; padding: 16px 18px; border-radius: 4px; background: var(--soft); }
 .service-actions, .alt-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 18px; margin: 0 0 12px; }
 .service-actions a, .alt-actions a { display: inline-flex; align-items: center; min-height: 44px; font-size: 16px; overflow-wrap: anywhere; }
@@ -248,22 +253,23 @@ main { padding-top: 28px; min-height: 420px; }
   max-width: 100%;
   min-height: 48px;
   padding: 11px 18px;
-  border: 1px solid var(--accent);
+  border: 1px solid var(--action);
   border-radius: 4px;
-  background: var(--accent);
+  background: var(--action);
   color: var(--white);
   font-size: 17px;
   line-height: 1.35;
-  font-weight: 650;
+  font-weight: 600;
   text-align: center;
   text-decoration: none;
 }
 .button:hover { background: var(--ink); border-color: var(--ink); color: var(--white); text-decoration: underline; }
-.button-secondary { background: var(--white); color: var(--accent); }
+.button-secondary { border-color: var(--accent); background: var(--white); color: var(--accent); }
+.service-actions .button { font-size: 17px; }
 .button-secondary:hover { background: var(--selected); color: var(--accent); }
 .contact-panel p { margin: 0 0 10px; font-size: 15px; line-height: 1.5; }
 .contact-panel p:last-child { margin-bottom: 0; }
-.contact-panel .hours { font-weight: 600; color: var(--ink); }
+.contact-panel .hours { font-weight: 500; color: var(--text); }
 .contact-panel .official, .contact-panel .another-contact, .alternative > .official {
   display: inline-flex;
   align-items: center;
@@ -274,15 +280,15 @@ main { padding-top: 28px; min-height: 420px; }
 .contact-panel .notice { margin-bottom: 14px; padding: 12px; }
 .published-contact { white-space: pre-line; }
 .service-information, .service-qualifications { min-width: 0; margin-top: 16px; }
-.fit, .access, .cost { font-size: 16px; line-height: 1.5; }
-.fit strong { font-weight: 650; }
+.fit, .access, .cost { color: var(--muted); font-size: 16px; line-height: 1.65; }
+.fit strong, .access strong, .cost strong { color: var(--text); font-weight: 600; }
 .service-information p, .service-qualifications p, .alternative p, .contact-panel p {
   white-space: pre-line;
   overflow-wrap: anywhere;
 }
 .service-information p:last-child, .service-qualifications p:last-child { margin-bottom: 0; }
 .service-source { margin-top: 12px; font-size: 14px; color: var(--muted); }
-.service-source summary { display: list-item; min-height: 44px; padding: 10px 0; color: var(--accent); cursor: pointer; }
+.service-source summary { display: list-item; min-height: 44px; padding: 10px 0; color: var(--muted); cursor: pointer; }
 .service-source ul { margin: 0; padding-left: 20px; }
 .service-source a { display: inline-flex; align-items: center; min-height: 44px; overflow-wrap: anywhere; }
 .service-source li + li { margin-top: 2px; }
@@ -376,7 +382,7 @@ footer > p > a { display: inline-flex; align-items: center; min-height: 44px; }
   .intro { font-size: 17px; margin-bottom: 24px; }
   .back-nav { margin-bottom: 14px; }
   .home-groups { grid-template-columns: 1fr; gap: 26px; }
-  .home-group h2 { font-size: 21px; }
+  .home-group h2 { font-size: 20px; }
   .task-grid, .extra-task-grid { grid-template-columns: 1fr; }
   .task-link { min-height: 50px; padding: 11px 0; }
   .task-link strong { font-size: 18px; }
@@ -384,16 +390,17 @@ footer > p > a { display: inline-flex; align-items: center; min-height: 44px; }
   .task-choices .task-link { min-height: 60px; }
   .task-choices .task-link strong { font-size: 18px; }
   .human-link { font-size: 16px; margin-top: 20px; }
+  .home-help { margin: 10px 0 24px; }
   .answer-record { padding: 4px 12px; margin-bottom: 22px; }
   .answer-record li { gap: 12px; }
   .question-area { margin-top: 22px; }
-  .choice-fieldset legend h2 { font-size: 21px; }
+  .choice-fieldset legend h2 { font-size: 24px; }
   .choice-list { grid-template-columns: 1fr; }
   .choice-list-compact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .choice-row { gap: 10px; padding: 12px; }
   .choice-row { scroll-margin-block: 18px; }
   .notice { padding: 14px 16px; font-size: 15px; }
-  .contacts-heading h2 { font-size: 25px; }
+  .contacts-heading h2 { font-size: 18px; }
   .service-card { padding: 18px 16px; margin-bottom: 18px; }
   .service-card-head h3 { font-size: 22px; }
   .service-card .offer { font-size: 17px; }
