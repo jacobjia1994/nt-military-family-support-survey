@@ -22,7 +22,7 @@ function renderer() {
     matches() { return false; }
   };
   for(const id of ['main','urgent-help','preference-status','preference-results','chat-options'])target(id);
-  pageTargets['preference-results'].querySelectorAll=()=>[...pageTargets['preference-results'].innerHTML.matchAll(/class="alternative"/g)];
+  pageTargets['preference-results'].querySelectorAll=()=>[...pageTargets['preference-results'].innerHTML.matchAll(/class="[^"]*\balternative\b[^"]*"/g)];
   let html='', field=null, next=null, selectedPreferences=[];
   const root = {
     get innerHTML() { return html; },
@@ -204,8 +204,10 @@ test('a radio choice immediately commits the answer and shows contacts without N
   assert.equal(ui.location.hash,'#task/money/2');
   assert.equal(ui.question(),undefined);
   assert.match(ui.root.innerHTML,/Lutheran Care/);
-  assert.match(ui.root.innerHTML,/Your support contacts/);
-  assert.match(ui.root.innerHTML,/Your choices · change/);
+  assert.match(ui.root.innerHTML,/Contact a service/);
+  assert.match(ui.root.innerHTML,/class="answer-record"/);
+  assert.doesNotMatch(ui.root.innerHTML,/<details class="answer-record"/);
+  assert.match(ui.root.innerHTML,/<strong>Alice Springs<\/strong>/);
   assert.equal(ui.focus(),'contacts-heading');
   assert.doesNotMatch(ui.root.innerHTML,/id="flow-next"|type="submit"/);
 });
@@ -334,7 +336,7 @@ test('browser Back and Forward through a human handoff restore actual history sn
   ui.back();
   assert.equal(ui.location.hash,'#task/money/2');
   assert.equal(ui.run('JSON.stringify(state)'),original);
-  assert.match(ui.root.innerHTML,/Your support contacts/);
+  assert.match(ui.root.innerHTML,/Contact a service/);
   ui.forward();
   assert.equal(ui.location.hash,'#help');
   assert.equal(ui.run('handoff.entryKey'),'money/2');
@@ -414,7 +416,7 @@ test('browser Back after a choice shows the previous native radio selected and F
   assert.equal(ui.run('state.answers.region'),'alice');
   ui.forward();
   assert.equal(ui.question(),undefined);
-  assert.match(ui.root.innerHTML,/Your support contacts/);
+  assert.match(ui.root.innerHTML,/Contact a service/);
 });
 
 test('re-selecting the checked answer after Back needs no change event or Next button',()=>{

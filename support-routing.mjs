@@ -185,7 +185,7 @@ function selectedPriorities(topic,a) {
  if(topic==='money'&&n==='pets')ids=a.petNeed==='safe-exit'?[3,111,40]:a.petNeed==='care'?[111]:[139,40,111];
  if(topic==='money'&&n==='losing-housing'&&a.housingRisk==='tenancy')ids=[32,86];
  if(topic==='money'&&n==='family-crisis'&&['former','bereaved','unsure'].includes(a.connection))ids=[];
- if(topic==='parenting'&&n==='childcare'&&a.careHours==='nonstandard')ids=[67,58];
+ if(topic==='parenting'&&n==='childcare'&&a.careHours==='nonstandard')ids=[67];
  if(topic==='parenting'&&n==='emergency-care'&&a.connection!=='serving')ids=[67];
  if(topic==='parenting'&&n==='learning'&&a.schoolHelp==='advocacy')ids=[4,95,34];
  if(topic==='parenting'&&n==='education-costs'&&['former','bereaved'].includes(a.connection))ids=[48,34];
@@ -244,10 +244,30 @@ export function primaryWebURL(service) {
  if(Number(service.appearance.catalogue_id)===86)return urls.find(url=>new URL(url).pathname==='/nt-cis-enquiries/')||urls[0];
  return urls[0];
 }
+// Promote supplied task actions separately from documentary source links.
+export function routeWebActions(service) {
+ const urls=service.urls.map(safeURL).filter(url=>url&&/^https?:/.test(url));
+ if(Number(service.appearance.catalogue_id)===113){
+  const supplied=[['https://www.servicesaustralia.gov.au/payment-and-service-finder','Check payments'],['https://findus.servicesaustralia.gov.au/?msg=Centrelink','Find in-person Centrelink help']];
+  const actions=supplied.filter(([url])=>urls.includes(url)).map(([url,label])=>({url,label}));
+  if(actions.length)return actions;
+ }
+ const url=primaryWebURL(service);
+ return url?[{url,label:Number(service.appearance.catalogue_id)===86?'Use online referral form':'Official service information'}]:[];
+}
 export function routeContactURLs(service) {
  const contactDigits=service.contact.replace(/\D/g,'');
- const outage=/telephone outage|phone.*unavailable|phone.*outage/i.test(service.access+' '+service.contact);
- return [...new Set(service.urls.map(safeURL).filter(url=>url&&(!url.startsWith('tel:')||(!outage&&contactDigits.includes(url.replace(/\D/g,''))))))];
+ const outage=Number(service.appearance.catalogue_id)===86||/telephone outage|phone.*unavailable|phone.*outage/i.test(service.access+' '+service.contact);
+ // Some verified appearances publish the route number as contact text without
+ // a tel URL. Derive only Australian phone formats in that exact appearance;
+ // sibling phones in broad source URLs never become this route's call action.
+ const published=[];
+ if(!outage)for(const line of service.contact.split('\n')){
+  const numbers=line.match(/\b(?:0[2378](?:[ ()-]*\d){8}|04(?:[ ()-]*\d){8}|1[38]00(?:[ ()-]*\d){6}|13(?:[ ()-]*\d){4}|000)\b/g)||[];
+  for(const number of numbers){const url=safeURL((/\btext\b|\bsms\b/i.test(line)?'sms:':'tel:')+number.replace(/\D/g,''));if(url)published.push(url);}
+ }
+ const supplied=service.urls.map(safeURL).filter(url=>url&&(!url.startsWith('tel:')||(!outage&&contactDigits.includes(url.replace(/\D/g,'')))));
+ return [...new Set([...supplied,...published])];
 }
 export function safeURL(url) {
  if(typeof url!=='string')return null;

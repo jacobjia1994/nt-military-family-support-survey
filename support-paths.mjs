@@ -80,7 +80,7 @@ export function questionsFor(topic,a={}) {
  }else if(topic==='parenting'){
   if(n==='parenting')qs.push(question('parentingNeed','What would help?',[['general','Parenting or a child’s behaviour'],['indigenous-child','Emotional or behavioural support for an Aboriginal child under 12']]));
   if(n==='teenager')qs.push(ageQuestion);
-  if(['childcare','emergency-care','education-costs'].includes(n))qs.push(connectionQuestion);
+  if((n==='childcare'&&a.careHours!=='nonstandard')||['emergency-care','education-costs'].includes(n))qs.push(connectionQuestion);
   if(n==='childcare')qs.push(question('careHours','What childcare do you need?',[['regular','A regular place'],['nonstandard','Care for unusual hours, isolation or complex needs']]));
   if(['school','learning'].includes(n))qs.push(question('schoolType','Which school setting?',[['government','NT government school'],['other','Another school or not sure']]));
   if(n==='learning'&&a.schoolType==='government')qs.push(question('schoolHelp','What would help most?',[['learning','Learning or inclusion support'],['advocacy','Independent help with a school problem']]));
@@ -135,10 +135,11 @@ export function questionsFor(topic,a={}) {
   if(['language','migrant'].includes(n))qs.push(question('languageNeed','What access help would you like?',[['english','An interpreter for another language'],['aboriginal','An Aboriginal-language interpreter'],['relay','Help with a call because of hearing or speech difficulties'],['cultural','Local First Nations wellbeing support']]));
  }else if(topic==='help')qs.push(connectionQuestion);
  const mode=regionModeFor(topic,a);
- if(mode!=='none')qs.push(mode==='jurisdiction'?question('region','Is support needed in the Northern Territory?',[['nt','Northern Territory'],['outside','Outside the NT']]):regionQuestion);
+ if(mode!=='none')qs.push(mode==='jurisdiction'?question('region','Is support needed in the Northern Territory?',[['nt','Northern Territory'],['outside','Outside the NT']]):(['defence-housing','settle'].includes(n)?question('region','Where are you posted or moving to?',regions):regionQuestion));
  const memberCare=topic==='care'&&((n==='health'&&a.healthFor==='member')||(n==='costs'&&a.healthFunding==='member')||(n==='travel'&&a.connection==='serving'&&a.role==='member'));
  if(memberCare&&['darwin','palmerston'].includes(a.region))qs.push(question('memberCentre','Which assigned health centre do you use?',[['darwin','Darwin Health Centre'],['larrakeyah','Larrakeyah Health Centre'],['robertson','Robertson Health Centre'],['unsure','Not sure']]));
- if(a.region==='remote'&&mode==='full'){
+ const redundantRemoteArea=(topic==='connection'&&n==='settle')||(topic==='parenting'&&((n==='childcare'&&a.careHours==='regular')||n==='learning'))||(topic==='care'&&n==='health'&&a.healthFor==='member');
+ if(a.region==='remote'&&mode==='full'&&!redundantRemoteArea){
   if(topic==='mental'&&['feelings','treatment','grief'].includes(n)&&child(a))qs.push(question('localCommunity','Which community is support needed in?',[['jabiru','Jabiru'],['wadeye','Wadeye'],['other','Another NT community']]));
   else if(topic==='money'&&n==='essentials')qs.push(question('reliefCommunity','Which community is support needed in?',[['tiwi','Tiwi Islands'],['wadeye','Wadeye / Port Keats'],['other','Another NT community']]));
   else qs.push(question('remoteArea','Which area is support needed in?',[['topend','Other Top End'],['bigrivers','Katherine / Big Rivers communities'],['barkly','Barkly'],['central','Central Australia'],['eastarnhem','East Arnhem'],['jabiru','Jabiru'],['nauiyu','Nauiyu'],['wadeye','Wadeye'],['other','Another community or not sure']]));
@@ -185,6 +186,7 @@ export function regionModeFor(topic,a={}) {
   return 'none';
  }
  if(topic==='connection'){
+  if(n==='settle'&&['former','bereaved'].includes(a.connection))return 'none';
   if(['local','settle'].includes(n))return 'full';
   if(n==='apart')return a.absenceNeed==='relationship'?'jurisdiction':'none';
   if(n==='language'||n==='migrant')return a.languageNeed==='cultural'?'full':'none';

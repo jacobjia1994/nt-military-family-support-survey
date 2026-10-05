@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {verifiedDefence} from '../support-verified-data.mjs';
-import {appearances,appearanceById,services,needIssueMap,issueNumbersFor,verifiedResults,routeMatchesRegion,qualifies,safeURL,routeContactURLs,primaryWebURL,recoveryResults} from '../support-routing.mjs';
+import {appearances,appearanceById,services,needIssueMap,issueNumbersFor,verifiedResults,routeMatchesRegion,qualifies,safeURL,routeContactURLs,primaryWebURL,routeWebActions,recoveryResults} from '../support-routing.mjs';
 import {topics,questionsFor} from '../support-paths.mjs';
 import {getFlowState,applyAnswer} from '../support-flow.mjs';
 const row=(number,id,hash)=>appearances.find(row=>row.issue_number===number&&Number(row.catalogue_id)===id&&(!hash||row.route_id.endsWith(hash)));
@@ -99,4 +99,44 @@ test('recovery recalculates regional and connection fits instead of reusing old 
 
 test('a confirmed assigned centre remains reachable across Darwin and Palmerston',()=>{
  for(const region of ['darwin','palmerston'])for(const centre of ['darwin','larrakeyah','robertson']){const result=resultRows('care',{need:'health',healthFor:'member',region,memberCentre:centre});const hashes={darwin:'f1da0539f127b80d',larrakeyah:'3991d58873ccf7c3',robertson:'1abe21b2395e5ff6'};assert.ok(result.some(row=>row.route_id.endsWith(hashes[centre])));assert.equal(result.filter(row=>Number(row.catalogue_id)===9).length,1);}
+});
+
+test('route call actions also use exact published phone text when source tel URLs are absent',()=>{
+ for(const[number,id,phone]of[[23,7,'tel:1300561454'],[9,141,'tel:136150'],[7,132,'tel:1800333362']]){const source=row(number,id);assert.ok(!source.display.urls.some(url=>url.startsWith('tel:')));assert.ok(routeContactURLs(services[source.appearance_id]).includes(phone));}
+ assert.ok(!routeContactURLs(services[row(7,86).appearance_id]).some(url=>url.startsWith('tel:')));
+ const tindal=services[row(23,9,'e567cf9371c84887').appearance_id];assert.deepEqual(routeContactURLs(tindal).filter(url=>url.startsWith('tel:')),['tel:0879782391']);
+ const nhulunbuy=services[row(15,12,'16ceec286732be79').appearance_id];assert.deepEqual(routeContactURLs(nhulunbuy).filter(url=>url.startsWith('tel:')),['tel:0889393400']);
+});
+test('three invariant remote subregion branches skip that question while genuine catchments retain it',()=>{
+ const subregions=['topend','bigrivers','barkly','central','eastarnhem','jabiru','nauiyu','wadeye','other'];
+ for(const[topic,answers]of[['connection',{need:'settle',connection:'serving',region:'remote'}],['parenting',{need:'childcare',careHours:'regular',connection:'serving',region:'remote'}],['care',{need:'health',healthFor:'member',region:'remote'}]]){
+  const expected=verifiedResults(topic,answers);
+  for(const remoteArea of subregions)assert.deepEqual(verifiedResults(topic,{...answers,remoteArea}).ids,expected.ids);
+  const flow=getFlowState(topic,answers);assert.ok(flow.complete);assert.ok(!flow.questions.some(q=>q.id==='remoteArea'));
+ }
+ const travel={need:'travel',connection:'former',dvaTravel:'no',region:'remote',ntResidence:'yes'};assert.ok(getFlowState('care',travel).questions.some(q=>q.id==='remoteArea'));
+ const barkly=verifiedResults('care',{...travel,remoteArea:'barkly'}),central=verifiedResults('care',{...travel,remoteArea:'central'});assert.notDeepEqual(barkly.ids,central.ids);
+ assert.ok(getFlowState('mental',{need:'indigenous',indigenousNeed:'local',region:'remote'}).questions.some(q=>q.id==='remoteArea'));
+});
+
+test('school remote subareas and former settlement locations with identical contacts are skipped',()=>{
+ const school={need:'learning',schoolType:'government',schoolHelp:'advocacy',region:'remote'};const before=verifiedResults('parenting',school);
+ for(const remoteArea of ['topend','bigrivers','barkly','central','eastarnhem','jabiru','nauiyu','wadeye','other'])assert.deepEqual(verifiedResults('parenting',{...school,remoteArea}).ids,before.ids);
+ assert.ok(getFlowState('parenting',school).complete);assert.ok(!getFlowState('parenting',school).questions.some(q=>q.id==='remoteArea'));
+ for(const connection of ['former','bereaved']){const a={need:'settle',connection};const expected=verifiedResults('connection',a);for(const region of ['darwin','palmerston','katherine','tennant','alice','gove','remote','outside'])assert.deepEqual(verifiedResults('connection',{...a,region}).ids,expected.ids);assert.ok(getFlowState('connection',a).complete);assert.ok(!getFlowState('connection',a).questions.some(q=>q.id==='region'));}
+});
+test('ordinary nonstandard childcare keeps its own route and emergency help remains reachable',()=>{
+ const a={need:'childcare',careHours:'nonstandard',region:'nt'};const flow=getFlowState('parenting',a);assert.ok(flow.complete);assert.ok(!flow.questions.some(q=>q.id==='connection'));
+ const result=resultRows('parenting',a);assert.deepEqual(result.map(r=>Number(r.catalogue_id)),[67]);
+ const emergency=resultRows('parenting',{need:'emergency-care',connection:'serving'});assert.ok(emergency.some(r=>Number(r.catalogue_id)===58));assert.match(emergency.find(r=>Number(r.catalogue_id)===58).display.who,/away on duty or medically unable/);
+});
+test('benefit lookup and offline Centrelink access promote exact supplied web actions',()=>{
+ for(const r of appearances.filter(r=>Number(r.catalogue_id)===113)){const service=services[r.appearance_id],actions=routeWebActions(service);assert.deepEqual(actions,[{url:'https://www.servicesaustralia.gov.au/payment-and-service-finder',label:'Check payments'},{url:'https://findus.servicesaustralia.gov.au/?msg=Centrelink',label:'Find in-person Centrelink help'}]);for(const action of actions)assert.ok(service.urls.includes(action.url));}
+ assert.deepEqual(routeWebActions(services[row(7,86).appearance_id]),[{url:'https://www.lutherancare.org.au/nt-cis-enquiries/',label:'Use online referral form'}]);
+});
+
+test('ADF Equip source email stays actionable when published contact text names the program page',()=>{
+ const source=appearances.find(row=>row.appearance_id==='defence:issue:02:row:002'),email='mailto:adfequip.program@defence.gov.au';
+ assert.equal(source.display.contact,'Official program page');assert.ok(source.display.urls.includes(email));
+ const actions=routeContactURLs(services[source.appearance_id]);assert.deepEqual(actions.filter(url=>url.startsWith('mailto:')),[email]);assert.ok(!actions.some(url=>url.startsWith('tel:')));
 });
