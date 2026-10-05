@@ -1,4 +1,4 @@
-import {questionsFor, preferencesFor} from './support-paths.mjs?v=20260927-4';
+import {questionsFor, preferencesFor} from './support-paths.mjs?v=20261005-1';
 
 const ntRegions = new Set(['darwin','palmerston','katherine','alice','tennant','gove','remote']);
 const contextRegions = new Set([...ntRegions,'nt','outside']);
@@ -77,11 +77,16 @@ export function applyAnswer(topic, answers, questionId, value, savedRegion='') {
 
  const current={...flow.answers};
  const position=flow.questions.findIndex(item=>item.id===questionId);
+ const resetFollowing=questionId==='need'||!owns(flow.answers,questionId);
+ const changedPatient=topic==='care'&&questionId==='role';
+ const localQualifications=new Set(['localCommunity','reliefCommunity','remoteArea','congressFit','wurliClient']);
  for(const key of Object.keys(current)){
   if(key===questionId||key==='region'||key==='preferences')continue;
   const keyPosition=flow.questions.findIndex(item=>item.id===key);
-  if(keyPosition>position||keyPosition===-1)delete current[key];
+  if((resetFollowing&&(keyPosition>position||keyPosition===-1))||(changedPatient&&['dvaTravel','ntResidence','dependant'].includes(key))||(questionId==='region'&&localQualifications.has(key)))delete current[key];
  }
+ // Normalisation removes qualifications whose question is no longer relevant.
+ // Independent answers that still mean the same thing stay selected.
  current[questionId]=value;
  return getFlowState(topic,current,savedRegion);
 }
