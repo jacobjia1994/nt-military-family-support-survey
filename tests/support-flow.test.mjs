@@ -102,9 +102,9 @@ test('changing adult age to child age clears adult service history and incompati
 });
 
 test('invalid values or answers to hidden questions cannot skip prerequisites', () => {
-  const flow = getFlowState('money', {need:'bills'});
-  for (const [id, value] of [['connection','made-up'], ['role','partner'], ['region','darwin'], ['unknown','yes']]) {
-    const changed = answer('money', flow, id, value);
+  const flow = getFlowState('care', {need:'travel'});
+  for (const [id, value] of [['connection','made-up'], ['role','partner'], ['dvaTravel','yes'], ['region','darwin'], ['unknown','yes']]) {
+    const changed = answer('care', flow, id, value);
     assert.deepEqual(changed.answers, flow.answers, `${id}/${value}`);
     assert.deepEqual(visibleIds(changed), ['need','connection']);
     assert.equal(changed.complete, false);
@@ -134,12 +134,12 @@ test('an explicit outside-NT answer overrides a previously saved NT town', () =>
 });
 
 test('invalid persisted choices are not accepted as a completed questionnaire', () => {
-  const flow = getFlowState('money', {need:'bills', connection:'not-a-connection', role:'partner', region:'darwin'});
+  const flow = getFlowState('care', {need:'travel', connection:'not-a-connection', role:'partner', dvaTravel:'made-up', region:'darwin'});
   assert.equal(flow.complete, false);
   assert.equal(flow.nextQuestion.id, 'connection');
   assert.equal(flow.answers.connection, undefined);
   assert.deepEqual(visibleIds(flow), ['need','connection']);
-  const corrected = answer('money', flow, 'connection', 'former');
+  const corrected = answer('care', flow, 'connection', 'serving');
   assert.equal(corrected.complete, false);
   assert.equal(corrected.nextQuestion.id, 'role');
   assert.equal(corrected.answers.role, undefined);

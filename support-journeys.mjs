@@ -1,155 +1,109 @@
-// Four reader-facing routes. Each next choice opens contact-ready services.
-// needIds are provenance links to the earlier 39-heading source inventory;
-// they do not define the public navigation or limit its scope.
-const housingContacts = {
-  title: 'Phone help by area',
-  note: 'Central Intake’s phone is temporarily unavailable. These services may offer earlier advice or referrals; accommodation is assessed.',
-  afterPrimary: 1,
-  contacts: [
-    { id: 'territory-faces', label: 'Territory FACES · NT family referrals (weekdays)' },
-    { id: 'salvos-topend-families', label: 'Salvation Army · Top End families (assessed)' },
-    { id: 'salvos-alice-waterhole', label: 'Salvation Army Waterhole · Alice Springs' },
-    { id: 'salvos-katherine-doorways', label: 'Salvation Army Doorways · Katherine' }
-  ]
-};
-const sexualAssaultContacts = {
-  title: 'After sexual assault: NT referral centres',
-  note: 'Darwin and Alice Springs offer 24-hour medical help after a recent assault. Check access hours for the other local contacts.',
-  afterPrimary: 1,
-  contacts: [
-    { id: 'sarc-darwin', label: 'Darwin · 24-hour medical help' },
-    { id: 'sarc-alice', label: 'Alice Springs · 24-hour medical help' },
-    { id: 'sarc-katherine', label: 'Katherine · local contact' },
-    { id: 'sarc-tennant', label: 'Tennant Creek · local contact' }
-  ],
-  url: 'https://nt.gov.au/wellbeing/hospitals-health-services/sexual-assault-referral-centres',
-  urlLabel: 'About NT sexual assault referral centres'
-};
-const financialContacts = {
-  title: 'Local financial counselling',
-  note: 'Ask the team in your area about free counselling and current appointments.',
-  afterPrimary: 1,
-  contacts: [
-    { id: 'catholiccare-financial', label: 'CatholicCare NT · Darwin, Palmerston, Katherine and listed remote areas' },
-    { id: 'lc-alice-financial', label: 'Lutheran Care · Alice Springs and nearby communities' }
-  ]
-};
-const youthContacts = {
-  title: 'Local headspace centres (ages 12–25)',
-  note: 'Call a centre about appointments.',
-  afterPrimary: 1,
-  contacts: [
-    { id: 'headspace-darwin', label: 'headspace Darwin' },
-    { id: 'headspace-palmerston', label: 'headspace Palmerston' },
-    { id: 'headspace-katherine', label: 'headspace Katherine' },
-    { id: 'headspace-alice', label: 'headspace Alice Springs' }
-  ]
-};
-const postnatalContacts = {
-  title: 'Postnatal home visits after a birth',
-  note: 'For public maternity patients; ask your maternity team about follow-up and availability.',
-  afterPrimary: 1,
-  contacts: [
-    { id: 'postnatal-darwin', label: 'NT Health domiciliary midwives · Darwin' },
-    { id: 'postnatal-alice', label: 'NT Health domiciliary midwives · Alice Springs' }
-  ],
-  url: 'https://nt.gov.au/wellbeing/pregnancy-birthing-and-child-health/pregnancy-and-birthing-services-in-the-top-end/postnatal-home-visits',
-  urlLabel: 'NT postnatal home-visit information'
-};
-const culturallySafeMentalContacts = {
-  title: 'First Nations local wellbeing support',
-  note: 'These services are for Aboriginal and Torres Strait Islander people in their listed areas.',
-  afterPrimary: 2,
-  contacts: [
-    { id: 'danila-dilba', label: 'Danila Dilba · Greater Darwin and Palmerston' },
-    { id: 'wurli-sewb', label: 'Wurli-Wurlinjang · Katherine region' }
-  ]
-};
-export const journeys = [
-  {
-    id: 'moving', title: 'Moving or settling in',
-    choices: [
-      { id: 'arriving', title: 'Arriving after a posting', needIds: [1, 28, 32], primaryServiceIds: ['dmfs-helpline', 'dmfs-darwin', 'dmfs-tindal'], moreServiceIds: ['defence-community-groups'], moreLabel: 'Local family groups' },
-      { id: 'housing', title: 'Finding Defence housing after a posting', needIds: [7], primaryServiceIds: ['dha-housing', 'dmfs-helpline'], moreServiceIds: ['toll-transitions', 'legal-aid-nt'], moreLabel: 'Removals and tenancy advice', related: { routeId: 'concern', choiceId: 'homelessness', label: 'At risk of homelessness? See local contacts' } },
-      { id: 'pets', title: 'Moving with a pet', needIds: [8], primaryServiceIds: ['defence-pet-move', 'dha-housing', 'dmfs-helpline'], related: { routeId: 'concern', choiceId: 'safety', label: 'Unsafe at home? Find safety support, including pet care' } },
-      { id: 'school', title: 'A child is changing schools', needIds: [13, 14], primaryServiceIds: ['school-change', 'nt-school-enrolment', 'school-mentor'], moreServiceIds: ['defence-education'], moreLabel: 'Education assistance' },
-      { id: 'childcare', title: 'Finding childcare', needIds: [9, 10], primaryServiceIds: ['startingblocks', 'kentish-fdc', 'onetree-nt'], moreServiceIds: ['defence-childcare', 'nt-in-home-care'], moreLabel: 'Defence priority and care around shifts' },
-      { id: 'partner-work', title: 'Partner work after a move', needIds: [5], primaryServiceIds: ['soldieron-employment', 'peap', 'cowork-coplay'] },
-      { id: 'connections', title: 'Meeting people in a new place', needIds: [28, 29], primaryServiceIds: ['dmfs-helpline', 'dmfs-darwin', 'dmfs-tindal'], moreServiceIds: ['defence-community-groups', 'soldieron-connect', 'darwin-vfwc', 'chaplaincy'], moreLabel: 'Groups and other ways to connect' }
-    ]
-  },
-  {
-    id: 'apart', title: 'Apart because of service',
-    choices: [
-      { id: 'away', title: 'Someone is away or coming home', needIds: [2], primaryServiceIds: ['dmfs-helpline', 'adf-equip', 'open-arms'] },
-      { id: 'parenting', title: 'Parenting or managing daily life alone', needIds: [2, 12], primaryServiceIds: ['dmfs-helpline', 'parentline', 'territory-faces'] },
-      { id: 'child', title: 'A child is finding time apart hard', needIds: [2, 12, 15], primaryServiceIds: ['parentline', 'kids-helpline', 'adf-equip'], moreServiceIds: ['eheadspace'], moreLabel: 'Young person online support' },
-      { id: 'care-hours', title: 'Care does not fit work or service hours', needIds: [3, 10], primaryServiceIds: ['kentish-fdc', 'nt-in-home-care', 'dmfs-helpline'], moreServiceIds: ['adf-flexible-work'], moreLabel: 'ADF flexible work options' },
-      { id: 'relationship', title: 'Relationship strain or reunion', needIds: [17], primaryServiceIds: ['open-arms', 'relationship-counselling-nt', 'family-rel-advice'] },
-      { id: 'mental', title: 'Stress or mental health worries', needIds: [20, 21, 22], primaryServiceIds: ['adf-allhours', 'open-arms', 'teamtalk'], moreServiceIds: ['nt-mental-health-line', 'suicide-callback'], moreLabel: 'Urgent mental-health contacts', note: 'If someone is in immediate danger, call 000.' },
-      { id: 'unsafe', title: 'Unsafe at home or sexual assault', needIds: [8, 19], primaryServiceIds: ['1800respect', 'dawn-house', 'kwcc', 'wossca-alice'], quickHelp: sexualAssaultContacts, moreServiceIds: ['defence-safe', 'sempro'], moreLabel: 'Defence-specific help', note: 'If you are in immediate danger, call 000. If this device is not safe to use, use a safer phone or computer when you can.', safety: true }
-    ]
-  },
-  {
-    id: 'leaving', title: 'Leaving Defence or already left',
-    choices: [
-      { id: 'transition', title: 'Preparing to leave', needIds: [37], primaryServiceIds: ['nt-transition-centre', 'adf-transition', 'veteran-wellbeing-agency'], moreServiceIds: ['dva-claims'], moreLabel: 'Claims and entitlements' },
-      { id: 'already-left', title: 'Already left Defence', needIds: [37], primaryServiceIds: ['veteran-wellbeing-agency', 'dva-claims', 'open-arms'], moreServiceIds: ['darwin-vfwc', 'soldieron-connect'], moreLabel: 'Darwin and peer support' },
-      { id: 'injury', title: 'Service-related injury or claim', needIds: [23, 37], primaryServiceIds: ['dva-claims', 'veteran-wellbeing-agency'], moreServiceIds: ['darwin-vfwc', 'dva-acute-support', 'general-health-nt'], moreLabel: 'Darwin advocacy and other health help' },
-      { id: 'caring', title: 'Caring for someone', needIds: [25, 26, 37], primaryServiceIds: ['carer-gateway', 'open-arms'], moreServiceIds: ['my-aged-care', 'nt-telehealth'], moreLabel: 'Older relatives and care decisions' },
-      { id: 'work', title: 'Work or study after service', needIds: [5, 37], primaryServiceIds: ['soldieron-employment', 'veteran-wellbeing-agency'], moreServiceIds: ['darwin-vfwc'], moreLabel: 'Darwin local hub' },
-      { id: 'housing', title: 'At risk of losing housing', needIds: [7, 37], primaryServiceIds: ['nt-central-intake'], quickHelp: housingContacts, quickHelpFirst: true, moreServiceIds: ['darwin-vfwc'], moreLabel: 'Darwin veteran housing navigation' },
-      { id: 'money', title: 'Debt or money pressure', needIds: [6, 37], primaryServiceIds: ['national-debt-helpline'], quickHelp: financialContacts, moreServiceIds: ['bravery-financial'], moreLabel: 'Veteran financial counselling' },
-      { id: 'connections', title: 'New routines and people to connect with', needIds: [28, 29, 37], primaryServiceIds: ['soldieron-connect', 'veteran-wellbeing-agency'], moreServiceIds: ['darwin-vfwc', 'defglis', 'chaplaincy'], moreLabel: 'Darwin, LGBTQIA+ and spiritual support' },
-      { id: 'family', title: 'Family or relationship stress', needIds: [17, 20, 22, 37], primaryServiceIds: ['open-arms', 'relationship-counselling-nt', 'teamtalk'], moreServiceIds: ['family-rel-advice'], moreLabel: 'Separation and parenting advice' }
-    ]
-  },
-  {
-    id: 'concern', title: 'Find help for a specific concern',
-    choices: [
-      // Home & money
-      { id: 'adf-housing', title: 'Defence housing after a posting', needIds: [7], primaryServiceIds: ['dha-housing', 'dmfs-helpline'], moreServiceIds: ['toll-transitions', 'legal-aid-nt'], moreLabel: 'Removals and tenancy advice' },
-      { id: 'homelessness', title: 'At risk of homelessness', needIds: [7], primaryServiceIds: ['nt-central-intake'], quickHelp: housingContacts, quickHelpFirst: true, moreServiceIds: ['legal-aid-nt'], moreLabel: 'Tenancy advice' },
-      { id: 'employment', title: 'Finding work', needIds: [5], primaryServiceIds: ['soldieron-employment', 'peap'], moreServiceIds: ['cowork-coplay'], moreLabel: 'Partner career group in Darwin or Katherine' },
-      { id: 'money', title: 'Debt or bills', needIds: [6], primaryServiceIds: ['national-debt-helpline'], quickHelp: financialContacts, moreServiceIds: ['bravery-financial'], moreLabel: 'Veteran financial counselling' },
-      { id: 'reserve-work', title: 'Reserve service and civilian work', needIds: [3, 4], primaryServiceIds: ['reserve-protection', 'reserve-employer-support'], moreServiceIds: ['reserve-flexible-work', 'employer-support-payment'], moreLabel: 'Service options and employer payments' },
-      // Children & young people
-      { id: 'childcare', title: 'Finding childcare', needIds: [9, 10], primaryServiceIds: ['startingblocks', 'kentish-fdc'], moreServiceIds: ['onetree-nt', 'defence-childcare', 'nt-in-home-care'], moreLabel: 'Defence centres and care around shifts' },
-      { id: 'pregnancy', title: 'Pregnancy or a new baby', needIds: [11], primaryServiceIds: ['nt-pregnancy-care', 'breastfeeding-help'], quickHelp: postnatalContacts, moreServiceIds: ['postnatal-home'], moreLabel: 'How postnatal visits work' },
-      { id: 'parenting-stress', title: 'Parenting stress', needIds: [12], primaryServiceIds: ['parentline', 'territory-faces'], moreServiceIds: ['dmfs-helpline'], moreLabel: 'Defence family support' },
-      { id: 'school', title: 'Changing schools or enrolment', needIds: [13, 14], primaryServiceIds: ['nt-school-enrolment', 'school-change'], moreServiceIds: ['school-mentor', 'defence-education'], moreLabel: 'Defence school support' },
-      { id: 'young-person', title: 'A young person needs support', needIds: [15, 16], primaryServiceIds: ['kids-helpline', 'eheadspace'], quickHelp: youthContacts, moreServiceIds: ['carer-gateway'], moreLabel: 'Support for a young carer' },
-      // Health & care
-      { id: 'mental', title: 'Mental health', needIds: [20, 21, 22], primaryServiceIds: ['open-arms', 'adf-allhours', 'nt-mental-health-line'], quickHelp: culturallySafeMentalContacts, moreServiceIds: ['teamtalk', 'darwin-mmhc', 'katherine-mmhc', '13yarn'], moreLabel: 'Peer, local adult and First Nations options', note: 'If someone is in immediate danger, call 000.' },
-      { id: 'doctor', title: 'Sick or need a doctor', needIds: [23], primaryServiceIds: ['general-health-nt', 'imsick'], moreServiceIds: ['adf-family-health'], moreLabel: 'ADF dependant healthcare benefit' },
-      { id: 'specialist-travel', title: 'Travel for specialist care', needIds: [24], primaryServiceIds: ['pats-nt', 'defence-remote-travel'], moreServiceIds: ['dmfs-helpline'], moreLabel: 'Ask Defence about family travel' },
-      { id: 'disability', title: 'Disability support', needIds: [25], primaryServiceIds: ['ndis', 'defence-special-needs'], moreServiceIds: ['carer-gateway'], moreLabel: 'Support for carers' },
-      { id: 'carer', title: 'Caring for someone', needIds: [16, 26, 27], primaryServiceIds: ['carer-gateway'], moreServiceIds: ['my-aged-care', 'nt-telehealth', 'carer-skills'], moreLabel: 'Older relatives and care decisions' },
-      // Relationships & loss
-      { id: 'relationship-strain', title: 'Relationship strain', needIds: [17], primaryServiceIds: ['relationship-counselling-nt', 'open-arms'], moreServiceIds: ['family-rel-advice'], moreLabel: 'Parenting and separation advice' },
-      { id: 'separation', title: 'Separation questions', needIds: [18], primaryServiceIds: ['family-rel-advice', 'legal-aid-nt'], moreServiceIds: ['open-arms'], moreLabel: 'Defence-aware counselling' },
-      { id: 'death', title: 'After a death', needIds: [38], primaryServiceIds: ['grief-australia', 'open-arms'], moreServiceIds: ['dva-death-support', 'legacy-nt', 'amber-nt', 'griefline'], moreLabel: 'Practical, veteran family and child-loss help', related: { routeId: 'concern', choiceId: 'suicide-loss', label: 'After a death by suicide? See support in the NT' } },
-      { id: 'suicide-loss', title: 'After a death by suicide', needIds: [39], primaryServiceIds: ['standby-nt', 'thirrili', 'open-arms'], moreServiceIds: ['suicide-callback', '13yarn'], moreLabel: 'Further phone support' },
-      // Defence & community
-      { id: 'meeting-people', title: 'Meeting people', needIds: [28, 29], primaryServiceIds: ['soldieron-connect', 'defence-community-groups'], moreServiceIds: ['dmfs-darwin', 'dmfs-tindal', 'darwin-vfwc', 'defglis'], moreLabel: 'Local groups and inclusive connection' },
-      { id: 'finding-help', title: 'Someone to guide me', needIds: [34, 35], primaryServiceIds: ['dmfs-helpline', 'veteran-wellbeing-agency'], moreServiceIds: ['territory-faces'], moreLabel: 'NT family referrals', note: 'Current ADF families can contact Defence Member and Family Support. Veteran families can contact the Veteran and Family Wellbeing Agency.' },
-      { id: 'adf-info', title: 'ADF family information', needIds: [32, 35], primaryServiceIds: ['dmfs-helpline'], moreServiceIds: ['dmfs-darwin', 'dmfs-tindal', 'dfa'], moreLabel: 'Local offices and family advocacy' },
-      { id: 'veteran-claims', title: 'Veteran support or DVA claim', needIds: [35, 37], primaryServiceIds: ['veteran-wellbeing-agency', 'dva-claims'], moreServiceIds: ['darwin-vfwc', 'dva-acute-support'], moreLabel: 'Darwin advocacy and assessed practical support' },
-      // Safety remains directly reachable from the specific-concern page.
-      { id: 'safety', title: 'Feeling unsafe or sexual assault', needIds: [19], primaryServiceIds: ['1800respect', 'dawn-house', 'kwcc', 'wossca-alice'], quickHelp: sexualAssaultContacts, moreServiceIds: ['defence-safe', 'sempro'], moreLabel: 'Defence-specific help', note: 'If you are in immediate danger, call 000. If this device is not safe to use, use a safer phone or computer when you can.', safety: true }
-    ]
-  }
+// Task labels describe what the person wants to do. The seven legacy topic IDs
+// remain private routing details, rather than categories shown on the homepage.
+const choice=(title,topicId,need,answers)=>({title,topicId,need,...(answers?{answers}:{})});
+export const journeys=[
+ {id:'posting',title:'Moving for a posting',hint:'Housing, removals and settling in',primary:true,choices:[
+  choice('Defence housing or rent allowance','money','defence-housing',{housingTask:'home'}),
+  choice('Arrange an approved Defence removal','money','defence-housing',{housingTask:'removal'}),
+  choice('Living apart or maintaining two homes','money','defence-housing',{housingTask:'other'}),
+  choice('Find local family support after a move','connection','settle'),
+  choice('Move a pet with a Defence-funded move','money','pets',{petNeed:'move'})]},
+ {id:'absence',title:'Managing time apart',hint:'A deployment, absence or reunion',primary:true,choices:[choice('Support during an absence or reunion','connection','apart',{absenceNeed:'support'}),choice('Help a child cope with parental absence','connection','apart',{absenceNeed:'child'}),choice('Relationship counselling during time apart','connection','apart',{absenceNeed:'relationship'})]},
+ {id:'children-education',title:'Childcare or school support',hint:'Find care, change schools or get learning help',primary:true,choices:[
+  choice('Find regular childcare','parenting','childcare',{careHours:'regular'}),
+  choice('Childcare outside usual hours','parenting','childcare',{careHours:'nonstandard'}),
+  choice('Urgent help caring for children','parenting','emergency-care'),
+  choice('Start or change schools','parenting','school'),
+  choice('Learning support or a school problem','parenting','learning'),
+  choice('Help with education costs','parenting','education-costs')]},
+ {id:'work',title:'Finding work or studying',hint:'Jobs, partner careers and training',primary:true,choices:[
+  choice('Find work or change career','work','job'),choice('Career support for a Defence partner','work','partner'),
+  choice('Adult study or retraining','work','study'),choice('Balance Reserve service with civilian work','work','reserve'),
+  choice('Change Defence work arrangements','work','flexible')]},
+ {id:'transition',title:'Leaving Defence',hint:'Plan the next stage of work and family life',primary:true,choices:[choice('Transition support before or after leaving','work','transition')]},
+ {id:'mental-health',title:'Support with mental health',hint:'Talk to someone or arrange ongoing care',primary:true,choices:[
+  choice('Talk about stress, mood or mental health','mental','feelings'),
+  choice('Arrange ongoing mental-health treatment','mental','treatment'),
+  choice('Manage ongoing stress','mental','managing-stress')]},
+ {id:'health',title:'Healthcare or treatment costs',hint:'Health advice, member care and medical travel',primary:true,choices:[
+  choice('Health advice for a family member or civilian','care','health',{healthFor:'other'}),
+  choice('Find a serving member’s health centre','care','health',{healthFor:'member'}),
+  choice('Help with treatment costs','care','costs'),choice('Travel for specialist treatment','care','travel')]},
+ {id:'safety',title:'Violence, assault or feeling unsafe',hint:'Safe support and a place to stay',primary:true,choices:[
+  choice('Talk about violence or feeling unsafe','relationships','unsafe'),
+  choice('A safe place to stay because of violence','relationships','refuge'),
+  choice('Medical support after sexual assault','relationships','assault'),
+  choice('Defence-related sexual misconduct','relationships','misconduct'),
+  choice('Support for a child affected by violence','relationships','child-violence')]},
+ {id:'relationships',title:'Relationship or separation support',hint:'Counselling, arrangements and child contact',primary:true,choices:[
+  choice('Relationship counselling','relationships','counselling'),
+  choice('Separation, parenting or property advice','relationships','separation',{separationHelp:'advice'}),
+  choice('Supervised child visits or safer changeovers','relationships','separation',{separationHelp:'child-contact'})]},
+ {id:'money',title:'Bills, income or essentials',hint:'Debt advice, payments and emergency relief',primary:true,choices:[
+  choice('Debt or bills','money','bills'),choice('Income has dropped or stopped','money','income'),choice('Food or other essentials','money','essentials')]},
+ {id:'housing-tonight',title:'Nowhere to stay tonight',hint:'Check suitable accommodation and eligibility',primary:true,choices:[choice('Nowhere to stay tonight','money','tonight')]},
+ {id:'losing-housing',title:'At risk of losing your home',hint:'Get help before housing is lost',primary:true,choices:[choice('At risk of losing your home','money','losing-housing')]},
+ {id:'stable-housing',title:'Find a stable home',hint:'Housing advice and a suitable referral',primary:true,choices:[choice('Find a stable home','money','stable-housing')]},
+ {id:'rental',title:'Rent assistance or tenancy advice',hint:'Payments, bond, rent and tenancy problems',primary:false,choices:[choice('Help with private rent','money','rent-assistance'),choice('A rent, bond or tenancy dispute','money','tenancy'),choice('A young person at risk of homelessness','money','youth-housing')]},
+ {id:'child-wellbeing',title:'A child or young person’s wellbeing',hint:'Emotions, behaviour and youth support',primary:false,choices:[
+  choice('Emotional support for a child under 18','mental','feelings',{age:'under18'}),
+  choice('Support for a teenager or young adult (12–25)','parenting','teenager')]},
+ {id:'parenting',title:'Help with parenting',hint:'Support for a parent, carer or child',primary:false,choices:[
+  choice('Parenting stress or a child’s behaviour','parenting','parenting',{parentingNeed:'general'}),
+  choice('Support for an Aboriginal child under 12','parenting','parenting',{parentingNeed:'indigenous-child'})]},
+ {id:'baby',title:'Pregnancy or a new baby',hint:'Maternity care, advice and wellbeing',primary:false,choices:[
+  choice('Pregnancy, baby or feeding advice','care','baby',{babyNeed:'advice'}),
+  choice('Find local maternity care','care','baby',{babyNeed:'maternity'}),
+  choice('A child-health nurse for a child from birth to five','care','baby',{babyNeed:'nurse'}),
+  choice('Emotional support during pregnancy or early parenthood','care','baby',{babyNeed:'emotional'})]},
+ {id:'disability',title:'Disability support',hint:'Access, advocacy and continuity during a posting',primary:false,choices:[
+  choice('Apply for NDIS support','care','disability',{disabilityNeed:'ndis'}),
+  choice('A problem getting disability support','care','disability',{disabilityNeed:'advocacy'}),
+  choice('Special needs during a Defence posting','care','disability',{disabilityNeed:'posting'}),
+  choice('Development or therapy support for a child','parenting','development')]},
+ {id:'carers',title:'Support for an unpaid carer',hint:'Practical help, respite and young carers',primary:false,choices:[
+  choice('Support for an unpaid carer','care','carer'),choice('A young person caring for someone','care','young-carer'),
+  choice('Carer skills or involvement in care decisions','care','care-skills')]},
+ {id:'older',title:'Support for an older relative',hint:'Aged care, memory problems and care rights',primary:false,choices:[
+  choice('Find or arrange aged care','care','older',{olderNeed:'care'}),
+  choice('Memory problems or dementia','care','older',{olderNeed:'memory'}),
+  choice('A problem with aged-care services','care','older',{olderNeed:'rights'})]},
+ {id:'home-help',title:'Practical help at home',hint:'Illness, injury or a family-care emergency',primary:false,choices:[
+  choice('Veteran home care or household help','care','home-care'),
+  choice('Family care when a serving member is away or unwell','money','family-crisis'),
+  choice('Check the DVA Acute Support Package','money','acute-support')]},
+ {id:'bereavement',title:'Support after a death',hint:'Practical next steps and support with grief',primary:false,choices:[
+  choice('Support with grief','mental','grief'),choice('Practical help after a member or veteran dies','mental','practical-loss'),
+  choice('Support after a death by suicide','mental','suicide-loss')]},
+ {id:'addiction',title:'Alcohol, drugs or gambling concerns',hint:'Counselling and confidential advice',primary:false,choices:[
+  choice('Alcohol or other drugs','mental','addiction',{addiction:'substances'}),choice('Gambling','mental','addiction',{addiction:'gambling'})]},
+ {id:'groups',title:'Meet people or join activities',hint:'Local groups and Defence-family activities',primary:false,choices:[
+  choice('Find local groups and activities','connection','local'),choice('Activities for a Defence child aged 8–18','connection','defence-child'),
+  choice('Meaningful activities or recognition','connection','recognition')]},
+ {id:'language',title:'Interpreting or accessible contact',hint:'Language, hearing or speech support',primary:false,choices:[
+  choice('An interpreter for another language','connection','language',{languageNeed:'english'}),
+  choice('An Aboriginal-language interpreter','connection','language',{languageNeed:'aboriginal'}),
+  choice('Help with a call because of hearing or speech difficulties','connection','language',{languageNeed:'relay'})]},
+ {id:'aboriginal-wellbeing',title:'Aboriginal or Torres Strait Islander wellbeing',hint:'Local care or support after a traumatic death',primary:false,choices:[
+  choice('Local social and emotional wellbeing support','mental','indigenous',{indigenousNeed:'local'}),
+  choice('Culturally led support after a suicide or traumatic death','mental','indigenous',{indigenousNeed:'loss'})]},
+ {id:'inclusive',title:'LGBTQIA+ peer support',hint:'Sexuality, gender, identity and relationships',primary:false,choices:[choice('LGBTQIA+ peer support','mental','lgbtq')]},
+ {id:'private',title:'Anonymous support about Defence life',hint:'Talk without routinely giving your identity',primary:false,choices:[choice('Confidential or anonymous military-aware support','mental','private')]},
+ {id:'family-info',title:'Information for Defence family members',hint:'Recognition, benefits and direct family enquiries',primary:false,choices:[choice('Information and benefits for family members','connection','family-info')]},
+ {id:'family-advocacy',title:'Family advocacy or consultation',hint:'Have a say in policy and services',primary:false,choices:[choice('Family advocacy or consultations','connection','feedback')]},
+ {id:'defence-aware',title:'Find services that understand Defence life',hint:'Service history and family eligibility can differ',primary:false,choices:[choice('Military-aware support and eligibility advice','connection','defence-aware')]},
+ {id:'new-entry',title:'Supporting someone starting military life',hint:'Information for a new member and their family',primary:false,choices:[choice('Family support when someone joins Defence','connection','new-entry')]},
+ {id:'moving-childcare',title:'Childcare during a Defence move',hint:'Eligibility depends on the child and available care',primary:false,choices:[choice('Childcare during a Defence-funded move','parenting','moving-care')]},
+ {id:'rehabilitation',title:'DVA rehabilitation',hint:'Support with an accepted condition and rehabilitation needs',primary:false,choices:[choice('DVA rehabilitation','work','rehabilitation')]},
+ {id:'budgeting',title:'Plan a budget or understand money',hint:'Defence financial education before or after transition',primary:false,choices:[choice('Budgeting and financial education','money','budgeting')]},
+ {id:'claims',title:'DVA claims or benefits',hint:'Independent claims help and entitlement information',primary:false,choices:[choice('Help with a DVA claim','money','claims')]},
+ {id:'legal',title:'Legal advice',hint:'Find a service for the actual legal issue',primary:false,choices:[choice('Legal advice','relationships','legal')]},
+ {id:'pets',title:'Pet care or a safe exit with pets',hint:'Care information and safety planning',primary:false,choices:[
+  choice('Pet care information','money','pets',{petNeed:'care'}),choice('Pets while leaving an unsafe home','money','pets',{petNeed:'safe-exit'})]},
+ {id:'distress-training',title:'Learn to recognise and respond to distress',hint:'Veteran-community mental-health training',primary:false,choices:[choice('Mental-health training for the veteran community','mental','distress-signs')]},
+ {id:'home-ownership',title:'Defence home ownership assistance',hint:'Qualifying service and loan conditions apply',primary:false,choices:[choice('Check Defence Home Ownership Assistance','money','home-ownership')]},
+ {id:'nt-preparedness',title:'Prepare for NT weather and emergencies',hint:'Official household guidance and alerts',primary:false,choices:[choice('NT household emergency preparation','connection','nt-preparedness')]},
+ {id:'pastoral',title:'Pastoral or spiritual support',hint:'ADF chaplaincy for members and families',primary:false,choices:[choice('Contact an ADF chaplain','connection','pastoral')]},
+ {id:'urgent-mental',title:'Urgent mental-health or emotional crisis',hint:'Emergency and crisis contacts',primary:false,choices:[choice('Immediate crisis contacts','mental','crisis')]},
+ {id:'nt-urgent-mental',title:'NT urgent mental-health advice',hint:'Help for you or someone you are concerned about',primary:false,choices:[choice('NT Mental Health Line','mental','nt-crisis')]}
 ];
-
-export const concernGroups = [
-  { id: 'home-money', title: 'Home, work & money', choiceIds: ['adf-housing', 'homelessness', 'employment', 'money', 'reserve-work'] },
-  { id: 'children', title: 'Children & young people', choiceIds: ['childcare', 'pregnancy', 'parenting-stress', 'school', 'young-person'] },
-  { id: 'health-care', title: 'Health & care', choiceIds: ['mental', 'doctor', 'specialist-travel', 'disability', 'carer'] },
-  { id: 'relationships-loss', title: 'Relationships & loss', choiceIds: ['relationship-strain', 'separation', 'death', 'suicide-loss'] },
-  { id: 'defence-community', title: 'Defence & community', choiceIds: ['meeting-people', 'finding-help', 'adf-info', 'veteran-claims'] }
-];
-export const concernDirectChoiceIds = ['safety'];
-
-export const humanHelpServiceIds = ['dmfs-helpline', 'veteran-wellbeing-agency', 'territory-faces'];
-// Language, LGBTQIA+ inclusion and privacy are access needs; #36 is feedback.
-export const secondaryNeedIds = [30, 31, 33, 36];

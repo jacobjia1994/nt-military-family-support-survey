@@ -1,8 +1,10 @@
-import {reviewedReferrals} from './support-referrals.mjs?v=20260927-4';
-import {expandedServices} from './support-expanded.mjs?v=20260927-4';
-import {nationalReviewedServices} from './support-national-reviewed.mjs?v=20260927-4';
-import {ntReviewedServices} from './support-nt-reviewed.mjs?v=20260927-4';
-import {astraReviewedServices} from './support-astra-reviewed.mjs?v=20260927-4';
+import * as septemberReview from './support-sept30-reviewed.mjs?v=20260930-1';
+import {reviewedReferrals} from './support-referrals.mjs?v=20260930-1';
+import {expandedServices} from './support-expanded.mjs?v=20260930-1';
+import {nationalReviewedServices} from './support-national-reviewed.mjs?v=20260930-1';
+import {ntReviewedServices} from './support-nt-reviewed.mjs?v=20260930-1';
+import {astraReviewedServices} from './support-astra-reviewed.mjs?v=20260930-1';
+import {handbookRouteAdditions} from './support-handbook.mjs?v=20260930-revised-1';
 // Curated contact routes, independently checked against official provider sources.
 // A free first service does not imply that every onward service is free.
 const checked = '2026-09-26';
@@ -531,4 +533,91 @@ export const services = {
     url: 'https://standbysupport.com.au/find-support/nt/',
     sources: ['https://standbysupport.com.au/find-support/nt/', 'https://standbysupport.com.au/']
   })
+  ,...septemberReview.sept30ReviewedServices
 };
+
+// Live source checks in this stream; retain the verified outage and access limits.
+Object.assign(services['housing-intake'], {
+  checked:'2026-09-30',
+  access:'The provider still reports its phone line is down (22 September notice). Use the enquiry form; the provider states a response within 48 business hours. This does not reserve a bed or provide same-day accommodation.'
+});
+services['wellbeing-agency'].checked='2026-09-30';
+for (const [id,patch] of Object.entries(septemberReview.sept30ServicePatches || {})) {
+  if (!services[id]) throw new Error(`Cannot patch an unknown service: ${id}`);
+  services[id]={...services[id],...patch};
+}
+
+// Reviewed additions supplement the existing detailed routes; none are deleted.
+Object.assign(services,handbookRouteAdditions);
+Object.assign(services.tewls,{
+ checked:'2026-09-30',audience:'Women and non-binary people living in Greater Darwin',
+ offer:'Free advice on civil, migration and family law, including safety, tenancy, debt and separation.',
+ access:'Contact directly for an appointment. Greater Darwin catchment applies. Casework and representation are assessed case by case; ask about the scope of your matter.',
+ hours:'Ask about current appointment hours',url:'https://tewls.org.au/services/',action:'Check services and request an appointment',
+ sources:['https://tewls.org.au/services/']
+});
+Object.assign(services['adf-family-health'],{
+ checked:'2026-09-30',phone:'1300 561 454',
+ hours:'Claims administration: Mon–Thu 8:30am–6pm; Fri 8:30am–5pm AEDT, as published. Confirm Melbourne local time when calling.',
+ extraUrl:'mailto:Adf.familyhealth@navyhealth.com.au',extraLabel:'Email claims and administration',
+ access:services['adf-family-health'].access+' For claims or administration contact Navy Health on 1300 561 454. Directorate feedback and programme comments use 02 6266 3547 or adf.familyhealth@defence.gov.au. The current Contact Us page and an older announcement publish different email spelling and hours; current contact details are shown here.',
+ sources:[...new Set([...services['adf-family-health'].sources,'https://adffamilyhealth.com/contact-us/','https://adffamilyhealth.com/announcements/'])]
+});
+Object.assign(services['housing-intake'],{
+ phone:undefined,extraUrl:undefined,url:'https://www.lutherancare.org.au/nt-cis-enquiries/',
+ hours:'Weekdays; online enquiry response stated as within 48 business hours. Published staffing hours conflict.',
+ action:'Open non-urgent housing enquiry form'
+});
+Object.assign(services['lc-alice'],{
+ checked:'2026-09-30',access:'Call or email to arrange support. The provider still publishes a flood closure for its Gregory Terrace office. A current temporary location and emergency-relief session time have not been confirmed; ask before travelling.',
+ extraUrl:'mailto:alicesprings@lutherancare.org.au',extraLabel:'Email Alice Springs financial wellbeing',
+ sources:['https://www.lutherancare.org.au/nt-financial-wellbeing/']
+});
+Object.assign(services.parentline,{
+ checked:'2026-09-30',hours:'Available daily; current official pages publish conflicting phone and chat hours. Check before relying on after-hours contact.',
+ cost:'Counselling is free; 1300 call charges may apply.',access:services.parentline.access+' Published hours conflict; ask about the current phone or chat schedule.'
+});
+services['open-arms-check'].access+=' The 2025 eligibility matrix also includes some Commonwealth or allied veterans with a DVA White Card for accepted service-related mental health conditions under reciprocal healthcare arrangements; ask the team to check this pathway.';
+Object.assign(services.griefline,{
+ checked:'2026-09-30',url:'https://griefline.org.au/supporting-australians-through-grief-and-loss/',
+ offer:'Contact SANE service enquiries to ask about the Griefline grief-support programme, registration and referral options.',
+ access:'This contact is service enquiries and access to organised grief support, rather than immediate ad hoc counselling or a crisis response. Ask about registration, appointments and any referral requirements.',
+ action:'Read about grief-support access',sources:['https://griefline.org.au/supporting-australians-through-grief-and-loss/']
+});
+Object.assign(services['catherine-booth-house'],{
+ checked:'2026-09-30',name:'Catherine Booth House — family violence refuge enquiry',
+ audience:'Single adult victim survivors; the Salvation Army also operates a family refuge in this region',
+ offer:'Ask the specialist family violence team about refuge, safe access and the service suitable for your household.',
+ access:'The operator describes Catherine Booth House as a refuge for single adult victim survivors and separately lists a family refuge. Ask the team which programme can accept your circumstances, children and safety needs. Confirm vacancies, assessment and any charges before travelling; no admission is guaranteed.',
+ cost:'Ask about assessed accommodation charges.',url:'https://www.salvationarmy.org.au/northernterritory/domestic-violence/',
+ sources:['https://www.salvationarmy.org.au/northernterritory/domestic-violence/']
+});
+Object.assign(services.naafls,{
+ checked:'2026-09-30',offer:'Culturally safe legal advice on family violence, safety, family law and child protection; housing advocacy is for existing clients.',
+ access:services.naafls.access+' Housing advocacy, including transfers and priority housing, is offered to existing clients rather than general housing intake.'
+});
+Object.assign(services.daiws,{
+ checked:'2026-09-30',access:services.daiws.access+' The shelter publishes accommodation for females of any age and males usually aged 12 or younger. Give the team the ages of accompanying children and ask about suitability before travelling; an older child is not automatically excluded by this guide.'
+});
+Object.assign(services.ramss,{
+ checked:'2026-09-30',area:'Darwin, Palmerston and surrounding rural area',
+ access:'Call to discuss your needs and SETS programme eligibility. Eligible visa categories and settlement needs apply; current Home Affairs rules exclude Australian citizens from funded SETS client services. Arrival within five years is a priority, rather than an automatic limit. Ask about alternatives if this programme does not fit.',
+ sources:[...services.ramss.sources,'https://immi.homeaffairs.gov.au/settling-in-australia/sets-program/eligibility']
+});
+Object.assign(services.mcsca,{
+ checked:'2026-09-30',access:services.mcsca.access+' General community information and activities are distinct from funded SETS casework. Ask the team to assess any funded programme’s visa and settlement eligibility; those conditions do not apply to every MCSCA activity.',
+ sources:[...services.mcsca.sources,'https://mcsca.org.au/services/','https://immi.homeaffairs.gov.au/settling-in-australia/sets-program/eligibility']
+});
+Object.assign(services['mcnt-connection'],{
+ checked:'2026-09-30',audience:'Community members looking for social connection',
+ access:services['mcnt-connection'].access+' The community dinner is distinct from funded settlement casework; SETS visa conditions are not a dinner eligibility test.'
+});
+for(const id of ['caaflu-central','caaflu-barkly']){
+ services[id].checked='2026-09-30';
+ services[id].audience='Aboriginal and Torres Strait Islander victim survivors of domestic, family or sexual violence';
+}
+for(const id of ['tenancy-nt','disability-nt']){
+ services[id].checked='2026-09-30';
+ services[id].access+=' Current service pages give 08 8982 1111 for appointments; the DCLS contact page also lists this 1800 freecall. Ask for the relevant service.';
+}
+for(const [id,s]of Object.entries(services))s.id=id;

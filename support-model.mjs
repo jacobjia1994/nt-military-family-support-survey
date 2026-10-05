@@ -9,7 +9,7 @@ export const tasks = [
   {id:'connect', title:'Meet people and feel connected', hint:'Local groups and online activities', focuses:[]},
   {id:'safety', title:'Safety or separation', hint:'Violence, sexual assault or legal help', focuses:[['unsafe','Feeling unsafe or experiencing violence'],['assault','After sexual assault'],['separation','Separation or parenting arrangements'],['legal','Another legal question']]}
 ];
-export const regions = [['darwin','Darwin'],['palmerston','Palmerston / rural Top End'],['katherine','Katherine / Tindal'],['alice','Alice Springs'],['tennant','Tennant Creek / Barkly'],['remote','Elsewhere in the NT'],['outside','Outside the NT / moving to the NT']];
+export const regions = [['darwin','Darwin'],['palmerston','Palmerston'],['katherine','Katherine / Tindal'],['alice','Alice Springs'],['tennant','Tennant Creek / Barkly'],['remote','Rural or remote NT / another NT community'],['outside','Outside the NT / moving to the NT']];
 export const ages = [['0-4','Under 5'],['5-11','5–11'],['12-17','12–17'],['18-25','18–25'],['26+','26 or older']];
 export const connections = [['serving','Serving ADF member or family (including Reserves)'],['former','Former ADF member or family'],['bereaved','Bereaved Defence or veteran family'],['unsure','Another connection / not sure']];
 export const counsellingConnections = [['member','They have had full-time ADF service'],['partner','Their current partner has had full-time ADF service'],['child','Their parent has had full-time ADF service'],['other','Another relationship, Reserve-only service, or not sure']];
@@ -23,9 +23,9 @@ export function fieldsFor(task, focus, age) {
 export function matchSupport(c) {
   const {task, focus, region, age, connection, counselling} = c;
   const inNT = region !== 'outside';
-  const young = ['5-11','12-17','18-25'].includes(age);
-  const teen = ['12-17','18-25'].includes(age);
-  const adult = ['18-25','26+'].includes(age);
+  const young = ['5-7','8-11','5-11','12-17','18','19-25','18-25'].includes(age);
+  const teen = ['12-17','18','19-25','18-25'].includes(age);
+  const adult = ['18','19-25','18-25','26+'].includes(age);
   const serving = connection === 'serving';
   const oa = ['member','partner','child'].includes(counselling);
   const localYouth = {darwin:'headspace-darwin',palmerston:'headspace-palmerston',katherine:'headspace-katherine',alice:'headspace-alice'}[region];

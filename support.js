@@ -1,7 +1,8 @@
-import {topics, questionsFor, preferencesFor, getResults, legacyRoute} from './support-paths.mjs?v=20261005-1';
-import {services,issues,appearances,regionLabels,routeMatchesRegion,safeURL,verifiedResults,routeContactURLs,primaryWebURL,recoveryResults} from './support-routing.mjs?v=20261005-1';
-import {verifiedDefence} from './support-verified-data.mjs?v=20261005-1';
-import {getFlowState, applyAnswer} from './support-flow.mjs?v=20261005-1';
+import {journeys} from './support-journeys.mjs?v=20261005-tasks-3';
+import {topics, questionsFor, preferencesFor, getResults, legacyRoute} from './support-paths.mjs?v=20261005-tasks-3';
+import {services,issues,appearances,regionLabels,routeMatchesRegion,safeURL,verifiedResults,routeContactURLs,primaryWebURL,recoveryResults} from './support-routing.mjs?v=20261005-tasks-3';
+import {verifiedDefence} from './support-verified-data.mjs?v=20261005-tasks-3';
+import {getFlowState, applyAnswer} from './support-flow.mjs?v=20261005-tasks-3';
 
 
 const root = document.getElementById('finder');
@@ -12,6 +13,12 @@ const telephone = phone => `tel:${phone.replace(/\D/g,'')}`;
 const topicById = id => topics.find(topic => topic.id === id) || (id === 'help' ? {id:'help',title:'Help finding support',hint:''} : null);
 const ntRegions = new Set(['darwin','palmerston','katherine','alice','tennant','gove','remote']);
 const topicAnswers = new Map();
+const journeyAnswers = new Map();
+const historyViews = new Map();
+let viewCounter=0;
+let restoredHistoryURL=null;
+let activeJourney=null;
+let editingQuestion=null;
 let state = {topicId:null,answers:{}};
 let savedRegion = '';
 let started = false;
@@ -23,6 +30,7 @@ function copyAnswers(answers) {
 }
 function rememberAnswers() {
   if (state.topicId) topicAnswers.set(state.topicId,copyAnswers(state.answers));
+  if(state.entryKey)journeyAnswers.set(state.entryKey,copyAnswers(state.answers));
 }
 function focusHeading() {
   root.querySelector('h1')?.focus();
@@ -33,21 +41,46 @@ function initialiseTopic(topicId, need) {
     rememberAnswers();
     state = {topicId,answers:copyAnswers(topicAnswers.get(topicId) || (savedRegion ? {region:savedRegion} : {}))};
   }
-  if (need && state.answers.need !== need) {
+  if (need) {
     // A named related link starts its intended need, never another person's eligibility.
     state.answers = {...(savedRegion ? {region:savedRegion} : {}),need};
   }
 }
+function entryChoice(){
+ const [id,index]=String(state.entryKey||'').split('/');
+ return journeys.find(task=>task.id===id)?.choices[Number(index)];
+}
+function seedEntryAnswers(answers){
+ const choice=entryChoice();
+ return choice?{...answers,need:choice.need,...choice.answers}:answers;
+}
 function currentFlow() {
-  const flow = getFlowState(state.topicId,state.answers,savedRegion);
+  let flow = getFlowState(state.topicId,seedEntryAnswers(state.answers),savedRegion);
+  while(flow.nextQuestion?.options.length===1)flow=applyAnswer(state.topicId,flow.answers,flow.nextQuestion.id,flow.nextQuestion.options[0].value,savedRegion);
   state.answers = flow.answers;
   rememberAnswers();
   return flow;
 }
-function showHome() {
-  rememberAnswers();
-  root.innerHTML = `<h1 tabindex="-1">NT Defence family support</h1><p class="intro">Support for Defence members, veterans and families.</p><ul class="task-grid" aria-label="Choose the help you need">${topics.map(topic=>`<li><a class="task-link" href="#${topic.id}"><span><strong>${esc(topic.title)}</strong><small>${esc(topic.hint)}</small></span>${arrow}</a></li>`).join('')}</ul><p class="human-link"><a href="#help">Not sure where to start?</a></p><p class="human-link"><a href="#directory">Browse resource details</a></p>`;
+function taskLink(task,compact=false) {
+ return `<li><a class="${compact?'extra-task-link':'task-link'}" href="#task/${esc(task.id)}"><span><strong>${esc(task.title)}</strong>${!compact&&task.hint?`<small>${esc(task.hint)}</small>`:''}</span>${compact?'':arrow}</a></li>`;
 }
+function showHome() {
+ rememberAnswers(); activeJourney=null; editingQuestion=null;
+ root.innerHTML=`<h1 tabindex="-1">NT Defence family support</h1><p class="intro">Support for Defence members, veterans and families in the Northern Territory.</p><ul class="task-grid" aria-label="Choose the help you need">${journeys.filter(task=>task.primary).map(task=>taskLink(task)).join('')}</ul><details class="extra-help" open><summary>More ways to get help</summary><ul class="extra-task-grid">${journeys.filter(task=>!task.primary).map(task=>taskLink(task,true)).join('')}</ul></details><p class="human-link"><a href="#help">Not sure where to start?</a></p>`;
+}
+function showTaskMenu(task) {
+ rememberAnswers(); activeJourney=task; editingQuestion=null;
+ root.innerHTML=`<nav class="back-nav" aria-label="Support navigation"><a href="#home">All help</a></nav><h1 tabindex="-1">${esc(task.title)}</h1>${task.hint?`<p class="intro">${esc(task.hint)}</p>`:''}<ul class="task-grid task-choices" aria-label="Choose what you need">${task.choices.map((choice,index)=>`<li><a class="task-link" href="#task/${esc(task.id)}/${index}"><span><strong>${esc(choice.title)}</strong></span>${arrow}</a></li>`).join('')}</ul>`;
+ document.title=`${task.title} | NT Defence family support | Lutheran Care`;
+}
+function initialiseJourney(task,choice,key) {
+ rememberAnswers(); activeJourney=task;
+ if(state.entryKey!==key){
+  state={topicId:choice.topicId,entryKey:key,answers:copyAnswers(journeyAnswers.get(key)||{...(savedRegion?{region:savedRegion}:{}),need:choice.need,...choice.answers})};
+  editingQuestion=null;
+ }
+}
+
 
 function directoryCard(row,open=false) {
  const service=services[row.appearance_id];
@@ -63,7 +96,7 @@ function showDirectory(selectedId='') {
  rememberAnswers();
  const selected=appearances.find(row=>row.appearance_id===selectedId);
  if(selected){directoryChoice.need=selected.issue_id;directoryChoice.region='';}
- root.innerHTML=`<nav class="back-nav" aria-label="Support navigation"><a href="#home">All support topics</a>${state.topicId?`<a href="#${esc(state.topicId)}">Back to your support choices</a>`:''}</nav><h1 tabindex="-1">Defence family resource details</h1><p class="intro">Browse the dated resource snapshot by need and region. The support finder gives a shorter first-contact route.</p><div class="directory-filters"><label for="directory-need">Need<select id="directory-need"><option value="">All needs</option>${issues.map(issue=>`<option value="${esc(issue.issue_id)}"${issue.issue_id===directoryChoice.need?' selected':''}>${esc(issue.title)}</option>`).join('')}</select></label><label for="directory-region">Region<select id="directory-region"><option value="">All published areas</option>${Object.entries(regionLabels).filter(([id])=>!['outside','remote'].includes(id)).map(([id,name])=>`<option value="${esc(id)}"${id===directoryChoice.region?' selected':''}>${esc(name)}</option>`).join('')}</select></label></div><p id="directory-count" class="directory-count" role="status" aria-live="polite"></p><div id="directory-records"></div><p class="quiet">Information checked 5 October 2026. Entries are routes and cross-listed appearances, not counts of organisations or exhaustive coverage.</p>`;
+ root.innerHTML=`<nav class="back-nav" aria-label="Support navigation"><a href="#home">All help</a>${state.topicId?`<a href="#${esc(state.topicId)}">Back to your support choices</a>`:''}</nav><h1 tabindex="-1">Defence family resource details</h1><p class="intro">Find a service by the help you need and the area it serves.</p><div class="directory-filters"><label for="directory-need">Need<select id="directory-need"><option value="">All needs</option>${issues.map(issue=>`<option value="${esc(issue.issue_id)}"${issue.issue_id===directoryChoice.need?' selected':''}>${esc(issue.title)}</option>`).join('')}</select></label><label for="directory-region">Region<select id="directory-region"><option value="">All published areas</option>${Object.entries(regionLabels).filter(([id])=>!['outside','remote'].includes(id)).map(([id,name])=>`<option value="${esc(id)}"${id===directoryChoice.region?' selected':''}>${esc(name)}</option>`).join('')}</select></label></div><p id="directory-count" class="directory-count" role="status" aria-live="polite"></p><div id="directory-records"></div><p class="quiet">Information checked 5 October 2026. Entries are routes and cross-listed appearances, not counts of organisations or exhaustive coverage.</p>`;
  refreshDirectory(selectedId);
  document.title='Defence family resource details | NT Defence family support | Lutheran Care';
  if(selected)requestAnimationFrame(()=>{const record=document.getElementById('record-'+selected.appearance_id);record?.scrollIntoView({block:'start'});record?.querySelector('summary')?.focus({preventScroll:true});});
@@ -81,10 +114,19 @@ function relatedMarkup(topic) {
   return !state.answers.need && topic.links?.length ? `<nav class="related-needs" aria-label="Related help">${topic.links.map(item=>link(item.href,item.label)).join('')}</nav>` : '';
 }
 const lines=value=>esc(value).replace(/\n/g,'<br>');
+function phoneLabel(service,url){
+ const number=url.slice(4);
+ const published=(service.contact.match(/[+]?[0-9][0-9 ()-]{3,}[0-9]/g)||[]).find(text=>safeURL('tel:'+text.replace(/[^+0-9]/g,''))===url);
+ if(published)return published.trim();
+ if(/^1[38]00[0-9]{6}$/.test(number))return number.slice(0,4)+' '+number.slice(4,7)+' '+number.slice(7);
+ if(/^0[0-9]{9}$/.test(number))return number.slice(0,2)+' '+number.slice(2,6)+' '+number.slice(6);
+ if(/^13[0-9]{4}$/.test(number))return number.slice(0,2)+' '+number.slice(2);
+ return number;
+}
 function actionBlock(service,primary) {
  const urls=routeContactURLs(service),phones=urls.filter(url=>url.startsWith('tel:')),emails=urls.filter(url=>url.startsWith('mailto:')&&service.contact.toLowerCase().includes(url.slice(7).toLowerCase()));
  const website=primaryWebURL(service),messages=urls.filter(url=>url.startsWith('sms:')&&service.contact.replace(/\D/g,'').includes(url.replace(/\D/g,'')));
- return `${phones.map((url,index)=>link(url,'Call '+url.slice(4),primary&&index===0?'button':'official')).join('')}${emails.map(url=>link(url,'Email '+url.slice(7),'official')).join('')}${messages.map(url=>link(url,'Text '+url.slice(4),'official')).join('')}${website?link(website,Number(service.appearance.catalogue_id)===86?'Use online referral form':'Official service information',primary&&!phones.length?'button':'official'):''}`;
+ return `${phones.map((url,index)=>link(url,'Call '+phoneLabel(service,url),primary&&index===0?'button':'official')).join('')}${emails.map(url=>link(url,'Email '+url.slice(7),'official')).join('')}${messages.map(url=>link(url,'Text '+url.slice(4),'official')).join('')}${website?link(website,Number(service.appearance.catalogue_id)===86?'Use online referral form':'Official service information',primary&&!phones.length?'button':'official'):''}`;
 }
 function chatOptions(){return '';}
 function sourceDetails(service) {
@@ -118,55 +160,79 @@ function answerSummary(topicId, answers) {
 function currentResults() {
  return state.topicId==='help'&&handoff?recoveryResults(handoff,state.answers):getResults(state.topicId,state.answers);
 }
+function changeChoicesLink(){
+ const fixed=fixedQuestionIds();
+ const choices=questionsFor(state.topicId,state.answers).some(q=>!fixed.has(q.id)&&state.answers[q.id]);
+ if(choices)return '<a href="#support-answers" data-page-jump="support-answers">Change your choices</a>';
+ return `<a href="${activeJourney&&activeJourney.choices.length>1?'#task/'+esc(activeJourney.id):'#home'}">Choose different help</a>`;
+}
 function resultsMarkup(topic) {
   const result = currentResults();
   const allIds = [...new Set(result.ids || [])].filter(id=>services[id]);
   const ids = allIds.slice(0,3);
   const more = [...new Set([...allIds.slice(3),...(result.moreIds || [])])].filter(id=>services[id] && !ids.includes(id));
-  if (!ids.length) return `<h2 id="support-contacts-heading">Help finding a service</h2><p>No contact in this snapshot matches these choices. You can change the answers above or ask a navigation team to help check a suitable route.</p>${topic.id!=='help' ? '<a href="#help" data-action="request-help">Find another way to get help</a>' : ''}`;
-  const summary = topic.id==='help' && handoff ? handoff.summary : result.contextLabel || answerSummary(topic.id,state.answers) || topic.title;
+  if (!ids.length) return `<h2 id="support-contacts-heading">Help finding a service</h2><p>No service matches these choices. Change your choices or ask for help finding another service.</p>${topic.id!=='help' ? '<a href="#help" data-action="request-help">Find another way to get help</a>' : ''}`;
+  const summary = topic.id==='help' && handoff ? handoff.summary : activeJourney ? questionsFor(topic.id,state.answers).filter(q=>!fixedQuestionIds().has(q.id)).map(q=>q.options.find(o=>o.value===state.answers[q.id])?.label).filter(Boolean).join(' · ') : result.contextLabel || answerSummary(topic.id,state.answers) || topic.title;
   const say = topic.id==='help' && handoff ? handoff.say : result.say;
   const note = result.note || result.preferenceLink ? `<p class="notice">${esc(result.note).replace(/1800 737 732/g,'<a href="tel:1800737732">1800 737 732</a>').replace(/call 000/g,'call <a href="tel:000">000</a>')}${result.preferenceLink ? ` ${link(result.preferenceLink.href,result.preferenceLink.label)}` : ''}</p>` : '';
   const nextAction = ids.length>1 || more.length ? '<a class="another-contact" href="#other-contacts" data-page-jump="other-contacts">Try another contact</a>' : topic.id!=='help' ? '<a class="another-contact" href="#help" data-action="request-help">Help finding another service</a>' : '';
   const noteBefore = result.noteBefore || (topic.id==='relationships' && ['unsafe','refuge','assault','misconduct','child-violence'].includes(state.answers.need));
-  return `<div class="contacts-heading"><h2 id="support-contacts-heading">Your support contacts</h2><a href="#support-answers" data-page-jump="support-answers">Change your choices above</a></div><p class="context">${esc(summary)}</p><p class="quiet">${ids.length+more.length} suggested contacts for these choices, including ${more.length} in “More relevant services”. ${link('#directory','Browse resource details')}</p>${result.issueNotes?.filter(note=>note.text).map(note=>`<p class="quiet">${esc(note.text)}</p>`).join('')||''}${serviceDetails(services[ids[0]],true,noteBefore ? note : '',chatOptions(result,ids[0]),nextAction)}${!noteBefore ? note : ''}${say ? `<details class="say"><summary>What could I say when I contact them?</summary><p>“${esc(say)}”</p></details>` : ''}${ids.length>1 ? `<section class="alternate-list" id="other-contacts" tabindex="-1" aria-label="Other suitable options"><h2>Other ways to get help</h2>${ids.slice(1).map(id=>serviceDetails(services[id])).join('')}</section>` : ''}${more.length ? `<details class="more-services"${ids.length===1 ? ' id="other-contacts" tabindex="-1"' : ''}><summary>More relevant services (${more.length})</summary><div>${more.map(id=>serviceDetails(services[id])).join('')}</div></details>` : ''}${preferenceChoices(topic,result)}<div class="result-bottom">${topic.id!=='help' ? '<a href="#help" data-action="request-help">Find another way to get help</a>' : ''}<button class="text-button" data-action="print">Print these contacts</button></div>`;
+  return `<div class="contacts-heading"><h2 id="support-contacts-heading">Your support contacts</h2>${changeChoicesLink()}</div>${summary?`<p class="context">${esc(summary)}</p>`:''}${result.issueNotes?.filter(note=>note.text).map(note=>`<p class="quiet">${esc(note.text)}</p>`).join('')||''}${serviceDetails(services[ids[0]],true,noteBefore ? note : '',chatOptions(result,ids[0]),nextAction)}${!noteBefore ? note : ''}${say ? `<details class="say"><summary>What could I say when I contact them?</summary><p>“${esc(say)}”</p></details>` : ''}${ids.length>1 ? `<section class="alternate-list" id="other-contacts" tabindex="-1" aria-label="Other suitable options"><h2>Other ways to get help</h2>${ids.slice(1).map(id=>serviceDetails(services[id])).join('')}</section>` : ''}${more.length ? `<details class="more-services"${ids.length===1 ? ' id="other-contacts" tabindex="-1"' : ''}><summary>More relevant services (${more.length})</summary><div>${more.map(id=>serviceDetails(services[id])).join('')}</div></details>` : ''}${preferenceChoices(topic,result)}<div class="result-bottom">${topic.id!=='help' ? '<a href="#help" data-action="request-help">Find another way to get help</a>' : ''}<button class="text-button" data-action="print">Print these contacts</button></div>`;
+}
+function fixedQuestionIds(){
+ const [id,index]=String(state.entryKey||'').split('/');
+ const choice=journeys.find(task=>task.id===id)?.choices[Number(index)];
+ return new Set(['need',...Object.keys(choice?.answers||{})]);
+}
+function choiceRecord(flow) {
+ const fixed=fixedQuestionIds();
+ const selected=flow.visibleQuestions.filter(q=>!fixed.has(q.id)&&state.answers[q.id]&&q.options.some(o=>o.value===state.answers[q.id]));
+ if(!selected.length)return '<div id="support-answers" tabindex="-1"></div>';
+ return `<details class="answer-record" id="support-answers" tabindex="-1"><summary>Your choices · change</summary><ul>${selected.map(q=>`<li><span><small>${esc(q.label)}</small><strong>${esc(q.options.find(o=>o.value===state.answers[q.id]).label)}</strong></span><button type="button" class="text-button" data-action="edit-answer" data-question="${esc(q.id)}">Change<span class="sr-only"> ${esc(q.label)}</span></button></li>`).join('')}</ul></details>`;
+}
+function rememberView(push=false) {
+ const key=`view-${++viewCounter}`;
+ historyViews.set(key,{url:location.href,state:{...state,answers:copyAnswers(state.answers)},editingQuestion,journeyId:activeJourney?.id||null,savedRegion,handoff});
+ history[push?'pushState':'replaceState']({supportView:key},'',location.href);
 }
 function showFlow(topic) {
-  const flow = currentFlow();
-  const returnLink = topic.id==='help' && handoff ? `<a href="#${handoff.topicId}" data-action="return-to-request">Back to your original contacts</a>` : '';
-  const context = topic.id==='help' && handoff ? `<p class="handoff-context"><strong>Help finding another service:</strong> ${esc(handoff.summary)}</p>` : '';
-  root.innerHTML = `<nav class="back-nav" aria-label="Support navigation"><a href="#home">All support topics</a>${returnLink}</nav><h1 tabindex="-1">${esc(topic.id==='help' && handoff ? 'Help finding another service' : topic.title)}</h1>${context}<div id="flow-safety">${safetyNotice(topic)}</div><div id="support-answers" tabindex="-1"><form id="support-flow" aria-label="Your support choices" novalidate><div id="flow-questions">${flow.visibleQuestions.map(questionMarkup).join('')}</div></form></div><p id="flow-status" class="sr-only" role="status" aria-live="polite"></p><div id="flow-related">${relatedMarkup(topic)}</div><section id="support-contacts" class="flow-results" aria-labelledby="support-contacts-heading" tabindex="-1"${flow.complete ? '' : ' hidden'}>${flow.complete ? resultsMarkup(topic) : ''}</section>`;
-  document.title = `${topic.title} | NT Defence family support | Lutheran Care`;
+ const flow=currentFlow();
+ const question=editingQuestion?flow.questions.find(q=>q.id===editingQuestion):flow.nextQuestion;
+ if(editingQuestion&&!question)editingQuestion=null;
+ const title=topic.id==='help'&&handoff?'Find another suitable service':activeJourney?.choices.find(c=>c.topicId===state.topicId&&c.need===state.answers.need&&Object.entries(c.answers||{}).every(([k,v])=>state.answers[k]===v))?.title||activeJourney?.title||topic.title;
+ const back=activeJourney&&activeJourney.choices.length>1?`<a href="#task/${esc(activeJourney.id)}">${esc(activeJourney.title)}</a>`:'';
+ const context=topic.id==='help'&&handoff?`<p class="handoff-context">${esc(handoff.summary)}</p>`:'';
+ const qIndex=question?flow.questions.filter(q=>!fixedQuestionIds().has(q.id)).findIndex(q=>q.id===question.id):-1;
+ root.innerHTML=`<nav class="back-nav" aria-label="Support navigation"><a href="#home">All help</a>${back}${topic.id==='help'&&handoff?`<a href="${handoff.entryKey?'#task/'+handoff.entryKey:'#'+handoff.topicId}" data-action="return-to-request">Your original contacts</a>`:''}</nav><h1 tabindex="-1">${esc(title)}</h1>${context}<div id="flow-safety">${safetyNotice(topic)}</div>${choiceRecord(flow)}${question?`<form id="support-flow" aria-label="Your support choices" novalidate><div id="flow-questions">${questionMarkup(question)}</div><div class="form-actions"><button type="submit" class="button" id="flow-next"${state.answers[question.id]?'':' disabled'}>${flow.complete?'Update contacts':'Next'}</button>${qIndex>0?'<button type="button" class="text-button" data-action="previous-question">Back</button>':''}</div></form>`:''}<p id="flow-status" class="sr-only" role="status" aria-live="polite"></p><div id="flow-related">${relatedMarkup(topic)}</div><section id="support-contacts" class="flow-results" aria-labelledby="support-contacts-heading" tabindex="-1"${flow.complete&&!question?'':' hidden'}>${flow.complete&&!question?resultsMarkup(topic):''}</section>`;
+ document.title=`${title} | NT Defence family support | Lutheran Care`;
 }
-function syncFlow(topic) {
-  const flow = currentFlow();
-  const container = document.getElementById('flow-questions');
-  if (!container) { showFlow(topic); return; }
-  // Preserve the changed radio and its fieldset. Arrow keys keep their native
-  // focus and browsing position; only new/changed downstream fields are rebuilt.
-  for (const [index,question] of flow.visibleQuestions.entries()) {
-    let fieldset = container.children[index];
-    if (!fieldset || fieldset.dataset.signature!==JSON.stringify(question)) {
-      const template = document.createElement('template');
-      template.innerHTML = questionMarkup(question);
-      const replacement = template.content.firstElementChild;
-      if (fieldset) fieldset.replaceWith(replacement);
-      else container.append(replacement);
-      fieldset = replacement;
-    }
-    for (const input of fieldset.querySelectorAll('input[type="radio"]')) input.checked = input.value===state.answers[question.id];
-  }
-  while (container.children.length>flow.visibleQuestions.length) container.lastElementChild.remove();
-  document.getElementById('flow-safety').innerHTML = safetyNotice(topic);
-  document.getElementById('flow-related').innerHTML = relatedMarkup(topic);
-  const contacts = document.getElementById('support-contacts');
-  contacts.hidden = !flow.complete;
-  contacts.innerHTML = flow.complete ? resultsMarkup(topic) : '';
-  document.getElementById('flow-status').textContent = flow.complete ? 'Your support contacts are ready below.' : `Next question: ${flow.nextQuestion.label}`;
+function syncFlow(topic){showFlow(topic);}
+function advanceQuestion() {
+ const field=root.querySelector('#flow-questions fieldset');
+ const selected=field?.querySelector('input:checked');
+ if(!selected)return;
+ const flow=applyAnswer(state.topicId,state.answers,selected.name,selected.value,savedRegion);
+ state.answers=getFlowState(state.topicId,seedEntryAnswers(flow.answers),savedRegion).answers;
+ if(selected.name==='region'&&state.answers.region===selected.value&&!(selected.value==='nt'&&ntRegions.has(savedRegion)))savedRegion=selected.value;
+ editingQuestion=selected.name;rememberView();
+ editingQuestion=null;rememberAnswers();rememberView(true);showFlow(topicById(state.topicId));focusHeading();
+ const first=root.querySelector('#flow-questions legend h2')||root.querySelector('#support-contacts-heading');
+ first?.setAttribute('tabindex','-1');first?.focus({preventScroll:true});
 }
+
 function render() {
   const rawHash = location.hash.slice(1);
   const segments = rawHash.split('/');
+  if(segments[0]==='task'){
+    const task=journeys.find(t=>t.id===segments[1]);
+    const index=segments[2]===undefined&&task?.choices.length===1?0:Number(segments[2]);
+    const choice=task?.choices[index];
+    if(task&&choice){initialiseJourney(task,choice,`${task.id}/${index}`);showFlow(topicById(choice.topicId));rememberView();}
+    else if(task){showTaskMenu(task);}
+    else{showHome();}
+    if(started)focusHeading();started=true;return;
+  }
+  activeJourney=null;editingQuestion=null;
   if(segments[0]==='directory'){
     showDirectory(segments[1]||'');
     if(started&&!segments[1])focusHeading();
@@ -185,11 +251,13 @@ function render() {
     showHome();
     document.title = 'NT Defence family support | Lutheran Care';
   } else {
+    if(state.entryKey){rememberAnswers();state={topicId:null,answers:{}};}
     initialiseTopic(topic.id,seededNeed);
     // Old question/result links still open the appropriate topic. Answers are
     // memory-only and choices never add a history entry or navigate to a page.
-    history.replaceState(null,'',`#${topic.id}`);
+    // Keep named deep links intact; eligibility answers stay only in memory.
     showFlow(topic);
+    rememberView();
   }
   if (started) focusHeading();
   started = true;
@@ -201,7 +269,7 @@ root.addEventListener('change', event => {
   }
   if (event.target.matches('input[name="support-preference"]')) {
     state.answers.preferences = [...root.querySelectorAll('input[name="support-preference"]:checked')].map(input=>input.value);
-    rememberAnswers();
+    rememberAnswers();rememberView();
     const result = getResults(state.topicId,state.answers);
     document.getElementById('preference-results').innerHTML = preferenceGroups(result);
     document.getElementById('chat-options').innerHTML = chatOptions(result,result.ids[0]);
@@ -210,26 +278,31 @@ root.addEventListener('change', event => {
     return;
   }
   if (!event.target.matches('input[type="radio"]')) return;
-  const {name,value} = event.target;
-  const flow = applyAnswer(state.topicId,state.answers,name,value,savedRegion);
-  state.answers = flow.answers;
-  if (name==='region' && state.answers.region===value && !(value==='nt' && ntRegions.has(savedRegion))) savedRegion=value;
-  syncFlow(topicById(state.topicId));
+  const next=document.getElementById('flow-next');
+  if(next)next.disabled=false;
 });
 root.addEventListener('submit', event => {
-  // Enter never submits an application or advances to another page.
   event.preventDefault();
+  if(event.target.id==='support-flow')advanceQuestion();
 });
 root.addEventListener('click', event => {
+  const change=event.target.closest('[data-action="edit-answer"]');
+  if(change){editingQuestion=change.dataset.question;rememberView(true);showFlow(topicById(state.topicId));focusHeading();return;}
+  if(event.target.closest('[data-action="previous-question"]')){
+    const flow=currentFlow(),questions=flow.questions.filter(q=>!fixedQuestionIds().has(q.id));
+    const current=editingQuestion||flow.nextQuestion?.id;
+    const index=questions.findIndex(q=>q.id===current);
+    if(index>0){editingQuestion=questions[index-1].id;rememberView(true);showFlow(topicById(state.topicId));focusHeading();}return;
+  }
   if (event.target.closest('[data-action="print"]')) window.print();
   const anchor = event.target.closest('a[href^="#"]');
-  if (!anchor || anchor.dataset.pageJump) return;
+  if (!anchor || anchor.dataset.pageJump || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
   if (anchor.dataset.action==='request-help' && state.topicId!=='help') {
     const region = questionsFor(state.topicId,state.answers).find(question=>question.id==='region')?.options.find(option=>option.value===state.answers.region)?.label;
     const result = getResults(state.topicId,state.answers);
-    handoff = {topicId:state.topicId,previousPrimaryId:result.ids[0],otherIds:[...result.ids.slice(1),...(result.moreIds || [])],answers:copyAnswers(state.answers),summary:answerSummary(state.topicId,state.answers)||topicById(state.topicId)?.title||'Support',say:`${result.say||'I would like help finding support.'}${region ? ` Support is needed in ${region}.` : ''} Could you help me find another service for this need?`};
+    handoff = {entryKey:state.entryKey,topicId:state.topicId,previousPrimaryId:result.ids[0],otherIds:[...result.ids.slice(1),...(result.moreIds || [])],answers:copyAnswers(state.answers),summary:answerSummary(state.topicId,state.answers)||topicById(state.topicId)?.title||'Support',say:`${result.say||'I would like help finding support.'}${region ? ` Support is needed in ${region}.` : ''} Could you help me find another service for this need?`};
     topicAnswers.set(state.topicId,copyAnswers(state.answers));
-    topicAnswers.set('help',{...(savedRegion ? {region:savedRegion} : {}),...(state.answers.connection ? {connection:state.answers.connection} : {})});
+    topicAnswers.set('help',{...(state.answers.connection?{connection:state.answers.connection}:{}),...(savedRegion ? {region:savedRegion} : {}),...(state.answers.connection ? {connection:state.answers.connection} : {})});
   } else if (anchor.hash==='#help' && state.topicId!=='help') {
     handoff=null;
     topicAnswers.delete('help');
@@ -237,7 +310,9 @@ root.addEventListener('click', event => {
   if (anchor.dataset.action==='return-to-request' && handoff) {
     topicAnswers.set(handoff.topicId,copyAnswers(handoff.answers));
   }
-  if (anchor.hash===location.hash) { event.preventDefault(); render(); }
+  event.preventDefault();
+  if(anchor.hash!==location.hash)history.pushState(null,'',anchor.hash);
+  render();
 });
 document.querySelector('.skip-link')?.addEventListener('click', event => {
   event.preventDefault();
@@ -254,7 +329,17 @@ document.addEventListener('click', event => {
   target.focus({preventScroll:true});
   target.scrollIntoView({block:'start'});
 });
-window.addEventListener('hashchange',render);
+window.addEventListener('hashchange',()=>{
+ if(restoredHistoryURL===location.href){restoredHistoryURL=null;return;}
+ restoredHistoryURL=null;render();
+});
+window.addEventListener('popstate',event=>{
+ const view=historyViews.get(event.state?.supportView);
+ if(!view||view.url!==location.href)return;
+ restoredHistoryURL=location.href;
+ state={...view.state,answers:copyAnswers(view.state.answers)};editingQuestion=view.editingQuestion;activeJourney=journeys.find(t=>t.id===view.journeyId)||null;savedRegion=view.savedRegion;handoff=view.handoff;
+ if(topicById(state.topicId)){showFlow(topicById(state.topicId));focusHeading();}
+});
 let printOpened = [];
 window.addEventListener('beforeprint', () => {
   printOpened = [...root.querySelectorAll('details.more-services:not([open])')];

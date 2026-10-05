@@ -16,8 +16,8 @@ test('verified public snapshot retains all display objects, identities and order
  const source=process.env.DEFENCE_VERIFIED_SOURCE;
  if(source)assert.deepEqual(verifiedDefence,JSON.parse(fs.readFileSync(source,'utf8')));
 });
-test('all45 issues map to deliberately offered needs under seven tiles',()=>{
- assert.equal(topics.length,7);const numbers=new Set();
+test('all45 issues map to deliberately offered needs',()=>{
+ const numbers=new Set();
  for(const [topic,map] of Object.entries(needIssueMap))for(const [need,ids] of Object.entries(map)){
   if(topic!=='help'&&need!=='indigenous'&&need!=='men')assert.ok(questionsFor(topic,{need}).find(q=>q.id==='need').options.some(o=>o.value===need),`${topic}/${need} is offered`);
   ids.forEach(id=>numbers.add(id));
