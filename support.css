@@ -243,7 +243,7 @@ main { padding-top: 28px; min-height: 420px; }
 .service-card .offer { margin: 0 0 10px; color: var(--text); font-size: 17px; line-height: 1.6; }
 .area { margin: 0 0 8px; font-size: 15px; color: var(--muted); }
 .fit-note { margin: 0; font-size: 15px; line-height: 1.65; color: var(--muted); }
-.contact-panel { min-width: 0; padding: 16px 18px; border-radius: 4px; background: var(--soft); }
+.contact-panel { min-width: 0; padding: 0; background: none; }
 .service-actions, .alt-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 18px; margin: 0 0 12px; }
 .service-actions a, .alt-actions a { display: inline-flex; align-items: center; min-height: 44px; font-size: 16px; overflow-wrap: anywhere; }
 .button {
@@ -277,7 +277,7 @@ main { padding-top: 28px; min-height: 420px; }
   margin-right: 18px;
   font-size: 15px;
 }
-.contact-panel .notice { margin-bottom: 14px; padding: 12px; }
+.contact-panel .notice { margin-bottom: 16px; padding: 0 0 0 12px; border-left: 3px solid var(--line); border-radius: 0; background: none; }
 .published-contact { white-space: pre-line; }
 .service-information, .service-qualifications { min-width: 0; margin-top: 16px; }
 .fit, .access, .cost { color: var(--muted); font-size: 16px; line-height: 1.65; }
@@ -391,10 +391,11 @@ footer > p > a { display: inline-flex; align-items: center; min-height: 44px; }
   .task-choices .task-link strong { font-size: 18px; }
   .human-link { font-size: 16px; margin-top: 20px; }
   .home-help { margin: 10px 0 24px; }
-  .answer-record { padding: 4px 12px; margin-bottom: 22px; }
+  .answer-record { padding: 4px 12px; margin-bottom: 16px; }
   .answer-record li { gap: 12px; }
   .question-area { margin-top: 22px; }
-  .choice-fieldset legend h2 { font-size: 24px; }
+  .choice-fieldset legend { margin-bottom: 12px; }
+  .choice-fieldset legend h2 { font-size: 22px; line-height: 1.25; }
   .choice-list { grid-template-columns: 1fr; }
   .choice-list-compact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .choice-row { gap: 10px; padding: 12px; }
@@ -404,7 +405,7 @@ footer > p > a { display: inline-flex; align-items: center; min-height: 44px; }
   .service-card { padding: 18px 16px; margin-bottom: 18px; }
   .service-card-head h3 { font-size: 22px; }
   .service-card .offer { font-size: 17px; }
-  .contact-panel { padding: 14px; }
+  .contact-panel { padding: 0; }
   .service-actions { gap: 6px 14px; }
   .service-actions .button { width: 100%; }
   .service-information { margin-top: 14px; }
