@@ -1,5 +1,5 @@
-import { verifiedResults } from './support-routing.mjs?v=20261006-content-scope-1';
-export const regions=[['darwin','Darwin'],['palmerston','Palmerston'],['katherine','Katherine / Tindal'],['tennant','Tennant Creek / Barkly'],['alice','Alice Springs'],['gove','Nhulunbuy / East Arnhem'],['remote','Other rural or remote NT community'],['outside','Outside the NT / moving to the NT']];
+import { verifiedResults } from './support-routing.mjs?v=20261006-continuous-final';
+export const regions=[['darwin','Darwin'],['palmerston','Palmerston'],['katherine','Katherine / Tindal'],['tennant','Tennant Creek / Barkly'],['alice','Alice Springs'],['gove','Nhulunbuy / East Arnhem'],['remote','Other rural or remote NT community'],['outside','Outside the NT']];
 const opts = rows => rows.map(([value,label,detail])=>({value,label,...(detail?{detail}:{})}));
 // No default helper prose. Reserve hints for distinctions needed to choose an answer.
 const question=(id,label,rows,hint)=>({id,label,options:opts(rows),...(hint?{hint}:{})});
@@ -44,8 +44,11 @@ const youngerSchoolAge=age=>['5-7','8-11','5-11'].includes(age);
 const youthAge=age=>['12-17','18','19-25','18-25'].includes(age);
 const ageOf=a=>a.age==='under18'?a.childAge:a.age==='adult'?'26+':a.age;
 const child=a=>a.age==='under18'||childAges.includes(ageOf(a));
-const veteranCareQuestion=question('veteranCare','Does the person needing care have a Veteran Card or a DVA-accepted condition?',[
- ['yes','Yes'],['no','No'],['unsure','Not sure']
+const veteranCareQuestion=question('veteranCare','Which DVA qualification may apply to care at home?',[
+ ['card','A Gold or White Veteran Card'],['condition','A DVA-accepted service-related condition'],['both','Both a card and an accepted condition'],['no','Neither'],['unsure','Not sure']
+]);
+const veteranCardQuestion=question('veteranCare','Does the person have a Gold or White Veteran Card?',[
+ ['card','Yes'],['no','No'],['unsure','Not sure']
 ]);
 // Only offered qualifications enter the in-memory flow. Task entries seed the
 // same valid answers, so changing a task never silently keeps an unrelated field.
@@ -80,20 +83,20 @@ export function questionsFor(topic,a={}) {
  }else if(topic==='parenting'){
   if(n==='parenting')qs.push(question('parentingNeed','What would help?',[['general','Parenting or a child’s behaviour'],['indigenous-child','Emotional or behavioural support for an Aboriginal child under 12']]));
   if(n==='teenager')qs.push(ageQuestion);
-  if((n==='childcare'&&a.careHours!=='nonstandard')||['emergency-care','education-costs'].includes(n))qs.push(connectionQuestion);
   if(n==='childcare')qs.push(question('careHours','What childcare do you need?',[['regular','A regular place'],['nonstandard','Care for unusual hours, isolation or complex needs']]));
+  if((n==='childcare'&&a.careHours==='regular')||['emergency-care','education-costs'].includes(n))qs.push(connectionQuestion);
   if(['school','learning'].includes(n))qs.push(question('schoolType','Which school setting?',[['government','NT government school'],['other','Another school or not sure']]));
   if(n==='learning'&&a.schoolType==='government')qs.push(question('schoolHelp','What would help most?',[['learning','Learning or inclusion support'],['advocacy','Independent help with a school problem']]));
   if(n==='development')qs.push(question('therapy','Which applies to the child?',[['eligible','Birth–18, with Medicare and no NDIS support'],['ndis','Already receives NDIS support'],['other','Another situation or not sure']]));
  }else if(topic==='money'){
-  if(['housing','tonight','family-crisis'].includes(n)||(n==='defence-housing'&&a.housingTask!=='removal'))qs.push(connectionQuestion);
+  if(['tonight','family-crisis'].includes(n)||(n==='defence-housing'&&a.housingTask!=='removal'))qs.push(connectionQuestion);
   if(n==='losing-housing')qs.push(question('housingRisk','What is putting the home at risk?',[['tenancy','Rent, eviction, bond or a tenancy problem'],['other','Another reason or not sure']]));
   if(n==='youth-housing')qs.push(question('youthAge','How old is the young person?',[['10-11','10–11'],['12-18','12–18'],['19-25','19–25'],['other','Another age or not sure']]));
   if(['housing','tonight'].includes(n)){
-   if(['serving','reserve'].includes(a.connection))qs.push(question('housingReason','Why is accommodation needed?',[['crisis','A domestic crisis means we cannot stay at home'],['other','Another reason or not sure']]));
+   if(n==='tonight'&&['serving','reserve'].includes(a.connection))qs.push(question('housingReason','Why is accommodation needed?',[['crisis','A domestic crisis means we cannot stay at home'],['other','Another reason or not sure']]));
    qs.push(question('accommodationFor','Who needs accommodation?',[['single-adult','One adult aged 18 or older'],['couple','A couple without children'],['household','A family with children'],['youth','Someone under 18'],['other','Another situation or not sure']]));
    if(['single-adult','couple'].includes(a.accommodationFor))qs.push(question('housingAge','How old are the adults who need accommodation?',[['18','18'],['19-24','All 19 or older, with someone under 25'],['25+','All 25 or older'],['unsure','Not sure']]));
-   if(a.accommodationFor==='single-adult'&&['katherine','alice'].includes(a.region))qs.push(question('adultAccommodation','Is a men’s accommodation programme suitable?',[['men','Yes'],['other','No or not sure']]));
+   if(a.accommodationFor==='single-adult'&&(a.region==='alice'||a.region==='katherine'&&!['18','unsure'].includes(a.housingAge)))qs.push(question('adultAccommodation','Is a men’s accommodation programme suitable?',[['men','Yes'],['other','No or not sure']]));
   }
   if(n==='defence-housing')qs.push(question('housingTask','Which part of the move?',[['home','Service housing or rent allowance'],['removal','An approved Defence removal'],['other','Living apart or maintaining two homes']]));
   if(n==='pets')qs.push(question('petNeed','What do you need help with?',[['move','A Defence-funded move'],['care','Pet care information'],['safe-exit','Pets while leaving an unsafe home']]));
@@ -102,8 +105,9 @@ export function questionsFor(topic,a={}) {
   if(n==='transition'&&a.connection==='former')qs.push(question('leftWhen','When did they leave Defence?',[['recent','Within the last 24 months'],['earlier','More than 24 months ago'],['unsure','Not sure']]));
   if(n==='partner'&&a.connection==='serving')qs.push(question('partnerEmployment','Does the applicant partner also serve full-time?',[['no','No — civilian or part-time Reserve'],['yes','Yes'],['unsure','Not sure']]));
  }else if(topic==='care'){
-  if(n==='young-carer')qs.push(question('carerAge','How old is the young carer?',[['under12','Under 12'],['12-25','12–25'],['26+','26 or older'],['unsure','Not sure']]));
-  if(n==='health')qs.push(question('healthFor','Who needs healthcare?',[['member','A currently serving ADF member'],['family','A currently serving member’s family'],['other','Someone else or not sure']]));
+  if(n==='care-skills')qs.push(question('carerSkillNeed','What would help with caring?',[['support','Coaching or practical support for me'],['aged-rights','A say in aged-care decisions or services'],['disability-rights','A say in disability support or rights']]));
+  if(n==='young-carer')qs.push(question('carerAge','How old is the young carer?',[['under5','Under 5'],['5-11','5–11'],['12-25','12–25'],['26+','26 or older'],['unsure','Not sure']]));
+  if(n==='health')qs.push(question('healthFor','Who needs healthcare?',[['member','A currently serving ADF member'],['other','A family member or civilian']]));
   if(n==='home-care'){
    qs.push(veteranCareQuestion);
    if(a.veteranCare==='no')qs.push(question('homeCareAge','Which describes the person needing help?',[['older','65 or older; or 50+ if Aboriginal or Torres Strait Islander, homeless or at risk'],['younger','Younger than these ages'],['unsure','Not sure']]));
@@ -116,7 +120,7 @@ export function questionsFor(topic,a={}) {
   }
   if(n==='older'){
    qs.push(question('olderNeed','What would help?',[['care','Finding or arranging aged care'],['memory','Memory problems or dementia'],['rights','A problem with aged-care services']]));
-   if(a.olderNeed==='care')qs.push(veteranCareQuestion);
+   if(a.olderNeed==='care')qs.push(veteranCardQuestion);
   }
   if(n==='costs')qs.push(question('healthFunding','Which treatment funding may apply?',[['member','Care for a currently serving ADF member'],['dependant','A recognised dependant of a permanent or continuous full-time member'],['veteran','DVA or Veteran Card treatment'],['other','Another situation or not sure']]));
   if(n==='travel'){
@@ -124,7 +128,6 @@ export function questionsFor(topic,a={}) {
    if(a.connection==='serving')qs.push(roleQuestion);
    if(!(a.connection==='serving'&&a.role==='member'))qs.push(question('dvaTravel','Does the patient have a Veteran Card that covers this treatment?',[['yes','Yes'],['no','No'],['unsure','Not sure']]));
    if(a.connection==='serving'&&a.role!=='member'&&a.dvaTravel!=='yes')qs.push(question('remotePosting','Is the patient resident family accompanying a member at an approved remote posting?',[['yes','Yes'],['no','No'],['unsure','Not sure']]));
-   if(a.dvaTravel!=='yes'&&!(a.connection==='serving'&&a.role==='member')&&a.region&&a.region!=='outside')qs.push(question('ntResidence','Has the patient usually lived in the NT for at least six months?',[['yes','Yes'],['no','No'],['unsure','Not sure']]));
   }
  }else if(topic==='connection'){
   if(['local','settle','family-info','feedback'].includes(n))qs.push(connectionQuestion);
@@ -138,7 +141,13 @@ export function questionsFor(topic,a={}) {
  if(mode!=='none')qs.push(mode==='jurisdiction'?question('region','Is support needed in the Northern Territory?',[['nt','Northern Territory'],['outside','Outside the NT']]):(['defence-housing','settle'].includes(n)?question('region','Where are you posted or moving to?',regions):regionQuestion));
  const memberCare=topic==='care'&&((n==='health'&&a.healthFor==='member')||(n==='costs'&&a.healthFunding==='member')||(n==='travel'&&a.connection==='serving'&&a.role==='member'));
  if(memberCare&&['darwin','palmerston'].includes(a.region))qs.push(question('memberCentre','Which assigned health centre do you use?',[['darwin','Darwin Health Centre'],['larrakeyah','Larrakeyah Health Centre'],['robertson','Robertson Health Centre'],['unsure','Not sure']]));
- const redundantRemoteArea=(topic==='connection'&&n==='settle')||(topic==='parenting'&&((n==='childcare'&&a.careHours==='regular')||n==='learning'))||(topic==='care'&&n==='health'&&a.healthFor==='member');
+ const redundantRemoteArea=(topic==='connection'&&['settle','local'].includes(n))
+  ||(topic==='parenting'&&((n==='childcare'&&a.careHours==='regular')||['learning','teenager'].includes(n)))
+  ||memberCare
+  ||(topic==='care'&&n==='travel'&&a.connection==='serving'&&a.role==='member')
+  ||(topic==='money'&&(['housing','tonight','defence-housing','essentials'].includes(n)||n==='youth-housing'&&a.youthAge!=='12-18'))
+  ||(topic==='relationships'&&(n==='assault'||n==='separation'&&a.separationHelp==='child-contact'||n==='legal'&&a.legalIssue==='migration'))
+  ||(topic==='mental'&&['feelings','treatment','grief'].includes(n)&&ageOf(a)==='0-4');
  if(a.region==='remote'&&mode==='full'&&!redundantRemoteArea){
   if(topic==='mental'&&['feelings','treatment','grief'].includes(n)&&child(a))qs.push(question('localCommunity','Which community is support needed in?',[['jabiru','Jabiru'],['wadeye','Wadeye'],['other','Another NT community']]));
   else if(topic==='money'&&n==='essentials')qs.push(question('reliefCommunity','Which community is support needed in?',[['tiwi','Tiwi Islands'],['wadeye','Wadeye / Port Keats'],['other','Another NT community']]));
@@ -157,6 +166,7 @@ export function regionModeFor(topic,a={}) {
   return n==='indigenous'&&a.indigenousNeed==='local'?'full':'none';
  }
  if(topic==='relationships'){
+  if(n==='refuge'&&a.refugeFor==='other')return 'none';
   if(n==='refuge'||n==='assault'||(n==='separation'&&a.separationHelp==='child-contact'))return 'full';
   if(n==='counselling'||n==='separation'||n==='legal')return n==='legal'&&a.womenLegal==='yes'&&['family-civil','migration'].includes(a.legalIssue)?'full':'jurisdiction';
   return 'none';
@@ -166,10 +176,12 @@ export function regionModeFor(topic,a={}) {
   if(n==='childcare')return a.careHours==='regular'?'full':'jurisdiction';
   if(n==='emergency-care')return a.connection==='serving'?'none':'jurisdiction';
   if(n==='school')return 'jurisdiction';
+  if(n==='learning'&&a.schoolType==='other')return 'none';
   return 'full';
  }
  if(topic==='money'){
-  if(n==='defence-housing')return a.housingTask==='home'?'full':'none';
+  if(n==='defence-housing')return a.housingTask==='home'&&!['former','bereaved'].includes(a.connection)?'full':'none';
+  if(n==='rent-assistance')return 'none';
   if(['income','family-crisis','acute-support','home-ownership','budgeting','claims','pets'].includes(n))return 'none';
   return ['tenancy','rent-assistance','stable-housing','losing-housing'].includes(n)?'jurisdiction':'full';
  }
@@ -181,8 +193,9 @@ export function regionModeFor(topic,a={}) {
   if((n==='health'&&a.healthFor==='member')||(n==='costs'&&a.healthFunding==='member'))return 'full';
   if(n==='travel')return a.dvaTravel==='yes'?'none':'full';
   if(n==='baby')return ['nurse','maternity'].includes(a.babyNeed)?'full':'none';
-  if(n==='disability')return a.disabilityNeed==='posting'?'jurisdiction':'full';
-  if(n==='care-skills')return 'full';
+  if(n==='disability')return a.disabilityNeed==='posting'?'none':'full';
+  if(n==='home-care'&&a.veteranCare==='no'&&a.homeCareAge!=='older')return 'full';
+  if(n==='care-skills')return a.carerSkillNeed==='disability-rights'?'full':'none';
   return 'none';
  }
  if(topic==='connection'){

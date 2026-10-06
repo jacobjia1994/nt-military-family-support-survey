@@ -34,6 +34,9 @@ const rankRegions={1:['darwin','palmerston'],2:['katherine'],3:['tennant'],4:['a
 // Route identity is retained where several programmes share a provider or intake phone.
 const catchments={
  '871892f9aff57db9':['darwin','palmerston','alice'],
+ '3158a5d5391e8a81':['katherine','remote:bigrivers'],
+ '6b48fffc67665a19':['tennant','remote:barkly'],
+ 'ab7e196c74afaec7':['alice','remote:central'],
  'a433ac808876aa83':['darwin','palmerston','katherine'],
  'f1da0539f127b80d':['darwin'],
  '3991d58873ccf7c3':['darwin'],
@@ -88,6 +91,9 @@ export function routeMatchesRegion(row,region='',a={}) {
  if(!region)return true; // An unfiltered detail browser makes no regional recommendation.
  if(Number(row.catalogue_id)===9&&['darwin','palmerston'].includes(region)&&a.memberCentre&&a.memberCentre!=='unsure'){const assigned={darwin:'f1da0539f127b80d',larrakeyah:'3991d58873ccf7c3',robertson:'1abe21b2395e5ff6'}[a.memberCentre];return row.route_id.endsWith(assigned||'unmatched');}
  if(region==='outside')return row.geography.rank===0&&national.has(Number(row.catalogue_id));
+ // This exact student-advocacy appearance publishes advice enquiries outside
+ // Darwin/Palmerston. It is a qualified enquiry, not an expanded local catchment.
+ if(row.route_id.endsWith('ff76ffd103680ce3')&&a.need==='learning'&&a.schoolHelp==='advocacy')return true;
  const token=region==='remote'?'remote:'+(a.localCommunity&&a.localCommunity!=='other'?a.localCommunity:a.remoteArea||'other'):region;
  const rules=catchments[row.route_id.split(':').at(-1)];
  if(rules)return rules.includes('nt')||rules.includes(token);
@@ -115,7 +121,8 @@ export function qualifies(row,a={},topic='') {
  if(id===26&&a.congressFit==='other')return false;
  if(id===25&&a.parentingNeed!=='indigenous-child')return false;
  if(id===88&&a.connection==='former'&&a.leftWhen==='earlier')return false;
- if([49,125].includes(id)&&a.veteranCare==='no')return false;
+ if(id===49&&['no','card'].includes(a.veteranCare))return false;
+ if(id===125&&['no','condition'].includes(a.veteranCare))return false;
  if(id===93&&a.dvaTravel==='yes')return false;
  if(id===52&&a.dvaTravel==='no')return false;
  if(id===36&&(a.connection!=='serving'||a.role==='member'||a.remotePosting==='no'))return false;
@@ -128,6 +135,7 @@ export function qualifies(row,a={},topic='') {
  if(id===20&&age&&adultAges.has(age)&&age!=='18')return false;
  if([57,62,63,64,65,21].includes(id)&&age&&!['12-17','18','19-25','18-25'].includes(age))return false;
  if(id===70&&age&&!['5-7','8-11','5-11','12-17','18','19-25','18-25'].includes(age))return false;
+ if(id===70&&n==='young-carer'&&['under5','26+'].includes(a.carerAge))return false;
  if(id===71&&age&&!['8-11','12-17','18'].includes(age))return false;
  if(id===12&&a.youthAge&&a.youthAge!=='12-18')return false;
  if(id===130&&a.carerAge&&a.carerAge!=='12-25'&&a.carerAge!=='unsure')return false;
@@ -158,13 +166,21 @@ const choices={
  parenting:{parenting:[17,102,23],childcare:[98,99,24,141],'emergency-care':[58,67],'moving-care':[140],school:[34,44,95,23],learning:[95,4,34],development:[89,83,90],'education-costs':[33,48,34],teenager:[62,63,64,65,21,57,70]},
  money:{bills:[75,56,80,15],income:[113,54,15],essentials:[19,75,15,113],housing:[86,117,126,127,69,122,106,137,138],'losing-housing':[86],'stable-housing':[86],tonight:[43,117,126,127,69,122,106,86],'youth-housing':[12,70,86],'rent-assistance':[137,138,136],tenancy:[32],'defence-housing':[39,136],claims:[110,54,76],'family-crisis':[58],'acute-support':[47],'home-ownership':[38],budgeting:[8],pets:[139,111,40]},
  work:{job:[114,128,22],study:[22,114,128],partner:[103,114,128],reserve:[10,37],transition:[88,124,114,115,76],rehabilitation:[51],flexible:[37]},
- care:{health:[66],baby:[104],disability:[90,83,45,46],'home-care':[49,125],carer:[16,124],older:[79,125],travel:[93,52,36],costs:[7],'young-carer':[130,16,70],'care-skills':[16,97,90,124]},
+ care:{health:[66],baby:[104],disability:[90,83,45,46],'home-care':[49,125],carer:[16,124],older:[79,125],travel:[93,52,36],costs:[7],'young-carer':[16,130,70],'care-skills':[16,97,90,124]},
  connection:{local:[41,42,72,76,115,14],'defence-child':[71,23],settle:[41,42,40],apart:[40],migrant:[82,85,121,29,118,129,13,26,78],language:[82,85,121],recognition:[115,14,76],'family-info':[131,40,54,124,113],'defence-aware':[100,124,76,40],feedback:[35,53],'new-entry':[40],'nt-preparedness':[134],pastoral:[6]},help:{default:[40,124]}
 };
 function selectedPriorities(topic,a) {
  const n=a.need,age=effectiveAge(a);let ids=[...(choices[topic]?.[n||'default']||[])];
  if(topic==='mental'&&['feelings','treatment'].includes(n)) {
-  if(childAges.has(age)||['18','19-25','18-25'].includes(age))ids=age==='0-4'?[87,102,66]:[62,63,64,65,21,20,57,70,100];
+  if(childAges.has(age)||['18','19-25','18-25'].includes(age)){
+   ids=age==='0-4'?[87,102,66]:[62,63,64,65,21,20,57,70,100];
+   // Adult ADF treatment funding does not start at 26. Keep youth care while
+   // selecting the member's applicable funding enquiry by service and role.
+   if(n==='treatment'&&['18','19-25','18-25'].includes(age)){
+    if(['serving','member'].includes(a.counselling))ids=[50,...ids];
+    else if(a.counselling==='reserve')ids=[109,...(a.role==='member'?[50]:[]),...ids];
+   }
+  }
   else if(a.counselling==='reserve')ids=[109,...ids];
   else if(a.counselling==='other')ids=[30,68,27,119,...ids.filter(id=>id!==50)];
   else if(n==='treatment')ids=['serving','member'].includes(a.counselling)?[50,100,27,30,68]:[100,27,30,68];
@@ -187,9 +203,10 @@ function selectedPriorities(topic,a) {
  if(topic==='money'&&n==='family-crisis'&&['former','bereaved','unsure'].includes(a.connection))ids=[];
  if(topic==='parenting'&&n==='childcare'&&a.careHours==='nonstandard')ids=[67];
  if(topic==='parenting'&&n==='emergency-care'&&a.connection!=='serving')ids=[67];
- if(topic==='parenting'&&n==='learning'&&a.schoolHelp==='advocacy')ids=[4,95,34];
+ if(topic==='parenting'&&n==='learning'&&a.schoolHelp==='advocacy')ids=[4,34];
  if(topic==='parenting'&&n==='education-costs'&&['former','bereaved'].includes(a.connection))ids=[48,34];
- if(topic==='care'&&n==='home-care'&&a.veteranCare==='no')ids=a.homeCareAge==='older'?[79]:[90,83];
+ if(topic==='care'&&n==='home-care')ids=a.veteranCare==='no'?(a.homeCareAge==='older'?[79]:[90,83]):a.veteranCare==='card'?[125]:a.veteranCare==='condition'?[49]:[49,125];
+ if(topic==='care'&&n==='care-skills')ids={support:[16,124],'aged-rights':[97],'disability-rights':[90]}[a.carerSkillNeed]||[16,124];
  if(topic==='care'&&n==='health')ids=a.healthFor==='member'?[9,1]:[66];
  if(topic==='care'&&n==='baby')ids={emotional:[101],nurse:[87,104],maternity:[91],advice:[104]}[a.babyNeed]||ids;
  if(topic==='care'&&n==='older')ids={memory:[81],rights:[97],care:[79,125]}[a.olderNeed]||ids;
@@ -226,12 +243,17 @@ export function verifiedResults(topic,a={}) {
   noteBefore=true;
   if(!chosen.some(r=>[43,106,117,122,126,127,69].includes(Number(r.catalogue_id))))note='No direct accommodation programme in this snapshot matches the household and region answers. '+note;
  }
- if(topic==='care'&&a.need==='travel'&&a.ntResidence==='no'&&a.dvaTravel!=='yes')note='NT PATS generally requires six months of NT residence. Ask the regional office to check the referral and residence rules before booking; this is an eligibility enquiry.';
+ if(topic==='care'&&a.need==='travel'&&chosen.some(row=>Number(row.catalogue_id)===93))note='For PATS, ask about eligibility. Your healthcare provider applies; funding approval is needed before booking.';
  if(topic==='mental'&&['crisis','nt-crisis'].includes(a.need)){note='In immediate danger or a life-threatening emergency, call 000. These contacts cannot confirm a local appointment.';noteBefore=true;}
  if(topic==='money'&&['stable-housing','losing-housing'].includes(a.need)){note='NT Central Intake provides non-urgent housing assessment and referral. Its telephone is currently unavailable; use the supplied online referral form. A home, bed or appointment is not confirmed.';noteBefore=true;}
  if(topic==='care'&&a.need==='costs'&&a.healthFunding==='other')note='No treatment-funding route in this resource set is established by these answers. Ask your treating provider about costs and suitable payment options.';
  if(topic==='money'&&a.need==='family-crisis'&&!chosen.length)note='The serving-family Emergency Support scheme does not fit the Defence connection selected. Change the answer if needed, or choose unpaid-carer support, DVA Acute Support or help with essentials for your actual situation.';
- const uncertain=['unsure','other'].some(value=>Object.values(a).includes(value));
+ if(topic==='parenting'&&a.need==='learning'&&a.schoolHelp==='advocacy'&&chosen.some(row=>Number(row.catalogue_id)===4)&&!['darwin','palmerston'].includes(region))note='54 reasons is based in Darwin and Palmerston. Ask whether it can provide advice for your area; local advocacy is not confirmed.';
+ if(topic==='parenting'&&a.need==='learning'&&a.schoolHelp==='advocacy'&&!chosen.some(row=>Number(row.catalogue_id)===4))note='These contacts do not establish a matching independent student-advocacy service. An education liaison officer can help with school options and referrals.';
+ // These 'other' tokens name definite support recipients or a move task.
+ // Keep uncertainty for options that actually mean another/unknown situation.
+ const knownOtherFields=new Set(['role','healthFor','housingTask']);
+ const uncertain=Object.entries(a).some(([key,value])=>value==='unsure'||value==='other'&&!knownOtherFields.has(key));
  if(uncertain)note+=' Ask the contact to check the applicable eligibility and referral rules for your circumstances.';
  const preferenceGroups=[];
  if((a.preferences||[]).includes('anonymous'))preferenceGroups.push({title:'Anonymous military-aware support',ids:[appearances.find(r=>r.issue_number===33&&Number(r.catalogue_id)===112)?.appearance_id].filter(Boolean)});
