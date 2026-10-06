@@ -364,8 +364,8 @@ export const actions = [
   },
   {
     issueNumber: 15,
-    title: 'Find support for a teenager or young adult',
-    lead: 'A young person can seek their own support, and family or friends can ask how to help.',
+    title: 'Find support for a child or young person',
+    lead: 'A child or young person can seek support, and family or friends can ask how to help.',
     steps: [
       {
         title: 'Talk by phone or online',
@@ -373,12 +373,17 @@ export const actions = [
         catalogueIds: [70, 57],
       },
       {
-        title: 'Arrange care in Darwin or Palmerston',
+        title: 'Early support for a child and their family',
+        text: 'Contact the team in Darwin/Malak, Jabiru or Wadeye about early support when a child is at risk of mental-health difficulties.',
+        catalogueIds: [20],
+      },
+      {
+        title: 'For ages 12–25 in Darwin or Palmerston',
         text: 'Contact the relevant headspace centre to ask how to start, including phone or video options, consent and any clinical costs.',
         catalogueIds: [62, 65],
       },
       {
-        title: 'Arrange care in Katherine or Alice Springs',
+        title: 'For ages 12–25 in Katherine or Alice Springs',
         text: 'Contact the relevant headspace centre about access from your community. Katherine’s published temporary-relocation notice remains, so call before visiting.',
         catalogueIds: [63, 64],
       },

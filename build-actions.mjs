@@ -45,6 +45,11 @@ function renderTonight(){
  const compare=areas.map(area=>`<details class="housing-area"><summary>${esc(area==='Darwin'?'Darwin / Palmerston':area==='Katherine'?'Katherine / Tindal':area)}</summary>${local.filter(r=>r.geography.group===area).map(r=>service(r).replaceAll('id="defence-issue-','id="tonight-defence-issue-')).join('')}</details>`).join('');
  return shell('Nowhere safe to stay tonight',`<h1 tabindex="-1">Nowhere safe to stay tonight</h1><p class="lead">Call to ask about vacancies and who can stay.</p><section class="action-step"><h2>Local accommodation programmes</h2>${compare}</section><section class="action-step"><h2>For a Defence family in a domestic crisis</h2>${service(rows.find(r=>r.catalogue_id===43)).replaceAll('id="defence-issue-','id="tonight-defence-issue-')}</section><section class="action-step"><h2>For a non-urgent assessment and referral</h2>${service(rows.find(r=>r.catalogue_id===86)).replaceAll('id="defence-issue-','id="tonight-defence-issue-')}</section><aside class="related"><h2>Related help</h2><p>${link('19.html','Violence or feeling unsafe')}</p><p>${link('07.html','Defence housing and tenancy advice')}</p></aside>`,'../',[['../topics/money.html','Money and housing']]);
 }
+function renderLegal(){
+ const row=issue(18).rows.find(r=>r.catalogue_id===73);
+ const programme=service(row).replaceAll('id="defence-issue-','id="legal-defence-issue-').replace('<h3 ','<h2 ').replace('</h3>','</h2>');
+ return shell('Get legal information or advice',`<h1 tabindex="-1">Get legal information or advice</h1><p class="lead">Ask about family, civil or criminal legal problems.</p>${programme}<aside class="related"><h2>Related help</h2>${taskList([18,19],'../')}</aside>`,'../');
+}
 function renderGroup(g){
  const featured=g.featured||g.issueNumbers.slice(0,3),others=g.issueNumbers.filter(n=>!featured.includes(n));
   return shell(g.title,`<h1 tabindex="-1">${esc(g.title)}</h1>${g.id==='money'?`<ul class="task-list"><li>${link('../help/housing-tonight.html','Nowhere safe to stay tonight')}</li></ul>`:''}${taskList(featured,'../')}${others.length?`<details class="topic-more"><summary>${esc(g.moreLabel||'More help in this area')}</summary>${taskList(others,'../')}</details>`:''}`,'../',[]);
@@ -60,4 +65,5 @@ fs.writeFileSync(path.join(base,'lookup.html'),renderLookup());
 for(const g of groups)fs.writeFileSync(path.join(base,'topics',g.id+'.html'),renderGroup(g));
 for(const n of prototype?[1,10,34,40]:actions.map(a=>a.issueNumber))fs.writeFileSync(path.join(base,href(n)),renderAction(n));
 if(!prototype)fs.writeFileSync(path.join(base,'help/housing-tonight.html'),renderTonight());
+if(!prototype)fs.writeFileSync(path.join(base,'help/legal.html'),renderLegal());
 console.log(`Generated ${prototype?'four representative':actions.length} action pages; source snapshot unchanged.`);
