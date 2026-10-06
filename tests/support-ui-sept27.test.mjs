@@ -21,7 +21,7 @@ function renderer() {
     setAttribute(name,value) { this[name]=value; },
     matches() { return false; }
   };
-  for(const id of ['main','urgent-help','preference-status','preference-results','chat-options'])target(id);
+  for(const id of ['main','urgent-help','preference-status','preference-results','chat-options','directory-count','directory-records'])target(id);
   pageTargets['preference-results'].querySelectorAll=()=>[...pageTargets['preference-results'].innerHTML.matchAll(/class="[^"]*\balternative\b[^"]*"/g)];
   let html='', field=null, next=null, selectedPreferences=[];
   const root = {
@@ -108,6 +108,36 @@ function renderer() {
     });
   }
   const navigate=hash=>click(undefined,hash);
+  function nativeButton(action) {
+    const match=html.match(new RegExp('<button\\b[^>]*data-action="'+action+'"[^>]*>([\\s\\S]*?)<\\/button>'));
+    assert.ok(match,'The action must be a currently visible native button');
+    assert.match(match[0],/type="button"/,'The action must not submit a form');
+    const control={
+      type:'button',dataset:{action},matches:()=>false,
+      closest(selector) {
+        const found=selector.match(/^\[data-action="([^"]+)"\]$/);
+        return found?.[1]===action?control:null;
+      },
+      click() { handlers.click({target:control,preventDefault:()=>{}}); }
+    };
+    return control;
+  }
+  function pressButton(action,key) {
+    const control=nativeButton(action);
+    let prevented=false;
+    handlers.keydown?.({target:control,key,preventDefault:()=>{prevented=true;}});
+    // Native buttons activate on Enter or on the Space keyup. The renderer
+    // should leave those defaults intact rather than implementing radio logic.
+    if(!prevented&&key==='Enter')control.click();
+    if(!prevented&&key===' ') {
+      handlers.keyup?.({target:control,key,preventDefault:()=>{prevented=true;}});
+      if(!prevented)control.click();
+    }
+    return prevented;
+  }
+  function filterDirectory(id,value) {
+    handlers.change({target:{id,value}});
+  }
   function radio(questionId,value) {
     assert.equal(field?.id,questionId,'Choose only the current rendered question');
     const control=field.controls.find(input=>input.value===value);
@@ -173,7 +203,7 @@ function renderer() {
   return {root,run,render,navigate,click,change,submit,choose,edit,jump,prefer,
     location,pageTargets,back:()=>traverse(-1),forward:()=>traverse(1),
     question:()=>field?.id,selected:()=>field?.controls.find(input=>input.checked)?.value,next:()=>next,
-    focus:()=>focused,key,radio,dispatchChange:control=>handlers.change({target:control}),historySize:()=>historyEntries.length};
+    focus:()=>focused,key,nativeButton,pressButton,filterDirectory,radio,dispatchChange:control=>handlers.change({target:control}),historySize:()=>historyEntries.length};
 }
 
 const resultCatalogues=ui=>JSON.parse(ui.run('JSON.stringify(currentResults().ids.map(id=>Number(services[id].appearance.catalogue_id)))'));
@@ -487,4 +517,111 @@ test('Space on an unchecked radio retains native selection and advances immediat
   assert.equal(ui.run('state.answers.region'),'alice');
   assert.equal(ui.question(),undefined);
   assert.equal(ui.focus(),'contacts-heading');
+});
+
+function assertRestarted(ui) {
+  assert.equal(ui.location.hash,'#home','Start again removes the current choice URL');
+  assert.equal(ui.focus(),'heading','Focus returns to the home heading');
+  assert.equal(ui.question(),undefined);
+  assert.deepEqual(JSON.parse(ui.run('JSON.stringify(state)')),{topicId:null,answers:{}});
+  assert.equal(ui.run('topicAnswers.size + journeyAnswers.size + historyViews.size'),0,'No saved answers or old snapshots survive');
+  assert.equal(ui.run('savedRegion'),'');
+  for(const name of ['handoff','activeJourney','editingQuestion','restoredHistoryURL'])assert.equal(ui.run(name),null);
+  assert.deepEqual(JSON.parse(ui.run('JSON.stringify(directoryChoice)')),{need:'',region:''});
+  assert.equal(ui.run('history.state'),null,'The current history entry no longer names an answer snapshot');
+  assert.doesNotMatch(ui.root.innerHTML,/id="support-contacts"|class="answer-record"|data-action="return-to-request"/);
+}
+function assertFreshQualifiers(ui) {
+  for(const key of ['age','childAge','region','household','counselling','connection','role','dvaTravel','ntResidence','dependant','community','preferences']) {
+    assert.equal(ui.run('state.answers['+JSON.stringify(key)+']'),undefined,'Old '+key+' must not return');
+  }
+}
+function registerResetTests(site,fresh,plan) {
+  test(site+': visible Start again from an edited question clears all remembered eligibility and regions',()=>{
+    const ui=fresh();ui.navigate(plan.multistep);
+    for(const step of plan.steps)ui.choose(...step);
+    ui.navigate(plan.food);
+    assert.equal(ui.question(),undefined,'The old local region is remembered before reset');
+    ui.navigate(plan.multistep);
+    assert.equal(ui.question(),undefined,'The old journey answers are remembered before reset');
+    assert.ok(ui.run('topicAnswers.size')>=2);assert.ok(ui.run('journeyAnswers.size')>=2);
+    ui.edit('age');
+    assert.match(ui.root.innerHTML,/<nav class="back-nav"[^>]*>[\s\S]*data-action="reset">Start again<\/button><\/nav>/);
+    ui.nativeButton('reset').click();
+    assertRestarted(ui);
+    ui.navigate(plan.multistep);
+    assert.equal(ui.question(),plan.steps[0][0],'The original task starts with its first required question');
+    assertFreshQualifiers(ui);
+    assert.doesNotMatch(ui.root.innerHTML,/id="flow-next"/);
+  });
+  test(site+': Enter and Space activate the native Start again button once from results',()=>{
+    for(const key of ['Enter',' ']) {
+      const ui=fresh();ui.navigate(plan.multistep);
+      for(const step of plan.steps)ui.choose(...step);
+      assert.match(ui.root.innerHTML,/Contact a service/);
+      assert.equal(ui.pressButton('reset',key),false,'Keyboard activation keeps the native button default');
+      assertRestarted(ui);
+      ui.navigate(plan.food);
+      assert.equal(ui.question(),'region','The last saved town cannot silently prefill the next person');
+      assertFreshQualifiers(ui);
+    }
+  });
+  test(site+': Start again clears the recovery handoff and cannot reopen the original client request',()=>{
+    const ui=fresh();ui.navigate(plan.food);ui.choose('region',plan.recoveryRegion);
+    ui.click('request-help','#help');
+    assert.ok(ui.run('handoff'));
+    assert.match(ui.root.innerHTML,/data-action="return-to-request"/);
+    ui.nativeButton('reset').click();assertRestarted(ui);
+    ui.navigate('#help');
+    assert.equal(ui.run('handoff'),null);
+    assert.doesNotMatch(ui.root.innerHTML,/data-action="return-to-request"|class="handoff-context"/);
+    assertFreshQualifiers(ui);
+  });
+  test(site+': Back and Forward through old same-URL steps cannot restore pre-reset qualifications',()=>{
+    const ui=fresh();ui.navigate(plan.multistep);
+    for(const step of plan.steps)ui.choose(...step);
+    ui.back(); // Keep an old result in Forward history, then reset from its question.
+    ui.nativeButton('reset').click();assertRestarted(ui);
+    ui.back();
+    assert.equal(ui.question(),plan.steps[0][0]);assertFreshQualifiers(ui);
+    ui.back(); // The URL has not changed, so this exercises popstate without hashchange.
+    assert.equal(ui.question(),plan.steps[0][0]);assertFreshQualifiers(ui);
+    ui.forward();assert.equal(ui.question(),plan.steps[0][0]);assertFreshQualifiers(ui);
+    ui.forward();assert.equal(ui.location.hash,'#home');assert.equal(ui.question(),undefined);
+    ui.forward(); // The former result URL still exists, but its answer snapshot does not.
+    assert.equal(ui.location.hash,plan.multistep);
+    assert.equal(ui.question(),plan.steps[0][0]);assertFreshQualifiers(ui);
+    ui.choose(...plan.steps[0]);
+    assert.equal(ui.question(),plan.steps[1][0],'New choices still advance immediately');
+    ui.back();assert.equal(ui.question(),plan.steps[0][0]);assert.equal(ui.selected(),plan.steps[0][1]);
+    ui.forward();assert.equal(ui.question(),plan.steps[1][0],'New post-reset history remains usable');
+  });
+  test(site+': reset clears resource filters and named deep links later open fresh valid flows',()=>{
+    const ui=fresh();ui.navigate(plan.multistep);
+    for(const step of plan.steps)ui.choose(...step);
+    ui.navigate('#directory');
+    ui.filterDirectory('directory-region','alice');
+    assert.equal(ui.run('directoryChoice.region'),'alice');
+    ui.nativeButton('reset').click();assertRestarted(ui);
+    ui.navigate(plan.named);
+    assert.equal(ui.question(),plan.namedSteps[0][0]);
+    assertFreshQualifiers(ui);
+    for(const step of plan.namedSteps)ui.choose(...step);
+    assert.equal(ui.question(),undefined);assert.match(ui.root.innerHTML,/Contact a service/);
+  });
+}
+
+registerResetTests('legacy defence',renderer,{
+  food:'#task/money/2',foodNeed:'essentials',
+  multistep:'#task/mental-health/0',steps:[['age','26+'],['counselling','member'],['region','darwin']],
+  named:'#mental/feelings',namedSteps:[['age','26+'],['counselling','member'],['region','darwin']],
+  recoveryRegion:'palmerston'
+});
+test('legacy defence: Start again clears patient and treatment-cover eligibility before a new request',()=>{
+  const ui=renderer();
+  ui.navigate('#task/health/3');ui.choose('connection','serving');ui.choose('role','other');ui.choose('dvaTravel','yes');
+  assert.equal(ui.question(),undefined);
+  ui.nativeButton('reset').click();assertRestarted(ui);
+  ui.navigate('#task/health/3');
+  assert.equal(ui.question(),'connection');assertFreshQualifiers(ui);
 });

@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {verifiedDefence} from '../support-verified-data.mjs';
 import {journeys} from '../support-journeys.mjs';
 import {getFlowState,applyAnswer} from '../support-flow.mjs';
 import {verifiedResults,appearanceById,appearances} from '../support-routing.mjs';
@@ -69,4 +70,35 @@ test('unpreset age keeps 18 and 19–25 eligible for headspace while 26+ uses ad
   else assert.equal(contacts[0],62);
  }
  const childChoice=journeys.find(task=>task.id==='child-wellbeing').choices[0];assert.equal(childChoice.answers.age,'under18');
+});
+
+
+test('scoped programme crosslists preserve ordinary health and legal routes',()=>{
+ for(const id of ['defence:issue:35:row:004','defence:issue:35:row:005','defence:issue:42:row:003'])assert.ok(!appearanceById[id]);
+ assert.deepEqual(ids('money',{need:'claims'}),[110,54]);
+ assert.ok(!ids('connection',{need:'defence-aware'}).some(id=>[66,73].includes(id)));
+ assert.deepEqual(ids('care',{need:'health',healthFor:'other'}),[66]);
+ assert.ok(ids('relationships',{need:'legal',womenLegal:'no',region:'nt'}).includes(73));
+ assert.ok(appearances.some(row=>row.issue_number===23&&Number(row.catalogue_id)===66));
+ for(const issue of [18,19])assert.ok(appearances.some(row=>row.issue_number===issue&&Number(row.catalogue_id)===73));
+ assert.ok(appearances.some(row=>row.issue_number===28&&Number(row.catalogue_id)===76));
+ const rsl=appearanceById['defence:issue:42:row:002'].display;
+ assert.ok(rsl.urls.includes('https://www.mates4mates.org/whom-we-are/our-locations/stuart-park'));
+ assert.equal(rsl.who,'Veterans/current members and eligible dependants seeking DVA benefits; no RSL membership required.');
+ assert.equal(rsl.contact,'08 8100 7300\nveteransservices@rslsa.org.au\nDarwin hub 08 7943 2800');
+ assert.equal(rsl.access,'Self-enquire by phone/form; underlying entitlement assessed. Darwin hub also hosts free RSL Queensland advocacy; book before visiting.');
+});
+test('carer education packages retain their unpaid-carer cohort and exact source',()=>{
+ const carer=appearanceById['defence:issue:43:row:001'].display;
+ assert.equal(carer.offers,'Assessed tailored support packages may include tutoring, educational supplies, training courses or study equipment to help unpaid carers continue education alongside caring.');
+ assert.equal(carer.who,'Unpaid carers, including young carers, supporting disability, illness, mental-health needs or age-related frailty.');
+ assert.equal(carer.access,'Free support. Call option 1, weekdays 8 am-5 pm local. Emergency respite enquiries 24/7; assessment and availability apply.');
+ assert.ok(carer.urls.includes('https://www.carergateway.gov.au/help-and-support/caring-me/available-support-carers/tailored-support-packages'));
+ assert.ok(!ids('work',{need:'study',region:'nt'}).includes(16));
+ assert.equal(ids('care',{need:'carer'})[0],16);
+});
+test('scoped correction changes only row dates while retaining the historical batch date',()=>{
+ assert.deepEqual(verifiedDefence.counts,{issue_groups:45,row_appearances:334,distinct_routes:189,catalogue_ids:141});
+ assert.equal(verifiedDefence.information_checked_on,'2026-10-05');
+ assert.deepEqual(appearances.filter(row=>row.display.checked==='6 October 2026').map(row=>row.appearance_id),['defence:issue:42:row:002','defence:issue:43:row:001']);
 });

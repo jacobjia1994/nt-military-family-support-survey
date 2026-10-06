@@ -5,7 +5,7 @@ export const verifiedDefence = {
   "information_checked_on": "2026-10-05",
   "counts": {
     "issue_groups": 45,
-    "row_appearances": 337,
+    "row_appearances": 334,
     "distinct_routes": 189,
     "catalogue_ids": 141
   },
@@ -7535,56 +7535,6 @@ export const verifiedDefence = {
           }
         },
         {
-          "appearance_id": "defence:issue:35:row:004",
-          "route_id": "defence:route:d0b9c083e844a179",
-          "catalogue_id": 66,
-          "row_order": 4,
-          "geography": {
-            "rank": 0,
-            "group": "NT-wide"
-          },
-          "display": {
-            "id": 66,
-            "name": "healthdirect",
-            "location": "NT-wide\nPhone / online",
-            "who": "Anyone in Australia; no Defence connection required.",
-            "offers": "Registered-nurse advice and help finding appropriate healthcare.",
-            "access": "Free advice, 24/7. Onward treatment may charge fees. Life-threatening emergency: 000.",
-            "contact": "1800 022 222",
-            "urls": [
-              "tel:1800022222",
-              "https://www.healthdirect.gov.au/contact-us",
-              "https://about.healthdirect.gov.au/what-we-do/portfolio/healthdirect"
-            ],
-            "checked": "5 October 2026"
-          }
-        },
-        {
-          "appearance_id": "defence:issue:35:row:005",
-          "route_id": "defence:route:3aa5894b1dc8cf1a",
-          "catalogue_id": 73,
-          "row_order": 5,
-          "geography": {
-            "rank": 0,
-            "group": "NT-wide"
-          },
-          "display": {
-            "id": 73,
-            "name": "Legal Aid NT",
-            "location": "NT-wide\nPhone/local offices",
-            "who": "Anyone in the NT needing legal information or advice, including remote callers.",
-            "offers": "Family, civil and criminal legal information, advice appointments and referrals.",
-            "access": "Call directly. Information/first advice free; ongoing aid assessed. Offices in Darwin, Palmerston, Katherine, Alice Springs and Tennant Creek.",
-            "contact": "1800 019 343",
-            "urls": [
-              "https://www.legalaid.nt.gov.au/about-ntlac/our-services/",
-              "https://www.legalaid.nt.gov.au/contact-us/where-are-we/",
-              "tel:1800019343"
-            ],
-            "checked": "5 October 2026"
-          }
-        },
-        {
           "appearance_id": "defence:issue:35:row:006",
           "route_id": "defence:route:95c4ceca210f6c63",
           "catalogue_id": 100,
@@ -8546,36 +8496,10 @@ export const verifiedDefence = {
               "https://www.rslsa.org.au/advocacy",
               "https://rslqld.org/services/veteran-and-family-wellbeing-centres/darwin",
               "tel:0881007300",
-              "mailto:veteransservices@rslsa.org.au"
+              "mailto:veteransservices@rslsa.org.au",
+              "https://www.mates4mates.org/whom-we-are/our-locations/stuart-park"
             ],
-            "checked": "5 October 2026"
-          }
-        },
-        {
-          "appearance_id": "defence:issue:42:row:003",
-          "route_id": "defence:route:6303f73c8ef528c2",
-          "catalogue_id": 76,
-          "row_order": 3,
-          "geography": {
-            "rank": 1,
-            "group": "Darwin"
-          },
-          "display": {
-            "id": 76,
-            "name": "Mates4Mates – Darwin wellbeing centre",
-            "location": "Darwin / telehealth",
-            "who": "Current/former ADF members and spouse/partner/children; no deployment/minimum service; family can attend independently.",
-            "offers": "Psychology, physiotherapy, exercise physiology, clinical groups, social connection and activities.",
-            "access": "Self-register; GP DVA/Medicare referral for clinical appointments. Services free; check co-located provider billing. Telehealth by arrangement.",
-            "contact": "08 7943 2800\nvfwc.darwin@mates4mates.org\n39 Stuart Highway, Stuart Park; Ramirez Road entry",
-            "urls": [
-              "https://www.mates4mates.org/whom-we-are/our-locations/stuart-park",
-              "https://mates4mates.org/get-help/join-mates4mates",
-              "https://mates4mates.org/whom-we-are/our-locations",
-              "tel:0879432800",
-              "mailto:vfwc.darwin@mates4mates.org"
-            ],
-            "checked": "5 October 2026"
+            "checked": "6 October 2026"
           }
         }
       ]
@@ -8600,7 +8524,7 @@ export const verifiedDefence = {
             "name": "Carer Gateway",
             "location": "NT-wide",
             "who": "Unpaid carers, including young carers, supporting disability, illness, mental-health needs or age-related frailty.",
-            "offers": "Counselling, coaching, peer support and assessed practical help or respite.",
+            "offers": "Assessed tailored support packages may include tutoring, educational supplies, training courses or study equipment to help unpaid carers continue education alongside caring.",
             "access": "Free support. Call option 1, weekdays 8 am-5 pm local. Emergency respite enquiries 24/7; assessment and availability apply.",
             "contact": "1800 422 737",
             "urls": [
@@ -8608,9 +8532,10 @@ export const verifiedDefence = {
               "https://www.carergateway.gov.au/about-us/contact-us",
               "https://www.carergateway.gov.au/",
               "https://www.carergateway.gov.au/help-and-support/caring-me/available-support-carers/planned-emergency-respite",
-              "https://www.carergateway.gov.au/feedback"
+              "https://www.carergateway.gov.au/feedback",
+              "https://www.carergateway.gov.au/help-and-support/caring-me/available-support-carers/tailored-support-packages"
             ],
-            "checked": "5 October 2026"
+            "checked": "6 October 2026"
           }
         },
         {

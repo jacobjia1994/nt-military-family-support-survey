@@ -1,4 +1,4 @@
-import { verifiedResults } from './support-routing.mjs?v=20261005-tasks-3';
+import { verifiedResults } from './support-routing.mjs?v=20261006-content-scope-1';
 export const regions=[['darwin','Darwin'],['palmerston','Palmerston'],['katherine','Katherine / Tindal'],['tennant','Tennant Creek / Barkly'],['alice','Alice Springs'],['gove','Nhulunbuy / East Arnhem'],['remote','Other rural or remote NT community'],['outside','Outside the NT / moving to the NT']];
 const opts = rows => rows.map(([value,label,detail])=>({value,label,...(detail?{detail}:{})}));
 // No default helper prose. Reserve hints for distinctions needed to choose an answer.

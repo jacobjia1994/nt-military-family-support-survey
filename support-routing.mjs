@@ -1,4 +1,4 @@
-import {verifiedDefence} from './support-verified-data.mjs?v=20261005-tasks-3';
+import {verifiedDefence} from './support-verified-data.mjs?v=20261006-content-scope-1';
 
 export const issues=verifiedDefence.issues;
 export const appearances=issues.flatMap(issue=>issue.rows.map(row=>({...row,issue_number:issue.issue_number,issue_id:issue.issue_id,issue_title:issue.title,issue_scope:issue.scope||issue.note||''})));

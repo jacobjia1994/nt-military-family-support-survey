@@ -1,8 +1,8 @@
-import {journeys} from './support-journeys.mjs?v=20261005-ux2-review';
-import {topics, questionsFor, preferencesFor, getResults, legacyRoute} from './support-paths.mjs?v=20261005-ux2-review';
-import {services,issues,appearances,regionLabels,routeMatchesRegion,safeURL,verifiedResults,routeContactURLs,primaryWebURL,routeWebActions,recoveryResults} from './support-routing.mjs?v=20261005-ux2-review';
-import {verifiedDefence} from './support-verified-data.mjs?v=20261005-ux2-review';
-import {getFlowState, applyAnswer} from './support-flow.mjs?v=20261005-ux2-review';
+import {journeys} from './support-journeys.mjs?v=20261006-content-scope-1';
+import {topics, questionsFor, preferencesFor, getResults, legacyRoute} from './support-paths.mjs?v=20261006-content-scope-1';
+import {services,issues,appearances,regionLabels,routeMatchesRegion,safeURL,verifiedResults,routeContactURLs,primaryWebURL,routeWebActions,recoveryResults} from './support-routing.mjs?v=20261006-content-scope-1';
+import {verifiedDefence} from './support-verified-data.mjs?v=20261006-content-scope-1';
+import {getFlowState, applyAnswer} from './support-flow.mjs?v=20261006-content-scope-1';
 
 
 const root = document.getElementById('finder');
@@ -35,6 +35,25 @@ function rememberAnswers() {
 function focusHeading() {
   root.querySelector('h1')?.focus();
   window.scrollTo({top:0,behavior:'instant'});
+}
+function startAgain() {
+  state = {topicId:null,answers:{}};
+  topicAnswers.clear();
+  journeyAnswers.clear();
+  historyViews.clear();
+  savedRegion = '';
+  handoff = null;
+  activeJourney = null;
+  editingQuestion = null;
+  restoredHistoryURL = null;
+  directoryChoice.need = '';
+  directoryChoice.region = '';
+  // Browser history keeps its URLs, but no pre-reset answer snapshot survives.
+  // Keep viewCounter monotonic so a stale history key cannot name a new view.
+  history.replaceState(null,'','#home');
+  showHome();
+  started = true;
+  focusHeading();
 }
 function initialiseTopic(topicId, need) {
   if (state.topicId !== topicId) {
@@ -72,13 +91,13 @@ function showHome() {
 }
 function showStartMenu(entry) {
  rememberAnswers();activeJourney=null;editingQuestion=null;
- root.innerHTML=`<nav class="back-nav" aria-label="Support navigation"><a href="#home">All Defence help</a></nav><h1 tabindex="-1">${esc(entry.title)}</h1><ul class="home-links" aria-label="Choose the help you need">${entry.tasks.map(id=>taskLink(journeys.find(task=>task.id===id))).join('')}</ul>`;
+ root.innerHTML=`<nav class="back-nav" aria-label="Support navigation"><a href="#home">All Defence help</a><button type="button" class="text-button" data-action="reset">Start again</button></nav><h1 tabindex="-1">${esc(entry.title)}</h1><ul class="home-links" aria-label="Choose the help you need">${entry.tasks.map(id=>taskLink(journeys.find(task=>task.id===id))).join('')}</ul>`;
  document.title=`${entry.title} | NT Defence family support | Lutheran Care`;
 }
 
 function showTaskMenu(task) {
  rememberAnswers(); activeJourney=task; editingQuestion=null;
- root.innerHTML=`<nav class="back-nav" aria-label="Support navigation"><a href="#home">All help</a></nav><h1 tabindex="-1">${esc(task.title)}</h1>${task.hint?`<p class="intro">${esc(task.hint)}</p>`:''}<ul class="task-grid task-choices" aria-label="Choose what you need">${task.choices.map((choice,index)=>`<li><a class="task-link" href="#task/${esc(task.id)}/${index}"><span><strong>${esc(choice.title)}</strong></span>${arrow}</a></li>`).join('')}</ul>`;
+ root.innerHTML=`<nav class="back-nav" aria-label="Support navigation"><a href="#home">All help</a><button type="button" class="text-button" data-action="reset">Start again</button></nav><h1 tabindex="-1">${esc(task.title)}</h1>${task.hint?`<p class="intro">${esc(task.hint)}</p>`:''}<ul class="task-grid task-choices" aria-label="Choose what you need">${task.choices.map((choice,index)=>`<li><a class="task-link" href="#task/${esc(task.id)}/${index}"><span><strong>${esc(choice.title)}</strong></span>${arrow}</a></li>`).join('')}</ul>`;
  document.title=`${task.title} | NT Defence family support | Lutheran Care`;
 }
 function initialiseJourney(task,choice,key) {
@@ -103,7 +122,7 @@ function showDirectory(selectedId='') {
  rememberAnswers();
  const selected=appearances.find(row=>row.appearance_id===selectedId);
  if(selected){directoryChoice.need=selected.issue_id;directoryChoice.region='';}
- root.innerHTML=`<nav class="back-nav" aria-label="Support navigation"><a href="#home">All help</a>${state.topicId?`<a href="#${esc(state.topicId)}">Back to your support choices</a>`:''}</nav><h1 tabindex="-1">Defence family resource details</h1><div class="directory-filters"><label for="directory-need">Need<select id="directory-need"><option value="">All needs</option>${issues.map(issue=>`<option value="${esc(issue.issue_id)}"${issue.issue_id===directoryChoice.need?' selected':''}>${esc(issue.title)}</option>`).join('')}</select></label><label for="directory-region">Region<select id="directory-region"><option value="">All published areas</option>${Object.entries(regionLabels).filter(([id])=>!['outside','remote'].includes(id)).map(([id,name])=>`<option value="${esc(id)}"${id===directoryChoice.region?' selected':''}>${esc(name)}</option>`).join('')}</select></label></div><p id="directory-count" class="directory-count" role="status" aria-live="polite"></p><div id="directory-records"></div><p class="quiet">Information checked 5 October 2026.</p>`;
+ root.innerHTML=`<nav class="back-nav" aria-label="Support navigation"><a href="#home">All help</a>${state.topicId?`<a href="#${esc(state.topicId)}">Back to your support choices</a>`:''}<button type="button" class="text-button" data-action="reset">Start again</button></nav><h1 tabindex="-1">Defence family resource details</h1><div class="directory-filters"><label for="directory-need">Need<select id="directory-need"><option value="">All needs</option>${issues.map(issue=>`<option value="${esc(issue.issue_id)}"${issue.issue_id===directoryChoice.need?' selected':''}>${esc(issue.title)}</option>`).join('')}</select></label><label for="directory-region">Region<select id="directory-region"><option value="">All published areas</option>${Object.entries(regionLabels).filter(([id])=>!['outside','remote'].includes(id)).map(([id,name])=>`<option value="${esc(id)}"${id===directoryChoice.region?' selected':''}>${esc(name)}</option>`).join('')}</select></label></div><p id="directory-count" class="directory-count" role="status" aria-live="polite"></p><div id="directory-records"></div><p class="quiet">Information checked 5 October 2026.</p>`;
  refreshDirectory(selectedId);
  document.title='Defence family resource details | NT Defence family support | Lutheran Care';
  if(selected)requestAnimationFrame(()=>{const record=document.getElementById('record-'+selected.appearance_id);record?.scrollIntoView({block:'start'});record?.querySelector('summary')?.focus({preventScroll:true});});
@@ -213,7 +232,7 @@ function showFlow(topic) {
  const title=topic.id==='help'&&handoff?'Find another suitable service':activeJourney?.title||topic.title;
  const context=topic.id==='help'&&handoff?`<p class="handoff-context">${esc(handoff.summary)}</p>`:'';
  const qIndex=question?flow.questions.filter(q=>!fixedQuestionIds().has(q.id)).findIndex(q=>q.id===question.id):-1;
- root.innerHTML=`<nav class="back-nav" aria-label="Support navigation"><a href="#home">All Defence help</a>${topic.id==='help'&&handoff?`<a href="${handoff.entryKey?'#task/'+handoff.entryKey:'#'+handoff.topicId}" data-action="return-to-request">Your original contacts</a>`:''}</nav><h1 tabindex="-1">${esc(title)}</h1>${context}<div id="flow-safety">${safetyNotice(topic)}</div>${choiceRecord(flow)}${question?`<form id="support-flow" aria-label="Your support choices" novalidate>${qIndex>0?'<button type="button" class="text-button flow-back" data-action="previous-question">Back to the previous question</button>':''}<div id="flow-questions">${questionMarkup(question)}</div></form>`:''}<p id="flow-status" class="sr-only" role="status" aria-live="polite"></p><div id="flow-related">${relatedMarkup(topic)}</div><section id="support-contacts" class="flow-results" aria-labelledby="support-contacts-heading" tabindex="-1"${flow.complete&&!question?'':' hidden'}>${flow.complete&&!question?resultsMarkup(topic):''}</section>`;
+ root.innerHTML=`<nav class="back-nav" aria-label="Support navigation"><a href="#home">All Defence help</a>${topic.id==='help'&&handoff?`<a href="${handoff.entryKey?'#task/'+handoff.entryKey:'#'+handoff.topicId}" data-action="return-to-request">Your original contacts</a>`:''}<button type="button" class="text-button" data-action="reset">Start again</button></nav><h1 tabindex="-1">${esc(title)}</h1>${context}<div id="flow-safety">${safetyNotice(topic)}</div>${choiceRecord(flow)}${question?`<form id="support-flow" aria-label="Your support choices" novalidate>${qIndex>0?'<button type="button" class="text-button flow-back" data-action="previous-question">Back to the previous question</button>':''}<div id="flow-questions">${questionMarkup(question)}</div></form>`:''}<p id="flow-status" class="sr-only" role="status" aria-live="polite"></p><div id="flow-related">${relatedMarkup(topic)}</div><section id="support-contacts" class="flow-results" aria-labelledby="support-contacts-heading" tabindex="-1"${flow.complete&&!question?'':' hidden'}>${flow.complete&&!question?resultsMarkup(topic):''}</section>`;
  document.title=`${title} | NT Defence family support | Lutheran Care`;
 }
 function focusStep() {
@@ -305,6 +324,9 @@ root.addEventListener('keydown', event => {
   }
 });
 root.addEventListener('click', event => {
+  if(event.target.closest('[data-action="reset"]')) {
+    event.preventDefault();startAgain();return;
+  }
   const radio=event.target.closest('input[type="radio"]');
   // Re-selecting the checked answer after Back/Edit emits no change event.
   if(radio?.checked && root.querySelector('#flow-questions fieldset')?.contains(radio) && state.answers[radio.name]===radio.value) { advanceQuestion();return; }
@@ -357,7 +379,12 @@ window.addEventListener('hashchange',()=>{
 });
 window.addEventListener('popstate',event=>{
  const view=historyViews.get(event.state?.supportView);
- if(!view||view.url!==location.href)return;
+ if(!view||view.url!==location.href) {
+   // Same-URL question entries have no hashchange, so render them fresh too.
+   restoredHistoryURL=location.href;
+   render();
+   return;
+ }
  restoredHistoryURL=location.href;
  state={...view.state,answers:copyAnswers(view.state.answers)};editingQuestion=view.editingQuestion;activeJourney=journeys.find(t=>t.id===view.journeyId)||null;savedRegion=view.savedRegion;handoff=view.handoff;
  if(topicById(state.topicId)){showFlow(topicById(state.topicId));focusStep();}

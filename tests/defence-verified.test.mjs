@@ -9,8 +9,8 @@ const row=(number,id,hash)=>appearances.find(row=>row.issue_number===number&&Num
 const resultRows=(topic,a)=>{const result=verifiedResults(topic,a);return [...result.ids,...result.moreIds].map(id=>appearanceById[id]);};
 
 test('verified public snapshot retains all display objects, identities and ordering',()=>{
- assert.deepEqual(verifiedDefence.counts,{issue_groups:45,row_appearances:337,distinct_routes:189,catalogue_ids:141});
- assert.equal(appearances.length,337);assert.equal(new Set(appearances.map(r=>r.appearance_id)).size,337);
+ assert.deepEqual(verifiedDefence.counts,{issue_groups:45,row_appearances:334,distinct_routes:189,catalogue_ids:141});
+ assert.equal(appearances.length,334);assert.equal(new Set(appearances.map(r=>r.appearance_id)).size,334);
  assert.equal(new Set(appearances.map(r=>r.route_id)).size,189);assert.equal(new Set(appearances.map(r=>String(r.catalogue_id))).size,141);
  for(const issue of verifiedDefence.issues){let previous=-1;for(const r of issue.rows){assert.ok(r.geography.rank>=previous);previous=r.geography.rank;assert.deepEqual(services[r.appearance_id].display,r.display);}}
  const source=process.env.DEFENCE_VERIFIED_SOURCE;
