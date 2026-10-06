@@ -8,7 +8,20 @@ import {getFlowState, applyAnswer} from './support-flow.mjs?v=20261006-content-s
 const root = document.getElementById('finder');
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const arrow = '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>';
-const link = (url, label, className='') => {const allowed=url?.startsWith('#')?url:safeURL(url);return allowed?`<a class="${className}" href="${esc(allowed)}" rel="noreferrer">${esc(label)}</a>`:esc(label);};
+// Keep providers out of a host iframe: some official services reject framing.
+const isEmbedded = window.self !== window.top;
+const externalTarget = url => isEmbedded && /^https?:\/\//i.test(url);
+const link = (url, label, className='') => {const allowed=url?.startsWith('#')?url:safeURL(url);return allowed?`<a class="${className}" href="${esc(allowed)}" rel="${externalTarget(allowed)?'noopener noreferrer':'noreferrer'}"${externalTarget(allowed)?` target="_blank" aria-label="${esc(label+' (opens in a new tab)')}"`:''}>${esc(label)}</a>`:esc(label);};
+function prepareEmbeddedWebLinks() {
+  if (!isEmbedded) return;
+  // Static urgent links live outside the dynamic finder.
+  document.querySelector('.page-shell')?.querySelectorAll('a[href]').forEach(anchor => {
+    if (!externalTarget(anchor.getAttribute('href'))) return;
+    anchor.target = '_blank';
+    anchor.rel = 'noopener noreferrer';
+    anchor.setAttribute('aria-label',anchor.textContent.trim()+' (opens in a new tab)');
+  });
+}
 const telephone = phone => `tel:${phone.replace(/\D/g,'')}`;
 const topicById = id => topics.find(topic => topic.id === id) || (id === 'help' ? {id:'help',title:'Help finding support',hint:''} : null);
 const ntRegions = new Set(['darwin','palmerston','katherine','alice','tennant','gove','remote']);
@@ -129,7 +142,7 @@ function showDirectory(selectedId='') {
 }
 function safetyNotice(topic) {
   if (topic.id !== 'relationships' || !['unsafe','refuge','assault','misconduct','child-violence'].includes(state.answers.need)) return '';
-  return '<p class="notice safety-note">For violence or sexual assault, <a href="tel:1800737732">1800RESPECT: 1800 737 732</a> or <a href="https://www.1800respect.org.au/" rel="noreferrer">online chat</a> is available 24/7. In immediate danger, call <a href="tel:000">000</a>.</p>';
+  return `<p class="notice safety-note">For violence or sexual assault, <a href="tel:1800737732">1800RESPECT: 1800 737 732</a> or ${link('https://www.1800respect.org.au/','online chat')} is available 24/7. In immediate danger, call <a href="tel:000">000</a>.</p>`;
 }
 function questionMarkup(question) {
   const prefix = `question-${state.topicId}-${question.id}`;
@@ -399,3 +412,4 @@ window.addEventListener('afterprint', () => {
   printOpened=[];
 });
 render();
+prepareEmbeddedWebLinks();
