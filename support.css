@@ -132,6 +132,7 @@ main { padding-top: 28px; min-height: 420px; }
 
 /* Homepage links are plain rows, grouped only to make scanning easier. */
 .home-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 48px; }
+.home-entry-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; }
 .home-group { min-width: 0; }
 .home-group h2 { margin: 0 0 10px; font-size: 20px; font-weight: 700; }
 .home-links, .task-grid, .extra-task-grid { list-style: none; padding: 0; margin: 0; }
@@ -381,6 +382,7 @@ footer > p > a { display: inline-flex; align-items: center; min-height: 44px; }
   h1 { font-size: 32px; }
   .intro { font-size: 17px; margin-bottom: 24px; }
   .back-nav { margin-bottom: 14px; }
+  .home-entry-grid { grid-template-columns: 1fr; }
   .home-groups { grid-template-columns: 1fr; gap: 26px; }
   .home-group h2 { font-size: 20px; }
   .task-grid, .extra-task-grid { grid-template-columns: 1fr; }

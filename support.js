@@ -64,11 +64,16 @@ function currentFlow() {
 function taskLink(task,compact=false) {
  return `<li><a class="${compact?'extra-task-link':'task-link'}" href="#task/${esc(task.id)}"><span><strong>${esc(task.title)}</strong>${!compact&&task.hint?`<small>${esc(task.hint)}</small>`:''}</span>${compact?'':arrow}</a></li>`;
 }
+const homeEntries=[{"title":"Moving for a posting","href":"#task/posting","tasks":["posting"]},{"title":"Managing time apart","href":"#task/absence","tasks":["absence"]},{"id":"housing","title":"Housing, bills and essentials","tasks":["housing-tonight","losing-housing","stable-housing","rental","money","home-help","pets","nt-preparedness","home-ownership"]},{"id":"health","title":"Health and wellbeing","tasks":["mental-health","health","disability","bereavement","addiction","aboriginal-wellbeing","inclusive","private","urgent-mental","nt-urgent-mental","distress-training"]},{"id":"relationships","title":"Relationships and safety","tasks":["safety","relationships","legal"]},{"id":"children","title":"Children and caring","tasks":["children-education","child-wellbeing","parenting","baby","moving-childcare","carers","older"]},{"id":"work","title":"Work, study and benefits","tasks":["work","transition","rehabilitation","budgeting","claims"]},{"id":"connection","title":"Defence and community support","tasks":["new-entry","family-info","family-advocacy","defence-aware","groups","language","pastoral"]}];
 function showHome() {
  rememberAnswers();activeJourney=null;editingQuestion=null;
- const groups=[["Moving and Defence life", ["posting", "absence", "new-entry", "family-info", "family-advocacy", "defence-aware", "home-ownership"]], ["Housing and everyday essentials", ["housing-tonight", "losing-housing", "stable-housing", "rental", "money", "home-help", "pets", "nt-preparedness"]], ["Health, wellbeing and safety", ["mental-health", "health", "safety", "disability", "bereavement", "addiction", "aboriginal-wellbeing", "inclusive", "private", "urgent-mental", "nt-urgent-mental", "distress-training"]], ["Children, relationships and caring", ["children-education", "child-wellbeing", "parenting", "baby", "moving-childcare", "carers", "older", "relationships"]], ["Work and financial support", ["work", "transition", "rehabilitation", "budgeting", "claims", "legal"]], ["Community and communication", ["groups", "language", "pastoral"]]];
- root.innerHTML=`<h1 tabindex="-1">NT Defence family support</h1><p class="human-link home-help"><a href="#help">Not sure where to start? Get help finding a service</a></p><div class="home-groups">${groups.map(([title,ids],i)=>`<section class="home-group" aria-labelledby="help-group-${i}"><h2 id="help-group-${i}" tabindex="-1">${esc(title)}</h2><ul class="home-links">${ids.map(id=>taskLink(journeys.find(task=>task.id===id),true)).join('')}</ul></section>`).join('')}</div>`;
+ root.innerHTML=`<h1 tabindex="-1">NT Defence family support</h1><ul class="home-links home-entry-grid" aria-label="Choose the help you need">${homeEntries.map(entry=>`<li><a class="task-link" href="${esc(entry.href||'#start/'+entry.id)}"><span><strong>${esc(entry.title)}</strong></span>${arrow}</a></li>`).join('')}</ul><p class="human-link home-help"><a href="#help">Not sure where to start? Get help finding a service</a></p>`;
  document.title='NT Defence family support | Lutheran Care';
+}
+function showStartMenu(entry) {
+ rememberAnswers();activeJourney=null;editingQuestion=null;
+ root.innerHTML=`<nav class="back-nav" aria-label="Support navigation"><a href="#home">All Defence help</a></nav><h1 tabindex="-1">${esc(entry.title)}</h1><ul class="home-links" aria-label="Choose the help you need">${entry.tasks.map(id=>taskLink(journeys.find(task=>task.id===id))).join('')}</ul>`;
+ document.title=`${entry.title} | NT Defence family support | Lutheran Care`;
 }
 
 function showTaskMenu(task) {
@@ -231,6 +236,11 @@ function advanceQuestion() {
 function render() {
   const rawHash = location.hash.slice(1);
   const segments = rawHash.split('/');
+  if(segments[0]==='start'){
+    const entry=homeEntries.find(item=>item.id&&item.id===segments[1]);
+    if(entry)showStartMenu(entry);else showHome();
+    if(started)focusHeading();started=true;return;
+  }
   if(segments[0]==='task'){
     const task=journeys.find(t=>t.id===segments[1]);
     const index=segments[2]===undefined&&task?.choices.length===1?0:Number(segments[2]);
