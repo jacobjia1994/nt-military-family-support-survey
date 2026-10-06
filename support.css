@@ -488,3 +488,48 @@ footer > p > a { display: inline-flex; align-items: center; min-height: 44px; }
   footer > p { display: none; }
   .checked { display: block; margin: 0; color: #444; font-size: 11px; }
 }
+
+/* Contacts appear independently of optional narrowing. */
+.discovery { margin-top: 32px; border-top: 1px solid var(--line); padding-top: 28px; }
+.discovery-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+.discovery-heading h2 { margin:0 0 8px; }
+.area-control { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.area-control label { font-weight:700; }
+.area-control select { max-width:310px; width:100%; font:inherit; padding:8px 30px 8px 10px; border:1px solid #9d9fa3; border-radius:2px; background:white; color:var(--ink); }
+.chosen-refinements { font-size:0.93rem; margin:4px 0 18px; color:var(--muted); }
+.chosen-refinements:empty { display:none; }
+.refinement-panel { border:1px solid var(--line); margin:12px 0 24px; padding:0; }
+.refinement-panel>summary { padding:14px 16px; font-weight:700; cursor:pointer; color:var(--ink); }
+.refinement-panel>summary span { font-weight:400; font-size:0.95em; }
+.refinement-panel[open]>summary { border-bottom:1px solid var(--line); }
+#discovery-fields { padding:16px; }
+.optional-field { margin:0 0 24px; padding:0; border:0; }
+.optional-field:last-child { margin-bottom:0; }
+.optional-field legend,.field-label { font-weight:700; display:block; margin-bottom:10px; }
+.optional-field .choice-list { gap:7px; }
+.optional-field .choice-row { min-height:42px; padding:9px; }
+.optional-field .choice-row strong { font-size:0.96rem; }
+.age-input { width:110px; max-width:100%; font:inherit; border:1px solid #92969d; border-radius:2px; padding:10px; }
+.age-input[aria-invalid=true] { border-color:#b00020; }
+.field-error { color:#b00020; margin:6px 0 0; font-size:0.9rem; }
+.field-error:empty { display:none; }
+.other-options { margin:24px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:16px 0; }
+.other-options>summary { font-weight:700; cursor:pointer; color:var(--ink); }
+.other-contact-list { margin-top:20px; }
+.contact-shortlist .service-card { margin-top:0; margin-bottom:20px; }
+.result-notice { margin:0 0 20px; }
+.contact-action { display:block; margin:0 0 12px; font-weight:700; }
+#discovery-recovery { display:flex; flex-wrap:wrap; align-items:center; gap:18px; }
+@media(min-width:960px){
+ .discovery-layout:has(.refinement-panel[open]) { display:grid; grid-template-columns:minmax(220px,280px) minmax(0,1fr); gap:30px; align-items:start; }
+ .discovery-layout:has(.refinement-panel[open]) .refinement-panel { margin-top:0; }
+ .discovery-layout:has(.refinement-panel[open]) .choice-list-compact { grid-template-columns:1fr; }
+}
+@media print { .refinement-panel,.area-control,#discovery-recovery,.back-nav { display:none!important; } .discovery-layout { display:block!important; } }
+
+.optional-field-group { border-bottom:1px solid var(--line); }
+.optional-field-group:last-child { border-bottom:0; }
+.optional-field-group>summary { padding:12px 0; font-weight:700; cursor:pointer; }
+.optional-field-body { padding:4px 0 12px; }
+.optional-field-body .field-label,.optional-field-body legend { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+#discovery-fields { padding-top:4px; padding-bottom:4px; }
